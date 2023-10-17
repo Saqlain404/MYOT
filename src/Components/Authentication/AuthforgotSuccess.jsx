@@ -1,0 +1,51 @@
+import React from 'react'
+
+const AuthforgotSuccess = () => {
+  return (
+    
+<>
+  <div
+    className="page-wrapper"
+    id="main-wrapper"
+    data-layout="vertical"
+    data-sidebartype="full"
+    data-sidebar-position="fixed"
+    data-header-position="fixed"
+  >
+    <div >
+      <div className="">
+        <div className="">
+          <div className="">
+            <div className="reset-pass-body">             
+                <div className="card-forgot">
+                  <img src='/images/Forgot-success.png'/>
+                  <div className="">
+                    <h2 className=" mb-4 d-flex justify-content-center recover-text">
+                      Successfully Recover
+                    </h2>
+                    <p className="reset-pass-desc">
+                    Your password successfully recover, Enjoy!
+                    </p>
+                  </div>
+                    <a
+                      href="javascript:void(0)"
+                      className="btn  py-8 mb-3 reset-success"
+                    >
+                      Go Back Home
+                    </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {/*  Import Js Files */}
+  {/*  core files */}
+  {/* Mirrored from demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/html/main/authentication-forgot-password.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Oct 2023 06:44:20 GMT */}
+</>
+
+)
+}
+
+export default AuthforgotSuccess;

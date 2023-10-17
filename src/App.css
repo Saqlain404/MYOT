@@ -1,38 +1,492 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+
+/* <-----LogIn Start-----> */
+
+.authentication-login {
+  box-sizing: border-box;
+  width: 448px;
+  height: 100vh;
+  flex-shrink: 0;
+  padding-bottom: 100px;
+  font-family: "Nunito";
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.page-wrapper {
+  background: #f7f7f8;
+  /* width: 1440px;
+height: 960px; */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.logo {
+  width: 40px;
+  margin: 10px;
+  /* position:sticky; */
+  padding-bottom: 60px;
+  margin-top: -60px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.myot {
+  color: #000;
+  font-family: Nunito;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.4px;
+  text-transform: capitalize;
+}
+
+.login-desc {
+  color: rgba(0, 0, 0, 0.4);
+  font-family: Nunito;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  padding-bottom: 30px;
+  margin-top: -15px;
+}
+
+.img-login {
+  margin-left: 200px;
+  width: 585.418px;
+  height: 557.422px;
+  flex-shrink: 0;
+}
+
+.btn {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  width: 348px;
+  height: 50px;
+  /* flex-shrink: 0; */
+  background-color: #3e51ff;
+  color: #fff;
+  font-family: Nunito;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  /* line-height: normal; */
 }
 
-.App-link {
-  color: #61dafb;
+.form-control {
+  width: 348px;
+  height: 50px;
+  flex-shrink: 0;
+  background-color: #f7f7f8;
+  stroke-width: 1px;
+  stroke: #E0E2E7;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-lable {
+  color: #000;
+  /* font-family: Nunito; */
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.remember-me {
+  color: #000;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.reset-password {
+  color: #605bff;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: none;
+  margin-right: -30px;
+}
+
+/* <-----LogIn End-----> */
+
+/* <-----Forgot password Start-----> */
+
+.reset-pass-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-shrink: 0;
+  /* border: none; */
+}
+
+.card-forgot {
+  border-radius: 25px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* justify-content: space-evenly; */
+  align-items: center;
+  /* text-align: center; */
+  width: 650px;
+ height: 600px;
+ padding: 100px;
+}
+
+.recover-text{
+  color: #000;
+font-family: Nunito;
+font-size: 25px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+margin-top: 50px;
+}
+
+.reset-pass-desc{
+  color: rgba(0, 0, 0, 0.40);
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 150% */
+margin-top: -15px;
+margin-bottom: 50px;
+}
+
+
+
+.form-reset{
+  width: 502px;
+height: 50px;
+margin-bottom: 20px;
+}
+
+.reset-success{
+  width: 169px;
+height: 50px;
+flex-shrink: 0;
+}
+
+/* <-----Forgot password End-----> */
+
+/* <-----Home page start-----> */
+
+.home-page{
+  width: 1440px;
+height: 1047px;
+background-color: #fff;
+}
+
+.middle-section{
+  display: flex;
+width: 944px;
+height: 100vh;
+}
+
+.left-sidebar{
+  width: 212px;
+}
+
+
+
+.sidebar{
+  width: 212px;
+height: 1047px;
+flex-shrink: 0;
+background-color: #fff;
+
+}
+
+.sidebarnav{
+  display: flex;
+width: 944px;
+height: 72px;
+padding: 22px 184px 22px 600px;
+justify-content: flex-end;
+align-items: center;
+flex-shrink: 0;
+}
+
+.card{
+  width: 202px;
+  height: 112px;
+  flex-shrink: 0;
+}
+.card-content{
+  width: 180px;
+  height: 0px;
+  color: #051036;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 142.857% */
+}
+
+.table-name{
+  color: #051036;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 142.857% */
+}
+
+.table-searchbar{
+  display: flex;
+  justify-content: flex-start;
+width: 892px;
+padding: 2px;
+/* align-items: center; */
+gap: 16px;
+  border-radius: 8px;
+background: #F7F9FB;
+align-content: center;
+}
+
+.hide-selected{
+  display: flex;
+height: 28px;
+padding: 4px 8px;
+justify-content: center;
+align-items: center;
+gap: 4px;
+border-radius: 8px;
+background: rgba(0, 0, 0, 0.05);
+}
+
+.search-bar{
+display: flex;
+width: 160px;
+height: 28px;
+padding: 4px 6px;
+align-items: center;
+gap: 4px;
+border-radius: 8px;
+border: 1px solid rgba(0, 0, 0, 0.10);
+background: rgba(255, 255, 255, 0.80);
+}
+
+.table{
+  display: flex;
+  /* width: 892px; */
+/* width: 1200px; */
+flex-direction: column;
+align-items: flex-start;
+}
+
+.checkbox-table{
+  width: 12px;
+height: 12px;
+margin: 3px 4px;
+}
+
+.table-head{
+  display: flex;
+  /* width: auto; */
+  height: 37px;
+  align-items: center;
+  border-bottom:  solid rgba(0, 0, 0, 0.40);
+  /* border-style: solid; */
+  border-width: 2px;
+  /* border- */
+}
+.table-head-dashboard{
+  display: flex;
+  width: auto;
+  height: 37px;
+  width: 892px;
+  align-items: center;
+  
+}
+
+.th-text{
+  color: rgba(0, 0, 0, 0.40);
+font-family: Nunito;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 18px; /* 150% */
+}
+.table-row{
+  width: 840px;
+}
+
+.right-sidebar{
+  height: 100%;
+  width: 280px;
+height: 1047px;
+flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  overflow: hidden;
+  background-color: #fff;
+  border-left: solid rgb(213, 212, 212) 1px;
+
+}
+
+.app-header{
+  display: flex;
+width: 500px;
+height: 72px;
+margin-left: -25px;
+padding: 0;
+background-color: transparent;
+/* padding: 22px 184px 22px 600px; */
+/* justify-content: flex-start; */
+/* align-items: center; */
+/* flex-shrink: 0; */
+}
+
+.management {
+  width: 892px;
+  height: 173px;
+  padding-top: 20px;
+  justify-content: space-around;
+  border-radius: 16px;
+background: #F7F9FB;
+text-align: center;
+}
+
+.card-1{
+  border-radius: 16px;
+background: #F7F9FB;
+width: 432px;
+height: 250px;
+flex-shrink: 0;
+margin-bottom: 20px;
+}
+
+.card-2{
+  width: 202px;
+  height: 250px;
+  background: #FFF4EA;
+  border-radius: 16px;
+
+}
+.card-3{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 202px;
+  height: 250px;
+  border-radius: 16px;
+background: #F7F9FB;
+}
+
+.cardss{
+  width: 892px;
+}
+
+.text-card{
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  margin-top: -15px;
+  font-family: nunito;
+}
+
+.calendar-screen{
+  width: 1100px;
+  background: #FAFAFB;
+  
+}
+
+.mini-calendar{
+  width: 206px;
+height: 222px;
+flex-shrink: 0;
+}
+
+.calendar-section{
+  width: 1228px;
+  /* margin-left: -100px; */
+  background: #FAFAFB;
+
+}
+
+.calendar-header{
+  margin-left: -60px;
+  width: calc(100% - 200px);
+  background-color: white;
+}
+
+.users-table{
+  width: 944px;
+}
+
+.calendar-btn{
+  width: 206px;
+height: 45px;
+flex-shrink: 0;
+color: #FFF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+border: none;
+border-radius: 10px;
+background: #3E51FF;
+}
+
+.header-card-text{
+  color: #051036;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 142.857% */
+}
+
+.table-body-desc{
+  display: flex;
+  color: #051036;
+font-family: Nunito;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 18px; /* 150% */
+/* align-content: center; */
+align-items: center;
+}
+
+.navbar{
+  display: flex;
+width: 944px;
+height: 72px;
+padding: 22px 184px 22px 600px;
+justify-content: flex-end;
+align-items: center;
+/* flex-shrink: 0; */
+border-bottom: 1px rgba(0, 0, 0, 0.10);
+background: #FFF;
+margin-left: -30px;
+}
+
+.page-navigation{
+  display: inline-flex;
+align-items: center;
+gap: 8px;
+}
+
+.table-tasks{
+  display: flex;
+flex-direction: column;
+align-items: flex-start;
+}
+
+.table-tasks > tr > th{
+  display: flex;
+width: 210px;
+height: 43px;
+padding: 8px 16px 8px 0px;
+align-items: center;
+flex-shrink: 0;
 }
