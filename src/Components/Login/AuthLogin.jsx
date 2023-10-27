@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 
 const AuthLogin = () => {
@@ -71,9 +72,13 @@ const AuthLogin = () => {
                           Reset Password?
                         </a>
                       </div>
+                      <Link 
+                      to={"/Admin/Home"}>
+                      
                       <a href="index.html" className="btn  py-8 mb-4 rounded-2">
                         Log In
                       </a>
+                      </Link>
                     </form>
           </div>
           <div className="col-8 m-auto ">
