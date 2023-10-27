@@ -185,7 +185,7 @@ const Users = () => {
                 <Table
                   columns={columns}
                   dataSource={data}
-                  className="users-table"
+                  className="users-table table table-body-desc"
                 />
               </div>
             </div>

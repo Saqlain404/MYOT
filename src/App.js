@@ -1,7 +1,4 @@
-// import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-// import "./index.css"
-// import "./dist/css/style.min.css"
-// import "../public/assets/css/style.min.css"
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import './App.css';
 import {
@@ -10,16 +7,14 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import AuthLogin from './Components/Authentication/AuthLogin';
-import Index from './Components/Index/Index';
-import Login from "./Components/Login/Login";
-import AuthforgotPass from "./Components/Authentication/AuthforgotPass";
-import AuthforgotSuccess from "./Components/Authentication/AuthforgotSuccess";
+
+import AuthLogin from "./Components/Login/AuthLogin"
+import AuthforgotPass from "./Components/Login/AuthforgotPass";
+import AuthforgotSuccess from "./Components/Login/AuthforgotSuccess"
 import Home from "./Components/Index/Home";
 import Dashboard from "./Components/Index/Dashboard";
 import Tasks from "./Components/Index/Tasks";
 import Calender from "./Components/Index/Calender";
-import CalenderYear from "./Components/Index/CalenderYear";
 import Users from "./Components/Index/Users";
 import Departments from "./Components/Index/Departments";
 
@@ -27,9 +22,9 @@ function App() {
   return (
     <div>
       <Router>
-        <Routes>
-          <Route path="*" element={<AuthLogin />} />
-          <Route path="Admin/Login" element={<AuthLogin />} />
+      <Routes>
+          <Route path="*" element={<AuthLogin/>} />
+          <Route path="Admin/Login" element={<AuthLogin/>} />
           <Route path="Admin/Forgot-password" element={<AuthforgotPass />} />
           <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} />
           <Route path="Admin/Home" element={<Home />} />
