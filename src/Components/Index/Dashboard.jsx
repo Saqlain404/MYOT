@@ -12,7 +12,7 @@ const Dashboard = () => {
       login: "18 Aug 22,09:23 AM",
       login2: "18 Aug 22,07:00 PM",
       status: <img src="/images/dashboard/Download-Button.png" />,
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ const Dashboard = () => {
       login: "18 Aug 22,09:23 AM",
       login2: "18 Aug 22,07:00 PM",
       status: <img src="/images/dashboard/Download-Button.png" />,
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 3,
@@ -28,7 +28,7 @@ const Dashboard = () => {
       login: "18 Aug 22,09:23 AM",
       login2: "18 Aug 22,07:00 PM",
       status: <img src="/images/dashboard/Download-Button.png" />,
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 4,
@@ -36,7 +36,7 @@ const Dashboard = () => {
       login: "18 Aug 22,09:23 AM",
       login2: "18 Aug 22,07:00 PM",
       status: <img src="/images/dashboard/Download-Button.png" />,
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 5,
@@ -44,14 +44,14 @@ const Dashboard = () => {
       login: "18 Aug 22,09:23 AM",
       login2: "18 Aug 22,07:00 PM",
       status: <img src="/images/dashboard/Download-Button.png" />,
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     // Add more tasks here
   ];
 
   return (
     <>
-      <div className="">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
             <Sidebar />

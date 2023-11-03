@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
-    <div className='container-fluid border-end sidebar'>
+    <div className='container-fluid  sidebar'>
     {/* Sidebar scroll*/}
 
     <div className='row'>
@@ -66,28 +66,41 @@ const Sidebar = () => {
             </Link>
         </li>
         <li className="nav-item text-dark">
+        <Link
+           to={"/Admin/Calendar"}
+           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/ic_calendar.png" className='align-middle sidebar-icon'/>
               
               <span className="ms-3 align-middle sidebar-btn">Calendar</span>
             </a>
+            </Link>
         </li>
+
         <li className="nav-item text-dark">
+        <Link
+           to={"/Admin/Users"}
+           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/user.png" className='align-middle sidebar-icon'/>
               
               <span className="ms-3 align-middle sidebar-btn">Users</span>
             </a>
+            </Link>
         </li>
         <li className="nav-item text-dark">
+        <Link
+           to={"/Admin/Departments"}
+           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/departments.png" className='align-middle sidebar-icon'/>
               
               <span className="ms-3 align-middle sidebar-btn">Departments</span>
             </a>
+            </Link>
         </li>
         <li className="nav-item text-dark">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">

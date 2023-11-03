@@ -17,7 +17,7 @@ const Home = () => {
           In Progress
         </p>,
       department: "Human Resources",
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 2,
@@ -26,7 +26,7 @@ const Home = () => {
       version: "2.0",
       status: <p className="text-warning m-0"> Approved</p>,
       department: "Finance",
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 3,
@@ -35,7 +35,7 @@ const Home = () => {
       version: "1.5",
       status: <p className="text-info m-0">Pending</p>,
       department: "Human Resources",
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 3,
@@ -44,7 +44,7 @@ const Home = () => {
       version: "1.5",
       status: <p className="text-success m-0"> Active</p>,
       department: "R&D",
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 3,
@@ -53,7 +53,7 @@ const Home = () => {
       version: "1.5",
       status: <p className="text-secondary m-0">Rejected</p>,
       department: "Human Resources",
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     // Add more tasks here
   ];
@@ -67,7 +67,7 @@ const Home = () => {
       version: "1.0",
       status: <p className="text-primary">In Progress</p>,
       department: "Human Resources",
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 2,
@@ -77,7 +77,7 @@ const Home = () => {
       version: "2.0",
       status: <p className="text-warning">Approved</p>,
       department: "Finance",
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 3,
@@ -87,7 +87,7 @@ const Home = () => {
       version: "1.5",
       status: <p className="text-info">Pending</p>,
       department: "Human Resources",
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 4,
@@ -97,7 +97,7 @@ const Home = () => {
       version: "1.5",
       status: <p className="text-success">Active</p>,
       department: "R&D",
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 5,
@@ -107,7 +107,7 @@ const Home = () => {
       version: "1.5",
       status: <p className="text-secondary">Rejected</p>,
       department: "Human Resources",
-      action: "...",
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     // Add more tasks here
   ];
@@ -352,7 +352,19 @@ const Home = () => {
                         <td className="td-text">{task.version}</td>
                         <td className="td-text">{task.status}</td>
                         <td className="td-text">{task.department}</td>
-                        <td className="td-text">{task.action}</td>
+                        <td className="td-text"><div class="dropdown">
+  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
+  {task.action}
+  </a>
+  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
+    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
+    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
+    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
+    <li><a class="dropdown-item text-danger" href="#"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete User</a></li>
+  </ul>
+</div>
+                          </td>
                         <td></td>
                       </tr>
                     ))}
@@ -499,7 +511,19 @@ const Home = () => {
                         <td className="td-text">{task.version}</td>
                         <td className="td-text">{task.status}</td>
                         <td className="td-text">{task.department}</td>
-                        <td className="td-text">{task.action}</td>
+                        <td className="td-text"><div class="dropdown">
+  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
+  {task.action}
+  </a>
+  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
+    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
+    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
+    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
+    <li><a class="dropdown-item text-danger" href="#"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete User</a></li>
+  </ul>
+</div>
+                          </td>
                         <td></td>
                       </tr>
                     ))}
