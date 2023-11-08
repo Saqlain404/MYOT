@@ -3,6 +3,7 @@ import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from 'antd';
+import { Link } from "react-router-dom";
 
 
 const Tasks = () => {
@@ -130,11 +131,13 @@ const Tasks = () => {
                       alt=""
                       className="ms-4 "
                     />
+                    <Link to={"/Admin/Chat"}>
                     <img
                       src="/images/dashboard/chat-left-dots-fill.png"
                       alt=""
                       className="ms-4"
                     />
+                    </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
                       alt=""

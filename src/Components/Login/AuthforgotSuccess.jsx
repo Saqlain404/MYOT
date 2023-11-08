@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const AuthforgotSuccess = () => {
   return (
@@ -12,11 +13,7 @@ const AuthforgotSuccess = () => {
     data-sidebar-position="fixed"
     data-header-position="fixed"
   >
-    <div >
-      <div className="">
-        <div className="">
-          <div className="">
-            <div className="reset-pass-body">             
+ <div className="reset-pass-body">             
                 <div className="card-forgot">
                   <img src='/images/Forgot-success.png'/>
                   <div className="">
@@ -27,23 +24,19 @@ const AuthforgotSuccess = () => {
                     Your password successfully recover, Enjoy!
                     </p>
                   </div>
+                  <Link 
+                      to={"/Admin/Login"}>
                     <a
                       href="javascript:void(0)"
                       className="btn  py-8 mb-3 reset-success"
                     >
                       Go Back Home
                     </a>
+                    </Link>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  {/*  Import Js Files */}
-  {/*  core files */}
-  {/* Mirrored from demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/html/main/authentication-forgot-password.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Oct 2023 06:44:20 GMT */}
-</>
+            </div>
+            </>
 
 )
 }

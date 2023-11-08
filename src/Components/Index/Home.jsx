@@ -3,6 +3,7 @@ import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "@fortawesome/free-regular-svg-icons";
+import { Link } from "react-router-dom";
 // import "../../dist/css/style.min.css"
 
 const Home = () => {
@@ -143,11 +144,13 @@ const Home = () => {
                       alt=""
                       className="ms-4 "
                     />
+                    <Link to={"/Admin/Chat"}>
                     <img
                       src="/images/dashboard/chat-left-dots-fill.png"
                       alt=""
                       className="ms-4"
                     />
+                    </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
                       alt=""
@@ -449,7 +452,7 @@ const Home = () => {
 
             <div className="col-12 table_comman mt-3 ">
               <div className="table-responsive">
-                <table className="table">
+                <table className="table table-borderless">
                   <thead>
                     <tr className="th-text">
                       <th className="th-text">

@@ -3,6 +3,7 @@ import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Space, Table, Tag } from "antd";
+import { Link } from "react-router-dom";
 
 const Users = () => {
   const photo = <img src="/images/dashboard/Avatar.png" />;
@@ -103,11 +104,13 @@ const Users = () => {
                       alt=""
                       className="ms-4 "
                     />
+                    <Link to={"/Admin/Chat"}>
                     <img
                       src="/images/dashboard/chat-left-dots-fill.png"
                       alt=""
                       className="ms-4"
                     />
+                    </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
                       alt=""

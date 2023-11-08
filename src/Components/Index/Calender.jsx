@@ -5,6 +5,8 @@ import { Calendar, theme, Badge } from 'antd';
 // import "assets/css/style.min.css"
 import { Card } from 'antd';
 import MiniCalendar from "./MiniCalendar";
+import CalenderYear from "./CalenderYear";
+import { Link } from "react-router-dom";
 
 
 
@@ -44,11 +46,13 @@ const Calender = () => {
                       alt=""
                       className="ms-4 "
                     />
+                    <Link to={"/Admin/Chat"}>
                     <img
                       src="/images/dashboard/chat-left-dots-fill.png"
                       alt=""
                       className="ms-4"
                     />
+                    </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
                       alt=""
@@ -59,11 +63,16 @@ const Calender = () => {
               </nav>
             
             </div>
+
             <div className="d-flex ps-3 ">
               <p className="p-2 text-decoration-underline td-text">Day</p>
               <p className="p-2 th-text ">Week</p>
+              <Link to={"/Admin/Calendar-month"} className="text-decoration-none">
               <p className="p-2 th-text">Month</p>
+              </Link>
+              <Link to={"/Admin/Calendar-year"} className="text-decoration-none">
               <p className="p-2 th-text">Year</p>
+              </Link>
             </div>
             <div className="container px-4 text-center">
   <div className="row gx-5">
@@ -87,6 +96,10 @@ const Calender = () => {
           </div>
         </div>
       </div>
+   
+      <div>
+      
+      
       <div className="row bg-white">
         <div className="col-1">
           <p className="day-time"> 09.00 AM</p>
@@ -208,6 +221,7 @@ const Calender = () => {
           <p className="day-time"> 01.00 AM</p>
           </div>
         <div className="col border-bottom"></div>
+      </div>
       </div>
     </div>
   </div>

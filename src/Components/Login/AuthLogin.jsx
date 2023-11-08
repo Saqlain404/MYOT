@@ -65,12 +65,15 @@ const AuthLogin = () => {
                             Remember me
                           </label>
                         </div>
+                        <Link 
+                      to={"/Admin/Forgot-password"}>
                         <a
                           className=" fw-medium reset-password"
                           href="authentication-forgot-password.html"
                         >
                           Reset Password?
                         </a>
+                        </Link>
                       </div>
                       <Link 
                       to={"/Admin/Home"}>

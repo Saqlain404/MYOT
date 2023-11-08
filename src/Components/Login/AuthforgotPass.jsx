@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const AuthforgotPass = () => {
   return (
@@ -43,12 +44,15 @@ const AuthforgotPass = () => {
                         placeholder='example@gmail.com'
                       />
                     </div>
+                    <Link
+                      to={"/Admin/Forgot-success"}>
                     <a
                       href="javascript:void(0)"
                       className="btn  py-8 mb-3 form-reset"
                     >
                       Reset Your Password
                     </a>
+                    </Link>
                   </form>
                 
               </div>

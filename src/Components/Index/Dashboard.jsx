@@ -3,6 +3,7 @@ import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from "antd";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const documents = [
@@ -81,11 +82,13 @@ const Dashboard = () => {
                       alt=""
                       className="ms-4 "
                     />
+                    <Link to={"/Admin/Chat"}>
                     <img
                       src="/images/dashboard/chat-left-dots-fill.png"
                       alt=""
                       className="ms-4"
                     />
+                    </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
                       alt=""
@@ -322,7 +325,7 @@ const Dashboard = () => {
            
                 <div className="col-12 table_comman mt-3 ">
                 <div className="table-responsive">
-            <table className="table">
+            <table className="table table-borderless">
               <thead>
                 <tr className="th-text">
                   <th className="th-text">
@@ -377,7 +380,19 @@ const Dashboard = () => {
                       {document.login2}
                     </td>
                     <td className="td-text">{document.status}</td>
-                    <td className="td-text">{document.action}</td>
+                    <td className="td-text"><div class="dropdown">
+  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
+  {document.action}
+  </a>
+  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
+    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
+    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
+    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
+    <li><a class="dropdown-item text-danger" href="#"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete Template</a></li>
+  </ul>
+</div>
+                          </td>
                     <td></td>
                   </tr>
                 ))}

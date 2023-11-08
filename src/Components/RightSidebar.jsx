@@ -15,7 +15,7 @@ const RightSidebar = () => {
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
           <span>
-                <img src="/images/sidebar/featured Icon.png"/>
+                <img src="/images/sidebar/Featured Icon.png"/>
               </span>
               
               <span className="right-sidebar-item">You have a bug that need to...</span>
@@ -37,7 +37,7 @@ const RightSidebar = () => {
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
           <span>
-                <img src="/images/sidebar/featured Icon.png"/>
+                <img src="/images/sidebar/Featured Icon.png"/>
               </span>
               <span className="right-sidebar-item">You have a bug that need to...</span>
             </a>

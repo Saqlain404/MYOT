@@ -18,6 +18,9 @@ import Tasks from "./Components/Index/Tasks";
 import Calender from "./Components/Index/Calender";
 import Users from "./Components/Index/Users";
 import Departments from "./Components/Index/Departments";
+import Chatbox from "./Components/Index/Chatbox";
+import CalendarMonth from "./Components/Index/CalendarMonth";
+import CalenderYear from "./Components/Index/CalenderYear";
 
 function App() {
   return (
@@ -36,6 +39,10 @@ function App() {
           <Route path="Admin/Users" element={<Users />} />
           <Route path="Admin/Departments" element={<Departments />} />
           <Route path="Admin/Calendar" element={<Calender />} />
+          <Route path="Admin/Calendar-month" element={<CalendarMonth />} />
+          <Route path="Admin/Calendar-year" element={<CalenderYear />} />
+
+          <Route path="Admin/Chat" element={<Chatbox />} />
 
         </Routes>
       </Router>

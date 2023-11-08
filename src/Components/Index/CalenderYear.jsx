@@ -4,287 +4,1655 @@ import Sidebar from "../Sidebar";
 import { Calendar, theme, Badge } from 'antd';
 // import "assets/css/style.min.css"
 import { Card } from 'antd';
+import MiniCalendar from "./MiniCalendar";
+import { Link } from "react-router-dom";
 
-
-
-
-const Calender = () => {
-  const getListData = (value) => {
-    let listData;
-    switch (value.date()) {
-      case 8:
-        listData = [
-          {
-            type: 'warning',
-            content: 'This is warning event.',
-          },
-          {
-            type: 'success',
-            content: 'This is usual event.',
-          },
-        ];
-        break;
-      case 10:
-        listData = [
-          {
-            type: 'warning',
-            content: 'This is warning event.',
-          },
-          {
-            type: 'success',
-            content: 'This is usual event.',
-          },
-          {
-            type: 'error',
-            content: 'This is error event.',
-          },
-        ];
-        break;
-      case 15:
-        listData = [
-          {
-            type: 'warning',
-            content: 'This is warning event',
-          },
-          {
-            type: 'success',
-            content: 'This is very long usual event......',
-          },
-          {
-            type: 'error',
-            content: 'This is error event 1.',
-          },
-          {
-            type: 'error',
-            content: 'This is error event 2.',
-          },
-          {
-            type: 'error',
-            content: 'This is error event 3.',
-          },
-          {
-            type: 'error',
-            content: 'This is error event 4.',
-          },
-        ];
-        break;
-      default:
-    }
-    return listData || [];
-  };
-  const getMonthData = (value) => {
-    if (value.month() === 8) {
-      return 1394;
-    }
-  };
-
-  const monthCellRender = (value) => {
-    const num = getMonthData(value);
-    return num ? (
-      <div className="notes-month">
-        <section>{num}</section>
-        <span>Backlog number</span>
-      </div>
-    ) : null;
-  };
-  const dateCellRender = (value) => {
-    const listData = getListData(value);
-    return (
-      <ul className="events">
-        {listData.map((item) => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} />
-          </li>
-        ))}
-      </ul>
-    );
-  };
-  const cellRender = (current, info) => {
-    if (info.type === 'date') return dateCellRender(current);
-    if (info.type === 'month') return monthCellRender(current);
-    return info.originNode;
-  };
-
-  const onPanelChange = (value, mode) => {
-    console.log(value.format('YYYY-MM-DD'), mode);
-  };
-  const { token } = theme.useToken();
-  const wrapperStyle = {
-    width: 300,
-    border: `1px solid ${token.colorBorderSecondary}`,
-    borderRadius: token.borderRadiusLG,
-  };
-
+const CalenderYear = () => {
   return (
     <>
-      <div className="home-page">
-        {/* Body Wrapper */}
-        <div
-          className="sidebar"
-          id="main-wrapper"
-          data-layout="vertical"
-          data-sidebartype="full"
-          data-sidebar-position="fixed"
-          data-header-position="fixed"
-        >
-          {/* Sidebar Start */}
-          <Sidebar />
-          {/* Sidebar End */}
-          {/* Main wrapper */}
-          <div className="middle-section">
-            <div className="body-wrapper">
-              {/* Header Start */}
-              {/* <div className="calendar-header"> */}
-              <header className="app-header calendar-header">
-                <nav className="navbar navbar-expand-lg navbar-light">
-                  <ul className="navbar-nav quick-links d-none d-lg-flex">
-                    <li className="nav-item dropdown-hover d-none d-lg-block">
-                      <a className="nav-link" href="app-email.html">
-                        /Calender
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </header>
-              {/* </div> */}
-             
-              {/* Header End */}
-              <div className="container-fluid calendar-section">
-                <div className="row d-flex flex-direction-row cards-row">
-
-                  <div className="d-flex mt-4 ms-1">
-                    <p className="me-3">Day</p>
-                    <p className="me-3">Week</p>
-                    <p className="me-3">Month</p>
-                    <p className="me-3">Year</p>
+    <div className="container-fluid">
+        <div className="row">
+          <div className="col-2 sidebar pe-0">
+            <Sidebar />
+          </div>
+          <div className="col middle-content bg-body-tertiary p-0 min-vh-100">
+            <div className="container-fluid border-bottom mb-4">
+              <nav className="row header bg-white  ">
+                <ul className="col align-items-center mt-3">
+                  <li className="nav-item dropdown-hover d-none d-lg-block">
+                    <a className="nav-link ms-2" href="app-email.html">
+                      /Calendar
+                    </a>
+                  </li>
+                </ul>
+                <div className="col d-flex align-items-center  justify-content-end">
+                  <form className="" role="search">
+                    <input
+                      className="form-control search-bar"
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                    />
+                  </form>
+                  <div className="">
+                    <img
+                      src="/images/dashboard/announcement.png"
+                      alt=""
+                      className="ms-4 "
+                    />
+                    <Link to={"/Admin/Chat"}>
+                    <img
+                      src="/images/dashboard/chat-left-dots-fill.png"
+                      alt=""
+                      className="ms-4"
+                    />
+                    </Link>
+                    <img
+                      src="/images/dashboard/round-notifications.png"
+                      alt=""
+                      className="ms-4"
+                    />
                   </div>
-                 
                 </div>
-                <div className="d-flex calendar-screen">
-                <div style={wrapperStyle} className="me-4 mini-calendar">
-      <Calendar fullscreen={false} onPanelChange={onPanelChange} />
-    </div>
+              </nav>
+            
+            </div>
 
-    <Calendar cellRender={cellRender} />
+            <div className="d-flex ps-3 ">
+            <Link to={"/Admin/Calendar"} className="text-decoration-none">
+              <p className="p-2 th-text">Day</p>
+              </Link>
+              <p className="p-2 th-text ">Week</p>
+              <Link to={"/Admin/Calendar-month"} className="text-decoration-none">
+              <p className="p-2 th-text">Month</p>
+              </Link>
+              <p className="p-2  text-decoration-underline td-text">Year</p>
+            </div>
+            <div className="container px-4 text-center">
+  <div className="row gx-5">
+    <div className="col-3  ">
+     <div className=" bg-white min-vh-100 p-4 ">
+      <button className="create-task-btn ">
+         +{" "}Create Task
+      </button>
+      <MiniCalendar className="mini-calendar"/>
+     </div>
     </div>
-               
-              </div>
-            </div>
-            <div className="dark-transparent sidebartoggler" />
-            <div className="dark-transparent sidebartoggler" />
-          </div>
+    <div className="col-9 ">
+      <div className="row mb-4">
+   
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">January 2023</h4>
         </div>
-        {/*  Mobilenavbar */}
-        <div
-          className="offcanvas offcanvas-start"
-          data-bs-scroll="true"
-          tabIndex={-1}
-          id="mobilenavbar"
-          aria-labelledby="offcanvasWithBothOptionsLabel"
-        >
-          <nav className="sidebar-nav scroll-sidebar">
-            <div className="offcanvas-header justify-content-between">
-              <img
-                src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/favicon.ico"
-                alt=""
-                className="img-fluid"
-              />
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-              />
-            </div>
-            <div
-              className="offcanvas-body profile-dropdown mobile-navbar"
-              data-simplebar=""
-            >
-              <ul id="sidebarnav">
-                <li className="sidebar-item">
-                  <a
-                    className="sidebar-link has-arrow"
-                    href="javascript:void(0)"
-                    aria-expanded="false"
-                  >
-                    <span>
-                      <i className="ti ti-apps" />
-                    </span>
-                    <span className="hide-menu">Apps</span>
-                  </a>
-                </li>
-                <li className="sidebar-item">
-                  <a
-                    className="sidebar-link"
-                    href="app-chat.html"
-                    aria-expanded="false"
-                  >
-                    <span>
-                      <i className="ti ti-message-dots" />
-                    </span>
-                    <span className="hide-menu">Chat</span>
-                  </a>
-                </li>
-                <li className="sidebar-item">
-                  <a
-                    className="sidebar-link"
-                    href="app-calendar.html"
-                    aria-expanded="false"
-                  >
-                    <span>
-                      <i className="ti ti-calendar" />
-                    </span>
-                    <span className="hide-menu">Calendar</span>
-                  </a>
-                </li>
-                <li className="sidebar-item">
-                  <a
-                    className="sidebar-link"
-                    href="app-email.html"
-                    aria-expanded="false"
-                  >
-                    <span>
-                      <i className="ti ti-mail" />
-                    </span>
-                    <span className="hide-menu">Email</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-        {/* Search Bar */}
-        <div
-          className="modal fade"
-          id="exampleModal"
-          tabIndex={-1}
-          aria-hidden="true"
-        >
-          <div className="modal-dialog modal-dialog-scrollable modal-lg">
-            <div className="modal-content rounded-1">
-              <div className="modal-header border-bottom">
-                <input
-                  type="search"
-                  className="form-control fs-3"
-                  placeholder="Search here"
-                  id="search"
-                />
-                <span data-bs-dismiss="modal" className="lh-1 cursor-pointer">
-                  <i className="ti ti-x fs-5 ms-3" />
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Customizer */}
       </div>
-      {/* Customizer */}
-      {/* Import Js Files */}
-      {/* core files */}
-      {/* current page js files */}
-      {/* Mirrored from demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/html/main/index4.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Oct 2023 06:39:36 GMT */}
-    </>
-  );
-};
+      <div className="row bg-white">
 
-export default Calender;
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">February 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">March 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+      
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">April 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">May 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">June 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">July 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">August 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">September 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">October 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">November 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">December 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+          
+        </div>
+      </div>
+      </div>
+      
+    
+    {/* <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">January 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">February 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">March 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+      
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">April 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">May 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">June 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">July 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">August 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">September 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">October 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">November 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div>
+
+      <div className="col-4  gx-5">
+    <div className="row bg-white">
+        <div className="col float-start ms-2 mt-4">
+      <h4 className="text-align-left float-start current-day">December 2023</h4>
+        </div>
+      </div>
+      <div className="row bg-white">
+
+          <div className="col day-year p-2">S</div>
+          <div className="col day-year p-2">M</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">W</div>
+          <div className="col day-year p-2">T</div>
+          <div className="col day-year p-2">F</div>
+          <div className="col day-year p-2">S</div>
+      </div>
+    <div className="row bg-white">
+        <div className="col p-2 prev-day-year">29</div>
+        <div className="col p-2 prev-day-year">30</div>
+        <div className="col p-2 day-year">01</div>
+        <div className="col p-2 day-year">02</div>
+        <div className="col p-2 day-year">03</div>
+        <div className="col p-2 day-year">04</div>
+        <div className="col p-2 day-year">05</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">06</div>
+        <div className="col p-2 day-year">07</div>
+        <div className="col p-2 day-year">08</div>
+        <div className="col p-2 day-year">09</div>
+        <div className="col p-2 day-year">10</div>
+        <div className="col p-2 day-year">11</div>
+        <div className="col p-2 day-year">12</div>
+      </div> 
+      <div className="row bg-white">
+        <div className="col p-2 day-year">13</div>
+        <div className="col p-2 day-year">14</div>
+        <div className="col p-2 day-year">15</div>
+        <div className="col p-2 day-year">16</div>
+        <div className="col p-2 day-year">17</div>
+        <div className="col p-2 day-year">18</div>
+        <div className="col p-2 day-year">19</div>
+      </div>
+      <div className="row bg-white">
+        <div className="col p-2 day-year">20</div>
+        <div className="col p-2 day-year">21</div>
+        <div className="col p-2 day-year">22</div>
+        <div className="col p-2 day-year">23</div>
+        <div className="col p-2 day-year">24</div>
+        <div className="col p-2 day-year">25
+       
+        </div>
+        <div className="col p-2 day-year">26</div>
+      </div>
+      <div className="row bg-white" >
+        <div className="col p-2 day-year">27</div>
+        <div className="col p-2 day-year">28</div>
+        <div className="col p-2 day-year">29</div>
+        <div className="col p-2 day-year">30</div>
+        <div className="col p-2 day-year">31</div>
+        <div className="col p-2 prev-day-year">01</div>
+        <div className="col p-2 prev-day-year">02</div>
+      </div>
+      </div> */}
+    </>
+  )
+}
+
+export default CalenderYear;
