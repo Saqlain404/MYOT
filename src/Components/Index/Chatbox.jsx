@@ -91,7 +91,7 @@ const Chatbox = () => {
             <p className='people-chat-time'>9 min ago</p>
         </div>
         <div className='people-chat d-flex'>
-            <img src="/images/chatbox/Avatar4.svg" alt="" className='sender-profile'/>
+            <img src="/images/chatbox/avatar4.svg" alt="" className='sender-profile'/>
             <div className='ps-2 pe-3'>
                 <h5 className='sender-name'>John Carilo</h5>
                 <p className='text-recived'>Lorem Ipsum is simply dummy text of the printing</p>
@@ -99,7 +99,7 @@ const Chatbox = () => {
             <p className='people-chat-time'>14 min ago</p>
         </div>
         <div className='people-chat d-flex bg-primary-subtle ps-1 pe-1 rounded-2'>
-            <img src="/images/chatbox/Avatar5.svg" alt="" className='sender-profile'/>
+            <img src="/images/chatbox/avatar5.svg" alt="" className='sender-profile'/>
             <div className='ps-2 pe-3'>
                 <h5 className='sender-name'>John Carilo</h5>
                 <p className='text-recived'>Lorem Ipsum is simply dummy text of the printing</p>
@@ -107,7 +107,7 @@ const Chatbox = () => {
             <p className='people-chat-time'>17 min ago</p>
         </div>
         <div className='people-chat d-flex '>
-            <img src="/images/chatbox/Avatar6.svg" alt="" className='sender-profile'/>
+            <img src="/images/chatbox/avatar6.svg" alt="" className='sender-profile'/>
             <div className='ps-2 pe-3'>
                 <h5 className='sender-name'>John Carilo</h5>
                 <p className='text-recived'>Lorem Ipsum is simply dummy text of the printing</p>
@@ -115,7 +115,7 @@ const Chatbox = () => {
             <p className='people-chat-time'>19 min ago</p>
         </div>
         <div className='people-chat d-flex'>
-            <img src="/images/chatbox/Avatar7.svg" alt="" className='sender-profile'/>
+            <img src="/images/chatbox/avatar7.svg" alt="" className='sender-profile'/>
             <div className='ps-2 pe-3'>
                 <h5 className='sender-name'>John Carilo</h5>
                 <p className='text-recived'>Lorem Ipsum is simply dummy text of the printing</p>
@@ -133,7 +133,7 @@ const Chatbox = () => {
         </div>
         
         <div className='people-chat d-flex'>
-            <img src="/images/chatbox/Avatar8.svg" alt="" className='sender-profile'/>
+            <img src="/images/chatbox/avatar8.svg" alt="" className='sender-profile'/>
             <div className='ps-2 pe-3'>
                 <h5 className='sender-name'>John Carilo</h5>
                 <p className='text-recived'>Lorem Ipsum is simply dummy text of the printing</p>
@@ -148,7 +148,7 @@ const Chatbox = () => {
 
         <div className="main-chat-header">
             <div className='d-flex'>
-                <img src="/images/chatbox/Avatar8.svg" alt="" className='main-chat-profile'/>
+                <img src="/images/chatbox/avatar8.svg" alt="" className='main-chat-profile'/>
                 <div className='ps-2 pe-3 '>
                      <h5 className='sender-name'>John Carilo</h5>
                      <p className='text-recived'>Online</p>
@@ -170,7 +170,7 @@ const Chatbox = () => {
         </div>
 
         <div className='d-flex justify-content-start'>
-            <img src="/images/chatbox/Avatar8.svg" alt="" className='main-chat-profile mt-2' />
+            <img src="/images/chatbox/avatar8.svg" alt="" className='main-chat-profile mt-2' />
         </div>
 
         <div className='d-flex justify-content-end mb-4'>
@@ -188,7 +188,7 @@ const Chatbox = () => {
         <img src="/images/chatbox/More-dots.svg" alt="" className='m-3'/>
         </div>
         <div className='d-flex justify-content-start'>
-            <img src="/images/chatbox/Avatar8.svg" alt="" className='main-chat-profile mt-2' />
+            <img src="/images/chatbox/avatar8.svg" alt="" className='main-chat-profile mt-2' />
         </div>
 
         <div className="message-box-chats rounded-2 mt-4 d-flex justify-content-between pt-2 pb-2">

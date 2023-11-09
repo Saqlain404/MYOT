@@ -354,7 +354,7 @@ height: 960px; */
 
 .th-text {
   color: rgba(0, 0, 0, 0.4);
-  opacity: 60% !important;
+  opacity: 0.6;
   font-family: Nunito;
   font-size: 12px;
   font-style: normal;
@@ -841,6 +841,7 @@ line-height: 20px; /* 142.857% */
 }
 
 .day-time{
+  white-space: nowrap;
 padding-top: 20px;
   /* margin: auto; */
   color: #030229;
@@ -1422,4 +1423,14 @@ margin-right: 20px;
     padding: 5px;
 height: 60px;
     background: #F7F7F8;
+  }
+
+  .right-cal-event{
+    margin-bottom: -15px;
+    width: 97px;
+height: 30px;
+padding-top: 5px;
+border-radius: 10px;
+color: #000;
+background: #E5ECF6;
   }

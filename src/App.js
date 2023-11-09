@@ -6,7 +6,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Redirect,
 } from "react-router-dom";
 
 import AuthLogin from "./Components/Login/AuthLogin"

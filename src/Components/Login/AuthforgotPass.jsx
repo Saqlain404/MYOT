@@ -19,7 +19,7 @@ const AuthforgotPass = () => {
           <div className="">
             <div className="reset-pass-body">             
                 <div className="card-forgot">
-                  <img src='/images/Ellipse-forgot-pass.png'/>
+                  <img src='/images/Ellipse-forgot-pass.png' alt=''/>
                   <div className="">
                     <h2 className=" mb-3 d-flex justify-content-center recover-text">
                       Recover

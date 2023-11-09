@@ -1,12 +1,9 @@
 import React from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
-// import "assets/css/style.min.css"
-import { Space, Table, Tag } from "antd";
 import { Link } from "react-router-dom";
 
 const Users = () => {
-  const photo = <img src="/images/dashboard/Avatar.png" />;
 
   const data = [
     {

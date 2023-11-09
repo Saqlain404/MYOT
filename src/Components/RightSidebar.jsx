@@ -9,7 +9,17 @@ const RightSidebar = () => {
       <div className="col">
 
       <ul className="nav nav-pills flex-column  ">
-      <span className="right-sidebar-heading mt-2 mb-1">Notifications</span>
+      {/* <span className="right-sidebar-heading mt-2 mb-1">Notifications</span> */}
+      <div className="row bg-white">
+        <div className="col float-start ">
+      <h4 className="text-align-left float-start current-day">Notifications</h4>
+        </div>
+        <div className="col float-end">
+          <div className=" float-end me-1 ">
+          <img src="/images/chatbox/More-dots.svg" alt="" className="me-2" />
+          </div>
+        </div>
+      </div>
 
         <li className="nav-item text-dark">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
@@ -55,7 +65,17 @@ const RightSidebar = () => {
       </ul>
 
       <ul className="nav nav-pills flex-column  ">
-      <span className="right-sidebar-heading mt-3 mb-3">Activities</span>
+      {/* <span className="right-sidebar-heading mt-3 mb-3">Activities</span> */}
+      <div className="row bg-white">
+        <div className="col float-start  mt-4">
+      <h4 className="text-align-left float-start current-day">Activities</h4>
+        </div>
+        <div className="col float-end">
+          <div className=" float-end me-1 mt-4">
+          <img src="/images/chatbox/More-dots.svg" alt="" className="me-2" />
+          </div>
+        </div>
+      </div>
 
         <li className="nav-item text-dark">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
@@ -108,111 +128,68 @@ const RightSidebar = () => {
             </a>
         </li>
       </ul>
-        {/* <ul id="sidebarnav">
-         
-          <li className="">
-            <i className="ti ti-dots nav-small-cap-icon fs-4" />
-            <span className="hide-menu">Notifications</span>
-          </li>
-          
-          <li className="sidebar-item">
-            <a
-             
-            >
-              <span>
-                <img src="/images/sidebar/featured Icon.png"/>
-              </span>
-              <span className="">You have a bug that need to...</span>
-            </a>
-          </li>
-          <li className="sidebar-item">
-            <a
-              
-            >
-              <span>
-              <img src="/images/sidebar/Featured Icon user.png"/>
-              </span>
-              <span className="hide-menu">New user registered</span>
-            </a>
-          </li>
-          <li className="sidebar-item">
-            <a
-              
-            >
-              <span>
-              <img src="/images/sidebar/Avatar-Text-Time.png"/>
-              </span>
-              
-            </a>
-          </li>
-          <li className="sidebar-item">
-            <a
-              
-            >
-              <span>
-              <img src="/images/sidebar/Featured Icon user.png"/>
-
-              </span>
-              <span className="hide-menu">New user recentlu added by a..</span>
-            </a>
-          </li>
-          <li className="nav-small-cap">
-            <i className="ti ti-dots nav-small-cap-icon fs-4" />
-            <span className="hide-menu">OTHER</span>
-          </li>
-          <li className="sidebar-item">
-            <a
-              
-            >
-              <span>
-              <img src="/images/sidebar/Avatar1.png"/>
-
-              </span>
-              <span className="hide-menu">Edited the details of Project X</span>
-            </a>
-          </li>
-          <li className="sidebar-item">
-            
-              <span>
-              <img src="/images/sidebar/Avatar2.png"/>
-
-              </span>
-              <span className="hide-menu">Changed the status of Project X</span>
-            
-          </li>
-          <li className="sidebar-item">
-            
-              <span>
-              <img src="/images/sidebar/Avatar3.png"/>
-
-              </span>
-              <span className="hide-menu">Submitted a bug</span>
-            
-          </li>
-          <li className="sidebar-item">
-            <a
-              
-            >
-              <span>
-              <img src="/images/sidebar/Avatar1.png"/>
-
-              </span>
-              <span className="hide-menu">Modified A data in Page X</span>
-            </a>
-          </li>
-          <li className="sidebar-item">
-            <a
-              
-            >
-              <span>
-              <img src="/images/sidebar/Avatar4.png"/>
-
-              </span>
-              <span className="hide-menu">Deleted a page in Project X</span>
-            </a>
-          </li>
-        </ul> */}
         
+      <div className="row bg-white">
+        <div className="col float-start mt-4">
+      <h4 className="text-align-left float-start current-day">Calendar</h4>
+        </div>
+        <div className="col float-end">
+          <div className=" float-end me-1 mt-4">
+          <img src="/images/chatbox/More-dots.svg" alt="" className="me-2" />
+          </div>
+        </div>
+      </div>
+<div>
+<div className="row bg-white">
+        <div className="col-3">
+          <p className="day-time"> 09.00 AM</p>
+          </div>
+        <div className="col border-bottom d-flex">
+          <div className="event-9am right-cal-event">
+          
+            <p>Onboarding</p>
+          </div>
+        </div>
+      </div>
+      <div className="row bg-white">
+        <div className="col-3">
+          <p className="day-time"> 10.00 AM</p>
+          </div>
+        <div className="col border-bottom"></div>
+      </div>
+      <div className="row bg-white">
+        <div className="col-3 ">
+          <p className="day-time"> 11.00 AM</p>
+          </div>
+        <div className="col border-bottom"></div>
+      </div>
+      <div className="row bg-white">
+        <div className="col-3">
+          <p className="day-time"> 12.00 PM</p>
+          </div>
+        <div className="col border-bottom d-flex">
+        <div className="event-12pm right-cal-event">
+          <p>Onboarding</p>
+        </div>
+        </div>
+      </div>
+      <div className="row bg-white">
+        <div className="col-3">
+          <p className="day-time"> 01.00 PM</p>
+          </div>
+        <div className="col border-bottom"></div>
+      </div>
+      <div className="row bg-white">
+        <div className="col-3">
+          <p className="day-time"> 02.00 PM</p>
+          </div>
+        <div className="col border-bottom d-flex ">
+        {/* <div className="event-12pm right-cal-event">
+          <p>Onboarding</p>
+        </div> */}
+        </div>
+      </div>
+      </div>
       </div>
      
     </div>
