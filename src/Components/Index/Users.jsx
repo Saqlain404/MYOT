@@ -9,7 +9,6 @@ const Users = () => {
     {
       key: "1",
       userId: "111125",
-      // image: "./images/dashboard/Avatar.png",
       name: ['Aliah Lane'],
       department: "Human Resourses",
       roles: <ul>
