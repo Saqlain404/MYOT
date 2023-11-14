@@ -20,6 +20,12 @@ import Departments from "./Components/Index/Departments";
 import Chatbox from "./Components/Index/Chatbox";
 import CalendarMonth from "./Components/Index/CalendarMonth";
 import CalenderYear from "./Components/Index/CalenderYear";
+import HomeDept from "./Components/DepartmentManager/HomeDept";
+import DashboardDept from "./Components/DepartmentManager/DashboardDept";
+import Template from "./Components/DepartmentManager/Template";
+import Certificate from "./Components/DepartmentManager/Certificate";
+import CalenderDept from "./Components/DepartmentManager/CalenderDept";
+import DepartmentsDept from "./Components/DepartmentManager/DepartmentsDept";
 
 function App() {
   return (
@@ -40,8 +46,15 @@ function App() {
           <Route path="Admin/Calendar" element={<Calender />} />
           <Route path="Admin/Calendar-month" element={<CalendarMonth />} />
           <Route path="Admin/Calendar-year" element={<CalenderYear />} />
-
           <Route path="Admin/Chat" element={<Chatbox />} />
+
+          <Route path="Department/Home" element={<HomeDept />} />
+          <Route path="Department/Dashboard" element={<DashboardDept/>} />
+          <Route path="Department/Template" element={<Template />} />
+          <Route path="Department/Certificate" element={<Certificate/>} />
+          <Route path="Department/Calendar" element={<CalenderDept/>} />
+          <Route path="Department/Departments" element={<DepartmentsDept/>} />
+
 
         </Routes>
       </Router>
