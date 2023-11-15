@@ -26,6 +26,7 @@ import Template from "./Components/DepartmentManager/Template";
 import Certificate from "./Components/DepartmentManager/Certificate";
 import CalenderDept from "./Components/DepartmentManager/CalenderDept";
 import DepartmentsDept from "./Components/DepartmentManager/DepartmentsDept";
+import CertificateView from "./Components/DepartmentManager/CertificateView";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="Department/Dashboard" element={<DashboardDept/>} />
           <Route path="Department/Template" element={<Template />} />
           <Route path="Department/Certificate" element={<Certificate/>} />
+          <Route path="Department/Certificate-view" element={<CertificateView/>} />
           <Route path="Department/Calendar" element={<CalenderDept/>} />
           <Route path="Department/Departments" element={<DepartmentsDept/>} />
 

@@ -1439,3 +1439,33 @@ border-radius: 10px;
 color: #000;
 background: #E5ECF6;
   }
+
+  .preview-cert-txt{
+    color: #000;
+font-family: Nunito;
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+  }
+
+  .preview-dwld-btn{
+    display: inline-flex;
+padding: 10px 20px;
+align-items: center;
+border: none;
+gap: 10px;
+border-radius: 10px;
+background: #3E51FF;
+color: #FFF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+  }
+
+  .certificate-img{
+    width: 950px;
+height: 675px;
+  }

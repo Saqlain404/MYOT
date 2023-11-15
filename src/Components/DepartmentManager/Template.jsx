@@ -240,27 +240,97 @@ const Template = () => {
             <p className="table-name mb-2">Templates</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
-                <div className="col-md-3 border-end">
+                <div className="col-md-3 border-end d-flex">
+                <div
+                  className="mt-1"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
                   <img
                     src="/images/dashboard/Plus-icon.png"
                     alt=""
                     className="p-2 table-searchbar-img"
                   />
+                </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-department">
+    <div class="modal-content border-0">
+      <div class="d-flex modal-header border-bottom">
+        <p class="" id="exampleModalLabel">Add Templates</p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <form action="">
+      <div className="row p-3">
+
+     
+      <div className="col-12 mb-3 ">
+        <input type="number" placeholder="Select Template" className="col-12 modal-input td-text  p-2"/>
+       
+      </div>
+      <div className="col-12 mb-3 ">
+        <p className="bg-primary-subtle th-text ps-4 p-2">Assign</p>
+      </div>
+      <div className="col-12 border-bottom border-light mb-3 ">
+        <div className="row">
+        <p className="col-4 td-text p-2">
+        <input className=" form-check-input checkbox-table ms-4 me-4" type="checkbox" value="" />Approver</p>
+        <input type="number" placeholder="Select Name" className="col modal-input th-text p-2 me-3"/>
+        </div>
+      </div>
+      <div className="col-12 border-bottom border-light mb-3 ">
+        <div className="row">
+        <p className="col-4 td-text p-2">
+        <input className=" form-check-input checkbox-table ms-4 me-4" type="checkbox" value="" />Signatory</p>
+        <input type="number" placeholder="Select Name" className="col modal-input th-text p-2 me-3"/>
+        </div>
+      </div>
+      <div className="col-12 border-bottom border-light mb-3">
+        <div className="row">
+        <p className="col-4 td-text p-2">
+        <input className=" form-check-input checkbox-table ms-4 me-4" type="checkbox" value="" />Admin</p>
+        <input type="number" placeholder="Select Name" className="col modal-input th-text p-2 me-3"/>
+        </div>
+      </div>
+      <div className="col-12  mb-3 ">
+        <div className="row">
+        <p className="col-4 td-text p-2">
+        <input className=" form-check-input checkbox-table ms-4 me-4" type="checkbox" value="" />Department Manger</p>
+        <input type="number" placeholder="Select Name" className="col modal-input th-text p-2 me-3"/>
+        </div>
+      </div>
+      
+      </div>
+      </form>
+      <div className="d-flex justify-content-end mb-3">
+        <button type="button" class="user-modal-btn">Add New</button>
+        <button type="button" class="user-modal-btn2">Cancle</button>
+      </div>
+    </div>
+  </div>
+</div>
+                  <div>
                   <img
                     src="/images/dashboard/FunnelSimple.png"
                     alt=""
                     className="p-2 table-searchbar-img"
                   />
+                  </div>
+                  <div>
                   <img
                     src="/images/dashboard/ArrowsDownUp.png"
                     alt=""
                     className="p-2 table-searchbar-img"
                   />
+                  </div>
+                  <div>
                   <img
                     src="/images/dashboard/DotsThreeOutlineVertical2.png"
                     alt=""
                     className="p-2 table-searchbar-img"
                   />
+                  </div>
                 </div>
                 <div className="col-4 d-flex align-items-center justify-content-around ">
                   <p className="m-0 text-nowrap">2 Selected</p>
@@ -278,6 +348,7 @@ const Template = () => {
                 />
               </form>
             </div>
+
 
             <div className="col-12 table_comman mt-3 ">
               <div className="table-responsive">
