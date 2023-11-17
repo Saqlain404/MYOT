@@ -739,7 +739,7 @@ flex-shrink: 0;
   border-radius: 14px;
 }
 .table_comman tbody tr td {
-  padding: 20px 22px;
+  padding: 0px;
   padding-left: 30px;
   background-color: #fff;
   font-size: 15px;
@@ -1468,4 +1468,40 @@ line-height: normal;
   .certificate-img{
     width: 950px;
 height: 675px;
+  }
+
+  .preview-edit-btn{
+    display: inline-flex;
+padding: 10px 20px;
+align-items: center;
+gap: 10px;
+border-radius: 10px;
+border: 1px solid #EFEFEF;
+background: #FAFAFB;
+color: #000;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+  }
+
+  .template-action{
+    width: 1128px;
+height: 50px;
+/* flex-shrink: 0; */
+border-radius: 10px;
+border: 1px solid #E0E2E7;
+background: #F7F7F8;
+color: #4D4D4D;
+font-family: Nunito;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+  }
+
+  .dashboard-graph{
+    width: 100%;
+    height: auto;
   }

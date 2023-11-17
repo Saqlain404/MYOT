@@ -27,6 +27,17 @@ import Certificate from "./Components/DepartmentManager/Certificate";
 import CalenderDept from "./Components/DepartmentManager/CalenderDept";
 import DepartmentsDept from "./Components/DepartmentManager/DepartmentsDept";
 import CertificateView from "./Components/DepartmentManager/CertificateView";
+import TemplateView from "./Components/DepartmentManager/TemplateView";
+import HomeAprv from "./Components/Approver/HomeAprv";
+import TemplateReview from "./Components/Approver/TemplateReview";
+import DashboardAprv from "./Components/Approver/DashboardAprv";
+import TemplateRevView from "./Components/Approver/TemplateRevView";
+import HistoryLog from "./Components/Approver/HistoryLogAprv";
+import CalenderAprv from "./Components/Approver/CalenderAprv";
+import CalendarMonthAprv from "./Components/Approver/CalendarMonthAprv";
+import CalendarYearAprv from "./Components/Approver/CalenderYearAprv";
+import HistoryLogAprv from "./Components/Approver/HistoryLogAprv";
+import HistoryLogReject from "./Components/Approver/HistoryLogReject";
 
 function App() {
   return (
@@ -52,10 +63,24 @@ function App() {
           <Route path="Department/Home" element={<HomeDept />} />
           <Route path="Department/Dashboard" element={<DashboardDept/>} />
           <Route path="Department/Template" element={<Template />} />
+          <Route path="Department/Template-view" element={<TemplateView/>} />
           <Route path="Department/Certificate" element={<Certificate/>} />
           <Route path="Department/Certificate-view" element={<CertificateView/>} />
           <Route path="Department/Calendar" element={<CalenderDept/>} />
           <Route path="Department/Departments" element={<DepartmentsDept/>} />
+
+          <Route path="Approver/Home" element={<HomeAprv />} />
+          <Route path="Approver/Dashboard" element={<DashboardAprv/>} />
+          <Route path="Approver/Template-review" element={<TemplateReview />} />
+          <Route path="Approver/Template-view" element={<TemplateRevView/>} />
+          <Route path="Approver/History-log-approved" element={<HistoryLogAprv/>} />
+          <Route path="Approver/History-log-rejected" element={<HistoryLogReject/>} />
+          <Route path="Approver/Calendar" element={<CalenderAprv/>} />
+          <Route path="Approver/Calendar-month" element={<CalendarMonthAprv />} />
+          <Route path="Approver/Calendar-year" element={<CalendarYearAprv />} />
+
+
+
 
 
         </Routes>

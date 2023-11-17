@@ -367,8 +367,7 @@ const Template = () => {
                       <input className="form-check-input checkbox-table" type="checkbox" value="" />Status</th>
                       <th className="th-text">
                       <input className="form-check-input checkbox-table" type="checkbox" value="" />Department</th>
-                      <th className="th-text">
-                      <input className="form-check-input checkbox-table" type="checkbox" value="" />Comment</th>
+                      
                       <th className="th-text">
                       <input className="form-check-input checkbox-table" type="checkbox" value="" />Actions</th>
                     </tr>
@@ -384,40 +383,18 @@ const Template = () => {
                           {document.date}</td>
                         <td className="td-text">{document.status}</td>
                         <td className="td-text">{document.department}</td>
-                        <td className="td-text"><div className="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
-  {document.comment}
-  </a>
-  <form className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded">
-    <div className="mb-3 border-bottom">
-      <label className="form-label th-text">Comment or type</label>
-      
-      <input type="text" className="form-control border-0"/>
-    </div>
-    
-      <div className="d-flex justify-content-between">
-        <div>
-          <img src="/images/tasks/assign comments.svg" alt="" className="comment-img"/>
-          <img src="/images/tasks/mention.svg" alt="" className="comment-img"/>
-          <img src="/images/tasks/task.svg" alt="" className="comment-img"/>
-          <img src="/images/tasks/emoji.svg" alt="" className="comment-img"/>
-          <img src="/images/tasks/attach_attachment.svg" alt="" className="comment-img" />
-        </div>        
-        <div>
-    <button type="submit" className="comment-btn btn-primary">Comment</button>
-    </div>
-      </div>
-    
-  </form>
-</div>
-                          </td>
+                       
                         {/* <td className="td-text"></td> */}
                         <td className="td-text"><div class="dropdown">
   <a type="" data-bs-toggle="dropdown" aria-expanded="false">
   {document.actions}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
+    <li >
+    <Link to={"/Department/Template-view"} className="text-decoration-none">
+      <a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Template</a>
+      </Link>
+      </li>
     <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
     <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
     <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
