@@ -4,69 +4,74 @@ import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from "antd";
 import { Link } from "react-router-dom";
-import SidebarDepartment from "./SidebarAprv";
-import SidebarAprv from "./SidebarAprv";
+import SidebarDepartment from "./SidebarSig";
+import SidebarSig from "./SidebarSig";
 
-const DashboardAprv = () => {
+const HistoryLogSig = () => {
   const documents = [
     {
       id: 1,
-      templateName: "Salary Slip.jpg",
+      documentName: "Salary Slip",
       creator: [
         <img src="/images/dashboard/avatar3.png" className="me-2" />,
         "Eve Leroy",
       ],
       department: "Human Resources",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-warning">High</p>,
+      dateOfSigning: "2023-09-16",
+      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
+      version: "0.1",
       action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 2,
-      templateName: "Promotion Letter.zip",
+      documentName: "Promotion Letter",
       creator: [
         <img src="/images/dashboard/avatar2.png" className="me-2" />,
         "Lana Steiner",
       ],
       department: "Sales & Marketing",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-warning">High</p>,
+      dateOfSigning: "2023-09-16",
+      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
+      version: "0.1",
       action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 3,
-      templateName: "Create Project Wireframes.xls",
+      documentName: "Training Certificate",
       creator: [
         <img src="/images/dashboard/Avatar1.png" className="me-2" />,
         "ByeWind",
       ],
       department: "Training & Development",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-danger">Urgent</p>,
+      dateOfSigning: "2023-09-16",
+        comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
+version: "0.1",
       action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 4,
-      templateName: "Create Project Wireframes.pdf",
+      documentName: "Salary Slip",
       creator: [
         <img src="/images/dashboard/Avatar.png" className="me-2" />,
         "Katherine Moss",
       ],
       department: "Human Resources",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-secondary">Low</p>,
+      dateOfSigning: "2023-09-16",
+        comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
+version: "0.1",
       action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     {
       id: 5,
-      templateName: "Project tech requirements.zip",
+      documentName: "Client Contract",
       creator: [
         <img src="/images/dashboard/Avatar1.png" className="me-2" />,
         "Natali Craig",
       ],
       department: "Training & Development",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-primary">Normal</p>,
+      dateOfSigning: "2023-09-16",
+        comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
+        version: "0.1",
       action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
     },
     
@@ -78,7 +83,7 @@ const DashboardAprv = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <SidebarAprv />
+            <SidebarSig />
           </div>
           <div className="col-7 middle-content">
             <div className="container-fluid border-bottom mb-4">
@@ -86,7 +91,7 @@ const DashboardAprv = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link ms-2" href="app-email.html">
-                      /Dashboard
+                    History Log / Approved
                     </a>
                   </li>
                 </ul>
@@ -122,200 +127,22 @@ const DashboardAprv = () => {
               </nav>
             </div>
 
-            <div className="col-12 mb-4">
-              <div className="row statics_part">
-                <div className="col-md-3">
-                  <div className="statics_box card-clr-1-3">
-                    <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">Total Users</h6>
-                    </div>
-                    <div className="d-flex  mt-4">
-                      <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                       256
-                      </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        +11.01%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3 ">
-                  <div className="statics_box card-clr-2-4">
-                    <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">
-                        Total Templates
-                      </h6>
-                    </div>
-                    <div className="d-flex  mt-4">
-                      <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        156
-                      </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        -0.56%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3 ">
-                  <div className="statics_box card-clr-1-3">
-                    <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">
-                        Documents Generated
-                      </h6>
-                    </div>
-                    <div className="d-flex  mt-4">
-                      <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        1,320
-                      </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        -1.48%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3 ">
-                  <div className="statics_box card-clr-2-4">
-                    <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">Active Users</h6>
-                    </div>
-                    <div className="d-flex mt-4">
-                      <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        32
-                      </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        +9.15%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="d-flex">
+              <Link to={"/Signatory/History-log-sig"} className="text-decoration-none">
+              <p className="td-text border-bottom me-3">Signing</p>
+              </Link>
+              <Link to={"/signatory/History-log-doc"} className="text-decoration-none">
+              <p className="th-text">Document Access Log</p>
+              </Link>
             </div>
-            <div className="col-12">
-              <div className="row">
-            
-                <div className="col-md-9 ">
-
-                <img src="/images/dashboard/Block.svg" alt="" className="dashboard-graph"/>
-                  {/* <div className="dashboard-card bg-light ">
-                    <div className="d-flex justify-content-around dashboard-card-text">
-                      <p>Templates </p>
-                      <p>Documents </p>
-                      <p>Current Week </p>
-                      <p>Previous Week</p>
-                    </div>
-                    <div className="d-flex justify-content-around">
-                      <img
-                        src="/images/dashboard/circle-analytics.png"
-                        alt=""
-                        className="m-4"
-                      />
-                      <table className="ms-2 dashboard-card-text">
-                        <tr>
-                          <td style={{paddingRight: 70}} className="text-nowrap">
-                            <img src="/images/dashboard/active-dot.svg" alt="" /> Active</td>
-                          <td>38.6%</td>
-                        </tr>
-                        <tr>
-                          <td>
-                          <img src="/images/dashboard/under-review-dot.svg" alt="" />Under Review</td>
-                          <td>22.5%</td>
-                        </tr>
-                        <tr>
-                          <td>
-                          <img src="/images/dashboard/approve-dot.svg" alt="" />Approved</td>
-                          <td>30.8%</td>
-                        </tr>
-                        <tr>
-                          <td>
-                          <img src="/images/dashboard/rejected-dot.svg" alt="" />Rejected</td>
-                          <td>8.1%</td>
-                        </tr>
-                      </table>
-                    </div>
-                  </div> */}
-                </div>
-
-                
-
-                <div className="col-md-3 ">
-                <div className="dashboard-card3 bg-light ">
-                    <p className="text-card">Document Request</p>
-                    <table className="table-card3 dashboard-card3-text">
-                      <tr className="pb-2">
-                        <td style={{paddingRight: 40}} className="text-nowrap">HR</td>
-                        <td>
-                          <img src="/images/dashboard/HR.png" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Finance</td>
-                        <td>
-                          <img src="/images/dashboard/Finance.png" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>R&D</td>
-                        <td>
-                          <img src="/images/dashboard/R&D.png" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Transport</td>
-                        <td>
-                          <img src="/images/dashboard/Transport.png" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>IT</td>
-                        <td>
-                          <img src="/images/dashboard/IT.png" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Sales</td>
-                        <td>
-                          <img src="/images/dashboard/sales.png" />
-                        </td>
-                      </tr>
-                    </table>
-                  </div>
-                </div>
-
-               
-                
-                
-              </div>
-            </div>
-
-            <p className="table-name mb-2 mt-4">Templates</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
                 <div className="col-md-3 border-end">
-                  <img
+                  {/* <img
                     src="/images/dashboard/Plus-icon.png"
                     alt=""
                     className="p-2 table-searchbar-img"
-                  />
+                  /> */}
                   <img
                     src="/images/dashboard/FunnelSimple.png"
                     alt=""
@@ -335,7 +162,7 @@ const DashboardAprv = () => {
                 <div className="col-4 d-flex align-items-center justify-content-around ">
                   <p className="m-0 text-nowrap">2 Selected</p>
                   <p className="hide-selected m-0 text-nowrap ">
-                    Hide Selected
+                    Clear Selection
                   </p>
                 </div>
               </div>
@@ -343,13 +170,13 @@ const DashboardAprv = () => {
                 <input
                   className="form-control table-search-bar"
                   type="search"
-                  placeholder="Search"
+                  placeholder="Type Something!"
                   aria-label="Search"
                 />
               </form>
             </div>
            
-                <div className="col-12 table_comman mt-3 ">
+            <div className="col-12 table_comman mt-3 mb-4">
                 <div className="table-responsive">
             <table className="table table-borderless">
               <thead>
@@ -368,7 +195,7 @@ const DashboardAprv = () => {
                       type="checkbox"
                       value=""
                     />
-                    Creator
+                    Requester's Name
                   </th>
                   <th className="th-text">
                     <input
@@ -384,7 +211,7 @@ const DashboardAprv = () => {
                       type="checkbox"
                       value=""
                     />
-                    Date of Creation
+                    Date of Signing
                   </th>
                   <th className="th-text">
                   <input
@@ -392,7 +219,14 @@ const DashboardAprv = () => {
                       type="checkbox"
                       value=""
                     />
-                    Status</th>
+                    Comments</th>
+                    <th className="th-text">
+                  <input
+                      className="form-check-input checkbox-table"
+                      type="checkbox"
+                      value=""
+                    />
+                    Version</th>
                   <th className="th-text">
                   <input
                       className="form-check-input checkbox-table"
@@ -414,7 +248,7 @@ const DashboardAprv = () => {
                         type="checkbox"
                         value=""
                       />
-                      {document.templateName}
+                      {document.documentName}
                     </td>
                     <td className="td-text">
                       {document.creator}
@@ -424,9 +258,10 @@ const DashboardAprv = () => {
                     </td>
                     <td className="td-text">
                       <img src="/images/dashboard/CalendarBlank.png" />
-                      {document.dateOfCreation}
+                      {document.dateOfSigning}
                     </td>
-                    <td className="td-text">{document.status}</td>
+                    <td className="td-text">{document.comments}</td>
+                    <td className="td-text">{document.version}</td>
                     <td className="td-text"><div class="dropdown">
   <a type="" data-bs-toggle="dropdown" aria-expanded="false">
   {document.action}
@@ -479,6 +314,17 @@ const DashboardAprv = () => {
                 </ul>
               </nav>
             </div>
+
+            <div className="footer mt-4">
+              <div>
+              © 2023 MYOT
+              </div>
+              <div className="d-flex ">
+                <p className="ms-3">About</p>
+                <p className="ms-3">Support</p>
+                <p className="ms-3">Contact Us</p>
+              </div>
+            </div>
           </div>
           <div className="col">
             <RightSidebar />
@@ -498,4 +344,4 @@ const DashboardAprv = () => {
   );
 };
 
-export default DashboardAprv;
+export default HistoryLogSig;

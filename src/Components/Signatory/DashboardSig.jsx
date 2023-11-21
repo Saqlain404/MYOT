@@ -4,78 +4,75 @@ import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from "antd";
 import { Link } from "react-router-dom";
-import SidebarDepartment from "./SidebarAprv";
-import SidebarSig from "../Signatory/SidebarSig";
-import SidebarAprv from "./SidebarAprv";
+import SidebarDepartment from "./SidebarSig";
+import SidebarSig from "./SidebarSig";
 
-const TemplateReview = () => {
+const DashboardSig = () => {
   const documents = [
     {
       id: 1,
-      templateName: "Salary Slip.jpg",
-      creator: [
+      templateName: "Reimbursement Forms",
+      assignedTo: [
         <img src="/images/dashboard/avatar3.png" className="me-2" />,
-        "Eve Leroy",
       ],
+      version: "0.2",
       department: "Human Resources",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-warning">High</p>,
+      date: "26 Oct, 2023",
+      status: <p className="text-primary">In Progress</p>,
       action: (
         <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
       ),
     },
     {
       id: 2,
-      templateName: "Promotion Letter.zip",
-      creator: [
+      templateName: "Client Contracts",
+      assignedTo: [
         <img src="/images/dashboard/avatar2.png" className="me-2" />,
-        "Lana Steiner",
       ],
+      version: "0.2",
       department: "Sales & Marketing",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-warning">High</p>,
+      date: "26 Oct, 2023",
+      status: <p className="text-warning">Approved</p>,
       action: (
         <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
       ),
     },
     {
       id: 3,
-      templateName: "Create Project Wireframes.xls",
-      creator: [
+      templateName: "Skill Assessment Reports",
+      assignedTo: [
         <img src="/images/dashboard/Avatar1.png" className="me-2" />,
-        "ByeWind",
       ],
+      version: "0.2",
       department: "Training & Development",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-danger">Urgent</p>,
+      date: "26 Oct, 2023",
+      status: <p className="text-success">Complete</p>,
       action: (
         <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
       ),
     },
     {
       id: 4,
-      templateName: "Create Project Wireframes.pdf",
-      creator: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Katherine Moss",
-      ],
+      templateName: "Incident Reports",
+      assignedTo: [<img src="/images/dashboard/Avatar.png" className="me-2" />],
+      version: "0.2",
       department: "Human Resources",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-secondary">Low</p>,
+      date: "26 Oct, 2023",
+      status: <p className="text-primary">In Progress</p>,
       action: (
         <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
       ),
     },
     {
       id: 5,
-      templateName: "Project tech requirements.zip",
-      creator: [
+      templateName: "Employment Contract",
+      assignedTo: [
         <img src="/images/dashboard/Avatar1.png" className="me-2" />,
-        "Natali Craig",
       ],
+      version: "0.2",
       department: "Training & Development",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-primary">Normal</p>,
+      date: "26 Oct, 2023",
+      status: <p className="text-info">Pending</p>,
       action: (
         <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
       ),
@@ -89,7 +86,7 @@ const TemplateReview = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <SidebarAprv />
+            <SidebarSig />
           </div>
           <div className="col-7 middle-content">
             <div className="container-fluid border-bottom mb-4">
@@ -97,14 +94,14 @@ const TemplateReview = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link ms-2" href="app-email.html">
-                      Template Review /
+                      /Dashboard
                     </a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
-                  <form className="" role="search">
+                  <form class="" role="search">
                     <input
-                      className="form-control search-bar"
+                      class="form-control search-bar"
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
@@ -133,6 +130,113 @@ const TemplateReview = () => {
               </nav>
             </div>
 
+            <div className="col-12 mb-4">
+              <div className="row statics_part">
+                <div className="col-md-3">
+                  <div className="statics_box card-clr-1-3">
+                    <div className="statics_left">
+                      <h6 className="mb-0 header-card-text">Total Users</h6>
+                    </div>
+                    <div className="d-flex  mt-4">
+                      <h3 className="card-text-count mb-0 fw-semibold fs-7">
+                        256
+                      </h3>
+                      <span className="card-insights fw-bold m-auto">
+                        +11.01%
+                        <img
+                          src="/images/dashboard/ArrowRise.png"
+                          alt=""
+                          className="ps-1"
+                        />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-3 ">
+                  <div className="statics_box card-clr-2-4">
+                    <div className="statics_left">
+                      <h6 className="mb-0 header-card-text">Total Templates</h6>
+                    </div>
+                    <div className="d-flex  mt-4">
+                      <h3 className="card-text-count mb-0 fw-semibold fs-7">
+                        156
+                      </h3>
+                      <span className="card-insights fw-bold m-auto">
+                        -0.56%
+                        <img
+                          src="/images/dashboard/ArrowFall.png"
+                          alt=""
+                          className="ps-1"
+                        />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-3 ">
+                  <div className="statics_box card-clr-1-3">
+                    <div className="statics_left">
+                      <h6 className="mb-0 header-card-text">
+                        Documents Generated
+                      </h6>
+                    </div>
+                    <div className="d-flex  mt-4">
+                      <h3 className="card-text-count mb-0 fw-semibold fs-7">
+                        1,320
+                      </h3>
+                      <span className="card-insights fw-bold m-auto">
+                        -1.48%
+                        <img
+                          src="/images/dashboard/ArrowFall.png"
+                          alt=""
+                          className="ps-1"
+                        />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-3 ">
+                  <div className="statics_box card-clr-2-4">
+                    <div className="statics_left">
+                      <h6 className="mb-0 header-card-text">Active Users</h6>
+                    </div>
+                    <div className="d-flex mt-4">
+                      <h3 className="card-text-count mb-0 fw-semibold fs-7">
+                        32
+                      </h3>
+                      <span className="card-insights fw-bold m-auto">
+                        +9.15%
+                        <img
+                          src="/images/dashboard/ArrowRise.png"
+                          alt=""
+                          className="ps-1"
+                        />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-12">
+              <div className="row">
+                <div className="col-md-6 ">
+                  <img
+                    src="/images/dashboard/Block1.svg"
+                    alt=""
+                    className="dashboard-graph"
+                  />
+                </div>
+
+                <div className="col-md-6 ">
+                  <img
+                    src="/images/dashboard/Block2.svg"
+                    alt=""
+                    className="dashboard-graph"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <p className="table-name mb-2 mt-4">Templates</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
                 <div className="col-md-3 border-end">
@@ -174,7 +278,7 @@ const TemplateReview = () => {
               </form>
             </div>
 
-            <div className="col-12 table_comman mt-3 mb-4">
+            <div className="col-12 table_comman mt-3 ">
               <div className="table-responsive">
                 <table className="table table-borderless">
                   <thead>
@@ -193,7 +297,7 @@ const TemplateReview = () => {
                           type="checkbox"
                           value=""
                         />
-                        Creator
+                        Assigned to
                       </th>
                       <th className="th-text">
                         <input
@@ -201,15 +305,16 @@ const TemplateReview = () => {
                           type="checkbox"
                           value=""
                         />
-                        Department
+                        Version
                       </th>
+                      
                       <th className="th-text">
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
                         />
-                        Date of Creation
+                        Date
                       </th>
                       <th className="th-text">
                         <input
@@ -218,6 +323,14 @@ const TemplateReview = () => {
                           value=""
                         />
                         Status
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Department
                       </th>
                       <th className="th-text">
                         <input
@@ -240,13 +353,15 @@ const TemplateReview = () => {
                           />
                           {document.templateName}
                         </td>
-                        <td className="td-text">{document.creator}</td>
-                        <td className="td-text">{document.department}</td>
+                        <td className="td-text">{document.assignedTo}</td>
+                        <td className="td-text">{document.version}</td>
+                        
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
-                          {document.dateOfCreation}
+                          {document.date}
                         </td>
                         <td className="td-text">{document.status}</td>
+                        <td className="td-text">{document.department}</td>
                         <td className="td-text">
                           <div class="dropdown">
                             <a
@@ -258,22 +373,14 @@ const TemplateReview = () => {
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                               <li>
-                                <Link
-                                  to={"/Approver/Template-view"}
-                                  className="text-decoration-none"
-                                >
-                                  <a
-                                    class="dropdown-item border-bottom"
-                                    href="#"
-                                  >
-                                    <img
-                                      src="/images/users/AddressBook.svg"
-                                      alt=""
-                                      className="me-2"
-                                    />
-                                    View Users Details
-                                  </a>
-                                </Link>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Users Details
+                                </a>
                               </li>
                               <li>
                                 <a class="dropdown-item border-bottom" href="#">
@@ -357,18 +464,18 @@ const TemplateReview = () => {
                 </ul>
               </nav>
             </div>
-
-            <div className="footer mt-4">
-              <div>© 2023 MYOT</div>
-              <div className="d-flex ">
-                <p className="ms-3">About</p>
-                <p className="ms-3">Support</p>
-                <p className="ms-3">Contact Us</p>
-              </div>
-            </div>
           </div>
           <div className="col">
             <RightSidebar />
+          </div>
+
+          <div className="middle-section">
+            <div className="body-wrapper">
+              <div className="container-fluid">
+                <div className="row d-flex flex-direction-row cards-row"></div>
+                <div className="d-flex cardss"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -376,4 +483,4 @@ const TemplateReview = () => {
   );
 };
 
-export default TemplateReview;
+export default DashboardSig;

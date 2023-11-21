@@ -38,6 +38,14 @@ import CalendarMonthAprv from "./Components/Approver/CalendarMonthAprv";
 import CalendarYearAprv from "./Components/Approver/CalenderYearAprv";
 import HistoryLogAprv from "./Components/Approver/HistoryLogAprv";
 import HistoryLogReject from "./Components/Approver/HistoryLogReject";
+import HomeSig from "./Components/Signatory/HomeSig";
+import DashboardSig from "./Components/Signatory/DashboardSig";
+import HistoryLogSig from "./Components/Signatory/HistoryLogSig";
+import HistoryLogDoc from "./Components/Signatory/HistoryLogDoc";
+import CalenderSig from "./Components/Signatory/CalenderSig";
+import CalendarMonthSig from "./Components/Signatory/CalendarMonthSig";
+import CalendarYearSig from "./Components/Signatory/CalenderYearSig";
+import AwaitingSig from "./Components/Signatory/AwaitingSig";
 
 function App() {
   return (
@@ -79,7 +87,14 @@ function App() {
           <Route path="Approver/Calendar-month" element={<CalendarMonthAprv />} />
           <Route path="Approver/Calendar-year" element={<CalendarYearAprv />} />
 
-
+          <Route path="Signatory/Home" element={<HomeSig />} />
+          <Route path="Signatory/Dashboard" element={<DashboardSig/>} />
+          <Route path="Signatory/Awaiting-sig" element={<AwaitingSig/>} />
+          <Route path="Signatory/History-log-approved" element={<HistoryLogSig/>} />
+          <Route path="Signatory/History-log-doc" element={<HistoryLogDoc/>} />
+          <Route path="Signatory/Calendar" element={<CalenderSig/>} />
+          <Route path="Signatory/Calendar-month" element={<CalendarMonthSig />} />
+          <Route path="Signatory/Calendar-year" element={<CalendarYearSig />} />
 
 
 
