@@ -181,9 +181,22 @@ const SidebarDepartment = () => {
         <span>Easin Arafat</span>
         <p className="th-text">Department Manager</p>
         </div>
-        <div>
-        <img src="/images/sidebar/ArrowLineDown2.svg" alt="" />
-        </div>
+        <div class="dropdown">
+  <a class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <img src="/images/sidebar/ArrowLineDown2.svg" alt="" />
+  </a>
+  <ul class="dropdown-menu">
+  <Link to={"/Admin/Home"} className="text-decoration-none">
+    <li><a class="dropdown-item">Admin</a></li>
+    </Link>
+    <Link to={"/Approver/Home"} className="text-decoration-none">
+    <li><a class="dropdown-item">Approver</a></li>
+    </Link>
+    <Link to={"/Signatory/Home"} className="text-decoration-none">
+    <li><a class="dropdown-item">Signatory</a></li>
+    </Link>
+  </ul>
+</div>
       </div>
 
 
