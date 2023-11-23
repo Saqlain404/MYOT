@@ -4,10 +4,10 @@ import Sidebar from "../Sidebar";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
-import SidebarDepartment from "./SidebarDepartment";
+import SideBarEmpl from "./SideBarEmpl";
 // import "../../dist/css/style.min.css"
 
-const HomeDept = () => {
+const HomeEmpl = () => {
   const tasks = [
     {
       id: 1,
@@ -118,7 +118,7 @@ const HomeDept = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <SidebarDepartment/>
+            <SideBarEmpl/>
           </div>
           <div className="col-7 middle-content">
             <div className="container-fluid border-bottom mb-4">
@@ -164,10 +164,10 @@ const HomeDept = () => {
 
             <div className="col-12 mb-4">
               <div className="row statics_part">
-                <div className="col-md-3">
+                <div className="col-md-6">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">Total Employees</h6>
+                      <h6 className="mb-0 header-card-text">Document Requests</h6>
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
@@ -184,14 +184,14 @@ const HomeDept = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-3 ">
+                <div className="col-md-6">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
-                        Total Departments
+                        Recieved Documents
                       </h6>
                     </div>
-                    <div className="d-flex  mt-4">
+                    <div className="d-flex justify-content-between mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         20
                       </h3>
@@ -199,48 +199,6 @@ const HomeDept = () => {
                         +9.15%
                         <img
                           src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3 ">
-                  <div className="statics_box card-clr-1-3">
-                    <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">
-                        Total Active Users
-                      </h6>
-                    </div>
-                    <div className="d-flex  mt-4">
-                      <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        1,156
-                      </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        -0.65%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3 ">
-                  <div className="statics_box card-clr-2-4">
-                    <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">Total Templates</h6>
-                    </div>
-                    <div className="d-flex mt-4">
-                      <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        320
-                      </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        -1.48%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
                           alt=""
                           className="ps-1"
                         />
@@ -471,6 +429,14 @@ const HomeDept = () => {
                           type="checkbox"
                           value=""
                         />
+                        Requester
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
                         Assigned To
                       </th>
                       <th className="th-text">
@@ -511,6 +477,7 @@ const HomeDept = () => {
                     {tasks.map((task) => (
                       <tr key={task.id}>
                         <td className="td-text">{task.template}</td>
+                        <td>{task.assignedTo}</td>
                         <td>{task.assignedTo}</td>
                         <td className="td-text">{task.version}</td>
                         <td className="td-text">{task.status}</td>
@@ -588,4 +555,4 @@ const HomeDept = () => {
   );
 };
 
-export default HomeDept;
+export default HomeEmpl;

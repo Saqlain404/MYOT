@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-const SidebarDepartment = () => {
+const SideBarEmpl = () => {
   return (
     <div className='container-fluid  sidebar'>
     {/* Sidebar scroll*/}
@@ -31,9 +31,9 @@ const SidebarDepartment = () => {
       <ul className="nav nav-pills flex-column">
         <li className="nav-item text-dark">
           <Link
-          to={"/Department/Home"}
+          to={"/Employee/Home"}
           className="text-decoration-none">
-          <a href="/" className="nav-link text-dark fs-5 align-middle" aria-current="page">
+          <a href="/Employee/Home" className="nav-link text-dark fs-5 align-middle" aria-current="page">
         
                 <img src="/images/sidebar/home2.png" className='align-middle sidebar-icon'/>
               
@@ -43,9 +43,9 @@ const SidebarDepartment = () => {
         </li>
         <li className="nav-item text-dark">
           <Link
-           to={"/Department/Dashboard"}
+           to={"/Employee/Dashboard"}
            className="text-decoration-none">
-          <a href="/" className="nav-link text-dark fs-5 align-middle" aria-current="page">
+          <a href="/Employee/Dashboard" className="nav-link text-dark fs-5 align-middle" aria-current="page">
         
                 <img src="/images/sidebar/Dashboard.png" className='align-middle sidebar-icon'/>
               
@@ -55,32 +55,46 @@ const SidebarDepartment = () => {
         </li>
         <li className="nav-item text-dark">
           <Link
-          to={"/Department/Template"}
+          to={"/Employee/document"}
           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle" aria-current="page">
         
                 <img src="/images/dashboard/templates.svg" className='align-middle sidebar-icon'/>
               
-              <span className="ms-3 align-middle sidebar-btn">Template</span>
-            </a>
-            </Link>
-        </li>
-        <li className="nav-item text-dark">
-        <Link
-           to={"/Department/Certificate"}
-           className="text-decoration-none">
-          <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
-        
-                <img src="/images/dashboard/certificate.svg" className='align-middle sidebar-icon'/>
-              
-              <span className="ms-3 align-middle sidebar-btn ">Certificate Issued</span>
+              <span className="ms-3 align-middle sidebar-btn">Document</span>
             </a>
             </Link>
         </li>
 
         <li className="nav-item text-dark">
         <Link
-           to={"/Department/Calendar"}
+           to={"/Employee/history-log-request"}
+           className="text-decoration-none">
+          <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
+        
+                <img src="/images/sidebar/departments.png" className='align-middle sidebar-icon'/>
+              
+              <span className="ms-3 align-middle sidebar-btn">History Logs</span>
+            </a>
+            </Link>
+        </li>
+
+        <li className="nav-item text-dark">
+        <Link
+           to={"/Employee/received-doc"}
+           className="text-decoration-none">
+          <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
+        
+                <img src="/images/sidebar/departments.png" className='align-middle sidebar-icon'/>
+              
+              <span className="ms-3 align-middle sidebar-btn">Recived Doc.</span>
+            </a>
+            </Link>
+        </li>
+
+        <li className="nav-item text-dark">
+        <Link
+           to={"/Employee/Calender"}
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
@@ -90,50 +104,8 @@ const SidebarDepartment = () => {
             </a>
             </Link>
         </li>
-        <li className="nav-item text-dark">
-        <Link
-           to={"/Department/Departments"}
-           className="text-decoration-none">
-          <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
-        
-                <img src="/images/sidebar/departments.png" className='align-middle sidebar-icon'/>
-              
-              <span className="ms-3 align-middle sidebar-btn">Departments</span>
-            </a>
-            </Link>
-        </li>
-        <li className="nav-item text-dark">
-          <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
-        
-                <img src="/images/sidebar/request.png" className='align-middle sidebar-icon'/>
-              
-              <span className="ms-3 align-middle sidebar-btn">Requests</span>
-            </a>
-        </li>
-        <li className="nav-item text-dark ">
-          <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
-        
-                <img src="/images/sidebar/announcement.png" className='align-middle sidebar-icon'/>
-              
-              <span className="ms-3 align-middle sidebar-btn ">Announcements</span>
-            </a>
-        </li>
-        <li className="nav-item text-dark">
-          <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
-        
-                <img src="/images/sidebar/files.png" className='align-middle sidebar-icon'/>
-              
-              <span className="ms-3 align-middle sidebar-btn">Files</span>
-            </a>
-        </li>
-        <li className="nav-item text-dark">
-          <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
-        
-                <img src="/images/sidebar/analytics.png" className='align-middle sidebar-icon'/>
-              
-              <span className="ms-3 align-middle sidebar-btn">Analytics</span>
-            </a>
-        </li>
+      
+      
 
         <p className="th-text mt-3">OTHERS</p>
 
@@ -212,4 +184,4 @@ const SidebarDepartment = () => {
   )
 }
 
-export default SidebarDepartment;
+export default SideBarEmpl;

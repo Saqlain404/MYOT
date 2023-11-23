@@ -348,6 +348,9 @@ height: 960px; */
   border-width: 2px;
   /* border- */
 }
+.employ-footer{
+  margin-top: 200px;
+}
 .table-head-dashboard {
   display: flex;
   width: auto;

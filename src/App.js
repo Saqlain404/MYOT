@@ -42,6 +42,13 @@ import CalenderSig from "./Components/Signatory/CalenderSig";
 import CalendarMonthSig from "./Components/Signatory/CalendarMonthSig";
 import CalendarYearSig from "./Components/Signatory/CalenderYearSig";
 import AwaitingSig from "./Components/Signatory/AwaitingSig";
+import HomeEmpl from "./Components/Employee/HomeEmpl";
+import EmployeeDash from "./Components/Employee/EmployeeDash";
+import RequestHistoryEmpl from "./Components/Employee/RequestHistoryEmpl";
+import DocHistoryEmploye from "./Components/Employee/DocHistoryEmploye";
+import DocumentEmply from "./Components/Employee/DocumentEmply";
+import ReceivedDocEmpl from "./Components/Employee/ReceivedDocEmpl";
+import CalenderEmply from "./Components/Employee/CalenderEmply";
 
 function App() {
   return (
@@ -102,6 +109,14 @@ function App() {
         <Route path="Signatory/Calendar" element={<CalenderSig />} />
         <Route path="Signatory/Calendar-month" element={<CalendarMonthSig />} />
         <Route path="Signatory/Calendar-year" element={<CalendarYearSig />} />
+
+        <Route path="Employee/Home" element={<HomeEmpl/>} />
+        <Route path="Employee/Dashboard" element={<EmployeeDash/>} />
+        <Route path="Employee/history-log-request" element={<RequestHistoryEmpl/>} />
+        <Route path="Employee/history-log-access" element={<DocHistoryEmploye/>} />
+        <Route path="Employee/document" element={<DocumentEmply/>} />
+        <Route path="Employee/received-doc" element={<ReceivedDocEmpl/>} />
+        <Route path="Employee/Calender" element={<CalenderEmply/>} />
       </Routes>
     </div>
   );
