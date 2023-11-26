@@ -58,7 +58,7 @@ const Dashboard = () => {
             <Sidebar />
           </div>
           <div className="col-7 middle-content">
-            <div className="container-fluid border-bottom mb-4">
+            <div className="container-fluid border-bottom sticky-top bg-white mb-4">
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
@@ -67,7 +67,7 @@ const Dashboard = () => {
                     </a>
                   </li>
                 </ul>
-                <div className="col d-flex align-items-center  justify-content-end">
+                <div className="col d-flex align-items-center justify-content-end ">
                   <form class="" role="search">
                     <input
                       class="form-control search-bar"
@@ -86,7 +86,7 @@ const Dashboard = () => {
                     <img
                       src="/images/dashboard/chat-left-dots-fill.png"
                       alt=""
-                      className="ms-4"
+                      className="ms-4 "
                     />
                     </Link>
                     <img
@@ -101,7 +101,7 @@ const Dashboard = () => {
 
             <div className="col-12 mb-4">
               <div className="row statics_part">
-                <div className="col-md-3">
+                <div className="col-lg-3 col-md-6 mb-md-2">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">Total Users</h6>
@@ -121,7 +121,7 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-3 ">
+                <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
@@ -143,7 +143,7 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-3 ">
+                <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
@@ -165,7 +165,7 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-3 ">
+                <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">Active Users</h6>
@@ -201,7 +201,7 @@ const Dashboard = () => {
                       <img
                         src="/images/dashboard/circle-analytics.png"
                         alt=""
-                        className="m-4"
+                        className="m-4 dashboard-card-img"
                       />
                       <table className="ms-2 dashboard-card-text">
                         <tr>
@@ -229,7 +229,7 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                <div className="col-md-3 ">
+                <div className="col-lg-3 col-md-6 mb-md-2 ">
                 <div className="dashboard-card2 bg-danger-subtle">
                     <p className="dashboard-card2-text">Open Tickets</p>
                     <p className="text-card  mb-3">20 / 50 </p>
@@ -237,55 +237,55 @@ const Dashboard = () => {
                     <img
                       src="/images/dashboard/Frame 427318940.png"
                       alt=""
-                      className="pb-3"
+                      className="pb-3 dashboard-card-img"
                     />
                     <p className=" mb-1 dashboard-card2-text">Status</p>
                     <img
                       src="/images/dashboard/Info/Frame 427318940.png"
                       alt=""
-                      className=" mb-4"
+                      className=" mb-4 dashboard-card-img"
                     />
                   </div>
                 </div>
 
-                <div className="col-md-3 ">
+                <div className="col-lg-3 col-md-6 mb-md-2 ">
                 <div className="dashboard-card3 bg-light ">
                     <p className="text-card">Document Request</p>
                     <table className="table-card3 dashboard-card3-text">
                       <tr className="pb-2">
                         <td style={{paddingRight: 40}} className="text-nowrap">HR</td>
                         <td>
-                          <img src="/images/dashboard/HR.png" />
+                          <img src="/images/dashboard/HR.png" className="dashboard-card-img" />
                         </td>
                       </tr>
                       <tr>
                         <td>Finance</td>
                         <td>
-                          <img src="/images/dashboard/Finance.png" />
+                          <img src="/images/dashboard/Finance.png" className="dashboard-card-img" />
                         </td>
                       </tr>
                       <tr>
                         <td>R&D</td>
                         <td>
-                          <img src="/images/dashboard/R&D.png" />
+                          <img src="/images/dashboard/R&D.png" className="dashboard-card-img" />
                         </td>
                       </tr>
                       <tr>
                         <td>Transport</td>
                         <td>
-                          <img src="/images/dashboard/Transport.png" />
+                          <img src="/images/dashboard/Transport.png" className="dashboard-card-img" />
                         </td>
                       </tr>
                       <tr>
                         <td>IT</td>
                         <td>
-                          <img src="/images/dashboard/IT.png" />
+                          <img src="/images/dashboard/IT.png" className="dashboard-card-img" />
                         </td>
                       </tr>
                       <tr>
                         <td>Sales</td>
                         <td>
-                          <img src="/images/dashboard/sales.png" />
+                          <img src="/images/dashboard/sales.png" className="dashboard-card-img" />
                         </td>
                       </tr>
                     </table>
@@ -301,7 +301,7 @@ const Dashboard = () => {
             <div className="col-12 mt-4">
             <div className="row bg-light management">
               <div className="col">
-                <img src="/images/dashboard/search.png" />
+                <img src="/images/dashboard/search.png"  />
                 <p className="management-text">Manage Users</p>
               </div>
               <div className="col ">

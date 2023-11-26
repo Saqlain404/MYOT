@@ -18,7 +18,7 @@ const CalendarMonthAprv
             <SidebarAprv />
           </div>
           <div className="col middle-content bg-body-tertiary p-0 min-vh-100">
-            <div className="container-fluid border-bottom mb-4">
+            <div className="container-fluid border-bottom sticky-top bg-white mb-4">
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">

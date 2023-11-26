@@ -348,9 +348,6 @@ height: 960px; */
   border-width: 2px;
   /* border- */
 }
-.employ-footer{
-  margin-top: 200px;
-}
 .table-head-dashboard {
   display: flex;
   width: auto;
@@ -592,6 +589,7 @@ flex-shrink: 0;
 }
 
 .header {
+ 
   /* align-items: center; */
   /* display: flex; */
 
@@ -600,8 +598,9 @@ flex-shrink: 0;
   /* align-items: center; */
   /* flex-shrink: 0; */
 }
-
 .statics_box {
+  white-space: nowrap;
+  overflow: hidden;
   /* box-shadow: 0px 0px 8px 0px #D0D0D880; */
   background-color: #fff;
   /* height: 124px; */
@@ -613,6 +612,8 @@ flex-shrink: 0;
 }
 
 .dashboard-card {
+  white-space: nowrap;
+  overflow: hidden;
   background-color: #fff;
   align-items: flex-start;
   border-radius: 14px;
@@ -620,6 +621,8 @@ flex-shrink: 0;
   justify-content: space-between;
 }
 .dashboard-card2 {
+  white-space: nowrap;
+  overflow: hidden;
   height: 100%;
   background-color: #fff;
   align-items: flex-start;
@@ -628,6 +631,8 @@ flex-shrink: 0;
   justify-content: space-between;
 }
 .dashboard-card3 {
+  white-space: nowrap;
+  overflow: hidden;
   height: 100%;
   background-color: #fff;
   align-items: flex-start;
@@ -636,6 +641,10 @@ flex-shrink: 0;
   justify-content: space-between;
 }
 
+.dashboard-card-img{
+  width: 100%;
+  height: auto;
+}
 .dashboard-card3 > table {
   height: inherit;
 }
@@ -807,7 +816,7 @@ flex-shrink: 0;
   line-height: 20px; /* 142.857% */
 }
 .profile{
-  margin-top: 100px;
+  margin-top: 20px;
   display: flex;
   justify-content: space-between;
 }
@@ -1509,6 +1518,8 @@ line-height: normal;
     height: auto;
   }
 
-  .vhvh{
-    width: auto;
-  }
+  .react-calendar__navigation button {
+    min-width: 0px;
+    background: none;
+}
+

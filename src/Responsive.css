@@ -1,0 +1,104 @@
+@media (max-width: 1350px) and (min-width: 1300px) {
+
+.header-card-text{
+    font-size: 12px;
+}
+
+.card-text-count{
+    font-size: 20px;
+}
+.card-insights{
+    font-size: 10px;
+}
+.table-searchbar-txt{
+    font-size: 14px;
+    margin-left: 5px;
+}
+.table-searchbar-imgs{
+    margin: 5px;
+}
+.create-task-btn{
+    width: 180px;
+    height: 45px;
+    font-size: 14px;
+}
+
+}
+@media (max-width: 1300px) and (min-width: 1250px) {
+
+    .header-card-text{
+        font-size: 12px;
+    }
+    
+    .card-text-count{
+        font-size: 20px;
+    }
+    .card-insights{
+        font-size: 10px;
+    }
+    .table-searchbar-txt{
+        font-size: 14px;
+        margin-left: 15px;
+    }
+    .table-searchbar-imgs{
+        margin: 5px;
+    }
+    .create-task-btn{
+        width: 170px;
+        height: 40px;
+        font-size: 12px;
+    }
+    }
+
+@media (max-width: 1250px) and (min-width: 780px) {
+
+    .header-card-text{
+        font-size: 12px;
+    }
+    
+    .card-text-count{
+        font-size: 20px;
+    }
+    .card-insights{
+        font-size: 10px;
+    }
+    .table-searchbar-txt{
+        font-size: 14px;
+        margin-left: 25px;
+    }
+    .table-searchbar-imgs{
+        margin: 5px;
+    }
+    .create-task-btn{
+        width: 160px;
+        height: 35px;
+        font-size: 12px;
+    }
+    }
+
+    @media (max-width: 1160px) and (min-width: 780px) {
+
+        .header-card-text{
+            font-size: 12px;
+        }
+        
+        .card-text-count{
+            font-size: 20px;
+        }
+        .card-insights{
+            font-size: 10px;
+        }
+        .table-searchbar-txt{
+            font-size: 14px;
+            margin-left: 45px;
+        }
+        .table-searchbar-imgs{
+            margin: 5px;
+        }
+        .create-task-btn{
+            width: 160px;
+            height: 35px;
+            font-size: 12px;
+        }
+        }
+

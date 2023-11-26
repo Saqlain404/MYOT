@@ -13,12 +13,11 @@ const Home = () => {
       template: "Non-Objection Certificate",
       assignedTo: <img src="/images/dashboard/Avatar2.png" />,
       version: "1.0",
-      status: 
-        <p className="text-primary m-0">
-          In Progress
-        </p>,
+      status: <p className="text-primary m-0">In Progress</p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 2,
@@ -27,7 +26,9 @@ const Home = () => {
       version: "2.0",
       status: <p className="text-warning m-0"> Approved</p>,
       department: "Finance",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 3,
@@ -36,7 +37,9 @@ const Home = () => {
       version: "1.5",
       status: <p className="text-info m-0">Pending</p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 3,
@@ -45,7 +48,9 @@ const Home = () => {
       version: "1.5",
       status: <p className="text-success m-0"> Active</p>,
       department: "R&D",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 3,
@@ -54,7 +59,9 @@ const Home = () => {
       version: "1.5",
       status: <p className="text-secondary m-0">Rejected</p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     // Add more tasks here
   ];
@@ -68,7 +75,9 @@ const Home = () => {
       version: "1.0",
       status: <p className="text-primary">In Progress</p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 2,
@@ -78,7 +87,9 @@ const Home = () => {
       version: "2.0",
       status: <p className="text-warning">Approved</p>,
       department: "Finance",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 3,
@@ -88,7 +99,9 @@ const Home = () => {
       version: "1.5",
       status: <p className="text-info">Pending</p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 4,
@@ -98,7 +111,9 @@ const Home = () => {
       version: "1.5",
       status: <p className="text-success">Active</p>,
       department: "R&D",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 5,
@@ -108,7 +123,9 @@ const Home = () => {
       version: "1.5",
       status: <p className="text-secondary">Rejected</p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     // Add more tasks here
   ];
@@ -120,7 +137,7 @@ const Home = () => {
             <Sidebar />
           </div>
           <div className="col-7 middle-content">
-            <div className="container-fluid border-bottom mb-4">
+            <div className="container-fluid border-bottom sticky-top bg-white mb-4">
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
@@ -145,11 +162,11 @@ const Home = () => {
                       className="ms-4 "
                     />
                     <Link to={"/Admin/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -163,7 +180,7 @@ const Home = () => {
 
             <div className="col-12 mb-4">
               <div className="row statics_part">
-                <div className="col-md-3">
+                <div className="col-lg-3 col-md-6 mb-md-2">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">Total Employees</h6>
@@ -183,7 +200,7 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-3 ">
+                <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
@@ -205,7 +222,7 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-3 ">
+                <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
@@ -227,7 +244,7 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-3 ">
+                <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">Total Templates</h6>
@@ -252,7 +269,7 @@ const Home = () => {
             <p className="table-name mb-2">Templates</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
-                <div className="col-md-3 border-end">
+                <div className="col-lg-3 col-md-6 mb-md-2  table-searchbar-imgs">
                   <img
                     src="/images/dashboard/Plus-icon.png"
                     alt=""
@@ -271,10 +288,10 @@ const Home = () => {
                   <img
                     src="/images/dashboard/DotsThreeOutlineVertical2.png"
                     alt=""
-                    className="p-2 table-searchbar-img"
+                    className="p-2 table-searchbar-img border-end"
                   />
                 </div>
-                <div className="col-4 d-flex align-items-center justify-content-around ">
+                <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
                   <p className="m-0 text-nowrap">2 Selected</p>
                   <p className="hide-selected m-0 text-nowrap ">
                     Hide Selected
@@ -355,19 +372,69 @@ const Home = () => {
                         <td className="td-text">{task.version}</td>
                         <td className="td-text">{task.status}</td>
                         <td className="td-text">{task.department}</td>
-                        <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
-  {task.action}
-  </a>
-  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="#"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete User</a></li>
-  </ul>
-</div>
-                          </td>
+                        <td className="td-text">
+                          <div class="dropdown">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              {task.action}
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Users Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/PencilLine.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Edit User Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  <img
+                                    src="/images/dashboard/Comment.png"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Comments
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/TextAlignLeft.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Wrap Column
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item text-danger" href="#">
+                                  <img
+                                    src="/images/users/Trash.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Delete User
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
                         <td></td>
                       </tr>
                     ))}
@@ -411,7 +478,7 @@ const Home = () => {
             <p className="table-name mb-2">Document Requests</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col">
-                <div className="col-md-3 border-end">
+                <div className="col-lg-3 col-md-6 mb-md-2  table-searchbar-imgs">
                   <img
                     src="/images/dashboard/Plus-icon.png"
                     alt=""
@@ -430,10 +497,10 @@ const Home = () => {
                   <img
                     src="/images/dashboard/DotsThreeOutlineVertical2.png"
                     alt=""
-                    className="p-2 table-searchbar-img"
+                    className="p-2 table-searchbar-img border-end"
                   />
                 </div>
-                <div className="col-4 d-flex align-items-center justify-content-around ">
+                <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
                   <p className="m-0 text-nowrap">2 Selected</p>
                   <p className="hide-selected m-0 text-nowrap ">
                     Hide Selected
@@ -514,19 +581,69 @@ const Home = () => {
                         <td className="td-text">{task.version}</td>
                         <td className="td-text">{task.status}</td>
                         <td className="td-text">{task.department}</td>
-                        <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
-  {task.action}
-  </a>
-  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="#"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete User</a></li>
-  </ul>
-</div>
-                          </td>
+                        <td className="td-text">
+                          <div class="dropdown">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              {task.action}
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Users Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/PencilLine.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Edit User Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  <img
+                                    src="/images/dashboard/Comment.png"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Comments
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/TextAlignLeft.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Wrap Column
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item text-danger" href="#">
+                                  <img
+                                    src="/images/users/Trash.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Delete User
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
                         <td></td>
                       </tr>
                     ))}
@@ -568,9 +685,7 @@ const Home = () => {
             </div>
 
             <div className="footer">
-              <div>
-              © 2023 MYOT
-              </div>
+              <div>© 2023 MYOT</div>
               <div className="d-flex ">
                 <p className="ms-3">About</p>
                 <p className="ms-3">Support</p>

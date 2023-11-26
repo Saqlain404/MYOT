@@ -119,7 +119,7 @@ const HomeSig = () => {
             <SidebarSig/>
           </div>
           <div className="col-7 middle-content">
-            <div className="container-fluid border-bottom mb-4">
+            <div className="container-fluid border-bottom sticky-top bg-white mb-4">
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
@@ -251,7 +251,7 @@ const HomeSig = () => {
             <p className="table-name mb-2">Templates</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
-                <div className="col-md-3 border-end">
+                <div className="col-md-3 table-searchbar-imgs">
                   <img
                     src="/images/dashboard/Plus-icon.png"
                     alt=""
@@ -270,10 +270,10 @@ const HomeSig = () => {
                   <img
                     src="/images/dashboard/DotsThreeOutlineVertical2.png"
                     alt=""
-                    className="p-2 table-searchbar-img"
+                    className="p-2 table-searchbar-img border-end"
                   />
                 </div>
-                <div className="col-4 d-flex align-items-center justify-content-around ">
+                <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
                   <p className="m-0 text-nowrap">2 Selected</p>
                   <p className="hide-selected m-0 text-nowrap ">
                     Hide Selected
@@ -410,7 +410,7 @@ const HomeSig = () => {
             <p className="table-name mb-2">Document Requests</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col">
-                <div className="col-md-3 border-end">
+                <div className="col-md-3 table-searchbar-imgs">
                   <img
                     src="/images/dashboard/Plus-icon.png"
                     alt=""
@@ -429,10 +429,10 @@ const HomeSig = () => {
                   <img
                     src="/images/dashboard/DotsThreeOutlineVertical2.png"
                     alt=""
-                    className="p-2 table-searchbar-img"
+                    className="p-2 table-searchbar-img border-end"
                   />
                 </div>
-                <div className="col-4 d-flex align-items-center justify-content-around ">
+                <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
                   <p className="m-0 text-nowrap">2 Selected</p>
                   <p className="hide-selected m-0 text-nowrap ">
                     Hide Selected
