@@ -7,7 +7,7 @@ const SidebarAprv = () => {
     {/* Sidebar scroll*/}
 
     <div className='row'>
-    <div className='mb-4'>
+    <div className='mb-4 sticky-top bg-white'>
       {/* <img src='/images/Myot-logo.png' className="logo pb-1"/> */}
       <svg xmlns="http://www.w3.org/2000/svg" width="35" height="28" viewBox="0 0 35 28" fill="none" className="logo ">
   <path d="M12.5935 2.38856C11.5079 2.46075 10.4909 2.93234 9.74802 3.70798C9.00516 4.48363 8.59188 5.50548 8.59174 6.56697V23.7398C8.60114 24.2959 8.49698 24.8483 8.28532 25.3647C8.07367 25.8811 7.75876 26.3513 7.35895 26.7478C6.95914 27.1443 6.48242 27.4592 5.95658 27.6742C5.43074 27.8892 4.8663 27.9999 4.29616 27.9999C3.72602 27.9999 3.16158 27.8892 2.63574 27.6742C2.10991 27.4592 1.63319 27.1443 1.23337 26.7478C0.833561 26.3513 0.51865 25.8811 0.306997 25.3647C0.0953446 24.8483 -0.00881665 24.2959 0.00058408 23.7398V7.01364C0.000837593 5.58774 0.446624 4.19579 1.27852 3.02334C2.11041 1.8509 3.28888 0.953664 4.65684 0.451247C6.0248 -0.0511689 7.51724 -0.134896 8.93523 0.211228C10.3532 0.557351 11.6294 1.31688 12.5935 2.38856Z" fill="url(#paint0_linear_417_9559)"/>
@@ -155,20 +155,23 @@ const SidebarAprv = () => {
       </ul>
       </div>
 
-      <div className='profile'>
-        <div>
-        <img src="/images/sidebar/Profile photo.png" alt="" />
-        </div>
-        <div>
-        <span>Easin Arafat</span>
-        <p className="th-text">Approver</p>
-        </div>
-        <div class="dropdown">
-  <a class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <div class="dropdown">
+  <a class="text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <div className="profile">
+          <div>
+            <img src="/images/sidebar/Profile photo.png" alt="" />
+          </div>
+          <div>
+            <span className="text-dark">Easin Arafat</span>
+            <p className="th-text">Approver</p>
+          </div>
+          <div>
   <img src="/images/sidebar/ArrowLineDown2.svg" alt="" />
+  </div>
+  </div>
   </a>
   <ul class="dropdown-menu">
-  <Link to={"/Admin/Home"} className="text-decoration-none">
+    <Link to={"/Admin/Home"} className="text-decoration-none">
     <li><a class="dropdown-item">Admin</a></li>
     </Link>
     <Link to={"/Department/Home"} className="text-decoration-none">
@@ -179,13 +182,6 @@ const SidebarAprv = () => {
     </Link>
   </ul>
 </div>
-      </div>
-
-
-
-
-
-      
     </div>
  </div>
   )

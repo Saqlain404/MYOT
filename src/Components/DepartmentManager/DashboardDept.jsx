@@ -83,7 +83,7 @@ const DashboardDept = () => {
             <SidebarDepartment />
           </div>
           <div className="col-7 middle-content">
-            <div className="container-fluid border-bottom mb-4">
+            <div className="container-fluid border-bottom sticky-top bg-white mb-4">
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
