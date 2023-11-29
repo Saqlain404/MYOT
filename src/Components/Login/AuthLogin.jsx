@@ -1,8 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import {useForm} from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { adminLogin } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 
 
 const AuthLogin = () => {
+  const [type, setType] = useState("password");
+  const [password, setPassword] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("token-admin")) {
+      navigate("/Admin/Login");
+    }
+  }, []);
+
+  const onSubmit = async (data) => {
+    console.log(data);
+
+    const response = await adminLogin(data);
+    if (!response.data.error) {
+      navigate("/Admin/Dashboard");
+    }
+  };
+
+  const typeChange = () => {
+    if (type === "password") setType("text");
+    else {
+      setType("password");
+    }
+  };
+
+  const getPasswordValue = (value) => {
+    console.log(value);
+    setPassword(value);
+  };
   return (
     <>
 
@@ -18,7 +58,8 @@ const AuthLogin = () => {
                     </p>
 
                     </div>
-                    <form className="form-login">
+                    <form className="form-login"
+                    onSubmit={handleSubmit(onSubmit)}>
                       <div className="mb-3">
                         <label
                           htmlFor="exampleInputEmail1"
@@ -29,11 +70,25 @@ const AuthLogin = () => {
                         <input
                           type="email"
                           className="form-control"
-                          id="exampleInputEmail1"
+                          id="email"
+                          name="email"
                           aria-describedby="emailHelp"
                           placeholder="example@gmail.com"
                           autoComplete="off"
+                          {...register("email", {
+                            required: "This field is required",
+                            pattern: {
+                              value:
+                                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                              message: "Invalid email address",
+                            },
+                          })}
                         />
+                        {errors?.email && (
+                            <p className="form-error mt-1">
+                              {errors.email.message}
+                            </p>
+                          )}
                       </div>
                       <div className="mb-4">
                         <label
@@ -45,9 +100,32 @@ const AuthLogin = () => {
                         <input
                           type="password"
                           className="form-control"
-                          id="exampleInputPassword1"
+                          name="password"
+                          id="password"
                           autoComplete="off"
+                          {...register("password", {
+                            required: true,
+                            onChange: (e) => {
+                              getPasswordValue(e.target.value);
+                            },
+                          })}
                         />
+                         {password ? (
+                            <i
+                              className={`fa eyepassword fa-eye${
+                                type === "password" ? "" : "-slash"
+                              }`}
+                              onClick={() => typeChange()}
+                            ></i>
+                          ) : (
+                            ""
+                          )}
+
+                          {errors?.password && (
+                            <p className="form-error mt-1">
+                              This field is required
+                            </p>
+                          )}
                       </div>
                       <div className="d-flex  justify-content-between mb-4 remember">
                         <div className="form-check">
@@ -75,13 +153,12 @@ const AuthLogin = () => {
                         </a>
                         </Link>
                       </div>
-                      <Link 
-                      to={"/Admin/Home"}>
                       
-                      <a href="index.html" className="btn  py-8 mb-4 rounded-2">
+                        <button className="btn py-8 mb-4 rounded-2" type="submit">
                         Log In
-                      </a>
-                      </Link>
+                        </button>
+                    
+                     
                     </form>
           </div>
           <div className="col-8 m-auto ">

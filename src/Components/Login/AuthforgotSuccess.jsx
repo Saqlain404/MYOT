@@ -1,7 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { forgotPassword } from '../../ApiServices/adminHttpServices/adminLoginHttpService';
 
 const AuthforgotSuccess = () => {
+
+
   return (
     
 <>
@@ -26,12 +30,11 @@ const AuthforgotSuccess = () => {
                   </div>
                   <Link 
                       to={"/Admin/Login"}>
-                    <a
-                      href="javascript:void(0)"
+                    <button
                       className="btn  py-8 mb-3 reset-success"
                     >
                       Go Back Home
-                    </a>
+                    </button>
                     </Link>
               </div>
             </div>
