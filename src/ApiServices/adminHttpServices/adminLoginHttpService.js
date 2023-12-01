@@ -14,7 +14,7 @@ export async function adminLogin(formData) {
       await localStorage.setItem("token-company", headers["x-auth-token-company"]);
       await localStorage.setItem("user_id", data.results.company._id);
 
-      toast.success(data.message);
+      toast.success("Success");
     } else toast.error(data.message);
 
     

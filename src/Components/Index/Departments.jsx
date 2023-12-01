@@ -109,8 +109,8 @@ const Departments = () => {
 
   const [listItems, setListItems] = useState([]);
 
-  const DepartmentLists = async () => {
-    const { data } = await DepartmentList();
+  const DepartmentLists = async (key) => {
+    const { data } = await DepartmentList({ search: key });
     if (!data.error) {
       setListItems(data.results.department);
     }
@@ -159,7 +159,7 @@ const Departments = () => {
   };
   useEffect(() => {
     DepartmentLists();
-  }, [handleChange]);
+  }, []);
 
   return (
     <>
@@ -330,6 +330,7 @@ const Departments = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  onChange={(e) => DepartmentLists(e.target.value)}
                 />
               </form>
             </div>
@@ -417,7 +418,10 @@ const Departments = () => {
                               data-bs-toggle="dropdown"
                               aria-expanded="false"
                             >
-                              <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+                              <img
+                                src="/images/sidebar/ThreeDots.svg"
+                                className="w-auto p-3"
+                              />
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                               <li>
