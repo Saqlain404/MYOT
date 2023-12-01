@@ -10,10 +10,10 @@ const errorCallBack = (error) => {
   }
   return Promise.reject(error);
 };
-axios.defaults.headers.common["x-auth-token-admin"] =
-  localStorage.getItem("token-admin");
+axios.defaults.headers.common["x-auth-token-company"] =
+  localStorage.getItem("token-company");
 axios.interceptors.request.use(async (req) => {
-  req.headers["x-auth-token-admin"] = await localStorage.getItem("token-admin");
+  req.headers["x-auth-token-company"] = await localStorage.getItem("token-company");
   return req;
 });
 //intercept errors while communicating with backend server
