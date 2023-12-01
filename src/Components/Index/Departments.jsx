@@ -1,9 +1,13 @@
 import React from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
-// import "assets/css/style.min.css"
-import { Space, Table, Tag } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import {
+  AddDepartment,
+  DepartmentList,
+} from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import { useEffect } from "react";
 
 const Departments = () => {
   const photo = <img src="/images/dashboard/Avatar.png" />;
@@ -99,6 +103,64 @@ const Departments = () => {
     },
   ];
 
+  const navigate = useNavigate();
+
+  const userId = localStorage.getItem("user_id");
+
+  const [listItems, setListItems] = useState([]);
+
+  const DepartmentLists = async () => {
+    const { data } = await DepartmentList();
+    if (!data.error) {
+      setListItems(data.results.department);
+    }
+  };
+  console.log(listItems);
+
+  const [departmentInfo, setDepartmentInfo] = useState({
+    departmentname: "",
+    description: "",
+  });
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    console.log(name, value);
+
+    setDepartmentInfo({ ...departmentInfo, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    console.log({ e });
+    e.preventDefault();
+    const departmentData = {
+      ...departmentInfo,
+      user: localStorage.getItem("user_id"),
+    };
+    console.log(departmentData);
+
+    await AddDepartment({
+      departmentName: departmentData.departmentname,
+      description: departmentData.description,
+    })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then((res) => {
+        if (!res.data?.error) {
+          console.log("Success");
+          navigate("");
+        }
+      });
+    setDepartmentInfo({
+      departmentname: "",
+      description: "",
+    });
+  };
+  useEffect(() => {
+    DepartmentLists();
+  }, [handleChange]);
+
   return (
     <>
       <div className="container-fluid">
@@ -132,11 +194,11 @@ const Departments = () => {
                       className="ms-4 "
                     />
                     <Link to={"/Admin/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -169,43 +231,68 @@ const Departments = () => {
             </div>
 
             {/* <!-- Modal --> */}
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-department">
-    <div class="modal-content border-0">
-      <div class="d-flex modal-header border-bottom">
-        <p class="" id="exampleModalLabel">Add Departments</p>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      
-      <form action="">
-      <div className="row p-3">
+            <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered modal-dialog-department">
+                <div class="modal-content border-0">
+                  <div class="d-flex modal-header border-bottom">
+                    <p class="" id="exampleModalLabel">
+                      Add Departments
+                    </p>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
 
-     
-      <div className="col-12 mb-3 ">
-        <input type="text" placeholder="Department Name *" className="col-4 modal-input th-text  p-2"/>
-        <input type="text" placeholder="Department Head Name *" className="col-4 modal-input th-text  p-2"/>
-        <input type="text" placeholder="Email ID *" className="col-4 modal-input th-text p-2"/>
-      </div>
-      <div className="col-12 mb-3 ">
-        <input type="text" placeholder="Employee Id*" className="col-4 modal-input th-text p-2"/>
-        <input type="text" placeholder="Employee Tittle" className="col-4 modal-input th-text p-2"/>
-        {/* <input type="text" placeholder="Password *" className="col-4 modal-input  p-2"/> */}
-      </div>
-      <div className="col-12 mb-3 ">
-        <input type="text" placeholder="Address" className="col-6 modal-input th-text p-2"/>
-        <input type="text" placeholder="Phone Number" className="col-6 modal-input th-text p-2"/>
-      </div>
-      
-      </div>
-      </form>
-      <div className="d-flex justify-content-end mb-3">
-        <button type="button" class="user-modal-btn">Add New</button>
-        <button type="button" class="user-modal-btn2">Cancle</button>
-      </div>
-    </div>
-  </div>
-</div>
-{/* <!-- Modal End--> */}
+                  <form action="" onSubmit={handleSubmit}>
+                    <div className="row p-3">
+                      <div className="col-12 mb-3 ">
+                        <input
+                          type="text"
+                          placeholder="Department Name *"
+                          className="col-12 modal-input th-text  p-2"
+                          name="departmentname"
+                          value={departmentInfo.departmentname}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="col-12 mb-3 ">
+                        <textarea
+                          type="text"
+                          placeholder="Description"
+                          className="col-12 modal-input th-text p-2"
+                          name="description"
+                          value={departmentInfo.description}
+                          onChange={handleChange}
+                        ></textarea>
+                        {/* <input type="text" placeholder="Phone Number" className="col-6 modal-input th-text p-2"/> */}
+                      </div>
+                    </div>
+                    <div className="d-flex justify-content-end mb-3">
+                      <button
+                        type="submit"
+                        class="user-modal-btn"
+                        onClick={AddDepartment}
+                      >
+                        Add New
+                      </button>
+                      <button type="button" class="user-modal-btn2">
+                        Cancle
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {/* <!-- Modal End--> */}
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
                 <div className="col-md-3 table-searchbar-imgs">
@@ -266,10 +353,18 @@ const Departments = () => {
                           type="checkbox"
                           value=""
                         />
-                        Manager
+                        Description
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Actions
                       </th>
 
-                      <th className="th-text">
+                      {/* <th className="th-text">
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
@@ -300,24 +395,87 @@ const Departments = () => {
                           value=""
                         />
                         Actions
-                      </th>
+                      </th> */}
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map((document) => (
-                      <tr key={document.id} className="ms-0">
+                    {listItems.map((item, index) => (
+                      <tr className="ms-0">
                         <td className="td-text">
                           <input
                             className="form-check-input checkbox-table"
                             type="checkbox"
                             value=""
                           />
-                          {document.department}
+                          {item.departmentName}
                         </td>
-                        <td className="td-text">{document.name}</td>
-
+                        <td className="td-text">{item.description}</td>
                         <td className="td-text">
-                          {/* <img src="/images/dashboard/CalendarBlank.png" /> */}
+                          <div class="dropdown">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Department Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/PencilLine.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Edit Department Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  <img
+                                    src="/images/dashboard/Comment.png"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Comments
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/TextAlignLeft.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Wrap Column
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item text-danger" href="#">
+                                  <img
+                                    src="/images/users/Trash.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Delete Manager
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
+
+                        {/* <td className="td-text">
+                          
                           {document.roles}
                         </td>
                         <td className="td-text">
@@ -387,7 +545,7 @@ const Departments = () => {
                               </li>
                             </ul>
                           </div>
-                        </td>
+                        </td> */}
                       </tr>
                     ))}
                   </tbody>

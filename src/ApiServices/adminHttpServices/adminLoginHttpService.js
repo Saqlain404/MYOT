@@ -10,8 +10,9 @@ export async function adminLogin(formData) {
     
 
     if (!data?.error) {
-      await localStorage.removeItem("token-admin");
-      await localStorage.setItem("token-admin", headers["x-auth-token-admin"]);
+      await localStorage.removeItem("token-company");
+      await localStorage.setItem("token-company", headers["x-auth-token-company"]);
+      await localStorage.setItem("user_id", data.results.company._id);
 
       toast.success(data.message);
     } else toast.error(data.message);
@@ -138,6 +139,24 @@ export async function updateProfile(formData) {
     if (error.response) toast.error(error.response.data.message);
     return { error };
   }
+}
+const masteHook = async ( url,formData ) =>{
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/${url}`,
+      formData
+    );
+    console.log(data);
+    if (!data.error) {
+      toast.success(data.message);
+    } else toast.error(data.message);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+
 }
 
 export async function getAdminData() {
