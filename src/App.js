@@ -4,6 +4,7 @@ import React from "react";
 import "./App.css";
 import "./Responsive.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import AuthLogin from "./Components/Login/AuthLogin";
 import AuthforgotPass from "./Components/Login/AuthforgotPass";
