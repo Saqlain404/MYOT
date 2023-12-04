@@ -51,10 +51,11 @@ export async function DepartmentDetails(formData) {
     return { error };
   }
 }
-export async function changeClinicianStatus(id) {
+export async function AddEmployee(formData) {
   try {
-    const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/admin/changeClinicianStatus/${id}`
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/register-employee`,
+      formData
     );
     console.log(data);
     if (!data.error) {

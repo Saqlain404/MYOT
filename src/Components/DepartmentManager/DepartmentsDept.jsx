@@ -178,31 +178,48 @@ const DepartmentsDept = () => {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       
-      <form action="">
-      <div className="row p-3">
+      
 
      
-      <div className="col-12 mb-3 ">
-        <input type="text" placeholder="Department Name *" className="col-4 modal-input th-text  p-2"/>
-        <input type="text" placeholder="Department Head Name *" className="col-4 modal-input th-text  p-2"/>
-        <input type="text" placeholder="Email ID *" className="col-4 modal-input th-text p-2"/>
-      </div>
-      <div className="col-12 mb-3 ">
-        <input type="text" placeholder="Employee Id*" className="col-4 modal-input th-text p-2"/>
-        <input type="text" placeholder="Employee Tittle" className="col-4 modal-input th-text p-2"/>
-        {/* <input type="text" placeholder="Password *" className="col-4 modal-input  p-2"/> */}
-      </div>
-      <div className="col-12 mb-3 ">
-        <input type="text" placeholder="Address" className="col-6 modal-input th-text p-2"/>
-        <input type="text" placeholder="Phone Number" className="col-6 modal-input th-text p-2"/>
-      </div>
-      
-      </div>
-      </form>
-      <div className="d-flex justify-content-end mb-3">
-        <button type="button" class="user-modal-btn">Add New</button>
-        <button type="button" class="user-modal-btn2">Cancle</button>
-      </div>
+      <form action=""
+      //  onSubmit={handleSubmit}
+       >
+                    <div className="row p-3">
+                      <div className="col-12 mb-3 ">
+                        <input
+                          type="text"
+                          placeholder="Department Name *"
+                          className="col-12 modal-input th-text  p-2"
+                          name="departmentname"
+                          // value={departmentInfo.departmentname}
+                          // onChange={handleChange}
+                        />
+                      </div>
+                      <div className="col-12 mb-3 ">
+                        <textarea
+                          type="text"
+                          placeholder="Description"
+                          className="col-12 modal-input th-text p-2"
+                          name="description"
+                          // value={departmentInfo.description}
+                          // onChange={handleChange}
+                        ></textarea>
+                        {/* <input type="text" placeholder="Phone Number" className="col-6 modal-input th-text p-2"/> */}
+                      </div>
+                    </div>
+                    <div className="d-flex justify-content-end mb-3">
+                      <button
+                        type="submit"
+                        class="user-modal-btn"
+                        // onClick={AddDepartment}
+                      >
+                        Add New
+                      </button>
+                      <button type="button" class="user-modal-btn2">
+                        Cancle
+                      </button>
+                    </div>
+                  </form>
     </div>
   </div>
 </div>

@@ -173,20 +173,23 @@ const SidebarDepartment = () => {
       </ul>
       </div>
 
-      <div className='profile'>
-        <div>
-        <img src="/images/sidebar/Profile photo.png" alt="" />
-        </div>
-        <div>
-        <span>Easin Arafat</span>
-        <p className="th-text">Department Manager</p>
-        </div>
-        <div class="dropdown">
-  <a class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <div class="dropdown">
+  <a class="text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <div className="profile">
+          <div>
+            <img src="/images/sidebar/Profile photo.png" alt="" />
+          </div>
+          <div>
+            <span className="text-dark">Easin Arafat</span>
+            <p className="th-text">Department Manager</p>
+          </div>
+          <div>
   <img src="/images/sidebar/ArrowLineDown2.svg" alt="" />
+  </div>
+  </div>
   </a>
   <ul class="dropdown-menu">
-  <Link to={"/Admin/Home"} className="text-decoration-none">
+    <Link to={"/Admin/Home"} className="text-decoration-none">
     <li><a class="dropdown-item">Admin</a></li>
     </Link>
     <Link to={"/Approver/Home"} className="text-decoration-none">
@@ -197,12 +200,6 @@ const SidebarDepartment = () => {
     </Link>
   </ul>
 </div>
-      </div>
-
-
-
-
-
       
     </div>
  </div>

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { AddEmployee } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 
 const Users = () => {
 
@@ -67,6 +68,78 @@ const Users = () => {
       actions: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/> ,
     },
   ];
+
+  const [employeeInfo, setEmployeeInfo] = useState({
+    name: "",
+    email: "",
+    password: "",
+    employtitle: "",
+    department_id: "",
+    mobilenumber: "",
+    salary: "",
+    gender: "",
+    employid: "",
+    employrole: "",
+    profile_pic: "",
+    document_img: "",
+  });
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    console.log(name, value);
+
+    setEmployeeInfo({ ...employeeInfo, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    // console.log({ e });
+    e.preventDefault();
+    const employeeData = {
+      ...employeeInfo,
+      user: localStorage.getItem("user_id"),
+    };
+    console.log(employeeData);
+
+    await AddEmployee({
+      name: employeeData.name,
+      email: employeeData.email,
+      password: employeeData.password,
+      employTitle: employeeData.employtitle,
+      department_Id: employeeData.department_id,
+      mobileNumber: employeeData.mobilenumber,
+      salary: employeeData.salary,
+      gender: employeeData.gender,
+      employId: employeeData.employid,
+      employRole: employeeData.employrole,
+      profile_Pic: employeeData.profile_pic,
+      document_Img: employeeData.document_img,
+
+    })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then((res) => {
+        if (!res.data?.error) {
+          console.log("Success");
+          // Navigate("");
+        }
+      });
+    // setEmployeeInfo({
+    //   employname: "",
+    // email: "",
+    // password: "",
+    // employtitle: "",
+    // department_id: "",
+    // mobilenumber: "",
+    // salary: "",
+    // gender: "",
+    // employid: "",
+    // employRole: "",
+    // profile_pic: "",
+    // document_img: "",
+    // });
+  };
 
   return (
     <>
@@ -142,28 +215,59 @@ const Users = () => {
        <img src="/images/tasks/modal-profile-photo.svg" alt="" />
       </div>
       
-      <form action="">
+      <form action="" onSubmit={handleSubmit}>
       <div className="row p-3">
       <div className="col-12 mb-3">
-        <input type="text" placeholder="Full Name*" className="col-12 modal-input th-text  p-2"/>
+        <input type="text" placeholder="Full Name*" className="col-12 modal-input th-text  p-2"
+        name="name"
+        value={employeeInfo.name}
+        onChange={handleChange}/>
+      </div>
+      {console.log(employeeInfo.name)}
+      <div className="col-12 mb-3 ">
+        <input type="text" placeholder="Employee Tittle" className="col-6 modal-input th-text p-2"
+        name="employtitle"
+        value={employeeInfo.employtitle}
+        onChange={handleChange}/>
+        <input type="text" placeholder="Department *" className="col-6 modal-input th-text  p-2"
+        name="department_id"
+        value={employeeInfo.department_id}
+        onChange={handleChange}/>
       </div>
       <div className="col-12 mb-3 ">
-        <input type="text" placeholder="Employee Tittle" className="col-6 modal-input th-text p-2"/>
-        <input type="text" placeholder="Department *" className="col-6 modal-input th-text  p-2"/>
+        <input type="text" placeholder="Email ID *" className="col-4 modal-input th-text  p-2"
+        name="email"
+        value={employeeInfo.email}
+        onChange={handleChange}/>
+        <input type="text" placeholder="Mobile No" className="col-4 modal-input th-text  p-2"
+        name="mobilenumber"
+        value={employeeInfo.mobilenumber}
+        onChange={handleChange}/>
+        <input type="text" placeholder="Salary" className="col-4 modal-input th-text  p-2"
+        name="salary"
+        value={employeeInfo.salary}
+        onChange={handleChange}/>
       </div>
       <div className="col-12 mb-3 ">
-        <input type="text" placeholder="Email ID *" className="col-4 modal-input th-text  p-2"/>
-        <input type="text" placeholder="Mobile No" className="col-4 modal-input th-text  p-2"/>
-        <input type="text" placeholder="Salary" className="col-4 modal-input th-text  p-2"/>
-      </div>
-      <div className="col-12 mb-3 ">
-        <input type="text" placeholder="Gender *" className="col-4 modal-input th-text  p-2"/>
-        <input type="text" placeholder="Employee Id" className="col-4 modal-input th-text  p-2"/>
-        <input type="text" placeholder="Password *" className="col-4 modal-input th-text  p-2"/>
+        <input type="text" placeholder="Gender *" className="col-4 modal-input th-text  p-2"
+        name="gender"
+        value={employeeInfo.gender}
+        onChange={handleChange}/>
+        <input type="text" placeholder="Employee Id" className="col-4 modal-input th-text  p-2"
+        name="employid"
+        value={employeeInfo.employid}
+        onChange={handleChange}/>
+        <input type="text" placeholder="Password *" className="col-4 modal-input th-text  p-2"
+        name="password"
+        value={employeeInfo.password}
+        onChange={handleChange}/>
       </div>
       <p>Document Upload</p>
       <div className="col-12 mb-3">
-        <input type="file" placeholder="File Format: JPG, JPEG, PNG or PDF Size: Upto 500KB" border="dotted" className="col-12 modal-input th-text  p-2"/>
+        <input type="file" placeholder="File Format: JPG, JPEG, PNG or PDF Size: Upto 500KB" border="dotted" className="col-12 modal-input th-text  p-2"
+        name="document_img"
+        value={employeeInfo.document_img}
+        onChange={handleChange}/>
       </div>
       <div className="table-responsive">
               <table className="table">
@@ -179,27 +283,75 @@ const Users = () => {
                   
                       <tr  className="ms-0">
                         <td className="td-text">Approver</td>
-                         <td><input type="checkbox" value="" /></td>
-                         <td><input type="checkbox" value="" /></td>
-                         <td><input type="checkbox" value="" /></td>
+                         <td><input type="checkbox" 
+                         name="document_img"
+                         value={employeeInfo.employrole}
+                         onChange={handleChange}
+                         /></td>
+                         <td><input type="checkbox" 
+                         name="employrole"
+                         value={employeeInfo.employrole}
+                         onChange={handleChange}
+                         /></td>
+                         <td><input type="checkbox" 
+                         name="employrole"
+                         value={employeeInfo.employrole}
+                         onChange={handleChange}
+                         /></td>
                         </tr>
                         <tr  className="ms-0">
                         <td className="td-text">Department Manager</td>
-                        <td><input type="checkbox" value="" /></td>
-                        <td><input type="checkbox" value="" /></td>
-                        <td><input type="checkbox" value="" /></td>
+                        <td><input type="checkbox" 
+                        name="employrole"
+                        value={employeeInfo.employrole}
+                        onChange={handleChange}
+                        /></td>
+                        <td><input type="checkbox" 
+                        name="employrole"
+                        value={employeeInfo.employrole}
+                        onChange={handleChange}
+                        /></td>
+                        <td><input type="checkbox" 
+                        name="employrole"
+                        value={employeeInfo.employrole}
+                        onChange={handleChange}
+                        /></td>
                         </tr>
                         <tr  className="ms-0">
                         <td className="td-text">Signatory</td>
-                        <td><input type="checkbox" value="" /></td>
-                        <td><input type="checkbox" value="" /></td>
-                        <td><input type="checkbox" value="" /></td>
+                        <td><input type="checkbox" 
+                        name="employrole"
+                        value={employeeInfo.employrole}
+                        onChange={handleChange}
+                        /></td>
+                        <td><input type="checkbox" 
+                        name="employrole"
+                        value={employeeInfo.employrole}
+                        onChange={handleChange}
+                        /></td>
+                        <td><input type="checkbox" 
+                        name="employrole"
+                        value={employeeInfo.employrole}
+                        onChange={handleChange}
+                        /></td>
                         </tr>
                         <tr  className="ms-0">
                         <td className="td-text">Admin</td>
-                        <td><input type="checkbox" value="" /></td>
-                        <td><input type="checkbox" value="" /></td>
-                        <td><input type="checkbox" value="" /></td>
+                        <td><input type="checkbox" 
+                        name="employrole"
+                        value={employeeInfo.employrole}
+                        onChange={handleChange}
+                        /></td>
+                        <td><input type="checkbox" 
+                        name="employrole"
+                        value={employeeInfo.employrole}
+                        onChange={handleChange}
+                        /></td>
+                        <td><input type="checkbox" 
+                        name="employrole"
+                        value={employeeInfo.employrole}
+                        onChange={handleChange}
+                        /></td>
                         </tr>
                    
                   </tbody>
@@ -207,11 +359,12 @@ const Users = () => {
                 <p className="text-danger th-text">Add New Field</p>
               </div>
       </div>
-      </form>
       <div className="d-flex justify-content-end">
-        <button type="button" class="user-modal-btn">Save</button>
+        <button type="submit" class="user-modal-btn">Save</button>
         <button type="button" class="user-modal-btn2">Cancle</button>
       </div>
+      </form>
+      
     </div>
   </div>
 </div>
