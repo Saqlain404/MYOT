@@ -44,6 +44,10 @@ import CalenderSig from "./Components/Signatory/CalenderSig";
 import CalendarMonthSig from "./Components/Signatory/CalendarMonthSig";
 import CalendarYearSig from "./Components/Signatory/CalenderYearSig";
 import AwaitingSig from "./Components/Signatory/AwaitingSig";
+import Approver from "./Components/Index/Approver";
+import Signatories from "./Components/Index/Signatories";
+import Requests from "./Components/Index/Requests";
+import Announcements from "./Components/Index/Announcements";
 
 function App() {
   return (
@@ -56,6 +60,10 @@ function App() {
         <Route path="Admin/Home" element={<Home />} />
         <Route path="Admin/Dashboard" element={<Dashboard />} />
         <Route path="Admin/Tasks" element={<Tasks />} />
+        <Route path="Admin/Approvers" element={<Approver />} />
+        <Route path="Admin/Signatories" element={<Signatories/>} />
+        <Route path="Admin/Requests" element={<Requests/>} />
+        <Route path="Admin/Announcements" element={<Announcements/>} />
         <Route path="Admin/Calendar" element={<Calender />} />
         {/* <Route path="Admin/Calendar-year" element={<CalenderYear/>} /> */}
         <Route path="Admin/Users" element={<Users />} />

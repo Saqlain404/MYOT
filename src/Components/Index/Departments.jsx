@@ -111,7 +111,7 @@ const Departments = () => {
 
   const DepartmentLists = async (key) => {
     const { data } = await DepartmentList({ search: key });
-    if (!data.error) {
+    if (!data?.error) {
       setListItems(data.results.department);
     }
   };
