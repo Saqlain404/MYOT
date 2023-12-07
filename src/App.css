@@ -1524,3 +1524,46 @@ line-height: normal;
     background: none;
 }
 
+.templates-leave{
+  color: #000;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.07px;
+}
+
+.anouncement-text{
+  margin: auto;
+  color: #000;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+letter-spacing: -0.07px;
+}
+
+.new-feedback{
+  margin-top: auto;
+  margin-bottom: auto;
+  color: #999;
+font-family: Nunito;
+font-size: 13px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+letter-spacing: -0.065px;
+}
+
+.announcement-time{
+  margin-left: 100px;
+  color: #656668;
+font-family: Nunito;
+font-size: 13px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+letter-spacing: -0.065px;
+}

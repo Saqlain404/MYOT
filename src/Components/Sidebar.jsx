@@ -247,6 +247,7 @@ const Sidebar = () => {
               </a>
             </li>
             <li className="nav-item text-dark">
+            <Link to={"/Admin/Analytics"} className="text-decoration-none">
               <a
                 href="/"
                 className="nav-link text-dark fs-5 align-middle "
@@ -259,6 +260,7 @@ const Sidebar = () => {
 
                 <span className="ms-3 align-middle sidebar-btn">Analytics</span>
               </a>
+              </Link>
             </li>
 
             <p className="th-text mt-3">OTHERS</p>

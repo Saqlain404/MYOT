@@ -92,20 +92,28 @@ const SidebarSig = () => {
         </li>
        
         <li className="nav-item text-dark">
+        <Link
+           to={"/Signatory/Requests"}
+           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/request.png" className='align-middle sidebar-icon'/>
               
               <span className="ms-3 align-middle sidebar-btn">Requests</span>
             </a>
+            </Link>
         </li>
         <li className="nav-item text-dark ">
+        <Link
+           to={"/Signatory/Announcements"}
+           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/announcement.png" className='align-middle sidebar-icon'/>
               
               <span className="ms-3 align-middle sidebar-btn ">Announcements</span>
             </a>
+            </Link>
         </li>
         <li className="nav-item text-dark">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
