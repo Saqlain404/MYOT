@@ -2,6 +2,8 @@ import React from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { forgotPassword } from '../../ApiServices/EmployeeHttpService/employeeLoginHttpService';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const AuthforgotPass = () => {
@@ -17,7 +19,7 @@ const AuthforgotPass = () => {
     console.log(data);
 
     const response = await forgotPassword(data);
-    if (!response?.data.error) {
+    if (response?.data.error) {
       navigate("/Employee/Forgot-success", { state: { email: data?.email } });
     }
   };
@@ -78,6 +80,7 @@ const AuthforgotPass = () => {
                           {errors.email.message}
                         </p>
                       )}
+                      <ToastContainer/>
                     </div>
                     <button
                       className="btn  py-8 mb-3 form-reset"

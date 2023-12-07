@@ -32,12 +32,12 @@ export async function forgotPassword(formData) {
     );
     console.log(data);
 
-    if (!data?.error) {
+    if (!data.error) {
       await localStorage.removeItem("token-employee");
       toast.success(data.results.otp);
     } else toast.error(data.message);
 
-    if (!data?.error) return { data };
+    if (!data.error) return { data };
   } catch (error) {
     if (error?.response) toast.error(error.response.data.message);
     return { error };
