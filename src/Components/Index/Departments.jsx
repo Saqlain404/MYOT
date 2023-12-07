@@ -110,9 +110,9 @@ const Departments = () => {
   const [listItems, setListItems] = useState([]);
 
   const DepartmentLists = async (key) => {
-    const { data } = await DepartmentList({ search: key });
+    const { data } = await DepartmentList({search: key});
     if (!data?.error) {
-      setListItems(data.results.department);
+      setListItems(data?.results?.department);
     }
   };
   console.log(listItems);
@@ -330,6 +330,7 @@ const Departments = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  // value={}
                   onChange={(e) => DepartmentLists(e.target.value)}
                 />
               </form>
@@ -400,7 +401,7 @@ const Departments = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {listItems.map((item, index) => (
+                    {listItems?.map((item, index) => (
                       <tr className="ms-0">
                         <td className="td-text">
                           <input
@@ -418,10 +419,7 @@ const Departments = () => {
                               data-bs-toggle="dropdown"
                               aria-expanded="false"
                             >
-                              <img
-                                src="/images/sidebar/ThreeDots.svg"
-                                className="w-auto p-3"
-                              />
+                              <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                               <li>
