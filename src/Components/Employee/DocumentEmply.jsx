@@ -129,7 +129,55 @@ const DocumentEmply = () => {
               </nav>
             </div>
 
-            <p className="table-name mb-2">Document Requests Management</p>
+            <div className="d-flex justify-content-between">
+              <p className="table-name mb-2">Document Requests Management</p>
+              <div className="d-flex justify-content-center th-text">
+                <div
+                  className="d-flex whitespace-nowrap"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  <img src="/images/tasks/Add.svg" alt="" className="pb-3" />
+                  <p className="pt-1 text-nowrap">Document Request</p>
+                </div>
+                <img
+                  src="/images/sidebar/ThreeDots.svg"
+                  alt=""
+                  className="pb-3 ms-2 text-secondary"
+                />
+              </div>
+            </div>
+
+                        {/* <!-- Modal --> */}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-department">
+    <div class="modal-content border-0">
+      <div class="d-flex modal-header border-bottom">
+        <p class="" id="exampleModalLabel">New Document</p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <form action="">
+      <div className="row p-3">
+
+     
+      <div className="col-12 mb-3 ">
+        <input type="text" placeholder="Document Type *" className="col-12 modal-input th-text  p-2"/>
+      </div>
+      
+      </div>
+      </form>
+      <div className="d-flex justify-content-end mb-3">
+        <button type="button" class="user-modal-btn">Request</button>
+        <button type="button" class="user-modal-btn2">Cancle</button>
+      </div>
+    </div>
+  </div>
+</div>
+{/* <!-- Modal End--> */}
+
+
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
                 <div className="col-md-3 border-end">
@@ -249,7 +297,7 @@ const DocumentEmply = () => {
   {task.action}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Details</a></li>
+    <li ><a class="dropdown-item border-bottom" href="/Employee/view-details"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Details</a></li>
     <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Download-Button.png" alt="" className="me-2"/>Download</a></li>
   </ul>
 </div>

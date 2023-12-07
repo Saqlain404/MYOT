@@ -249,7 +249,7 @@ const ReceivedDocEmpl = () => {
   {task.action}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Details</a></li>
+    <li ><a class="dropdown-item border-bottom" href="/Employee/received-doc/view-details"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Details</a></li>
     <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Download-Button.png" alt="" className="me-2"/>Download</a></li>
   </ul>
 </div>

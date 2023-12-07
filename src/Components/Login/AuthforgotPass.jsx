@@ -1,7 +1,26 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { forgotPassword } from '../../ApiServices/EmployeeHttpService/employeeLoginHttpService';
+
 
 const AuthforgotPass = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    console.log(data);
+
+    const response = await forgotPassword(data);
+    if (!response?.data.error) {
+      navigate("/Employee/Forgot-success", { state: { email: data?.email } });
+    }
+  };
   return (
     
 <>
@@ -28,7 +47,8 @@ const AuthforgotPass = () => {
                     No worries, we’ll send you reset instructions.
                     </p>
                   </div>
-                  <form >
+                  <form 
+                  onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-3">
                       <label
                         htmlFor="exampleInputEmail1"
@@ -39,20 +59,33 @@ const AuthforgotPass = () => {
                       <input
                         type="email"
                         className="form-control form-reset"
-                        id="exampleInputEmail1"
                         aria-describedby="emailHelp"
-                        placeholder='example@gmail.com'
+                        placeholder='example@gmail.com' 
+                        name="email"
+                        id="email"
+                        {...register("email", {
+                          required: "This field is required",
+                          pattern: {
+                            value:
+                              /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                            message: "Invalid email address",
+                          },
+                        })}
                       />
+
+                      {errors?.email && (
+                        <p className="form-error mt-1">
+                          {errors.email.message}
+                        </p>
+                      )}
                     </div>
-                    <Link
-                      to={"/Admin/Forgot-success"}>
-                    <a
-                      href="javascript:void(0)"
+                    <button
                       className="btn  py-8 mb-3 form-reset"
+                      type='submit'
                     >
                       Reset Your Password
-                    </a>
-                    </Link>
+                    </button>
+                    
                   </form>
                 
               </div>

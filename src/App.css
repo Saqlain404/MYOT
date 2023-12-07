@@ -73,6 +73,7 @@ height: 960px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 348px;
   height: 50px;
   /* flex-shrink: 0; */
@@ -85,6 +86,99 @@ height: 960px; */
   /* line-height: normal; */
 }
 
+.download-btn{
+  width: 106px;
+  height: 39px;
+  align-items: center;
+  background-color: #3E51FF;
+  color: white;
+  border-radius: 10px;
+  font-size: 14px;
+  border: none;
+}
+.view-details{
+  width: 1168px;
+  margin-left: 20px;
+  height: 850px;
+  border: 2px solid gray;
+  border-radius: 10px;
+}
+.jLogo{
+  width: 30px;
+  height: 44px;
+  margin-left: 50px;
+}
+.preview{
+  font-size: 24px;
+  font-weight: 700;
+}
+.view-text-1{
+  width: 231px;
+  height: 51px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 17px;
+  margin-left: 50px;
+  margin-top: 20px;
+  color: #000;
+}
+.view-text-2{
+  width: 1108px;
+  height: 268px;
+  font-size: 12px;
+  font-weight: 400;
+  /* line-height: 20px; */
+  margin-left: 50px;
+  margin-top: 20px;
+  color: #000;
+}
+.sign{
+  width: 89px;
+  height: 55px;
+  margin-left: 50px;
+  margin-top: -80px;
+}
+.sign-2{
+  margin-left: 950px;
+}
+.received-docs-title{
+  font-size: 16px;
+  font-weight: 600;
+}
+.received-docs{
+  /* border: 2px solid gray; */
+  padding: 6px;
+  border-radius: 10px;
+  background-color: #FAFAFB;
+  width: 950px;
+  height: 900px;
+}
+.docs-info{
+  background-color: #fff;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 20px;
+  border-radius: 10px;
+}
+.docs-data{
+  justify-content: space-between;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.body-data{
+  margin-top: -14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.head-data{
+  font-size: 10px;
+  margin-top: 10px;
+}
+.comment{
+  margin-top: 20px;
+  font-size: 12px;
+}
 .form-login {
   padding: inherit;
 }

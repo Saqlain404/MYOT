@@ -49,6 +49,8 @@ import DocHistoryEmploye from "./Components/Employee/DocHistoryEmploye";
 import DocumentEmply from "./Components/Employee/DocumentEmply";
 import ReceivedDocEmpl from "./Components/Employee/ReceivedDocEmpl";
 import CalenderEmply from "./Components/Employee/CalenderEmply";
+import ViewDocumentEmply from "./Components/Employee/ViewDocumentEmply";
+import ViewReceivedDoc from "./Components/Employee/ViewRecievedDoc";
 
 function App() {
   return (
@@ -56,8 +58,8 @@ function App() {
       <Routes>
         <Route path="*" element={<AuthLogin />} />
         <Route path="Admin/Login" element={<AuthLogin />} />
-        <Route path="Admin/Forgot-password" element={<AuthforgotPass />} />
-        <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} />
+        {/* <Route path="Admin/Forgot-password" element={<AuthforgotPass />} /> */}
+        {/* <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} /> */}
         <Route path="Admin/Home" element={<Home />} />
         <Route path="Admin/Dashboard" element={<Dashboard />} />
         <Route path="Admin/Tasks" element={<Tasks />} />
@@ -117,6 +119,11 @@ function App() {
         <Route path="Employee/document" element={<DocumentEmply/>} />
         <Route path="Employee/received-doc" element={<ReceivedDocEmpl/>} />
         <Route path="Employee/Calender" element={<CalenderEmply/>} />
+        <Route path="Employee/view-details" element={<ViewDocumentEmply/>} />
+        <Route path="Employee/received-doc/view-details" element={<ViewReceivedDoc/>} />
+        <Route path="Employee/Forgot-success" element={<AuthforgotSuccess />} />
+            <Route path="Employee/Forgot-password" element={<AuthforgotPass />} />
+       
       </Routes>
     </div>
   );
