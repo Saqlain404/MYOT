@@ -166,70 +166,77 @@ const Sidebar = () => {
             </li>
             <li className="nav-item text-dark">
               <Link to={"/Admin/Approvers"} className="text-decoration-none">
-              <a
-                href="/"
-                className="nav-link text-dark fs-5 align-middle "
-                aria-current="page"
-              >
-                <img
-                  src="/images/sidebar/approvers.png"
-                  className="align-middle sidebar-icon"
-                />
+                <a
+                  href="/"
+                  className="nav-link text-dark fs-5 align-middle "
+                  aria-current="page"
+                >
+                  <img
+                    src="/images/sidebar/approvers.png"
+                    className="align-middle sidebar-icon"
+                  />
 
-                <span className="ms-3 align-middle sidebar-btn">Approvers</span>
-              </a>
+                  <span className="ms-3 align-middle sidebar-btn">
+                    Approvers
+                  </span>
+                </a>
               </Link>
             </li>
             <li className="nav-item text-dark">
-            <Link to={"/Admin/Signatories"} className="text-decoration-none">
-              <a
-                href="/"
-                className="nav-link text-dark fs-5 align-middle "
-                aria-current="page"
-              >
-                <img
-                  src="/images/sidebar/signatories.png"
-                  className="align-middle sidebar-icon"
-                />
+              <Link to={"/Admin/Signatories"} className="text-decoration-none">
+                <a
+                  href="/"
+                  className="nav-link text-dark fs-5 align-middle "
+                  aria-current="page"
+                >
+                  <img
+                    src="/images/sidebar/signatories.png"
+                    className="align-middle sidebar-icon"
+                  />
 
-                <span className="ms-3 align-middle sidebar-btn">
-                  Signatories
-                </span>
-              </a>
+                  <span className="ms-3 align-middle sidebar-btn">
+                    Signatories
+                  </span>
+                </a>
               </Link>
             </li>
             <li className="nav-item text-dark">
-            <Link to={"/Admin/Requests"} className="text-decoration-none">
-              <a
-                href="/"
-                className="nav-link text-dark fs-5 align-middle "
-                aria-current="page"
-              >
-                <img
-                  src="/images/sidebar/request.png"
-                  className="align-middle sidebar-icon"
-                />
+              <Link to={"/Admin/Requests"} className="text-decoration-none">
+                <a
+                  href="/"
+                  className="nav-link text-dark fs-5 align-middle "
+                  aria-current="page"
+                >
+                  <img
+                    src="/images/sidebar/request.png"
+                    className="align-middle sidebar-icon"
+                  />
 
-                <span className="ms-3 align-middle sidebar-btn">Requests</span>
-              </a>
+                  <span className="ms-3 align-middle sidebar-btn">
+                    Requests
+                  </span>
+                </a>
               </Link>
             </li>
             <li className="nav-item text-dark ">
-            <Link to={"/Admin/Announcements"} className="text-decoration-none">
-              <a
-                href="/"
-                className="nav-link text-dark fs-5 align-middle "
-                aria-current="page"
+              <Link
+                to={"/Admin/Announcements"}
+                className="text-decoration-none"
               >
-                <img
-                  src="/images/sidebar/announcement.png"
-                  className="align-middle sidebar-icon"
-                />
+                <a
+                  href="/"
+                  className="nav-link text-dark fs-5 align-middle "
+                  aria-current="page"
+                >
+                  <img
+                    src="/images/sidebar/announcement.png"
+                    className="align-middle sidebar-icon"
+                  />
 
-                <span className="ms-3 align-middle sidebar-btn ">
-                  Announcements
-                </span>
-              </a>
+                  <span className="ms-3 align-middle sidebar-btn ">
+                    Announcements
+                  </span>
+                </a>
               </Link>
             </li>
             <li className="nav-item text-dark">
@@ -324,34 +331,43 @@ const Sidebar = () => {
           </ul>
         </div>
         <div class="dropdown">
-  <a class="text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <div className="profile">
-          <div>
-            <img src="/images/sidebar/Profile photo.png" alt="" />
-          </div>
-          <div>
-            <span className="text-dark">Easin Arafat</span>
-            <p className="th-text">Admin</p>
-          </div>
-          <div>
-  <img src="/images/sidebar/ArrowLineDown2.svg" alt="" />
-  </div>
-  </div>
-  </a>
-  <ul class="dropdown-menu">
-    <Link to={"/Approver/Home"} className="text-decoration-none">
-    <li><a class="dropdown-item">Approver</a></li>
-    </Link>
-    <Link to={"/Department/Home"} className="text-decoration-none">
-    <li><a class="dropdown-item">Department Manager</a></li>
-    </Link>
-    <Link to={"/Signatory/Home"} className="text-decoration-none">
-    <li><a class="dropdown-item">Signatory</a></li>
-    </Link>
-  </ul>
-</div>
-        
-
+          <a
+            class="text-decoration-none"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <div className="profile">
+              <div>
+                <img src="/images/sidebar/Profile photo.png" alt="" />
+              </div>
+              <div>
+                <span className="text-dark">Easin Arafat</span>
+                <p className="th-text">Admin</p>
+              </div>
+              <div>
+                <img src="/images/sidebar/ArrowLineDown2.svg" alt="hh" />
+              </div>
+            </div>
+          </a>
+          <ul class="dropdown-menu">
+            <Link to={"/Approver/Home"} className="text-decoration-none">
+              <li>
+                <a class="dropdown-item">Approver</a>
+              </li>
+            </Link>
+            <Link to={"/Department/Home"} className="text-decoration-none">
+              <li>
+                <a class="dropdown-item">Department Manager</a>
+              </li>
+            </Link>
+            <Link to={"/Signatory/Home"} className="text-decoration-none">
+              <li>
+                <a class="dropdown-item">Signatory</a>
+              </li>
+            </Link>
+          </ul>
+        </div>
       </div>
     </div>
   );
