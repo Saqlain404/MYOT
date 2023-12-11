@@ -57,6 +57,7 @@ import AnalyticsDept from "./Components/DepartmentManager/Analytics";
 import RequestsSig from "./Components/Signatory/Requests";
 import AnnouncementsSig from "./Components/Signatory/AnnouncementsSig";
 
+
 function App() {
   return (
     <div>
@@ -68,11 +69,13 @@ function App() {
         <Route path="Admin/Home" element={<Home />} />
         <Route path="Admin/Dashboard" element={<Dashboard />} />
         <Route path="Admin/Tasks" element={<Tasks />} />
-        <Route path="Admin/Approvers" element={<Approver />} />
+         <Route path="Admin/Approvers" element={<Approver />} />
         <Route path="Admin/Signatories" element={<Signatories/>} />
         <Route path="Admin/Requests" element={<Requests/>} />
         <Route path="Admin/Announcements" element={<Announcements/>} />
         <Route path="Admin/Analytics" element={<Analytics/>} />
+        <Route path="Admin/Announcements" element={<Announcements/>} /> */}
+
         <Route path="Admin/Calendar" element={<Calender />} />
         {/* <Route path="Admin/Calendar-year" element={<CalenderYear/>} /> */}
         <Route path="Admin/Users" element={<Users />} />
