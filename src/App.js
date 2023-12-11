@@ -56,6 +56,16 @@ import AnnouncementsDept from "./Components/DepartmentManager/AnnouncementsDept"
 import AnalyticsDept from "./Components/DepartmentManager/Analytics";
 import RequestsSig from "./Components/Signatory/Requests";
 import AnnouncementsSig from "./Components/Signatory/AnnouncementsSig";
+import Profile from "./Components/Index/Profile";
+import EditProfile from "./Components/Index/EditProfile";
+import EditProfileSig from "./Components/Signatory/EditProfile";
+import ProfileSig from "./Components/Signatory/ProfileSig";
+import ProfileAprv from "./Components/Approver/ProfileAprv";
+import EditProfileAprv from "./Components/Approver/EditProfileAprv";
+import ProfileDept from "./Components/DepartmentManager/ProfileDept";
+import EditProfileDept from "./Components/DepartmentManager/EditProfileDept";
+import Help from "./Components/Index/Help";
+import HelpSupport from "./Components/Index/Help&support";
 
 
 function App() {
@@ -69,13 +79,6 @@ function App() {
         <Route path="Admin/Home" element={<Home />} />
         <Route path="Admin/Dashboard" element={<Dashboard />} />
         <Route path="Admin/Tasks" element={<Tasks />} />
-         <Route path="Admin/Approvers" element={<Approver />} />
-        <Route path="Admin/Signatories" element={<Signatories/>} />
-        <Route path="Admin/Requests" element={<Requests/>} />
-        <Route path="Admin/Announcements" element={<Announcements/>} />
-        <Route path="Admin/Analytics" element={<Analytics/>} />
-        <Route path="Admin/Announcements" element={<Announcements/>} /> 
-
         <Route path="Admin/Calendar" element={<Calender />} />
         {/* <Route path="Admin/Calendar-year" element={<CalenderYear/>} /> */}
         <Route path="Admin/Users" element={<Users />} />
@@ -84,6 +87,16 @@ function App() {
         <Route path="Admin/Calendar-month" element={<CalendarMonth />} />
         <Route path="Admin/Calendar-year" element={<CalenderYear />} />
         <Route path="Admin/Chat" element={<Chatbox />} />
+        <Route path="Admin/Approvers" element={<Approver />} />
+        <Route path="Admin/Signatories" element={<Signatories/>} />
+        <Route path="Admin/Requests" element={<Requests/>} />
+        <Route path="Admin/Announcements" element={<Announcements/>} />
+        <Route path="Admin/Analytics" element={<Analytics/>} />
+        <Route path="Admin/Announcements" element={<Announcements/>} /> 
+        <Route path="Admin/My-profile" element={<Profile/>} /> 
+        <Route path="Admin/Edit-profile" element={<EditProfile/>} /> 
+        <Route path="Admin/Help" element={<Help/>} /> 
+        <Route path="Admin/Help-Support" element={<HelpSupport/>} /> 
 
         <Route path="Department/Home" element={<HomeDept />} />
         <Route path="Department/Dashboard" element={<DashboardDept />} />
@@ -99,6 +112,8 @@ function App() {
         <Route path="Department/Requests" element={<RequestsDept/>} />
         <Route path="Department/Announcements" element={<AnnouncementsDept/>} />
         <Route path="Department/Analytics" element={<AnalyticsDept/>} />
+        <Route path="Department/My-profile" element={<ProfileDept/>} /> 
+        <Route path="Department/Edit-profile" element={<EditProfileDept/>} /> 
 
         <Route path="Approver/Home" element={<HomeAprv />} />
         <Route path="Approver/Dashboard" element={<DashboardAprv />} />
@@ -117,6 +132,8 @@ function App() {
         <Route path="Approver/Calendar" element={<CalenderAprv />} />
         <Route path="Approver/Calendar-month" element={<CalendarMonthAprv />} />
         <Route path="Approver/Calendar-year" element={<CalendarYearAprv />} />
+        <Route path="Approver/My-profile" element={<ProfileAprv/>} /> 
+        <Route path="Approver/Edit-profile" element={<EditProfileAprv/>} /> 
 
         <Route path="Signatory/Home" element={<HomeSig />} />
         <Route path="Signatory/Dashboard" element={<DashboardSig />} />
@@ -131,6 +148,8 @@ function App() {
         <Route path="Signatory/Calendar-year" element={<CalendarYearSig />} />
         <Route path="Signatory/Requests" element={<RequestsSig/>} />
         <Route path="Signatory/Announcements" element={<AnnouncementsSig/>} />
+        <Route path="Signatory/My-profile" element={<ProfileSig/>} /> 
+        <Route path="Signatory/Edit-profile" element={<EditProfileSig/>} /> 
       </Routes>
     </div>
   );

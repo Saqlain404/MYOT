@@ -150,12 +150,16 @@ const SidebarDepartment = () => {
         <p className="th-text mt-3">OTHERS</p>
 
         <li className="nav-item text-dark">
+        <Link
+           to={"/Department/My-profile"}
+           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/my-profile.png" className='align-middle sidebar-icon'/>
               
               <span className="ms-3 align-middle sidebar-btn">My Profile</span>
             </a>
+            </Link>
         </li>
         <li className="nav-item text-dark">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">

@@ -273,6 +273,7 @@ const Sidebar = () => {
             <p className="th-text mt-3">OTHERS</p>
 
             <li className="nav-item text-dark">
+            <Link to={"/Admin/My-profile"} className="text-decoration-none">
               <a
                 href="/"
                 className="nav-link text-dark fs-5 align-middle "
@@ -287,6 +288,7 @@ const Sidebar = () => {
                   My Profile
                 </span>
               </a>
+              </Link>
             </li>
             <li className="nav-item text-dark">
               <a
@@ -303,6 +305,7 @@ const Sidebar = () => {
               </a>
             </li>
             <li className="nav-item text-dark">
+            <Link to={"/Admin/Help"} className="text-decoration-none">
               <a
                 href="/"
                 className="nav-link text-dark fs-5 align-middle "
@@ -315,6 +318,7 @@ const Sidebar = () => {
 
                 <span className="ms-3 align-middle sidebar-btn">Help</span>
               </a>
+              </Link>
             </li>
             <li className="nav-item text-dark">
               <a
