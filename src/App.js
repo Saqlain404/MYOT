@@ -44,10 +44,19 @@ import CalenderSig from "./Components/Signatory/CalenderSig";
 import CalendarMonthSig from "./Components/Signatory/CalendarMonthSig";
 import CalendarYearSig from "./Components/Signatory/CalenderYearSig";
 import AwaitingSig from "./Components/Signatory/AwaitingSig";
-// import Approver from "./Components/Index/Approver";
-// import Signatories from "./Components/Index/Signatories";
-// import Requests from "./Components/Index/Requests";
-// import Announcements from "./Components/Index/Announcements";
+import Approver from "./Components/Index/Approver";
+import Signatories from "./Components/Index/Signatories";
+import Requests from "./Components/Index/Requests";
+import Announcements from "./Components/Index/Announcements";
+import Analytics from "./Components/Index/Analytics";
+import RequestsAprv from "./Components/Approver/RequestsAprv";
+import AnnouncementsAprv from "./Components/Approver/AnnouncementsAprv";
+import RequestsDept from "./Components/DepartmentManager/RequestsDept";
+import AnnouncementsDept from "./Components/DepartmentManager/AnnouncementsDept";
+import AnalyticsDept from "./Components/DepartmentManager/Analytics";
+import RequestsSig from "./Components/Signatory/Requests";
+import AnnouncementsSig from "./Components/Signatory/AnnouncementsSig";
+
 
 function App() {
   return (
@@ -60,10 +69,13 @@ function App() {
         <Route path="Admin/Home" element={<Home />} />
         <Route path="Admin/Dashboard" element={<Dashboard />} />
         <Route path="Admin/Tasks" element={<Tasks />} />
-        {/* <Route path="Admin/Approvers" element={<Approver />} />
+         <Route path="Admin/Approvers" element={<Approver />} />
         <Route path="Admin/Signatories" element={<Signatories/>} />
         <Route path="Admin/Requests" element={<Requests/>} />
+        <Route path="Admin/Announcements" element={<Announcements/>} />
+        <Route path="Admin/Analytics" element={<Analytics/>} />
         <Route path="Admin/Announcements" element={<Announcements/>} /> */}
+
         <Route path="Admin/Calendar" element={<Calender />} />
         {/* <Route path="Admin/Calendar-year" element={<CalenderYear/>} /> */}
         <Route path="Admin/Users" element={<Users />} />
@@ -84,11 +96,16 @@ function App() {
         />
         <Route path="Department/Calendar" element={<CalenderDept />} />
         <Route path="Department/Departments" element={<DepartmentsDept />} />
+        <Route path="Department/Requests" element={<RequestsDept/>} />
+        <Route path="Department/Announcements" element={<AnnouncementsDept/>} />
+        <Route path="Department/Analytics" element={<AnalyticsDept/>} />
 
         <Route path="Approver/Home" element={<HomeAprv />} />
         <Route path="Approver/Dashboard" element={<DashboardAprv />} />
         <Route path="Approver/Template-review" element={<TemplateReview />} />
         <Route path="Approver/Template-view" element={<TemplateRevView />} />
+        <Route path="Approver/Requests" element={<RequestsAprv/>} />
+        <Route path="Approver/Announcements" element={<AnnouncementsAprv/>} />
         <Route
           path="Approver/History-log-approved"
           element={<HistoryLogAprv />}
@@ -112,6 +129,8 @@ function App() {
         <Route path="Signatory/Calendar" element={<CalenderSig />} />
         <Route path="Signatory/Calendar-month" element={<CalendarMonthSig />} />
         <Route path="Signatory/Calendar-year" element={<CalendarYearSig />} />
+        <Route path="Signatory/Requests" element={<RequestsSig/>} />
+        <Route path="Signatory/Announcements" element={<AnnouncementsSig/>} />
       </Routes>
     </div>
   );

@@ -1,11 +1,9 @@
 import React from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-// import "assets/css/style.min.css"
-import { Card } from "antd";
 import { Link } from "react-router-dom";
+import SidebarAprv from "./SidebarAprv";
 
-const Announcements = () => {
+const AnnouncementsAprv = () => {
   const documents = [
     {
       id: 1,
@@ -91,7 +89,7 @@ const Announcements = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <Sidebar />
+            <SidebarAprv />
           </div>
           <div className="col-7 middle-content">
             <div className="container-fluid border-bottom sticky-top bg-white mb-4">
@@ -264,4 +262,4 @@ const Announcements = () => {
   );
 };
 
-export default Announcements;
+export default AnnouncementsAprv;

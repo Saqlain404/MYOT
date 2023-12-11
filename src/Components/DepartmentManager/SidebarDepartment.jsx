@@ -103,20 +103,28 @@ const SidebarDepartment = () => {
             </Link>
         </li>
         <li className="nav-item text-dark">
+        <Link
+           to={"/Department/Requests"}
+           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/request.png" className='align-middle sidebar-icon'/>
               
               <span className="ms-3 align-middle sidebar-btn">Requests</span>
             </a>
+            </Link>
         </li>
         <li className="nav-item text-dark ">
+        <Link
+           to={"/Department/Announcements"}
+           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/announcement.png" className='align-middle sidebar-icon'/>
               
               <span className="ms-3 align-middle sidebar-btn ">Announcements</span>
             </a>
+            </Link>
         </li>
         <li className="nav-item text-dark">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
@@ -127,12 +135,16 @@ const SidebarDepartment = () => {
             </a>
         </li>
         <li className="nav-item text-dark">
+        <Link
+           to={"/Department/Analytics"}
+           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/analytics.png" className='align-middle sidebar-icon'/>
               
               <span className="ms-3 align-middle sidebar-btn">Analytics</span>
             </a>
+            </Link>
         </li>
 
         <p className="th-text mt-3">OTHERS</p>
