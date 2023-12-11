@@ -74,7 +74,7 @@ function App() {
         <Route path="Admin/Requests" element={<Requests/>} />
         <Route path="Admin/Announcements" element={<Announcements/>} />
         <Route path="Admin/Analytics" element={<Analytics/>} />
-        <Route path="Admin/Announcements" element={<Announcements/>} /> */}
+        <Route path="Admin/Announcements" element={<Announcements/>} /> 
 
         <Route path="Admin/Calendar" element={<Calender />} />
         {/* <Route path="Admin/Calendar-year" element={<CalenderYear/>} /> */}
