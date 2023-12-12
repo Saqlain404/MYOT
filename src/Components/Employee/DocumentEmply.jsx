@@ -1,85 +1,140 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "@fortawesome/free-regular-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
+import {
+  AddDocument,
+  employeDocumentList,
+  fetchTemplateData,
+  searchDoc,
+} from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // import "../../dist/css/style.min.css"
 
 const DocumentEmply = () => {
-  const tasks = [
-    {
-      id: 1,
-      template: "Non-Objection Certificate",
-      assignedTo: [
-        <img src="/images/dashboard/avatar2.png" className="me-2" />,
-        "Katherine Ross",
-      ],
-      dateofSigning: "2023-09-15",
-      comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      status: 
-        <p className="text-primary m-0">
-          In Progress
-        </p>,
-      department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 2,
-      template: "Expense Report",
-      assignedTo: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
-        "Eve Leroy",
-      ],
-      dateofSigning: "2023-09-15",
-      comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      status: <p className="text-warning m-0"> Approved</p>,
-      department: "Finance",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 3,
-      template: "Salary Slip",
-      assignedTo: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Drew Cano",
-      ],
-      dateofSigning: "2023-09-15",
-      comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      status: <p className="text-info m-0">Pending</p>,
-      department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 4,
-      template: "Research Proposal",assignedTo: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Andi Lane",
-      ],
-      dateofSigning: "2023-09-15",
-      comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      status: <p className="text-success m-0"> Active</p>,
-      department: "R&D",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 5,
-      template: "Conference Attendance",
-      assignedTo: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
-        "Natali Craig",
-      ],
-      dateofSigning: "2023-09-15",
-      comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      status: <p className="text-secondary m-0">Rejected</p>,
-      department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    // Add more tasks here
-  ];
+  const navigate = useNavigate();
+  const [searchData, setSearchData] = useState("");
+  const [templateNames, setTemplateNames] = useState(null);
+  const [documentRequests, setDocumentRequests] = useState([]);
+  const [shouldRender, setShouldRender] = useState(false);
 
-  
+  const [documentInfo, setDocumentInfo] = useState({
+    documentName: "",
+    templateId: "",
+  });
+
+  const handleSearch = async () => {
+    const result = await searchDoc(searchData);
+    console.log(result);
+    const searchResult = result?.data?.results?.document;
+
+    if (searchResult && Array.isArray(searchResult)) {
+      const mappedResult = searchResult?.map((document) => ({
+        documentName: document?.templete?.templeteName,
+        img: [document?.templete?.manager?.[0]?.profile_Pic],
+        assignedTo: [document?.templete?.manager?.[0]?.name],
+        department: [
+          document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
+        ],
+        dateofSigning: [document?.createdAt],
+        comments: (
+          <img
+            src="/images/dashboard/Comment.png"
+            className="mx-auto d-block"
+          />
+        ),
+        status: [document?.status],
+      }));
+      setDocumentRequests(mappedResult);
+    }
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchData]);
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    console.log(name, value);
+
+    setDocumentInfo({ ...documentInfo, [name]: value });
+  };
+  console.log(documentInfo);
+
+  const [templateIdList, setTemplateIdList] = useState([]);
+
+  useEffect(() => {
+    const fetchTemplateIdsData = async () => {
+      const [templateList] = await fetchTemplateData();
+      if (templateList) {
+        setTemplateIdList(templateList);
+        console.log(templateList);
+      }
+    };
+
+    fetchTemplateIdsData();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    // e.preventDefault();
+    const documentData = {
+      ...documentInfo,
+      user: localStorage.getItem("user_id"),
+    };
+    await AddDocument({
+      documentName: documentData.documentName,
+      templete_Id: documentData.templateId,
+      creator_Id: localStorage.getItem("user_id"),
+    }).then((res) => {
+      if (!res.data?.error) {
+        setShouldRender(!shouldRender);
+        console.log("Success");
+        navigate("");
+      }
+    });
+    setDocumentInfo({
+      documentName: "",
+      templateId: "",
+    });
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!searchData || searchData === "") {
+        const names = await employeDocumentList();
+        if (names) {
+          setTemplateNames(names);
+          console.log(names);
+        }
+
+        const requests = names?.map((name) => ({
+          documentName: name?.templete_Id?.templeteName,
+          assignedTo: [name?.templete_Id?.manager?.name],
+          img: [name?.templete_Id?.manager?.profile_Pic],
+          department: [
+            name?.templete_Id?.manager?.department_Id?.departmentName,
+          ],
+          dateofSigning: [name?.createdAt],
+          comments: (
+            <img
+              src="/images/dashboard/Comment.png"
+              className="mx-auto d-block"
+            />
+          ),
+          status: [name?.status],
+        }));
+
+        setDocumentRequests(requests);
+      }
+    };
+
+    fetchData();
+  }, [searchData,shouldRender]);
+
   return (
     <>
       <div className="container-fluid">
@@ -93,7 +148,7 @@ const DocumentEmply = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link ms-2" href="app-email.html">
-                    Document Requests Management
+                      Document Requests Management
                     </a>
                   </li>
                 </ul>
@@ -112,12 +167,12 @@ const DocumentEmply = () => {
                       alt=""
                       className="ms-4 "
                     />
-                    <Link to={"/Admin/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                    <Link to={"/Employee/Chat"}>
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -149,34 +204,66 @@ const DocumentEmply = () => {
               </div>
             </div>
 
-                        {/* <!-- Modal --> */}
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-department">
-    <div class="modal-content border-0">
-      <div class="d-flex modal-header border-bottom">
-        <p class="" id="exampleModalLabel">New Document</p>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      
-      <form action="">
-      <div className="row p-3">
+            {/* <!-- Modal --> */}
+            <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered modal-dialog-department">
+                <div class="modal-content border-0">
+                  <div class="d-flex modal-header border-bottom">
+                    <p class="" id="exampleModalLabel">
+                      New Document
+                    </p>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
 
-     
-      <div className="col-12 mb-3 ">
-        <input type="text" placeholder="Document Type *" className="col-12 modal-input th-text  p-2"/>
-      </div>
-      
-      </div>
-      </form>
-      <div className="d-flex justify-content-end mb-3">
-        <button type="button" class="user-modal-btn">Request</button>
-        <button type="button" class="user-modal-btn2">Cancle</button>
-      </div>
-    </div>
-  </div>
-</div>
-{/* <!-- Modal End--> */}
-
+                  <form action="" onSubmit={handleSubmit}>
+                    <div className="row p-3">
+                      <div className="col-12 mb-3 ">
+                        <select
+                          className="col-12 modal-input  p-2"
+                          name="templateId"
+                          onChange={handleChange}
+                          value={documentInfo.templateId}
+                        >
+                          <option value="" disabled>
+                            Select Document Type *
+                          </option>
+                          {templateIdList.map((template) => (
+                            <option key={template._id} value={template._id}>
+                              {template.templeteName}
+                            </option>
+                          ))}
+                          console.log(template)
+                        </select>
+                      </div>
+                    </div>
+                  </form>
+                  <div className="d-flex justify-content-end mb-3">
+                    <button
+                      type="submit"
+                      class="user-modal-btn"
+                      onClick={() => handleSubmit()}
+                    >
+                      Request <ToastContainer />
+                    </button>
+                    <button type="button" class="user-modal-btn2">
+                      Cancle
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* <!-- Modal End--> */}
 
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
@@ -212,7 +299,12 @@ const DocumentEmply = () => {
               <form className="d-flex me-2" role="search">
                 <input
                   className="form-control table-search-bar"
-                  type="search"
+                  type="text"
+                  onChange={(e) => {
+                    setSearchData(e.target.value);
+                    //  handleSearch();
+                  }}
+                  value={searchData.searchTerm}
                   placeholder="Search"
                   aria-label="Search"
                 />
@@ -284,24 +376,61 @@ const DocumentEmply = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {tasks.map((task) => (
-                      <tr key={task.id}>
-                        <td className="td-text">{task.template}</td>
-                        <td className="td-text">{task.assignedTo}</td>
-                        <td className="td-text">{task.department}</td>
-                        <td className="td-text"><img src="/images/dashboard/CalendarBlank.png" />{task.dateofSigning}</td>
-                        <td className="td-text">{task.comments}</td>
-                        <td className="td-text">{task.status}</td>
-                        <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
-  {task.action}
-  </a>
-  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="/Employee/view-details"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Details</a></li>
-    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Download-Button.png" alt="" className="me-2"/>Download</a></li>
-  </ul>
-</div>
-                          </td>
+                    {documentRequests?.map((request, index) => (
+                      <tr key={index}>
+                        <td className="td-text">{request.documentName}</td>
+                        <td className="td-text">
+                          <img className="img_profile" src={request.img} />
+                          {request.assignedTo}
+                        </td>
+                        <td className="td-text">{request.department}</td>
+                        <td className="td-text">
+                          <img src="/images/dashboard/CalendarBlank.png" />
+                          {request.dateofSigning}
+                        </td>
+                        <td className="td-text">{request.comments}</td>
+                        <td className="td-text text-info m-0">
+                          {request.status}
+                        </td>
+                        <td className="td-text">
+                          <div class="dropdown">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <img
+                                src="/images/sidebar/ThreeDots.svg"
+                                className="w-auto p-3"
+                              />
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a
+                                  class="dropdown-item border-bottom"
+                                  href="/Employee/view-details"
+                                >
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  <img
+                                    src="/images/dashboard/Download-Button.png"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Download
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
                         <td></td>
                       </tr>
                     ))}
@@ -343,9 +472,7 @@ const DocumentEmply = () => {
             </div>
 
             <div className="footer employ-footer">
-              <div>
-              © 2023 MYOT
-              </div>
+              <div>© 2023 MYOT</div>
               <div className="d-flex ">
                 <p className="ms-3">About</p>
                 <p className="ms-3">Support</p>

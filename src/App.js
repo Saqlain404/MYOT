@@ -51,6 +51,11 @@ import ReceivedDocEmpl from "./Components/Employee/ReceivedDocEmpl";
 import CalenderEmply from "./Components/Employee/CalenderEmply";
 import ViewDocumentEmply from "./Components/Employee/ViewDocumentEmply";
 import ViewReceivedDoc from "./Components/Employee/ViewRecievedDoc";
+import Profile from "./Components/Employee/ProfileEmpl";
+import Help from "./Components/Employee/Help";
+import HelpSupport from "./Components/Employee/Help&Support";
+import EditProfile from "./Components/Employee/EditProfile";
+import ChatboxEmploy from "./Components/Employee/ChatboxEmploy";
 
 function App() {
   return (
@@ -122,7 +127,12 @@ function App() {
         <Route path="Employee/view-details" element={<ViewDocumentEmply/>} />
         <Route path="Employee/received-doc/view-details" element={<ViewReceivedDoc/>} />
         <Route path="Employee/Forgot-success" element={<AuthforgotSuccess />} />
-            <Route path="Employee/Forgot-password" element={<AuthforgotPass />} />
+         <Route path="Employee/Forgot-password" element={<AuthforgotPass />} />
+         <Route path="Employee/profile" element={<Profile/>} />
+         <Route path="Employee/Help" element={<Help/>} />
+         <Route path="Employee/Help&Support" element={<HelpSupport/>} />
+         <Route path="Employee/Edit-Profile" element={<EditProfile/>} />
+         <Route path="Employee/Chat" element={<ChatboxEmploy/>} />
        
       </Routes>
     </div>

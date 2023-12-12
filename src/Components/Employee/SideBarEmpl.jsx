@@ -110,7 +110,7 @@ const SideBarEmpl = () => {
         <p className="th-text mt-3">OTHERS</p>
 
         <li className="nav-item text-dark">
-          <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
+          <a href="/Employee/profile" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/my-profile.png" className='align-middle sidebar-icon'/>
               
@@ -126,7 +126,7 @@ const SideBarEmpl = () => {
             </a>
         </li>
         <li className="nav-item text-dark">
-          <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
+          <a href="/Employee/Help" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/help.png" className='align-middle sidebar-icon'/>
               

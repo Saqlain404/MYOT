@@ -21,7 +21,7 @@ const AuthLogin = () => {
 
   useEffect(() => {
     if (!localStorage.getItem("token-employee")) {
-      navigate("/employee/Login");
+      navigate("/");
     }
   }, []);
 
@@ -30,7 +30,7 @@ const AuthLogin = () => {
 
     const response = await employeeLogin(data);
     if (!response.data?.error) {
-      navigate("/employee/dashboard");
+      navigate("/Employee/dashboard");
     }
   };
 

@@ -28,7 +28,7 @@ const AuthforgotSuccess = () => {
                     </p>
                   </div>
                   <Link 
-                      to={"/Admin/Login"}>
+                      to={"/"}>
                     <button
                       className="btn  py-8 mb-3 reset-success"
                     >

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from "antd";
 import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
+import { DasboardCount } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const EmployeeDash = () => {
   const documents = [
@@ -60,6 +61,23 @@ const EmployeeDash = () => {
     // Add more tasks here
   ];
 
+  const[totalDocument,setTotalDocument] = useState(null);
+  const[pendingDocument,setPendingDocument] = useState(null);
+
+  useEffect(()=>{
+    const count = async ()=>{
+      const dashbaordCountResult = await DasboardCount();
+      if (!dashbaordCountResult?.error && dashbaordCountResult?.data) {
+        const count = dashbaordCountResult?.data?.results.totalDocument;
+        const receivedDocCount = dashbaordCountResult?.data?.results?.pendingDocument;
+        console.log(dashbaordCountResult);
+        setTotalDocument(count)
+        setPendingDocument(receivedDocCount)
+    }
+  }
+    count();
+  },[])
+
   return (
     <>
       <div className="container-fluid">
@@ -92,7 +110,7 @@ const EmployeeDash = () => {
                       alt=""
                       className="ms-4 "
                     />
-                    <Link to={"/Admin/Chat"}>
+                    <Link to={"/Employee/Chat"}>
                     <img
                       src="/images/dashboard/chat-left-dots-fill.png"
                       alt=""
@@ -114,11 +132,11 @@ const EmployeeDash = () => {
                 <div className="col-md-3">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">Total Users</h6>
+                      <h6 className="mb-0 header-card-text">Total Document</h6>
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                       256
+                      {totalDocument !== null && (totalDocument)}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -135,12 +153,12 @@ const EmployeeDash = () => {
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
-                        Total Templates
+                        Total Pending Request
                       </h6>
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        156
+                      {pendingDocument !== null && (pendingDocument)}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         -0.56%
@@ -157,12 +175,12 @@ const EmployeeDash = () => {
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
-                        Documents Generated
+                        Recently Documents
                       </h6>
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        1,320
+                      {pendingDocument !== null && (pendingDocument)}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         -1.48%
@@ -178,11 +196,11 @@ const EmployeeDash = () => {
                 <div className="col-md-3 ">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">Active Users</h6>
+                      <h6 className="mb-0 header-card-text">Document Request</h6>
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        32
+                      {totalDocument !== null && (totalDocument)}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         +9.15%
