@@ -66,6 +66,16 @@ import ProfileDept from "./Components/DepartmentManager/ProfileDept";
 import EditProfileDept from "./Components/DepartmentManager/EditProfileDept";
 import Help from "./Components/Index/Help";
 import HelpSupport from "./Components/Index/Help&support";
+import ContactUs from "./Components/Index/ContactUs";
+import HelpSig from "./Components/Signatory/HelpSig";
+import HelpSupportSig from "./Components/Signatory/Help&supportSig";
+import ContactUsSig from "./Components/Signatory/ContactUsSig";
+import HelpAprv from "./Components/Approver/HelpAprv";
+import HelpSupportAprv from "./Components/Approver/Help&supportAprv";
+import ContactUsAprv from "./Components/Approver/ContactUsAprv";
+import HelpDept from "./Components/DepartmentManager/HelpDept";
+import HelpSupportDept from "./Components/DepartmentManager/Help&supportDept";
+import ContactUsDept from "./Components/DepartmentManager/ContactUsDept";
 
 
 function App() {
@@ -97,6 +107,7 @@ function App() {
         <Route path="Admin/Edit-profile" element={<EditProfile/>} /> 
         <Route path="Admin/Help" element={<Help/>} /> 
         <Route path="Admin/Help-Support" element={<HelpSupport/>} /> 
+        <Route path="Admin/Contact-us" element={<ContactUs/>} /> 
 
         <Route path="Department/Home" element={<HomeDept />} />
         <Route path="Department/Dashboard" element={<DashboardDept />} />
@@ -113,7 +124,10 @@ function App() {
         <Route path="Department/Announcements" element={<AnnouncementsDept/>} />
         <Route path="Department/Analytics" element={<AnalyticsDept/>} />
         <Route path="Department/My-profile" element={<ProfileDept/>} /> 
-        <Route path="Department/Edit-profile" element={<EditProfileDept/>} /> 
+        <Route path="Department/Edit-profile" element={<EditProfileDept/>} />
+        <Route path="Department/Help" element={<HelpDept/>} /> 
+        <Route path="Department/Help-Support" element={<HelpSupportDept/>} /> 
+        <Route path="Department/Contact-us" element={<ContactUsDept/>} />  
 
         <Route path="Approver/Home" element={<HomeAprv />} />
         <Route path="Approver/Dashboard" element={<DashboardAprv />} />
@@ -134,6 +148,9 @@ function App() {
         <Route path="Approver/Calendar-year" element={<CalendarYearAprv />} />
         <Route path="Approver/My-profile" element={<ProfileAprv/>} /> 
         <Route path="Approver/Edit-profile" element={<EditProfileAprv/>} /> 
+        <Route path="Approver/Help" element={<HelpAprv/>} /> 
+        <Route path="Approver/Help-Support" element={<HelpSupportAprv/>} /> 
+        <Route path="Approver/Contact-us" element={<ContactUsAprv/>} /> 
 
         <Route path="Signatory/Home" element={<HomeSig />} />
         <Route path="Signatory/Dashboard" element={<DashboardSig />} />
@@ -150,6 +167,9 @@ function App() {
         <Route path="Signatory/Announcements" element={<AnnouncementsSig/>} />
         <Route path="Signatory/My-profile" element={<ProfileSig/>} /> 
         <Route path="Signatory/Edit-profile" element={<EditProfileSig/>} /> 
+        <Route path="Signatory/Help" element={<HelpSig/>} /> 
+        <Route path="Signatory/Help-Support" element={<HelpSupportSig/>} /> 
+        <Route path="Signatory/Contact-us" element={<ContactUsSig/>} /> 
       </Routes>
     </div>
   );

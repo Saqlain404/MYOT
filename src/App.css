@@ -1734,3 +1734,96 @@ font-style: normal;
 font-weight: 400;
 line-height: 24px; /* 171.429% */
 }
+
+.ticket-number{
+  color: #000;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 14px; /* 87.5% */
+}
+
+.ticket-question{
+  text-align: start;
+  color: #000;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 14px; /* 100% */
+}
+
+.ticket-post-time{
+  width: 150px;
+  color: #999;
+font-family: Nunito;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: 14px; /* 116.667% */
+}
+
+.ticket-link{
+  color: #3E51FF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 14px; /* 100% */
+text-decoration-line: underline;
+}
+
+.help-support-dd-img{
+  margin-right: 10px;
+  margin-bottom: 3px;
+  width: 12px;
+height: 12px;
+}
+
+.contact-form-btn{
+  width: 515px;
+height: 45px;
+flex-shrink: 0;
+border-radius: 10px;
+border: none;
+background: #3E51FF;
+color: #FFF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.contact-mini-logo{
+  width: 28px;
+height: 28px;
+}
+
+.contact-txt{
+  color: #000;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 125% */
+letter-spacing: 0.32px;
+text-align: start;
+}
+
+.contact-txt1{
+  color: #DD5471;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px;
+letter-spacing: 0.32px;
+}
+
+.contact-img{
+  margin-top: 50px;
+  width: 380px;
+  height: 412px;
+}

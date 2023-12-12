@@ -1,14 +1,15 @@
 import React from "react";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
+import SidebarAprv from "./SidebarAprv";
 
-const HelpSupport = () => {
+const HelpSupportAprv = () => {
   return (
     <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <Sidebar />
+            <SidebarAprv />
           </div>
           <div className="col middle-content bg-body-tertiary p-0 min-vh-100">
             <div className="container-fluid border-bottom sticky-top bg-white mb-4">
@@ -57,19 +58,19 @@ const HelpSupport = () => {
                 <div className="col-12 d-flex justify-content-between">
                   <div className="d-flex mt-2">
                   <Link
-                    to={"/Admin/Help"}
+                    to={"/Approver/Help"}
                     className="text-decoration-none"
                   >
                     <p className="th-text  me-3">Template Guidelines</p>
                   </Link>
                   <Link
-                    to={"/Admin/Help-Support"}
+                    to={"/Approver/Help-Support"}
                     className="text-decoration-none"
                   >
                     <p className="td-text border-bottom me-3">Help & Support</p>
                   </Link>
                   <Link
-                    to={"/Admin/Contact-us"}
+                    to={"/Approver/Contact-us"}
                     className="text-decoration-none"
                   >
                     <p className="th-text">Contact Us</p>
@@ -143,7 +144,7 @@ const HelpSupport = () => {
                     <p className="td-text border-bottom me-3">All Tickets</p>
                   </Link>
                   <Link
-                    to={"/Admin/Help-Support"}
+                    to={""}
                     className="text-decoration-none"
                   >
                     <p className="th-text me-3">New</p>
@@ -266,4 +267,4 @@ const HelpSupport = () => {
   );
 };
 
-export default HelpSupport;
+export default HelpSupportAprv;

@@ -8,7 +8,7 @@ export async function adminLogin(formData) {
       formData
     );
     
-
+    console.log(data);
     if (!data?.error) {
       await localStorage.removeItem("token-company");
       await localStorage.setItem("token-company", headers["x-auth-token-company"]);

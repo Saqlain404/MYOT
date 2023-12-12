@@ -1,14 +1,15 @@
 import React from "react";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
+import SidebarSig from "./SidebarSig";
 
-const Help = () => {
+const HelpSig = () => {
   return (
     <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <Sidebar />
+            <SidebarSig />
           </div>
           <div className="col middle-content bg-body-tertiary p-0 min-vh-100">
             <div className="container-fluid border-bottom sticky-top bg-white mb-4">
@@ -56,19 +57,19 @@ const Help = () => {
               <div className="row bg-white rounded  p-4 m-4">
                 <div className="col-12 d-flex">
                   <Link
-                    to={"/Admin/Help"}
+                    to={"/Signatory/Help"}
                     className="text-decoration-none"
                   >
                     <p className="td-text border-bottom me-3">Template Guidelines</p>
                   </Link>
                   <Link
-                    to={"/Admin/Help-Support"}
+                    to={"/Signatory/Help-Support"}
                     className="text-decoration-none"
                   >
                     <p className="th-text me-3">Help & Support</p>
                   </Link>
                   <Link
-                    to={"/Admin/Contact-Us"}
+                    to={"/Signatory/Contact-Us"}
                     className="text-decoration-none"
                   >
                     <p className="th-text">Contact Us</p>
@@ -100,4 +101,4 @@ const Help = () => {
   );
 };
 
-export default Help;
+export default HelpSig;

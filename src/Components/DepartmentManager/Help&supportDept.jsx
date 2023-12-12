@@ -1,14 +1,15 @@
 import React from "react";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
+import SidebarDepartment from "./SidebarDepartment";
 
-const HelpSupport = () => {
+const HelpSupportDept = () => {
   return (
     <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <Sidebar />
+            <SidebarDepartment />
           </div>
           <div className="col middle-content bg-body-tertiary p-0 min-vh-100">
             <div className="container-fluid border-bottom sticky-top bg-white mb-4">
@@ -57,19 +58,19 @@ const HelpSupport = () => {
                 <div className="col-12 d-flex justify-content-between">
                   <div className="d-flex mt-2">
                   <Link
-                    to={"/Admin/Help"}
+                    to={"/Department/Help"}
                     className="text-decoration-none"
                   >
                     <p className="th-text  me-3">Template Guidelines</p>
                   </Link>
                   <Link
-                    to={"/Admin/Help-Support"}
+                    to={"/Department/Help-Support"}
                     className="text-decoration-none"
                   >
                     <p className="td-text border-bottom me-3">Help & Support</p>
                   </Link>
                   <Link
-                    to={"/Admin/Contact-us"}
+                    to={"/Department/Contact-us"}
                     className="text-decoration-none"
                   >
                     <p className="th-text">Contact Us</p>
@@ -266,4 +267,4 @@ const HelpSupport = () => {
   );
 };
 
-export default HelpSupport;
+export default HelpSupportDept;

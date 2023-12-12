@@ -170,12 +170,16 @@ const SidebarDepartment = () => {
             </a>
         </li>
         <li className="nav-item text-dark">
+        <Link
+           to={"/Department/Help"}
+           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/help.png" className='align-middle sidebar-icon'/>
               
               <span className="ms-3 align-middle sidebar-btn">Help</span>
             </a>
+            </Link>
         </li>
         <li className="nav-item text-dark">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
