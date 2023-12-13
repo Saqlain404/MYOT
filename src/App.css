@@ -1567,3 +1567,414 @@ font-weight: 400;
 line-height: normal;
 letter-spacing: -0.065px;
 }
+
+
+.profile-txt{
+  color: #000;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 142.857% */
+}
+
+.profile-edit-btn{
+  color: #FFF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+  display: inline-flex;
+padding: 10px 20px;
+align-items: center;
+gap: 10px;
+border-radius: 10px;
+border: none;
+background: #3E51FF;
+}
+
+.profile-info{
+  text-align: start;
+  color: #000;
+font-family: Nunito;
+font-size: 10px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+letter-spacing: -0.05px;
+opacity: 0.8;
+}
+
+.profile-data{
+  margin-top: -12px;
+  text-align: start;
+  color: #000;
+font-family: Nunito;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.06px;
+}
+
+.profile-salary-slip{
+  color: #3E51FF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.07px;
+}
+
+.profile-card-title{
+  color: #000;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 142.857% */
+}
+
+.profile-edit-input{
+  /* width: 430px; */
+height: 52px;
+flex-shrink: 0;
+border-radius: 10px;
+border: 1px solid #E0E2E7;
+background: linear-gradient(0deg, #F7F7F8 0%, #F7F7F8 100%), #FFF;
+
+color: rgba(0, 0, 0, 0.40);
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 112.4%; /* 15.736px */
+}
+
+.profile-edit-submit{
+  margin-top: 40px;
+  margin-bottom: 100px;
+  width: 206px;
+height: 45px;
+flex-shrink: 0;
+border-radius: 10px;
+background: #3E51FF;
+color: #FFF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+border: none;
+}
+
+.help-text{
+  text-align: start;
+  color: #000;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 27px; /* 192.857% */
+}
+
+.help-support-btn1{
+  display: inline-flex;
+padding: 8px;
+align-items: center;
+gap: 10px;
+border-radius: 10px;
+border: 1px solid #E0E2E7;
+background: #FFF;
+color: rgba(0, 0, 0, 0.40);
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.help-support-btn{
+  display: inline-flex;
+height: 36px;
+padding: 8px 16px;
+align-items: center;
+gap: 10px;
+flex-shrink: 0;
+border-radius: 10px;
+border: none;
+background: #3E51FF;
+color: #FFF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.help-support-heading{
+  margin-bottom: 0px;
+  text-align: start;
+  color: #000;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+/* line-height: 20px; 125% */
+}
+
+.help-support-text{
+  text-align: start;
+  color: rgba(0, 0, 0, 0.40);
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 171.429% */
+}
+
+.ticket-number{
+  color: #000;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 14px; /* 87.5% */
+}
+
+.ticket-question{
+  text-align: start;
+  color: #000;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 14px; /* 100% */
+}
+
+.ticket-post-time{
+  width: 150px;
+  color: #999;
+font-family: Nunito;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: 14px; /* 116.667% */
+}
+
+.ticket-link{
+  color: #3E51FF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 14px; /* 100% */
+text-decoration-line: underline;
+}
+
+.help-support-dd-img{
+  margin-right: 10px;
+  margin-bottom: 3px;
+  width: 12px;
+height: 12px;
+}
+
+.contact-form-btn{
+  width: 515px;
+height: 45px;
+flex-shrink: 0;
+border-radius: 10px;
+border: none;
+background: #3E51FF;
+color: #FFF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.contact-mini-logo{
+  width: 28px;
+height: 28px;
+}
+
+.contact-txt{
+  color: #000;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 125% */
+letter-spacing: 0.32px;
+text-align: start;
+}
+
+.contact-txt1{
+  color: #DD5471;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px;
+letter-spacing: 0.32px;
+}
+
+.contact-img{
+  margin-top: 50px;
+  width: 380px;
+  height: 412px;
+}
+
+.settings-txt{
+  text-align: start;
+  color: #000;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.commenter-name{
+  color: #000;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.comment-time{
+  color: #999;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 150% */
+padding-left: 10px;
+}
+
+.comment-avatar{
+  width: 32px;
+height: 32px;
+flex-shrink: 0;
+border-radius: 40px;
+}
+
+.comment-txt{
+  text-align: start;
+  color: #000;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 150% */
+}
+
+.reply-btn{
+  margin-top: 10px;
+  width: 124px;
+height: 45px;
+flex-shrink: 0;
+border-radius: 10px;
+border: none;
+background: #3E51FF;
+color: #FFF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.comment-reply{
+  margin: 10px;
+  text-align: start;
+  width: 570px;
+height: 95px;
+flex-shrink: 0;
+border-radius: 8px;
+border: 1px solid #3E51FF;
+background: #FFF;
+color: #000;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 150% */
+}
+
+.you-btn{
+  margin: auto;
+  width: 36px;
+height: 19px;
+flex-shrink: 0;
+border-radius: 5px;
+border: none;
+background: #3E51FF;
+color: var(--White, #FFF);
+font-family: Nunito;
+font-size: 13px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.comment-write{
+  text-align: start;
+  width: 735px;
+height: 45px;
+flex-shrink: 0;
+border-radius: 8px;
+border: 1px solid #3E51FF;
+background: #FFF;
+color: #000;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 150% */
+}
+
+.update-comment-btn{
+  margin-top: 10px;
+  width: 124px;
+height: 45px;
+flex-shrink: 0;
+border-radius: 10px;
+border: none;
+background: #3E51FF;
+color: #FFF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.delete-comment-btn{
+  color: #FF4747;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 150% */
+}
+
+.comment-inbox{
+  width: 600px;
+height: 146px;
+flex-shrink: 0;
+border-radius: 10px;
+border: 1px solid #EFF4FA;
+background: #FFF;
+}
