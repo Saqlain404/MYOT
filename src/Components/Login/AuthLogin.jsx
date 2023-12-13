@@ -31,6 +31,7 @@ const AuthLogin = () => {
     const response = await employeeLogin(data);
     if (!response.data?.error) {
       navigate("/Employee/dashboard");
+      console.log(response)
     }
   };
 

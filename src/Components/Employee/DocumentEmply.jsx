@@ -159,6 +159,10 @@ const DocumentEmply = () => {
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
+                      onChange={(e) => {
+                        setSearchData(e.target.value);
+                        //  handleSearch();
+                      }}
                     />
                   </form>
                   <div className="">

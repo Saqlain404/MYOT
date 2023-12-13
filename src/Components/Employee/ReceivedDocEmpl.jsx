@@ -1,83 +1,69 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "@fortawesome/free-regular-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
+import { EmployeeDashList, searchDash } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 // import "../../dist/css/style.min.css"
 
 const ReceivedDocEmpl = () => {
-  const tasks = [
-    {
-      id: 1,
-      template: "Non-Objection Certificate",
-      assignedTo: [
-        <img src="/images/dashboard/avatar2.png" className="me-2" />,
-        "Katherine Ross",
-      ],
-      dateofSigning: "2023-09-15",
-      comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      status: 
-        <p className="text-primary m-0">
-          In Progress
-        </p>,
-      department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 2,
-      template: "Expense Report",
-      assignedTo: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
-        "Eve Leroy",
-      ],
-      dateofSigning: "2023-09-15",
-      comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      status: <p className="text-warning m-0"> Approved</p>,
-      department: "Finance",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 3,
-      template: "Salary Slip",
-      assignedTo: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Drew Cano",
-      ],
-      dateofSigning: "2023-09-15",
-      comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      status: <p className="text-info m-0">Pending</p>,
-      department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 4,
-      template: "Research Proposal",assignedTo: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Andi Lane",
-      ],
-      dateofSigning: "2023-09-15",
-      comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      status: <p className="text-success m-0"> Active</p>,
-      department: "R&D",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 5,
-      template: "Conference Attendance",
-      assignedTo: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
-        "Natali Craig",
-      ],
-      dateofSigning: "2023-09-15",
-      comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      status: <p className="text-secondary m-0">Rejected</p>,
-      department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    // Add more tasks here
-  ];
+  const[searchData, setSearchData] = useState("");
+  const [templateNames, setTemplateNames] = useState(null);
+  const [documentRequests, setDocumentRequests] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+     if(!searchData || searchData === ""){
+       const names = await EmployeeDashList();
+      if (names) {
+        setTemplateNames(names);
+        console.log(names)
+     }
+      
+        const requests = names?.[0]?.map((name) => ({
+          documentName: name?.templete_Id?.templeteName,
+          assignedTo: [name?.templete_Id?.manager?.name], 
+          department: [name?.templete_Id?.manager?.department_Id?.departmentName], 
+          dateofSigning: [name?.createdAt],
+          img:[name?.templete_Id?.manager?.profile_Pic],
+          comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
+          status:[name?.status],
+          action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+        }));
+        
+
+        setDocumentRequests(requests);
+      }
+    };
+
+    fetchData();
+  },[searchData]);
+
+   
+  const handleSearch = async()=>{
+    const result = await searchDash(searchData)
+    console.log(result)
+    const searchResult = result?.data?.results?.document;
+
+      if (searchResult && Array.isArray(searchResult)) {
+        const mappedResult = searchResult?.map((document) => ({
+          documentName: document?.templete?.templeteName,
+          img:[document?.templete?.manager?.[0]?.profile_Pic],
+          assignedTo: [document?.templete?.manager?.[0]?.name], 
+          department: [document?.templete?.manager?.[0]?.department?.[0]?.departmentName], 
+          dateofSigning: [document?.createdAt],
+          comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
+          status:[document?.status],
+          action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+        }));
+        setDocumentRequests(mappedResult);
+      } 
+  }
+
+  
+  useEffect(()=>{
+    handleSearch()
+  },[searchData])
 
   
   return (
@@ -104,6 +90,10 @@ const ReceivedDocEmpl = () => {
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
+                      onChange={(e)=> {setSearchData(e.target.value);
+                        //  handleSearch();
+                        }}
+                        value={searchData.searchTerm}
                     />
                   </form>
                   <div className="">
@@ -236,17 +226,17 @@ const ReceivedDocEmpl = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {tasks.map((task) => (
-                      <tr key={task.id}>
-                        <td className="td-text">{task.template}</td>
-                        <td className="td-text">{task.assignedTo}</td>
-                        <td className="td-text">{task.department}</td>
-                        <td className="td-text"><img src="/images/dashboard/CalendarBlank.png" />{task.dateofSigning}</td>
-                        <td className="td-text">{task.comments}</td>
-                        <td className="td-text">{task.status}</td>
+                    {documentRequests.map((document) => (
+                      <tr key={document.id}>
+                        <td className="td-text">{document.documentName}</td>
+                        <td className="td-text"><img className="img_profile" src={document.img}/>{document.assignedTo}</td>
+                        <td className="td-text">{document.department}</td>
+                        <td className="td-text"><img src="/images/dashboard/CalendarBlank.png" />{document.dateofSigning}</td>
+                        <td className="td-text">{document.comments}</td>
+                        <td className="td-text">{document.status}</td>
                         <td className="td-text"><div class="dropdown">
   <a type="" data-bs-toggle="dropdown" aria-expanded="false">
-  {task.action}
+  {document.action}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
     <li ><a class="dropdown-item border-bottom" href="/Employee/received-doc/view-details"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Details</a></li>

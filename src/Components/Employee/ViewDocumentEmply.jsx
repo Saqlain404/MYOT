@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SideBarEmpl from './SideBarEmpl'
 import { Link } from 'react-router-dom'
+import { documentViewDetails } from '../../ApiServices/EmployeeHttpService/employeeLoginHttpService'
 
 const ViewDocumentEmply = () => {
+  const [viewPage, setViewPage] = useState();
+
+  useEffect(()=>{
+    const viewDetail = async()=>{
+      const documentView = await documentViewDetails();
+      const view = documentView?.[0]?.templete_Id?.templete
+      console.log(view)
+      setViewPage(view)
+    }
+    viewDetail()
+  },[])
+
   return (
     <div className="container-fluid">
     <div className="row">
@@ -53,12 +66,15 @@ const ViewDocumentEmply = () => {
        <div className='view-details'>
        <div className='d-flex align-items-center justify-content-between m-5'>
         <h1 className='preview'>Preview</h1>
-       <a href='/txt.pdf' download>
+       <a href={viewPage} download="document download">
        <button className="download-btn">Download</button>
        </a>
     </div>  
     <img className='jLogo' src='../images/jLogo.png'/>
-    <h1 className='view-text-1'>
+    <div>
+      <img className='view-page' alt='view' src={viewPage}/>
+    </div>
+    {/* <h1 className='view-text-1'>
     4304 Liberty Avenue 92680 Tustin, CA <br/>
     VAT no.: 12345678 <br/>
     Date : 09/10/2023
@@ -85,12 +101,12 @@ const ViewDocumentEmply = () => {
 
     Susan Lewis <br/>
     [Signatory Position]
-    </p>
-    <img className='sign' src='../images/sign.png'/>
-  <div className='sign-2'>
+    </p> */}
+    {/* <img className='sign' src='../images/sign.png'/> */}
+  {/* <div className='sign-2'>
   <p>Nancy Walker</p> <br/>
   <img className='sign' src='../images/sign.png'/>
-  </div>
+  </div> */}
    </div>
       </div>
     </div>

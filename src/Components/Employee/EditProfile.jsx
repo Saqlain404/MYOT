@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
+import { updateProfile } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const EditProfile = () => {
- 
+
+
+  useState(()=>{
+  const editProfile = async()=>{
+    const data = await updateProfile();
+    console.log(data)
+  }
+
+  editProfile();
+  },[])
 
   return (
     <>
@@ -95,26 +105,6 @@ const EditProfile = () => {
       <div className="col-6 m-2">
     <p className=" d-flex justify-content-start profile-card-title">Confirm Password</p>
     <input type="text" placeholder="Confirm Password" className="col-12 profile-edit-input p-2"/>
-      </div>
-    </div>
-    <div className="col-12 d-flex justify-content-between mb-2">
-      <div className="col-6 m-2">
-    <p className=" d-flex justify-content-start profile-card-title">Company Name</p>
-    <input type="text" placeholder="Company Name" className="col-12 profile-edit-input p-2"/>
-      </div>
-      <div className="col-6 m-2">
-    <p className=" d-flex justify-content-start profile-card-title">Company Email</p>
-    <input type="text" placeholder="Company Email" className="col-12 profile-edit-input p-2"/>
-      </div>
-    </div>
-    <div className="col-12 d-flex justify-content-between mb-2">
-      <div className="col-6 m-2">
-    <p className=" d-flex justify-content-start profile-card-title">Company Phone Number</p>
-    <input type="text" placeholder="Company Phone Number" className="col-12 profile-edit-input p-2"/>
-      </div>
-      <div className="col-6 m-2">
-    <p className=" d-flex justify-content-start profile-card-title">Address</p>
-    <input type="text" placeholder="Address" className="col-12 profile-edit-input p-2"/>
       </div>
     </div>
    </div>

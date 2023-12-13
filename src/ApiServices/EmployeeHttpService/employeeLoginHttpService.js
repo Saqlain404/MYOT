@@ -1,5 +1,9 @@
+import { useEffect } from "react";
 import employeeHttpService from "../LoginHttpService/employeeHttpService";
 import { toast } from "react-toastify";
+
+
+const id = localStorage.getItem("user_id")
 
 export async function employeeLogin(formData) {
   try {
@@ -70,6 +74,104 @@ export async function fetchTemplateData() {
   }
 }
 
+export async function EmployeeDashList() {
+  try {
+    const response = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/complete-document/${id}`
+    );
+
+    if (!response.data?.error) {
+      const templateList = response?.data?.results?.completeDocument;
+      console.log(templateList)
+
+      return [templateList];
+    } else {
+      toast.error(response.data.message);
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error('An error occurred while fetching the template IDs.');
+    }
+    return null;
+  }
+}
+
+export async function documentViewDetails() {
+  try {
+    const response = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-details/657853a8a6a190aabf64f55a`
+    );
+
+    if (!response.data?.error) {
+      const templateList = response?.data?.results?.document;
+      
+
+      return [templateList];
+    } else {
+      toast.error(response.data.message);
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error('An error occurred while fetching the template IDs.');
+    }
+    return null;
+  }
+}
+
+
+export async function employeProfileDetail() {
+  try {
+    const response = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/employee-details/${id}`
+    );
+
+    if (!response.data?.error) {
+      const templateList = response?.data;
+      console.log(templateList)
+      
+
+      return [templateList];
+    } else {
+      toast.error(response.data.message);
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error('An error occurred while fetching the template IDs.');
+    }
+    return null;
+  }
+}
+
+
+export async function updateProfile(formData) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/edit-profile/656982002e4c41f286f7dffb`,
+      formData
+    );
+    console.log(data);
+    if (!data.error) {
+      toast.success(data.message);
+      const templateId = data?.results;
+      return { data, templateId };
+    } else toast.error(data.message);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 
 
 export async function AddDocument(formData) {
@@ -96,7 +198,7 @@ export async function AddDocument(formData) {
 export async function employeDocumentList(){
   try {
     const response = await employeeHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-list/656982002e4c41f286f7dffb`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-list/${id}`
     );
 
     
@@ -122,6 +224,8 @@ if (!response.data?.error) {
     return null;
   }
 }
+
+
 
 export async function searchDoc(searchKey) {
   try {
@@ -151,11 +255,41 @@ export async function searchDoc(searchKey) {
     return { error };
   }
 }
+export async function searchDash(searchKey) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/search-complete-document/${id}`,
+      {search:searchKey}
+    );
+
+    if (!data?.error) {
+      const searchTerm = searchKey?.searchTerm?.toLowerCase();
+      
+      
+      
+      const filteredDocuments = data?.results?.document.filter(document =>
+        document.templete.templeteName.toLowerCase().includes(searchTerm)
+      );
+
+      console.log(filteredDocuments);
+
+      toast.success(data.message);
+    } else {
+      console.log(data.message)
+    }
+
+    if (!data?.error) return { data };
+  } catch (error) {
+    if (error?.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 
 export async function DocumentCount() {
   try {
     const { data } = await employeeHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-count/656982002e4c41f286f7dffb`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-count/${id}`
     );
     console.log(data);
     if (!data?.error) {
@@ -171,7 +305,7 @@ export async function DocumentCount() {
 export async function DasboardCount() {
   try {
     const { data } = await employeeHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/pending-request-count/656982002e4c41f286f7dffb`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/pending-request-count/${id}`
     );
     console.log(data);
     if (!data?.error) {

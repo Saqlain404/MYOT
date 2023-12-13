@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
+import { employeProfileDetail } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const ProfileEmpl = () => {
  
+  const[profileDetail,setProfileDetail] = useState(null);
+
+  
+
+  useEffect(()=>{
+    const details = async ()=>{
+      const detailResults = await employeProfileDetail();
+      const data = detailResults?.[0]?.results?.employee;
+      setProfileDetail(data)
+      console.log(profileDetail)
+  }
+    details();
+  },[])
+
 
   return (
     <>
@@ -39,7 +54,7 @@ const ProfileEmpl = () => {
                       alt=""
                       className="ms-4 "
                     />
-                    <Link to={"/Admin/Chat"}>
+                    <Link to={"/Employee/Chat"}>
                     <img
                       src="/images/dashboard/chat-left-dots-fill.png"
                       alt=""
@@ -62,6 +77,7 @@ const ProfileEmpl = () => {
     
     <div className=" d-flex justify-content-between">
       <p className="profile-txt m-2">Profile</p>
+      <img alt="profile image" src={profileDetail?.profile_Pic}/>
       <Link to={"/Employee/Edit-profile"} className="text-decoration-none">
       <button className="profile-edit-btn">Edit</button>
       </Link>
@@ -74,15 +90,15 @@ const ProfileEmpl = () => {
     <div className="d-flex justify-content-between">
       <div>
         <p className="profile-info">Full Name</p>
-        <p className="profile-data">Katherine Moss</p>
+        <p className="profile-data">{profileDetail?.name}</p>
       </div>
       <div>
         <p className="profile-info">Email</p>
-        <p className="profile-data">Ase@gmail.com</p>
+        <p className="profile-data">{profileDetail?.email}</p>
       </div>
       <div>
         <p className="profile-info">Phone Number</p>
-        <p className="profile-data">+97 7898788999</p>
+        <p className="profile-data">{profileDetail?.mobileNumber}</p>
       </div>
       <div>
         <p className="profile-info">Date of Birth</p>
@@ -90,7 +106,7 @@ const ProfileEmpl = () => {
       </div>
     </div>
    </div>
-   <div className="bg-white rounded mb-4 p-4 ">
+   {/* <div className="bg-white rounded mb-4 p-4 ">
     <p className=" d-flex justify-content-start profile-card-title">Doccument</p>
     <div className=" d-flex ">
         <img src="/images/dashboard/pdf-icon.svg" alt="" />
@@ -100,8 +116,8 @@ const ProfileEmpl = () => {
         <img src="/images/dashboard/pdf-icon.svg" alt="" />
         <p className="profile-salary-slip m-2">Salaryslip.Pdf</p>
     </div>
-   </div>
-   <div className="bg-white rounded mb-4 p-4 pb-2">
+   </div> */}
+   {/* <div className="bg-white rounded mb-4 p-4 pb-2">
     <p className=" d-flex justify-content-start profile-card-title">Company Information</p>
     <div className="d-flex justify-content-between">
       <div>
@@ -121,7 +137,7 @@ const ProfileEmpl = () => {
         <p className="profile-data">Human Resources</p>
       </div>
     </div>
-   </div>
+   </div> */}
   </div>
 </div>
 
