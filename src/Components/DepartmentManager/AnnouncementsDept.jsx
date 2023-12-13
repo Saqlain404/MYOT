@@ -132,7 +132,119 @@ const AnnouncementsDept = () => {
                 </div>
               </nav>
             </div>
+            <div className="d-flex justify-content-between">
             <p className="table-name mb-2">Broadcast Announcement</p>
+              <div className="d-flex justify-content-center th-text">
+                <div
+                  className="d-flex whitespace-nowrap"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  <img src="/images/tasks/Add.svg" alt="" className="pb-3" />
+                  <p className="pt-1 text-nowrap">Add Announcement</p>
+                </div>
+                <img
+                  src="/images/sidebar/ThreeDots.svg"
+                  alt=""
+                  className="pb-3 ms-2 text-secondary"
+                />
+              </div>
+            </div>
+                 {/* <!-- Modal --> */}
+                 <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered modal-dialog-department">
+                <div class="modal-content border-0">
+                  <div class="d-flex modal-header border-bottom">
+                    <p class="" id="exampleModalLabel">
+                    Create New Announcement
+                    </p>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+
+                  <form action="" 
+                  // onSubmit={handleSubmit}
+                  >
+                    <div className="row p-3">
+                      <div className="col-12 mb-3 d-flex">
+                        <div className="col-6 pe-3">
+                        <input
+                          type="text"
+                          placeholder="Announcement Category"
+                          className="col-12 modal-input td-text  p-2"
+                          name="departmentname"
+                          // value={departmentInfo.departmentname}
+                          // onChange={handleChange}
+                        />
+                      </div>
+                      <div className="col-6 ps-3">
+                        <input
+                          type=""
+                          placeholder="Date & Time"
+                          className="col-12 modal-input td-text  p-2"
+                          name="departmentname"
+                          // value={departmentInfo.departmentname}
+                          // onChange={handleChange}
+                        />
+                      </div>
+                      </div>
+                      <p className="d-flex" id="exampleModalLabel">
+                      Document Upload
+                    </p>
+                      <div className="col-12 mb-3 ">
+                        <input
+                          type="file"
+                          placeholder="File Format: JPG, JPEG, PNG or PDF Size: Upto 500KB"
+                          className="col-12 modal-input td-text p-2 display-none"
+                          name="description"
+                          // value={departmentInfo.description}
+                          // onChange={handleChange}
+                        ></input>
+                        {/* <input type="text" placeholder="Phone Number" className="col-6 modal-input th-text p-2"/> */}
+                      </div>
+                      <p className="d-flex" id="exampleModalLabel">
+                    Enter text here
+                    </p>
+                      <div className="col-12 mb-3 ">
+                        <textarea
+                          type="text"
+                          placeholder=""
+                          className="col-12 modal-input td-text p-2"
+                          name="description"
+                          // value={departmentInfo.description}
+                          // onChange={handleChange}
+                        ></textarea>
+                        {/* <input type="text" placeholder="Phone Number" className="col-6 modal-input th-text p-2"/> */}
+                      </div>
+                    </div>
+                    <div className="d-flex justify-content-end mb-3">
+                      <button
+                        type="submit"
+                        class="user-modal-btn"
+                        // onClick={AddDepartment}
+                      >
+                        Send
+                      </button>
+                      <button type="button" class="user-modal-btn2">
+                        Cancle
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {/* <!-- Modal End--> */}
 
             <div className="container bg-body-tertiary rounded mb-3">
               <div className="row">

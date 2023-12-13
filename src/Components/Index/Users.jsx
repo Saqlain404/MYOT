@@ -218,46 +218,46 @@ const Users = () => {
       <form action="" onSubmit={handleSubmit}>
       <div className="row p-3">
       <div className="col-12 mb-3">
-        <input type="text" placeholder="Full Name*" className="col-12 modal-input th-text  p-2"
+        <input type="text" placeholder="Full Name*" className="col-12 modal-input td-text  p-2"
         name="name"
         value={employeeInfo.name}
         onChange={handleChange}/>
       </div>
       {console.log(employeeInfo.name)}
       <div className="col-12 mb-3 ">
-        <input type="text" placeholder="Employee Tittle" className="col-6 modal-input th-text p-2"
+        <input type="text" placeholder="Employee Tittle" className="col-6 modal-input td-text p-2"
         name="employtitle"
         value={employeeInfo.employtitle}
         onChange={handleChange}/>
-        <input type="text" placeholder="Department *" className="col-6 modal-input th-text  p-2"
+        <input type="text" placeholder="Department *" className="col-6 modal-input td-text  p-2"
         name="department_id"
         value={employeeInfo.department_id}
         onChange={handleChange}/>
       </div>
       <div className="col-12 mb-3 ">
-        <input type="text" placeholder="Email ID *" className="col-4 modal-input th-text  p-2"
+        <input type="text" placeholder="Email ID *" className="col-4 modal-input td-text  p-2"
         name="email"
         value={employeeInfo.email}
         onChange={handleChange}/>
-        <input type="text" placeholder="Mobile No" className="col-4 modal-input th-text  p-2"
+        <input type="text" placeholder="Mobile No" className="col-4 modal-input td-text  p-2"
         name="mobilenumber"
         value={employeeInfo.mobilenumber}
         onChange={handleChange}/>
-        <input type="text" placeholder="Salary" className="col-4 modal-input th-text  p-2"
+        <input type="text" placeholder="Salary" className="col-4 modal-input td-text  p-2"
         name="salary"
         value={employeeInfo.salary}
         onChange={handleChange}/>
       </div>
       <div className="col-12 mb-3 ">
-        <input type="text" placeholder="Gender *" className="col-4 modal-input th-text  p-2"
+        <input type="text" placeholder="Gender *" className="col-4 modal-input td-text  p-2"
         name="gender"
         value={employeeInfo.gender}
         onChange={handleChange}/>
-        <input type="text" placeholder="Employee Id" className="col-4 modal-input th-text  p-2"
+        <input type="text" placeholder="Employee Id" className="col-4 modal-input td-text  p-2"
         name="employid"
         value={employeeInfo.employid}
         onChange={handleChange}/>
-        <input type="text" placeholder="Password *" className="col-4 modal-input th-text  p-2"
+        <input type="text" placeholder="Password *" className="col-4 modal-input td-text  p-2"
         name="password"
         value={employeeInfo.password}
         onChange={handleChange}/>

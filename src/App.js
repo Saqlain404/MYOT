@@ -76,6 +76,8 @@ import ContactUsAprv from "./Components/Approver/ContactUsAprv";
 import HelpDept from "./Components/DepartmentManager/HelpDept";
 import HelpSupportDept from "./Components/DepartmentManager/Help&supportDept";
 import ContactUsDept from "./Components/DepartmentManager/ContactUsDept";
+import Settings from "./Components/Index/Settings";
+import Comments from "./Components/Index/Comments";
 
 
 function App() {
@@ -105,6 +107,8 @@ function App() {
         <Route path="Admin/Announcements" element={<Announcements/>} /> 
         <Route path="Admin/My-profile" element={<Profile/>} /> 
         <Route path="Admin/Edit-profile" element={<EditProfile/>} /> 
+        <Route path="Admin/Settings" element={<Settings/>} /> 
+        <Route path="Admin/Comments" element={<Comments/>} /> 
         <Route path="Admin/Help" element={<Help/>} /> 
         <Route path="Admin/Help-Support" element={<HelpSupport/>} /> 
         <Route path="Admin/Contact-us" element={<ContactUs/>} /> 

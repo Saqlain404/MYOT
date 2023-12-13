@@ -259,7 +259,7 @@ const Departments = () => {
                         <input
                           type="text"
                           placeholder="Department Name *"
-                          className="col-12 modal-input th-text  p-2"
+                          className="col-12 modal-input td-text  p-2"
                           name="departmentname"
                           value={departmentInfo.departmentname}
                           onChange={handleChange}
@@ -269,7 +269,7 @@ const Departments = () => {
                         <textarea
                           type="text"
                           placeholder="Description"
-                          className="col-12 modal-input th-text p-2"
+                          className="col-12 modal-input td-text p-2"
                           name="description"
                           value={departmentInfo.description}
                           onChange={handleChange}

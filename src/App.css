@@ -1827,3 +1827,154 @@ letter-spacing: 0.32px;
   width: 380px;
   height: 412px;
 }
+
+.settings-txt{
+  text-align: start;
+  color: #000;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.commenter-name{
+  color: #000;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.comment-time{
+  color: #999;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 150% */
+padding-left: 10px;
+}
+
+.comment-avatar{
+  width: 32px;
+height: 32px;
+flex-shrink: 0;
+border-radius: 40px;
+}
+
+.comment-txt{
+  text-align: start;
+  color: #000;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 150% */
+}
+
+.reply-btn{
+  margin-top: 10px;
+  width: 124px;
+height: 45px;
+flex-shrink: 0;
+border-radius: 10px;
+border: none;
+background: #3E51FF;
+color: #FFF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.comment-reply{
+  margin: 10px;
+  text-align: start;
+  width: 570px;
+height: 95px;
+flex-shrink: 0;
+border-radius: 8px;
+border: 1px solid #3E51FF;
+background: #FFF;
+color: #000;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 150% */
+}
+
+.you-btn{
+  margin: auto;
+  width: 36px;
+height: 19px;
+flex-shrink: 0;
+border-radius: 5px;
+border: none;
+background: #3E51FF;
+color: var(--White, #FFF);
+font-family: Nunito;
+font-size: 13px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.comment-write{
+  text-align: start;
+  width: 735px;
+height: 45px;
+flex-shrink: 0;
+border-radius: 8px;
+border: 1px solid #3E51FF;
+background: #FFF;
+color: #000;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Nunito;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 150% */
+}
+
+.update-comment-btn{
+  margin-top: 10px;
+  width: 124px;
+height: 45px;
+flex-shrink: 0;
+border-radius: 10px;
+border: none;
+background: #3E51FF;
+color: #FFF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.delete-comment-btn{
+  color: #FF4747;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 150% */
+}
+
+.comment-inbox{
+  width: 600px;
+height: 146px;
+flex-shrink: 0;
+border-radius: 10px;
+border: 1px solid #EFF4FA;
+background: #FFF;
+}

@@ -56,10 +56,7 @@ const ContactUsAprv = () => {
             <div className="container px-4 text-center min-vh-100 ">
               <div className="row bg-white rounded  p-4 m-4">
                 <div className="col-12 d-flex">
-                  <Link
-                    to={"/Approver/Help"}
-                    className="text-decoration-none"
-                  >
+                  <Link to={"/Approver/Help"} className="text-decoration-none">
                     <p className="th-text me-3">Template Guidelines</p>
                   </Link>
                   <Link
@@ -75,52 +72,91 @@ const ContactUsAprv = () => {
                     <p className="td-text border-bottom">Contact Us</p>
                   </Link>
                 </div>
-                <div className="col-12 d-flex">
+                <div className="col-12 d-flex mb-4 pb-4">
                   <div className="col-6">
-                  <p className="help-support-heading">Get in Touch</p>
-                <p className="help-support-text">Have any questions? We’d love to hear from you.</p>
-                <div className="col mb-3">
-    <p className=" d-flex justify-content-start profile-card-title">Name*</p>
-    <input type="text" placeholder="Name" className="col-12 profile-edit-input p-2"/>
-      </div>
-      <div className="col mb-3">
-    <p className=" d-flex justify-content-start profile-card-title">Email*</p>
-    <input type="text" placeholder="Email" className="col-12 profile-edit-input p-2"/>
-      </div>
-      <div className="col mb-3">
-    <p className=" d-flex justify-content-start profile-card-title">Phone Number*</p>
-    <input type="text" placeholder="Phone Number" className="col-12 profile-edit-input p-2"/>
-      </div>
-      <div className="col mb-3">
-    <p className=" d-flex justify-content-start profile-card-title">Message</p>
-    <textarea name="message" id="" cols="30" rows="10" placeholder="Type your message..." className="col-12 profile-edit-input p-2"></textarea>
-      </div>
-      <button className="contact-form-btn">Submit</button>
+                    <p className="help-support-heading">Get in Touch</p>
+                    <p className="help-support-text">
+                      Have any questions? We’d love to hear from you.
+                    </p>
+                    <div className="col mb-3">
+                      <p className=" d-flex justify-content-start profile-card-title">
+                        Name*
+                      </p>
+                      <input
+                        type="text"
+                        placeholder="Name"
+                        className="col-12 profile-edit-input p-2"
+                      />
+                    </div>
+                    <div className="col mb-3">
+                      <p className=" d-flex justify-content-start profile-card-title">
+                        Email*
+                      </p>
+                      <input
+                        type="text"
+                        placeholder="Email"
+                        className="col-12 profile-edit-input p-2"
+                      />
+                    </div>
+                    <div className="col mb-3">
+                      <p className=" d-flex justify-content-start profile-card-title">
+                        Phone Number*
+                      </p>
+                      <input
+                        type="text"
+                        placeholder="Phone Number"
+                        className="col-12 profile-edit-input p-2"
+                      />
+                    </div>
+                    <div className="col mb-3">
+                      <p className=" d-flex justify-content-start profile-card-title">
+                        Message
+                      </p>
+                      <textarea
+                        name="message"
+                        id=""
+                        cols="30"
+                        rows="10"
+                        placeholder="Type your message..."
+                        className="col-12 profile-edit-input p-2"
+                      ></textarea>
+                    </div>
+                    <button className="contact-form-btn">Submit</button>
                   </div>
                   <div className="col-6">
-                    <img src="/images/dashboard/contact-us.svg" alt="" className="contact-img"/>
+                    <img
+                      src="/images/dashboard/contact-us.svg"
+                      alt=""
+                      className="contact-img"
+                    />
                     <div className="d-flex justify-content-around mt-4">
                       <div className="d-flex">
-                      <img src="/images/dashboard/phone-contact.svg" alt="" className="contact-mini-logo m-2"/>
-                      <div>
-                        <p className="contact-txt mb-0">PHONE</p>
-                        <p className="contact-txt1">03 5432 1234</p>
-                      </div>
+                        <img
+                          src="/images/dashboard/phone-contact.svg"
+                          alt=""
+                          className="contact-mini-logo m-2"
+                        />
+                        <div>
+                          <p className="contact-txt mb-0">PHONE</p>
+                          <p className="contact-txt1">03 5432 1234</p>
+                        </div>
                       </div>
                       <div className="d-flex">
-                      <img src="/images/dashboard/email-contact.svg" alt="" className="contact-mini-logo m-2"/>
-                      <div>
-                        <p className="contact-txt mb-0">EMAIL</p>
-                        <p className="contact-txt1">info@marcc.com.au</p>
-                      </div>
+                        <img
+                          src="/images/dashboard/email-contact.svg"
+                          alt=""
+                          className="contact-mini-logo m-2"
+                        />
+                        <div>
+                          <p className="contact-txt mb-0">EMAIL</p>
+                          <p className="contact-txt1">info@marcc.com.au</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            
           </div>
         </div>
       </div>
