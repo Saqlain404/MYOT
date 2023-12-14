@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from "antd";
 import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
+import { EmployeeDashList, searchDash } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const DocHistoryEmploye = () => {
   const documents = [
@@ -77,6 +78,69 @@ version: "0.1",
     // Add more tasks here
   ];
 
+  
+  // const navigate = useNavigate();
+  const[searchData, setSearchData] = useState("");
+  const [templateNames, setTemplateNames] = useState(null);
+  const [documentRequests, setDocumentRequests] = useState([]);
+ 
+  const handleSearch = async()=>{
+    const result = await searchDash(searchData)
+    console.log(result)
+    const searchResult = result?.data?.results?.document;
+    
+
+      if (searchResult && Array.isArray(searchResult)) {
+        const mappedResult = searchResult?.map((document) => ({
+          documentName: document?.templete?.templeteName,
+          img: [document?.templete?.manager?.[0]?.profile_Pic], 
+          assignTo: [document?.templete?.manager?.[0]?.name], 
+          department: [document?.templete?.manager?.[0]?.department?.[0]?.departmentName], 
+          createdAt: [document?.createdAt],
+          comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
+          // status:[document?.status],
+          version:"0.1",
+          action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+        }));
+        setDocumentRequests(mappedResult);
+      } 
+  }
+
+  
+  useEffect(()=>{
+    handleSearch()
+  },[searchData])
+
+  
+  useEffect(() => {
+    const fetchData = async () => {
+     if(!searchData || searchData === ""){
+       const names = await EmployeeDashList();
+      if (names) {
+        setTemplateNames(names);
+        // console.log(names)
+     }
+      
+        const requests = names?.[0]?.map((name) => ({
+          documentName: name?.templete_Id?.templeteName,
+          assignTo: [name?.templete_Id?.manager?.name], 
+          img: [name?.templete_Id?.manager?.profile_Pic], 
+          department: [name?.templete_Id?.manager?.department_Id?.departmentName], 
+          createdAt: [name?.createdAt],
+          comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
+          // status:[name?.status],
+          version:"0.1",
+          action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+        }));
+        
+
+        setDocumentRequests(requests);
+      }
+    };
+
+    fetchData();
+  },[searchData]);
+
   return (
     <>
       <div className="container-fluid">
@@ -101,6 +165,10 @@ version: "0.1",
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
+                      onChange={(e)=> {setSearchData(e.target.value);
+                        //  handleSearch();
+                        }}
+                        value={searchData.searchTerm}
                     />
                   </form>
                   <div className="">
@@ -171,6 +239,10 @@ version: "0.1",
                   type="search"
                   placeholder="Type Something!"
                   aria-label="Search"
+                  onChange={(e)=> {setSearchData(e.target.value);
+                    //  handleSearch();
+                    }}
+                    value={searchData.searchTerm}
                 />
               </form>
             </div>
@@ -236,9 +308,9 @@ version: "0.1",
                 </tr>
               </thead>
               <tbody >
-                {documents.map((document) => (
+                {documentRequests?.map((document) => (
                   <tr
-                    key={document.id}
+                    key={document._id}
                     
                   >
                     <td className="td-text">
@@ -249,15 +321,15 @@ version: "0.1",
                       />
                       {document.documentName}
                     </td>
-                    <td className="td-text">
-                      {document.creator}
+                    <td className="td-text"><img className="img_profile" alt="profile-pic" src={document.img}/>
+                      {document.assignTo}
                     </td>
                     <td className="td-text">
                       {document.department}
                     </td>
                     <td className="td-text">
                       <img src="/images/dashboard/CalendarBlank.png" />
-                      {document.Login}
+                      {document.createdAt}
                     </td>
                     <td className="td-text">{document.IP }</td>
                     <td className="td-text">{document.version}</td>

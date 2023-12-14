@@ -77,7 +77,7 @@ const ProfileEmpl = () => {
     
     <div className=" d-flex justify-content-between">
       <p className="profile-txt m-2">Profile</p>
-      <img alt="profile image" src={profileDetail?.profile_Pic}/>
+      {/* <img alt="profile image" src={profileDetail?.profile_Pic}/> */}
       <Link to={"/Employee/Edit-profile"} className="text-decoration-none">
       <button className="profile-edit-btn">Edit</button>
       </Link>

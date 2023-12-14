@@ -90,8 +90,8 @@ import ViewDocumentEmply from "./Components/Employee/ViewDocumentEmply";
 import ViewReceivedDoc from "./Components/Employee/ViewRecievedDoc";
 import EmplProfile from "./Components/Employee/ProfileEmpl";
 import EmplHelp from "./Components/Employee/Help";
-import EmplHelpSupport from "./Components/Employee/Help&Support";
-import EmplEditProfile from "./Components/Employee/EditProfile";
+import EmplHelpSupport from "./Components/Employee/EmplHelp&Support";
+import EmplEditProfile from "./Components/Employee/EmplEditProfile";
 import ChatboxEmploy from "./Components/Employee/ChatboxEmploy";
 import ContactUsEmpl from "./Components/Employee/ContactUsEmpl";
 import EmplAuthLogin from "./Components/Login/EmplAuthLogin";
@@ -202,24 +202,15 @@ function App() {
         <Route path="Employee/Forgot-Success" element={<EmplForgotSuccess />} />
         <Route path="Employee/Home" element={<HomeEmpl />} />
         <Route path="Employee/Dashboard" element={<EmployeeDash />} />
-        <Route
-          path="Employee/history-log-request"
-          element={<RequestHistoryEmpl />}
-        />
-        <Route
-          path="Employee/history-log-access"
-          element={<DocHistoryEmploye />}
-        />
+        <Route path="Employee/history-log-request" element={<RequestHistoryEmpl />} />
+        <Route path="Employee/history-log-access" element={<DocHistoryEmploye />} />
         <Route path="Employee/document" element={<DocumentEmply />} />
         <Route path="Employee/received-doc" element={<ReceivedDocEmpl />} />
         <Route path="Employee/Calender" element={<CalenderEmply />} />
         <Route path="Employee/view-details" element={<ViewDocumentEmply />} />
-        <Route
-          path="Employee/received-doc/view-details"
-          element={<ViewReceivedDoc />}
-        />
-        <Route path="Employee/Forgot-success" element={<AuthforgotSuccess />} />
-        <Route path="Employee/Forgot-password" element={<AuthforgotPass />} />
+        <Route path="Employee/received-doc/view-details" element={<ViewReceivedDoc />} />
+        <Route path="Employee/Forgot-success" element={<EmplForgotSuccess />} />
+        <Route path="Employee/Forgot-password" element={<EmplAuthforgotPassword />} />
         <Route path="Employee/profile" element={<EmplProfile />} />
         <Route path="Employee/Help" element={<EmplHelp />} />
         <Route path="Employee/Help&Support" element={<EmplHelpSupport />} />
