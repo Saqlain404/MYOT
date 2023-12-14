@@ -1,12 +1,78 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
+import {
+  AdminDashboardCount,
+  GetTaskData,
+  SearchTask,
+} from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 // import "../../dist/css/style.min.css"
 
 const Home = () => {
+  const [template, setTemplate] = useState();
+  const [adminCount, setAdminCount] = useState();
+  const [templateSearch, setTemplateSearch] = useState("");
+
+  const [checkedCheckboxes, setCheckedCheckboxes] = useState({
+    templateName: false,
+    assignedTo: false,
+    version: false,
+    status: false,
+    department: false,
+    actions: false,
+  });
+  const handleCheckboxChange = (checkboxName) => {
+    setCheckedCheckboxes({
+      ...checkedCheckboxes,
+      [checkboxName]: !checkedCheckboxes[checkboxName],
+    });
+  };
+  const countCheckedCheckboxes = () => {
+    let count = 0;
+    for (const checkbox in checkedCheckboxes) {
+      if (checkedCheckboxes[checkbox]) {
+        count++;
+      }
+    }
+    return count;
+  };
+
+  useEffect(() => {
+    getTaskData();
+    getAdminCount();
+  }, []);
+
+  const getAdminCount = async () => {
+    let { data } = await AdminDashboardCount();
+    if (!data?.error) {
+      setAdminCount(data?.results);
+    }
+  };
+
+  const getTaskData = async () => {
+    const { data } = await GetTaskData();
+    if (!data?.error) {
+      const templates = data?.results?.templete;
+      setTemplate(templates);
+    }
+  };
+
+  const handleTemplateSearch = async (e) => {
+    const value = e.target.value.toLowerCase();
+    setTemplateSearch(value);
+    if (value.length > 0) {
+      let { data } = await SearchTask({ search: value });
+      if (!data?.error) {
+        setTemplate(data?.results?.Template);
+      }
+    } else {
+      getTaskData();
+    }
+  };
+
   const tasks = [
     {
       id: 1,
@@ -66,69 +132,69 @@ const Home = () => {
     // Add more tasks here
   ];
 
-  const documents = [
-    {
-      id: 1,
-      document: "To Whom It May Concern",
-      requester: <img src="/images/dashboard/Avatar1.png" />,
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
-      version: "1.0",
-      status: <p className="text-primary">In Progress</p>,
-      department: "Human Resources",
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 2,
-      document: "Salary Certificate",
-      requester: <img src="/images/dashboard/Avatar2.png" />,
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
-      version: "2.0",
-      status: <p className="text-warning">Approved</p>,
-      department: "Finance",
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 3,
-      document: "Maternity Leave",
-      requester: <img src="/images/dashboard/Avatar3.png" />,
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
-      version: "1.5",
-      status: <p className="text-info">Pending</p>,
-      department: "Human Resources",
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 4,
-      document: "Promotion",
-      requester: <img src="/images/dashboard/Avatar.png" />,
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
-      version: "1.5",
-      status: <p className="text-success">Active</p>,
-      department: "R&D",
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 5,
-      document: "Sales Report",
-      requester: <img src="/images/dashboard/Avatar2.png" />,
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
-      version: "1.5",
-      status: <p className="text-secondary">Rejected</p>,
-      department: "Human Resources",
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    // Add more tasks here
-  ];
+  // const documents = [
+  //   {
+  //     id: 1,
+  //     document: "To Whom It May Concern",
+  //     requester: <img src="/images/dashboard/Avatar1.png" />,
+  //     assignedTo: <img src="/images/dashboard/Avatar2.png" />,
+  //     version: "1.0",
+  //     status: <p className="text-primary">In Progress</p>,
+  //     department: "Human Resources",
+  //     action: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 2,
+  //     document: "Salary Certificate",
+  //     requester: <img src="/images/dashboard/Avatar2.png" />,
+  //     assignedTo: <img src="/images/dashboard/Avatar2.png" />,
+  //     version: "2.0",
+  //     status: <p className="text-warning">Approved</p>,
+  //     department: "Finance",
+  //     action: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 3,
+  //     document: "Maternity Leave",
+  //     requester: <img src="/images/dashboard/Avatar3.png" />,
+  //     assignedTo: <img src="/images/dashboard/Avatar2.png" />,
+  //     version: "1.5",
+  //     status: <p className="text-info">Pending</p>,
+  //     department: "Human Resources",
+  //     action: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 4,
+  //     document: "Promotion",
+  //     requester: <img src="/images/dashboard/Avatar.png" />,
+  //     assignedTo: <img src="/images/dashboard/Avatar2.png" />,
+  //     version: "1.5",
+  //     status: <p className="text-success">Active</p>,
+  //     department: "R&D",
+  //     action: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 5,
+  //     document: "Sales Report",
+  //     requester: <img src="/images/dashboard/Avatar2.png" />,
+  //     assignedTo: <img src="/images/dashboard/Avatar2.png" />,
+  //     version: "1.5",
+  //     status: <p className="text-secondary">Rejected</p>,
+  //     department: "Human Resources",
+  //     action: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   // Add more tasks here
+  // ];
   return (
     <>
       <div className="container-fluid">
@@ -187,7 +253,7 @@ const Home = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        320
+                        {adminCount?.totalEmployee}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -209,7 +275,7 @@ const Home = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        20
+                        {adminCount?.countDepartment}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         +9.15%
@@ -231,7 +297,7 @@ const Home = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        1,156
+                        {adminCount?.totalActiveUser}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         -0.65%
@@ -251,7 +317,7 @@ const Home = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        320
+                        {adminCount?.totalTempleted}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         -1.48%
@@ -292,7 +358,9 @@ const Home = () => {
                   />
                 </div>
                 <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
-                  <p className="m-0 text-nowrap">2 Selected</p>
+                  <p className="m-0 text-nowrap">
+                    {countCheckedCheckboxes()} Selected
+                  </p>
                   <p className="hide-selected m-0 text-nowrap ">
                     Hide Selected
                   </p>
@@ -304,6 +372,8 @@ const Home = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={templateSearch}
+                  onChange={handleTemplateSearch}
                 />
               </form>
             </div>
@@ -318,6 +388,8 @@ const Home = () => {
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.templateName}
+                          onChange={() => handleCheckboxChange("templateName")}
                         />
                         Template name
                       </th>
@@ -327,6 +399,8 @@ const Home = () => {
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.assignedTo}
+                          onChange={() => handleCheckboxChange("assignedTo")}
                         />
                         Assigned To
                       </th>
@@ -335,6 +409,8 @@ const Home = () => {
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.version}
+                          onChange={() => handleCheckboxChange("version")}
                         />
                         Version
                       </th>
@@ -343,6 +419,8 @@ const Home = () => {
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.status}
+                          onChange={() => handleCheckboxChange("status")}
                         />
                         Status
                       </th>
@@ -351,6 +429,8 @@ const Home = () => {
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.department}
+                          onChange={() => handleCheckboxChange("department")}
                         />
                         Department
                       </th>
@@ -359,27 +439,61 @@ const Home = () => {
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.actions}
+                          onChange={() => handleCheckboxChange("actions")}
                         />
                         Actions
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {tasks.map((task) => (
-                      <tr key={task.id}>
-                        <td className="td-text">{task.template}</td>
-                        <td>{task.assignedTo}</td>
-                        <td className="td-text">{task.version}</td>
-                        <td className="td-text">{task.status}</td>
-                        <td className="td-text">{task.department}</td>
+                  <tbody className="task_table">
+                    {template?.map((template) => (
+                      <tr className="tr" key={template?._id}>
+                        <td className="td-text">{template?.templeteName}</td>
+                        <td>
+                          <img
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                              borderRadius: "50%",
+                            }}
+                            src={template?.manager?.profile_Pic}
+                            alt={template?.manager?.name}
+                          />
+                          <span className="ms-3">
+                            {template?.manager?.name.charAt(0).toUpperCase() +
+                              template?.manager?.name.slice(1).toLowerCase()}
+                          </span>
+                        </td>
+                        <td className="td-text">{template?.version}</td>
+                        <td
+                          className={`"td-text" ${
+                            template?.status === "Pending"
+                              ? "text-info"
+                              : template?.status === "Approved"
+                              ? "text-warning"
+                              : template?.status === "In Progress"
+                              ? "text-primary"
+                              : "text-success"
+                          }`}
+                        >
+                          {template?.status}
+                        </td>
+                        <td className="td-text">
+                          {template?.manager?.department_Id?.departmentName}
+                        </td>
                         <td className="td-text">
                           <div class="dropdown">
                             <a
+                              className="cursor_pointer"
                               type=""
                               data-bs-toggle="dropdown"
                               aria-expanded="false"
                             >
-                              {task.action}
+                              <img
+                                src="/images/sidebar/ThreeDots.svg"
+                                className="w-auto p-3"
+                              />
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                               <li>

@@ -5,6 +5,8 @@ import "./App.css";
 import "./Responsive.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import AuthLogin from "./Components/Login/AuthLogin";
 import AuthforgotPass from "./Components/Login/AuthforgotPass";
@@ -105,6 +107,7 @@ import EmplForgotSuccess from "./Components/Login/EmplForgotSuccess";
 function App() {
   return (
     <div>
+      <ToastContainer />
       <Routes>
         <Route path="*" element={<AuthLogin />} />
         <Route path="Admin/Login" element={<AuthLogin />} />

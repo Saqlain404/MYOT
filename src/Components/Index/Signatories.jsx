@@ -1,105 +1,138 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from "antd";
 import { Link } from "react-router-dom";
+import {
+  SignatoryList, SignatorySearch,
+} from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import moment from "moment";
 
 const Signatories = () => {
-  const documents = [
-    {
-      id: 1,
-      documentName: "Employment Contract",
-      creator: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Katherine Moss",
-      ],
-      version: "0.1",
-      login: "18 Aug 22,09:23 AM",
-      ipAddress: "17.172.224.47",
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 2,
-      documentName: "Tax Deduction at Source",
-      creator: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Katherine Moss",
-      ],
-      version: "0.1",
-      login: "18 Aug 22,09:23 AM",
-      ipAddress: "17.172.224.47",
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 3,
-      documentName: "Training Certificates",
-      creator: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Katherine Moss",
-      ],
-      version: "0.1",
-      login: "18 Aug 22,09:23 AM",
-      ipAddress: "17.172.224.47",
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 4,
-      documentName: "Software Licenses",
-      creator: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Katherine Moss",
-      ],
-      version: "0.1",
-      login: "18 Aug 22,09:23 AM",
-      ipAddress: "17.172.224.47",
-      department: "Information Technologies",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 5,
-      documentName: "Reference Letter",
-      creator: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Katherine Moss",
-      ],
-      version: "0.1",
-      login: "18 Aug 22,09:23 AM",
-      ipAddress: "17.172.224.47",
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-   
-    // Add more tasks here
-  ];
+  const [documents, setDocumments] = useState();
+  const [searchInput, setSearchInput] = useState("");
+
+  useEffect(() => {
+    getSignatoriesData();
+  }, []);
+
+  const getSignatoriesData = async () => {
+    let { data } = await SignatoryList();
+    if (!data?.error) {
+      setDocumments(data?.results?.signatory);
+      console.log(data?.results?.signatory);
+    }
+  };
+
+  const handleSignatorySearch = async (e) => {
+    const value = e.target.value;
+    setSearchInput(value);
+    if (value.length > 0) {
+      let { data } = await SignatorySearch({ search: value });
+      console.log(data)
+      if (!data?.error) {
+        setDocumments(data?.results?.signatory);
+      }
+    } else {
+      getSignatoriesData();
+    }
+  };
+
+  // const documents1 = [
+  //   {
+  //     id: 1,
+  //     documentName: "Employment Contract",
+  //     creator: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+  //       "Katherine Moss",
+  //     ],
+  //     version: "0.1",
+  //     login: "18 Aug 22,09:23 AM",
+  //     ipAddress: "17.172.224.47",
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 2,
+  //     documentName: "Tax Deduction at Source",
+  //     creator: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+  //       "Katherine Moss",
+  //     ],
+  //     version: "0.1",
+  //     login: "18 Aug 22,09:23 AM",
+  //     ipAddress: "17.172.224.47",
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 3,
+  //     documentName: "Training Certificates",
+  //     creator: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+  //       "Katherine Moss",
+  //     ],
+  //     version: "0.1",
+  //     login: "18 Aug 22,09:23 AM",
+  //     ipAddress: "17.172.224.47",
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 4,
+  //     documentName: "Software Licenses",
+  //     creator: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+  //       "Katherine Moss",
+  //     ],
+  //     version: "0.1",
+  //     login: "18 Aug 22,09:23 AM",
+  //     ipAddress: "17.172.224.47",
+  //     department: "Information Technologies",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 5,
+  //     documentName: "Reference Letter",
+  //     creator: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+  //       "Katherine Moss",
+  //     ],
+  //     version: "0.1",
+  //     login: "18 Aug 22,09:23 AM",
+  //     ipAddress: "17.172.224.47",
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+
+  //   // Add more tasks here
+  // ];
 
   return (
     <>
@@ -187,6 +220,8 @@ const Signatories = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  onChange={(e) => handleSignatorySearch(e)}
+                  value={searchInput}
                 />
               </form>
             </div>
@@ -202,16 +237,16 @@ const Signatories = () => {
                           type="checkbox"
                           value=""
                         />
-                        Document Name
+                        Name
                       </th>
-                      <th className="th-text">
+                      {/* <th className="th-text">
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
                         />
                         Creator
-                      </th>
+                      </th> */}
                       <th className="th-text">
                         <input
                           className="form-check-input checkbox-table"
@@ -226,7 +261,7 @@ const Signatories = () => {
                           type="checkbox"
                           value=""
                         />
-                      Login
+                        Emp ID
                       </th>
                       <th className="th-text">
                         <input
@@ -234,18 +269,26 @@ const Signatories = () => {
                           type="checkbox"
                           value=""
                         />
-                      IP Address
+                        Login
                       </th>
-                      <th className="th-text">
+                      {/* <th className="th-text">
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
                         />
-                      Version
-                      </th>
+                        IP Address
+                      </th> */}
+                      {/* <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Version
+                      </th> */}
                       <th className="th-text">
-                      <input
+                        <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
@@ -255,22 +298,34 @@ const Signatories = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {documents.map((document) => (
-                      <tr key={document.id}>
+                    {documents?.map((document) => (
+                      <tr key={document?._id}>
                         <td className="td-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />{document.documentName}</td>
-                        <td className="td-text">{document.creator}</td>
-                        <td className="td-text">{document.department}</td>
+                          <input
+                            className="form-check-input checkbox-table"
+                            type="checkbox"
+                            value=""
+                          />
+                           {document?.name
+                              .charAt(0)
+                              .toUpperCase() +
+                              document?.name.slice(1).toLowerCase()}
+                        </td>
+                        {/* <td className="td-text">{document.creator}</td> */}
+                        <td className="td-text">
+                          {document?.department_Id?.departmentName}
+                        </td>
+                        <td className="td-text">
+                          {document?.employId}
+                        </td>
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
-                          {document.login}
+                          {moment(document?.logIn).format(
+                            '"MMM Do YY", h:mm:ss a'
+                          )}
                         </td>
-                        <td className="td-text">{document.ipAddress}</td>
-                        <td className="td-text">{document.version}</td>
+                        {/* <td className="td-text">{document.ipAddress}</td>
+                        <td className="td-text">{document.version}</td> */}
                         <td className="td-text">
                           <div class="dropdown">
                             <a
@@ -278,7 +333,10 @@ const Signatories = () => {
                               data-bs-toggle="dropdown"
                               aria-expanded="false"
                             >
-                              {document.actions}
+                              <img
+                                src="/images/sidebar/ThreeDots.svg"
+                                className="w-auto p-3"
+                              />
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                               <li>
