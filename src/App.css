@@ -1978,3 +1978,86 @@ border-radius: 10px;
 border: 1px solid #EFF4FA;
 background: #FFF;
 }
+
+.modal-user-details{
+  width: 900px;
+}
+
+.user-view-table{
+  margin-left: -16px;
+  width: 900px;
+
+}
+
+.view-user-info{
+  color: #000;
+  font-family: Nunito;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.view-user-data{
+  color: rgba(0, 0, 0, 0.40);
+font-family: Nunito;
+font-size: 15px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.checkbox-view-user{
+  background-color: #000000;
+}
+
+.signature-img{
+  width: 100%;
+  height: auto;
+  padding: 5px;
+}
+
+.add-img-btn{
+  display: inline-flex;
+padding: 10px 14px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+border-radius: 10px;
+border: none;
+background: #DEDEFA;
+color: #3E51FF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 142.857% */
+letter-spacing: 0.07px;
+}
+
+.notify-admin-btn{
+  margin-top: 100px;
+  width: 206px;
+height: 45px;
+border-radius: 10px;
+border: none;
+background: #3E51FF;
+color: #FFF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.import-img-card{
+  border-radius: 10px;
+border: 2px dashed #E0E2E7;
+background: #F7F7F8;
+}
+
+.color-palete{
+  display: flex;
+  width: 45%;
+  height: auto;
+}

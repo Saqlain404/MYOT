@@ -78,6 +78,10 @@ import HelpSupportDept from "./Components/DepartmentManager/Help&supportDept";
 import ContactUsDept from "./Components/DepartmentManager/ContactUsDept";
 import Settings from "./Components/Index/Settings";
 import Comments from "./Components/Index/Comments";
+import SignManagement from "./Components/Signatory/SignManagement";
+import SettingsSig from "./Components/Signatory/SettingsSig";
+import SettingsAprv from "./Components/Approver/SettingsAprv";
+import SettingsDept from "./Components/DepartmentManager/SettingsDept";
 
 
 function App() {
@@ -132,6 +136,7 @@ function App() {
         <Route path="Department/Help" element={<HelpDept/>} /> 
         <Route path="Department/Help-Support" element={<HelpSupportDept/>} /> 
         <Route path="Department/Contact-us" element={<ContactUsDept/>} />  
+        <Route path="Department/Settings" element={<SettingsDept/>} />  
 
         <Route path="Approver/Home" element={<HomeAprv />} />
         <Route path="Approver/Dashboard" element={<DashboardAprv />} />
@@ -155,6 +160,7 @@ function App() {
         <Route path="Approver/Help" element={<HelpAprv/>} /> 
         <Route path="Approver/Help-Support" element={<HelpSupportAprv/>} /> 
         <Route path="Approver/Contact-us" element={<ContactUsAprv/>} /> 
+        <Route path="Approver/Settings" element={<SettingsAprv/>} /> 
 
         <Route path="Signatory/Home" element={<HomeSig />} />
         <Route path="Signatory/Dashboard" element={<DashboardSig />} />
@@ -170,10 +176,12 @@ function App() {
         <Route path="Signatory/Requests" element={<RequestsSig/>} />
         <Route path="Signatory/Announcements" element={<AnnouncementsSig/>} />
         <Route path="Signatory/My-profile" element={<ProfileSig/>} /> 
+        <Route path="Signatory/Signature-management" element={<SignManagement/>} /> 
         <Route path="Signatory/Edit-profile" element={<EditProfileSig/>} /> 
         <Route path="Signatory/Help" element={<HelpSig/>} /> 
         <Route path="Signatory/Help-Support" element={<HelpSupportSig/>} /> 
         <Route path="Signatory/Contact-us" element={<ContactUsSig/>} /> 
+        <Route path="Signatory/Settings" element={<SettingsSig/>} /> 
       </Routes>
     </div>
   );

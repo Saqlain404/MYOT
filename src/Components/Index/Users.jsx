@@ -191,7 +191,7 @@ const Users = () => {
             </div>
 
             <div className="d-flex justify-content-between">
-            <p className="table-name mb-2">Templates</p>
+            <p className="table-name mb-2">Users</p>
             <div className="d-flex justify-content-center th-text">
               <div className="d-flex whitespace-nowrap" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
               <img src="/images/tasks/Add.svg" alt=""  className="pb-3"/>
@@ -451,7 +451,17 @@ const Users = () => {
   {document.actions}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
+    <li >
+    <div
+                  className="d-flex whitespace-nowrap"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#viewUserDetails"
+                >
+                
+      <a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a>
+      </div>
+      </li>
     <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
     <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
     <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
@@ -464,6 +474,163 @@ const Users = () => {
                   </tbody>
                 </table>
               </div>
+              {/* <!-- Modal --> */}
+            <div
+              class="modal fade "
+              id="viewUserDetails"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered modal-dialog-department modal-user-details">
+                <div class="modal-content border-0">
+                  <div class="d-flex modal-header border-bottom">
+                    <p className="mb-0" id="exampleModalLabel">
+                    Katherine Moss
+                    </p>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+
+                 
+                    <div className="row p-3">
+                      <div className="col-12 ">
+                      <div className=" d-flex justify-content-start mb-4">
+    <img src="/images/dashboard/AvatarProfile.svg" alt="" />
+   </div>
+                      </div>
+                      <div className="d-flex justify-content-between">
+                      <div className="d-flex ">
+        <p className="view-user-info me-1">Name :</p>
+        <p className="view-user-data">Katherine Moss</p>
+      </div>
+      <div className="d-flex ">
+        <p className="view-user-info me-1">Department :</p>
+        <p className="view-user-data">Human Resources</p>
+      </div>
+      <div className="d-flex ">
+        <p className="view-user-info me-1">Employee Id :</p>
+        <p className="view-user-data">BN456</p>
+      </div>
+      
+      
+    </div>
+    <div className="d-flex justify-content-between">
+                 
+      <div className="d-flex ">
+        <p className="view-user-info me-1">Employee Tittle :</p>
+        <p className="view-user-data">Executive</p>
+      </div>
+      <div className="d-flex ">
+        <p className="view-user-info me-1">Phone Number :</p>
+        <p className="view-user-data">+91 99999999</p>
+      </div>
+      <div className="d-flex ">
+        <p className="view-user-info me-1">Gender :</p>
+        <p className="view-user-data">Female</p>
+      </div>
+      
+    </div>
+    <div className="d-flex">
+    <div className="d-flex me-4 pe-4">
+        <p className="view-user-info me-1">Email :</p>
+        <p className="view-user-data">Katherine@gmail.com</p>
+      </div>
+      <div className="d-flex ms-4 ps-4">
+        <p className="view-user-info me-1">Salary :</p>
+        <p className="view-user-data">50,000</p>
+      </div>
+    </div>
+    <div className="bg-white rounded mb-2 mt-4 mb-4 ">
+    <p className=" d-flex justify-content-start profile-card-title mb-2">Doccument</p>
+    <div className=" d-flex ">
+        <img src="/images/dashboard/pdf-icon.svg" alt="" />
+        <p className="profile-salary-slip m-2">Salaryslip.Pdf</p>
+    </div>
+    <div className=" d-flex ">
+        <img src="/images/dashboard/pdf-icon.svg" alt="" />
+        <p className="profile-salary-slip m-2">Salaryslip.Pdf</p>
+    </div>
+   </div>
+   
+                      <div className="">
+                      <div className="">
+              <table className="user-view-table">
+                  <thead >
+                    <tr className="bg-primary-subtle">
+                      <th className="th-text">Assign Permission</th>
+                      <th className="th-text">Edit</th>
+                      <th className="th-text">Add</th>
+                      <th className="th-text">Delete</th> 
+                    </tr>
+                  </thead>
+                  <tbody>
+                  
+                      <tr  className="ms-0 ">
+                        <td className="td-text p-4">Approver</td>
+                         <td className=""><input type="checkbox" id="flexCheckChecked" for="flexCheckChecked"
+                         className="checkbox-view-user" 
+                         name="document_img" checked
+                         /></td>
+                         <td><input type="checkbox" 
+                         name="employrole" checked
+                         /></td>
+                         <td><input type="checkbox" 
+                         name="employrole"checked
+                         /></td>
+                        </tr>
+                        <tr  className="ms-0 ">
+                        <td className="td-text p-4">Department Manager</td>
+                        <td><input type="checkbox" 
+                        /></td>
+                        <td><input type="checkbox" checked 
+                        /></td>
+                        <td><input type="checkbox" checked
+                        /></td>
+                        </tr>
+                        <tr  className="ms-0">
+                        <td className="td-text p-4">Signatory</td>
+                        <td><input type="checkbox" checked
+                        /></td>
+                        <td><input type="checkbox" checked 
+                        /></td>
+                        <td><input type="checkbox" 
+                        /></td>
+                        </tr>
+                        <tr  className="ms-0">
+                        <td className="td-text p-4">Admin</td>
+                        <td><input type="checkbox" 
+                        /></td>
+                        <td><input type="checkbox" checked 
+                        /></td>
+                        <td><input type="checkbox" checked
+                        /></td>
+                        </tr>
+                   
+                  </tbody>
+                </table>
+              </div>
+                      </div>
+                    </div>
+                    <div className="d-flex justify-content-end mb-3">
+                      <button
+                        type="submit"
+                        className="user-modal-btn me-3"
+                        // onClick={AddDepartment}
+                      >
+                        Edit
+                      </button>
+                      
+                    </div>
+                  
+                </div>
+              </div>
+            </div>
+            {/* <!-- Modal End--> */}
               <nav
                 aria-label="Page navigation"
                 className="d-flex justify-content-end page-navigation mt-3"

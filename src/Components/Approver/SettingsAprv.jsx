@@ -2,8 +2,9 @@ import React from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
+import SidebarAprv from "./SidebarAprv";
 
-const Settings = () => {
+const SettingsAprv = () => {
  
 
   return (
@@ -11,7 +12,7 @@ const Settings = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <Sidebar/>
+            <SidebarAprv/>
           </div>
           <div className="col-7 middle-content bg-body-tertiary p-0 min-vh-100">
             <div className="container-fluid border-bottom sticky-top bg-white mb-4">
@@ -118,4 +119,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default SettingsAprv;
