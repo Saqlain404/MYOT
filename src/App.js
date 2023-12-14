@@ -83,6 +83,24 @@ import SettingsSig from "./Components/Signatory/SettingsSig";
 import SettingsAprv from "./Components/Approver/SettingsAprv";
 import SettingsDept from "./Components/DepartmentManager/SettingsDept";
 
+import HomeEmpl from "./Components/Employee/HomeEmpl";
+import EmployeeDash from "./Components/Employee/EmployeeDash";
+import RequestHistoryEmpl from "./Components/Employee/RequestHistoryEmpl";
+import DocHistoryEmploye from "./Components/Employee/DocHistoryEmploye";
+import DocumentEmply from "./Components/Employee/DocumentEmply";
+import ReceivedDocEmpl from "./Components/Employee/ReceivedDocEmpl";
+import CalenderEmply from "./Components/Employee/CalenderEmply";
+import ViewDocumentEmply from "./Components/Employee/ViewDocumentEmply";
+import ViewReceivedDoc from "./Components/Employee/ViewRecievedDoc";
+import EmplProfile from "./Components/Employee/ProfileEmpl";
+import EmplHelp from "./Components/Employee/Help";
+import EmplHelpSupport from "./Components/Employee/Help&Support";
+import EmplEditProfile from "./Components/Employee/EditProfile";
+import ChatboxEmploy from "./Components/Employee/ChatboxEmploy";
+import ContactUsEmpl from "./Components/Employee/ContactUsEmpl";
+import EmplAuthLogin from "./Components/Login/EmplAuthLogin";
+import EmplAuthforgotPassword from "./Components/Login/EmplAuthforgotPass";
+import EmplForgotSuccess from "./Components/Login/EmplForgotSuccess";
 
 function App() {
   return (
@@ -90,8 +108,8 @@ function App() {
       <Routes>
         <Route path="*" element={<AuthLogin />} />
         <Route path="Admin/Login" element={<AuthLogin />} />
-        <Route path="Admin/Forgot-password" element={<AuthforgotPass />} />
-        <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} />
+        {/* <Route path="Admin/Forgot-password" element={<AuthforgotPass />} /> */}
+        {/* <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} /> */}
         <Route path="Admin/Home" element={<Home />} />
         <Route path="Admin/Dashboard" element={<Dashboard />} />
         <Route path="Admin/Tasks" element={<Tasks />} />
@@ -104,18 +122,18 @@ function App() {
         <Route path="Admin/Calendar-year" element={<CalenderYear />} />
         <Route path="Admin/Chat" element={<Chatbox />} />
         <Route path="Admin/Approvers" element={<Approver />} />
-        <Route path="Admin/Signatories" element={<Signatories/>} />
-        <Route path="Admin/Requests" element={<Requests/>} />
-        <Route path="Admin/Announcements" element={<Announcements/>} />
-        <Route path="Admin/Analytics" element={<Analytics/>} />
-        <Route path="Admin/Announcements" element={<Announcements/>} /> 
-        <Route path="Admin/My-profile" element={<Profile/>} /> 
-        <Route path="Admin/Edit-profile" element={<EditProfile/>} /> 
-        <Route path="Admin/Settings" element={<Settings/>} /> 
-        <Route path="Admin/Comments" element={<Comments/>} /> 
-        <Route path="Admin/Help" element={<Help/>} /> 
-        <Route path="Admin/Help-Support" element={<HelpSupport/>} /> 
-        <Route path="Admin/Contact-us" element={<ContactUs/>} /> 
+        <Route path="Admin/Signatories" element={<Signatories />} />
+        <Route path="Admin/Requests" element={<Requests />} />
+        <Route path="Admin/Announcements" element={<Announcements />} />
+        <Route path="Admin/Analytics" element={<Analytics />} />
+        <Route path="Admin/Announcements" element={<Announcements />} />
+        <Route path="Admin/My-profile" element={<Profile />} />
+        <Route path="Admin/Edit-profile" element={<EditProfile />} />
+        <Route path="Admin/Settings" element={<Settings />} />
+        <Route path="Admin/Comments" element={<Comments />} />
+        <Route path="Admin/Help" element={<Help />} />
+        <Route path="Admin/Help-Support" element={<HelpSupport />} />
+        <Route path="Admin/Contact-us" element={<ContactUs />} />
 
         <Route path="Department/Home" element={<HomeDept />} />
         <Route path="Department/Dashboard" element={<DashboardDept />} />
@@ -137,13 +155,24 @@ function App() {
         <Route path="Department/Help-Support" element={<HelpSupportDept/>} /> 
         <Route path="Department/Contact-us" element={<ContactUsDept/>} />  
         <Route path="Department/Settings" element={<SettingsDept/>} />  
+        <Route path="Department/Requests" element={<RequestsDept />} />
+        <Route
+          path="Department/Announcements"
+          element={<AnnouncementsDept />}
+        />
+        <Route path="Department/Analytics" element={<AnalyticsDept />} />
+        <Route path="Department/My-profile" element={<ProfileDept />} />
+        <Route path="Department/Edit-profile" element={<EditProfileDept />} />
+        <Route path="Department/Help" element={<HelpDept />} />
+        <Route path="Department/Help-Support" element={<HelpSupportDept />} />
+        <Route path="Department/Contact-us" element={<ContactUsDept />} />
 
         <Route path="Approver/Home" element={<HomeAprv />} />
         <Route path="Approver/Dashboard" element={<DashboardAprv />} />
         <Route path="Approver/Template-review" element={<TemplateReview />} />
         <Route path="Approver/Template-view" element={<TemplateRevView />} />
-        <Route path="Approver/Requests" element={<RequestsAprv/>} />
-        <Route path="Approver/Announcements" element={<AnnouncementsAprv/>} />
+        <Route path="Approver/Requests" element={<RequestsAprv />} />
+        <Route path="Approver/Announcements" element={<AnnouncementsAprv />} />
         <Route
           path="Approver/History-log-approved"
           element={<HistoryLogAprv />}
@@ -155,12 +184,19 @@ function App() {
         <Route path="Approver/Calendar" element={<CalenderAprv />} />
         <Route path="Approver/Calendar-month" element={<CalendarMonthAprv />} />
         <Route path="Approver/Calendar-year" element={<CalendarYearAprv />} />
+
         <Route path="Approver/My-profile" element={<ProfileAprv/>} /> 
         <Route path="Approver/Edit-profile" element={<EditProfileAprv/>} /> 
         <Route path="Approver/Help" element={<HelpAprv/>} /> 
         <Route path="Approver/Help-Support" element={<HelpSupportAprv/>} /> 
         <Route path="Approver/Contact-us" element={<ContactUsAprv/>} /> 
         <Route path="Approver/Settings" element={<SettingsAprv/>} /> 
+
+        <Route path="Approver/My-profile" element={<ProfileAprv />} />
+        <Route path="Approver/Edit-profile" element={<EditProfileAprv />} />
+        <Route path="Approver/Help" element={<HelpAprv />} />
+        <Route path="Approver/Help-Support" element={<HelpSupportAprv />} />
+        <Route path="Approver/Contact-us" element={<ContactUsAprv />} />
 
         <Route path="Signatory/Home" element={<HomeSig />} />
         <Route path="Signatory/Dashboard" element={<DashboardSig />} />
@@ -173,6 +209,7 @@ function App() {
         <Route path="Signatory/Calendar" element={<CalenderSig />} />
         <Route path="Signatory/Calendar-month" element={<CalendarMonthSig />} />
         <Route path="Signatory/Calendar-year" element={<CalendarYearSig />} />
+
         <Route path="Signatory/Requests" element={<RequestsSig/>} />
         <Route path="Signatory/Announcements" element={<AnnouncementsSig/>} />
         <Route path="Signatory/My-profile" element={<ProfileSig/>} /> 
@@ -182,6 +219,45 @@ function App() {
         <Route path="Signatory/Help-Support" element={<HelpSupportSig/>} /> 
         <Route path="Signatory/Contact-us" element={<ContactUsSig/>} /> 
         <Route path="Signatory/Settings" element={<SettingsSig/>} /> 
+
+        <Route path="Signatory/Requests" element={<RequestsSig />} />
+        <Route path="Signatory/Announcements" element={<AnnouncementsSig />} />
+        <Route path="Signatory/My-profile" element={<ProfileSig />} />
+        <Route path="Signatory/Edit-profile" element={<EditProfileSig />} />
+        <Route path="Signatory/Help" element={<HelpSig />} />
+        <Route path="Signatory/Help-Support" element={<HelpSupportSig />} />
+        <Route path="Signatory/Contact-us" element={<ContactUsSig />} />
+
+
+        <Route path="Employee/Login" element={<EmplAuthLogin />} />
+        <Route path="Employee/Forgot-Password" element={<EmplAuthforgotPassword />} />
+        <Route path="Employee/Forgot-Success" element={<EmplForgotSuccess />} />
+        <Route path="Employee/Home" element={<HomeEmpl />} />
+        <Route path="Employee/Dashboard" element={<EmployeeDash />} />
+        <Route
+          path="Employee/history-log-request"
+          element={<RequestHistoryEmpl />}
+        />
+        <Route
+          path="Employee/history-log-access"
+          element={<DocHistoryEmploye />}
+        />
+        <Route path="Employee/document" element={<DocumentEmply />} />
+        <Route path="Employee/received-doc" element={<ReceivedDocEmpl />} />
+        <Route path="Employee/Calender" element={<CalenderEmply />} />
+        <Route path="Employee/view-details" element={<ViewDocumentEmply />} />
+        <Route
+          path="Employee/received-doc/view-details"
+          element={<ViewReceivedDoc />}
+        />
+        <Route path="Employee/Forgot-success" element={<EmplForgotSuccess />} />
+        <Route path="Employee/Forgot-password" element={<EmplAuthforgotPassword />} />
+        <Route path="Employee/profile" element={<EmplProfile />} />
+        <Route path="Employee/Help" element={<EmplHelp />} />
+        <Route path="Employee/Help&Support" element={<EmplHelpSupport />} />
+        <Route path="Employee/Edit-Profile" element={<EmplEditProfile />} />
+        <Route path="Employee/Chat" element={<ChatboxEmploy />} />
+        <Route path="Employee/Contact" element={<ContactUsEmpl />} />
       </Routes>
     </div>
   );

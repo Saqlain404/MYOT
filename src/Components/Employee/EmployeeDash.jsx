@@ -1,64 +1,89 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
-import { Card } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
+import { DasboardCount, EmployeeDashList, searchDash } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const EmployeeDash = () => {
-  const documents = [
-    {
-      id: 1,
-      DocumentName: "Leave Certificate",
-      Department: "Human Resources",
-      login: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 2,
-      DocumentName: "Salary Certificate",
-      Department: "Human Resources",
-      login: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 3,
-      DocumentName: "Employee Contract",
-      Department: "Human Resources",
-      login: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 4,
-      DocumentName: "Tax Deduction certificate",
-      Department: "Human Resources",
-      login: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 5,
-      DocumentName: "Experiment Report",
-      Department: "R&D",
-      login: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 6,
-      DocumentName: "Sale Proposal",
-      Department: "Human Resources",
-      login: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-   
-    // Add more tasks here
-  ];
+
+
+  const navigate = useNavigate();
+  const[searchData, setSearchData] = useState("");
+  const [templateNames, setTemplateNames] = useState(null);
+  const [documentRequests, setDocumentRequests] = useState([]);
+ 
+  const handleSearch = async()=>{
+    const result = await searchDash(searchData)
+    console.log(result)
+    const searchResult = result?.data?.results?.document;
+
+      if (searchResult && Array.isArray(searchResult)) {
+        const mappedResult = searchResult?.map((document) => ({
+          documentName: document?.templete?.templeteName,
+          // assignedTo: [name?.templete_Id?.manager?.name], 
+          department: [document?.templete?.manager?.[0]?.department?.[0]?.departmentName], 
+          dateofSigning: [document?.createdAt],
+          comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
+          status:[document?.status],
+          action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+        }));
+        setDocumentRequests(mappedResult);
+      } 
+  }
+
+  
+  useEffect(()=>{
+    handleSearch()
+  },[searchData])
+
+  
+  useEffect(() => {
+    const fetchData = async () => {
+     if(!searchData || searchData === ""){
+       const names = await EmployeeDashList();
+      if (names) {
+        setTemplateNames(names);
+        console.log(names)
+     }
+      
+        const requests = names?.[0]?.map((name) => ({
+          documentName: name?.templete_Id?.templeteName,
+          // assignedTo: [name?.templete_Id?.manager?.name], 
+          department: [name?.templete_Id?.manager?.department_Id?.departmentName], 
+          dateofSigning: [name?.createdAt],
+          comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
+          status:[name?.status],
+          action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+        }));
+        
+
+        setDocumentRequests(requests);
+      }
+    };
+
+    fetchData();
+  },[searchData]);
+
+
+
+  // Dasboard Count API
+  const[totalDocument,setTotalDocument] = useState(null);
+  const[pendingDocument,setPendingDocument] = useState(null);
+
+  useEffect(()=>{
+    const count = async ()=>{
+      const dashbaordCountResult = await DasboardCount();
+      if (!dashbaordCountResult?.error && dashbaordCountResult?.data) {
+        const count = dashbaordCountResult?.data?.results.totalDocument;
+        const receivedDocCount = dashbaordCountResult?.data?.results?.pendingDocument;
+        console.log(dashbaordCountResult);
+        setTotalDocument(count)
+        setPendingDocument(receivedDocCount)
+    }
+  }
+    count();
+  },[])
 
   return (
     <>
@@ -84,6 +109,10 @@ const EmployeeDash = () => {
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
+                      onChange={(e)=> {setSearchData(e.target.value);
+                        //  handleSearch();
+                        }}
+                        value={searchData.searchTerm}
                     />
                   </form>
                   <div className="">
@@ -92,7 +121,7 @@ const EmployeeDash = () => {
                       alt=""
                       className="ms-4 "
                     />
-                    <Link to={"/Admin/Chat"}>
+                    <Link to={"/Employee/Chat"}>
                     <img
                       src="/images/dashboard/chat-left-dots-fill.png"
                       alt=""
@@ -114,11 +143,11 @@ const EmployeeDash = () => {
                 <div className="col-md-3">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">Total Users</h6>
+                      <h6 className="mb-0 header-card-text">Total Document</h6>
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                       256
+                      {totalDocument !== null && (totalDocument)}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -135,12 +164,12 @@ const EmployeeDash = () => {
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
-                        Total Templates
+                        Total Pending Request
                       </h6>
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        156
+                      {pendingDocument !== null && (pendingDocument)}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         -0.56%
@@ -157,12 +186,12 @@ const EmployeeDash = () => {
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
-                        Documents Generated
+                        Recently Documents
                       </h6>
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        1,320
+                      {pendingDocument !== null && (pendingDocument)}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         -1.48%
@@ -178,11 +207,11 @@ const EmployeeDash = () => {
                 <div className="col-md-3 ">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">Active Users</h6>
+                      <h6 className="mb-0 header-card-text">Document Request</h6>
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        32
+                      {totalDocument !== null && (totalDocument)}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         +9.15%
@@ -343,9 +372,9 @@ const EmployeeDash = () => {
                 </tr>
               </thead>
               <tbody >
-                {documents.map((document) => (
+                {documentRequests.map((document,index) => (
                   <tr
-                    key={document.id}
+                    key={index}
                     
                   >
                     <td className="td-text">
@@ -355,14 +384,14 @@ const EmployeeDash = () => {
                         value=""
                       />
                     
-                      {document.DocumentName}
+                      {document.documentName}
                     </td>
                     <td className="td-text">
-                      {document.Department}
+                      {document.department}
                     </td>
                     <td className="td-text">
                       <img src="/images/dashboard/CalendarBlank.png" />
-                      {document.login}
+                      {document.dateofSigning}
                     </td>
                     <td className="td-text">{document.status}</td>
                     <td className="td-text"><div class="dropdown">

@@ -199,6 +199,9 @@ const SidebarAprv = () => {
     </Link>
     <Link to={"/Signatory/Home"} className="text-decoration-none">
     <li><a class="dropdown-item">Signatory</a></li>
+    <Link to={"/Employee/Home"} className="text-decoration-none">
+    <li><a class="dropdown-item">Employee</a></li>
+    </Link>
     </Link>
   </ul>
 </div>
