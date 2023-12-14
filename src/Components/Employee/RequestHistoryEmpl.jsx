@@ -1,81 +1,75 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from "antd";
 import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
+import { EmpyHistoryLogList, searchHistoryLog } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const RequestHistoryEmpl = () => {
-  const documents = [
-    {
-      id: 1,
-      documentName: "Salary Slip",
-      assignTo: [
-        <img src="/images/dashboard/avatar3.png" className="me-2" />,
-        "Eve Leroy",
-      ],
-      department: "Human Resources",
-      login: "18 Aug 22,09:23 AM",
-       comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 2,
-      documentName: "Promotion Letter.zip",
-      assignTo: [
-        <img src="/images/dashboard/avatar2.png" className="me-2" />,
-        "Lana Steiner",
-      ],
-      department: "Sales & Marketing",
-      login: "18 Aug 22,09:23 AM",
-       comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 3,
-      documentName: "Create Project Wireframes.xls",
-      assignTo: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
-        "ByeWind",
-      ],
-      department: "Training & Development",
-      login: "18 Aug 22,09:23 AM",
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 4,
-      documentName: "Create Project Wireframes.pdf",
-      assignTo: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Katherine Moss",
-      ],
-      department: "Human Resources",
-      login: "18 Aug 22,09:23 AM",
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 5,
-      documentName: "Project tech requirements.zip",
-      assignTo: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
-        "Natali Craig",
-      ],
-      department: "Training & Development",
-      login: "18 Aug 22,09:23 AM",
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-        version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
+
+  const[searchData, setSearchData] = useState("");
+  const [templateNames, setTemplateNames] = useState(null);
+  const [documentRequests, setDocumentRequests] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+     if(!searchData || searchData === ""){
+       const names = await EmpyHistoryLogList();
+      if (names) {
+        setTemplateNames(names);
+        console.log(names?.[0])
+     }
+      
+        const requests = names?.[0]?.results?.pendingDocument?.map((name) => ({
+          documentName: name?.templete_Id?.templeteName,
+          assignTo: [name?.templete_Id?.manager?.name], 
+          department: [name?.templete_Id?.manager?.department_Id?.departmentName], 
+          dateofSigning: [name?.createdAt],
+          img:[name?.templete_Id?.manager?.profile_Pic],
+          version: "0.1",
+          comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
+          // status:[name?.status],
+          action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+        }));
+        
+
+        setDocumentRequests(requests);
+      }
+    };
+
+    fetchData();
+  },[searchData]);
+
+   
+  const handleSearch = async()=>{
+    const result = await searchHistoryLog(searchData)
+    const searchResult = result?.data?.results?.document;
+    console.log(searchResult)
     
-    // Add more tasks here
-  ];
+
+      if (searchResult && Array.isArray(searchResult)) {
+        const mappedResult = searchResult?.map((document) => ({
+          documentName: document?.templete?.templeteName,
+          img:[document?.templete?.manager?.[0]?.profile_Pic],
+          assignTo: [document?.templete?.manager?.[0]?.name], 
+          department: [document?.templete?.manager?.[0]?.department?.[0]?.departmentName], 
+          dateofSigning: [document?.createdAt],
+          comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
+          // status:[document?.status],
+          version:"0.1",
+          action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+        }));
+        setDocumentRequests(mappedResult);
+      } 
+  }
+
+  
+  useEffect(()=>{
+    handleSearch()
+  },[searchData])
+
 
   return (
     <>
@@ -101,6 +95,10 @@ version: "0.1",
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
+                      onChange={(e)=> {setSearchData(e.target.value);
+                        //  handleSearch();
+                        }}
+                        value={searchData.searchTerm}
                     />
                   </form>
                   <div className="">
@@ -171,6 +169,10 @@ version: "0.1",
                   type="search"
                   placeholder="Type Something!"
                   aria-label="Search"
+                  onChange={(e)=> {setSearchData(e.target.value);
+                    //  handleSearch();
+                    }}
+                    value={searchData.searchTerm}
                 />
               </form>
             </div>
@@ -184,7 +186,6 @@ version: "0.1",
                     <input
                       className="form-check-input checkbox-table"
                       type="checkbox"
-                      value=""
                     />
                     Document Name
                   </th>
@@ -237,9 +238,9 @@ version: "0.1",
                 </tr>
               </thead>
               <tbody >
-                {documents.map((document) => (
+                {documentRequests.map((document) => (
                   <tr
-                    key={document.id}
+                    key={document._id}
                     
                   >
                     <td className="td-text">
@@ -250,7 +251,7 @@ version: "0.1",
                       />
                       {document.documentName}
                     </td>
-                    <td className="td-text">
+                    <td className="td-text"> <img className="img_profile" src={document.img} alt="profile-pic"/>
                       {document.assignTo}
                     </td>
                     <td className="td-text">
@@ -258,7 +259,7 @@ version: "0.1",
                     </td>
                     <td className="td-text">
                       <img src="/images/dashboard/CalendarBlank.png" />
-                      {document.login}
+                      {document.dateofSigning}
                     </td>
                     <td className="td-text">
                       {document.comments}

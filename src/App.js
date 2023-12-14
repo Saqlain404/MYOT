@@ -90,8 +90,8 @@ import ViewDocumentEmply from "./Components/Employee/ViewDocumentEmply";
 import ViewReceivedDoc from "./Components/Employee/ViewRecievedDoc";
 import EmplProfile from "./Components/Employee/ProfileEmpl";
 import EmplHelp from "./Components/Employee/Help";
-import EmplHelpSupport from "./Components/Employee/Help&Support";
-import EmplEditProfile from "./Components/Employee/EditProfile";
+import EmplHelpSupport from "./Components/Employee/EmplHelp&Support";
+import EmplEditProfile from "./Components/Employee/EmplEditProfile";
 import ChatboxEmploy from "./Components/Employee/ChatboxEmploy";
 import ContactUsEmpl from "./Components/Employee/ContactUsEmpl";
 import EmplAuthLogin from "./Components/Login/EmplAuthLogin";
@@ -196,9 +196,11 @@ function App() {
         <Route path="Signatory/Help-Support" element={<HelpSupportSig />} />
         <Route path="Signatory/Contact-us" element={<ContactUsSig />} />
 
-
         <Route path="Employee/Login" element={<EmplAuthLogin />} />
-        <Route path="Employee/Forgot-Password" element={<EmplAuthforgotPassword />} />
+        <Route
+          path="Employee/Forgot-Password"
+          element={<EmplAuthforgotPassword />}
+        />
         <Route path="Employee/Forgot-Success" element={<EmplForgotSuccess />} />
         <Route path="Employee/Home" element={<HomeEmpl />} />
         <Route path="Employee/Dashboard" element={<EmployeeDash />} />
@@ -219,7 +221,10 @@ function App() {
           element={<ViewReceivedDoc />}
         />
         <Route path="Employee/Forgot-success" element={<EmplForgotSuccess />} />
-        <Route path="Employee/Forgot-password" element={<EmplAuthforgotPassword />} />
+        <Route
+          path="Employee/Forgot-password"
+          element={<EmplAuthforgotPassword />}
+        />
         <Route path="Employee/profile" element={<EmplProfile />} />
         <Route path="Employee/Help" element={<EmplHelp />} />
         <Route path="Employee/Help&Support" element={<EmplHelpSupport />} />

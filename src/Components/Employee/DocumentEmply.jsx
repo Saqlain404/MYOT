@@ -224,7 +224,7 @@ const DocumentEmply = () => {
                     </p>
                     <button
                       type="button"
-                      class="btn-close"
+                      className="btn-close"
                       data-bs-dismiss="modal"
                       aria-label="Close"
                     ></button>
@@ -242,12 +242,11 @@ const DocumentEmply = () => {
                           <option value="" disabled>
                             Select Document Type *
                           </option>
-                          {templateIdList.map((template) => (
+                          {templateIdList?.map((template) => (
                             <option key={template._id} value={template._id}>
                               {template.templeteName}
                             </option>
                           ))}
-                          console.log(template)
                         </select>
                       </div>
                     </div>
@@ -255,12 +254,13 @@ const DocumentEmply = () => {
                   <div className="d-flex justify-content-end mb-3">
                     <button
                       type="submit"
-                      class="user-modal-btn"
+                      className="user-modal-btn"
                       onClick={() => handleSubmit()}
                     >
                       Request <ToastContainer />
                     </button>
-                    <button type="button" class="user-modal-btn2">
+                    <button type="button" data-bs-dismiss="modal"
+                       aria-label="Close" className="user-modal-btn2">
                       Cancle
                     </button>
                   </div>

@@ -372,7 +372,7 @@ const EmployeeDash = () => {
                 </tr>
               </thead>
               <tbody >
-                {documentRequests.map((document,index) => (
+                {documentRequests?.map((document,index) => (
                   <tr
                     key={index}
                     

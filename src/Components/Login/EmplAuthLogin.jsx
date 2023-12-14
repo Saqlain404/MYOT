@@ -20,7 +20,7 @@ const EmplAuthLogin = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!localStorage.getItem("token-employee")) {
+    if (!localStorage.getItem("token-company")) {
       navigate("/Employee/Login");
     }
   }, []);
@@ -30,7 +30,7 @@ const EmplAuthLogin = () => {
 
     const response = await employeeLogin(data);
     if (!response.data?.error) {
-      navigate("/Employee/dashboard");
+      navigate("/Employee/Dashboard");
       console.log(response)
     }
   };

@@ -14,8 +14,8 @@ export async function employeeLogin(formData) {
     console.log(data);
 
     if (!data.error) {
-      await localStorage.removeItem("token-employee");
-      await localStorage.setItem("token-employee", headers["x-auth-token-employee"]);
+      await localStorage.removeItem("token-company");
+      await localStorage.setItem("token-company", headers["x-auth-token-company"]);
       await localStorage.setItem("user_id", data?.results?.employee._id);
 
       toast.success("Success");
@@ -38,7 +38,7 @@ export async function EmplforgotPassword(formData) {
     console.log(data);
 
     if (!data.error) {
-      await localStorage.removeItem("token-employee");
+      await localStorage.removeItem("token-company");
       toast.success(data.results.otp);
     } else toast.error(data.message);
 
@@ -82,7 +82,7 @@ export async function EmployeeDashList() {
 
     if (!response.data?.error) {
       const templateList = response?.data?.results?.completeDocument;
-      console.log(templateList)
+      // console.log(templateList)
 
       return [templateList];
     } else {
@@ -155,7 +155,7 @@ export async function employeProfileDetail() {
 export async function updateProfile(formData) {
   try {
     const { data } = await employeeHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/edit-profile/656982002e4c41f286f7dffb`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/edit-profile/${id}`,
       formData
     );
     console.log(data);
@@ -227,6 +227,34 @@ if (!response.data?.error) {
 
 
 
+export async function EmpyHistoryLogList() {
+  try {
+    const response = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/pendning-document/${id}`
+    );
+
+    if (!response.data?.error) {
+      const templateList = response?.data;
+      console.log(templateList)
+      
+
+      return [templateList];
+    } else {
+      toast.error(response?.data.message);
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response?.data.message);
+    } else {
+      toast.error('An error occurred while fetching the template IDs.');
+    }
+    return null;
+  }
+}
+
+
+
 export async function searchDoc(searchKey) {
   try {
     const { data } = await employeeHttpService.post(
@@ -262,6 +290,36 @@ export async function searchDash(searchKey) {
       {search:searchKey}
     );
 
+    if (!data?.error) {
+      const searchTerm = searchKey?.searchTerm?.toLowerCase();
+      
+      
+      
+      const filteredDocuments = data?.results?.document.filter(document =>
+        document.templete.templeteName.toLowerCase().includes(searchTerm)
+      );
+
+      console.log(filteredDocuments);
+
+      toast.success(data.message);
+    } else {
+      console.log(data.message)
+    }
+
+    if (!data?.error) return { data };
+  } catch (error) {
+    if (error?.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+
+export async function searchHistoryLog(searchKey) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/pending-docuement-search/${id}`,
+      {search:searchKey}
+    );
     if (!data?.error) {
       const searchTerm = searchKey?.searchTerm?.toLowerCase();
       
