@@ -1,134 +1,192 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from "antd";
 import { Link } from "react-router-dom";
+import {
+  AddCommentForTask,
+  GetTaskData,
+  SearchTask,
+} from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import moment from "moment";
+import { toast } from "react-toastify";
 
 const Tasks = () => {
-  const documents = [
-    {
-      id: 1,
-      templateName: "Employment Contract",
-      assignedTo: <img src="/images/dashboard/Avatar.png" />,
-      version: "0.2",
-      date: "26 Oct, 2023",
-      status: <p className="text-primary m-0">In Progress</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 2,
-      templateName: "Tax Deduction at Source (TDS)",
-      assignedTo: <img src="/images/dashboard/Avatar.png" />,
-      version: "0.2",
-      date: "26 Oct, 2023",
-      status: <p className="text-warning m-0"> Approved</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 3,
-      templateName: "Training Certificates",
-      assignedTo: <img src="/images/dashboard/Avatar.png" />,
-      version: "0.2",
-      date: "26 Oct, 2023",
-      status: <p className="text-success m-0">Complete</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 4,
-      templateName: "Software Licenses",
-      assignedTo: <img src="/images/dashboard/Avatar.png" />,
-      version: "0.2",
-      date: "26 Oct, 2023",
-      status: <p className="text-primary m-0">In Progress</p>,
-      department: "Information Technologies",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 5,
-      templateName: "Reference Letter",
-      assignedTo: <img src="/images/dashboard/Avatar.png" />,
-      version: "0.2",
-      date: "26 Oct, 2023",
-      status: <p className="text-info m-0">Pending</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 6,
-      templateName: "Annual Tax Statement",
-      assignedTo: <img src="/images/dashboard/Avatar.png" />,
-      version: "0.2",
-      date: "26 Oct, 2023",
-      status: <p className="text-warning m-0"> Approved</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 7,
-      templateName: "Leave Application",
-      assignedTo: <img src="/images/dashboard/Avatar.png" />,
-      version: "0.2",
-      date: "26 Oct, 2023",
-      status: <p className="text-secondary m-0">Rejected</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 8,
-      templateName: "Marketing Campaign Reports",
-      assignedTo: <img src="/images/dashboard/Avatar.png" />,
-      version: "0.2",
-      date: "26 Oct, 2023",
-      status: <p className="text-primary m-0">In Progress</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    // Add more tasks here
-  ];
+  const [documents, setDocuments] = useState();
+  const [search, setSearch] = useState("");
+  const [comment, setComment] = useState("");
+
+  useEffect(() => {
+    getTaskData();
+  }, []);
+
+  const getTaskData = async () => {
+    const { data } = await GetTaskData();
+    if (!data?.error) {
+      setDocuments(data?.results?.templete);
+    }
+  };
+
+  const handleSearch = async (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearch(value);
+    if (value.length > 0) {
+      let { data } = await SearchTask({ search: value });
+      if (!data?.error) {
+        setDocuments(data?.results?.Template);
+      }
+    } else {
+      getTaskData();
+    }
+  };
+
+  const handleSubmit = async (e, templete_Id) => {
+    e.preventDefault();
+    let creator_Id = localStorage.getItem("user_id");
+    let { data } = await AddCommentForTask({
+      comment,
+      templete_Id,
+      creator_Id,
+    });
+    console.log(data);
+    if (!data?.error) {
+      toast("Comment added successfully", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setComment("");
+    }
+  };
+
+  // const documents = [
+  //   {
+  //     id: 1,
+  //     templateName: "Employment Contract",
+  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
+  //     version: "0.2",
+  //     date: "26 Oct, 2023",
+  //     status: <p className="text-primary m-0">In Progress</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 2,
+  //     templateName: "Tax Deduction at Source (TDS)",
+  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
+  //     version: "0.2",
+  //     date: "26 Oct, 2023",
+  //     status: <p className="text-warning m-0"> Approved</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 3,
+  //     templateName: "Training Certificates",
+  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
+  //     version: "0.2",
+  //     date: "26 Oct, 2023",
+  //     status: <p className="text-success m-0">Complete</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 4,
+  //     templateName: "Software Licenses",
+  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
+  //     version: "0.2",
+  //     date: "26 Oct, 2023",
+  //     status: <p className="text-primary m-0">In Progress</p>,
+  //     department: "Information Technologies",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 5,
+  //     templateName: "Reference Letter",
+  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
+  //     version: "0.2",
+  //     date: "26 Oct, 2023",
+  //     status: <p className="text-info m-0">Pending</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 6,
+  //     templateName: "Annual Tax Statement",
+  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
+  //     version: "0.2",
+  //     date: "26 Oct, 2023",
+  //     status: <p className="text-warning m-0"> Approved</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 7,
+  //     templateName: "Leave Application",
+  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
+  //     version: "0.2",
+  //     date: "26 Oct, 2023",
+  //     status: <p className="text-secondary m-0">Rejected</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 8,
+  //     templateName: "Marketing Campaign Reports",
+  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
+  //     version: "0.2",
+  //     date: "26 Oct, 2023",
+  //     status: <p className="text-primary m-0">In Progress</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  // ];
 
   return (
     <>
@@ -310,6 +368,8 @@ const Tasks = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={search}
+                  onChange={(e) => handleSearch(e)}
                 />
               </form>
             </div>
@@ -385,18 +445,46 @@ const Tasks = () => {
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {documents.map((document) => (
-                      <tr key={document.id}>
-                        <td className="td-text">{document.templateName}</td>
-                        <td className="td-text">{document.assignedTo}</td>
+                  <tbody className="task_table">
+                    {documents?.map((document) => (
+                      <tr className="tr" key={document?._id}>
+                        <td className="td-text">{document?.templeteName}</td>
+                        <td className="td-text">
+                          <img
+                            style={{
+                              width: "40px",
+                              height: "40px",
+                              borderRadius: "50%",
+                            }}
+                            src={document?.manager?.profile_Pic}
+                            alt={document?.manager?.name}
+                          />
+                          <span className="ms-3">
+                            {document?.manager?.name.charAt(0).toUpperCase() +
+                              document?.manager?.name.slice(1).toLowerCase()}
+                          </span>
+                        </td>
                         <td className="td-text">{document.version}</td>
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
-                          {document.date}
+                          {moment(document.createdAt).format("ll")}
                         </td>
-                        <td className="td-text">{document.status}</td>
-                        <td className="td-text">{document.department}</td>
+                        <td
+                          className={`"td-text" ${
+                            document.status === "Pending"
+                              ? "text-info"
+                              : document.status === "Approved"
+                              ? "text-warning"
+                              : document.status === "In Progress"
+                              ? "text-primary"
+                              : "text-success"
+                          }`}
+                        >
+                          {document.status}
+                        </td>
+                        <td className="td-text">
+                          {document?.manager?.department_Id?.departmentName}
+                        </td>
                         <td className="td-text">
                           <div className="dropdown">
                             <a
@@ -404,9 +492,15 @@ const Tasks = () => {
                               data-bs-toggle="dropdown"
                               aria-expanded="false"
                             >
-                              {document.comment}
+                              <img
+                                src="/images/dashboard/Comment.png"
+                                className="mx-auto d-block"
+                              />
                             </a>
-                            <form className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded">
+                            <form
+                              className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
+                              onSubmit={(e) => handleSubmit(e, document?._id)}
+                            >
                               <div className="mb-3 border-bottom">
                                 <label className="form-label th-text">
                                   Comment or type
@@ -415,6 +509,8 @@ const Tasks = () => {
                                 <input
                                   type="text"
                                   className="form-control border-0"
+                                  value={comment}
+                                  onChange={(e) => setComment(e.target.value)}
                                 />
                               </div>
 
@@ -466,7 +562,11 @@ const Tasks = () => {
                               data-bs-toggle="dropdown"
                               aria-expanded="false"
                             >
-                              {document.actions}
+                              {/* {document.actions} */}
+                              <img
+                                src="/images/sidebar/ThreeDots.svg"
+                                className="w-auto p-3"
+                              />
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                               <li>

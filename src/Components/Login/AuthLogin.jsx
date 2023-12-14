@@ -26,7 +26,7 @@ const AuthLogin = () => {
     console.log(data);
 
     const response = await adminLogin(data);
-    if (!response.data.error) {
+    if (!response?.data?.error) {
       navigate("/Admin/Dashboard");
     }
   };

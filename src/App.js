@@ -5,6 +5,8 @@ import "./App.css";
 import "./Responsive.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import AuthLogin from "./Components/Login/AuthLogin";
 import AuthforgotPass from "./Components/Login/AuthforgotPass";
@@ -101,6 +103,7 @@ import EmplForgotSuccess from "./Components/Login/EmplForgotSuccess";
 function App() {
   return (
     <div>
+      <ToastContainer />
       <Routes>
         <Route path="*" element={<AuthLogin />} />
         <Route path="Admin/Login" element={<AuthLogin />} />
@@ -196,9 +199,11 @@ function App() {
         <Route path="Signatory/Help-Support" element={<HelpSupportSig />} />
         <Route path="Signatory/Contact-us" element={<ContactUsSig />} />
 
-
         <Route path="Employee/Login" element={<EmplAuthLogin />} />
-        <Route path="Employee/Forgot-Password" element={<EmplAuthforgotPassword />} />
+        <Route
+          path="Employee/Forgot-Password"
+          element={<EmplAuthforgotPassword />}
+        />
         <Route path="Employee/Forgot-Success" element={<EmplForgotSuccess />} />
         <Route path="Employee/Home" element={<HomeEmpl />} />
         <Route path="Employee/Dashboard" element={<EmployeeDash />} />
@@ -219,7 +224,10 @@ function App() {
           element={<ViewReceivedDoc />}
         />
         <Route path="Employee/Forgot-success" element={<EmplForgotSuccess />} />
-        <Route path="Employee/Forgot-password" element={<EmplAuthforgotPassword />} />
+        <Route
+          path="Employee/Forgot-password"
+          element={<EmplAuthforgotPassword />}
+        />
         <Route path="Employee/profile" element={<EmplProfile />} />
         <Route path="Employee/Help" element={<EmplHelp />} />
         <Route path="Employee/Help&Support" element={<EmplHelpSupport />} />

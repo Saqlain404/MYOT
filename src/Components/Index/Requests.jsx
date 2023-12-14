@@ -1,105 +1,137 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from "antd";
 import { Link } from "react-router-dom";
+import {
+  RequestorList,
+  SearchRequestor,
+} from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 
 const Requests = () => {
-  const documents = [
-    {
-      id: 1,
-      document: "Employment Contract",
-      requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        
-      ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-primary m-0">In Progress</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 2,
-      document: "Tax Deduction at Source (TDS)",
-      requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        
-      ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-warning m-0"> Approved</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 3,
-      document: "Training Certificates",
-      requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        
-      ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-success m-0">Complete</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 4,
-      document: "Software Licenses",
-      requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        
-      ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-primary m-0">In Progress</p>,
-      department: "Information Technologies",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 5,
-      document: "Reference Letter",
-      requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        
-      ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-info m-0">Pending</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-   
-    // Add more tasks here
-  ];
+  const [documents, setDocuments] = useState();
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    getRequestorList();
+  }, []);
+
+  const getRequestorList = async () => {
+    let { data } = await RequestorList();
+    if (!data.error) {
+      setDocuments(data?.results?.list);
+    }
+  };
+
+  const handleSearch = async (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearch(value);
+    if (value.length > 0) {
+      let { data } = await SearchRequestor({ search: value });
+      console.log(data);
+      if (!data?.error) {
+        setDocuments(data?.results?.document);
+      }
+    } else {
+      getRequestorList();
+    }
+  };
+
+  // const documents1 = [
+  //   {
+  //     id: 1,
+  //     document: "Employment Contract",
+  //     requester: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+
+  //     ],
+  //     assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+  //     lastLoggedIn: "26 Oct, 2023 18:02:55",
+  //     status: <p className="text-primary m-0">In Progress</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 2,
+  //     document: "Tax Deduction at Source (TDS)",
+  //     requester: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+
+  //     ],
+  //     assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+  //     lastLoggedIn: "26 Oct, 2023 18:02:55",
+  //     status: <p className="text-warning m-0"> Approved</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 3,
+  //     document: "Training Certificates",
+  //     requester: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+
+  //     ],
+  //     assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+  //     lastLoggedIn: "26 Oct, 2023 18:02:55",
+  //     status: <p className="text-success m-0">Complete</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 4,
+  //     document: "Software Licenses",
+  //     requester: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+
+  //     ],
+  //     assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+  //     lastLoggedIn: "26 Oct, 2023 18:02:55",
+  //     status: <p className="text-primary m-0">In Progress</p>,
+  //     department: "Information Technologies",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 5,
+  //     document: "Reference Letter",
+  //     requester: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+
+  //     ],
+  //     assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+  //     lastLoggedIn: "26 Oct, 2023 18:02:55",
+  //     status: <p className="text-info m-0">Pending</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+
+  //   // Add more tasks here
+  // ];
 
   return (
     <>
@@ -187,6 +219,8 @@ const Requests = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={search}
+                  onChange={(e) => handleSearch(e)}
                 />
               </form>
             </div>
@@ -226,7 +260,7 @@ const Requests = () => {
                           type="checkbox"
                           value=""
                         />
-                       Status
+                        Status
                       </th>
                       <th className="th-text">
                         <input
@@ -234,10 +268,10 @@ const Requests = () => {
                           type="checkbox"
                           value=""
                         />
-                       Department
+                        Department
                       </th>
                       <th className="th-text">
-                      <input
+                        <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
@@ -247,19 +281,100 @@ const Requests = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {documents.map((document) => (
+                    {documents?.map((document) => (
                       <tr key={document.id}>
                         <td className="td-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />{document.document}</td>
-                        <td className="td-text">{document.requester}</td>
-                        <td className="td-text">{document.assignedTo}</td>
-                        <td className="td-text">{document.status}</td>
-                        <td className="td-text">{document.department}</td>
-                        
+                          <input
+                            className="form-check-input checkbox-table"
+                            type="checkbox"
+                            value=""
+                          />
+                          {document?.templete_Id?.templeteName ||
+                            document?.templete?.templeteName}
+                        </td>
+                        <td className="td-text">
+                          <img
+                            style={{
+                              width: "40px",
+                              height: "40px",
+                              borderRadius: "50%",
+                            }}
+                            src={
+                              document?.creator_Id?.profile_Pic ||
+                              document?.creator_Id[0]?.profile_Pic
+                            }
+                            // alt={
+                            //   document?.creator_Id?.name ||
+                            //   document?.creator_Id[0]?.name
+                            // }
+                          />
+                          <span className="ms-3">
+                            {document?.creator_Id?.name
+                              ?.charAt(0)
+                              ?.toUpperCase() +
+                              document?.creator_Id?.name
+                                ?.slice(1)
+                                ?.toLowerCase() ||
+                              document?.creator_Id[0]?.name
+                                ?.charAt(0)
+                                ?.toUpperCase() +
+                                document?.creator_Id[0]?.name
+                                  ?.slice(1)
+                                  ?.toLowerCase()}
+                          </span>
+                        </td>
+                        <td className="td-text">
+                          {/* {document?.templete_Id?.manager?.name} */}
+                          <img
+                            style={{
+                              width: "40px",
+                              height: "40px",
+                              borderRadius: "50%",
+                            }}
+                            src={
+                              document?.templete_Id?.manager?.profile_Pic ||
+                              document?.templete?.manager[0]?.profile_Pic
+                            }
+                            alt={
+                              document?.templete_Id?.manager?.name ||
+                              document?.templete?.manager[0]?.name
+                            }
+                          />
+                          <span className="ms-3">
+                            {document?.templete_Id?.manager?.name
+                              .charAt(0)
+                              .toUpperCase() +
+                              document?.templete_Id?.manager?.name
+                                .slice(1)
+                                .toLowerCase() ||
+                              document?.templete?.manager[0]?.name
+                                .charAt(0)
+                                .toUpperCase() +
+                                document?.templete?.manager[0]?.name
+                                  .slice(1)
+                                  .toLowerCase()}
+                          </span>
+                        </td>
+                        <td
+                          className={`"td-text" ${
+                            document.status === "Pending"
+                              ? "text-info"
+                              : document.status === "Approved"
+                              ? "text-warning"
+                              : document.status === "In Progress"
+                              ? "text-primary"
+                              : "text-success"
+                          }`}
+                        >
+                          {document.status}
+                        </td>
+                        <td className="td-text">
+                          {document?.templete_Id?.manager?.department_Id
+                            ?.departmentName ||
+                            document?.templete?.manager[0]?.department[0]
+                              ?.departmentName}
+                        </td>
+
                         {/* <td className="td-text"></td> */}
                         <td className="td-text">
                           <div class="dropdown">
@@ -268,7 +383,10 @@ const Requests = () => {
                               data-bs-toggle="dropdown"
                               aria-expanded="false"
                             >
-                              {document.actions}
+                              <img
+                                src="/images/sidebar/ThreeDots.svg"
+                                className="w-auto p-3"
+                              />
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                               <li>

@@ -2268,3 +2268,13 @@ height: 960px; */
   width: 380px;
   height: 412px;
 }
+
+
+
+.task_table .tr {
+  margin: 10px 0 !important;
+}
+
+.cursor_pointer{
+  cursor: pointer !important;
+}

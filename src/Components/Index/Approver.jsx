@@ -1,105 +1,138 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from "antd";
 import { Link } from "react-router-dom";
+import {
+  ApproverList,
+  ApproverSearch,
+} from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import moment from "moment";
 
 const Approver = () => {
-  const documents = [
-    {
-      id: 1,
-      templateName: "Employment Contract",
-      managerName: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Katherine Moss",
-      ],
-      userId: "101128",
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-primary m-0">In Progress</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 2,
-      templateName: "Tax Deduction at Source (TDS)",
-      managerName: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Katherine Moss",
-      ],
-      userId: "101128",
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-warning m-0"> Approved</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 3,
-      templateName: "Training Certificates",
-      managerName: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Katherine Moss",
-      ],
-      userId: "101128",
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-success m-0">Complete</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 4,
-      templateName: "Software Licenses",
-      managerName: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Katherine Moss",
-      ],
-      userId: "101128",
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-primary m-0">In Progress</p>,
-      department: "Information Technologies",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 5,
-      templateName: "Reference Letter",
-      managerName: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Katherine Moss",
-      ],
-      userId: "101128",
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-info m-0">Pending</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-   
-    // Add more tasks here
-  ];
+  const [documents, setDocuments] = useState();
+  const [searchInput, setSearchInput] = useState("");
+
+  useEffect(() => {
+    getAprroversData();
+  }, []);
+
+  const getAprroversData = async () => {
+    let { data } = await ApproverList();
+    console.log(data?.results?.approver);
+    if (!data?.error) {
+      setDocuments(data?.results?.approver);
+    }
+  };
+
+  const handleApproverSearch = async (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchInput(value);
+    if (value.length > 0) {
+      let { data } = await ApproverSearch({ search: value });
+      if (!data?.error) {
+        setDocuments(data?.results?.approver);
+      }
+    } else {
+      getAprroversData();
+    }
+  };
+
+  // const documents = [
+  //   {
+  //     id: 1,
+  //     templateName: "Employment Contract",
+  //     managerName: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+  //       "Katherine Moss",
+  //     ],
+  //     userId: "101128",
+  //     lastLoggedIn: "26 Oct, 2023 18:02:55",
+  //     status: <p className="text-primary m-0">In Progress</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 2,
+  //     templateName: "Tax Deduction at Source (TDS)",
+  //     managerName: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+  //       "Katherine Moss",
+  //     ],
+  //     userId: "101128",
+  //     lastLoggedIn: "26 Oct, 2023 18:02:55",
+  //     status: <p className="text-warning m-0"> Approved</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 3,
+  //     templateName: "Training Certificates",
+  //     managerName: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+  //       "Katherine Moss",
+  //     ],
+  //     userId: "101128",
+  //     lastLoggedIn: "26 Oct, 2023 18:02:55",
+  //     status: <p className="text-success m-0">Complete</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 4,
+  //     templateName: "Software Licenses",
+  //     managerName: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+  //       "Katherine Moss",
+  //     ],
+  //     userId: "101128",
+  //     lastLoggedIn: "26 Oct, 2023 18:02:55",
+  //     status: <p className="text-primary m-0">In Progress</p>,
+  //     department: "Information Technologies",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+  //   {
+  //     id: 5,
+  //     templateName: "Reference Letter",
+  //     managerName: [
+  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
+  //       "Katherine Moss",
+  //     ],
+  //     userId: "101128",
+  //     lastLoggedIn: "26 Oct, 2023 18:02:55",
+  //     status: <p className="text-info m-0">Pending</p>,
+  //     department: "Human Resources",
+  //     comment: (
+  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+  //     ),
+  //     actions: (
+  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //     ),
+  //   },
+
+  //   // Add more tasks here
+  // ];
 
   return (
     <>
@@ -187,6 +220,8 @@ const Approver = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  onChange={(e) => handleApproverSearch(e)}
+                  value={searchInput}
                 />
               </form>
             </div>
@@ -210,7 +245,7 @@ const Approver = () => {
                           type="checkbox"
                           value=""
                         />
-                        Manager Name
+                        Name
                       </th>
                       <th className="th-text">
                         <input
@@ -218,7 +253,7 @@ const Approver = () => {
                           type="checkbox"
                           value=""
                         />
-                        User ID
+                        Emp ID
                       </th>
                       <th className="th-text">
                         <input
@@ -226,10 +261,10 @@ const Approver = () => {
                           type="checkbox"
                           value=""
                         />
-                       Last Logged In
+                        Last Logged In
                       </th>
                       <th className="th-text">
-                      <input
+                        <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
@@ -239,21 +274,25 @@ const Approver = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {documents.map((document) => (
-                      <tr key={document.id}>
+                    {documents?.map((document) => (
+                      <tr key={document?._id}>
                         <td className="td-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />{document.department}</td>
-                        <td className="td-text">{document.managerName}</td>
-                        <td className="td-text">{document.userId}</td>
+                          <input
+                            className="form-check-input checkbox-table"
+                            type="checkbox"
+                            value=""
+                          />
+                          {document?.department_Id?.departmentName}
+                        </td>
+                        <td className="td-text">{document.name}</td>
+                        <td className="td-text">{document?.employId}</td>
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
-                          {document.lastLoggedIn}
+                          {moment(document?.logIn).format(
+                            '"MMM Do YY", h:mm:ss a'
+                          )}
                         </td>
-                        
+
                         {/* <td className="td-text"></td> */}
                         <td className="td-text">
                           <div class="dropdown">
@@ -262,7 +301,10 @@ const Approver = () => {
                               data-bs-toggle="dropdown"
                               aria-expanded="false"
                             >
-                              {document.actions}
+                              <img
+                                src="/images/sidebar/ThreeDots.svg"
+                                className="w-auto p-3"
+                              />
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                               <li>
