@@ -134,7 +134,7 @@ const SideBarEmpl = () => {
             </a>
         </li>
         <li className="nav-item text-dark">
-          <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
+          <a href="/Employee/Login" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/logout.png" className='align-middle sidebar-icon'/>
               
@@ -145,20 +145,23 @@ const SideBarEmpl = () => {
       </ul>
       </div>
 
-      <div className='profile'>
-        <div>
-        <img src="/images/sidebar/Profile photo.png" alt="" />
-        </div>
-        <div>
-        <span>Easin Arafat</span>
-        <p className="th-text">Employee</p>
-        </div>
-        <div class="dropdown">
-  <a class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <div class="dropdown">
+  <a class="text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <div className="profile">
+          <div>
+            <img src="/images/sidebar/Profile photo.png" alt="" />
+          </div>
+          <div>
+            <span className="text-dark">Easin Arafat</span>
+            <p className="th-text">Employee</p>
+          </div>
+          <div>
   <img src="/images/sidebar/ArrowLineDown2.svg" alt="" />
+  </div>
+  </div>
   </a>
   <ul class="dropdown-menu">
-  <Link to={"/Admin/Home"} className="text-decoration-none">
+    <Link to={"/Admin/Home"} className="text-decoration-none">
     <li><a class="dropdown-item">Admin</a></li>
     </Link>
     <Link to={"/Approver/Home"} className="text-decoration-none">
@@ -167,12 +170,11 @@ const SideBarEmpl = () => {
     <Link to={"/Signatory/Home"} className="text-decoration-none">
     <li><a class="dropdown-item">Signatory</a></li>
     </Link>
-    <Link to={"/Department/Home"} className="text-decoration-none">
-    <li><a class="dropdown-item">Department Manager</a></li>
+    <Link to={"/Employee/Home"} className="text-decoration-none">
+       <li><a class="dropdown-item">Employee</a></li>
     </Link>
   </ul>
 </div>
-      </div>
 
 
 

@@ -16,7 +16,7 @@ export async function employeeLogin(formData) {
     if (!data.error) {
       await localStorage.removeItem("token-employee");
       await localStorage.setItem("token-employee", headers["x-auth-token-employee"]);
-      await localStorage.setItem("user_id", data.results.employee._id);
+      await localStorage.setItem("user_id", data?.results?.employee._id);
 
       toast.success("Success");
     } else toast.error(data.message);
@@ -29,7 +29,7 @@ export async function employeeLogin(formData) {
   }
 }
 
-export async function forgotPassword(formData) {
+export async function EmplforgotPassword(formData) {
   try {
     const { data } = await employeeHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/employee/send-email`,

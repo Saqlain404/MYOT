@@ -1,6 +1,7 @@
 import React from "react";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
+import SideBarEmpl from "./SideBarEmpl";
 
 const ContactUsEmpl = () => {
   return (
@@ -8,7 +9,7 @@ const ContactUsEmpl = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <Sidebar/>
+            <SideBarEmpl/>
           </div>
           <div className="col middle-content bg-body-tertiary p-0 min-vh-100">
             <div className="container-fluid border-bottom sticky-top bg-white mb-4">
@@ -35,7 +36,7 @@ const ContactUsEmpl = () => {
                       alt=""
                       className="ms-4 "
                     />
-                    <Link to={"/Admin/Chat"}>
+                    <Link to={"/Employee/Chat"}>
                       <img
                         src="/images/dashboard/chat-left-dots-fill.png"
                         alt=""

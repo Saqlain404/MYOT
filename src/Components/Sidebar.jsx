@@ -380,6 +380,9 @@ const Sidebar = () => {
                 <a class="dropdown-item">Signatory</a>
               </li>
             </Link>
+            <Link to={"/Employee/Home"} className="text-decoration-none">
+                  <li><a class="dropdown-item">Employee</a></li>
+             </Link>
           </ul>
         </div>
       </div>

@@ -157,6 +157,10 @@ const ReceivedDocEmpl = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  onChange={(e)=> {setSearchData(e.target.value);
+                    //  handleSearch();
+                    }}
+                    value={searchData.searchTerm}
                 />
               </form>
             </div>

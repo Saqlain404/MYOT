@@ -88,12 +88,15 @@ import ReceivedDocEmpl from "./Components/Employee/ReceivedDocEmpl";
 import CalenderEmply from "./Components/Employee/CalenderEmply";
 import ViewDocumentEmply from "./Components/Employee/ViewDocumentEmply";
 import ViewReceivedDoc from "./Components/Employee/ViewRecievedDoc";
-import Profile from "./Components/Employee/ProfileEmpl";
-import Help from "./Components/Employee/Help";
-import HelpSupport from "./Components/Employee/Help&Support";
-import EditProfile from "./Components/Employee/EditProfile";
+import EmplProfile from "./Components/Employee/ProfileEmpl";
+import EmplHelp from "./Components/Employee/Help";
+import EmplHelpSupport from "./Components/Employee/Help&Support";
+import EmplEditProfile from "./Components/Employee/EditProfile";
 import ChatboxEmploy from "./Components/Employee/ChatboxEmploy";
 import ContactUsEmpl from "./Components/Employee/ContactUsEmpl";
+import EmplAuthLogin from "./Components/Login/EmplAuthLogin";
+import EmplAuthforgotPassword from "./Components/Login/EmplAuthforgotPass";
+import EmplForgotSuccess from "./Components/Login/EmplForgotSuccess";
 
 function App() {
   return (
@@ -193,6 +196,10 @@ function App() {
         <Route path="Signatory/Help-Support" element={<HelpSupportSig />} />
         <Route path="Signatory/Contact-us" element={<ContactUsSig />} />
 
+
+        <Route path="Employee/Login" element={<EmplAuthLogin />} />
+        <Route path="Employee/Forgot-Password" element={<EmplAuthforgotPassword />} />
+        <Route path="Employee/Forgot-Success" element={<EmplForgotSuccess />} />
         <Route path="Employee/Home" element={<HomeEmpl />} />
         <Route path="Employee/Dashboard" element={<EmployeeDash />} />
         <Route
@@ -213,10 +220,10 @@ function App() {
         />
         <Route path="Employee/Forgot-success" element={<AuthforgotSuccess />} />
         <Route path="Employee/Forgot-password" element={<AuthforgotPass />} />
-        <Route path="Employee/profile" element={<Profile />} />
-        <Route path="Employee/Help" element={<Help />} />
-        <Route path="Employee/Help&Support" element={<HelpSupport />} />
-        <Route path="Employee/Edit-Profile" element={<EditProfile />} />
+        <Route path="Employee/profile" element={<EmplProfile />} />
+        <Route path="Employee/Help" element={<EmplHelp />} />
+        <Route path="Employee/Help&Support" element={<EmplHelpSupport />} />
+        <Route path="Employee/Edit-Profile" element={<EmplEditProfile />} />
         <Route path="Employee/Chat" element={<ChatboxEmploy />} />
         <Route path="Employee/Contact" element={<ContactUsEmpl />} />
       </Routes>
