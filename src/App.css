@@ -1622,314 +1622,311 @@ height: 960px; */
 
 .templates-leave {
   color: #000;
-  .vhvh {
-    width: auto;
-  }
+}
 
-  .profile-txt {
-    color: #000;
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 20px; /* 142.857% */
-  }
+.profile-txt {
+  color: #000;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 142.857% */
+}
 
-  .profile-edit-btn {
-    color: #fff;
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    display: inline-flex;
-    padding: 10px 20px;
-    align-items: center;
-    gap: 10px;
-    border-radius: 10px;
-    border: none;
-    background: #3e51ff;
-  }
+.profile-edit-btn {
+  color: #fff;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  display: inline-flex;
+  padding: 10px 20px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #3e51ff;
+}
 
-  .profile-info {
-    text-align: start;
-    color: #000;
-    font-family: Nunito;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: -0.05px;
-    opacity: 0.8;
-  }
+.profile-info {
+  text-align: start;
+  color: #000;
+  font-family: Nunito;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.05px;
+  opacity: 0.8;
+}
 
-  .profile-data {
-    margin-top: -12px;
-    text-align: start;
-    color: #000;
-    font-family: Nunito;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    letter-spacing: -0.06px;
-  }
+.profile-data {
+  margin-top: -12px;
+  text-align: start;
+  color: #000;
+  font-family: Nunito;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.06px;
+}
 
-  .profile-salary-slip {
-    color: #3e51ff;
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    letter-spacing: -0.07px;
-  }
+.profile-salary-slip {
+  color: #3e51ff;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.07px;
+}
 
-  .anouncement-text {
-    margin: auto;
-    color: #000;
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: -0.07px;
-  }
+.anouncement-text {
+  margin: auto;
+  color: #000;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.07px;
+}
 
-  .new-feedback {
-    margin-top: auto;
-    margin-bottom: auto;
-    color: #999;
-    font-family: Nunito;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: -0.065px;
-  }
+.new-feedback {
+  margin-top: auto;
+  margin-bottom: auto;
+  color: #999;
+  font-family: Nunito;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.065px;
+}
 
-  .announcement-time {
-    margin-left: 100px;
-    color: #656668;
-    font-family: Nunito;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: -0.065px;
-  }
+.announcement-time {
+  margin-left: 100px;
+  color: #656668;
+  font-family: Nunito;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.065px;
+}
 
-  .profile-txt {
-    color: #000;
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 20px; /* 142.857% */
-  }
+.profile-txt {
+  color: #000;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 142.857% */
+}
 
-  .profile-edit-btn {
-    color: #fff;
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    display: inline-flex;
-    padding: 10px 20px;
-    align-items: center;
-    gap: 10px;
-    border-radius: 10px;
-    border: none;
-    background: #3e51ff;
-  }
+.profile-edit-btn {
+  color: #fff;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  display: inline-flex;
+  padding: 10px 20px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #3e51ff;
+}
 
-  .profile-info {
-    text-align: start;
-    color: #000;
-    font-family: Nunito;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: -0.05px;
-    opacity: 0.8;
-  }
+.profile-info {
+  text-align: start;
+  color: #000;
+  font-family: Nunito;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.05px;
+  opacity: 0.8;
+}
 
-  .profile-data {
-    margin-top: -12px;
-    text-align: start;
-    color: #000;
-    font-family: Nunito;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    letter-spacing: -0.06px;
-  }
+.profile-data {
+  margin-top: -12px;
+  text-align: start;
+  color: #000;
+  font-family: Nunito;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.06px;
+}
 
-  .profile-salary-slip {
-    color: #3e51ff;
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    letter-spacing: -0.07px;
-  }
+.profile-salary-slip {
+  color: #3e51ff;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.07px;
+}
 
-  .profile-card-title {
-    color: #000;
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 20px; /* 142.857% */
-  }
+.profile-card-title {
+  color: #000;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 142.857% */
+}
 
-  .profile-edit-input {
-    /* width: 430px; */
-    height: 52px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    border: 1px solid #e0e2e7;
-    background: linear-gradient(0deg, #f7f7f8 0%, #f7f7f8 100%), #fff;
+.profile-edit-input {
+  /* width: 430px; */
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #e0e2e7;
+  background: linear-gradient(0deg, #f7f7f8 0%, #f7f7f8 100%), #fff;
 
-    color: rgba(0, 0, 0, 0.4);
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 112.4%; /* 15.736px */
-  }
+  color: rgba(0, 0, 0, 0.4);
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 112.4%; /* 15.736px */
+}
 
-  .profile-edit-submit {
-    margin-top: 40px;
-    margin-bottom: 100px;
-    width: 206px;
-    height: 45px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    background: #3e51ff;
-    color: #fff;
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    border: none;
-  }
+.profile-edit-submit {
+  margin-top: 40px;
+  margin-bottom: 100px;
+  width: 206px;
+  height: 45px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #3e51ff;
+  color: #fff;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+}
 
-  .help-text {
-    text-align: start;
-    color: #000;
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 27px; /* 192.857% */
-  }
+.help-text {
+  text-align: start;
+  color: #000;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 27px; /* 192.857% */
+}
 
-  .help-support-btn1 {
-    display: inline-flex;
-    padding: 8px;
-    align-items: center;
-    gap: 10px;
-    border-radius: 10px;
-    border: 1px solid #e0e2e7;
-    background: #fff;
-    color: rgba(0, 0, 0, 0.4);
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-  }
+.help-support-btn1 {
+  display: inline-flex;
+  padding: 8px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  border: 1px solid #e0e2e7;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.4);
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
 
-  .help-support-btn {
-    display: inline-flex;
-    height: 36px;
-    padding: 8px 16px;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    border: none;
-    background: #3e51ff;
-    color: #fff;
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-  }
+.help-support-btn {
+  display: inline-flex;
+  height: 36px;
+  padding: 8px 16px;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: none;
+  background: #3e51ff;
+  color: #fff;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
 
-  .help-support-heading {
-    margin-bottom: 0px;
-    text-align: start;
-    color: #000;
-    font-family: Nunito;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    /* line-height: 20px; 125% */
-  }
+.help-support-heading {
+  margin-bottom: 0px;
+  text-align: start;
+  color: #000;
+  font-family: Nunito;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  /* line-height: 20px; 125% */
+}
 
-  .help-support-text {
-    text-align: start;
-    color: rgba(0, 0, 0, 0.4);
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px; /* 171.429% */
-  }
+.help-support-text {
+  text-align: start;
+  color: rgba(0, 0, 0, 0.4);
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 171.429% */
+}
 
-  .ticket-number {
-    color: #000;
-    font-family: Nunito;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 14px; /* 87.5% */
-  }
+.ticket-number {
+  color: #000;
+  font-family: Nunito;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 14px; /* 87.5% */
+}
 
-  .ticket-question {
-    text-align: start;
-    color: #000;
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 14px; /* 100% */
-  }
+.ticket-question {
+  text-align: start;
+  color: #000;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px; /* 100% */
+}
 
-  .ticket-post-time {
-    width: 150px;
-    color: #999;
-    font-family: Nunito;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 14px; /* 116.667% */
-  }
+.ticket-post-time {
+  width: 150px;
+  color: #999;
+  font-family: Nunito;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px; /* 116.667% */
+}
 
-  .ticket-link {
-    color: #3e51ff;
-    font-family: Nunito;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 14px; /* 100% */
-    text-decoration-line: underline;
-  }
+.ticket-link {
+  color: #3e51ff;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px; /* 100% */
+  text-decoration-line: underline;
+}
 
-  .help-support-dd-img {
-    margin-right: 10px;
-    margin-bottom: 3px;
-    width: 12px;
-    height: 12px;
-  }
+.help-support-dd-img {
+  margin-right: 10px;
+  margin-bottom: 3px;
+  width: 12px;
+  height: 12px;
 }
 
 .profile-card-title {
