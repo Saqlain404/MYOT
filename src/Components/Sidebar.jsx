@@ -1,10 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { employeeLogout, removeEmployeeTokens } from "../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  
+  
+ 
+  
   return (
     <div className="container-fluid  sidebar">
       {/* Sidebar scroll*/}
@@ -324,7 +330,7 @@ const Sidebar = () => {
             </li>
             <li className="nav-item text-dark">
               <a
-                href="/"
+                href="/" 
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"
               >
