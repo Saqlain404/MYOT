@@ -212,7 +212,7 @@ const Departments = () => {
             </div>
 
             <div className="d-flex justify-content-between">
-              <p className="table-name mb-2">Templates</p>
+              <p className="table-name mb-2">Departments</p>
               <div className="d-flex justify-content-center th-text">
                 <div
                   className="d-flex whitespace-nowrap"

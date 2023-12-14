@@ -78,6 +78,10 @@ import HelpSupportDept from "./Components/DepartmentManager/Help&supportDept";
 import ContactUsDept from "./Components/DepartmentManager/ContactUsDept";
 import Settings from "./Components/Index/Settings";
 import Comments from "./Components/Index/Comments";
+import SignManagement from "./Components/Signatory/SignManagement";
+import SettingsSig from "./Components/Signatory/SettingsSig";
+import SettingsAprv from "./Components/Approver/SettingsAprv";
+import SettingsDept from "./Components/DepartmentManager/SettingsDept";
 
 import HomeEmpl from "./Components/Employee/HomeEmpl";
 import EmployeeDash from "./Components/Employee/EmployeeDash";
@@ -142,6 +146,15 @@ function App() {
         />
         <Route path="Department/Calendar" element={<CalenderDept />} />
         <Route path="Department/Departments" element={<DepartmentsDept />} />
+        <Route path="Department/Requests" element={<RequestsDept/>} />
+        <Route path="Department/Announcements" element={<AnnouncementsDept/>} />
+        <Route path="Department/Analytics" element={<AnalyticsDept/>} />
+        <Route path="Department/My-profile" element={<ProfileDept/>} /> 
+        <Route path="Department/Edit-profile" element={<EditProfileDept/>} />
+        <Route path="Department/Help" element={<HelpDept/>} /> 
+        <Route path="Department/Help-Support" element={<HelpSupportDept/>} /> 
+        <Route path="Department/Contact-us" element={<ContactUsDept/>} />  
+        <Route path="Department/Settings" element={<SettingsDept/>} />  
         <Route path="Department/Requests" element={<RequestsDept />} />
         <Route
           path="Department/Announcements"
@@ -171,6 +184,14 @@ function App() {
         <Route path="Approver/Calendar" element={<CalenderAprv />} />
         <Route path="Approver/Calendar-month" element={<CalendarMonthAprv />} />
         <Route path="Approver/Calendar-year" element={<CalendarYearAprv />} />
+
+        <Route path="Approver/My-profile" element={<ProfileAprv/>} /> 
+        <Route path="Approver/Edit-profile" element={<EditProfileAprv/>} /> 
+        <Route path="Approver/Help" element={<HelpAprv/>} /> 
+        <Route path="Approver/Help-Support" element={<HelpSupportAprv/>} /> 
+        <Route path="Approver/Contact-us" element={<ContactUsAprv/>} /> 
+        <Route path="Approver/Settings" element={<SettingsAprv/>} /> 
+
         <Route path="Approver/My-profile" element={<ProfileAprv />} />
         <Route path="Approver/Edit-profile" element={<EditProfileAprv />} />
         <Route path="Approver/Help" element={<HelpAprv />} />
@@ -188,6 +209,17 @@ function App() {
         <Route path="Signatory/Calendar" element={<CalenderSig />} />
         <Route path="Signatory/Calendar-month" element={<CalendarMonthSig />} />
         <Route path="Signatory/Calendar-year" element={<CalendarYearSig />} />
+
+        <Route path="Signatory/Requests" element={<RequestsSig/>} />
+        <Route path="Signatory/Announcements" element={<AnnouncementsSig/>} />
+        <Route path="Signatory/My-profile" element={<ProfileSig/>} /> 
+        <Route path="Signatory/Signature-management" element={<SignManagement/>} /> 
+        <Route path="Signatory/Edit-profile" element={<EditProfileSig/>} /> 
+        <Route path="Signatory/Help" element={<HelpSig/>} /> 
+        <Route path="Signatory/Help-Support" element={<HelpSupportSig/>} /> 
+        <Route path="Signatory/Contact-us" element={<ContactUsSig/>} /> 
+        <Route path="Signatory/Settings" element={<SettingsSig/>} /> 
+
         <Route path="Signatory/Requests" element={<RequestsSig />} />
         <Route path="Signatory/Announcements" element={<AnnouncementsSig />} />
         <Route path="Signatory/My-profile" element={<ProfileSig />} />

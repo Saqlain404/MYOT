@@ -317,6 +317,29 @@ const SidebarSig = () => {
                 </li>
               </Link>
             </Link>
+        </li>
+        <li className="nav-item text-dark">
+        <Link
+           to={"/Signatory/Settings"}
+           className="text-decoration-none">
+          <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
+        
+                <img src="/images/sidebar/settings.png" className='align-middle sidebar-icon'/>
+              
+              <span className="ms-3 align-middle sidebar-btn">Settings</span>
+            </a>
+            </Link>
+        </li>
+        <li className="nav-item text-dark">
+        <Link
+           to={"/Signatory/Help"}
+           className="text-decoration-none">
+          <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
+        
+                <img src="/images/sidebar/help.png" className='align-middle sidebar-icon'/>
+              
+              <span className="ms-3 align-middle sidebar-btn">Help</span>
+            </a>
             <Link to={"/Department/Home"} className="text-decoration-none">
               <li>
                 <a class="dropdown-item">Department Manager</a>

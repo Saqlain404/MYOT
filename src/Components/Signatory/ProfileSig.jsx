@@ -61,7 +61,15 @@ const ProfileSig = () => {
   <div className="row rounded">
     
     <div className=" d-flex justify-content-between">
-      <p className="profile-txt m-2">Profile</p>
+    <div className="d-flex">
+              <Link to={"/Signatory/My-Profile"} className="text-decoration-none">
+              <p className="td-text border-bottom me-3">Profile</p>
+              </Link>
+              <Link to={"/Signatory/Signature-management"} className="text-decoration-none">
+              <p className="th-text">Signature Management</p>
+              </Link>
+            </div>
+      {/* <p className="profile-txt m-2"></p> */}
       <Link to={"/Signatory/Edit-profile"} className="text-decoration-none">
       <button className="profile-edit-btn">Edit</button>
       </Link>
