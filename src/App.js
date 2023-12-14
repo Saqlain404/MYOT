@@ -56,6 +56,7 @@ import Help from "./Components/Employee/Help";
 import HelpSupport from "./Components/Employee/Help&Support";
 import EditProfile from "./Components/Employee/EditProfile";
 import ChatboxEmploy from "./Components/Employee/ChatboxEmploy";
+import ContactUsEmpl from "./Components/Employee/ContactUsEmpl";
 
 function App() {
   return (
@@ -133,6 +134,7 @@ function App() {
          <Route path="Employee/Help&Support" element={<HelpSupport/>} />
          <Route path="Employee/Edit-Profile" element={<EditProfile/>} />
          <Route path="Employee/Chat" element={<ChatboxEmploy/>} />
+         <Route path="Employee/Contact" element={<ContactUsEmpl/>} />
        
       </Routes>
     </div>

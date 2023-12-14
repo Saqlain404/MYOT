@@ -151,7 +151,7 @@ const SideBarEmpl = () => {
         </div>
         <div>
         <span>Easin Arafat</span>
-        <p className="th-text">Department Manager</p>
+        <p className="th-text">Employee</p>
         </div>
         <div class="dropdown">
   <a class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -167,8 +167,8 @@ const SideBarEmpl = () => {
     <Link to={"/Signatory/Home"} className="text-decoration-none">
     <li><a class="dropdown-item">Signatory</a></li>
     </Link>
-    <Link to={"/Employee/Home"} className="text-decoration-none">
-    <li><a class="dropdown-item">Employee</a></li>
+    <Link to={"/Department/Home"} className="text-decoration-none">
+    <li><a class="dropdown-item">Department Manager</a></li>
     </Link>
   </ul>
 </div>

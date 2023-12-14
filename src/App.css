@@ -1786,3 +1786,49 @@ line-height: normal;
     margin-top: 80px;
     margin-left: 300px;
   }
+  .contact-mini-logo{
+    width: 28px;
+  height: 28px;
+  }
+  
+  .contact-txt{
+    color: #000;
+  font-family: Nunito;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 125% */
+  letter-spacing: 0.32px;
+  text-align: start;
+  }
+  
+.contact-form-btn{
+  width: 515px;
+height: 45px;
+flex-shrink: 0;
+border-radius: 10px;
+border: none;
+background: #3E51FF;
+color: #FFF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+  
+  .contact-txt1{
+  color: #DD5471;
+  font-family: Nunito;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.32px;
+  }
+  
+  .contact-img{
+    margin-top: 50px;
+    width: 380px;
+    height: 412px;
+  }

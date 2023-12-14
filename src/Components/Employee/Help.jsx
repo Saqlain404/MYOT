@@ -69,7 +69,7 @@ const Help = () => {
                     <p className="th-text me-3">Help & Support</p>
                   </Link>
                   <Link
-                    to={"/"}
+                    to={"/Employee/Contact"}
                     className="text-decoration-none"
                   >
                     <p className="th-text">Contact Us</p>

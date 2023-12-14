@@ -161,7 +161,7 @@ const SidebarSig = () => {
         </div>
         <div>
         <span>Easin Arafat</span>
-        <p className="th-text">Approver</p>
+        <p className="th-text">Signatory</p>
         </div>
         <div class="dropdown">
   <a class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -176,6 +176,9 @@ const SidebarSig = () => {
     </Link>
     <Link to={"/Approver/Home"} className="text-decoration-none">
     <li><a class="dropdown-item">Approver</a></li>
+    <Link to={"/Employee/Home"} className="text-decoration-none">
+    <li><a class="dropdown-item">Employee</a></li>
+    </Link>
     </Link>
   </ul>
 </div>
