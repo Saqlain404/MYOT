@@ -2335,12 +2335,12 @@ background: #F7F7F8;
   width: 45%;
   height: auto;
 }
-  height: 146px;
+  /* height: 146px;
   flex-shrink: 0;
   border-radius: 10px;
   border: 1px solid #eff4fa;
-  background: #fff;
-}
+  background: #fff; */
+/* } */
 
 .contact-txt1 {
   color: #dd5471;
