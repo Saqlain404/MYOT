@@ -272,7 +272,8 @@ export async function searchDoc(searchKey) {
 
       console.log(filteredDocuments);
 
-      toast.success(data.message);
+      // toast.success(data.message);
+      console.log(data.message)
     } else {
       console.log(data.message)
     }
@@ -301,7 +302,8 @@ export async function searchDash(searchKey) {
 
       console.log(filteredDocuments);
 
-      toast.success(data.message);
+      // toast.success(data.message);
+      console.log(data.message)
     } else {
       console.log(data.message)
     }
@@ -331,7 +333,8 @@ export async function searchHistoryLog(searchKey) {
 
       console.log(filteredDocuments);
 
-      toast.success(data.message);
+      // toast.success(data.message);
+      console.log(data.message)
     } else {
       console.log(data.message)
     }
@@ -351,8 +354,9 @@ export async function DocumentCount() {
     );
     console.log(data);
     if (!data?.error) {
-      toast.success(data.message);
-    } else toast?.error(data.message);
+      // toast.success(data.message);
+      console.log(data.message)
+    } else toast.error(data.message);
 
     if (!data?.error) return { data };
   } catch (error) {
@@ -360,6 +364,7 @@ export async function DocumentCount() {
     return { error };
   }
 }
+
 export async function DasboardCount() {
   try {
     const { data } = await employeeHttpService.post(
@@ -367,7 +372,8 @@ export async function DasboardCount() {
     );
     console.log(data);
     if (!data?.error) {
-      toast.success(data.message);
+      // toast.success(data.message);
+      console.log(data.message)
     } else toast?.error(data.message);
 
     if (!data?.error) return { data };

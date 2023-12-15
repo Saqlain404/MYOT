@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "@fortawesome/free-regular-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 // import "../../dist/css/style.min.css"
 import { AddDocument, DocumentCount, employeDocumentList, fetchTemplateData, searchDoc } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
-import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer } from "react-toastify";
+// import 'react-toastify/dist/ReactToastify.css';
 
 const HomeEmpl = () => {
   const navigate = useNavigate();
