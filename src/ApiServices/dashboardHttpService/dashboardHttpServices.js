@@ -279,3 +279,18 @@ export async function UpdateAdminProfile (id, formData) {
   }
 }
 
+// DASHBOARD DATA
+
+export async function DashboardCount () {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/employe-count`,
+    );
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+

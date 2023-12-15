@@ -10,8 +10,9 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    localStorage.removeItem("myot_emp_id");
+  const handleLogout = (e) => {
+    e.preventDefault()
+    localStorage.removeItem("myot_admin_id");
     localStorage.removeItem("token-company");
     navigate("/Admin/Login");
   };

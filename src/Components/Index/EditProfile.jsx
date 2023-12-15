@@ -24,7 +24,7 @@ const EditProfile = () => {
 
   const onSubmit = async (data1) => {
     console.log(files?.profile_img);
-    let emp_id = localStorage.getItem("myot_emp_id");
+    let emp_id = localStorage.getItem("myot_admin_id");
     if (data1?.password !== data1?.cpassword) {
       toast("Password does not match", {
         position: "top-right",
@@ -42,7 +42,6 @@ const EditProfile = () => {
     formData.append("email", data1?.email);
     formData.append("phone_number", data1?.number);
     formData.append("profile_Pic", files?.profile_img);
-    formData.append("email", data1?.email);
     formData.append("DOB", data1?.dob);
     formData.append("password", data1?.password);
     formData.append("confirmPassword", data1?.cpassword);
@@ -64,7 +63,7 @@ const EditProfile = () => {
       });
     }
     if (!data?.error) {
-      toast(data?.message, {
+      toast("Profile Updated Successfully", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -74,7 +73,7 @@ const EditProfile = () => {
         progress: undefined,
         theme: "light",
       });
-      navigate("Admin/My-profile");
+      navigate("/Admin/My-profile");
     }
   };
   return (
@@ -148,7 +147,7 @@ const EditProfile = () => {
                         id="profile_img"
                         name="profile_img"
                         type="file"
-                        accept=".png, .jpeg, .jpg"
+                        accept="image/*"
                         defaultValue=""
                         onChange={(e) => onFileSelection(e, "profile_img")}
                       />
@@ -190,7 +189,7 @@ const EditProfile = () => {
                           Email
                         </p>
                         <input
-                          autoComplete="false"
+                          autoComplete="off"
                           type="email"
                           placeholder="Email"
                           className={`col-12 profile-edit-input p-2 ${
@@ -292,25 +291,7 @@ const EditProfile = () => {
                       </div>
                     </div>
                     <div className="col-12 d-flex justify-content-between mb-2">
-                      <div className="col-6 m-2">
-                        <p className=" d-flex justify-content-start profile-card-title">
-                          Company Name
-                        </p>
-                        <input
-                          autoComplete="false"
-                          type="text"
-                          placeholder="Company Name"
-                          className={classNames(
-                            "col-12 profile-edit-input p-2",
-                            {
-                              "is-invalid": errors.companyName,
-                            }
-                          )}
-                          name="companyName"
-                          {...register("companyName")}
-                        />
-                      </div>
-                      <div className="col-6 m-2">
+                      {/* <div className="col-6 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Company Email
                         </p>
@@ -327,10 +308,8 @@ const EditProfile = () => {
                           name="companyEmail"
                           {...register("companyEmail")}
                         />
-                      </div>
-                    </div>
-                    <div className="col-12 d-flex justify-content-between mb-2">
-                      <div className="col-6 m-2">
+                      </div> */}
+                      {/* <div className="col-6 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Company Phone Number
                         </p>
@@ -346,6 +325,26 @@ const EditProfile = () => {
                           )}
                           name="companyNumber"
                           {...register("companyNumber")}
+                        />
+                      </div> */}
+                    </div>
+                    <div className="col-12 d-flex justify-content-between mb-2">
+                      <div className="col-6 m-2">
+                        <p className=" d-flex justify-content-start profile-card-title">
+                          Company Name
+                        </p>
+                        <input
+                          autoComplete="false"
+                          type="text"
+                          placeholder="Company Name"
+                          className={classNames(
+                            "col-12 profile-edit-input p-2",
+                            {
+                              "is-invalid": errors.companyName,
+                            }
+                          )}
+                          name="companyName"
+                          {...register("companyName")}
                         />
                       </div>
                       <div className="col-6 m-2">

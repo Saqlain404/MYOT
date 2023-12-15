@@ -13,7 +13,7 @@ const Profile = () => {
   }, []);
 
   const getProfileData = async () => {
-    let emp_id = localStorage.getItem("myot_emp_id");
+    let emp_id = localStorage.getItem("myot_admin_id");
     const { data } = await AdminProfile(emp_id);
     if (!data?.error) {
       setProfileData(data?.results?.employee);
