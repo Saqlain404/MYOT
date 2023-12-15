@@ -2335,35 +2335,33 @@ background: #F7F7F8;
   width: 45%;
   height: auto;
 }
-  /* height: 146px;
-  flex-shrink: 0;
-  border-radius: 10px;
-  border: 1px solid #eff4fa;
-  background: #fff; */
-/* } */
 
-.contact-txt1 {
-  color: #dd5471;
-  font-family: Nunito;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: 0.32px;
+.otp-input{
+  width: 75px;
+height: 50px;
+flex-shrink: 0;
+background: #F7F7F8;
+border-radius: 10px;
+/* border: none; */
+border-color: #E0E2E7;
+border-style:solid;
+text-align: center;
 }
 
-.contact-img {
-  margin-top: 50px;
-  width: 380px;
-  height: 412px;
+.not-recive-otp{
+  color: #000;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
 }
 
-
-
-.task_table .tr {
-  margin: 10px 0 !important;
-}
-
-.cursor_pointer{
-  cursor: pointer !important;
+.resend-otp{
+  color: #3E51FF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
 }
