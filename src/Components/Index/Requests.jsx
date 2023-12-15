@@ -21,6 +21,7 @@ const Requests = () => {
     let { data } = await RequestorList();
     if (!data.error) {
       setDocuments(data?.results?.list);
+      console.log(data?.results?.list);
     }
   };
 
@@ -301,6 +302,7 @@ const Requests = () => {
                             }}
                             src={
                               document?.creator_Id?.profile_Pic ||
+                              document?.creator_Id &&
                               document?.creator_Id[0]?.profile_Pic
                             }
                             // alt={
@@ -309,18 +311,9 @@ const Requests = () => {
                             // }
                           />
                           <span className="ms-3">
-                            {document?.creator_Id?.name
-                              ?.charAt(0)
-                              ?.toUpperCase() +
-                              document?.creator_Id?.name
-                                ?.slice(1)
-                                ?.toLowerCase() ||
-                              document?.creator_Id[0]?.name
-                                ?.charAt(0)
-                                ?.toUpperCase() +
-                                document?.creator_Id[0]?.name
-                                  ?.slice(1)
-                                  ?.toLowerCase()}
+                            {document?.creator_Id?.name ||
+                              (document?.creator_Id &&
+                                document?.creator_Id[0]?.name)}
                           </span>
                         </td>
                         <td className="td-text">

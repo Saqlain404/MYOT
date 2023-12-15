@@ -1,16 +1,20 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { employeeLogout, removeEmployeeTokens } from "../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import {
+  employeeLogout,
+  removeEmployeeTokens,
+} from "../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  
-  
- 
-  
+  const handleLogout = () => {
+    localStorage.removeItem("myot_emp_id");
+    localStorage.removeItem("token-company");
+    navigate("/Admin/Login");
+  };
   return (
     <div className="container-fluid  sidebar">
       {/* Sidebar scroll*/}
@@ -260,77 +264,81 @@ const Sidebar = () => {
               </a>
             </li>
             <li className="nav-item text-dark">
-            <Link to={"/Admin/Analytics"} className="text-decoration-none">
-              <a
-                href="/"
-                className="nav-link text-dark fs-5 align-middle "
-                aria-current="page"
-              >
-                <img
-                  src="/images/sidebar/analytics.png"
-                  className="align-middle sidebar-icon"
-                />
+              <Link to={"/Admin/Analytics"} className="text-decoration-none">
+                <a
+                  href="/"
+                  className="nav-link text-dark fs-5 align-middle "
+                  aria-current="page"
+                >
+                  <img
+                    src="/images/sidebar/analytics.png"
+                    className="align-middle sidebar-icon"
+                  />
 
-                <span className="ms-3 align-middle sidebar-btn">Analytics</span>
-              </a>
+                  <span className="ms-3 align-middle sidebar-btn">
+                    Analytics
+                  </span>
+                </a>
               </Link>
             </li>
 
             <p className="th-text mt-3">OTHERS</p>
 
             <li className="nav-item text-dark">
-            <Link to={"/Admin/My-profile"} className="text-decoration-none">
-              <a
-                href="/"
-                className="nav-link text-dark fs-5 align-middle "
-                aria-current="page"
-              >
-                <img
-                  src="/images/sidebar/my-profile.png"
-                  className="align-middle sidebar-icon"
-                />
+              <Link to={"/Admin/My-profile"} className="text-decoration-none">
+                <a
+                  href="/"
+                  className="nav-link text-dark fs-5 align-middle "
+                  aria-current="page"
+                >
+                  <img
+                    src="/images/sidebar/my-profile.png"
+                    className="align-middle sidebar-icon"
+                  />
 
-                <span className="ms-3 align-middle sidebar-btn">
-                  My Profile
-                </span>
-              </a>
+                  <span className="ms-3 align-middle sidebar-btn">
+                    My Profile
+                  </span>
+                </a>
               </Link>
             </li>
             <li className="nav-item text-dark">
-            <Link to={"/Admin/Settings"} className="text-decoration-none">
-              <a
-                href="/"
-                className="nav-link text-dark fs-5 align-middle "
-                aria-current="page"
-              >
-                <img
-                  src="/images/sidebar/settings.png"
-                  className="align-middle sidebar-icon"
-                />
+              <Link to={"/Admin/Settings"} className="text-decoration-none">
+                <a
+                  href="/"
+                  className="nav-link text-dark fs-5 align-middle "
+                  aria-current="page"
+                >
+                  <img
+                    src="/images/sidebar/settings.png"
+                    className="align-middle sidebar-icon"
+                  />
 
-                <span className="ms-3 align-middle sidebar-btn">Settings</span>
-              </a>
+                  <span className="ms-3 align-middle sidebar-btn">
+                    Settings
+                  </span>
+                </a>
               </Link>
             </li>
             <li className="nav-item text-dark">
-            <Link to={"/Admin/Help"} className="text-decoration-none">
-              <a
-                href="/"
-                className="nav-link text-dark fs-5 align-middle "
-                aria-current="page"
-              >
-                <img
-                  src="/images/sidebar/help.png"
-                  className="align-middle sidebar-icon"
-                />
+              <Link to={"/Admin/Help"} className="text-decoration-none">
+                <a
+                  href="/"
+                  className="nav-link text-dark fs-5 align-middle "
+                  aria-current="page"
+                >
+                  <img
+                    src="/images/sidebar/help.png"
+                    className="align-middle sidebar-icon"
+                  />
 
-                <span className="ms-3 align-middle sidebar-btn">Help</span>
-              </a>
+                  <span className="ms-3 align-middle sidebar-btn">Help</span>
+                </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li className="nav-item text-dark" onClick={() => handleLogout()}>
               <a
-                href="/" 
+                href="/"
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"
               >
@@ -381,8 +389,10 @@ const Sidebar = () => {
               </li>
             </Link>
             <Link to={"/Employee/Home"} className="text-decoration-none">
-                  <li><a class="dropdown-item">Employee</a></li>
-             </Link>
+              <li>
+                <a class="dropdown-item">Employee</a>
+              </li>
+            </Link>
           </ul>
         </div>
       </div>

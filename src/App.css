@@ -459,12 +459,12 @@ height: 960px; */
 }
 
 .th-text {
-  color: rgba(0, 0, 0, 0.4);
-  opacity: 0.6;
+  color: rgb(0, 0, 0);
+  opacity: 1;
   font-family: Nunito;
   font-size: 12px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: bold;
   line-height: 18px; /* 150% */
 }
 
