@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 
 const id = localStorage.getItem("user_id")
+// const id ="656982002e4c41f286f7dffb"
 
 export async function employeeLogin(formData) {
   try {
@@ -102,7 +103,7 @@ export async function EmployeeDashList() {
 export async function documentViewDetails() {
   try {
     const response = await employeeHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-details/657853a8a6a190aabf64f55a`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-details/${id}`
     );
 
     if (!response.data?.error) {
@@ -258,7 +259,7 @@ export async function EmpyHistoryLogList() {
 export async function searchDoc(searchKey) {
   try {
     const { data } = await employeeHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/search-document`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/search-document/${id}`,
       {search:searchKey}
     );
 

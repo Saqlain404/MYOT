@@ -97,6 +97,7 @@ import ContactUsEmpl from "./Components/Employee/ContactUsEmpl";
 import EmplAuthLogin from "./Components/Login/EmplAuthLogin";
 import EmplAuthforgotPassword from "./Components/Login/EmplAuthforgotPass";
 import EmplForgotSuccess from "./Components/Login/EmplForgotSuccess";
+import EmplySetting from "./Components/Employee/EmplySetting";
 
 function App() {
   return (
@@ -217,6 +218,7 @@ function App() {
         <Route path="Employee/Edit-Profile" element={<EmplEditProfile />} />
         <Route path="Employee/Chat" element={<ChatboxEmploy />} />
         <Route path="Employee/Contact" element={<ContactUsEmpl />} />
+        <Route path="Employee/Settings" element={<EmplySetting />} />
       </Routes>
     </div>
   );

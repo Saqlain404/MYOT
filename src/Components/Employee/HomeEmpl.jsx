@@ -30,6 +30,8 @@ const HomeEmpl = () => {
     count();
   },[])
 
+
+  
   const handleSearch = async()=>{
     const result = await searchDoc(searchData)
     console.log(result)
@@ -69,6 +71,9 @@ const HomeEmpl = () => {
     setDocumentInfo({ ...documentInfo, [name]: value });
   };
   console.log(documentInfo)
+
+  
+ 
 
 
   const [templateIdList, setTemplateIdList] = useState([]);
@@ -356,7 +361,7 @@ const HomeEmpl = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {documentRequests.map((request,index) => (
+                    {documentRequests?.map((request,index) => (
                       <tr key={index}>
                         <td className="td-text">{request.documentName}</td>
                         <td className="td-text"><img className="img_profile"  src={request.img}/>{request.assignedTo}</td>

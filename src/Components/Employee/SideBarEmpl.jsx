@@ -118,7 +118,7 @@ const SideBarEmpl = () => {
             </a>
         </li>
         <li className="nav-item text-dark">
-          <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
+          <a href="/Employee/Settings" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/settings.png" className='align-middle sidebar-icon'/>
               

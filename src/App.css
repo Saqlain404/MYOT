@@ -170,6 +170,12 @@ height: 960px; */
   margin-left: 20px;
   margin-right: 10px;
 }
+.profile_img{
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  object-fit: fill;
+}
 .docs-data {
   justify-content: space-between;
   margin-left: 5px;
@@ -1650,6 +1656,7 @@ height: 960px; */
     border: none;
     background: #3e51ff;
   }
+ 
 
   .profile-info {
     text-align: start;
