@@ -103,6 +103,7 @@ import ContactUsEmpl from "./Components/Employee/ContactUsEmpl";
 import EmplAuthLogin from "./Components/Login/EmplAuthLogin";
 import EmplAuthforgotPassword from "./Components/Login/EmplAuthforgotPass";
 import EmplForgotSuccess from "./Components/Login/EmplForgotSuccess";
+import TemplateEdit from "./Components/DepartmentManager/TemplateEdit";
 
 function App() {
   return (
@@ -142,6 +143,7 @@ function App() {
         <Route path="Department/Dashboard" element={<DashboardDept />} />
         <Route path="Department/Template" element={<Template />} />
         <Route path="Department/Template-view" element={<TemplateView />} />
+        <Route path="Department/Template-edit" element={<TemplateEdit />} />
         <Route path="Department/Certificate" element={<Certificate />} />
         <Route
           path="Department/Certificate-view"
