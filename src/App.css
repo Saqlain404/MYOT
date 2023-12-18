@@ -1656,7 +1656,7 @@ height: 960px; */
     border: none;
     background: #3e51ff;
   }
- 
+
 
   .profile-info {
     text-align: start;
@@ -1734,7 +1734,6 @@ height: 960px; */
     font-weight: 600;
     line-height: 20px; /* 142.857% */
   }
-
   .profile-edit-btn {
     color: #fff;
     font-family: Nunito;
@@ -2277,4 +2276,84 @@ height: 960px; */
   margin-top: 50px;
   width: 380px;
   height: 412px;
+}
+.add-img-btn{
+  display: inline-flex;
+padding: 10px 14px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+border-radius: 10px;
+border: none;
+background: #DEDEFA;
+color: #3E51FF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 142.857% */
+letter-spacing: 0.07px;
+}
+
+.notify-admin-btn{
+  margin-top: 100px;
+  width: 206px;
+height: 45px;
+border-radius: 10px;
+border: none;
+background: #3E51FF;
+color: #FFF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.import-img-card{
+  border-radius: 10px;
+border: 2px dashed #E0E2E7;
+background: #F7F7F8;
+}
+
+.color-palete{
+  display: flex;
+  width: 45%;
+  height: auto;
+}
+.otp-input{
+  width: 75px;
+height: 50px;
+flex-shrink: 0;
+background: #F7F7F8;
+border-radius: 10px;
+/* border: none; */
+border-color: #E0E2E7;
+border-style:solid;
+text-align: center;
+}
+
+.not-recive-otp{
+  color: #000;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+.inputs{
+  margin-left: 20px;
+}
+
+.resend-otp{
+  color: #3E51FF;
+font-family: Nunito;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+.comment-model{
+  width: 350px;
+  height: 146px;
 }

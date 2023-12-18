@@ -40,7 +40,50 @@ export async function EmplforgotPassword(formData) {
 
     if (!data.error) {
       await localStorage.removeItem("token-company");
-      toast.success(data.results.otp);
+      toast.success(data.message);
+    } else toast.error(data.message);
+
+
+    if (!data.error) return { data };
+  } catch (error) {
+    if (error?.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+
+export async function OTPverifyEmply(formData) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/verify-otp`,
+      formData
+    );
+    console.log(data);
+
+    if (!data.error) {
+      await localStorage.removeItem("token-company");
+      toast.success(data.message);
+    } else {toast.error(data.message)
+    };
+
+    if (!data.error) return { data };
+  } catch (error) {
+    if (error?.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function ContactUsEmployee(formData) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/contact-us`,
+      formData
+    );
+    console.log(data);
+
+    if (!data.error) {
+      await localStorage.removeItem("token-company");
+      toast.success(data.message);
     } else toast.error(data.message);
 
     if (!data.error) return { data };

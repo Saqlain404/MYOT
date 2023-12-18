@@ -20,6 +20,8 @@ const DocumentEmply = () => {
   const [templateNames, setTemplateNames] = useState(null);
   const [documentRequests, setDocumentRequests] = useState([]);
   const [shouldRender, setShouldRender] = useState(false);
+  const [templateIdList, setTemplateIdList] = useState([]);
+
 
   const [documentInfo, setDocumentInfo] = useState({
     documentName: "",
@@ -65,14 +67,13 @@ const DocumentEmply = () => {
   };
   console.log(documentInfo);
 
-  const [templateIdList, setTemplateIdList] = useState([]);
-
+ 
   useEffect(() => {
     const fetchTemplateIdsData = async () => {
       const [templateList] = await fetchTemplateData();
       if (templateList) {
         setTemplateIdList(templateList);
-        console.log(templateList);
+        // console.log(templateList);
       }
     };
 
@@ -271,12 +272,20 @@ const DocumentEmply = () => {
 
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
-                <div className="col-md-3 border-end">
+                <div className="col-md-3 border-end d-flex">
+                <div
+                  className=""
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
                   <img
                     src="/images/dashboard/Plus-icon.png"
                     alt=""
                     className="p-2 table-searchbar-img"
                   />
+                </div>
+                 
                   <img
                     src="/images/dashboard/FunnelSimple.png"
                     alt=""

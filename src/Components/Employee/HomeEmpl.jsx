@@ -5,8 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 // import "../../dist/css/style.min.css"
 import { AddDocument, DocumentCount, employeDocumentList, fetchTemplateData, searchDoc } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
-// import { ToastContainer } from "react-toastify";
-// import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 const HomeEmpl = () => {
   const navigate = useNavigate();
@@ -15,6 +14,7 @@ const HomeEmpl = () => {
   const [documentRequests, setDocumentRequests] = useState([]);
   const[docCount,setDocCount] = useState(null);
   const[receivedCount,setReceivedCount] = useState(null);
+  const [shouldRender, setShouldRender] = useState(false);
 
   useEffect(()=>{
     const count = async ()=>{
@@ -28,9 +28,9 @@ const HomeEmpl = () => {
     }
   }
     count();
-  },[])
+  },[shouldRender])
 
-
+  
   
   const handleSearch = async()=>{
     const result = await searchDoc(searchData)
@@ -84,7 +84,7 @@ const HomeEmpl = () => {
       if (templateList) {
         setTemplateIdList(templateList);
         // setTemplateName(names)
-        console.log(templateList)
+        // console.log(templateList)
 
       }
     };
@@ -110,6 +110,7 @@ const HomeEmpl = () => {
     })
       .then((res) => {
         if (!res.data?.error) {
+          setShouldRender(!shouldRender)
           console.log("Success");
           navigate("");
         }
@@ -150,7 +151,7 @@ const HomeEmpl = () => {
     };
 
     fetchData();
-  }, [searchData]);
+  }, [searchData,shouldRender]);
  
   return (
     <>
@@ -194,7 +195,7 @@ const HomeEmpl = () => {
                       alt=""
                       className="ms-4"
                     />
-                    </Link>
+                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
                       alt=""
@@ -204,6 +205,67 @@ const HomeEmpl = () => {
                 </div>
               </nav>
             </div>
+
+             {/* <!-- Modal --> */}
+            <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered modal-dialog-department">
+                <div class="modal-content border-0">
+                  <div class="d-flex modal-header border-bottom">
+                    <p class="" id="exampleModalLabel">
+                      New Document
+                    </p>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+
+                  <form action="" onSubmit={handleSubmit}>
+                    <div className="row p-3">
+                      <div className="col-12 mb-3 ">
+                        <select
+                          className="col-12 modal-input  p-2"
+                          name="templateId"
+                          onChange={handleChange}
+                          value={documentInfo.templateId}
+                        >
+                          <option value="" disabled>
+                            Select Document Type *
+                          </option>
+                          {templateIdList?.map((template) => (
+                            <option key={template._id} value={template._id}>
+                              {template.templeteName}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </form>
+                  <div className="d-flex justify-content-end mb-3">
+                    <button
+                      type="submit"
+                      className="user-modal-btn"
+                      onClick={() => handleSubmit()}
+                    >
+                      Request <ToastContainer/>
+                    </button>
+                    <button type="button" data-bs-dismiss="modal"
+                       aria-label="Close" className="user-modal-btn2">
+                      Cancle
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* <!-- Modal End--> */}
 
             <div className="col-12 mb-4">
               <div className="row statics_part">
@@ -253,12 +315,19 @@ const HomeEmpl = () => {
             </div>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
-                <div className="col-md-3 border-end">
+                <div className="col-md-3 d-flex border-end">
+                <div
+                  className=""
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
                   <img
                     src="/images/dashboard/Plus-icon.png"
                     alt=""
                     className="p-2 table-searchbar-img"
                   />
+                </div>
                   <img
                     src="/images/dashboard/FunnelSimple.png"
                     alt=""
@@ -419,7 +488,7 @@ const HomeEmpl = () => {
               </nav>
             </div>
 
-           
+         
 
             <div className="footer">
               <div>

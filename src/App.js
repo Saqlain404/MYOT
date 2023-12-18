@@ -98,6 +98,7 @@ import EmplAuthLogin from "./Components/Login/EmplAuthLogin";
 import EmplAuthforgotPassword from "./Components/Login/EmplAuthforgotPass";
 import EmplForgotSuccess from "./Components/Login/EmplForgotSuccess";
 import EmplySetting from "./Components/Employee/EmplySetting";
+import OTPauthEmply from "./Components/Login/OTPauthEmply";
 
 function App() {
   return (
@@ -199,6 +200,7 @@ function App() {
 
 
         <Route path="Employee/Login" element={<EmplAuthLogin />} />
+        <Route path="Employee/OTP-verification" element={<OTPauthEmply />} />
         <Route path="Employee/Forgot-Password" element={<EmplAuthforgotPassword />} />
         <Route path="Employee/Forgot-Success" element={<EmplForgotSuccess />} />
         <Route path="Employee/Home" element={<HomeEmpl />} />
@@ -213,9 +215,9 @@ function App() {
         <Route path="Employee/Forgot-success" element={<EmplForgotSuccess />} />
         <Route path="Employee/Forgot-password" element={<EmplAuthforgotPassword />} />
         <Route path="Employee/profile" element={<EmplProfile />} />
-        <Route path="Employee/Help" element={<EmplHelp />} />
-        <Route path="Employee/Help&Support" element={<EmplHelpSupport />} />
         <Route path="Employee/Edit-Profile" element={<EmplEditProfile />} />
+        <Route path="Employee/Help&Support" element={<EmplHelpSupport />} />
+        <Route path="Employee/Help" element={<EmplHelp />} />
         <Route path="Employee/Chat" element={<ChatboxEmploy />} />
         <Route path="Employee/Contact" element={<ContactUsEmpl />} />
         <Route path="Employee/Settings" element={<EmplySetting />} />
