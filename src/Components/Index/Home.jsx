@@ -4,7 +4,9 @@ import Sidebar from "../Sidebar";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
+  AddCommentForTask,
   AdminDashboardCount,
   GetTaskData,
   SearchTask,
@@ -15,6 +17,7 @@ const Home = () => {
   const [template, setTemplate] = useState();
   const [adminCount, setAdminCount] = useState();
   const [templateSearch, setTemplateSearch] = useState("");
+  const [comment, setComment] = useState("");
 
   const [checkedCheckboxes, setCheckedCheckboxes] = useState({
     templateName: false,
@@ -70,6 +73,30 @@ const Home = () => {
       }
     } else {
       getTaskData();
+    }
+  };
+
+  const handleSubmit = async (e, templete_Id) => {
+    e.preventDefault();
+    let creator_Id = localStorage.getItem("user_id");
+    let { data } = await AddCommentForTask({
+      comment,
+      templete_Id,
+      creator_Id,
+    });
+    console.log(data);
+    if (!data?.error) {
+      toast("Comment added successfully", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setComment("");
     }
   };
 
@@ -332,7 +359,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <p className="table-name mb-2">Templates</p>
+            <p className="table-name mb-2">Home</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
                 <div className="col-lg-3 col-md-6 mb-md-2  table-searchbar-imgs">
@@ -440,6 +467,16 @@ const Home = () => {
                           type="checkbox"
                           value=""
                           checked={checkedCheckboxes.actions}
+                          onChange={() => handleCheckboxChange("comment")}
+                        />
+                        Comment
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                          checked={checkedCheckboxes.actions}
                           onChange={() => handleCheckboxChange("actions")}
                         />
                         Actions
@@ -465,7 +502,17 @@ const Home = () => {
                               template?.manager?.name.slice(1).toLowerCase()}
                           </span>
                         </td>
-                        <td className="td-text">{template?.version}</td>
+                        {/* <td className="td-text">{template?.version}</td> */}
+                        <td className="td-text">
+                          {template?.templeteVersion &&
+                          template?.templeteVersion?.length > 0
+                            ? ` ${
+                              template?.templeteVersion[
+                                template?.templeteVersion.length - 1
+                                ]?.version
+                              }`
+                            : "No templete versions found"}
+                        </td>
                         <td
                           className={`"td-text" ${
                             template?.status === "Pending"
@@ -481,6 +528,75 @@ const Home = () => {
                         </td>
                         <td className="td-text">
                           {template?.manager?.department_Id?.departmentName}
+                        </td>
+                        <td className="td-text">
+                          <div className="dropdown">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <img
+                                src="/images/dashboard/Comment.png"
+                                className="mx-auto d-block"
+                              />
+                            </a>
+                            <form
+                              className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
+                              onSubmit={(e) => handleSubmit(e, document?._id)}
+                            >
+                              <div className="mb-3 border-bottom">
+                                <label className="form-label th-text">
+                                  Comment or type
+                                </label>
+
+                                <input
+                                  type="text"
+                                  className="form-control border-0"
+                                  value={comment}
+                                  onChange={(e) => setComment(e.target.value)}
+                                />
+                              </div>
+
+                              <div className="d-flex justify-content-between">
+                                <div>
+                                  <img
+                                    src="/images/tasks/assign comments.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/mention.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/task.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/emoji.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/attach_attachment.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                </div>
+                                <div>
+                                  <button
+                                    type="submit"
+                                    className="comment-btn btn-primary"
+                                  >
+                                    Comment
+                                  </button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
                         </td>
                         <td className="td-text">
                           <div class="dropdown">

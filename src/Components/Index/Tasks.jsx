@@ -23,6 +23,7 @@ const Tasks = () => {
 
   const getTaskData = async () => {
     const { data } = await GetTaskData();
+    console.log(data);
     if (!data?.error) {
       setDocuments(data?.results?.templete);
     }
@@ -330,7 +331,7 @@ const Tasks = () => {
                 </div>
               </div>
             </div>
-            <p className="table-name mb-2">Templates</p>
+            <p className="table-name mb-2">Tasks</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
                 <div className="col-md-3  table-searchbar-imgs">
@@ -449,7 +450,7 @@ const Tasks = () => {
                     {documents?.map((document) => (
                       <tr className="tr" key={document?._id}>
                         <td className="td-text">{document?.templeteName}</td>
-                        <td className="td-text">
+                        <td className="">
                           <img
                             style={{
                               width: "40px",
@@ -464,7 +465,18 @@ const Tasks = () => {
                               document?.manager?.name.slice(1).toLowerCase()}
                           </span>
                         </td>
-                        <td className="td-text">{document.version}</td>
+                        {/* <td className="td-text">{document.version}</td> */}
+                        <td className="td-text">
+                          {document?.templeteVersion &&
+                          document?.templeteVersion?.length > 0
+                            ? ` ${
+                                document?.templeteVersion[
+                                  document?.templeteVersion.length - 1
+                                ]?.version
+                              }`
+                            : "No templete versions found"}
+                        </td>
+
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
                           {moment(document.createdAt).format("ll")}

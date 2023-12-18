@@ -26,7 +26,7 @@ export async function DepartmentList(formData) {
     );
     console.log(data);
     if (!data.error) {
-      toast.success(data.message);
+      // toast.success(data.message);
       await localStorage.getItem("x-auth-token-company");
     } else toast.error(data.message);
 
@@ -51,23 +51,23 @@ export async function DepartmentDetails(formData) {
     return { error };
   }
 }
-export async function AddEmployee(formData) {
-  try {
-    const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/register-employee`,
-      formData
-    );
-    console.log(data);
-    if (!data.error) {
-      toast.success(data.message);
-    } else toast.error(data.message);
+// export async function AddEmployee(formData) {
+//   try {
+//     const { data } = await adminHttpService.post(
+//       `${process.env.REACT_APP_APIENDPOINT}/api/company/register-employee`,
+//       formData
+//     );
+//     console.log(data);
+//     if (!data.error) {
+//       toast.success(data.message);
+//     } else toast.error(data.message);
 
-    return { data };
-  } catch (error) {
-    if (error.response) toast.error(error.response.data.message);
-    return { error };
-  }
-}
+//     return { data };
+//   } catch (error) {
+//     if (error.response) toast.error(error.response.data.message);
+//     return { error };
+//   }
+// }
 
 export async function getClinicianData(id) {
   try {
@@ -99,10 +99,10 @@ export async function getClinicianSessionHistory(formData) {
 }
 
 // TASK API
-export async function GetTaskData () {
+export async function GetTaskData() {
   try {
     const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/template-list`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/template-list`
     );
     // console.log(data);
 
@@ -113,7 +113,7 @@ export async function GetTaskData () {
   }
 }
 
-export async function SearchTask (formData) {
+export async function SearchTask(formData) {
   try {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/templete-search`,
@@ -128,7 +128,7 @@ export async function SearchTask (formData) {
   }
 }
 
-export async function AddCommentForTask (formData) {
+export async function AddCommentForTask(formData) {
   try {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/add-comment`,
@@ -143,10 +143,10 @@ export async function AddCommentForTask (formData) {
   }
 }
 
-export async function AdminDashboardCount () {
+export async function AdminDashboardCount() {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/department-count`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/department-count`
     );
     // console.log(data);
 
@@ -158,10 +158,10 @@ export async function AdminDashboardCount () {
 }
 
 // APPROVER API
-export async function ApproverList () {
+export async function ApproverList() {
   try {
     const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/approver-list`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/approver-list`
     );
     // console.log(data);
 
@@ -172,7 +172,7 @@ export async function ApproverList () {
   }
 }
 
-export async function ApproverSearch (formData) {
+export async function ApproverSearch(formData) {
   try {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/search-approver`,
@@ -189,10 +189,10 @@ export async function ApproverSearch (formData) {
 
 // SIGNATORY
 
-export async function SignatoryList () {
+export async function SignatoryList() {
   try {
     const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/signatory-list`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/signatory-list`
     );
     // console.log(data);
 
@@ -203,7 +203,7 @@ export async function SignatoryList () {
   }
 }
 
-export async function SignatorySearch (formData) {
+export async function SignatorySearch(formData) {
   try {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/signatory-search`,
@@ -220,10 +220,10 @@ export async function SignatorySearch (formData) {
 
 // REQUESTOR
 
-export async function RequestorList () {
+export async function RequestorList() {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/requests-list`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/requests-list`
     );
 
     return { data };
@@ -233,8 +233,7 @@ export async function RequestorList () {
   }
 }
 
-
-export async function SearchRequestor (formData) {
+export async function SearchRequestor(formData) {
   try {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/search-requests-document`,
@@ -250,11 +249,10 @@ export async function SearchRequestor (formData) {
 
 // PROFILE
 
-
-export async function AdminProfile (id) {
+export async function AdminProfile(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/getMyProfile/${id}`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/getMyProfile/${id}`
     );
 
     return { data };
@@ -264,8 +262,7 @@ export async function AdminProfile (id) {
   }
 }
 
-
-export async function UpdateAdminProfile (id, formData) {
+export async function UpdateAdminProfile(id, formData) {
   try {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/update-Profile/${id}`,
@@ -281,10 +278,10 @@ export async function UpdateAdminProfile (id, formData) {
 
 // DASHBOARD DATA
 
-export async function DashboardCount () {
+export async function DashboardCount() {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/employe-count`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/employe-count`
     );
 
     return { data };
@@ -294,3 +291,45 @@ export async function DashboardCount () {
   }
 }
 
+//  Users Section api / Employee list
+
+export async function AddEmployee(formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/register-employee`,
+      formData
+    );
+    if (data?.error) {
+      toast.error(data?.message);
+    }
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function EmployeeLists() {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/employee-list`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function EmployeeSearch(formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/employee-search`,
+      formData
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}

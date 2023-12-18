@@ -88,6 +88,7 @@ const Profile = () => {
                       width: "100px",
                       height: "100px",
                       borderRadius: "50%",
+                      objectFit: "cover",
                     }}
                     src={profileData?.profile_Pic}
                     alt="profile_image"
@@ -108,11 +109,15 @@ const Profile = () => {
                     </div>
                     <div>
                       <p className="profile-info">Phone Number</p>
-                      <p className="profile-data">+97 {profileData?.mobileNumber}</p>
+                      <p className="profile-data">
+                        +97 {profileData?.mobileNumber}
+                      </p>
                     </div>
                     <div>
                       <p className="profile-info">Date of Birth</p>
-                      <p className="profile-data">{moment(profileData?.DOB).format("L")}</p>
+                      <p className="profile-data">
+                        {moment(profileData?.DOB).format("L")}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -144,7 +149,9 @@ const Profile = () => {
                     </div>
                     <div>
                       <p className="profile-info">Phone Number</p>
-                      <p className="profile-data">+97 {profileData?.mobileNumber}</p>
+                      <p className="profile-data">
+                        +97 {profileData?.mobileNumber}
+                      </p>
                     </div>
                     <div>
                       <p className="profile-info">Address</p>

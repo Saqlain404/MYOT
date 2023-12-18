@@ -5,6 +5,11 @@ body {
 }
 
 /* <-----LogIn Start-----> */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 .authentication-login {
   box-sizing: border-box;
@@ -859,11 +864,12 @@ height: 960px; */
   /* color: #6E7594; */
   text-align: left;
   /* border: 0; */
-  font-weight: 500;
+  /* font-weight: 500; */
   vertical-align: middle;
   white-space: nowrap;
   /* border-bottom: 1px solid #e2e2ed; */
 }
+
 .table_comman tbody tr td:first-child {
   text-align: left;
 }
@@ -2269,12 +2275,10 @@ height: 960px; */
   height: 412px;
 }
 
-
-
 .task_table .tr {
   margin: 10px 0 !important;
 }
 
-.cursor_pointer{
+.cursor_pointer {
   cursor: pointer !important;
 }
