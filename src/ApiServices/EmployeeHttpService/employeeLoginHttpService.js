@@ -82,7 +82,7 @@ export async function ContactUsEmployee(formData) {
     console.log(data);
 
     if (!data.error) {
-      await localStorage.removeItem("token-company");
+      // await localStorage.removeItem("token-company");
       toast.success(data.message);
     } else toast.error(data.message);
 

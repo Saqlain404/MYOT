@@ -28,7 +28,7 @@ const RequestHistoryEmpl = () => {
           department: [name?.templete_Id?.manager?.department_Id?.departmentName], 
           dateofSigning: [name?.createdAt],
           img:[name?.templete_Id?.manager?.profile_Pic],
-          version: "0.1",
+          version: [name?.templete_Id?.templeteVersion?.[0]?.version],
           comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
           // status:[name?.status],
           action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
@@ -58,7 +58,7 @@ const RequestHistoryEmpl = () => {
           dateofSigning: [document?.createdAt],
           comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
           // status:[document?.status],
-          version:"0.1",
+          version:[document?.templete?.templeteVersion?.[0]?.version],
           action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
         }));
         setDocumentRequests(mappedResult);
