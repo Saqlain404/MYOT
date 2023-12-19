@@ -271,8 +271,8 @@ const DocumentEmply = () => {
             {/* <!-- Modal End--> */}
 
             <div className=" col-12 d-flex align-items-center table-searchbar">
-              <div className="row d-flex  col ">
-                <div className="col-md-3 border-end d-flex">
+              <div className="row col ">
+                <div className="col-md-3 border-end d-flex align-items-center">
                 <div
                   className=""
                   type="button"

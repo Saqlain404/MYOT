@@ -101,6 +101,8 @@ import EmplySetting from "./Components/Employee/EmplySetting";
 import OTPauthEmply from "./Components/Login/OTPauthEmply";
 
 function App() {
+
+  const token = localStorage.getItem("token-company")
   return (
     <div>
       <Routes>
@@ -202,16 +204,15 @@ function App() {
         <Route path="Employee/Login" element={<EmplAuthLogin />} />
         <Route path="Employee/OTP-verification" element={<OTPauthEmply />} />
         <Route path="Employee/Forgot-Password" element={<EmplAuthforgotPassword />} />
-        <Route path="Employee/Forgot-Success" element={<EmplForgotSuccess />} />
-        <Route path="Employee/Home" element={<HomeEmpl />} />
-        <Route path="Employee/Dashboard" element={<EmployeeDash />} />
-        <Route path="Employee/history-log-request" element={<RequestHistoryEmpl />} />
-        <Route path="Employee/history-log-access" element={<DocHistoryEmploye />} />
-        <Route path="Employee/document" element={<DocumentEmply />} />
-        <Route path="Employee/received-doc" element={<ReceivedDocEmpl />} />
-        <Route path="Employee/Calender" element={<CalenderEmply />} />
-        <Route path="Employee/view-details" element={<ViewDocumentEmply />} />
-        <Route path="Employee/received-doc/view-details" element={<ViewReceivedDoc />} />
+        <Route path="Employee/Home" element={token ? <HomeEmpl /> : <EmplAuthLogin/>} />
+        <Route path="Employee/Dashboard" element={token ? <EmployeeDash />:<EmplAuthLogin/>}/>  
+        <Route path="Employee/history-log-request" element={token ? <RequestHistoryEmpl/> : <EmplAuthLogin/>} />
+        <Route path="Employee/history-log-access" element={token ? <DocHistoryEmploye/> : <EmplAuthLogin/>}/>
+        <Route path="Employee/document" element={token ? <DocumentEmply/> : <EmplAuthLogin/>} />
+        <Route path="Employee/received-doc" element={token ? <ReceivedDocEmpl/> : <EmplAuthLogin/>} />
+        <Route path="Employee/Calender" element={token ? <CalenderEmply/> : <EmplAuthLogin/>} />
+        <Route path="Employee/view-details" element={token ? <ViewDocumentEmply/> : <EmplAuthLogin/>} />
+        <Route path="Employee/received-doc/view-details" element={token ? <ViewReceivedDoc/> : <EmplAuthLogin/>} />
         <Route path="Employee/Forgot-success" element={<EmplForgotSuccess />} />
         <Route path="Employee/Forgot-password" element={<EmplAuthforgotPassword />} />
         <Route path="Employee/profile" element={<EmplProfile />} />
@@ -220,7 +221,7 @@ function App() {
         <Route path="Employee/Help" element={<EmplHelp />} />
         <Route path="Employee/Chat" element={<ChatboxEmploy />} />
         <Route path="Employee/Contact" element={<ContactUsEmpl />} />
-        <Route path="Employee/Settings" element={<EmplySetting />} />
+        <Route path="Employee/Settings" element={token ? <EmplySetting/> : <EmplAuthLogin/>} />
       </Routes>
     </div>
   );

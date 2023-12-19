@@ -25,7 +25,7 @@ const EmplForgotSuccess = () => {
                     </p>
                   </div>
                   <Link 
-                      to={"/"}>
+                      to={"/Employee/Login"}>
                     <button
                       className="btn  py-8 mb-3 reset-success"
                     >

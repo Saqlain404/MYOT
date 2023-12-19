@@ -169,6 +169,32 @@ export async function documentViewDetails() {
 }
 
 
+export async function TicketListEmply() {
+  try {
+    const response = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/6564816c42ca2ce84e2ed3f2`
+    );
+
+    if (!response.data?.error) {
+      const ticketList = response.data.results.ticketList;
+      console.log(ticketList)
+
+      return [ticketList];
+    } else {
+      toast.error(response.data.message);
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error('An error occurred while fetching the template IDs.');
+    }
+    return null;
+  }
+}
+
+
 export async function employeProfileDetail() {
   try {
     const response = await employeeHttpService.get(
@@ -222,6 +248,27 @@ export async function AddDocument(formData) {
   try {
     const { data } = await employeeHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/employee/add-document`,
+      formData
+    );
+    // console.log(data);
+    if (!data.error) {
+      toast.success(data.message);
+      const templateId = data?.results?.document.templete_Id;
+      return { data, templateId };
+    } else toast.error(data.message);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+
+export async function CreateEmplyTicket(formData) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/create-ticket`,
       formData
     );
     // console.log(data);

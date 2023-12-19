@@ -106,7 +106,7 @@ const EmplEditProfile = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
+                    <a className="nav-link ms-2" href="/Employee/profile">
                       My Profile / Edit
                     </a>
                   </li>
@@ -151,13 +151,17 @@ const EmplEditProfile = () => {
 
                 <form className="row" onSubmit={onSubmit}>
                   <div className=" d-flex justify-content-start mb-4">
-                    <img
+                   <label htmlFor="new_img">
+                   <img
                       src="/images/tasks/modal-profile-photo.svg"
                       alt=""
                       className=""
+                      style={{cursor:"pointer"}}
                     />
+                   </label>
                     <input
                       className="file-upload"
+                      style={{display: 'none'}}
                       type="file"
                       id="new_img"
                       accept="image/*"

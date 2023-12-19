@@ -1,8 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
+import { CreateEmplyTicket, TicketListEmply } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import { ToastContainer } from "react-toastify";
 
 const EmplHelpSupport = () => {
+  const[ticketList, setTicketList] = useState();
+  // Add Ticket
+  const [contactData, setContactData] = useState({
+    email: "",
+    ticketType: "",
+    ticketIssue: "",
+  });
+  const handleInput = (event) => {
+    setContactData({ ...contactData, [event.target.name]: event.target.value });
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const data = {
+      email:  contactData.email,
+      ticketType:  contactData.ticketType,
+      ticketIssue:  contactData.ticketIssue,
+    };
+    const response = await CreateEmplyTicket({ creator_Id: localStorage.getItem("user_id"),
+    email:data.email,
+    ticketType:data.ticketType,
+    ticketIssue:data.ticketIssue,
+  });
+  setContactData({
+    email: "",
+    ticketType: "",
+    ticketIssue: "",
+  });  
+  };
+
+  
+
+
+  // Ticket List
+
+  const data = async()=>{
+    const getData = await TicketListEmply();
+    setTicketList(getData)
+  }
+  console.log(ticketList)
+useEffect(()=>{
+  data()
+},[])
+
+
   return (
     <>
       <div className="container-fluid">
@@ -103,7 +150,7 @@ const EmplHelpSupport = () => {
                                   />
                                   New Tickets
                                 </a>
-                </div>
+                                </div>
 
                               </li>
                               <li>
@@ -151,8 +198,7 @@ const EmplHelpSupport = () => {
                     ></button>
                   </div>
 
-                  <form action="" 
-                  // onSubmit={handleSubmit}
+                  <form action="" onSubmit={onSubmit} 
                   >
                     <div className="row p-3">
                       <div className="col-12 mb-3 d-flex">
@@ -161,9 +207,9 @@ const EmplHelpSupport = () => {
                           type="text"
                           placeholder="Email *"
                           className="col-12 modal-input td-text  p-2"
-                          name="departmentname"
-                          // value={departmentInfo.departmentname}
-                          // onChange={handleChange}
+                          name="email"
+                          value={contactData.email}
+                          onChange={handleInput}
                         />
                       </div>
                       <div className="col-6 ps-3">
@@ -171,9 +217,9 @@ const EmplHelpSupport = () => {
                           type=""
                           placeholder="Request Ticket Type *"
                           className="col-12 modal-input td-text  p-2"
-                          name="departmentname"
-                          // value={departmentInfo.departmentname}
-                          // onChange={handleChange}
+                          name="ticketType"
+                          value={contactData.ticketType}
+                          onChange={handleInput}
                         />
                       </div>
                       </div>
@@ -185,22 +231,21 @@ const EmplHelpSupport = () => {
                           type="text"
                           placeholder="Type ticket issue here..."
                           className="col-12 modal-input td-text p-2"
-                          name="description"
-                          // value={departmentInfo.description}
-                          // onChange={handleChange}
-                        ></textarea>
-                        {/* <input type="text" placeholder="Phone Number" className="col-6 modal-input th-text p-2"/> */}
+                          name="ticketIssue"
+                          value={contactData.ticketIssue}
+                          onChange={handleInput}
+                        ></textarea> 
                       </div>
                     </div>
+                    <ToastContainer/>
                     <div className="d-flex justify-content-end mb-3">
                       <button
                         type="submit"
                         class="user-modal-btn"
-                        // onClick={AddDepartment}
                       >
                         Send
                       </button>
-                      <button type="button" class="user-modal-btn2">
+                      <button type="button" class="user-modal-btn2" data-bs-dismiss="modal">
                         Cancle
                       </button>
                     </div>
@@ -224,13 +269,13 @@ const EmplHelpSupport = () => {
                 <p className="help-support-text">Please get in touch and we will be happy to help you. Create New tickets</p>
                 <div className="col-12 d-flex">
                   <Link
-                    to={"/"}
+                    to={"/Employee/dashboard"}
                     className="text-decoration-none"
                   >
                     <p className="td-text border-bottom me-3">All Tickets</p>
                   </Link>
                   <Link
-                    to={"/Admin/Help-Support"}
+                    to={"/Employee/Help&Support"}
                     className="text-decoration-none"
                   >
                     <p className="th-text me-3">New</p>
@@ -250,8 +295,9 @@ const EmplHelpSupport = () => {
                   
                 </div>
                 <div className="col-12">
-                  <div className="col rounded border bg-white mb-3 p-2">
-                    <div className="d-flex border-bottom">
+                  {ticketList?.[0]?.map((ticket)=>(
+                  <div className="col rounded border bg-white mb-3 p-2" key={ticket._id}>
+                    <div className="d-flex border-bottom" >
                   <div className="ps-2 pe-4">
                     <div className="d-flex mb-3">
                       <img
@@ -260,86 +306,27 @@ const EmplHelpSupport = () => {
                         className="me-2"
                       />
                       <p className="ticket-number m-1">
-                      Ticket# 2023-CS123
+                      {ticket.ticketType}
                       </p>
                     </div>
                     <div className=" mt-1">
                       <p className="ticket-question mb-1">
-                      How to deposit money to my portal?
+                     {ticket.ticketIssue}
                       </p>
                       <p className="td-text mt-0">Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You’ve nailed the design and the responsiveness at various breakpoints works really well.</p>
                     </div>
                   </div>
-                  <p className="ticket-post-time mt-2">Posted at 12:45 AM</p>
+                  <p className="ticket-post-time mt-2">Posted At <br/>{ticket.updatedAt}</p>
                   </div>
                   <div className="d-flex justify-content-between">
                     <div className="d-flex">
-                      <img src="/images/dashboard/Avatar.png" alt="" className="m-2"/>
-                      <p className="th-text m-auto">John snow</p>
+                      <img  src={ticket.creator_Id.profile_Pic} alt="" className="m-2 img_profile"/>
+                      <p className="th-text m-auto">{ticket.creator_Id.name}</p>
                     </div>
                     <a href="/" className="ticket-link mt-3 me-1">Open Ticket</a>
                   </div>
                 </div>
-                <div className="col rounded border bg-white mb-3 p-2">
-                    <div className="d-flex border-bottom">
-                  <div className="ps-2 pe-4">
-                    <div className="d-flex mb-3">
-                      <img
-                        src="/images/dashboard/blue-ticket-ball.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      <p className="ticket-number m-1">
-                      Ticket# 2023-CS123
-                      </p>
-                    </div>
-                    <div className=" mt-1">
-                      <p className="ticket-question mb-1">
-                      How to deposit money to my portal?
-                      </p>
-                      <p className="td-text mt-0">Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You’ve nailed the design and the responsiveness at various breakpoints works really well.</p>
-                    </div>
-                  </div>
-                  <p className="ticket-post-time mt-2">Posted at 12:45 AM</p>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <div className="d-flex">
-                      <img src="/images/dashboard/Avatar3.png" alt="" className="m-2"/>
-                      <p className="th-text m-auto">John snow</p>
-                    </div>
-                    <a href="/" className="ticket-link mt-3 me-1">Open Ticket</a>
-                  </div>
-                </div>
-                <div className="col rounded border bg-white  p-2">
-                    <div className="d-flex border-bottom">
-                  <div className="ps-2 pe-4">
-                    <div className="d-flex mb-3">
-                      <img
-                        src="/images/dashboard/green-ticket-ball.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      <p className="ticket-number m-1">
-                      Ticket# 2023-CS123
-                      </p>
-                    </div>
-                    <div className=" mt-1">
-                      <p className="ticket-question mb-1">
-                      How to deposit money to my portal?
-                      </p>
-                      <p className="td-text mt-0">Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You’ve nailed the design and the responsiveness at various breakpoints works really well.</p>
-                    </div>
-                  </div>
-                  <p className="ticket-post-time mt-2">Posted at 12:45 AM</p>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <div className="d-flex">
-                      <img src="/images/dashboard/Avatar2.png" alt="" className="m-2"/>
-                      <p className="th-text m-auto">John snow</p>
-                    </div>
-                    <a href="/" className="ticket-link mt-3 me-1">Open Ticket</a>
-                  </div>
-                </div>
+                  ))}
                   </div>
               </div>
              

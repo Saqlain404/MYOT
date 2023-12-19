@@ -1,7 +1,13 @@
-import React from 'react'
+import React from 'react' 
 import { Link } from 'react-router-dom';
 
 const SideBarEmpl = () => {
+
+  const handleLogOut = () => {
+    localStorage.removeItem('token-company');
+    localStorage.removeItem("user_id");
+
+  };
   return (
     <div className='container-fluid  sidebar'>
     {/* Sidebar scroll*/}
@@ -133,12 +139,12 @@ const SideBarEmpl = () => {
               <span className="ms-3 align-middle sidebar-btn">Help</span>
             </a>
         </li>
-        <li className="nav-item text-dark">
+        <li className="nav-item text-dark" onClick={handleLogOut}>
           <a href="/Employee/Login" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/logout.png" className='align-middle sidebar-icon'/>
               
-              <span className="ms-3 align-middle sidebar-btn">Logout</span>
+              <span className="ms-3 align-middle sidebar-btn" >Logout</span>
             </a>
         </li>
         

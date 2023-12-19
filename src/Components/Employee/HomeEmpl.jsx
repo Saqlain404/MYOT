@@ -313,9 +313,9 @@ const HomeEmpl = () => {
                 </div>
               </div>
             </div>
-            <div className=" col-12 d-flex align-items-center table-searchbar">
-              <div className="row d-flex  col ">
-                <div className="col-md-3 d-flex border-end">
+            <div className=" col-12 table-searchbar">
+              <div className="row d-flex align-items-center col ">
+                <div className="col-md-3 align-items-center d-flex border-end">
                 <div
                   className=""
                   type="button"
