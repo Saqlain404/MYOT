@@ -2282,3 +2282,13 @@ height: 960px; */
 .cursor_pointer {
   cursor: pointer !important;
 }
+
+.pagination li {
+  cursor: pointer !important;
+}
+
+.view_user .profile_img {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+}

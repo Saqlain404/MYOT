@@ -12,13 +12,18 @@ import {
 import moment from "moment";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import ViewUser from "./ViewUser";
 
 const Users = () => {
-  const [employeeData, setEmployeeData] = useState();
+  const [employeeData, setEmployeeData] = useState([]);
   const [departmentOptions, setDepartmentOptions] = useState([]);
   const [search, setSearch] = useState("");
   const [files, setFiles] = useState([]);
   const [profileImgUrl, setProfileImgUrl] = useState();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const [employeesPerPage] = useState(10);
 
   const {
     register,
@@ -35,7 +40,9 @@ const Users = () => {
     let { data } = await EmployeeLists();
     console.log(data);
     if (!data?.error) {
-      setEmployeeData(data?.results?.list);
+      let values = data?.results?.list;
+      setEmployeeData(values);
+      setTotalPage(Math.ceil(values.length / employeesPerPage));
     }
   };
 
@@ -56,7 +63,8 @@ const Users = () => {
       let { data } = await EmployeeSearch({ search: value });
       console.log(data);
       if (!data?.error) {
-        setEmployeeData(data?.results?.employee);
+        let values = data?.results?.employee;
+        setEmployeeData(values);
       }
     } else {
       getEmployeeList();
@@ -72,34 +80,93 @@ const Users = () => {
     }
   };
 
-  // const handleChange = (e) => {
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-  //   console.log(name, value);
+  const indexOfLastEmployee = currentPage * employeesPerPage;
+  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
+  const currentEmployees = employeeData?.slice(
+    indexOfFirstEmployee,
+    indexOfLastEmployee
+  );
 
-  //   setEmployeeInfo({ ...employeeInfo, [name]: value });
-  // };
+  const paginate = (pageNumber) => {
+    // console.log("total page", totalPage);
+    // console.log("crr", currentPage);
+    setCurrentPage(pageNumber);
+  };
 
   const onSubmit = async (datas) => {
     console.log(datas);
-    console.log(files?.profile_img);
+    console.log(datas?.document_img[0]);
+    let selectedRoles = [];
+    const roles = [
+      "employrole_admin",
+      "employrole_approver",
+      "employrole_department",
+      "employrole_signatory",
+    ];
+    roles.forEach((role) => {
+      if (datas[role]) {
+        switch (role) {
+          case "employrole_admin":
+            selectedRoles.push("Admin");
+            break;
+          case "employrole_approver":
+            selectedRoles.push("Approver");
+            break;
+          case "employrole_department":
+            selectedRoles.push("Department Manager");
+            break;
+          case "employrole_signatory":
+            selectedRoles.push("Signatory");
+            break;
+          default:
+            break;
+        }
+      }
+    });
+    console.log(selectedRoles);
+    if (selectedRoles.length === 0) {
+      toast.error("Please select role", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return false;
+    }
+    if (!files?.profile_img) {
+      toast.error("Please select profile image", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return false;
+    }
     const formData = new FormData();
     formData.append("name", datas?.name);
     formData.append("email", datas?.email);
     formData.append("password", datas?.password);
     formData.append("employTitle", datas?.employTitle);
     formData.append("department_Id", datas?.department_id);
-    formData.append("mobileNumber", datas?.mobileNumber);
+    formData.append("mobileNumber", datas?.mobilenumber);
     formData.append("salary", datas?.salary);
     formData.append("gender", datas?.gender);
     formData.append("employId", datas?.employid);
-    formData.append("employRole", "Admin");
+    formData.append("employRole", selectedRoles);
     formData.append("document_Img", datas?.document_img[0]);
-    formData.append("profile_Img", files?.profile_img);
+    formData.append("profile_Pic", files?.profile_img);
 
     let { data } = await AddEmployee(formData);
     console.log(data);
-    if (!data?.error) {
+    if (data && !data?.error) {
       toast("New employee added successfully", {
         position: "top-right",
         autoClose: 5000,
@@ -110,43 +177,11 @@ const Users = () => {
         progress: undefined,
         theme: "light",
       });
-      document.getElementById("formReset").click();
+      // document.getElementById("formReset").click();
       document.getElementById("closeFormModal").click();
       getEmployeeList();
     }
   };
-
-  // const handleSubmit1 = async (e) => {
-  //   e.preventDefault();
-  //   const employeeData = {
-  //     ...employeeInfo,
-  //     user: localStorage.getItem("user_id"),
-  //   };
-  //   console.log(employeeData);
-
-  //   await AddEmployee({
-  //     name: employeeData.name,
-  //     email: employeeData.email,
-  //     password: employeeData.password,
-  //     employTitle: employeeData.employtitle,
-  //     department_Id: employeeData.department_id,
-  //     mobileNumber: employeeData.mobilenumber,
-  //     salary: employeeData.salary,
-  //     gender: employeeData.gender,
-  //     employId: employeeData.employid,
-  //     employRole: employeeData.employrole,
-  //     profile_Pic: employeeData.profile_pic,
-  //     document_Img: employeeData.document_img,
-  //   })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     })
-  //     .then((res) => {
-  //       if (!res.data?.error) {
-  //         console.log("Success");
-  //       }
-  //     });
-  // };
 
   return (
     <>
@@ -196,7 +231,7 @@ const Users = () => {
             </div>
 
             <div className="d-flex justify-content-between">
-              <p className="table-name mb-2">Templates</p>
+              <p className="table-name mb-2">Users</p>
               <div className="d-flex justify-content-center th-text">
                 <div
                   className="d-flex whitespace-nowrap"
@@ -534,10 +569,10 @@ const Users = () => {
                           <table className="table">
                             <thead>
                               <tr className="bg-primary-subtle">
-                                <th className="th-text">Assign Permission</th>
-                                <th className="th-text">Edit</th>
-                                <th className="th-text">Add</th>
-                                <th className="th-text">Delete</th>
+                                <th className="th-text">Select Role</th>
+                                <th className="th-text">Select</th>
+                                {/* <th className="th-text">Add</th>
+                                <th className="th-text">Delete</th> */}
                               </tr>
                             </thead>
                             <tbody>
@@ -546,28 +581,8 @@ const Users = () => {
                                 <td>
                                   <input
                                     type="checkbox"
-                                    // name="document_img"
-                                    // value={employeeInfo.employrole}
-                                    // onChange={handleChange}
-                                    {...register("employrole_edit")}
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    type="checkbox"
-                                    // name="employrole"
-                                    // value={employeeInfo.employrole}
-                                    // onChange={handleChange}
-                                    {...register("employrole_add")}
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    type="checkbox"
-                                    // name="employrole"
-                                    // value={employeeInfo.employrole}
-                                    // onChange={handleChange}
-                                    {...register("employrole_delete")}
+                                    name="employrole_approver"
+                                    {...register("employrole_approver")}
                                   />
                                 </td>
                               </tr>
@@ -576,25 +591,8 @@ const Users = () => {
                                 <td>
                                   <input
                                     type="checkbox"
-                                    name="employrole"
-                                    // value={employeeInfo.employrole}
-                                    // onChange={handleChange}
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    type="checkbox"
-                                    name="employrole"
-                                    // value={employeeInfo.employrole}
-                                    // onChange={handleChange}
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    type="checkbox"
-                                    name="employrole"
-                                    // value={employeeInfo.employrole}
-                                    // onChange={handleChange}
+                                    name="employrole_department"
+                                    {...register("employrole_department")}
                                   />
                                 </td>
                               </tr>
@@ -603,25 +601,8 @@ const Users = () => {
                                 <td>
                                   <input
                                     type="checkbox"
-                                    name="employrole"
-                                    // value={employeeInfo.employrole}
-                                    // onChange={handleChange}
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    type="checkbox"
-                                    name="employrole"
-                                    // value={employeeInfo.employrole}
-                                    // onChange={handleChange}
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    type="checkbox"
-                                    name="employrole"
-                                    // value={employeeInfo.employrole}
-                                    // onChange={handleChange}
+                                    name="employrole_signatory"
+                                    {...register("employrole_signatory")}
                                   />
                                 </td>
                               </tr>
@@ -630,31 +611,14 @@ const Users = () => {
                                 <td>
                                   <input
                                     type="checkbox"
-                                    name="employrole"
-                                    // value={employeeInfo.employrole}
-                                    // onChange={handleChange}
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    type="checkbox"
-                                    name="employrole"
-                                    // value={employeeInfo.employrole}
-                                    // onChange={handleChange}
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    type="checkbox"
-                                    name="employrole"
-                                    // value={employeeInfo.employrole}
-                                    // onChange={handleChange}
+                                    name="employrole_admin"
+                                    {...register("employrole_admin")}
                                   />
                                 </td>
                               </tr>
                             </tbody>
                           </table>
-                          <p className="text-danger th-text">Add New Field</p>
+                          {/* <p className="text-danger th-text">Add New Field</p> */}
                         </div>
                       </div>
                       <div className="d-flex justify-content-end">
@@ -771,27 +735,27 @@ const Users = () => {
                         />
                         Last Logged In
                       </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Status
-                      </th>
                       {/* <th className="th-text">
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
                         />
-                        Actions
+                        Status
                       </th> */}
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Actions
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {employeeData &&
-                      employeeData?.map((document, i) => (
+                    {currentEmployees &&
+                      currentEmployees?.map((document, i) => (
                         <tr key={i} className="ms-0 user_table_row">
                           <td className="td-text">
                             <input
@@ -801,13 +765,51 @@ const Users = () => {
                             />
                             {document?.employId}
                           </td>
-                          <td className="td-text">{document?.name}</td>
+                          <td className="td-text d-flex align-items-center my-2">
+                            <img
+                              style={{
+                                width: "30px",
+                                height: "30px",
+                                borderRadius: "50%",
+                                objectFit: "cover",
+                              }}
+                              src={document?.profile_Pic}
+                              alt=""
+                            />
+                            <span className="ms-3">{document?.name}</span>
+                          </td>
                           <td className="td-text">
                             {document?.department_Id?.departmentName
                               ? document?.department_Id?.departmentName
                               : "Not Available"}
                           </td>
-                          <td className="td-text">{document?.employRole}</td>
+                          {/* <td className="td-text">
+                            {document?.employRole &&
+                              document?.employRole.map((rolesArray, index) => (
+                                <span key={index}>
+                                  {Array.isArray(rolesArray[0])
+                                    ? rolesArray[0].join(" · ")
+                                    : rolesArray[0].startsWith("[") &&
+                                      rolesArray[0].endsWith("]")
+                                    ? rolesArray[0]
+                                        .substring(1, rolesArray[0].length - 1)
+                                        .split(",")
+                                        .map((role) => role.trim())
+                                        .join(" · ")
+                                    : rolesArray[0]}
+                                </span>
+                              ))
+                              }
+                          </td> */}
+                          <td className="td-text">
+                            {document?.employRole[0] &&
+                              document?.employRole[0].map((itm, i) => (
+                                <span key={i}>
+                                  {Array.isArray(itm) ? itm.join(" * ") : itm}
+                                </span>
+                              ))}
+                          </td>
+
                           <td className="td-text">{document?.salary}</td>
                           <td className="td-text">
                             <img src="/images/dashboard/CalendarBlank.png" />
@@ -818,23 +820,29 @@ const Users = () => {
                                 )}
                             </span>
                           </td>
-                          <td className="td-text">
+                          {/* <td className="td-text">
                             {document?.status ? "True" : "False"}
-                          </td>
+                          </td> */}
                           <td className="td-text">
                             <div class="dropdown">
-                              <Link
+                              <a
                                 type=""
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                               >
-                                {document.actions}
-                              </Link>
+                                {/* {document.actions} */}
+                                <img
+                                  src="/images/sidebar/ThreeDots.svg"
+                                  className="w-auto p-3 cursor_pointer"
+                                />
+                              </a>
                               <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                                 <li>
                                   <Link
                                     class="dropdown-item border-bottom"
-                                    href="#"
+                                    // to="/Admin/View-User/123"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal1"
                                   >
                                     <img
                                       src="/images/users/AddressBook.svg"
@@ -845,7 +853,7 @@ const Users = () => {
                                   </Link>
                                 </li>
                                 <li>
-                                  <Link
+                                  <a
                                     class="dropdown-item border-bottom"
                                     href="#"
                                   >
@@ -855,20 +863,20 @@ const Users = () => {
                                       className="me-2"
                                     />
                                     Edit User Details
-                                  </Link>
+                                  </a>
                                 </li>
                                 <li>
-                                  <Link class="dropdown-item" href="#">
+                                  <a class="dropdown-item" href="#">
                                     <img
                                       src="/images/dashboard/Comment.png"
                                       alt=""
                                       className="me-2"
                                     />
                                     Comments
-                                  </Link>
+                                  </a>
                                 </li>
                                 <li>
-                                  <Link
+                                  <a
                                     class="dropdown-item border-bottom"
                                     href="#"
                                   >
@@ -878,20 +886,17 @@ const Users = () => {
                                       className="me-2"
                                     />
                                     Wrap Column
-                                  </Link>
+                                  </a>
                                 </li>
                                 <li>
-                                  <Link
-                                    class="dropdown-item text-danger"
-                                    href="#"
-                                  >
+                                  <a class="dropdown-item text-danger" href="#">
                                     <img
                                       src="/images/users/Trash.svg"
                                       alt=""
                                       className="me-2"
                                     />
-                                    Delete User
-                                  </Link>
+                                    Delete Template
+                                  </a>
                                 </li>
                               </ul>
                             </div>
@@ -906,33 +911,56 @@ const Users = () => {
                 className="d-flex justify-content-end page-navigation mt-3"
               >
                 <ul className="pagination">
-                  <li class="page-item">
-                    <Link class="page-link" href="#" aria-label="Previous">
+                  <li
+                    onClick={() =>
+                      paginate(
+                        currentPage === 1 ? currentPage : currentPage - 1
+                      )
+                    }
+                    class="page-item"
+                  >
+                    <p class="page-link" href="#" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
-                    </Link>
+                    </p>
                   </li>
-                  <li class="page-item">
-                    <button class="page-link" href="#">
-                      1
-                    </button>
-                  </li>
-                  <li class="page-item">
-                    <button class="page-link" href="#">
-                      2
-                    </button>
-                  </li>
-                  <li class="page-item">
-                    <button class="page-link" href="#">
-                      3
-                    </button>
-                  </li>
-                  <li class="page-item">
-                    <button class="page-link" href="#" aria-label="Next">
+                  {Array.from({
+                    length: Math.ceil(employeeData.length / employeesPerPage),
+                  }).map((_, index) => (
+                    <li key={index} className="page-item">
+                      <p
+                        onClick={() => paginate(index + 1)}
+                        className="page-link"
+                      >
+                        {index + 1}
+                      </p>
+                    </li>
+                  ))}
+                  <li
+                    onClick={() =>
+                      paginate(
+                        currentPage === totalPage
+                          ? currentPage
+                          : currentPage + 1
+                      )
+                    }
+                    class="page-item"
+                  >
+                    <p class="page-link" href="#" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
-                    </button>
+                    </p>
                   </li>
                 </ul>
               </nav>
+            </div>
+
+            <div
+              class="modal fade"
+              id="exampleModal1"
+              tabIndex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <ViewUser id={"123"} />
             </div>
 
             <div className="footer">

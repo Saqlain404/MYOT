@@ -99,6 +99,7 @@ import ContactUsEmpl from "./Components/Employee/ContactUsEmpl";
 import EmplAuthLogin from "./Components/Login/EmplAuthLogin";
 import EmplAuthforgotPassword from "./Components/Login/EmplAuthforgotPass";
 import EmplForgotSuccess from "./Components/Login/EmplForgotSuccess";
+import ViewUser from "./Components/Index/ViewUser";
 
 function App() {
   return (
@@ -115,6 +116,7 @@ function App() {
         <Route path="Admin/Calendar" element={<Calender />} />
         {/* <Route path="Admin/Calendar-year" element={<CalenderYear/>} /> */}
         <Route path="Admin/Users" element={<Users />} />
+        <Route path="Admin/View-User/:id" element={<ViewUser />} />
         <Route path="Admin/Departments" element={<Departments />} />
         <Route path="Admin/Calendar" element={<Calender />} />
         <Route path="Admin/Calendar-month" element={<CalendarMonth />} />

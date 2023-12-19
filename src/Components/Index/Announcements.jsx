@@ -1,90 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from "antd";
 import { Link } from "react-router-dom";
+import {
+  AnnouncementLists,
+  CreateAnnouncement,
+} from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import moment from "moment";
+import { toast } from "react-toastify";
 
 const Announcements = () => {
-  const documents = [
-    {
-      id: 1,
-      document: "Employment Contract",
-      requester: [<img src="/images/dashboard/Avatar.png" className="me-2" />],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-primary m-0">In Progress</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 2,
-      document: "Tax Deduction at Source (TDS)",
-      requester: [<img src="/images/dashboard/Avatar.png" className="me-2" />],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-warning m-0"> Approved</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 3,
-      document: "Training Certificates",
-      requester: [<img src="/images/dashboard/Avatar.png" className="me-2" />],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-success m-0">Complete</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 4,
-      document: "Software Licenses",
-      requester: [<img src="/images/dashboard/Avatar.png" className="me-2" />],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-primary m-0">In Progress</p>,
-      department: "Information Technologies",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 5,
-      document: "Reference Letter",
-      requester: [<img src="/images/dashboard/Avatar.png" className="me-2" />],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-info m-0">Pending</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
+  const [documents, setDocuments] = useState([]);
+  const [announcementType, setAnnouncementType] = useState("");
+  const [description, setDescription] = useState("");
+  const [files, setFiles] = useState([]);
 
-    // Add more tasks here
-  ];
+  useEffect(() => {
+    getAnnouncements();
+  }, []);
+
+  const getAnnouncements = async () => {
+    let { data } = await AnnouncementLists();
+    console.log(data);
+    if (!data?.error) {
+      setDocuments(data?.results?.announcementList);
+    }
+  };
+
+  const handleImgChange = (e, key) => {
+    setFiles({ ...files, [key]: e.target.files[0] });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let formData = new FormData();
+    formData.append("categoryName", announcementType);
+    formData.append("document", files?.doc_img);
+    formData.append("text", description);
+
+    let { data } = await CreateAnnouncement(formData);
+    console.log(data);
+    if (!data?.error) {
+      toast("New Announcement Created", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      getAnnouncements();
+      document.getElementById("modalClose").click();
+    }
+  };
 
   return (
     <>
@@ -135,7 +107,7 @@ const Announcements = () => {
               </nav>
             </div>
             <div className="d-flex justify-content-between">
-            <p className="table-name mb-2">Broadcast Announcement</p>
+              <p className="table-name mb-2">Broadcast Announcement</p>
               <div className="d-flex justify-content-center th-text">
                 <div
                   className="d-flex whitespace-nowrap"
@@ -153,8 +125,8 @@ const Announcements = () => {
                 />
               </div>
             </div>
-                 {/* <!-- Modal --> */}
-                 <div
+            {/* <!-- Modal --> */}
+            <div
               class="modal fade"
               id="exampleModal"
               tabindex="-1"
@@ -165,81 +137,72 @@ const Announcements = () => {
                 <div class="modal-content border-0">
                   <div class="d-flex modal-header border-bottom">
                     <p class="" id="exampleModalLabel">
-                    Create New Announcement
+                      Create New Announcement
                     </p>
                     <button
                       type="button"
                       class="btn-close"
                       data-bs-dismiss="modal"
                       aria-label="Close"
+                      id="modalClose"
                     ></button>
                   </div>
 
-                  <form action="" 
-                  // onSubmit={handleSubmit}
-                  >
+                  <form onSubmit={handleSubmit}>
                     <div className="row p-3">
                       <div className="col-12 mb-3 d-flex">
                         <div className="col-6 pe-3">
-                        <input
-                          type="text"
-                          placeholder="Announcement Category"
-                          className="col-12 modal-input td-text  p-2"
-                          name="departmentname"
-                          // value={departmentInfo.departmentname}
-                          // onChange={handleChange}
-                        />
+                          <label htmlFor="announcementType" className="mb-3">
+                            Announcement Category
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Announcement Category"
+                            className="col-12 modal-input td-text  p-2"
+                            name="announcementType"
+                            id="announcementType"
+                            value={announcementType}
+                            onChange={(e) =>
+                              setAnnouncementType(e.target.value)
+                            }
+                          />
+                        </div>
+                        <div className="col-6 mb-3 ">
+                          <label htmlFor="doc_file" className="mb-3">
+                            Document Upload
+                          </label>
+                          <input
+                            type="file"
+                            placeholder="File Format: JPG, JPEG, PNG or PDF Size: Upto 500KB"
+                            className="col-12 modal-input td-text p-2 display-none"
+                            name="doc_file"
+                            id="doc_file"
+                            onChange={(e) => handleImgChange(e, "doc_img")}
+                          />
+                        </div>
                       </div>
-                      <div className="col-6 ps-3">
-                        <input
-                          type=""
-                          placeholder="Date & Time"
-                          className="col-12 modal-input td-text  p-2"
-                          name="departmentname"
-                          // value={departmentInfo.departmentname}
-                          // onChange={handleChange}
-                        />
-                      </div>
-                      </div>
-                      <p className="d-flex" id="exampleModalLabel">
-                      Document Upload
-                    </p>
                       <div className="col-12 mb-3 ">
-                        <input
-                          type="file"
-                          placeholder="File Format: JPG, JPEG, PNG or PDF Size: Upto 500KB"
-                          className="col-12 modal-input td-text p-2 display-none"
-                          name="description"
-                          // value={departmentInfo.description}
-                          // onChange={handleChange}
-                        ></input>
-                        {/* <input type="text" placeholder="Phone Number" className="col-6 modal-input th-text p-2"/> */}
-                      </div>
-                      <p className="d-flex" id="exampleModalLabel">
-                    Enter text here
-                    </p>
-                      <div className="col-12 mb-3 ">
+                        <label htmlFor="description" className="mb-3">
+                          Description
+                        </label>
                         <textarea
                           type="text"
                           placeholder=""
                           className="col-12 modal-input td-text p-2"
                           name="description"
-                          // value={departmentInfo.description}
-                          // onChange={handleChange}
+                          id="description"
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          style={{minHeight:'150px'}}
                         ></textarea>
-                        {/* <input type="text" placeholder="Phone Number" className="col-6 modal-input th-text p-2"/> */}
                       </div>
                     </div>
                     <div className="d-flex justify-content-end mb-3">
-                      <button
-                        type="submit"
-                        class="user-modal-btn"
-                        // onClick={AddDepartment}
-                      >
+                      <button type="submit" class="user-modal-btn">
                         Send
                       </button>
-                      <button type="button" class="user-modal-btn2">
-                        Cancle
+                      <button type="reset" id="reset" className="d-none">
+                        reset
                       </button>
                     </div>
                   </form>
@@ -248,114 +211,76 @@ const Announcements = () => {
             </div>
             {/* <!-- Modal End--> */}
 
-            <div className="container bg-body-tertiary rounded mb-3">
-              <div className="row">
-                <p className="templates-leave mt-3 ms-2 mb-0 ">
-                  Templates {">"} leave
-                </p>
-                <div className="col-12">
-                <div className="col rounded bg-white d-flex m-3 p-2">
-                  <div className="ps-2 pe-3">
-                    <div className="d-flex">
-                      <img
-                        src="/images/dashboard/user (2) 1.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      <p className="anouncement-text">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
-                      </p>
-                    </div>
-                    <div className="d-flex ms-4 mt-1">
-                      <img src="/images/dashboard/bookmark 1.svg" alt="" className="m-1 "/>
-                      <p className="new-feedback">
-                      New feedback added
-                      </p>
-                    </div>
-                  </div>
-                  <p className="announcement-time">Yesterday at 4:17 Pm</p>
-                </div>
-                <div className="col rounded bg-white d-flex m-3 p-2">
-                  <div className="ps-2 pe-3">
-                    <div className="d-flex">
-                      <img
-                        src="/images/dashboard/user (2) 1.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      <p className="anouncement-text">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
-                      </p>
-                    </div>
-                    <div className="d-flex ms-4 mt-1">
-                      <img src="/images/dashboard/bookmark 1.svg" alt="" className="m-1 "/>
-                      <p className="new-feedback">
-                      New feedback added
-                      </p>
-                    </div>
-                  </div>
-                  <p className="announcement-time">Yesterday at 4:17 Pm</p>
-                </div>
-                </div>
-                
-              </div>
-            </div>
-
-            <div className="container bg-body-tertiary rounded mb-4">
-              <div className="row">
-                <p className="templates-leave mt-3 ms-2 mb-0 ">
-                  Templates {">"} leave
-                </p>
-                <div className="col-12">
-                <div className="col rounded bg-white d-flex m-3 p-2">
-                  <div className="ps-2 pe-3">
-                    <div className="d-flex">
-                      <img
-                        src="/images/dashboard/user (2) 1.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      <p className="anouncement-text">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
-                      </p>
-                    </div>
-                    <div className="d-flex ms-4 mt-1">
-                      <img src="/images/dashboard/bookmark 1.svg" alt="" className="m-1 "/>
-                      <p className="new-feedback">
-                      New feedback added
-                      </p>
+            <div className="container rounded mb-3">
+              {documents.map((document) => (
+                <>
+                  <div className="row my-4 bg-body-tertiary">
+                    <p className="templates-leave mt-3 ms-2 mb-0 ">
+                      {`Announcement > ${document?.categoryName}`}
+                    </p>
+                    <div className="col-12">
+                      <div className="col rounded bg-white d-flex m-3 p-2 algin-items-center justify-content-between">
+                        <div className="ps-2 pe-3">
+                          <div className="d-flex">
+                            <img
+                              style={{
+                                width: "20px",
+                                height: "20px",
+                                borderRadius: "50%",
+                              }}
+                              src={
+                                document?.document
+                                  ? document?.document
+                                  : "/images/dashboard/user (2) 1.svg"
+                              }
+                              alt=""
+                              className="me-2"
+                            />
+                            <p className="anouncement-text">{document?.text}</p>
+                          </div>
+                          <div className="d-flex ms-4 mt-1">
+                            <img
+                              src="/images/dashboard/bookmark 1.svg"
+                              alt=""
+                              className="m-1 "
+                            />
+                            <p className="new-feedback">New feedback added</p>
+                          </div>
+                        </div>
+                        <p className="announcement-time">
+                          {moment(document?.createdAt).calendar()}
+                        </p>
+                      </div>
+                      {/* <div className="col rounded bg-white d-flex m-3 p-2">
+                        <div className="ps-2 pe-3">
+                          <div className="d-flex">
+                            <img
+                              src="/images/dashboard/user (2) 1.svg"
+                              alt=""
+                              className="me-2"
+                            />
+                            <p className="anouncement-text">
+                              Lorem Ipsum is simply dummy text of the printing
+                              and typesetting industry.
+                            </p>
+                          </div>
+                          <div className="d-flex ms-4 mt-1">
+                            <img
+                              src="/images/dashboard/bookmark 1.svg"
+                              alt=""
+                              className="m-1 "
+                            />
+                            <p className="new-feedback">New feedback added</p>
+                          </div>
+                        </div>
+                        <p className="announcement-time">
+                          Yesterday at 4:17 Pm
+                        </p>
+                      </div> */}
                     </div>
                   </div>
-                  <p className="announcement-time">Yesterday at 4:17 Pm</p>
-                </div>
-                <div className="col rounded bg-white d-flex m-3 p-2">
-                  <div className="ps-2 pe-3">
-                    <div className="d-flex">
-                      <img
-                        src="/images/dashboard/user (2) 1.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      <p className="anouncement-text">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
-                      </p>
-                    </div>
-                    <div className="d-flex ms-4 mt-1">
-                      <img src="/images/dashboard/bookmark 1.svg" alt="" className="m-1 "/>
-                      <p className="new-feedback">
-                      New feedback added
-                      </p>
-                    </div>
-                  </div>
-                  <p className="announcement-time">Yesterday at 4:17 Pm</p>
-                </div>
-                </div>
-                
-              </div>
+                </>
+              ))}
             </div>
 
             <div className="footer">
