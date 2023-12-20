@@ -39,7 +39,7 @@ const EditProfileSig = () => {
                       alt=""
                       className="ms-4 "
                     />
-                    <Link to={"/Admin/Chat"}>
+                    <Link to={"/Signatory/Chat"}>
                     <img
                       src="/images/dashboard/chat-left-dots-fill.png"
                       alt=""
@@ -121,7 +121,7 @@ const EditProfileSig = () => {
 
    <div className=" d-flex justify-content-end">
       {/* <p className="profile-txt m-2">Profile</p> */}
-      <Link to={"/Admin/Edit-profile"} className="text-decoration-none">
+      <Link to={"/Signatory/Edit-profile"} className="text-decoration-none">
       <button className="profile-edit-submit">Update Profile</button>
       </Link>
     </div>

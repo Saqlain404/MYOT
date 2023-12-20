@@ -104,6 +104,9 @@ import EmplAuthLogin from "./Components/Login/EmplAuthLogin";
 import EmplAuthforgotPassword from "./Components/Login/EmplAuthforgotPass";
 import EmplForgotSuccess from "./Components/Login/EmplForgotSuccess";
 import TemplateEdit from "./Components/DepartmentManager/TemplateEdit";
+import ChatboxSig from "./Components/Signatory/ChatboxSig";
+import ChatboxDept from "./Components/DepartmentManager/ChatboxDept";
+import ChatboxAprv from "./Components/Approver/Chatbox";
 
 function App() {
   return (
@@ -161,6 +164,7 @@ function App() {
         <Route path="Department/Contact-us" element={<ContactUsDept/>} />  
         <Route path="Department/Settings" element={<SettingsDept/>} />  
         <Route path="Department/Requests" element={<RequestsDept />} />
+        <Route path="Department/Chat" element={<ChatboxDept/>} />
         <Route
           path="Department/Announcements"
           element={<AnnouncementsDept />}
@@ -196,6 +200,7 @@ function App() {
         <Route path="Approver/Help-Support" element={<HelpSupportAprv/>} /> 
         <Route path="Approver/Contact-us" element={<ContactUsAprv/>} /> 
         <Route path="Approver/Settings" element={<SettingsAprv/>} /> 
+        <Route path="Approver/Chat" element={<ChatboxAprv />} />
 
         <Route path="Approver/My-profile" element={<ProfileAprv />} />
         <Route path="Approver/Edit-profile" element={<EditProfileAprv />} />
@@ -223,6 +228,7 @@ function App() {
         <Route path="Signatory/Help" element={<HelpSig/>} /> 
         <Route path="Signatory/Help-Support" element={<HelpSupportSig/>} /> 
         <Route path="Signatory/Contact-us" element={<ContactUsSig/>} /> 
+        <Route path="Signatory/Chat" element={<ChatboxSig/>} />
         <Route path="Signatory/Settings" element={<SettingsSig/>} /> 
 
         <Route path="Signatory/Requests" element={<RequestsSig />} />

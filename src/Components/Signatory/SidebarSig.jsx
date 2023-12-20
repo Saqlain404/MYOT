@@ -316,6 +316,9 @@ const SidebarSig = () => {
                 <a class="dropdown-item">Approver</a>
               </li>
             </Link>
+            <Link to={"/Employee/Home"} className="text-decoration-none">
+       <li><a class="dropdown-item">Employee</a></li>
+    </Link>
             <Link to={"/Department/Home"} className="text-decoration-none">
               <li>
                 <a class="dropdown-item">Department Manager</a>

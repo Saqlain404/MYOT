@@ -36,7 +36,7 @@ const HelpSupportSig = () => {
                       alt=""
                       className="ms-4 "
                     />
-                    <Link to={"/Admin/Chat"}>
+                    <Link to={"/Signatory/Chat"}>
                       <img
                         src="/images/dashboard/chat-left-dots-fill.png"
                         alt=""
@@ -231,7 +231,7 @@ const HelpSupportSig = () => {
                     <p className="td-text border-bottom me-3">All Tickets</p>
                   </Link>
                   <Link
-                    to={"/Admin/Help-Support"}
+                    to={"/Signatory/Help-Support"}
                     className="text-decoration-none"
                   >
                     <p className="th-text me-3">New</p>

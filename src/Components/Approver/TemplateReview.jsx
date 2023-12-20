@@ -116,7 +116,7 @@ const TemplateReview = () => {
                       alt=""
                       className="ms-4 "
                     />
-                    <Link to={"/Admin/Chat"}>
+                    <Link to={"/Approver/Chat"}>
                       <img
                         src="/images/dashboard/chat-left-dots-fill.png"
                         alt=""
