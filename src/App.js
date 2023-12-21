@@ -106,7 +106,7 @@ function App() {
     <div>
       <ToastContainer />
       <Routes>
-        {/* <Route path="*" element={<AuthLogin />} /> */}
+        <Route path="*" element={<AuthLogin />} />
         <Route path="Admin/Login" element={<AuthLogin />} />
         {/* <Route path="Admin/Forgot-password" element={<AuthforgotPass />} /> */}
         {/* <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} /> */}
