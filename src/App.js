@@ -106,7 +106,7 @@ function App() {
     <div>
       <ToastContainer />
       <Routes>
-        <Route path="*" element={<AuthLogin />} />
+        {/* <Route path="*" element={<AuthLogin />} /> */}
         <Route path="Admin/Login" element={<AuthLogin />} />
         {/* <Route path="Admin/Forgot-password" element={<AuthforgotPass />} /> */}
         {/* <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} /> */}
@@ -133,8 +133,8 @@ function App() {
         <Route path="Admin/Settings" element={<Settings />} />
         <Route path="Admin/Comments" element={<Comments />} />
         <Route path="Admin/Help" element={<Help />} />
-        <Route path="Admin/Help-Support" element={<HelpSupport />} />
-        <Route path="Admin/Contact-us" element={<ContactUs />} />
+        <Route path="Admin/Help/Help-Support" element={<HelpSupport />} />
+        <Route path="Admin/Help/Contact-us" element={<ContactUs />} />
 
         <Route path="Department/Home" element={<HomeDept />} />
         <Route path="Department/Dashboard" element={<DashboardDept />} />

@@ -107,7 +107,7 @@ const CalendarMonthAprv
         <div className="col prev-day">30</div>
         <div className="col day">01</div>
         <div className="col day">02</div>
-        <div className="col today active">03
+        <div className="col today active_class">03
         <p className="event-1">Offer Letter</p>
         <p className="event-2">Salary slip</p>
         <p className="event-more">More</p>

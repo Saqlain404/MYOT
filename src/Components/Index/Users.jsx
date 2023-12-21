@@ -20,6 +20,7 @@ const Users = () => {
   const [search, setSearch] = useState("");
   const [files, setFiles] = useState([]);
   const [profileImgUrl, setProfileImgUrl] = useState();
+  const [userId, setUserId] = useState();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
@@ -94,14 +95,15 @@ const Users = () => {
   };
 
   const onSubmit = async (datas) => {
-    console.log(datas);
-    console.log(datas?.document_img[0]);
+    // console.log(datas);
+    // console.log(datas?.document_img[0]);
     let selectedRoles = [];
     const roles = [
       "employrole_admin",
       "employrole_approver",
       "employrole_department",
       "employrole_signatory",
+      "employrole_employee",
     ];
     roles.forEach((role) => {
       if (datas[role]) {
@@ -118,12 +120,15 @@ const Users = () => {
           case "employrole_signatory":
             selectedRoles.push("Signatory");
             break;
+          case "employrole_employee":
+            selectedRoles.push("Employee");
+            break;
           default:
             break;
         }
       }
     });
-    console.log(selectedRoles);
+
     if (selectedRoles.length === 0) {
       toast.error("Please select role", {
         position: "top-right",
@@ -150,6 +155,7 @@ const Users = () => {
       });
       return false;
     }
+    console.log("hhhhh", JSON.stringify(selectedRoles));
     const formData = new FormData();
     formData.append("name", datas?.name);
     formData.append("email", datas?.email);
@@ -160,7 +166,7 @@ const Users = () => {
     formData.append("salary", datas?.salary);
     formData.append("gender", datas?.gender);
     formData.append("employId", datas?.employid);
-    formData.append("employRole", selectedRoles);
+    formData.append("employRole", JSON.stringify(selectedRoles));
     formData.append("document_Img", datas?.document_img[0]);
     formData.append("profile_Pic", files?.profile_img);
 
@@ -616,6 +622,16 @@ const Users = () => {
                                   />
                                 </td>
                               </tr>
+                              <tr className="ms-0">
+                                <td className="td-text">Employee</td>
+                                <td>
+                                  <input
+                                    type="checkbox"
+                                    name="employrole_admin"
+                                    {...register("employrole_employee")}
+                                  />
+                                </td>
+                              </tr>
                             </tbody>
                           </table>
                           {/* <p className="text-danger th-text">Add New Field</p> */}
@@ -753,10 +769,10 @@ const Users = () => {
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="user_table">
                     {currentEmployees &&
                       currentEmployees?.map((document, i) => (
-                        <tr key={i} className="ms-0 user_table_row">
+                        <tr key={i} className="ms-0 tr">
                           <td className="td-text">
                             <input
                               className="form-check-input checkbox-table"
@@ -765,7 +781,7 @@ const Users = () => {
                             />
                             {document?.employId}
                           </td>
-                          <td className="td-text d-flex align-items-center my-2">
+                          <td className="td-text">
                             <img
                               style={{
                                 width: "30px",
@@ -781,33 +797,21 @@ const Users = () => {
                           <td className="td-text">
                             {document?.department_Id?.departmentName
                               ? document?.department_Id?.departmentName
-                              : "Not Available"}
+                              : document?.department_Id[0]
+                              ? document?.department_Id[0]?.departmentName
+                              : "Not Availabe"}
                           </td>
-                          {/* <td className="td-text">
-                            {document?.employRole &&
-                              document?.employRole.map((rolesArray, index) => (
-                                <span key={index}>
-                                  {Array.isArray(rolesArray[0])
-                                    ? rolesArray[0].join(" · ")
-                                    : rolesArray[0].startsWith("[") &&
-                                      rolesArray[0].endsWith("]")
-                                    ? rolesArray[0]
-                                        .substring(1, rolesArray[0].length - 1)
-                                        .split(",")
-                                        .map((role) => role.trim())
-                                        .join(" · ")
-                                    : rolesArray[0]}
-                                </span>
-                              ))
-                              }
-                          </td> */}
                           <td className="td-text">
-                            {document?.employRole[0] &&
-                              document?.employRole[0].map((itm, i) => (
-                                <span key={i}>
-                                  {Array.isArray(itm) ? itm.join(" * ") : itm}
-                                </span>
-                              ))}
+                            {document?.employRole.flat().map((role, index) => (
+                              <span
+                                className="d-flex align-items-start py-1"
+                                key={index}
+                              >
+                                • {role}
+                                {index !==
+                                  document.employRole.flat().length - 1}
+                              </span>
+                            ))}
                           </td>
 
                           <td className="td-text">{document?.salary}</td>
@@ -843,6 +847,7 @@ const Users = () => {
                                     // to="/Admin/View-User/123"
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal1"
+                                    onClick={() => setUserId(document?._id)}
                                   >
                                     <img
                                       src="/images/users/AddressBook.svg"
@@ -960,7 +965,7 @@ const Users = () => {
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
             >
-              <ViewUser id={"123"} />
+              <ViewUser userId={userId} />
             </div>
 
             <div className="footer">
