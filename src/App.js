@@ -110,8 +110,11 @@ import ChatboxDept from "./Components/DepartmentManager/ChatboxDept";
 import ChatboxAprv from "./Components/Approver/Chatbox";
 import CalendarMonthDept from "./Components/DepartmentManager/CalendarMonthDept";
 import CalenderYearDept from "./Components/DepartmentManager/CalenderYear";
+import EmplySetting from "./Components/Employee/EmplySetting";
+import OTPauthEmply from "./Components/Login/OTPauthEmply";
 
 function App() {
+  const token = localStorage.getItem("token-company");
   return (
     <div>
       <ToastContainer />
@@ -278,17 +281,62 @@ function App() {
           path="Employee/received-doc/view-details"
           element={<ViewReceivedDoc />}
         />
+        <Route path="Employee/OTP-verification" element={<OTPauthEmply />} />
+        <Route
+          path="Employee/Forgot-Password"
+          element={<EmplAuthforgotPassword />}
+        />
+        <Route
+          path="Employee/Home"
+          element={token ? <HomeEmpl /> : <EmplAuthLogin />}
+        />
+        <Route
+          path="Employee/Dashboard"
+          element={token ? <EmployeeDash /> : <EmplAuthLogin />}
+        />
+        <Route
+          path="Employee/history-log-request"
+          element={token ? <RequestHistoryEmpl /> : <EmplAuthLogin />}
+        />
+        <Route
+          path="Employee/history-log-access"
+          element={token ? <DocHistoryEmploye /> : <EmplAuthLogin />}
+        />
+        <Route
+          path="Employee/document"
+          element={token ? <DocumentEmply /> : <EmplAuthLogin />}
+        />
+        <Route
+          path="Employee/received-doc"
+          element={token ? <ReceivedDocEmpl /> : <EmplAuthLogin />}
+        />
+        <Route
+          path="Employee/Calender"
+          element={token ? <CalenderEmply /> : <EmplAuthLogin />}
+        />
+        <Route
+          path="Employee/view-details"
+          element={token ? <ViewDocumentEmply /> : <EmplAuthLogin />}
+        />
+        <Route
+          path="Employee/received-doc/view-details"
+          element={token ? <ViewReceivedDoc /> : <EmplAuthLogin />}
+        />
         <Route path="Employee/Forgot-success" element={<EmplForgotSuccess />} />
         <Route
           path="Employee/Forgot-password"
           element={<EmplAuthforgotPassword />}
         />
         <Route path="Employee/profile" element={<EmplProfile />} />
-        <Route path="Employee/Help" element={<EmplHelp />} />
-        <Route path="Employee/Help&Support" element={<EmplHelpSupport />} />
         <Route path="Employee/Edit-Profile" element={<EmplEditProfile />} />
+        <Route path="Employee/Help&Support" element={<EmplHelpSupport />} />
+        <Route path="Employee/Help" element={<EmplHelp />} />
         <Route path="Employee/Chat" element={<ChatboxEmploy />} />
         <Route path="Employee/Contact" element={<ContactUsEmpl />} />
+        <Route
+          path="Employee/Settings"
+          element={token ? <EmplySetting /> : <EmplAuthLogin />}
+        />
       </Routes>
     </div>
   );

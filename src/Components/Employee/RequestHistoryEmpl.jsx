@@ -28,7 +28,7 @@ const RequestHistoryEmpl = () => {
           department: [name?.templete_Id?.manager?.department_Id?.departmentName], 
           dateofSigning: [name?.createdAt],
           img:[name?.templete_Id?.manager?.profile_Pic],
-          version: "0.1",
+          version: [name?.templete_Id?.templeteVersion?.[0]?.version],
           comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
           // status:[name?.status],
           action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
@@ -58,7 +58,7 @@ const RequestHistoryEmpl = () => {
           dateofSigning: [document?.createdAt],
           comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
           // status:[document?.status],
-          version:"0.1",
+          version:[document?.templete?.templeteVersion?.[0]?.version],
           action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
         }));
         setDocumentRequests(mappedResult);
@@ -270,7 +270,7 @@ const RequestHistoryEmpl = () => {
   {document.action}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
+    <li ><a class="dropdown-item border-bottom"  href="/Employee/view-details"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
     <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
     <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>ipAddress</a></li>
     <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>

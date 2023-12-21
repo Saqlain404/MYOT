@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 
 const id = localStorage.getItem("user_id")
+// const id ="656982002e4c41f286f7dffb"
 
 export async function employeeLogin(formData) {
   try {
@@ -39,7 +40,50 @@ export async function EmplforgotPassword(formData) {
 
     if (!data.error) {
       await localStorage.removeItem("token-company");
-      toast.success(data.results.otp);
+      toast.success(data.message);
+    } else toast.error(data.message);
+
+
+    if (!data.error) return { data };
+  } catch (error) {
+    if (error?.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+
+export async function OTPverifyEmply(formData) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/verify-otp`,
+      formData
+    );
+    console.log(data);
+
+    if (!data.error) {
+      await localStorage.removeItem("token-company");
+      toast.success(data.message);
+    } else {toast.error(data.message)
+    };
+
+    if (!data.error) return { data };
+  } catch (error) {
+    if (error?.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function ContactUsEmployee(formData) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/contact-us`,
+      formData
+    );
+    console.log(data);
+
+    if (!data.error) {
+      // await localStorage.removeItem("token-company");
+      toast.success(data.message);
     } else toast.error(data.message);
 
     if (!data.error) return { data };
@@ -102,7 +146,7 @@ export async function EmployeeDashList() {
 export async function documentViewDetails() {
   try {
     const response = await employeeHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-details/657853a8a6a190aabf64f55a`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-details/${id}`
     );
 
     if (!response.data?.error) {
@@ -110,6 +154,32 @@ export async function documentViewDetails() {
       
 
       return [templateList];
+    } else {
+      toast.error(response.data.message);
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error('An error occurred while fetching the template IDs.');
+    }
+    return null;
+  }
+}
+
+
+export async function TicketListEmply() {
+  try {
+    const response = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/6564816c42ca2ce84e2ed3f2`
+    );
+
+    if (!response.data?.error) {
+      const ticketList = response.data.results.ticketList;
+      console.log(ticketList)
+
+      return [ticketList];
     } else {
       toast.error(response.data.message);
       return null;
@@ -195,6 +265,27 @@ export async function AddDocument(formData) {
 }
 
 
+export async function CreateEmplyTicket(formData) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/create-ticket`,
+      formData
+    );
+    // console.log(data);
+    if (!data.error) {
+      toast.success(data.message);
+      const templateId = data?.results?.document.templete_Id;
+      return { data, templateId };
+    } else toast.error(data.message);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+
 export async function employeDocumentList(){
   try {
     const response = await employeeHttpService.post(
@@ -258,7 +349,7 @@ export async function EmpyHistoryLogList() {
 export async function searchDoc(searchKey) {
   try {
     const { data } = await employeeHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/search-document`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/search-document/${id}`,
       {search:searchKey}
     );
 

@@ -1,7 +1,5 @@
 import React from 'react'
-import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { forgotPassword } from '../../ApiServices/EmployeeHttpService/employeeLoginHttpService';
 
 
 const EmplForgotSuccess = () => {
@@ -27,7 +25,7 @@ const EmplForgotSuccess = () => {
                     </p>
                   </div>
                   <Link 
-                      to={"/"}>
+                      to={"/Employee/Login"}>
                     <button
                       className="btn  py-8 mb-3 reset-success"
                     >

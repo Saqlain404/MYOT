@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 import { employeProfileDetail } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
@@ -16,10 +15,15 @@ const ProfileEmpl = () => {
       const detailResults = await employeProfileDetail();
       const data = detailResults?.[0]?.results?.employee;
       setProfileDetail(data)
-      console.log(profileDetail)
-  }
+    }
     details();
   },[])
+  console.log(profileDetail)
+
+
+  const originalDate = new Date(profileDetail?.DOB);
+  const options = { year: 'numeric', month: 'long', day: 'numeric', };
+  const formattedDate = originalDate.toLocaleDateString('en-US', options);
 
 
   return (
@@ -77,13 +81,12 @@ const ProfileEmpl = () => {
     
     <div className=" d-flex justify-content-between">
       <p className="profile-txt m-2">Profile</p>
-      {/* <img alt="profile image" src={profileDetail?.profile_Pic}/> */}
       <Link to={"/Employee/Edit-profile"} className="text-decoration-none">
       <button className="profile-edit-btn">Edit</button>
       </Link>
     </div>
-   <div className=" d-flex justify-content-start mb-4">
-    <img src="/images/dashboard/AvatarProfile.svg" alt="" />
+   <div className=" d-flex justify-content-start mb-4 ">
+    <img className="profile_img" src={profileDetail?.profile_Pic} alt="" />
    </div>
    <div className="bg-white rounded mb-4 p-4 pb-2">
     <p className=" d-flex justify-content-start profile-card-title">Details</p>
@@ -102,7 +105,7 @@ const ProfileEmpl = () => {
       </div>
       <div>
         <p className="profile-info">Date of Birth</p>
-        <p className="profile-data">18 Aug 20, 1999</p>
+        <p className="profile-data">{formattedDate}</p>
       </div>
     </div>
    </div>
