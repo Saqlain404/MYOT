@@ -138,7 +138,7 @@ const AuthLogin = () => {
                     Remember me
                   </label>
                 </div>
-                <Link to={"/Employee/Forgot-password"}>
+                <Link to={"/Admin/Forgot-password"}>
                   <a
                     className=" fw-medium reset-password"
                     href="authentication-forgot-password.html"

@@ -47,7 +47,7 @@ const CalenderDept = () => {
                       alt=""
                       className="ms-4 "
                     />
-                    <Link to={"/Admin/Chat"}>
+                    <Link to={"/Department/Chat"}>
                     <img
                       src="/images/dashboard/chat-left-dots-fill.png"
                       alt=""
@@ -68,10 +68,10 @@ const CalenderDept = () => {
             <div className="d-flex ps-3 ">
               <p className="p-2 text-decoration-underline td-text">Day</p>
               <p className="p-2 th-text ">Week</p>
-              <Link to={"/Admin/Calendar-month"} className="text-decoration-none">
+              <Link to={"/Department/Calendar-month"} className="text-decoration-none">
               <p className="p-2 th-text">Month</p>
               </Link>
-              <Link to={"/Admin/Calendar-year"} className="text-decoration-none">
+              <Link to={"/Department/Calendar-year"} className="text-decoration-none">
               <p className="p-2 th-text">Year</p>
               </Link>
             </div>

@@ -43,7 +43,7 @@ const TemplateView = () => {
                       alt=""
                       className="ms-4 "
                     />
-                    <Link to={"/Admin/Chat"}>
+                    <Link to={"/Department/Chat"}>
                     <img
                       src="/images/dashboard/chat-left-dots-fill.png"
                       alt=""
@@ -57,7 +57,9 @@ const TemplateView = () => {
                     />
                   </div>
                 </div>
+               
               </nav>
+              
             
             </div>
 
@@ -68,8 +70,11 @@ const TemplateView = () => {
       <p className="preview-cert-txt m-2">Preview</p>
       <div>
       <button className="preview-dwld-btn">Download</button>
+      <Link to={"/Department/Template-edit"} className="text-decoration-none">
       <button className="preview-edit-btn ms-3">Edit</button>
+      </Link>
       </div>
+      
     </div>
     <div className="col-12 mb-4 ">
       <div className="d-flex justify-content-start mt-4  col-4">

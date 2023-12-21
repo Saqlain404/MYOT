@@ -104,6 +104,12 @@ import EmplAuthLogin from "./Components/Login/EmplAuthLogin";
 import EmplAuthforgotPassword from "./Components/Login/EmplAuthforgotPass";
 import EmplForgotSuccess from "./Components/Login/EmplForgotSuccess";
 import ViewUser from "./Components/Index/ViewUser";
+import TemplateEdit from "./Components/DepartmentManager/TemplateEdit";
+import ChatboxSig from "./Components/Signatory/ChatboxSig";
+import ChatboxDept from "./Components/DepartmentManager/ChatboxDept";
+import ChatboxAprv from "./Components/Approver/Chatbox";
+import CalendarMonthDept from "./Components/DepartmentManager/CalendarMonthDept";
+import CalenderYearDept from "./Components/DepartmentManager/CalenderYear";
 
 function App() {
   return (
@@ -112,8 +118,8 @@ function App() {
       <Routes>
         <Route path="*" element={<AuthLogin />} />
         <Route path="Admin/Login" element={<AuthLogin />} />
-        {/* <Route path="Admin/Forgot-password" element={<AuthforgotPass />} /> */}
-        {/* <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} /> */}
+        <Route path="Admin/Forgot-password" element={<AuthforgotPass />} />
+        <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} />
         <Route path="Admin/Home" element={<Home />} />
         <Route path="Admin/Dashboard" element={<Dashboard />} />
         <Route path="Admin/Tasks" element={<Tasks />} />
@@ -144,23 +150,33 @@ function App() {
         <Route path="Department/Dashboard" element={<DashboardDept />} />
         <Route path="Department/Template" element={<Template />} />
         <Route path="Department/Template-view" element={<TemplateView />} />
+        <Route path="Department/Template-edit" element={<TemplateEdit />} />
         <Route path="Department/Certificate" element={<Certificate />} />
         <Route
           path="Department/Certificate-view"
           element={<CertificateView />}
         />
         <Route path="Department/Calendar" element={<CalenderDept />} />
+        <Route
+          path="Department/Calendar-month"
+          element={<CalendarMonthDept />}
+        />
+        <Route path="Department/Calendar-year" element={<CalenderYearDept />} />
         <Route path="Department/Departments" element={<DepartmentsDept />} />
-        <Route path="Department/Requests" element={<RequestsDept/>} />
-        <Route path="Department/Announcements" element={<AnnouncementsDept/>} />
-        <Route path="Department/Analytics" element={<AnalyticsDept/>} />
-        <Route path="Department/My-profile" element={<ProfileDept/>} /> 
-        <Route path="Department/Edit-profile" element={<EditProfileDept/>} />
-        <Route path="Department/Help" element={<HelpDept/>} /> 
-        <Route path="Department/Help-Support" element={<HelpSupportDept/>} /> 
-        <Route path="Department/Contact-us" element={<ContactUsDept/>} />  
-        <Route path="Department/Settings" element={<SettingsDept/>} />  
         <Route path="Department/Requests" element={<RequestsDept />} />
+        <Route
+          path="Department/Announcements"
+          element={<AnnouncementsDept />}
+        />
+        <Route path="Department/Analytics" element={<AnalyticsDept />} />
+        <Route path="Department/My-profile" element={<ProfileDept />} />
+        <Route path="Department/Edit-profile" element={<EditProfileDept />} />
+        <Route path="Department/Help" element={<HelpDept />} />
+        <Route path="Department/Help-Support" element={<HelpSupportDept />} />
+        <Route path="Department/Contact-us" element={<ContactUsDept />} />
+        <Route path="Department/Settings" element={<SettingsDept />} />
+        <Route path="Department/Requests" element={<RequestsDept />} />
+        <Route path="Department/Chat" element={<ChatboxDept />} />
         <Route
           path="Department/Announcements"
           element={<AnnouncementsDept />}
@@ -190,12 +206,13 @@ function App() {
         <Route path="Approver/Calendar-month" element={<CalendarMonthAprv />} />
         <Route path="Approver/Calendar-year" element={<CalendarYearAprv />} />
 
-        <Route path="Approver/My-profile" element={<ProfileAprv/>} /> 
-        <Route path="Approver/Edit-profile" element={<EditProfileAprv/>} /> 
-        <Route path="Approver/Help" element={<HelpAprv/>} /> 
-        <Route path="Approver/Help-Support" element={<HelpSupportAprv/>} /> 
-        <Route path="Approver/Contact-us" element={<ContactUsAprv/>} /> 
-        <Route path="Approver/Settings" element={<SettingsAprv/>} /> 
+        <Route path="Approver/My-profile" element={<ProfileAprv />} />
+        <Route path="Approver/Edit-profile" element={<EditProfileAprv />} />
+        <Route path="Approver/Help" element={<HelpAprv />} />
+        <Route path="Approver/Help-Support" element={<HelpSupportAprv />} />
+        <Route path="Approver/Contact-us" element={<ContactUsAprv />} />
+        <Route path="Approver/Settings" element={<SettingsAprv />} />
+        <Route path="Approver/Chat" element={<ChatboxAprv />} />
 
         <Route path="Approver/My-profile" element={<ProfileAprv />} />
         <Route path="Approver/Edit-profile" element={<EditProfileAprv />} />
@@ -215,15 +232,19 @@ function App() {
         <Route path="Signatory/Calendar-month" element={<CalendarMonthSig />} />
         <Route path="Signatory/Calendar-year" element={<CalendarYearSig />} />
 
-        <Route path="Signatory/Requests" element={<RequestsSig/>} />
-        <Route path="Signatory/Announcements" element={<AnnouncementsSig/>} />
-        <Route path="Signatory/My-profile" element={<ProfileSig/>} /> 
-        <Route path="Signatory/Signature-management" element={<SignManagement/>} /> 
-        <Route path="Signatory/Edit-profile" element={<EditProfileSig/>} /> 
-        <Route path="Signatory/Help" element={<HelpSig/>} /> 
-        <Route path="Signatory/Help-Support" element={<HelpSupportSig/>} /> 
-        <Route path="Signatory/Contact-us" element={<ContactUsSig/>} /> 
-        <Route path="Signatory/Settings" element={<SettingsSig/>} /> 
+        <Route path="Signatory/Requests" element={<RequestsSig />} />
+        <Route path="Signatory/Announcements" element={<AnnouncementsSig />} />
+        <Route path="Signatory/My-profile" element={<ProfileSig />} />
+        <Route
+          path="Signatory/Signature-management"
+          element={<SignManagement />}
+        />
+        <Route path="Signatory/Edit-profile" element={<EditProfileSig />} />
+        <Route path="Signatory/Help" element={<HelpSig />} />
+        <Route path="Signatory/Help-Support" element={<HelpSupportSig />} />
+        <Route path="Signatory/Contact-us" element={<ContactUsSig />} />
+        <Route path="Signatory/Chat" element={<ChatboxSig />} />
+        <Route path="Signatory/Settings" element={<SettingsSig />} />
 
         <Route path="Signatory/Requests" element={<RequestsSig />} />
         <Route path="Signatory/Announcements" element={<AnnouncementsSig />} />

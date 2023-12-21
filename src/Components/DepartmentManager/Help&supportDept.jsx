@@ -36,7 +36,7 @@ const HelpSupportDept = () => {
                       alt=""
                       className="ms-4 "
                     />
-                    <Link to={"/Admin/Chat"}>
+                    <Link to={"/Department/Chat"}>
                       <img
                         src="/images/dashboard/chat-left-dots-fill.png"
                         alt=""
@@ -231,7 +231,7 @@ const HelpSupportDept = () => {
                     <p className="td-text border-bottom me-3">All Tickets</p>
                   </Link>
                   <Link
-                    to={"/Admin/Help-Support"}
+                    to={"/Department/Help-Support"}
                     className="text-decoration-none"
                   >
                     <p className="th-text me-3">New</p>
