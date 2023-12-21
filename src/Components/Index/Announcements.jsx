@@ -136,7 +136,7 @@ const Announcements = () => {
               <div class="modal-dialog modal-dialog-centered modal-dialog-department">
                 <div class="modal-content border-0">
                   <div class="d-flex modal-header border-bottom">
-                    <p class="" id="exampleModalLabel">
+                    <p class="mb-0" id="exampleModalLabel">
                       Create New Announcement
                     </p>
                     <button
@@ -197,7 +197,7 @@ const Announcements = () => {
                         ></textarea>
                       </div>
                     </div>
-                    <div className="d-flex justify-content-end mb-3">
+                    <div className="d-flex justify-content-end mb-3 me-3">
                       <button type="submit" class="user-modal-btn">
                         Send
                       </button>

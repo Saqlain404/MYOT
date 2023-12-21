@@ -124,14 +124,14 @@ const Dashboard = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                        {dataCount?.employee}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
                         <img
                           src="/images/dashboard/ArrowRise.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -146,14 +146,14 @@ const Dashboard = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {dataCount?.totalTempleted}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         -0.56%
                         <img
                           src="/images/dashboard/ArrowFall.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -168,14 +168,14 @@ const Dashboard = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {dataCount?.totalDocument}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         -1.48%
                         <img
                           src="/images/dashboard/ArrowFall.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -188,14 +188,14 @@ const Dashboard = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {dataCount?.totalActiveUser}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         +9.15%
                         <img
                           src="/images/dashboard/ArrowRise.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>

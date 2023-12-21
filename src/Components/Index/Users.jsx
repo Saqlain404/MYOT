@@ -795,7 +795,8 @@ const Users = () => {
                             <span className="ms-3">{document?.name}</span>
                           </td>
                           <td className="td-text">
-                            {document?.department_Id?.departmentName
+                            {document?.department_Id &&
+                            document?.department_Id?.departmentName
                               ? document?.department_Id?.departmentName
                               : document?.department_Id[0]
                               ? document?.department_Id[0]?.departmentName

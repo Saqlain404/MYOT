@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { adminLogin } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
+import { toast } from "react-toastify";
 
 const AuthLogin = () => {
   const [type, setType] = useState("password");
@@ -27,6 +28,16 @@ const AuthLogin = () => {
 
     const response = await adminLogin(data);
     if (!response?.data?.error) {
+      toast("Logged in successfully", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       navigate("/Admin/Dashboard");
     }
   };

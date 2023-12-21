@@ -247,6 +247,20 @@ export async function SearchRequestor(formData) {
   }
 }
 
+export async function DocumentComment(formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/add-document-comment`,
+      formData
+    );
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 // PROFILE
 
 export async function AdminProfile(id) {
