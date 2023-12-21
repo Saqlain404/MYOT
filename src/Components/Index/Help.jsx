@@ -62,13 +62,13 @@ const Help = () => {
                     <p className="td-text border-bottom me-3">Template Guidelines</p>
                   </Link>
                   <Link
-                    to={"/Admin/Help-Support"}
+                    to={"/Admin/Help/Help-Support"}
                     className="text-decoration-none"
                   >
                     <p className="th-text me-3">Help & Support</p>
                   </Link>
                   <Link
-                    to={"/Admin/Contact-Us"}
+                    to={"/Admin/Help/Contact-Us"}
                     className="text-decoration-none"
                   >
                     <p className="th-text">Contact Us</p>

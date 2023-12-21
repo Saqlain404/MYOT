@@ -1,16 +1,40 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { employeeLogout, removeEmployeeTokens } from "../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import {
+  employeeLogout,
+  removeEmployeeTokens,
+} from "../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import { EmployeeLogout } from "../ApiServices/dashboardHttpService/dashboardHttpServices";
+import { toast } from "react-toastify";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  
-  
- 
-  
+  const location = useLocation();
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+
+    let id = await localStorage.getItem("myot_admin_id");
+    let { data } = await EmployeeLogout(id);
+    console.log(data);
+    toast("Logout Successfully", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+    localStorage.removeItem("myot_admin_id");
+    localStorage.removeItem("token-company");
+    navigate("/Admin/Login");
+  };
   return (
     <div className="container-fluid  sidebar">
       {/* Sidebar scroll*/}
@@ -67,10 +91,13 @@ const Sidebar = () => {
         <div className="col-auto col-mg-3 min-vh-100 mb-4">
           <p className="th-text">MAIN MENU</p>
           <ul className="nav nav-pills flex-column">
-            <li className="nav-item text-dark">
+            <li
+              className={`"nav-item text-dark" ${
+                location.pathname === "/Admin/Home" ? "nav_active" : ""
+              } `}
+            >
               <Link to={"/Admin/Home"} className="text-decoration-none">
                 <a
-                  href="/"
                   className="nav-link text-dark fs-5 align-middle"
                   aria-current="page"
                 >
@@ -83,10 +110,13 @@ const Sidebar = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li
+              className={`"nav-item text-dark" ${
+                location.pathname === "/Admin/Dashboard" ? "nav_active" : ""
+              }`}
+            >
               <Link to={"/Admin/Dashboard"} className="text-decoration-none">
                 <a
-                  href="/"
                   className="nav-link text-dark fs-5 align-middle"
                   aria-current="page"
                 >
@@ -101,10 +131,13 @@ const Sidebar = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li
+              className={` "nav-item text-dark" ${
+                location.pathname === "/Admin/Tasks" ? "nav_active" : ""
+              }`}
+            >
               <Link to={"/Admin/Tasks"} className="text-decoration-none">
                 <a
-                  href="/"
                   className="nav-link text-dark fs-5 align-middle"
                   aria-current="page"
                 >
@@ -117,10 +150,13 @@ const Sidebar = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li
+              className={` "nav-item text-dark" ${
+                location.pathname === "/Admin/Calendar" ? "nav_active" : ""
+              }`}
+            >
               <Link to={"/Admin/Calendar"} className="text-decoration-none">
                 <a
-                  href="/"
                   className="nav-link text-dark fs-5 align-middle "
                   aria-current="page"
                 >
@@ -136,10 +172,13 @@ const Sidebar = () => {
               </Link>
             </li>
 
-            <li className="nav-item text-dark">
+            <li
+              className={` "nav-item text-dark" ${
+                location.pathname === "/Admin/Users" ? "nav_active" : ""
+              }`}
+            >
               <Link to={"/Admin/Users"} className="text-decoration-none">
                 <a
-                  href="/"
                   className="nav-link text-dark fs-5 align-middle "
                   aria-current="page"
                 >
@@ -152,10 +191,13 @@ const Sidebar = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li
+              className={` "nav-item text-dark" ${
+                location.pathname === "/Admin/Departments" ? "nav_active" : ""
+              }`}
+            >
               <Link to={"/Admin/Departments"} className="text-decoration-none">
                 <a
-                  href="/"
                   className="nav-link text-dark fs-5 align-middle "
                   aria-current="page"
                 >
@@ -170,10 +212,13 @@ const Sidebar = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li
+              className={` "nav-item text-dark" ${
+                location.pathname === "/Admin/Approvers" ? "nav_active" : ""
+              }`}
+            >
               <Link to={"/Admin/Approvers"} className="text-decoration-none">
                 <a
-                  href="/"
                   className="nav-link text-dark fs-5 align-middle "
                   aria-current="page"
                 >
@@ -188,10 +233,13 @@ const Sidebar = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li
+              className={` "nav-item text-dark" ${
+                location.pathname === "/Admin/Signatories" ? "nav_active" : ""
+              }`}
+            >
               <Link to={"/Admin/Signatories"} className="text-decoration-none">
                 <a
-                  href="/"
                   className="nav-link text-dark fs-5 align-middle "
                   aria-current="page"
                 >
@@ -206,10 +254,13 @@ const Sidebar = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li
+              className={` "nav-item text-dark" ${
+                location.pathname === "/Admin/Requests" ? "nav_active" : ""
+              }`}
+            >
               <Link to={"/Admin/Requests"} className="text-decoration-none">
                 <a
-                  href="/"
                   className="nav-link text-dark fs-5 align-middle "
                   aria-current="page"
                 >
@@ -224,13 +275,16 @@ const Sidebar = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark ">
+            <li
+              className={` "nav-item text-dark" ${
+                location.pathname === "/Admin/Announcements" ? "nav_active" : ""
+              }`}
+            >
               <Link
                 to={"/Admin/Announcements"}
                 className="text-decoration-none"
               >
                 <a
-                  href="/"
                   className="nav-link text-dark fs-5 align-middle "
                   aria-current="page"
                 >
@@ -245,9 +299,12 @@ const Sidebar = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li
+              className={` "nav-item text-dark" ${
+                location.pathname === "/Admin/Tasks" ? "nav_active" : ""
+              }`}
+            >
               <a
-                href="/"
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"
               >
@@ -259,78 +316,93 @@ const Sidebar = () => {
                 <span className="ms-3 align-middle sidebar-btn">Files</span>
               </a>
             </li>
-            <li className="nav-item text-dark">
-            <Link to={"/Admin/Analytics"} className="text-decoration-none">
-              <a
-                href="/"
-                className="nav-link text-dark fs-5 align-middle "
-                aria-current="page"
-              >
-                <img
-                  src="/images/sidebar/analytics.png"
-                  className="align-middle sidebar-icon"
-                />
+            <li
+              className={` "nav-item text-dark" ${
+                location.pathname === "/Admin/Analytics" ? "nav_active" : ""
+              }`}
+            >
+              <Link to={"/Admin/Analytics"} className="text-decoration-none">
+                <a
+                  className="nav-link text-dark fs-5 align-middle "
+                  aria-current="page"
+                >
+                  <img
+                    src="/images/sidebar/analytics.png"
+                    className="align-middle sidebar-icon"
+                  />
 
-                <span className="ms-3 align-middle sidebar-btn">Analytics</span>
-              </a>
+                  <span className="ms-3 align-middle sidebar-btn">
+                    Analytics
+                  </span>
+                </a>
               </Link>
             </li>
 
             <p className="th-text mt-3">OTHERS</p>
 
-            <li className="nav-item text-dark">
-            <Link to={"/Admin/My-profile"} className="text-decoration-none">
-              <a
-                href="/"
-                className="nav-link text-dark fs-5 align-middle "
-                aria-current="page"
-              >
-                <img
-                  src="/images/sidebar/my-profile.png"
-                  className="align-middle sidebar-icon"
-                />
+            <li
+              className={` "nav-item text-dark" ${
+                location.pathname === "/Admin/My-profile" ? "nav_active" : ""
+              }`}
+            >
+              <Link to={"/Admin/My-profile"} className="text-decoration-none">
+                <a
+                  className="nav-link text-dark fs-5 align-middle "
+                  aria-current="page"
+                >
+                  <img
+                    src="/images/sidebar/my-profile.png"
+                    className="align-middle sidebar-icon"
+                  />
 
-                <span className="ms-3 align-middle sidebar-btn">
-                  My Profile
-                </span>
-              </a>
+                  <span className="ms-3 align-middle sidebar-btn">
+                    My Profile
+                  </span>
+                </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
-            <Link to={"/Admin/Settings"} className="text-decoration-none">
-              <a
-                href="/"
-                className="nav-link text-dark fs-5 align-middle "
-                aria-current="page"
-              >
-                <img
-                  src="/images/sidebar/settings.png"
-                  className="align-middle sidebar-icon"
-                />
+            <li
+              className={` "nav-item text-dark" ${
+                location.pathname === "/Admin/Settings" ? "nav_active" : ""
+              }`}
+            >
+              <Link to={"/Admin/Settings"} className="text-decoration-none">
+                <a
+                  className="nav-link text-dark fs-5 align-middle "
+                  aria-current="page"
+                >
+                  <img
+                    src="/images/sidebar/settings.png"
+                    className="align-middle sidebar-icon"
+                  />
 
-                <span className="ms-3 align-middle sidebar-btn">Settings</span>
-              </a>
+                  <span className="ms-3 align-middle sidebar-btn">
+                    Settings
+                  </span>
+                </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
-            <Link to={"/Admin/Help"} className="text-decoration-none">
-              <a
-                href="/"
-                className="nav-link text-dark fs-5 align-middle "
-                aria-current="page"
-              >
-                <img
-                  src="/images/sidebar/help.png"
-                  className="align-middle sidebar-icon"
-                />
+            <li
+              className={` "nav-item text-dark" ${
+                location.pathname.match(/^\/Admin\/Help/) ? "nav_active" : ""
+              }`}
+            >
+              <Link to={"/Admin/Help"} className="text-decoration-none">
+                <a
+                  className="nav-link text-dark fs-5 align-middle "
+                  aria-current="page"
+                >
+                  <img
+                    src="/images/sidebar/help.png"
+                    className="align-middle sidebar-icon"
+                  />
 
-                <span className="ms-3 align-middle sidebar-btn">Help</span>
-              </a>
+                  <span className="ms-3 align-middle sidebar-btn">Help</span>
+                </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li className="nav-item text-dark" onClick={handleLogout}>
               <a
-                href="/" 
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"
               >
@@ -381,8 +453,10 @@ const Sidebar = () => {
               </li>
             </Link>
             <Link to={"/Employee/Home"} className="text-decoration-none">
-                  <li><a class="dropdown-item">Employee</a></li>
-             </Link>
+              <li>
+                <a class="dropdown-item">Employee</a>
+              </li>
+            </Link>
           </ul>
         </div>
       </div>

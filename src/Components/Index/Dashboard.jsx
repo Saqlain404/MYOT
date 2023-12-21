@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from "antd";
 import { Link } from "react-router-dom";
+import { DashboardCount } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 
 const Dashboard = () => {
+  const [dataCount, setDataCount] = useState()
+
+  useEffect(() => {
+    getDashboardDataCount()
+  }, [])
+
+
+  const getDashboardDataCount = async() => {
+    let { data} = await DashboardCount()
+    if(!data.error){
+      setDataCount(data?.results)
+    }
+  }
   const documents = [
     {
       id: 1,
@@ -108,16 +122,16 @@ const Dashboard = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                       256
+                       {dataCount?.employee}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
                         <img
                           src="/images/dashboard/ArrowRise.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -130,16 +144,16 @@ const Dashboard = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        156
+                      {dataCount?.totalTempleted}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         -0.56%
                         <img
                           src="/images/dashboard/ArrowFall.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -152,16 +166,16 @@ const Dashboard = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        1,320
+                      {dataCount?.totalDocument}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         -1.48%
                         <img
                           src="/images/dashboard/ArrowFall.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -172,16 +186,16 @@ const Dashboard = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        32
+                      {dataCount?.totalActiveUser}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         +9.15%
                         <img
                           src="/images/dashboard/ArrowRise.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>

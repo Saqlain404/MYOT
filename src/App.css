@@ -5,6 +5,11 @@ body {
 }
 
 /* <-----LogIn Start-----> */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 .authentication-login {
   box-sizing: border-box;
@@ -459,12 +464,12 @@ height: 960px; */
 }
 
 .th-text {
-  color: rgba(0, 0, 0, 0.4);
-  opacity: 0.6;
+  color: rgb(0, 0, 0);
+  opacity: 1;
   font-family: Nunito;
   font-size: 12px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: bold;
   line-height: 18px; /* 150% */
 }
 
@@ -859,11 +864,12 @@ height: 960px; */
   /* color: #6E7594; */
   text-align: left;
   /* border: 0; */
-  font-weight: 500;
+  /* font-weight: 500; */
   vertical-align: middle;
   white-space: nowrap;
   /* border-bottom: 1px solid #e2e2ed; */
 }
+
 .table_comman tbody tr td:first-child {
   text-align: left;
 }
@@ -1335,8 +1341,18 @@ height: 960px; */
   line-height: normal;
 }
 
-.active {
+.active_class {
   border-top: solid 2px #ff8f6b;
+}
+.nav_active {
+  background: #ebf5ed;
+  border-radius: 15px;
+  transition: all 0.5s ease;
+}
+
+.nav_active .sidebar-btn {
+  color: black !important;
+  font-weight: bold;
 }
 
 .day-year {
@@ -2358,12 +2374,100 @@ background: #F7F7F8;
   height: 412px;
 }
 
-
-
 .task_table .tr {
   margin: 10px 0 !important;
 }
 
-.cursor_pointer{
+.user_table .tr {
+  margin: 50px 0 !important;
+  padding: 50px 0 !important;
+}
+
+.cursor_pointer {
   cursor: pointer !important;
+}
+
+.pagination li {
+  cursor: pointer !important;
+}
+
+.view_user .profile_img {
+  height: 120px;
+  width: 120px;
+  border-radius: 50% !important;
+}
+
+.view_user .profile_img img {
+  border-radius: 50% !important;
+}
+
+/* View employee */
+
+.text_transform_none {
+  text-transform: none !important;
+}
+
+.view_user {
+  font-family: "Nunito" !important;
+}
+.profile_data .title_head {
+  color: black !important;
+  font-weight: bold;
+  margin: 6px 0;
+}
+
+.profile_data .title_value {
+  color: #656668 !important;
+  text-transform: capitalize;
+  font-weight: normal !important;
+}
+
+.tickets ul {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: "Nunito";
+  gap: 20px;
+}
+
+.tickets ul li a {
+  text-decoration: none !important;
+  font-size: 12px;
+  color: black;
+}
+
+.nav-tabs .nav-link {
+  font-weight: bold;
+}
+.nav-tabs .nav-link:hover {
+  border-color: white !important;
+}
+.nav-tabs .nav-link.active {
+  border-color: white !important;
+  border-bottom: 2px solid rgb(0, 0, 0) !important;
+}
+
+/* APEX PIE CHART */
+
+.charts {
+  font-family: "Nunito";
+  color: #05103633;
+}
+
+.charts span {
+  font-size: 35px;
+  color: black;
+  font-weight: 700;
+  line-height: 42px;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+
+.pie_chart_text {
+  font-family: Nunito;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: -0.02em;
+  text-align: left;
 }
