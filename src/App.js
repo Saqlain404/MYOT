@@ -107,6 +107,8 @@ import TemplateEdit from "./Components/DepartmentManager/TemplateEdit";
 import ChatboxSig from "./Components/Signatory/ChatboxSig";
 import ChatboxDept from "./Components/DepartmentManager/ChatboxDept";
 import ChatboxAprv from "./Components/Approver/Chatbox";
+import CalendarMonthDept from "./Components/DepartmentManager/CalendarMonthDept";
+import CalenderYearDept from "./Components/DepartmentManager/CalenderYear";
 
 function App() {
   return (
@@ -153,6 +155,8 @@ function App() {
           element={<CertificateView />}
         />
         <Route path="Department/Calendar" element={<CalenderDept />} />
+        <Route path="Department/Calendar-month" element={<CalendarMonthDept />} />
+        <Route path="Department/Calendar-year" element={<CalenderYearDept />} />
         <Route path="Department/Departments" element={<DepartmentsDept />} />
         <Route path="Department/Requests" element={<RequestsDept/>} />
         <Route path="Department/Announcements" element={<AnnouncementsDept/>} />
