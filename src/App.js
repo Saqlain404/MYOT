@@ -215,12 +215,12 @@ function App() {
         <Route path="Employee/received-doc/view-details" element={token ? <ViewReceivedDoc/> : <EmplAuthLogin/>} />
         <Route path="Employee/Forgot-success" element={<EmplForgotSuccess />} />
         <Route path="Employee/Forgot-password" element={<EmplAuthforgotPassword />} />
-        <Route path="Employee/profile" element={<EmplProfile />} />
-        <Route path="Employee/Edit-Profile" element={<EmplEditProfile />} />
-        <Route path="Employee/Help&Support" element={<EmplHelpSupport />} />
-        <Route path="Employee/Help" element={<EmplHelp />} />
-        <Route path="Employee/Chat" element={<ChatboxEmploy />} />
-        <Route path="Employee/Contact" element={<ContactUsEmpl />} />
+        <Route path="Employee/profile" element={token ? <EmplProfile /> : <EmplAuthLogin/>} />
+        <Route path="Employee/Edit-Profile" element={token ? <EmplEditProfile/> : <EmplAuthLogin/>} />
+        <Route path="Employee/Help&Support" element={token ? <EmplHelpSupport/> : <EmplAuthLogin/>} />
+        <Route path="Employee/Help" element={token ? <EmplHelp/> : <EmplAuthLogin/>} />
+        <Route path="Employee/Chat" element={token ? <ChatboxEmploy/> : <EmplAuthLogin/>} />
+        <Route path="Employee/Contact" element={token ? <ContactUsEmpl/> : <EmplAuthLogin/>} />
         <Route path="Employee/Settings" element={token ? <EmplySetting/> : <EmplAuthLogin/>} />
       </Routes>
     </div>
