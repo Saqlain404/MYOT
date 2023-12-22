@@ -71,6 +71,9 @@ const EmplHelpSupport = () => {
     const getData = await TicketListEmply(emp_id);
     setTicketList(getData)
   }
+  useEffect(()=>{
+    data()
+  },[])
   
 
 
@@ -302,7 +305,7 @@ const EmplHelpSupport = () => {
                         role="tab"
                         aria-controls="ex1-tabs-1"
                         aria-selected="true"
-                        onClick={data}
+                        // onClick={data}
                       >
                         All Tickets
                       </a>
