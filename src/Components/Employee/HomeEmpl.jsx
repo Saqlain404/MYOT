@@ -278,14 +278,6 @@ const HomeEmpl = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         {docCount !== null && (docCount)}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        +11.01%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -300,14 +292,6 @@ const HomeEmpl = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {receivedCount !== null && (receivedCount)}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        +9.15%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
                     </div>
                   </div>
                 </div>

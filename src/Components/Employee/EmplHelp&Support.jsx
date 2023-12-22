@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
-import { CreateEmplyTicket, TicketListEmply } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import { CreateEmplyTicket, OnGoingListEmply, ResolveListEmpl, TicketListEmply } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 import { ToastContainer } from "react-toastify";
 
 const EmplHelpSupport = () => {
   const[ticketList, setTicketList] = useState();
+  const[id, setId] = useState();
+  
   // Add Ticket
   const [contactData, setContactData] = useState({
     email: "",
@@ -35,19 +37,41 @@ const EmplHelpSupport = () => {
   });  
   };
 
+
+  const showResolvedTickets = async () => {
+    console.log("resolved tickets");
+  };
+  const OnGoingList = async () => {
+    let data = await OnGoingListEmply(id);
+    console.log(data);
+    if (!data?.error) { 
+      setTicketList(data);
+    }
+  };
+  const resolveList = async () => {
+    let data = await ResolveListEmpl(id);
+    console.log(data);
+    if (!data?.error) { 
+      setTicketList(data);
+    }
+  };
+
+
+  const showNewTickets = async () => {
+    console.log("new tickets");
+  };
+
   
 
 
   // Ticket List
-
   const data = async()=>{
-    const getData = await TicketListEmply();
+    let emp_id = localStorage.getItem("user_id");
+    setId(emp_id);
+    const getData = await TicketListEmply(emp_id);
     setTicketList(getData)
   }
-  console.log(ticketList)
-useEffect(()=>{
-  data()
-},[])
+  
 
 
   return (
@@ -268,34 +292,67 @@ useEffect(()=>{
                 <p className="help-support-heading">Get in Touch</p>
                 <p className="help-support-text">Please get in touch and we will be happy to help you. Create New tickets</p>
                 <div className="col-12 d-flex">
-                  <Link
-                    to={"/Employee/dashboard"}
-                    className="text-decoration-none"
-                  >
-                    <p className="td-text border-bottom me-3">All Tickets</p>
-                  </Link>
-                  <Link
-                    to={"/Employee/Help&Support"}
-                    className="text-decoration-none"
-                  >
-                    <p className="th-text me-3">New</p>
-                  </Link>
-                  <Link
-                    to={"/"}
-                    className="text-decoration-none"
-                  >
-                    <p className="th-text me-3">On Going</p>
-                  </Link>
-                  <Link
-                    to={"/"}
-                    className="text-decoration-none"
-                  >
-                    <p className="th-text">Resolved</p>
-                  </Link>
-                  
+                <ul className="nav nav-tabs mb-5" id="ex1" role="tablist">
+                    <li className="nav-item" role="presentation">
+                      <a
+                        class="nav-link active"
+                        id="ex1-tab-1"
+                        data-bs-toggle="tab"
+                        href="#ex1-tabs-1"
+                        role="tab"
+                        aria-controls="ex1-tabs-1"
+                        aria-selected="true"
+                        onClick={data}
+                      >
+                        All Tickets
+                      </a>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                      <a
+                        className="nav-link"
+                        id="ex1-tab-2"
+                        data-bs-toggle="tab"
+                        href="#ex1-tabs-2"
+                        role="tab"
+                        aria-controls="ex1-tabs-2"
+                        aria-selected="false"
+                        onClick={showNewTickets}
+                      >
+                        New Tickets
+                      </a>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                       <a
+                        className="nav-link"
+                        id="ex1-tab-3"
+                        data-bs-toggle="tab"
+                        href="#ex1-tabs-3"
+                        role="tab"
+                        aria-controls="ex1-tabs-3"
+                        aria-selected="false"
+                        onClick={OnGoingList}
+                      >
+                        Ongoing Tickets
+                      </a>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                      <a
+                        className="nav-link"
+                        id="ex1-tab-4"
+                        data-bs-toggle="tab"
+                        href="#ex1-tabs-4"
+                        role="tab"
+                        aria-controls="ex1-tabs-4"
+                        aria-selected="false"
+                        onClick={resolveList}
+                      >
+                        Resolved Tickets
+                      </a>
+                    </li>
+                  </ul>
                 </div>
                 <div className="col-12">
-                  {ticketList?.[0]?.map((ticket)=>(
+                  {!ticketList && ticketList?.length ? "No Ticket Available" : ticketList?.[0]?.map((ticket)=>(
                   <div className="col rounded border bg-white mb-3 p-2" key={ticket._id}>
                     <div className="d-flex border-bottom" >
                   <div className="ps-2 pe-4">
