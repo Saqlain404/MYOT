@@ -1,6 +1,4 @@
 import React from "react";
-import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
 import { Calendar, theme, Badge } from 'antd';
 // import "assets/css/style.min.css"
 import MiniCalendar from "../Index/MiniCalendar";
@@ -9,7 +7,7 @@ import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 
 
-
+ 
 
 const CalenderEmply = () => {
   
@@ -46,7 +44,7 @@ const CalenderEmply = () => {
                       alt=""
                       className="ms-4 "
                     />
-                    <Link to={"/Admin/Chat"}>
+                    <Link to={"/Employee/Chat"}>
                     <img
                       src="/images/dashboard/chat-left-dots-fill.png"
                       alt=""
@@ -67,10 +65,10 @@ const CalenderEmply = () => {
             <div className="d-flex ps-3 ">
               <p className="p-2 text-decoration-underline td-text">Day</p>
               <p className="p-2 th-text ">Week</p>
-              <Link to={"/Admin/Calendar-month"} className="text-decoration-none">
+              <Link to={"/Employee/Calendar-month"} className="text-decoration-none">
               <p className="p-2 th-text">Month</p>
               </Link>
-              <Link to={"/Admin/Calendar-year"} className="text-decoration-none">
+              <Link to={"/Employee/Calendar-year"} className="text-decoration-none">
               <p className="p-2 th-text">Year</p>
               </Link>
             </div>

@@ -3,6 +3,7 @@ import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 import { employeProfileDetail } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import EmplEditProfile from "./EmplEditProfile";
 
 const ProfileEmpl = () => {
  

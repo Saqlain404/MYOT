@@ -112,6 +112,8 @@ import CalendarMonthDept from "./Components/DepartmentManager/CalendarMonthDept"
 import CalenderYearDept from "./Components/DepartmentManager/CalenderYear";
 import EmplySetting from "./Components/Employee/EmplySetting";
 import OTPauthEmply from "./Components/Login/OTPauthEmply";
+import CalendarMonthEmply from "./Components/Employee/CalendarMonthEmply";
+import CalenderYearEmply from "./Components/Employee/CalenderYearEmply";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -279,6 +281,8 @@ function App() {
         <Route path="Employee/Chat" element={<ChatboxEmploy />} />
         <Route path="Employee/Contact" element={<ContactUsEmpl />} />
         <Route path="Employee/Settings" element={<EmplySetting />}/>
+        <Route path="Employee/Calendar-month" element={<CalendarMonthEmply/>} />
+        <Route path="Employee/Calendar-year" element={<CalenderYearEmply/>} />
       </Routes>
     </div>
   );

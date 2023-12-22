@@ -1,13 +1,13 @@
 import React from 'react' 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const SideBarEmpl = () => {
-
+  const location = useLocation();
   const handleLogOut = () => {
     localStorage.removeItem('token-company');
     localStorage.removeItem("user_id");
 
-  };
+  }; 
   return (
     <div className='container-fluid  sidebar'>
     {/* Sidebar scroll*/}
@@ -35,19 +35,30 @@ const SideBarEmpl = () => {
       <div className="col-auto col-mg-3 min-vh-100">
       <p className="th-text">MAIN MENU</p>
       <ul className="nav nav-pills flex-column">
-        <li className="nav-item text-dark">
-          <Link
-          to={"/Employee/Home"}
-          className="text-decoration-none">
-          <a href="/Employee/Home" className="nav-link text-dark fs-5 align-middle" aria-current="page">
-        
-                <img src="/images/sidebar/home2.png" className='align-middle sidebar-icon'/>
-              
-              <span className="ms-3 align-middle sidebar-btn">Home</span>
-            </a>
-            </Link>
-        </li>
-        <li className="nav-item text-dark">
+      <li
+              className={`"nav-item text-dark" ${
+                location.pathname === "/Employee/Home" ? "nav_active" : ""
+              } `}
+            >
+              <Link to={"/Employee/Home"} className="text-decoration-none">
+                <a
+                  className="nav-link text-dark fs-5 align-middle"
+                  aria-current="page"
+                >
+                  <img
+                    src="/images/sidebar/home2.png"
+                    className="align-middle sidebar-icon"
+                  />
+
+                  <span className="ms-3 align-middle sidebar-btn">Home</span>
+                </a>
+              </Link>
+            </li>
+            <li
+              className={`"nav-item text-dark" ${
+                location.pathname === "/Employee/Dashboard" ? "nav_active" : ""
+              } `}
+            >
           <Link
            to={"/Employee/Dashboard"}
            className="text-decoration-none">
@@ -59,7 +70,11 @@ const SideBarEmpl = () => {
             </a>
             </Link>
         </li>
-        <li className="nav-item text-dark">
+        <li
+              className={`"nav-item text-dark" ${
+                location.pathname === "/Employee/document" ? "nav_active" : ""
+              } `}
+            >
           <Link
           to={"/Employee/document"}
           className="text-decoration-none">
@@ -72,7 +87,11 @@ const SideBarEmpl = () => {
             </Link>
         </li>
 
-        <li className="nav-item text-dark">
+        <li
+              className={`"nav-item text-dark" ${
+                location.pathname === "/Employee/history-log-request" ? "nav_active" : ""
+              } `}
+            >
         <Link
            to={"/Employee/history-log-request"}
            className="text-decoration-none">
@@ -85,7 +104,11 @@ const SideBarEmpl = () => {
             </Link>
         </li>
 
-        <li className="nav-item text-dark">
+        <li
+              className={`"nav-item text-dark" ${
+                location.pathname === "/Employee/received-doc" ? "nav_active" : ""
+              } `}
+            >
         <Link
            to={"/Employee/received-doc"}
            className="text-decoration-none">
@@ -98,7 +121,12 @@ const SideBarEmpl = () => {
             </Link>
         </li>
 
-        <li className="nav-item text-dark">
+       
+        <li
+              className={`"nav-item text-dark" ${
+                location.pathname === "/Employee/Calender" ? "nav_active" : ""
+              } `}
+            >
         <Link
            to={"/Employee/Calender"}
            className="text-decoration-none">
@@ -115,7 +143,11 @@ const SideBarEmpl = () => {
 
         <p className="th-text mt-3">OTHERS</p>
 
-        <li className="nav-item text-dark">
+        <li
+              className={`"nav-item text-dark" ${
+                location.pathname === "/Employee/profile" ? "nav_active" : ""
+              } `}
+            >
           <a href="/Employee/profile" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/my-profile.png" className='align-middle sidebar-icon'/>
@@ -123,7 +155,11 @@ const SideBarEmpl = () => {
               <span className="ms-3 align-middle sidebar-btn">My Profile</span>
             </a>
         </li>
-        <li className="nav-item text-dark">
+        <li
+              className={`"nav-item text-dark" ${
+                location.pathname === "/Employee/Settings" ? "nav_active" : ""
+              } `}
+            >
           <a href="/Employee/Settings" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/settings.png" className='align-middle sidebar-icon'/>
@@ -131,7 +167,11 @@ const SideBarEmpl = () => {
               <span className="ms-3 align-middle sidebar-btn">Settings</span>
             </a>
         </li>
-        <li className="nav-item text-dark">
+        <li
+              className={`"nav-item text-dark" ${
+                location.pathname === "/Employee/Help" ? "nav_active" : ""
+              } `}
+            >
           <a href="/Employee/Help" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/help.png" className='align-middle sidebar-icon'/>
@@ -139,7 +179,12 @@ const SideBarEmpl = () => {
               <span className="ms-3 align-middle sidebar-btn">Help</span>
             </a>
         </li>
-        <li className="nav-item text-dark" onClick={handleLogOut}>
+        <li
+              onClick={handleLogOut}
+              className={`"nav-item text-dark" ${
+                location.pathname === "/Employee/Login" ? "nav_active" : ""
+              } `}
+            >
           <a href="/Employee/Login" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
                 <img src="/images/sidebar/logout.png" className='align-middle sidebar-icon'/>

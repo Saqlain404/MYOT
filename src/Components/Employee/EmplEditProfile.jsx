@@ -10,6 +10,7 @@ const EmplEditProfile = () => {
   const [type, setType] = useState("password");
   const [password, setPassword] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
+  const[profileDetail,setProfileDetail] = useState(null);
 
 
   const [post, setPost] = useState({
@@ -89,6 +90,10 @@ const EmplEditProfile = () => {
       console.log(response);
     }
   };
+
+
+
+
 
 
  
