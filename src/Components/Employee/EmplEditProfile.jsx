@@ -69,7 +69,7 @@ const EmplEditProfile = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-
+ 
     if (!validateForm()) {
       return;
     }

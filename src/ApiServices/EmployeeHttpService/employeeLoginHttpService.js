@@ -93,6 +93,28 @@ export async function ContactUsEmployee(formData) {
   }
 }
 
+
+export async function AddCommentEmply(formData) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/add-comment`,
+      formData
+    );
+   
+    console.log(data);
+
+    // return { data };
+    if (!data.error) {
+      toast.success(data.message);
+    } else toast.error(data.message);
+
+    if (!data.error) return { data };
+  } catch (error) {
+    if (error?.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 export async function fetchTemplateData() {
   try {
     const response = await employeeHttpService.get(
@@ -319,12 +341,58 @@ export async function employeProfileDetail() {
     return null;
   }
 }
+export async function GetLogoEmply() {
+  try {
+    const response = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/logo-list/${id}`
+    );
+
+    if (!response.data?.error) {
+      const logo = response?.data;
+      console.log(logo)
+      
+
+      return [logo];
+    } else {
+      toast.error(response.data.message);
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error('An error occurred while fetching the template IDs.');
+    }
+    return null;
+  }
+}
 
 
 export async function updateProfile(formData) {
   try {
     const { data } = await employeeHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/employee/edit-profile/${id}`,
+      formData
+    );
+    console.log(data);
+    if (!data.error) {
+      toast.success(data.message);
+      const templateId = data?.results;
+      return { data, templateId };
+    } else toast.error(data.message);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+
+export async function AddLogoEmply(formData) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/add-logo`,
       formData
     );
     console.log(data);
@@ -394,13 +462,13 @@ export async function employeDocumentList(){
     
 if (!response.data?.error) {
   const documentList = response?.data?.results?.documentList;
+  console.log(documentList)
   
 
   // Extract template names from the document list
   const templateNames = documentList?.map(doc => doc);
-  console.log(templateNames)
 
-  return templateNames;
+  return documentList;
 }else {
       toast.error(response.data.message);
       return null;
@@ -559,6 +627,24 @@ export async function DasboardCount() {
   try {
     const { data } = await employeeHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/employee/pending-request-count/${id}`
+    );
+    console.log(data);
+    if (!data?.error) {
+      // toast.success(data.message);
+      console.log(data.message)
+    } else toast?.error(data.message);
+
+    if (!data?.error) return { data };
+  } catch (error) {
+    if (error?.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function LogOutEmply() {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/employee-logout/${id}`
     );
     console.log(data);
     if (!data?.error) {

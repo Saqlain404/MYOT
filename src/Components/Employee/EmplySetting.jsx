@@ -1,17 +1,49 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
+import { AddLogoEmply, GetLogoEmply } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import { get } from "react-hook-form";
 
 const EmplySetting = () => {
- 
+  const[logoImage,setLogoImage] = useState()
+  const[logoData,setLogoData] = useState({ logo:null})
+  const onFileSelection = (event) => {
+    setLogoData({ ...logoData, logo: event.target.files[0] });
+  };
+  
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    console.log('Form submitted!');
+  
+
+    const formData = new FormData();
+    formData.append("logo", logoData.logo);
+
+    const response = await AddLogoEmply(formData);
+
+    if (!response.data?.error) {
+      // navigate("/Employee/profile");
+      console.log(response);
+    }
+  };
+
+
+  const getLogo = async()=>{
+    const response = await GetLogoEmply()
+    setLogoImage(response?.[0]?.results?.logoList)
+  }
+  console.log(logoImage)
+  useEffect(()=>{
+    getLogo()
+  },[])
 
   return (
     <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <SideBarEmpl/>
+            <SideBarEmpl />
           </div>
           <div className="col-7 middle-content bg-body-tertiary p-0 min-vh-100">
             <div className="container-fluid border-bottom sticky-top bg-white mb-4">
@@ -39,11 +71,11 @@ const EmplySetting = () => {
                       className="ms-4 "
                     />
                     <Link to={"/Employee/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -53,53 +85,68 @@ const EmplySetting = () => {
                   </div>
                 </div>
               </nav>
-            
             </div>
 
+            <form onSubmit={onSubmit}>
             <div className="container px-4 text-center min-vh-100 ">
-  <div className="row rounded">
-   
-   
-   <div className="bg-white rounded mb-4 p-4 pb-2">
-   <div className="d-flex">
-              
-              <p className="td-text border-bottom me-3">Business Assets</p>
-              <p className="th-text  ">System Setting</p>
-            </div>
-            <div>
-              <p className="settings-txt">Select Logo</p>
-              <div className="d-flex">
-                <img src="/images/settings/facebook-logo.svg" alt="" className="me-3"/>
-                <img src="/images/settings/Facebook.svg" alt="" />
+              <div className="row rounded">
+                <div className="bg-white rounded mb-4 p-4 pb-2">
+                  <div className="d-flex">
+                    <p className="td-text border-bottom me-3">
+                      Business Assets
+                    </p>
+                    <p className="th-text  ">System Setting</p>
+                  </div>
+                  <div>
+                    <p className="settings-txt">Select Logo</p>
+                    <div className="d-flex">
+                    {logoImage?.map((logo)=>(
+                        <img className="settingLogo" alt="logo" src={logo?.logo}/>
+                      ))}
+                    </div>
+                    <p className="settings-txt mt-3 mb-2">Upload Logo</p>
+                    <div className="bg-body-tertiary rounded p-4 mb-2 import-img-card">
+                      <img src="/images/dashboard/import-img.svg" alt="" />
+                      <p className="th-text m-1">
+                        Drag and drop logo here, or click add image
+                      </p>
+                     
+                        <label htmlFor="logo" className="add-img-btn mt-4">
+                          Add Image
+                        </label>
+                        <input
+                          type="file"
+                          style={{ display: "none" }}
+                          id="logo"
+                          name="logo"
+                          accept="image/*"
+                          onChange={onFileSelection}
+                        />
+                   
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded mb-4 pb-2">
+                  <div>
+                    <p className="settings-txt mt-3 mb-2">Select Colors</p>
+                    <img
+                      src="/images/dashboard/color-palete.svg"
+                      alt=""
+                      className="color-palete"
+                    />
+                    <div className="d-flex justify-content-end">
+                      <button type="submit" className="notify-admin-btn mt-4 m-2">
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <p className="settings-txt mt-3 mb-2">Upload Logo</p>
-              <div className="bg-body-tertiary rounded p-4 mb-2 import-img-card">
-<img src="/images/dashboard/import-img.svg" alt="" />
-<p className="th-text m-1">Drag and drop logo here, or click add image</p>
-<button className="add-img-btn mt-4">Add Image</button>
-      </div>
             </div>
-   </div>
+                  </form>
 
-   <div className="bg-white rounded mb-4 pb-2">
-  
-            <div>
-             
-              
-             
-      <p className="settings-txt mt-3 mb-2">Select Colors</p>
-      <img src="/images/dashboard/color-palete.svg" alt="" className="color-palete"/>
-      <div className="d-flex justify-content-end">
-      <button className="notify-admin-btn mt-4 m-2">Save</button>
-      </div>
-            </div>
-   </div>
-   
-  
-  </div>
-</div>
-
-<div className="footer bg-white">
+            <div className="footer bg-white">
               <div>© 2023 MYOT</div>
               <div className="d-flex ">
                 <p className="ms-3">About</p>
@@ -107,9 +154,9 @@ const EmplySetting = () => {
                 <p className="ms-3">Contact Us</p>
               </div>
             </div>
-        </div>
-        
-        <div className="col">
+          </div>
+
+          <div className="col">
             <RightSidebar />
           </div>
         </div>

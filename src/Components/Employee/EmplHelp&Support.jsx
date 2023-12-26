@@ -185,7 +185,8 @@ const EmplHelpSupport = () => {
                           </div>
                         </li>
                         <li>
-                          <a class="dropdown-item border-bottom" href="#">
+                          <a class="dropdown-item border-bottom" href="#"
+                        aria-selected="false">
                             <img
                               src="/images/dashboard/orange-ticket-ball.svg"
                               alt=""
@@ -194,6 +195,7 @@ const EmplHelpSupport = () => {
                             On-Going Tickets
                           </a>
                         </li>
+                   
                         <li>
                           <a class="dropdown-item" href="#">
                             <img
