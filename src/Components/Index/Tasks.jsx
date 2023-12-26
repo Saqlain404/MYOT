@@ -8,6 +8,7 @@ import {
   AddCommentForTask,
   GetTaskData,
   SearchTask,
+  TemplateCount,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
 import { toast } from "react-toastify";
@@ -16,9 +17,11 @@ const Tasks = () => {
   const [documents, setDocuments] = useState();
   const [search, setSearch] = useState("");
   const [comment, setComment] = useState("");
+  const [totalCount, setTotalCount] = useState("");
 
   useEffect(() => {
     getTaskData();
+    getTotalCount()
   }, []);
 
   const getTaskData = async () => {
@@ -66,128 +69,13 @@ const Tasks = () => {
     }
   };
 
-  // const documents = [
-  //   {
-  //     id: 1,
-  //     templateName: "Employment Contract",
-  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
-  //     version: "0.2",
-  //     date: "26 Oct, 2023",
-  //     status: <p className="text-primary m-0">In Progress</p>,
-  //     department: "Human Resources",
-  //     comment: (
-  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-  //     ),
-  //     actions: (
-  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-  //     ),
-  //   },
-  //   {
-  //     id: 2,
-  //     templateName: "Tax Deduction at Source (TDS)",
-  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
-  //     version: "0.2",
-  //     date: "26 Oct, 2023",
-  //     status: <p className="text-warning m-0"> Approved</p>,
-  //     department: "Human Resources",
-  //     comment: (
-  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-  //     ),
-  //     actions: (
-  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-  //     ),
-  //   },
-  //   {
-  //     id: 3,
-  //     templateName: "Training Certificates",
-  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
-  //     version: "0.2",
-  //     date: "26 Oct, 2023",
-  //     status: <p className="text-success m-0">Complete</p>,
-  //     department: "Human Resources",
-  //     comment: (
-  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-  //     ),
-  //     actions: (
-  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-  //     ),
-  //   },
-  //   {
-  //     id: 4,
-  //     templateName: "Software Licenses",
-  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
-  //     version: "0.2",
-  //     date: "26 Oct, 2023",
-  //     status: <p className="text-primary m-0">In Progress</p>,
-  //     department: "Information Technologies",
-  //     comment: (
-  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-  //     ),
-  //     actions: (
-  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-  //     ),
-  //   },
-  //   {
-  //     id: 5,
-  //     templateName: "Reference Letter",
-  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
-  //     version: "0.2",
-  //     date: "26 Oct, 2023",
-  //     status: <p className="text-info m-0">Pending</p>,
-  //     department: "Human Resources",
-  //     comment: (
-  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-  //     ),
-  //     actions: (
-  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-  //     ),
-  //   },
-  //   {
-  //     id: 6,
-  //     templateName: "Annual Tax Statement",
-  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
-  //     version: "0.2",
-  //     date: "26 Oct, 2023",
-  //     status: <p className="text-warning m-0"> Approved</p>,
-  //     department: "Human Resources",
-  //     comment: (
-  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-  //     ),
-  //     actions: (
-  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-  //     ),
-  //   },
-  //   {
-  //     id: 7,
-  //     templateName: "Leave Application",
-  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
-  //     version: "0.2",
-  //     date: "26 Oct, 2023",
-  //     status: <p className="text-secondary m-0">Rejected</p>,
-  //     department: "Human Resources",
-  //     comment: (
-  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-  //     ),
-  //     actions: (
-  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-  //     ),
-  //   },
-  //   {
-  //     id: 8,
-  //     templateName: "Marketing Campaign Reports",
-  //     assignedTo: <img src="/images/dashboard/Avatar.png" />,
-  //     version: "0.2",
-  //     date: "26 Oct, 2023",
-  //     status: <p className="text-primary m-0">In Progress</p>,
-  //     department: "Human Resources",
-  //     comment: (
-  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-  //     ),
-  //     actions: (
-  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-  //     ),
-  //   },
-  // ];
+  const getTotalCount = async () => {
+    try {
+      let { data } = await TemplateCount();
+      console.log(data);
+      setTotalCount(data?.results)
+    } catch (error) {}
+  };
 
   return (
     <>
@@ -249,7 +137,7 @@ const Tasks = () => {
                       </div>
                       <div className="d-flex  mt-4">
                         <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                          320
+                          {totalCount?.totalTemplete}
                         </h3>
                         {/* <span className="card-insights fw-bold m-auto">
                           +11.01%
@@ -271,7 +159,7 @@ const Tasks = () => {
                       </div>
                       <div className="d-flex  mt-4">
                         <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                          20
+                          {totalCount?.totalPendingTemplete && totalCount?.totalPendingTemplete[0]?.count || 0}
                         </h3>
                         {/* <span className="card-insights fw-bold m-auto">
                           +9.15%
@@ -293,7 +181,7 @@ const Tasks = () => {
                       </div>
                       <div className="d-flex  mt-4">
                         <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                          1,156
+                        {totalCount?.totalPendingTemplete && totalCount?.totalPendingTemplete[0]?.count || 0}
                         </h3>
                         {/* <span className="card-insights fw-bold m-auto">
                           -0.65%
@@ -315,7 +203,7 @@ const Tasks = () => {
                       </div>
                       <div className="d-flex mt-4">
                         <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                          320
+                        {totalCount?.totalPendingTemplete && totalCount?.totalPendingTemplete[0]?.count || 0}
                         </h3>
                         {/* <span className="card-insights fw-bold m-auto">
                           -1.48%
@@ -498,7 +386,7 @@ const Tasks = () => {
                           {document?.manager?.department_Id?.departmentName}
                         </td>
                         <td className="td-text">
-                          <div className="dropdown">
+                          <div className="">
                             <a
                               type=""
                               data-bs-toggle="dropdown"

@@ -2382,3 +2382,58 @@ height: 960px; */
   letter-spacing: -0.02em;
   text-align: left;
 }
+
+.dashed_border {
+  border: 2px #999 dashed;
+  background-color: #f7f7f8;
+  border-radius: 10px;
+}
+
+.blue_btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-family: Nunito;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.005em;
+  text-align: left;
+  color: #3E51FF;
+  background: #DEDEFA;
+  border: none;
+  outline: none;
+}
+
+.setting_logo img{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+
+
+
+
+
+/* ViewUser.css */
+
+/* Target disabled checkboxes */
+/* .table input[type="checkbox"]:disabled {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+} */
+
+/* Style for the custom checkmark for disabled checkboxes */
+.table input[type="checkbox"]:checked::before {
+  content: '\2713';
+  display: inline-block;
+  width: 14px;
+  /* height: 14px; */
+  /* line-height: 14px; */
+  text-align: center;
+  background-color: green;
+  color: white;
+}

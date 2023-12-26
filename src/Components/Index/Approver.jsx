@@ -288,9 +288,13 @@ const Approver = () => {
                         <td className="td-text">{document?.employId}</td>
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
-                          {moment(document?.logIn).format(
-                            '"MMM Do YY", h:mm:ss a'
-                          )}
+                          <span className="ms-2">
+                            {(document?.logIn &&
+                              moment(document?.logIn).format(
+                                "MMM Do YY, h:mm:ss a"
+                              )) ||
+                              "NA"}
+                          </span>
                         </td>
 
                         {/* <td className="td-text"></td> */}

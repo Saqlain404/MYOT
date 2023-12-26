@@ -20,15 +20,15 @@ const Analytics = () => {
 
   const data = [
     {
-      name: "Natural",
+      name: "Documents",
       quantity: 65,
     },
     {
-      name: "Industrial",
-      quantity: 45,
+      name: "Users",
+      quantity: 35,
     },
     {
-      name: "Infrastructure",
+      name: "Departments",
       quantity: 25,
     },
   ];

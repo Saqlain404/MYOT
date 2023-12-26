@@ -38,37 +38,49 @@ const Users = () => {
   }, []);
 
   const getEmployeeList = async () => {
-    let { data } = await EmployeeLists();
-    console.log(data);
-    if (!data?.error) {
-      let values = data?.results?.list;
-      setEmployeeData(values);
-      setTotalPage(Math.ceil(values.length / employeesPerPage));
+    try {
+      let { data } = await EmployeeLists();
+      console.log(data);
+      if (!data?.error) {
+        let values = data?.results?.list;
+        setEmployeeData(values);
+        setTotalPage(Math.ceil(values.length / employeesPerPage));
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const getDepartmentList = async () => {
-    let { data } = await DepartmentList();
-    console.log(data);
-    if (!data?.error) {
-      let values = data?.results?.department;
-      setDepartmentOptions(values);
+    try {
+      let { data } = await DepartmentList();
+      console.log(data);
+      if (!data?.error) {
+        let values = data?.results?.department;
+        setDepartmentOptions(values);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const handleSearch = async (e) => {
-    const value = e.target.value.toLowerCase();
-    console.log(value);
-    setSearch(value);
-    if (value.length > 0) {
-      let { data } = await EmployeeSearch({ search: value });
-      console.log(data);
-      if (!data?.error) {
-        let values = data?.results?.employee;
-        setEmployeeData(values);
+    try {
+      const value = e.target.value.toLowerCase();
+      console.log(value);
+      setSearch(value);
+      if (value.length > 0) {
+        let { data } = await EmployeeSearch({ search: value });
+        console.log(data);
+        if (!data?.error) {
+          let values = data?.results?.employee;
+          setEmployeeData(values);
+        }
+      } else {
+        getEmployeeList();
       }
-    } else {
-      getEmployeeList();
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -89,8 +101,6 @@ const Users = () => {
   );
 
   const paginate = (pageNumber) => {
-    // console.log("total page", totalPage);
-    // console.log("crr", currentPage);
     setCurrentPage(pageNumber);
   };
 
@@ -798,12 +808,12 @@ const Users = () => {
                             {document?.department_Id &&
                             document?.department_Id?.departmentName
                               ? document?.department_Id?.departmentName
-                              : document?.department_Id[0]
+                              : document?.department_Id
                               ? document?.department_Id[0]?.departmentName
                               : "Not Availabe"}
                           </td>
                           <td className="td-text">
-                            {document?.employRole.flat().map((role, index) => (
+                            {document?.employRole.flat()?.map((role, index) => (
                               <span
                                 className="d-flex align-items-start py-1"
                                 key={index}
@@ -931,7 +941,7 @@ const Users = () => {
                   </li>
                   {Array.from({
                     length: Math.ceil(employeeData.length / employeesPerPage),
-                  }).map((_, index) => (
+                  })?.map((_, index) => (
                     <li key={index} className="page-item">
                       <p
                         onClick={() => paginate(index + 1)}

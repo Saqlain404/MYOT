@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import low from "../../../assets/logo/pr_low.svg";
 import {
   DocumentComment,
   RequestorList,
@@ -12,17 +11,61 @@ const Document = () => {
   const [search, setSearch] = useState("");
   const [comment, setComment] = useState("");
   const [document_Id, setDocument_Id] = useState();
+  const [selectedCount, setSelectedCount] = useState(0);
+  const [checkBoxes, setCheckBoxes] = useState({
+    document: false,
+    requestor: false,
+    assignedTo: false,
+    priority: false,
+    status: false,
+    department: false,
+    comment: false,
+    actions: false,
+  });
 
   useEffect(() => {
     getRequestorList();
   }, []);
 
-  const getRequestorList = async () => {
-    let { data } = await RequestorList();
-    if (!data.error) {
-      setDocuments(data?.results?.list);
-      console.log(data?.results?.list);
+  useEffect(() => {
+    updateSelectedCount();
+  }, [checkBoxes]);
+
+  const updateSelectedCount = () => {
+    const count = Object.values(checkBoxes).filter((value) => value).length;
+    setSelectedCount(count);
+  };
+
+  const handleCheckboxClick = (checkboxName) => {
+    setCheckBoxes((prevCheckboxes) => ({
+      ...prevCheckboxes,
+      [checkboxName]: !prevCheckboxes[checkboxName],
+    }));
+  };
+  const handleHideSelected = () => {
+    for (const key in checkBoxes) {
+      if (checkBoxes[key]) {
+        const thElement = document.querySelector(`th.${key}`);
+        const tdElements = document.querySelectorAll(`td.${key}`);
+
+        if (thElement) {
+          thElement.classList.add("d-none");
+        }
+
+        tdElements.forEach((td) => {
+          td.classList.add("d-none");
+        });
+      }
     }
+  };
+  const getRequestorList = async () => {
+    try {
+      let { data } = await RequestorList();
+      if (!data.error) {
+        setDocuments(data?.results?.list);
+        console.log(data?.results?.list);
+      }
+    } catch (error) {}
   };
 
   const handleSearch = async (e) => {
@@ -41,29 +84,31 @@ const Document = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let id = localStorage.getItem("myot_admin_id");
-    let formData = {
-      creator_Id: id,
-      document_Id,
-      comment,
-    };
-    console.log(formData);
-    let { data } = await DocumentComment(formData);
-    console.log(data);
-    if (!data?.error) {
-      toast("Comment added successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      document.getElementById("resetComment").click();
-      getRequestorList();
-    }
+    try {
+      let id = localStorage.getItem("myot_admin_id");
+      let formData = {
+        creator_Id: id,
+        document_Id,
+        comment,
+      };
+      console.log(formData);
+      let { data } = await DocumentComment(formData);
+      console.log(data);
+      if (!data?.error) {
+        toast("Comment added successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        document.getElementById("resetComment").click();
+        getRequestorList();
+      }
+    } catch (error) {}
   };
 
   return (
@@ -94,8 +139,15 @@ const Document = () => {
             />
           </div>
           <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
-            <p className="m-0 text-nowrap">2 Selected</p>
-            <p className="hide-selected m-0 text-nowrap ">Hide Selected</p>
+            <p className="m-0 mx-2 text-nowrap">{selectedCount} Selected</p>
+            <div>
+              <p
+                className="hide-selected m-0 text-nowrap cursor_pointer"
+                onClick={handleHideSelected}
+              >
+                Hide Selected
+              </p>
+            </div>
           </div>
         </div>
         <form className="d-flex me-2" role="search">
@@ -115,67 +167,83 @@ const Document = () => {
           <table className="table table-borderless">
             <thead>
               <tr className="th-text">
-                <th className="th-text">
+                <th className="th-text document">
                   <input
                     className="form-check-input checkbox-table"
                     type="checkbox"
                     value=""
+                    onClick={() => handleCheckboxClick("document")}
+                    checked={checkBoxes.document}
                   />
                   Document
                 </th>
-                <th className="th-text">
+                <th className="th-text requestor">
                   <input
                     className="form-check-input checkbox-table"
                     type="checkbox"
                     value=""
+                    onClick={() => handleCheckboxClick("requestor")}
+                    checked={checkBoxes.requestor}
                   />
                   Requester
                 </th>
-                <th className="th-text">
+                <th className="th-text assignedTo">
                   <input
                     className="form-check-input checkbox-table"
                     type="checkbox"
                     value=""
+                    onClick={() => handleCheckboxClick("assignedTo")}
+                    checked={checkBoxes.assignedTo}
                   />
                   Assigned to
                 </th>
-                <th className="th-text">
+                <th className="th-text priority">
                   <input
                     className="form-check-input checkbox-table"
                     type="checkbox"
                     value=""
+                    onClick={() => handleCheckboxClick("priority")}
+                    checked={checkBoxes.priority}
                   />
                   Priority
                 </th>
-                <th className="th-text">
+                <th className="th-text status">
                   <input
                     className="form-check-input checkbox-table"
                     type="checkbox"
                     value=""
+                    onClick={() => handleCheckboxClick("status")}
+                    checked={checkBoxes.status}
                   />
                   Status
                 </th>
-                <th className="th-text">
+                <th className="th-text department">
                   <input
                     className="form-check-input checkbox-table"
                     type="checkbox"
                     value=""
+                    onClick={() => handleCheckboxClick("department")}
+                    checked={checkBoxes.department}
                   />
                   Department
                 </th>
-                <th className="th-text">
+                <th className="th-text comment">
                   <input
                     className="form-check-input checkbox-table"
                     type="checkbox"
                     value=""
+                    onClick={() => handleCheckboxClick("comment")}
+                    checked={checkBoxes.comment}
                   />
                   Comment
                 </th>
-                <th className="th-text">
+                <th className="th-text actions">
                   <input
                     className="form-check-input checkbox-table"
                     type="checkbox"
                     value=""
+                    onClick={() => handleCheckboxClick("actions")}
+                    checked={checkBoxes.actions}
                   />
                   Actions
                 </th>
@@ -184,7 +252,7 @@ const Document = () => {
             <tbody>
               {documents?.map((document) => (
                 <tr key={document.id}>
-                  <td className="td-text">
+                  <td className="td-text document">
                     <input
                       className="form-check-input checkbox-table"
                       type="checkbox"
@@ -193,7 +261,7 @@ const Document = () => {
                     {document?.templete_Id?.templeteName ||
                       document?.templete?.templeteName}
                   </td>
-                  <td className="td-text">
+                  <td className="td-text requestor">
                     <img
                       style={{
                         width: "30px",
@@ -215,7 +283,7 @@ const Document = () => {
                         (document?.creator_Id && document?.creator_Id[0]?.name)}
                     </span>
                   </td>
-                  <td className="td-text">
+                  <td className="td-text assignedTo">
                     {/* {document?.templete_Id?.manager?.name} */}
                     <img
                       style={{
@@ -237,27 +305,27 @@ const Document = () => {
                         document?.templete?.manager[0]?.name}
                     </span>
                   </td>
-                  <td className="td-text">
+                  <td className="td-text priority">
                     <img
-                      style={{
-                        width: "20px",
-                        height: "20px",
-                        borderRadius: "50%",
-                      }}
+                      // style={{
+                      //   width: "20px",
+                      //   height: "20px",
+                      //   borderRadius: "50%",
+                      // }}
                       src={
                         document?.priority === "Urgent"
-                          ? "../../../assets/logo/pr_low.svg"
+                          ? require("../../../assets/logo/urgent.png")
                           : document?.priority === "High"
-                          ? { low }
+                          ? require("../../../assets/logo/high.png")
                           : document?.priority === "Low"
-                          ? "../../../assets/logo/pr_low.png"
-                          : "../../../assets/logo/pr_low.png"
+                          ? require("../../../assets/logo/low.png")
+                          : require("../../../assets/logo/normal.png")
                       }
                     />
                     <span className="ms-2">{document?.priority}</span>
                   </td>
                   <td
-                    className={`"td-text" ${
+                    className={`"td-text status" ${
                       document.status === "Pending"
                         ? "text-info"
                         : document.status === "Approved"
@@ -269,14 +337,14 @@ const Document = () => {
                   >
                     {document.status}
                   </td>
-                  <td className="td-text">
+                  <td className="td-text department">
                     {document?.templete_Id?.manager?.department_Id
                       ?.departmentName ||
                       document?.templete?.manager[0]?.department[0]
                         ?.departmentName}
                   </td>
 
-                  <td className="td-text">
+                  <td className="td-text comment">
                     <div className="">
                       <a
                         type=""
@@ -355,7 +423,7 @@ const Document = () => {
                       </form>
                     </div>
                   </td>
-                  <td className="td-text">
+                  <td className="td-text actions">
                     <div class="dropdown">
                       <a
                         type=""
