@@ -300,12 +300,8 @@ const Users = () => {
                                 : "/images/tasks/modal-profile-photo.svg"
                             }
                             alt=""
-                            className="object-fit-cover"
-                            style={{
-                              width: "100px",
-                              height: "100px",
-                              borderRadius: "50%",
-                            }}
+                            className="w_100_h_100"
+                            
                           />
                           <input
                             autoComplete="false"

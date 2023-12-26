@@ -2410,14 +2410,15 @@ height: 960px; */
   border-radius: 50%;
   object-fit: cover;
 }
+.w_100_h_100{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
 
 
-
-
-
-
-/* ViewUser.css */
 
 /* Target disabled checkboxes */
 /* .table input[type="checkbox"]:disabled {
@@ -2426,7 +2427,6 @@ height: 960px; */
   appearance: none;
 } */
 
-/* Style for the custom checkmark for disabled checkboxes */
 .table input[type="checkbox"]:checked::before {
   content: '\2713';
   display: inline-block;
@@ -2437,3 +2437,5 @@ height: 960px; */
   background-color: green;
   color: white;
 }
+
+
