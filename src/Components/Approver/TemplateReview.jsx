@@ -1,11 +1,6 @@
 import React from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-// import "assets/css/style.min.css"
-import { Card } from "antd";
 import { Link } from "react-router-dom";
-import SidebarDepartment from "./SidebarAprv";
-import SidebarSig from "../Signatory/SidebarSig";
 import SidebarAprv from "./SidebarAprv";
 
 const TemplateReview = () => {
@@ -14,70 +9,70 @@ const TemplateReview = () => {
       id: 1,
       templateName: "Salary Slip.jpg",
       creator: [
-        <img src="/images/dashboard/avatar3.png" className="me-2" />,
+        <img src="/images/dashboard/avatar3.png" className="me-2" alt=""/>,
         "Eve Leroy",
       ],
       department: "Human Resources",
       dateOfCreation: "2023-09-16",
       status: <p className="text-warning">High</p>,
       action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
       ),
     },
     {
       id: 2,
       templateName: "Promotion Letter.zip",
       creator: [
-        <img src="/images/dashboard/avatar2.png" className="me-2" />,
+        <img src="/images/dashboard/avatar2.png" className="me-2" alt=""/>,
         "Lana Steiner",
       ],
       department: "Sales & Marketing",
       dateOfCreation: "2023-09-16",
       status: <p className="text-warning">High</p>,
       action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
       ),
     },
     {
       id: 3,
       templateName: "Create Project Wireframes.xls",
       creator: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar1.png" className="me-2" alt=""/>,
         "ByeWind",
       ],
       department: "Training & Development",
       dateOfCreation: "2023-09-16",
       status: <p className="text-danger">Urgent</p>,
       action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
       ),
     },
     {
       id: 4,
       templateName: "Create Project Wireframes.pdf",
       creator: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2" alt=""/>,
         "Katherine Moss",
       ],
       department: "Human Resources",
       dateOfCreation: "2023-09-16",
       status: <p className="text-secondary">Low</p>,
       action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
       ),
     },
     {
       id: 5,
       templateName: "Project tech requirements.zip",
       creator: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar1.png" className="me-2" alt=""/>,
         "Natali Craig",
       ],
       department: "Training & Development",
       dateOfCreation: "2023-09-16",
       status: <p className="text-primary">Normal</p>,
       action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
       ),
     },
 
@@ -243,7 +238,7 @@ const TemplateReview = () => {
                         <td className="td-text">{document.creator}</td>
                         <td className="td-text">{document.department}</td>
                         <td className="td-text">
-                          <img src="/images/dashboard/CalendarBlank.png" />
+                          <img src="/images/dashboard/CalendarBlank.png" alt=""/>
                           {document.dateOfCreation}
                         </td>
                         <td className="td-text">{document.status}</td>
@@ -252,7 +247,7 @@ const TemplateReview = () => {
                             <a
                               type=""
                               data-bs-toggle="dropdown"
-                              aria-expanded="false"
+                              aria-expanded="false" href="/"
                             >
                               {document.action}
                             </a>
@@ -264,7 +259,7 @@ const TemplateReview = () => {
                                 >
                                   <a
                                     class="dropdown-item border-bottom"
-                                    href="#"
+                                    href="/"
                                   >
                                     <img
                                       src="/images/users/AddressBook.svg"
@@ -276,7 +271,7 @@ const TemplateReview = () => {
                                 </Link>
                               </li>
                               <li>
-                                <a class="dropdown-item border-bottom" href="#">
+                                <a class="dropdown-item border-bottom" href="/">
                                   <img
                                     src="/images/users/PencilLine.svg"
                                     alt=""
@@ -286,7 +281,7 @@ const TemplateReview = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/">
                                   <img
                                     src="/images/dashboard/Comment.png"
                                     alt=""
@@ -296,7 +291,7 @@ const TemplateReview = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item border-bottom" href="#">
+                                <a class="dropdown-item border-bottom" href="/">
                                   <img
                                     src="/images/users/TextAlignLeft.svg"
                                     alt=""
@@ -306,7 +301,7 @@ const TemplateReview = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item text-danger" href="#">
+                                <a class="dropdown-item text-danger" href="/">
                                   <img
                                     src="/images/users/Trash.svg"
                                     alt=""
@@ -330,7 +325,7 @@ const TemplateReview = () => {
               >
                 <ul className="pagination">
                   <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
+                    <a className="page-link" href="/" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>

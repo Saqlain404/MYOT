@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-// import "assets/css/style.min.css"
-import { Card } from 'antd';
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
+import { DepartmentTemplateCount } from "../../ApiServices/departmentHttpService/departmentHttpService";
 
 
 const Template = () => {
@@ -100,6 +98,21 @@ const Template = () => {
     // Add more tasks here
   ];
 
+  const [templateCount, setTemplateCount] = useState();
+
+  
+
+  const getTemplateCount = async () => {
+    let { data } = await DepartmentTemplateCount();
+    if (!data?.error) {
+      setTemplateCount(data?.results);
+    }
+  };
+
+  useEffect(() => {
+    getTemplateCount();
+  }, []);
+
   return (
     <>
       <div className="container-fluid">
@@ -158,7 +171,7 @@ const Template = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        320
+                      {templateCount?.totalTempleted}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -180,7 +193,7 @@ const Template = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        20
+                      {templateCount?.totalAwaiting?.[0]}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         +9.15%
@@ -202,7 +215,7 @@ const Template = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        1,156
+                      {templateCount?.totalApproved?.[0]}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         -0.65%
@@ -222,7 +235,7 @@ const Template = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        320
+                      {templateCount?.aciveSignatory?.[0]?.count}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         -1.48%
@@ -379,26 +392,28 @@ const Template = () => {
                         <td className="td-text">{document.assignedTo}</td>
                         <td className="td-text">{document.version}</td>
                         <td className="td-text">
-                      <img src="/images/dashboard/CalendarBlank.png" />
+                      <img src="/images/dashboard/CalendarBlank.png" alt=""/>
                           {document.date}</td>
                         <td className="td-text">{document.status}</td>
                         <td className="td-text">{document.department}</td>
                        
                         {/* <td className="td-text"></td> */}
                         <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
+  <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
   {document.actions}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
     <li >
     <Link to={"/Department/Template-view"} className="text-decoration-none">
-      <a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Template</a>
+      <a class="dropdown-item border-bottom" href="/"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Template</a>
       </Link>
       </li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="#"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete Template</a></li>
+    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
+    <li><Link to={"/Department/Comments"} className="text-decoration-none">
+      <a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a>
+      </Link></li>
+    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
+    <li><a class="dropdown-item text-danger" href="/"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete Template</a></li>
   </ul>
 </div>
                           </td>
@@ -413,7 +428,7 @@ const Template = () => {
               >
                 <ul className="pagination">
                   <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
+                    <a className="page-link" href="/" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>

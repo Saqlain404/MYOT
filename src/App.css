@@ -349,11 +349,6 @@ height: 960px; */
   scrollbar-color: white;
 }
 
-.nav-item {
-  /* padding: 5px; */
-  /* display: flex; */
-}
-
 .sidebarnav {
   display: flex;
   width: 944px;
@@ -695,15 +690,6 @@ height: 960px; */
   flex-shrink: 0;
 }
 
-.header {
-  /* align-items: center; */
-  /* display: flex; */
-
-  /* padding: 22px 184px 22px 600px; */
-  /* justify-content: flex-end; */
-  /* align-items: center; */
-  /* flex-shrink: 0; */
-}
 .statics_box {
   white-space: nowrap;
   overflow: hidden;
@@ -886,9 +872,6 @@ height: 960px; */
   width: 10px;
   height: 8px;
   border-radius: 50%;
-}
-.table_comman .table-responsive::-webkit-scrollbar-track {
-  /* background: #F1F1F1; */
 }
 .table_comman .table-responsive::-webkit-scrollbar-thumb {
   /* background: #FF7622; */
@@ -2406,103 +2389,6 @@ height: 960px; */
   line-height: 20px; /* 133.333% */
 }
 
-.task_table .tr {
-  margin: 10px 0 !important;
-}
-
-.user_table .tr {
-  margin: 50px 0 !important;
-  padding: 50px 0 !important;
-}
-
-.cursor_pointer {
-  cursor: pointer !important;
-}
-
-.pagination li {
-  cursor: pointer !important;
-}
-
-.view_user .profile_img {
-  height: 120px;
-  width: 120px;
-  border-radius: 50% !important;
-}
-
-.view_user .profile_img img {
-  border-radius: 50% !important;
-}
-
-/* View employee */
-
-.text_transform_none {
-  text-transform: none !important;
-}
-
-.view_user {
-  font-family: "Nunito" !important;
-}
-.profile_data .title_head {
-  color: black !important;
-  font-weight: bold;
-  margin: 6px 0;
-}
-
-.profile_data .title_value {
-  color: #656668 !important;
-  text-transform: capitalize;
-  font-weight: normal !important;
-}
-
-.tickets ul {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  font-family: "Nunito";
-  gap: 20px;
-}
-
-.tickets ul li a {
-  text-decoration: none !important;
-  font-size: 12px;
-  color: black;
-}
-
-.nav-tabs .nav-link {
-  font-weight: bold;
-}
-.nav-tabs .nav-link:hover {
-  border-color: white !important;
-}
-.nav-tabs .nav-link.active {
-  border-color: white !important;
-  border-bottom: 2px solid rgb(0, 0, 0) !important;
-}
-
-/* APEX PIE CHART */
-
-.charts {
-  font-family: "Nunito";
-  color: #05103633;
-}
-
-.charts span {
-  font-size: 35px;
-  color: black;
-  font-weight: 700;
-  line-height: 42px;
-  letter-spacing: -0.02em;
-  text-align: left;
-}
-
-.pie_chart_text {
-  font-family: Nunito;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 28px;
-  letter-spacing: -0.02em;
-  text-align: left;
-}
 .edit-menubar-heading {
   text-align: start;
   color: #737578;
@@ -2527,4 +2413,17 @@ height: 960px; */
 .sub-heading-menubar {
   background-color: rgb(91, 146, 255, 0.05);
   padding: 0px;
+}
+.requester-profile-pic {
+  width: 24px;
+  height: 24px;
+  border-radius: 16px;
+  margin: 10px;
+}
+
+.table-profile-pic {
+  width: 24px;
+  height: 24px;
+  border-radius: 16px;
+  margin: 10px;
 }

@@ -4,7 +4,6 @@ import React from "react";
 import "./App.css";
 import "./Responsive.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -110,10 +109,7 @@ import ChatboxDept from "./Components/DepartmentManager/ChatboxDept";
 import ChatboxAprv from "./Components/Approver/Chatbox";
 import CalendarMonthDept from "./Components/DepartmentManager/CalendarMonthDept";
 import CalenderYearDept from "./Components/DepartmentManager/CalenderYear";
-import EmplySetting from "./Components/Employee/EmplySetting";
-import OTPauthEmply from "./Components/Login/OTPauthEmply";
-import CalendarMonthEmply from "./Components/Employee/CalendarMonthEmply";
-import CalenderYearEmply from "./Components/Employee/CalenderYearEmply";
+import CommentsDept from "./Components/DepartmentManager/CommentsDept";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -169,19 +165,8 @@ function App() {
         <Route path="Department/Calendar-year" element={<CalenderYearDept />} />
         <Route path="Department/Departments" element={<DepartmentsDept />} />
         <Route path="Department/Requests" element={<RequestsDept />} />
-        <Route
-          path="Department/Announcements"
-          element={<AnnouncementsDept />}
-        />
-        <Route path="Department/Analytics" element={<AnalyticsDept />} />
-        <Route path="Department/My-profile" element={<ProfileDept />} />
-        <Route path="Department/Edit-profile" element={<EditProfileDept />} />
-        <Route path="Department/Help" element={<HelpDept />} />
-        <Route path="Department/Help-Support" element={<HelpSupportDept />} />
-        <Route path="Department/Contact-us" element={<ContactUsDept />} />
-        <Route path="Department/Settings" element={<SettingsDept />} />
-        <Route path="Department/Requests" element={<RequestsDept />} />
         <Route path="Department/Chat" element={<ChatboxDept />} />
+        <Route path="Department/Comments" element={<CommentsDept />} />
         <Route
           path="Department/Announcements"
           element={<AnnouncementsDept />}
@@ -259,20 +244,30 @@ function App() {
         <Route path="Signatory/Help-Support" element={<HelpSupportSig />} />
         <Route path="Signatory/Contact-us" element={<ContactUsSig />} />
 
-
-
         <Route path="Employee/Login" element={<EmplAuthLogin />} />
-        <Route path="Employee/Forgot-Password" element={<EmplAuthforgotPassword />}/>
+        <Route
+          path="Employee/Forgot-Password"
+          element={<EmplAuthforgotPassword />}
+        />
         <Route path="Employee/Forgot-Success" element={<EmplForgotSuccess />} />
         <Route path="Employee/Home" element={<HomeEmpl />} />
         <Route path="Employee/Dashboard" element={<EmployeeDash />} />
-        <Route path="Employee/history-log-request" element={<RequestHistoryEmpl />}/>
-        <Route path="Employee/history-log-access" element={<DocHistoryEmploye />}/>
+        <Route
+          path="Employee/history-log-request"
+          element={<RequestHistoryEmpl />}
+        />
+        <Route
+          path="Employee/history-log-access"
+          element={<DocHistoryEmploye />}
+        />
         <Route path="Employee/document" element={<DocumentEmply />} />
         <Route path="Employee/received-doc" element={<ReceivedDocEmpl />} />
         <Route path="Employee/Calender" element={<CalenderEmply />} />
         <Route path="Employee/view-details" element={<ViewDocumentEmply />} />
-        <Route path="Employee/received-doc/view-details" element={<ViewReceivedDoc />} />
+        <Route
+          path="Employee/received-doc/view-details"
+          element={<ViewReceivedDoc />}
+        />
         <Route path="Employee/OTP-verification" element={<OTPauthEmply />} />
         <Route path="Employee/profile" element={<EmplProfile />} />
         <Route path="Employee/Edit-Profile" element={<EmplEditProfile />} />
@@ -280,9 +275,12 @@ function App() {
         <Route path="Employee/Help" element={<EmplHelp />} />
         <Route path="Employee/Chat" element={<ChatboxEmploy />} />
         <Route path="Employee/Contact" element={<ContactUsEmpl />} />
-        <Route path="Employee/Settings" element={<EmplySetting />}/>
-        <Route path="Employee/Calendar-month" element={<CalendarMonthEmply/>} />
-        <Route path="Employee/Calendar-year" element={<CalenderYearEmply/>} />
+        <Route path="Employee/Settings" element={<EmplySetting />} />
+        <Route
+          path="Employee/Calendar-month"
+          element={<CalendarMonthEmply />}
+        />
+        <Route path="Employee/Calendar-year" element={<CalenderYearEmply />} />
       </Routes>
     </div>
   );

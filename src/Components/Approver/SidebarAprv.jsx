@@ -35,7 +35,7 @@ const SidebarAprv = () => {
           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle" aria-current="page">
         
-                <img src="/images/sidebar/home2.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/home2.png" alt='' className='align-middle sidebar-icon'/>
               
               <span className="ms-3 align-middle sidebar-btn">Home</span>
             </a>
@@ -47,7 +47,7 @@ const SidebarAprv = () => {
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle" aria-current="page">
         
-                <img src="/images/sidebar/dashboard.svg" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/dashboard.svg" alt="" className='align-middle sidebar-icon'/>
               
               <span className="ms-3 align-middle sidebar-btn">Dashboard</span>
             </a>
@@ -59,7 +59,7 @@ const SidebarAprv = () => {
           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle" aria-current="page">
         
-                <img src="/images/sidebar/template-review.svg" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/template-review.svg" alt="" className='align-middle sidebar-icon'/>
               
               <span className="ms-3 align-middle sidebar-btn">Template Review</span>
             </a>
@@ -71,7 +71,7 @@ const SidebarAprv = () => {
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/history-log.svg" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/history-log.svg" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn ">History Log</span>
             </a>
@@ -84,7 +84,7 @@ const SidebarAprv = () => {
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/user.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/user.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Calendar</span>
             </a>
@@ -97,7 +97,7 @@ const SidebarAprv = () => {
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/request.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/request.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Requests</span>
             </a>
@@ -109,7 +109,7 @@ const SidebarAprv = () => {
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/announcement.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/announcement.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn ">Announcements</span>
             </a>
@@ -118,7 +118,7 @@ const SidebarAprv = () => {
         <li className="nav-item text-dark">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/files.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/files.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Files</span>
             </a>
@@ -133,7 +133,7 @@ const SidebarAprv = () => {
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/my-profile.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/my-profile.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">My Profile</span>
             </a>
@@ -145,7 +145,7 @@ const SidebarAprv = () => {
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/settings.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/settings.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Settings</span>
             </a>
@@ -157,7 +157,7 @@ const SidebarAprv = () => {
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/help.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/help.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Help</span>
             </a>
@@ -166,7 +166,7 @@ const SidebarAprv = () => {
         <li className="nav-item text-dark">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/logout.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/logout.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Logout</span>
             </a>
@@ -176,7 +176,7 @@ const SidebarAprv = () => {
       </div>
 
       <div class="dropdown">
-  <a class="text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <a class="text-decoration-none" type="button" data-bs-toggle="dropdown" href='/' aria-expanded="false">
         <div className="profile">
           <div>
             <img src="/images/sidebar/Profile photo.png" alt="" />
@@ -192,15 +192,15 @@ const SidebarAprv = () => {
   </a>
   <ul class="dropdown-menu">
     <Link to={"/Admin/Home"} className="text-decoration-none">
-    <li><a class="dropdown-item">Admin</a></li>
+    <li><a class="dropdown-item" href='/'>Admin</a></li>
     </Link>
     <Link to={"/Department/Home"} className="text-decoration-none">
-    <li><a class="dropdown-item">Department Manager</a></li>
+    <li><a class="dropdown-item" href='/'>Department Manager</a></li>
     </Link>
     <Link to={"/Signatory/Home"} className="text-decoration-none">
-    <li><a class="dropdown-item">Signatory</a></li>
+    <li><a class="dropdown-item" href='/'>Signatory</a></li>
     <Link to={"/Employee/Home"} className="text-decoration-none">
-    <li><a class="dropdown-item">Employee</a></li>
+    <li><a class="dropdown-item" href='/'>Employee</a></li>
     </Link>
     </Link>
   </ul>
