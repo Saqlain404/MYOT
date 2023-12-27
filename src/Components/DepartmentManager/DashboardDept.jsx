@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-// import "assets/css/style.min.css"
-import { Card } from "antd";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
+import { DepartmentDashboardCount } from "../../ApiServices/departmentHttpService/departmentHttpService";
 
 const DashboardDept = () => {
   const documents = [
@@ -13,67 +11,82 @@ const DashboardDept = () => {
       activity: "Salary Slip.jpg",
       login: "18 Aug 22,09:23 AM",
       login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      status: <img src="/images/dashboard/Download-Button.png"  alt=""/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 2,
       activity: "Promotion Letter.zip",
       login: "18 Aug 22,09:23 AM",
       login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      status: <img src="/images/dashboard/Download-Button.png"  alt=""/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 3,
       activity: "Create Project Wireframes.xls",
       login: "18 Aug 22,09:23 AM",
       login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      status: <img src="/images/dashboard/Download-Button.png"  alt=""/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 4,
       activity: "Create Project Wireframes.pdf",
       login: "18 Aug 22,09:23 AM",
       login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      status: <img src="/images/dashboard/Download-Button.png"  alt=""/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 5,
       activity: "Project tech requirements.zip",
       login: "18 Aug 22,09:23 AM",
       login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      status: <img src="/images/dashboard/Download-Button.png"  alt=""/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 6,
       activity: "Create Project Wireframes.pdf",
       login: "18 Aug 22,09:23 AM",
       login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      status: <img src="/images/dashboard/Download-Button.png"  alt=""/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 7,
       activity: "Create Project Wireframes.xls",
       login: "18 Aug 22,09:23 AM",
       login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      status: <img src="/images/dashboard/Download-Button.png"  alt=""/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 8,
       activity: "Create Project Wireframes.pdf",
       login: "18 Aug 22,09:23 AM",
       login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      status: <img src="/images/dashboard/Download-Button.png"  alt=""/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     // Add more tasks here
   ];
+
+  const [departmentCount, setDepartmentCount] = useState();
+
+  
+
+  const getDepartmentCount = async () => {
+    let { data } = await DepartmentDashboardCount();
+    if (!data?.error) {
+      setDepartmentCount(data?.results);
+    }
+  };
+
+  useEffect(() => {
+    getDepartmentCount();
+  }, []);
 
   return (
     <>
@@ -133,7 +146,7 @@ const DashboardDept = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                       256
+                       {departmentCount?.totalUser}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -155,7 +168,7 @@ const DashboardDept = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        156
+                        {departmentCount?.totalTemplete}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         -0.56%
@@ -177,7 +190,7 @@ const DashboardDept = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        1,320
+                        {departmentCount?.totalDocument}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         -1.48%
@@ -197,7 +210,7 @@ const DashboardDept = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        32
+                      {departmentCount?.totalActiveUser}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         +9.15%
@@ -280,37 +293,37 @@ const DashboardDept = () => {
                       <tr className="pb-2">
                         <td style={{paddingRight: 40}} className="text-nowrap">HR</td>
                         <td>
-                          <img src="/images/dashboard/HR.png" />
+                          <img src="/images/dashboard/HR.png"  alt=""/>
                         </td>
                       </tr>
                       <tr>
                         <td>Finance</td>
                         <td>
-                          <img src="/images/dashboard/Finance.png" />
+                          <img src="/images/dashboard/Finance.png"  alt=""/>
                         </td>
                       </tr>
                       <tr>
                         <td>R&D</td>
                         <td>
-                          <img src="/images/dashboard/R&D.png" />
+                          <img src="/images/dashboard/R&D.png"  alt=""/>
                         </td>
                       </tr>
                       <tr>
                         <td>Transport</td>
                         <td>
-                          <img src="/images/dashboard/Transport.png" />
+                          <img src="/images/dashboard/Transport.png"  alt=""/>
                         </td>
                       </tr>
                       <tr>
                         <td>IT</td>
                         <td>
-                          <img src="/images/dashboard/IT.png" />
+                          <img src="/images/dashboard/IT.png"  alt=""/>
                         </td>
                       </tr>
                       <tr>
                         <td>Sales</td>
                         <td>
-                          <img src="/images/dashboard/sales.png" />
+                          <img src="/images/dashboard/sales.png"  alt=""/>
                         </td>
                       </tr>
                     </table>
@@ -326,23 +339,23 @@ const DashboardDept = () => {
             <div className="col-12 mt-4">
             <div className="row bg-light management">
               <div className="col">
-                <img src="/images/dashboard/search.png" />
+                <img src="/images/dashboard/search.png"  alt=""/>
                 <p className="management-text">Manage Users</p>
               </div>
               <div className="col ">
-                <img src="/images/dashboard/image 2.png" />
+                <img src="/images/dashboard/image 2.png"  alt=""/>
                 <p className="management-text">Manage Departments</p>
               </div>
               <div className="col ">
-                <img src="/images/dashboard/manage-reports.png" />
+                <img src="/images/dashboard/manage-reports.png"  alt=""/>
                 <p className="management-text">Manage Reports</p>
               </div>
               <div className="col ">
-                <img src="/images/dashboard/manage-settings.png" />
+                <img src="/images/dashboard/manage-settings.png"  alt=""/>
                 <p className="management-text">Manage Settings</p>
               </div>
               <div className="col  ">
-                <img src="/images/dashboard/manage-branding.png" />
+                <img src="/images/dashboard/manage-branding.png"  alt=""/>
                 <p className="management-text">Manage Branding</p>
               </div>
             </div>
@@ -393,28 +406,32 @@ const DashboardDept = () => {
                         type="checkbox"
                         value=""
                       />
-                      <img src="/images/dashboard/Featured Icon.png" />
+                      <img src="/images/dashboard/Featured Icon.png" alt=""/>
                       {document.activity}
                     </td>
                     <td className="td-text">
-                      <img src="/images/dashboard/CalendarBlank.png" />
+                      <img src="/images/dashboard/CalendarBlank.png" alt=""/>
                       {document.login}
                     </td>
                     <td className="td-text">
-                      <img src="/images/dashboard/CalendarBlank.png" />
+                      <img src="/images/dashboard/CalendarBlank.png" alt=""/>
                       {document.login2}
                     </td>
                     <td className="td-text">{document.status}</td>
                     <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
+  <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
   {document.action}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="#"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete Template</a></li>
+    <li ><a class="dropdown-item border-bottom" href="/"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
+    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
+    <li>
+      <Link to={"/Department/Comments"} className="text-decoration-none">
+      <a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a>
+      </Link>
+      </li>
+    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
+    <li><a class="dropdown-item text-danger" href="/"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete Template</a></li>
   </ul>
 </div>
                           </td>

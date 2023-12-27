@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 import { employeProfileDetail } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";

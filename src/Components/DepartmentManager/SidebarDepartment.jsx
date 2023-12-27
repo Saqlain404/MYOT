@@ -47,7 +47,7 @@ const SidebarDepartment = () => {
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle" aria-current="page">
         
-                <img src="/images/sidebar/Dashboard.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/Dashboard.svg" className='align-middle sidebar-icon'/>
               
               <span className="ms-3 align-middle sidebar-btn">Dashboard</span>
             </a>

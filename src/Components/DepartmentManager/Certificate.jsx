@@ -1,8 +1,5 @@
 import React from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-// import "assets/css/style.min.css"
-import { Card } from "antd";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
 
@@ -12,97 +9,97 @@ const Certificate = () => {
       id: 1,
       certificateName: "Salary Slip.jpg",
       assignSignatories: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2"  alt=""/>,
         "Katherine Moss",
       ],
       department: "Human Resources",
       dateOfIssurance: "2021-04-16",
       status: <p className="text-primary m-0">Online</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 1,
       certificateName: "Salary Slip.jpg",
       assignSignatories: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar1.png" className="me-2"  alt=""/>,
         "Katherine Moss",
       ],
       department: "Human Resources",
       dateOfIssurance: "2021-04-16",
       status: <p className="text-primary m-0">Online</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 1,
       certificateName: "Salary Slip.jpg",
       assignSignatories: [
-        <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar2.png" className="me-2"  alt=""/>,
         "Katherine Moss",
       ],
       department: "Human Resources",
       dateOfIssurance: "2021-04-16",
       status: <p className="text-primary m-0">Online</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 1,
       certificateName: "Salary Slip.jpg",
       assignSignatories: [
-        <img src="/images/dashboard/Avatar3.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar3.png" className="me-2"  alt=""/>,
         "Katherine Moss",
       ],
       department: "Human Resources",
       dateOfIssurance: "2021-04-16",
       status: <p className="text-primary m-0">Online</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 1,
       certificateName: "Salary Slip.jpg",
       assignSignatories: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2"  alt=""/>,
         "Katherine Moss",
       ],
       department: "Human Resources",
       dateOfIssurance: "2021-04-16",
       status: <p className="text-primary m-0">Online</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 1,
       certificateName: "Salary Slip.jpg",
       assignSignatories: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar1.png" className="me-2"  alt=""/>,
         "Katherine Moss",
       ],
       department: "Human Resources",
       dateOfIssurance: "2021-04-16",
       status: <p className="text-primary m-0">Online</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 1,
       certificateName: "Salary Slip.jpg",
       assignSignatories: [
-        <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar2.png" className="me-2"  alt=""/>,
         "Katherine Moss",
       ],
       department: "Human Resources",
       dateOfIssurance: "2021-04-16",
       status: <p className="text-primary m-0">Online</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 1,
       certificateName: "Salary Slip.jpg",
       assignSignatories: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar1.png" className="me-2"  alt=""/>,
         "Katherine Moss",
       ],
       department: "Human Resources",
       dateOfIssurance: "2021-04-16",
       status: <p className="text-primary m-0">Online</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
    
     // Add more tasks here
@@ -265,7 +262,7 @@ const Certificate = () => {
                         type="checkbox"
                         value=""
                       />
-                      <img src="/images/dashboard/Featured Icon.png" />
+                      <img src="/images/dashboard/Featured Icon.png" alt="" />
                       {document.certificateName}
                     </td>
                     <td className="td-text">
@@ -277,23 +274,25 @@ const Certificate = () => {
                       {document.department}
                     </td>
                     <td className="td-text">
-                    <img src="/images/dashboard/CalendarBlank.png" />
+                    <img src="/images/dashboard/CalendarBlank.png" alt=""/>
                     {document.dateOfIssurance}</td>
                     <td className="td-text">{document.status}</td>
                     <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
+  <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
   {document.action}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
     <li >
       <Link to={"/Department/Certificate-view"} className="text-decoration-none">
-      <a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Certificate</a>
+      <a class="dropdown-item border-bottom" href="/"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Certificate</a>
       </Link>
       </li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="#"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete Template</a></li>
+    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
+    <li><Link to={"/Department/Comments"} className="text-decoration-none">
+      <a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a>
+      </Link></li>
+    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
+    <li><a class="dropdown-item text-danger" href="/"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete Template</a></li>
   </ul>
 </div>
                           </td>

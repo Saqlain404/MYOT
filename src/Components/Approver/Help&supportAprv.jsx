@@ -1,5 +1,4 @@
 import React from "react";
-import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
 
@@ -82,6 +81,7 @@ const HelpSupportAprv = () => {
                               type=""
                               data-bs-toggle="dropdown"
                               aria-expanded="false"
+                              href="/"
                             >
                               
       <button className="help-support-btn1 me-2">Select Priority
@@ -96,7 +96,7 @@ const HelpSupportAprv = () => {
                   data-bs-target="#exampleModal"
                 >
                   
-                                <a class="dropdown-item border-bottom" href="#">
+                                <a class="dropdown-item border-bottom" href="/">
                                   <img
                                     src="/images/dashboard/blue-ticket-ball.svg"
                                     alt=""
@@ -108,7 +108,7 @@ const HelpSupportAprv = () => {
 
                               </li>
                               <li>
-                                <a class="dropdown-item border-bottom" href="#">
+                                <a class="dropdown-item border-bottom" href="/">
                                   <img
                                    src="/images/dashboard/orange-ticket-ball.svg"
                                     alt=""
@@ -118,7 +118,7 @@ const HelpSupportAprv = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/">
                                   <img
                                     src="/images/dashboard/green-ticket-ball.svg"
                                     alt=""

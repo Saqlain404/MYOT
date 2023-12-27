@@ -1,8 +1,5 @@
 import React from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-// import "assets/css/style.min.css"
-import { Card } from "antd";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarAprv";
 
@@ -12,66 +9,66 @@ const HistoryLogAprv = () => {
       id: 1,
       templateName: "Salary Slip.jpg",
       creator: [
-        <img src="/images/dashboard/avatar3.png" className="me-2" />,
+        <img src="/images/dashboard/avatar3.png" className="me-2"  alt=""/>,
         "Eve Leroy",
       ],
       department: "Human Resources",
       dateOfCreation: "2023-09-16",
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
+      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt=""/>,
       version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 2,
       templateName: "Promotion Letter.zip",
       creator: [
-        <img src="/images/dashboard/avatar2.png" className="me-2" />,
+        <img src="/images/dashboard/avatar2.png" className="me-2"  alt=""/>,
         "Lana Steiner",
       ],
       department: "Sales & Marketing",
       dateOfCreation: "2023-09-16",
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
+      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt=""/>,
       version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 3,
       templateName: "Create Project Wireframes.xls",
       creator: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar1.png" className="me-2"  alt=""/>,
         "ByeWind",
       ],
       department: "Training & Development",
       dateOfCreation: "2023-09-16",
-        comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
+        comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt=""/>,
 version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 4,
       templateName: "Create Project Wireframes.pdf",
       creator: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2"  alt=""/>,
         "Katherine Moss",
       ],
       department: "Human Resources",
       dateOfCreation: "2023-09-16",
-        comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
+        comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt=""/>,
 version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 5,
       templateName: "Project tech requirements.zip",
       creator: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar1.png" className="me-2"  alt=""/>,
         "Natali Craig",
       ],
       department: "Training & Development",
       dateOfCreation: "2023-09-16",
-        comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
+        comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt=""/>,
         version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     
     // Add more tasks here
@@ -256,21 +253,21 @@ version: "0.1",
                       {document.department}
                     </td>
                     <td className="td-text">
-                      <img src="/images/dashboard/CalendarBlank.png" />
+                      <img src="/images/dashboard/CalendarBlank.png" alt="" />
                       {document.dateOfCreation}
                     </td>
                     <td className="td-text">{document.comments}</td>
                     <td className="td-text">{document.version}</td>
                     <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
+  <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
   {document.action}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="#"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete Template</a></li>
+    <li ><a class="dropdown-item border-bottom" href="/"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
+    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
+    <li><a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
+    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
+    <li><a class="dropdown-item text-danger" href="/"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete Template</a></li>
   </ul>
 </div>
                           </td>
@@ -286,27 +283,27 @@ version: "0.1",
               >
                 <ul className="pagination">
                   <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
+                    <a className="page-link" href="/" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
                   <li className="page-item">
-                    <button className="page-link" href="#">
+                    <button className="page-link" href="/">
                       1
                     </button>
                   </li>
                   <li className="page-item">
-                    <button className="page-link" href="#">
+                    <button className="page-link" href="/">
                       2
                     </button>
                   </li>
                   <li className="page-item">
-                    <button className="page-link" href="#">
+                    <button className="page-link" href="/">
                       3
                     </button>
                   </li>
                   <li className="page-item">
-                    <button className="page-link" href="#" aria-label="Next">
+                    <button className="page-link" href="/" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
                     </button>
                   </li>

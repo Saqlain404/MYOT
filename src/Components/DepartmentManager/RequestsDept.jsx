@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
+import { RequestsList } from "../../ApiServices/departmentHttpService/departmentHttpService";
+import { useEffect } from "react";
 
 const RequestsDept = () => {
   const documents = [
@@ -9,95 +11,110 @@ const RequestsDept = () => {
       id: 1,
       document: "Employment Contract",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2"  alt=""/>,
         
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2"  alt=""/>,
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-primary m-0">In Progress</p>,
       department: "Human Resources",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block"  alt=""/>
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"  alt=""/>
       ),
     },
     {
       id: 2,
       document: "Tax Deduction at Source (TDS)",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2"  alt=""/>,
         
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2"  alt=""/>,
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-warning m-0"> Approved</p>,
       department: "Human Resources",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block"  alt=""/>
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"  alt=""/>
       ),
     },
     {
       id: 3,
       document: "Training Certificates",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2"  alt=""/>,
         
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2"  alt=""/>,
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-success m-0">Complete</p>,
       department: "Human Resources",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block"  alt=""/>
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"  alt=""/>
       ),
     },
     {
       id: 4,
       document: "Software Licenses",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2"  alt=""/>,
         
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2"  alt=""/>,
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-primary m-0">In Progress</p>,
       department: "Information Technologies",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block"  alt=""/>
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"  alt=""/>
       ),
     },
     {
       id: 5,
       document: "Reference Letter",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2"  alt=""/>,
         
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2"  alt=""/>,
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-info m-0">Pending</p>,
       department: "Human Resources",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block"  alt=""/>
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"  alt=""/>
       ),
     },
    
     // Add more tasks here
   ];
+
+  const [listItems, setListItems] = useState([]);
+
+  const getRequestsLists = async (key) => {
+    const { data } = await RequestsList ({search: key});
+    if (!data?.error) {
+      setListItems(data?.results?.list);
+    }
+  };
+  console.log(listItems);
+
+  useEffect(() => {
+    getRequestsLists()
+  }, [])
+  
 
   return (
     <>
@@ -200,7 +217,7 @@ const RequestsDept = () => {
                           type="checkbox"
                           value=""
                         />
-                        Document
+                        Template Name
                       </th>
                       <th className="th-text">
                         <input
@@ -208,7 +225,7 @@ const RequestsDept = () => {
                           type="checkbox"
                           value=""
                         />
-                        Requester
+                       Requester Name
                       </th>
                       <th className="th-text">
                         <input
@@ -216,7 +233,7 @@ const RequestsDept = () => {
                           type="checkbox"
                           value=""
                         />
-                        Assigned to
+                        Date
                       </th>
                       <th className="th-text">
                         <input
@@ -224,15 +241,7 @@ const RequestsDept = () => {
                           type="checkbox"
                           value=""
                         />
-                       Status
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                       Department
+                       Comment
                       </th>
                       <th className="th-text">
                       <input
@@ -245,32 +254,30 @@ const RequestsDept = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {documents.map((document) => (
-                      <tr key={document.id}>
+                    {listItems.map((requests) => (
+                      <tr key={requests._id}>
                         <td className="td-text">
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
-                        />{document.document}</td>
-                        <td className="td-text">{document.requester}</td>
-                        <td className="td-text">{document.assignedTo}</td>
-                        <td className="td-text">{document.status}</td>
-                        <td className="td-text">{document.department}</td>
+                        />{requests?.templete_Id?.templeteName}</td>
+                        <td className="td-text"><img src={requests?.templete_Id?.manager?.profile_Pic} alt="" className="requester-profile-pic" />{requests?.templete_Id?.manager?.name}</td>
+                        <td className="td-text"> <img src="/images/dashboard/CalendarBlank.png" alt=""/>{requests?.createdAt}</td>
                         
-                        {/* <td className="td-text"></td> */}
+                        <td className="td-text"><img src="/images/dashboard/Comment.png" className="mx-auto d-block" /></td>
                         <td className="td-text">
                           <div class="dropdown">
                             <a
                               type=""
                               data-bs-toggle="dropdown"
-                              aria-expanded="false"
+                              aria-expanded="false" href="/"
                             >
-                              {document.actions}
+                            <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"  alt=""/>
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                               <li>
-                                <a class="dropdown-item border-bottom" href="#">
+                                <a class="dropdown-item border-bottom" href="/">
                                   <img
                                     src="/images/users/AddressBook.svg"
                                     alt=""
@@ -280,7 +287,7 @@ const RequestsDept = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item border-bottom" href="#">
+                                <a class="dropdown-item border-bottom" href="/">
                                   <img
                                     src="/images/users/PencilLine.svg"
                                     alt=""
@@ -290,17 +297,12 @@ const RequestsDept = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item" href="#">
-                                  <img
-                                    src="/images/dashboard/Comment.png"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Comments
-                                </a>
+                              <Link to={"/Department/Comments"} className="text-decoration-none">
+      <a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a>
+      </Link>
                               </li>
                               <li>
-                                <a class="dropdown-item border-bottom" href="#">
+                                <a class="dropdown-item border-bottom" href="/">
                                   <img
                                     src="/images/users/TextAlignLeft.svg"
                                     alt=""
@@ -310,7 +312,7 @@ const RequestsDept = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item text-danger" href="#">
+                                <a class="dropdown-item text-danger" href="/">
                                   <img
                                     src="/images/users/Trash.svg"
                                     alt=""
@@ -333,7 +335,7 @@ const RequestsDept = () => {
               >
                 <ul className="pagination">
                   <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
+                    <a className="page-link" href="/" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>

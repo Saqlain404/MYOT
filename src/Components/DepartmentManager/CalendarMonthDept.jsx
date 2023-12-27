@@ -1,11 +1,5 @@
 import React from "react";
-import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-import { Calendar, theme, Badge } from 'antd';
-// import "assets/css/style.min.css"
-import { Card } from 'antd';
 import MiniCalendar from "./MiniCalendar";
-import CalenderYear from "./CalenderYear";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
 

@@ -9,90 +9,90 @@ const RequestsAprv = () => {
       id: 1,
       document: "Employment Contract",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
         
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />,
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-primary m-0">In Progress</p>,
       department: "Human Resources",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt="" />
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt="" />
       ),
     },
     {
       id: 2,
       document: "Tax Deduction at Source (TDS)",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
         
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />,
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-warning m-0"> Approved</p>,
       department: "Human Resources",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt="" />
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt="" />
       ),
     },
     {
       id: 3,
       document: "Training Certificates",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
         
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />,
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-success m-0">Complete</p>,
       department: "Human Resources",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt="" />
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt="" />
       ),
     },
     {
       id: 4,
       document: "Software Licenses",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
         
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />,
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-primary m-0">In Progress</p>,
       department: "Information Technologies",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt="" />
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt="" />
       ),
     },
     {
       id: 5,
       document: "Reference Letter",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
         
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />,
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-info m-0">Pending</p>,
       department: "Human Resources",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt="" />
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt="" />
       ),
     },
    
@@ -265,12 +265,13 @@ const RequestsAprv = () => {
                               type=""
                               data-bs-toggle="dropdown"
                               aria-expanded="false"
+                              href="/"
                             >
                               {document.actions}
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                               <li>
-                                <a class="dropdown-item border-bottom" href="#">
+                                <a class="dropdown-item border-bottom" href="/">
                                   <img
                                     src="/images/users/AddressBook.svg"
                                     alt=""
@@ -280,7 +281,7 @@ const RequestsAprv = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item border-bottom" href="#">
+                                <a class="dropdown-item border-bottom" href="/">
                                   <img
                                     src="/images/users/PencilLine.svg"
                                     alt=""
@@ -290,7 +291,7 @@ const RequestsAprv = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/">
                                   <img
                                     src="/images/dashboard/Comment.png"
                                     alt=""
@@ -300,7 +301,7 @@ const RequestsAprv = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item border-bottom" href="#">
+                                <a class="dropdown-item border-bottom" href="/">
                                   <img
                                     src="/images/users/TextAlignLeft.svg"
                                     alt=""
@@ -310,7 +311,7 @@ const RequestsAprv = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item text-danger" href="#">
+                                <a class="dropdown-item text-danger" href="/">
                                   <img
                                     src="/images/users/Trash.svg"
                                     alt=""
@@ -333,7 +334,7 @@ const RequestsAprv = () => {
               >
                 <ul className="pagination">
                   <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
+                    <a className="page-link" href="/" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>

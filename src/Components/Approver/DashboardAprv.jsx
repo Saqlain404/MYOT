@@ -1,10 +1,6 @@
 import React from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-// import "assets/css/style.min.css"
-import { Card } from "antd";
 import { Link } from "react-router-dom";
-import SidebarDepartment from "./SidebarAprv";
 import SidebarAprv from "./SidebarAprv";
 
 const DashboardAprv = () => {
@@ -13,61 +9,61 @@ const DashboardAprv = () => {
       id: 1,
       templateName: "Salary Slip.jpg",
       creator: [
-        <img src="/images/dashboard/avatar3.png" className="me-2" />,
+        <img src="/images/dashboard/avatar3.png" alt="" className="me-2" />,
         "Eve Leroy",
       ],
       department: "Human Resources",
       dateOfCreation: "2023-09-16",
       status: <p className="text-warning">High</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" alt="" className="w-auto p-3"/>,
     },
     {
       id: 2,
       templateName: "Promotion Letter.zip",
       creator: [
-        <img src="/images/dashboard/avatar2.png" className="me-2" />,
+        <img src="/images/dashboard/avatar2.png" alt="" className="me-2" />,
         "Lana Steiner",
       ],
       department: "Sales & Marketing",
       dateOfCreation: "2023-09-16",
       status: <p className="text-warning">High</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" alt="" className="w-auto p-3"/>,
     },
     {
       id: 3,
       templateName: "Create Project Wireframes.xls",
       creator: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar1.png" alt="" className="me-2" />,
         "ByeWind",
       ],
       department: "Training & Development",
       dateOfCreation: "2023-09-16",
       status: <p className="text-danger">Urgent</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" alt="" className="w-auto p-3"/>,
     },
     {
       id: 4,
       templateName: "Create Project Wireframes.pdf",
       creator: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" alt="" className="me-2" />,
         "Katherine Moss",
       ],
       department: "Human Resources",
       dateOfCreation: "2023-09-16",
       status: <p className="text-secondary">Low</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" alt="" className="w-auto p-3"/>,
     },
     {
       id: 5,
       templateName: "Project tech requirements.zip",
       creator: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar1.png" alt="" className="me-2" />,
         "Natali Craig",
       ],
       department: "Training & Development",
       dateOfCreation: "2023-09-16",
       status: <p className="text-primary">Normal</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" alt="" className="w-auto p-3"/>,
     },
     
     // Add more tasks here
@@ -264,37 +260,37 @@ const DashboardAprv = () => {
                       <tr className="pb-2">
                         <td style={{paddingRight: 40}} className="text-nowrap">HR</td>
                         <td>
-                          <img src="/images/dashboard/HR.png" />
+                          <img src="/images/dashboard/HR.png" alt="" />
                         </td>
                       </tr>
                       <tr>
                         <td>Finance</td>
                         <td>
-                          <img src="/images/dashboard/Finance.png" />
+                          <img src="/images/dashboard/Finance.png" alt="" />
                         </td>
                       </tr>
                       <tr>
                         <td>R&D</td>
                         <td>
-                          <img src="/images/dashboard/R&D.png" />
+                          <img src="/images/dashboard/R&D.png" alt="" />
                         </td>
                       </tr>
                       <tr>
                         <td>Transport</td>
                         <td>
-                          <img src="/images/dashboard/Transport.png" />
+                          <img src="/images/dashboard/Transport.png" alt="" />
                         </td>
                       </tr>
                       <tr>
                         <td>IT</td>
                         <td>
-                          <img src="/images/dashboard/IT.png" />
+                          <img src="/images/dashboard/IT.png" alt="" />
                         </td>
                       </tr>
                       <tr>
                         <td>Sales</td>
                         <td>
-                          <img src="/images/dashboard/sales.png" />
+                          <img src="/images/dashboard/sales.png" alt="" />
                         </td>
                       </tr>
                     </table>
@@ -423,20 +419,20 @@ const DashboardAprv = () => {
                       {document.department}
                     </td>
                     <td className="td-text">
-                      <img src="/images/dashboard/CalendarBlank.png" />
+                      <img src="/images/dashboard/CalendarBlank.png" alt="" />
                       {document.dateOfCreation}
                     </td>
                     <td className="td-text">{document.status}</td>
                     <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
+  <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
   {document.action}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="#"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete Template</a></li>
+    <li ><a class="dropdown-item border-bottom" href="/"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
+    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
+    <li><a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
+    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
+    <li><a class="dropdown-item text-danger" href="/"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete Template</a></li>
   </ul>
 </div>
                           </td>
@@ -452,27 +448,27 @@ const DashboardAprv = () => {
               >
                 <ul className="pagination">
                   <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
+                    <a className="page-link" href="/" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
                   <li className="page-item">
-                    <button className="page-link" href="#">
+                    <button className="page-link" href="/">
                       1
                     </button>
                   </li>
                   <li className="page-item">
-                    <button className="page-link" href="#">
+                    <button className="page-link" href="/">
                       2
                     </button>
                   </li>
                   <li className="page-item">
-                    <button className="page-link" href="#">
+                    <button className="page-link" href="/">
                       3
                     </button>
                   </li>
                   <li className="page-item">
-                    <button className="page-link" href="#" aria-label="Next">
+                    <button className="page-link" href="/" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
                     </button>
                   </li>

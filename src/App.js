@@ -4,7 +4,6 @@ import React from "react";
 import "./App.css";
 import "./Responsive.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -109,6 +108,7 @@ import ChatboxDept from "./Components/DepartmentManager/ChatboxDept";
 import ChatboxAprv from "./Components/Approver/Chatbox";
 import CalendarMonthDept from "./Components/DepartmentManager/CalendarMonthDept";
 import CalenderYearDept from "./Components/DepartmentManager/CalenderYear";
+import CommentsDept from "./Components/DepartmentManager/CommentsDept";
 
 function App() {
   return (
@@ -169,6 +169,7 @@ function App() {
         <Route path="Department/Settings" element={<SettingsDept/>} />  
         <Route path="Department/Requests" element={<RequestsDept />} />
         <Route path="Department/Chat" element={<ChatboxDept/>} />
+        <Route path="Department/Comments" element={<CommentsDept/>} />
         <Route
           path="Department/Announcements"
           element={<AnnouncementsDept />}

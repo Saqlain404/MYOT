@@ -1,6 +1,5 @@
 import React from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
 

@@ -1,20 +1,16 @@
 import React from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-// import "assets/css/style.min.css"
-import { Space, Table, Tag } from "antd";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
 
 const DepartmentsDept = () => {
-  const photo = <img src="/images/dashboard/Avatar.png" />;
   const data = [
     {
       key: "1",
       userId: "111125",
       // image: "./images/dashboard/Avatar.png",
       name: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar.png" className="me-2" alt=""/>,
         "Katherine Moss",
       ],
       department: "Human Resourses",
@@ -29,14 +25,14 @@ const DepartmentsDept = () => {
       lastLoggedIn: "2021-04-16 18:02:55",
       status: <p className="text-primary m-0">In Progress</p>,
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
       ),
     },
     {
       key: "2",
       userId: "101346",
       name: [
-        <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar2.png" className="me-2" alt=""/>,
         "Natali Craig",
       ],
       department: "Human Resourses",
@@ -51,14 +47,14 @@ const DepartmentsDept = () => {
       lastLoggedIn: "2021-04-16 18:02:55",
       status: <p className="text-primary m-0">In Progress</p>,
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
       ),
     },
     {
       key: "3",
       userId: "101127",
       name: [
-        <img src="/images/dashboard/Avatar3.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar3.png" className="me-2" alt=""/>,
         "Orlando Diggs",
       ],
       department: "Human Resourses",
@@ -73,14 +69,14 @@ const DepartmentsDept = () => {
       lastLoggedIn: "2021-04-16 18:02:55",
       status: <p className="text-primary m-0">In Progress</p>,
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
       ),
     },
     {
       key: "4",
       userId: "101128",
       name: [
-        <img src="/images/dashboard/Avatar2.png" className="me-2" />,
+        <img src="/images/dashboard/Avatar2.png" className="me-2" alt=""/>,
         "Katherine Moss",
       ],
       department: "Human Resourses",
@@ -95,7 +91,7 @@ const DepartmentsDept = () => {
       lastLoggedIn: "2021-04-16 18:02:55",
       status: <p className="text-primary m-0">In Progress</p>,
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
       ),
     },
   ];
@@ -352,7 +348,7 @@ const DepartmentsDept = () => {
                           {document.roles}
                         </td>
                         <td className="td-text">
-                          <img src="/images/dashboard/CalendarBlank.png" />
+                          <img src="/images/dashboard/CalendarBlank.png" alt=""/>
                           {document.lastLoggedIn}
                         </td>
                         <td className="td-text">{document.status}</td>
@@ -362,12 +358,13 @@ const DepartmentsDept = () => {
                               type=""
                               data-bs-toggle="dropdown"
                               aria-expanded="false"
+                              href="/"
                             >
                               {document.actions}
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                               <li>
-                                <a class="dropdown-item border-bottom" href="#">
+                                <a class="dropdown-item border-bottom" href="/">
                                   <img
                                     src="/images/users/AddressBook.svg"
                                     alt=""
@@ -377,7 +374,7 @@ const DepartmentsDept = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item border-bottom" href="#">
+                                <a class="dropdown-item border-bottom" href="/">
                                   <img
                                     src="/images/users/PencilLine.svg"
                                     alt=""
@@ -387,17 +384,12 @@ const DepartmentsDept = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item" href="#">
-                                  <img
-                                    src="/images/dashboard/Comment.png"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Comments
-                                </a>
+                              <Link to={"/Department/Comments"} className="text-decoration-none">
+      <a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a>
+      </Link>
                               </li>
                               <li>
-                                <a class="dropdown-item border-bottom" href="#">
+                                <a class="dropdown-item border-bottom" href="/">
                                   <img
                                     src="/images/users/TextAlignLeft.svg"
                                     alt=""
@@ -407,7 +399,7 @@ const DepartmentsDept = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item text-danger" href="#">
+                                <a class="dropdown-item text-danger" href="/">
                                   <img
                                     src="/images/users/Trash.svg"
                                     alt=""
@@ -430,7 +422,7 @@ const DepartmentsDept = () => {
               >
                 <ul className="pagination">
                   <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+                    <a class="page-link" href="/" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>

@@ -1,8 +1,4 @@
 import React from "react";
-import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-// import "assets/css/style.min.css"
-import { Card } from "antd";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
 

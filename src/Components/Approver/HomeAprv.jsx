@@ -1,10 +1,7 @@
 import React from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
-import SidebarDepartment from "./SidebarAprv";
 import SidebarAprv from "./SidebarAprv";
 // import "../../dist/css/style.min.css"
 
@@ -13,107 +10,55 @@ const HomeAprv = () => {
     {
       id: 1,
       template: "Non-Objection Certificate",
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
       version: "1.0",
       status: 
         <p className="text-primary m-0">
           In Progress
         </p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 2,
       template: "Expense Report",
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
       version: "2.0",
       status: <p className="text-warning m-0"> Approved</p>,
       department: "Finance",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 3,
       template: "Salary Slip",
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
       version: "1.5",
       status: <p className="text-info m-0">Pending</p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 3,
       template: "Research Proposal",
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
       version: "1.5",
       status: <p className="text-success m-0"> Active</p>,
       department: "R&D",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     {
       id: 3,
       template: "Conference Attendance",
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
+      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
       version: "1.5",
       status: <p className="text-secondary m-0">Rejected</p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
     },
     // Add more tasks here
   ];
 
-  const documents = [
-    {
-      id: 1,
-      document: "To Whom It May Concern",
-      requester: <img src="/images/dashboard/Avatar1.png" />,
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
-      version: "1.0",
-      status: <p className="text-primary">In Progress</p>,
-      department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 2,
-      document: "Salary Certificate",
-      requester: <img src="/images/dashboard/Avatar2.png" />,
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
-      version: "2.0",
-      status: <p className="text-warning">Approved</p>,
-      department: "Finance",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 3,
-      document: "Maternity Leave",
-      requester: <img src="/images/dashboard/Avatar3.png" />,
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
-      version: "1.5",
-      status: <p className="text-info">Pending</p>,
-      department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 4,
-      document: "Promotion",
-      requester: <img src="/images/dashboard/Avatar.png" />,
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
-      version: "1.5",
-      status: <p className="text-success">Active</p>,
-      department: "R&D",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 5,
-      document: "Sales Report",
-      requester: <img src="/images/dashboard/Avatar2.png" />,
-      assignedTo: <img src="/images/dashboard/Avatar2.png" />,
-      version: "1.5",
-      status: <p className="text-secondary">Rejected</p>,
-      department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    // Add more tasks here
-  ];
+  
   return (
     <>
       <div className="container-fluid">
@@ -358,15 +303,15 @@ const HomeAprv = () => {
                         <td className="td-text">{task.status}</td>
                         <td className="td-text">{task.department}</td>
                         <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
+  <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
   {task.action}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="#"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete User</a></li>
+    <li ><a class="dropdown-item border-bottom" href="/"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
+    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
+    <li><a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
+    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
+    <li><a class="dropdown-item text-danger" href="/"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete User</a></li>
   </ul>
 </div>
                           </td>
@@ -382,7 +327,7 @@ const HomeAprv = () => {
               >
                 <ul className="pagination">
                   <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+                    <a class="page-link" href="/" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
@@ -517,15 +462,15 @@ const HomeAprv = () => {
                         <td className="td-text">{task.status}</td>
                         <td className="td-text">{task.department}</td>
                         <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
+  <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
   {task.action}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="#"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete User</a></li>
+    <li ><a class="dropdown-item border-bottom" href="/"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
+    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
+    <li><a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
+    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
+    <li><a class="dropdown-item text-danger" href="/"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete User</a></li>
   </ul>
 </div>
                           </td>
@@ -541,7 +486,7 @@ const HomeAprv = () => {
               >
                 <ul className="pagination">
                   <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
+                    <a className="page-link" href="/" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
