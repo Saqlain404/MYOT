@@ -239,6 +239,30 @@ export async function OnGoingListEmply() {
     return null;
   }
 }
+export async function NewTicketEmply() {
+  try {
+    const response = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/new-ticket/${id}`
+    );
+
+    if (!response.data?.error) {
+      const ticketList = response.data.results?.ticket;
+      console.log(ticketList)
+
+      return [ticketList];
+    } else {
+      toast.error(response.data.message);
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error('An error occurred while fetching the template IDs.');
+    }
+    return null;
+  }
+}
 export async function ResolveListEmpl() {
   try {
     const response = await employeeHttpService.get(

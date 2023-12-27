@@ -48,6 +48,8 @@ height: 960px; */
   height: 80px;
   flex-shrink: 0;
   border-radius: 50px;
+  margin-right: 8px;
+  object-fit: cover;
 }
 
 .myot {
@@ -178,6 +180,7 @@ height: 960px; */
   width: 34px;
   height: 34px;
   border-radius: 100%;
+  object-fit: cover;
   margin-left: 20px;
   margin-right: 10px;
 }
@@ -736,7 +739,7 @@ height: 960px; */
   white-space: nowrap;
   overflow: hidden;
   height: 100%;
-  background-color: #fff;
+  background: #FFF4EA;
   align-items: flex-start;
   border-radius: 14px;
   padding: 18px 20px;
@@ -1357,7 +1360,7 @@ height: 960px; */
 }
 
 .nav_active .sidebar-btn {
-  color: black !important;
+ color: #3E51FF !important;
   font-weight: bold;
 }
 
@@ -2538,4 +2541,35 @@ height: 960px; */
   position: absolute;
   background: white;
   z-index: 10;
+}
+.progress-bar {
+  background: rgba(0, 0, 0, 0.05);
+  height: 28px;
+  width: 160px;
+  margin: 0 0 10px 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.progress-container {
+  position: relative;
+  height: 100%;
+}
+
+.progress {
+  background-color: #C6C7F8;
+  color: black;
+  font-weight: 600;
+  line-height: 28px;
+  height: 100%;
+}
+
+.progress-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 14px;
+  transform: translate(-50%, -50%);
+  color: #333; /* Choose a color that contrasts well with your progress bar color */
+  font-weight: 600;
 }

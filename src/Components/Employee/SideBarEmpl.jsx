@@ -101,7 +101,7 @@ const SideBarEmpl = () => {
                   aria-current="page"
                 >
                   <img
-                    src="/images/sidebar/Dashboard.png"
+                    src="/images/sidebar/dashboard.svg"
                     className="align-middle sidebar-icon"
                   />
 
@@ -123,7 +123,7 @@ const SideBarEmpl = () => {
                   aria-current="page"
                 >
                   <img
-                    src="/images/dashboard/templates.svg"
+                    src="/images/sidebar/File.svg"
                     className="align-middle sidebar-icon"
                   />
 
@@ -151,7 +151,7 @@ const SideBarEmpl = () => {
                   aria-current="page"
                 >
                   <img
-                    src="/images/sidebar/departments.png"
+                    src="/images/sidebar/history-log.svg"
                     className="align-middle sidebar-icon"
                   />
 
@@ -179,7 +179,7 @@ const SideBarEmpl = () => {
                   aria-current="page"
                 >
                   <img
-                    src="/images/sidebar/departments.png"
+                    src="/images/sidebar/FileArrowDown.svg"
                     className="align-middle sidebar-icon"
                   />
 
@@ -202,7 +202,7 @@ const SideBarEmpl = () => {
                   aria-current="page"
                 >
                   <img
-                    src="/images/sidebar/user.png"
+                    src="/images/sidebar/ic_calendar.png"
                     className="align-middle sidebar-icon"
                   />
 

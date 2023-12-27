@@ -3,119 +3,135 @@ import RightSidebar from "../RightSidebar";
 // import "assets/css/style.min.css"
 import { Link, useNavigate } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
-import { DasboardCount, EmployeeDashList, PresentDocumentDash, searchDash, totalTicketCount } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import {
+  DasboardCount,
+  EmployeeDashList,
+  PresentDocumentDash,
+  searchDash,
+  totalTicketCount,
+} from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const EmployeeDash = () => {
-
-
   const navigate = useNavigate();
-  const[searchData, setSearchData] = useState("");
+  const [searchData, setSearchData] = useState("");
   const [templateNames, setTemplateNames] = useState(null);
   const [documentRequests, setDocumentRequests] = useState([]);
- 
-  const handleSearch = async()=>{
-    const result = await searchDash(searchData)
+
+
+  const handleSearch = async () => {
+    const result = await searchDash(searchData);
     // console.log(result)
     const searchResult = result?.data?.results?.document;
 
-      if (searchResult && Array.isArray(searchResult)) {
-        const mappedResult = searchResult?.map((document) => ({
-          documentName: document?.templete?.templeteName,
-          // assignedTo: [name?.templete_Id?.manager?.name], 
-          department: [document?.templete?.manager?.[0]?.department?.[0]?.departmentName], 
-          dateofSigning: [document?.createdAt],
-          comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
-          status:[document?.status],
-          action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-        }));
-        setDocumentRequests(mappedResult);
-      } 
-  }
+    if (searchResult && Array.isArray(searchResult)) {
+      const mappedResult = searchResult?.map((document) => ({
+        documentName: document?.templete?.templeteName,
+        // assignedTo: [name?.templete_Id?.manager?.name],
+        department: [
+          document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
+        ],
+        dateofSigning: [document?.createdAt],
+        comments: (
+          <img
+            src="/images/dashboard/Comment.png"
+            className="mx-auto d-block"
+          />
+        ),
+        status: [document?.status],
+        action: (
+          <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        ),
+      }));
+      setDocumentRequests(mappedResult);
+    }
+  };
 
-  
-  useEffect(()=>{
-    handleSearch()
-  },[searchData])
+  useEffect(() => {
+    handleSearch();
+  }, [searchData]);
 
-  
   useEffect(() => {
     const fetchData = async () => {
-     if(!searchData || searchData === ""){
-       const names = await EmployeeDashList();
-      if (names) {
-        setTemplateNames(names);
-        // console.log(names)
-     }
-      
+      if (!searchData || searchData === "") {
+        const names = await EmployeeDashList();
+        if (names) {
+          setTemplateNames(names);
+          // console.log(names)
+        }
+
         const requests = names?.[0]?.map((name) => ({
           documentName: name?.templete_Id?.templeteName,
-          // assignedTo: [name?.templete_Id?.manager?.name], 
-          department: [name?.templete_Id?.manager?.department_Id?.departmentName], 
+          // assignedTo: [name?.templete_Id?.manager?.name],
+          department: [
+            name?.templete_Id?.manager?.department_Id?.departmentName,
+          ],
           dateofSigning: [name?.createdAt],
-          comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
-          status:[name?.status],
-          action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+          comments: (
+            <img
+              src="/images/dashboard/Comment.png"
+              className="mx-auto d-block"
+            />
+          ),
+          status: [name?.status],
+          action: (
+            <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+          ),
         }));
-        
 
         setDocumentRequests(requests);
       }
     };
 
     fetchData();
-  },[searchData]);
-
-
+  }, [searchData]);
 
   // Dasboard Count API
-  const[totalDocument,setTotalDocument] = useState(null);
-  const[pendingDocument,setPendingDocument] = useState(null);
+  const [totalDocument, setTotalDocument] = useState(null);
+  const [pendingDocument, setPendingDocument] = useState(null);
 
-  useEffect(()=>{
-    const count = async ()=>{
+  useEffect(() => {
+    const count = async () => {
       const dashbaordCountResult = await DasboardCount();
       if (!dashbaordCountResult?.error && dashbaordCountResult?.data) {
         const count = dashbaordCountResult?.data?.results.totalDocument;
-        const receivedDocCount = dashbaordCountResult?.data?.results?.pendingDocument;
+        const receivedDocCount =
+          dashbaordCountResult?.data?.results?.pendingDocument;
         // console.log(dashbaordCountResult);
-        setTotalDocument(count)
-        setPendingDocument(receivedDocCount)
-    }
-  }
+        setTotalDocument(count);
+        setPendingDocument(receivedDocCount);
+      }
+    };
     count();
-  },[])
+  }, []);
 
-
-  const[docCount,setDocCount] = useState()
-  useEffect(()=>{
-    const id = localStorage.getItem("user_id")
-    const presentDoc = async()=>{
+  const [docCount, setDocCount] = useState();
+  useEffect(() => {
+    const id = localStorage.getItem("user_id");
+    const presentDoc = async () => {
       const data = await PresentDocumentDash(id);
-      setDocCount(data?.[0]?.results)
-      console.log(data?.[0]?.results)
+      setDocCount(data?.[0]?.results);
+      console.log(data?.[0]?.results);
+    };
+    presentDoc();
+  }, []);
 
-    }
-    presentDoc()
-  },[])
-
-
-  const[ticketCount,setTotalTicket] = useState()
-  useEffect(()=>{
-    const id = localStorage.getItem("user_id")
-    const totalTicket = async()=>{
+  const [ticketCount, setTotalTicket] = useState();
+  useEffect(() => {
+    const id = localStorage.getItem("user_id");
+    const totalTicket = async () => {
       const data = await totalTicketCount(id);
-      setTotalTicket(data?.[0]?.results)
-      console.log(data?.[0]?.results)
-    }
-    totalTicket()
-  },[])
+      setTotalTicket(data?.[0]?.results);
+      console.log(data?.[0]?.results);
+    };
+    totalTicket();
+  }, []);
 
   return (
     <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <SideBarEmpl/>
+            <SideBarEmpl />
           </div>
           <div className="col-7 middle-content">
             <div className="container-fluid border-bottom mb-4">
@@ -134,10 +150,11 @@ const EmployeeDash = () => {
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
-                      onChange={(e)=> {setSearchData(e.target.value);
+                      onChange={(e) => {
+                        setSearchData(e.target.value);
                         //  handleSearch();
-                        }}
-                        value={searchData.searchTerm}
+                      }}
+                      value={searchData.searchTerm}
                     />
                   </form>
                   <div className="">
@@ -147,11 +164,11 @@ const EmployeeDash = () => {
                       className="ms-4 "
                     />
                     <Link to={"/Employee/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -172,7 +189,7 @@ const EmployeeDash = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                      {totalDocument !== null && (totalDocument)}
+                        {totalDocument !== null && totalDocument}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -194,7 +211,7 @@ const EmployeeDash = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                      {pendingDocument !== null && (pendingDocument)}
+                        {pendingDocument !== null && pendingDocument}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -0.56%
@@ -216,7 +233,7 @@ const EmployeeDash = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                      {pendingDocument !== null && (pendingDocument)}
+                        {pendingDocument !== null && pendingDocument}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -1.48%
@@ -232,11 +249,13 @@ const EmployeeDash = () => {
                 <div className="col-md-3 ">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">Document Request</h6>
+                      <h6 className="mb-0 header-card-text">
+                        Document Request
+                      </h6>
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                      {totalDocument !== null && (totalDocument)}
+                        {totalDocument !== null && totalDocument}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +9.15%
@@ -268,23 +287,46 @@ const EmployeeDash = () => {
                       />
                       <table className="ms-2 dashboard-card-text">
                         <tr>
-                          <td style={{paddingRight: 70}} className="text-nowrap">
-                            <img src="/images/dashboard/active-dot.svg" alt="" /> Active</td>
+                          <td
+                            style={{ paddingRight: 70 }}
+                            className="text-nowrap"
+                          >
+                            <img
+                              src="/images/dashboard/active-dot.svg"
+                              alt=""
+                            />{" "}
+                            Active
+                          </td>
                           <td>{docCount?.completePresent}%</td>
                         </tr>
                         <tr>
                           <td>
-                          <img src="/images/dashboard/under-review-dot.svg" alt="" />Under Review</td>
+                            <img
+                              src="/images/dashboard/under-review-dot.svg"
+                              alt=""
+                            />
+                            Under Review
+                          </td>
                           <td>{docCount?.pendingPresent}%</td>
                         </tr>
                         <tr>
                           <td>
-                          <img src="/images/dashboard/approve-dot.svg" alt="" />Approved</td>
+                            <img
+                              src="/images/dashboard/approve-dot.svg"
+                              alt=""
+                            />
+                            Approved
+                          </td>
                           <td>{docCount?.approvedPresent}%</td>
                         </tr>
                         <tr>
                           <td>
-                          <img src="/images/dashboard/rejected-dot.svg" alt="" />Rejected</td>
+                            <img
+                              src="/images/dashboard/rejected-dot.svg"
+                              alt=""
+                            />
+                            Rejected
+                          </td>
                           <td>{docCount?.rejectedPresent}%</td>
                         </tr>
                       </table>
@@ -293,30 +335,50 @@ const EmployeeDash = () => {
                 </div>
 
                 <div className="col-md-3 ">
-                <div className="dashboard-card2 bg-danger-subtle">
+                  <div className="dashboard-card2 ">
                     <p className="dashboard-card2-text">Open Tickets</p>
-                    <p className="text-card  mb-3">{ticketCount?.totalComplete} / {ticketCount?.totalTicket}</p>
-                    <p className=" mb-1 dashboard-card2-text">Profile Completion </p>
-                    <img
-                      src="/images/dashboard/Frame 427318940.png"
-                      alt=""
-                      className="pb-3"
-                    />
+                    <p className="text-card  mb-3">
+                      {ticketCount?.totalComplete} / {ticketCount?.totalTicket}
+                    </p>
+                    <p className=" mb-1 dashboard-card2-text">
+                      Profile Completion
+                    </p>
+                    
+                    <div className="progress-bar">
+                      <div className="progress-container">
+                        <div
+                          className="progress"
+                          style={{ width: `${ticketCount?.completepresent}%` }}
+                        ></div>
+                        <span className="progress-label">{`${ticketCount?.completepresent}%`}</span>
+                      </div>
+                    </div>
                     <p className=" mb-1 dashboard-card2-text">Status</p>
-                    <img
-                      src="/images/dashboard/Info/Frame 427318940.png"
-                      alt=""
-                      className=" mb-4"
-                    />
+                    <div className="progress-bar">
+                      <div className="progress-container">
+                        <div
+                          className="progress"
+                          style={{
+                            width: `${ticketCount?.InprogressPresent}%`,
+                          }}
+                        ></div>
+                        <span className="progress-label">{`In Progress / ${ticketCount?.InprogressPresent}%`}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
                 <div className="col-md-3 ">
-                <div className="dashboard-card3 bg-light ">
+                  <div className="dashboard-card3 bg-light ">
                     <p className="text-card">Document Request</p>
                     <table className="table-card3 dashboard-card3-text">
                       <tr className="pb-2">
-                        <td style={{paddingRight: 40}} className="text-nowrap">HR</td>
+                        <td
+                          style={{ paddingRight: 40 }}
+                          className="text-nowrap"
+                        >
+                          HR
+                        </td>
                         <td>
                           <img src="/images/dashboard/HR.png" />
                         </td>
@@ -354,89 +416,132 @@ const EmployeeDash = () => {
                     </table>
                   </div>
                 </div>
-
-               
-                
-                
               </div>
             </div>
 
-           
-                <div className="col-12 table_comman mt-3 ">
-                <div className="table-responsive">
-            <table className="table table-borderless">
-              <thead>
-                <tr className="th-text">
-                  <th className="th-text">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Document Name
-                  </th>
-                  <th className="th-text">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Department
-                  </th>
-                  <th className="th-text">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Login
-                  </th>
-                  <th className="th-text">Status</th>
-                  <th className="th-text">Action</th>
-                </tr>
-              </thead>
-              <tbody >
-                {documentRequests?.map((document,index) => (
-                  <tr
-                    key={index}
-                    
-                  >
-                    <td className="td-text">
-                      <input
-                        className="form-check-input checkbox-table"
-                        type="checkbox"
-                        value=""
-                      />
-                    
-                      {document.documentName}
-                    </td>
-                    <td className="td-text">
-                      {document.department}
-                    </td>
-                    <td className="td-text">
-                      <img src="/images/dashboard/CalendarBlank.png" />
-                      {document.dateofSigning}
-                    </td>
-                    <td className="td-text">{document.status}</td>
-                    <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
-  {document.action}
-  </a>
-  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom"  href="/Employee/view-details"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="#"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete Template</a></li>
-  </ul>
-</div>
-                          </td>
-                    <td></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            </div>
+            <div className="col-12 table_comman mt-3 ">
+              <div className="table-responsive">
+                <table className="table table-borderless">
+                  <thead>
+                    <tr className="th-text">
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Document Name
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Department
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Login
+                      </th>
+                      <th className="th-text">Status</th>
+                      <th className="th-text">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {documentRequests?.map((document, index) => (
+                      <tr key={index}>
+                        <td className="td-text">
+                          <input
+                            className="form-check-input checkbox-table"
+                            type="checkbox"
+                            value=""
+                          />
+
+                          {document.documentName}
+                        </td>
+                        <td className="td-text">{document.department}</td>
+                        <td className="td-text">
+                          <img src="/images/dashboard/CalendarBlank.png" />
+                          {document.dateofSigning}
+                        </td>
+                        <td className="td-text">{document.status}</td>
+                        <td className="td-text">
+                          <div class="dropdown">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              {document.action}
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a
+                                  class="dropdown-item border-bottom"
+                                  href="/Employee/view-details"
+                                >
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Users Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/PencilLine.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Edit User Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  <img
+                                    src="/images/dashboard/Comment.png"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Comments
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/TextAlignLeft.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Wrap Column
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item text-danger" href="#">
+                                  <img
+                                    src="/images/users/Trash.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Delete Template
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
+                        <td></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
           <div className="col">

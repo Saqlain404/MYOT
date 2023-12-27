@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 import {
   CreateEmplyTicket,
+  NewTicketEmply,
   OnGoingListEmply,
   ResolveListEmpl,
   TicketListEmply,
@@ -13,6 +14,7 @@ import moment from "moment";
 const EmplHelpSupport = () => {
   const [ticketList, setTicketList] = useState();
   const [id, setId] = useState();
+  const [selectedDropdown, setSelectedDropdown] = useState("All");
 
   // Add Ticket
   const [contactData, setContactData] = useState({
@@ -44,9 +46,6 @@ const EmplHelpSupport = () => {
     });
   };
 
-  const showResolvedTickets = async () => {
-    console.log("resolved tickets");
-  };
   const OnGoingList = async () => {
     let data = await OnGoingListEmply(id);
     console.log(data);
@@ -61,21 +60,45 @@ const EmplHelpSupport = () => {
       setTicketList(data);
     }
   };
+  const NewTickets = async () => {
+    let data = await NewTicketEmply(id);
+    console.log(data);
+    if (!data?.error) {
+      setTicketList(data);
+    }
+  };
 
-  const showNewTickets = async () => {
-    console.log("new tickets");
+  const onDropdownChange = (selectedItem) => {
+    setSelectedDropdown(selectedItem);
+    switch (selectedItem) {
+      case "New":
+        NewTickets();
+        break;
+      case "Ongoing":
+        OnGoingList();
+        break;
+      case "Resolved":
+        resolveList();
+        break;
+      default:
+        AllData();
+    }
   };
 
   // Ticket List
-  const data = async () => {
+  const AllData = async () => {
     let emp_id = localStorage.getItem("user_id");
     setId(emp_id);
     const getData = await TicketListEmply(emp_id);
     setTicketList(getData);
+    console.log(ticketList)
   };
   useEffect(() => {
-    data();
+    AllData();
   }, []);
+  useEffect(() => {
+    // AllData();
+  }, [ticketList]);
 
   return (
     <>
@@ -168,25 +191,37 @@ const EmplHelpSupport = () => {
                       </a>
                       <ul class="dropdown-menu border-0 shadow mt-3  rounded">
                         <li>
-                          <div
+                          {/* <div
                             className="d-flex whitespace-nowrap"
                             type="button"
                             data-bs-toggle="modal"
                             data-bs-target="#exampleModal"
+                          > */}
+                          <a
+                            class={`dropdown-item border-bottom ${
+                              selectedDropdown === "New" ? "active" : ""
+                            }`}
+                            href="#"
+                            onClick={() => onDropdownChange("New")}
                           >
-                            <a class="dropdown-item border-bottom" href="#">
-                              <img
-                                src="/images/dashboard/blue-ticket-ball.svg"
-                                alt=""
-                                className="help-support-dd-img"
-                              />
-                              New Tickets
-                            </a>
-                          </div>
+                            <img
+                              src="/images/dashboard/blue-ticket-ball.svg"
+                              alt=""
+                              className="help-support-dd-img"
+                            />
+                            New Tickets
+                          </a>
+                          {/* </div> */}
                         </li>
                         <li>
-                          <a class="dropdown-item border-bottom" href="#"
-                        aria-selected="false">
+                          <a
+                            class={`dropdown-item border-bottom ${
+                              selectedDropdown === "Ongoing" ? "active" : ""
+                            }`}
+                            href="#"
+                            onClick={() => onDropdownChange("Ongoing")}
+                            aria-selected="false"
+                          >
                             <img
                               src="/images/dashboard/orange-ticket-ball.svg"
                               alt=""
@@ -195,9 +230,15 @@ const EmplHelpSupport = () => {
                             On-Going Tickets
                           </a>
                         </li>
-                   
+
                         <li>
-                          <a class="dropdown-item" href="#">
+                          <a
+                            class={`dropdown-item ${
+                              selectedDropdown === "Resolved" ? "active" : ""
+                            }`}
+                            href="#"
+                            onClick={() => onDropdownChange("Resolved")}
+                          >
                             <img
                               src="/images/dashboard/green-ticket-ball.svg"
                               alt=""
@@ -311,56 +352,68 @@ const EmplHelpSupport = () => {
                   <ul className="nav nav-tabs mb-5" id="ex1" role="tablist">
                     <li className="nav-item" role="presentation">
                       <a
-                        class="nav-link active"
+                        className={`nav-link ${
+                          selectedDropdown === "All" ? "active" : ""
+                        }`}
                         id="ex1-tab-1"
                         data-bs-toggle="tab"
                         href="#ex1-tabs-1"
                         role="tab"
                         aria-controls="ex1-tabs-1"
                         aria-selected="true"
-                        onClick={data} 
+                        // onClick={AllData}
+                        onClick={() => onDropdownChange("All")}
                       >
                         All Tickets
                       </a>
                     </li>
                     <li className="nav-item" role="presentation">
                       <a
-                        className="nav-link"
+                        className={`nav-link ${
+                          selectedDropdown === "New" ? "active" : ""
+                        }`}
                         id="ex1-tab-2"
                         data-bs-toggle="tab"
                         href="#ex1-tabs-2"
                         role="tab"
                         aria-controls="ex1-tabs-2"
                         aria-selected="false"
-                        onClick={showNewTickets}
+                        // onClick={NewTickets}
+                        onClick={() => onDropdownChange("New")}
                       >
                         New Tickets
                       </a>
                     </li>
                     <li className="nav-item" role="presentation">
                       <a
-                        className="nav-link"
+                        className={`nav-link ${
+                          selectedDropdown === "Ongoing" ? "active" : ""
+                        }`}
                         id="ex1-tab-3"
                         data-bs-toggle="tab"
                         href="#ex1-tabs-3"
                         role="tab"
                         aria-controls="ex1-tabs-3"
                         aria-selected="false"
-                        onClick={OnGoingList}
+                        // onClick={OnGoingList}
+                        onClick={() => onDropdownChange("Ongoing")}
                       >
                         Ongoing Tickets
                       </a>
                     </li>
                     <li className="nav-item" role="presentation">
                       <a
-                        className="nav-link"
+                        className={`nav-link ${
+                          selectedDropdown === "Resolved" ? "active" : ""
+                        }`}
                         id="ex1-tab-4"
                         data-bs-toggle="tab"
                         href="#ex1-tabs-4"
                         role="tab"
                         aria-controls="ex1-tabs-4"
                         aria-selected="false"
-                        onClick={resolveList}
+                        // onClick={resolveList}
+                        onClick={() => onDropdownChange("Resolved")}
                       >
                         Resolved Tickets
                       </a>
@@ -378,11 +431,25 @@ const EmplHelpSupport = () => {
                           <div className="d-flex border-bottom">
                             <div className="ps-2 pe-4">
                               <div className="d-flex mb-3">
-                                <img
-                                  src="/images/dashboard/orange-ticket-ball.svg"
-                                  alt=""
-                                  className="me-2"
-                                />
+                                {ticket?.status === "In Progress" ? (
+                                  <img
+                                    src="/images/dashboard/orange-ticket-ball.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                ) : ticket?.status === "Pending" ? (
+                                  <img
+                                    src="/images/dashboard/blue-ticket-ball.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                ) : ticket.status === "Completed"?(
+                                  <img
+                                  src="/images/dashboard/green-ticket-ball.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                ): null}
                                 <p className="ticket-number m-1">
                                   {ticket.ticketType}
                                 </p>

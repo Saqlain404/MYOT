@@ -8,6 +8,7 @@ import { get } from "react-hook-form";
 const EmplySetting = () => {
   const[logoImage,setLogoImage] = useState()
   const[logoData,setLogoData] = useState({ logo:null})
+  const [shouldRender, setShouldRender] = useState(false);
   const onFileSelection = (event) => {
     setLogoData({ ...logoData, logo: event.target.files[0] });
   };
@@ -17,13 +18,14 @@ const EmplySetting = () => {
     console.log('Form submitted!');
   
 
+    const creator_Id = localStorage.getItem("user_id")
     const formData = new FormData();
     formData.append("logo", logoData.logo);
-
+    formData.append("creator_Id",creator_Id)
+    
     const response = await AddLogoEmply(formData);
 
     if (!response.data?.error) {
-      // navigate("/Employee/profile");
       console.log(response);
     }
   };
@@ -33,7 +35,6 @@ const EmplySetting = () => {
     const response = await GetLogoEmply()
     setLogoImage(response?.[0]?.results?.logoList)
   }
-  console.log(logoImage)
   useEffect(()=>{
     getLogo()
   },[])
@@ -93,7 +94,7 @@ const EmplySetting = () => {
                 <div className="bg-white rounded mb-4 p-4 pb-2">
                   <div className="d-flex">
                     <p className="td-text border-bottom me-3">
-                      Business Assets
+                      Business Assets 
                     </p>
                     <p className="th-text  ">System Setting</p>
                   </div>

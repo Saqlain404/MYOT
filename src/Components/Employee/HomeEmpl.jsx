@@ -36,7 +36,7 @@ const HomeEmpl = () => {
         setReceivedCount(receivedDocCount);
       }
     };
-    count();
+    count(); 
   }, [shouldRender]);
 
   const [isCommentVisible, setIsCommentVisible] = useState(false);
@@ -100,6 +100,7 @@ const HomeEmpl = () => {
 
     fetchTemplateIdsData();
   }, []);
+  
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
@@ -478,7 +479,7 @@ const HomeEmpl = () => {
                                   type="text"
                                   className="form-control border-0"
                                   value={comment}
-                                  onChange={(e) => setComment(e.target.value)} 
+                                  onChange={(e) => setComment(e.target.value)}
                                 />
                               </div>
 
@@ -510,7 +511,7 @@ const HomeEmpl = () => {
                                     className="comment-img"
                                   />
                                 </div>
-                                <div> 
+                                <div>
                                   <button
                                     type="submit"
                                     className="comment-btn btn-primary"
