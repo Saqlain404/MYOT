@@ -268,19 +268,19 @@ function App() {
           path="Employee/received-doc/view-details"
           element={<ViewReceivedDoc />}
         />
-        <Route path="Employee/OTP-verification" element={<OTPauthEmply />} />
+        {/* <Route path="Employee/OTP-verification" element={<OTPauthEmply />} /> */}
         <Route path="Employee/profile" element={<EmplProfile />} />
         <Route path="Employee/Edit-Profile" element={<EmplEditProfile />} />
         <Route path="Employee/Help&Support" element={<EmplHelpSupport />} />
         <Route path="Employee/Help" element={<EmplHelp />} />
         <Route path="Employee/Chat" element={<ChatboxEmploy />} />
         <Route path="Employee/Contact" element={<ContactUsEmpl />} />
-        <Route path="Employee/Settings" element={<EmplySetting />} />
-        <Route
+        {/* <Route path="Employee/Settings" element={<EmplySetting />} /> */}
+        {/* <Route
           path="Employee/Calendar-month"
           element={<CalendarMonthEmply />}
-        />
-        <Route path="Employee/Calendar-year" element={<CalenderYearEmply />} />
+        /> */}
+        {/* <Route path="Employee/Calendar-year" element={<CalenderYearEmply />} /> */}
       </Routes>
     </div>
   );
