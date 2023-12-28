@@ -100,6 +100,7 @@ import EmplAuthLogin from "./Components/Login/EmplAuthLogin";
 import EmplAuthforgotPassword from "./Components/Login/EmplAuthforgotPass";
 import EmplForgotSuccess from "./Components/Login/EmplForgotSuccess";
 import ViewUser from "./Components/Index/ViewUser";
+import DocComments from "./Components/Index/DocumentRequests/Comment";
 
 function App() {
   return (
@@ -131,7 +132,8 @@ function App() {
         <Route path="Admin/My-profile" element={<Profile />} />
         <Route path="Admin/Edit-profile" element={<EditProfile />} />
         <Route path="Admin/Settings" element={<Settings />} />
-        <Route path="Admin/Comments" element={<Comments />} />
+        <Route path="Admin/Tasks/Comments/:id" element={<Comments />} />
+        <Route path="Admin/Requests/Comments/:id" element={<DocComments />} />
         <Route path="Admin/Help" element={<Help />} />
         <Route path="Admin/Help/Help-Support" element={<HelpSupport />} />
         <Route path="Admin/Help/Contact-us" element={<ContactUs />} />

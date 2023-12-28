@@ -2416,26 +2416,15 @@ height: 960px; */
   border-radius: 50%;
   object-fit: cover;
 }
-
-
-
-
-/* Target disabled checkboxes */
-/* .table input[type="checkbox"]:disabled {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-} */
-
-.table input[type="checkbox"]:checked::before {
-  content: '\2713';
-  display: inline-block;
-  width: 14px;
-  /* height: 14px; */
-  /* line-height: 14px; */
-  text-align: center;
-  background-color: green;
-  color: white;
+.w_20_h_20{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-
+.task_reply textarea{
+  border: #3E51FF dashed 2px;
+  border-radius: 5px;
+  outline: none;
+}

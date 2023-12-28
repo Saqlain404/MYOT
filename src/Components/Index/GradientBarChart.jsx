@@ -1,7 +1,7 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-const GradientBarChart = () => {
+const GradientBarChart = ({tempData}) => {
   const initialData = [
     80, 55, 41, 67, 22, 35, 50, 20, 20, 20, 2, 0, 20, 2, 25, 5, 4, 5,
   ];

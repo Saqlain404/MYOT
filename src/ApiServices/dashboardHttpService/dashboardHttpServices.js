@@ -172,10 +172,38 @@ export async function AddCommentForTask(formData) {
   }
 }
 
+export async function TasksCommentList(id) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/comment-details/${id}`
+    );
+    // console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 export async function AdminDashboardCount() {
   try {
     const { data } = await adminHttpService.get(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/department-count`
+    );
+    // console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function DashboardTotalDocument() {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/total-document`
     );
     // console.log(data);
 
@@ -281,6 +309,19 @@ export async function DocumentComment(formData) {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/add-document-comment`,
       formData
+    );
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function DocumentCommentLists(id) {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/document-comment-details/${id}`,
     );
 
     return { data };
@@ -494,10 +535,48 @@ export async function EmployeeOngoingTicketList(id) {
   }
 }
 
+export async function EmployeeNewTicketList(id) {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/new-ticket/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function EmployeeResolvedTicketList(id) {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/complete-ticket/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 export async function EmployeeLogout(id) {
   try {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/employee/employee-logout/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+// ANALYTICS
+
+export async function AnalyticsData() {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/total-active-user`
     );
     return { data };
   } catch (error) {

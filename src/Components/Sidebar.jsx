@@ -140,7 +140,7 @@ const Sidebar = () => {
             </li>
             <li
               className={` "nav-item text-dark" ${
-                location.pathname === "/Admin/Tasks" ? "nav_active" : ""
+                location.pathname.match(/^\/Admin\/Tasks/) ? "nav_active" : ""
               }`}
             >
               <Link to={"/Admin/Tasks"} className="text-decoration-none">
@@ -159,7 +159,7 @@ const Sidebar = () => {
             </li>
             <li
               className={` "nav-item text-dark" ${
-                location.pathname === "/Admin/Calendar" ? "nav_active" : ""
+                location.pathname.match(/^\/Admin\/Calendar/) ? "nav_active" : ""
               }`}
             >
               <Link to={"/Admin/Calendar"} className="text-decoration-none">
@@ -181,7 +181,7 @@ const Sidebar = () => {
 
             <li
               className={` "nav-item text-dark" ${
-                location.pathname === "/Admin/Users" ? "nav_active" : ""
+                location.pathname.match(/^\/Admin\/Users/) ? "nav_active" : ""
               }`}
             >
               <Link to={"/Admin/Users"} className="text-decoration-none">
@@ -263,7 +263,7 @@ const Sidebar = () => {
             </li>
             <li
               className={` "nav-item text-dark" ${
-                location.pathname === "/Admin/Requests" ? "nav_active" : ""
+                location.pathname.match(/^\/Admin\/Requests/) ? "nav_active" : ""
               }`}
             >
               <Link to={"/Admin/Requests"} className="text-decoration-none">

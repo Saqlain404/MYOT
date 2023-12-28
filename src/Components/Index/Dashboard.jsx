@@ -4,13 +4,18 @@ import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from "antd";
 import { Link } from "react-router-dom";
-import { DashboardCount } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import {
+  DashboardCount,
+  DashboardTotalDocument,
+} from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 
 const Dashboard = () => {
   const [dataCount, setDataCount] = useState();
+  const [totalDocument, setTotalDocument] = useState([]);
 
   useEffect(() => {
     getDashboardDataCount();
+    getDasboardTotalDocument();
   }, []);
 
   const getDashboardDataCount = async () => {
@@ -23,6 +28,19 @@ const Dashboard = () => {
       console.log(error);
     }
   };
+
+  const getDasboardTotalDocument = async () => {
+    try {
+      let { data } = await DashboardTotalDocument();
+      console.log(data);
+      if (!data?.error) {
+        setTotalDocument(data?.results?.document);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const documents = [
     {
       id: 1,
@@ -299,24 +317,21 @@ const Dashboard = () => {
                 </div>
 
                 <div className="col-lg-3 col-md-6 mb-md-2 ">
-                  <div className="dashboard-card3 bg-light ">
+                  <div className="dashboard-card3 bg-light table-card3 dashboard-card3-text">
                     <p className="text-card">Document Request</p>
-                    <table className="table-card3 dashboard-card3-text">
-                      <tr className="pb-2">
-                        <td
-                          style={{ paddingRight: 40 }}
-                          className="text-nowrap"
-                        >
-                          HR
-                        </td>
-                        <td>
-                          <img
-                            src="/images/dashboard/HR.png"
-                            className="dashboard-card-img"
-                          />
-                        </td>
-                      </tr>
-                      <tr>
+
+                      {totalDocument &&
+                        totalDocument.map((count) => (
+                          <>
+                            <div className="my-1 d-flex align-items-center justify-content-between">
+                              <span>
+                                {count?._id.flat(Infinity)[0]?.departmentName}
+                              </span>
+                              <span className="fw-bold">{count?.count}</span>
+                            </div>
+                          </>
+                        ))}
+                      {/* <tr>
                         <td>Finance</td>
                         <td>
                           <img
@@ -360,8 +375,7 @@ const Dashboard = () => {
                             className="dashboard-card-img"
                           />
                         </td>
-                      </tr>
-                    </table>
+                      </tr> */}
                   </div>
                 </div>
               </div>

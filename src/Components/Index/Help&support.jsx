@@ -3,7 +3,9 @@ import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import {
   EmployeeNewTicket,
+  EmployeeNewTicketList,
   EmployeeOngoingTicketList,
+  EmployeeResolvedTicketList,
   EmployeeTicketList,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
@@ -30,9 +32,6 @@ const HelpSupport = () => {
     }
   };
 
-  const showResolvedTickets = async () => {
-    console.log("resolved tickets");
-  };
   const showOngoingTickets = async () => {
     let { data } = await EmployeeOngoingTicketList(id);
     console.log(data);
@@ -41,7 +40,18 @@ const HelpSupport = () => {
     }
   };
   const showNewTickets = async () => {
-    console.log("new tickets");
+    let { data } = await EmployeeNewTicketList(id);
+    console.log(data);
+    if (!data?.error) {
+      setTicketList(data?.results?.ticket);
+    }
+  };
+  const showResolvedTickets = async () => {
+    let { data } = await EmployeeResolvedTicketList(id);
+    console.log(data);
+    if (!data?.error) {
+      setTicketList(data?.results?.ticket);
+    }
   };
 
   const handleCreateRequest = async (e) => {
@@ -143,7 +153,7 @@ const HelpSupport = () => {
                     </Link>
                   </div>
                   <div className="d-flex">
-                    <div class="dropdown">
+                    {/* <div class="dropdown">
                       <a
                         type=""
                         data-bs-toggle="dropdown"
@@ -196,7 +206,7 @@ const HelpSupport = () => {
                           </a>
                         </li>
                       </ul>
-                    </div>
+                    </div> */}
                     {/* <!-- Modal --> */}
                     <div
                       class="modal fade"
@@ -277,7 +287,7 @@ const HelpSupport = () => {
                       </div>
                     </div>
                     {/* <!-- Modal End--> */}
-                    <Link to={"/"} className="text-decoration-none">
+                    <Link className="text-decoration-none">
                       <button className="help-support-btn1 me-2">
                         This Week
                         <img src="/images/dashboard/DownArrowBtn.svg" alt="" />

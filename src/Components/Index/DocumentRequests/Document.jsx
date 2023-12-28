@@ -5,6 +5,7 @@ import {
   SearchRequestor,
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const Document = () => {
   const [documents, setDocuments] = useState();
@@ -355,13 +356,13 @@ const Document = () => {
                           src="/images/dashboard/Comment.png"
                           className="mx-auto d-block cursor_pointer"
                           onClick={() =>
-                            setDocument_Id(document?.templete_Id?._id)
+                            setDocument_Id(document?._id)
                           }
                         />
                       </a>
                       <form
                         className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
-                        onSubmit={(e) => handleSubmit(e, document?._id)}
+                        onSubmit={(e) => handleSubmit(e)}
                       >
                         <div className="mb-3 border-bottom">
                           <label className="form-label th-text">
@@ -424,7 +425,7 @@ const Document = () => {
                     </div>
                   </td>
                   <td className="td-text actions">
-                    <div class="dropdown">
+                    <div class="">
                       <a
                         type=""
                         data-bs-toggle="dropdown"
@@ -432,7 +433,7 @@ const Document = () => {
                       >
                         <img
                           src="/images/sidebar/ThreeDots.svg"
-                          className="w-auto p-3"
+                          className="w-auto p-3 cursor_pointer"
                         />
                       </a>
                       <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
@@ -457,14 +458,16 @@ const Document = () => {
                           </a>
                         </li>
                         <li>
-                          <a class="dropdown-item" href="#">
+                          <Link
+                            class="dropdown-item"
+                            to={`/Admin/Requests/Comments/${document?._id}`}
+                          >
                             <img
                               src="/images/dashboard/Comment.png"
-                              alt=""
                               className="me-2"
                             />
                             Comments
-                          </a>
+                          </Link>
                         </li>
                         <li>
                           <a class="dropdown-item border-bottom" href="#">

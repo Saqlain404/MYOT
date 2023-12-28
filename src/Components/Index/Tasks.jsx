@@ -21,7 +21,7 @@ const Tasks = () => {
 
   useEffect(() => {
     getTaskData();
-    getTotalCount()
+    getTotalCount();
   }, []);
 
   const getTaskData = async () => {
@@ -47,7 +47,7 @@ const Tasks = () => {
 
   const handleSubmit = async (e, templete_Id) => {
     e.preventDefault();
-    let creator_Id = localStorage.getItem("user_id");
+    let creator_Id = localStorage.getItem("myot_admin_id");
     let { data } = await AddCommentForTask({
       comment,
       templete_Id,
@@ -73,7 +73,7 @@ const Tasks = () => {
     try {
       let { data } = await TemplateCount();
       console.log(data);
-      setTotalCount(data?.results)
+      setTotalCount(data?.results);
     } catch (error) {}
   };
 
@@ -159,7 +159,9 @@ const Tasks = () => {
                       </div>
                       <div className="d-flex  mt-4">
                         <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                          {totalCount?.totalPendingTemplete && totalCount?.totalPendingTemplete[0]?.count || 0}
+                          {(totalCount?.totalPendingTemplete &&
+                            totalCount?.totalPendingTemplete[0]?.count) ||
+                            0}
                         </h3>
                         {/* <span className="card-insights fw-bold m-auto">
                           +9.15%
@@ -181,7 +183,9 @@ const Tasks = () => {
                       </div>
                       <div className="d-flex  mt-4">
                         <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {totalCount?.totalPendingTemplete && totalCount?.totalPendingTemplete[0]?.count || 0}
+                          {(totalCount?.totalPendingTemplete &&
+                            totalCount?.totalPendingTemplete[0]?.count) ||
+                            0}
                         </h3>
                         {/* <span className="card-insights fw-bold m-auto">
                           -0.65%
@@ -203,7 +207,9 @@ const Tasks = () => {
                       </div>
                       <div className="d-flex mt-4">
                         <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {totalCount?.totalPendingTemplete && totalCount?.totalPendingTemplete[0]?.count || 0}
+                          {(totalCount?.totalPendingTemplete &&
+                            totalCount?.totalPendingTemplete[0]?.count) ||
+                            0}
                         </h3>
                         {/* <span className="card-insights fw-bold m-auto">
                           -1.48%
@@ -456,7 +462,7 @@ const Tasks = () => {
                         </td>
                         {/* <td className="td-text"></td> */}
                         <td className="td-text">
-                          <div class="dropdown">
+                          <div class="">
                             <a
                               type=""
                               data-bs-toggle="dropdown"
@@ -465,7 +471,7 @@ const Tasks = () => {
                               {/* {document.actions} */}
                               <img
                                 src="/images/sidebar/ThreeDots.svg"
-                                className="w-auto p-3"
+                                className="w-auto p-3 cursor_pointer"
                               />
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
@@ -490,14 +496,17 @@ const Tasks = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item" href="#">
+                                <Link
+                                  class="dropdown-item"
+                                  to={`/Admin/Tasks/Comments/${document?._id}`}
+                                >
                                   <img
                                     src="/images/dashboard/Comment.png"
                                     alt=""
                                     className="me-2"
                                   />
                                   Comments
-                                </a>
+                                </Link>
                               </li>
                               <li>
                                 <a class="dropdown-item border-bottom" href="#">

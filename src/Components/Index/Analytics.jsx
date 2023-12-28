@@ -4,52 +4,68 @@ import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import ReactApexChart from "react-apexcharts";
 import GradientBarChart from "./GradientBarChart";
+import GradientLineChart from "./GradientLineChart";
+import { AnalyticsData } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 
 const Analytics = () => {
-  const [chartData, setChartData] = useState({
-    series: [],
-    options: {
-      labels: [],
-      legend: {
-        show: true,
-        position: "bottom",
-      },
-      colors: ["#6AD2FF", "#4318FF", "#EFF4FB"],
-    },
-  });
-
-  const data = [
-    {
-      name: "Documents",
-      quantity: 65,
-    },
-    {
-      name: "Users",
-      quantity: 35,
-    },
-    {
-      name: "Departments",
-      quantity: 25,
-    },
-  ];
+  const [analyticsData, setAnalyticsData] = useState([]);
 
   useEffect(() => {
-    let names = [];
-    let quantities = [];
-    data.forEach(function (n) {
-      names.push(n.name);
-      quantities.push(n.quantity);
-    });
-
-    setChartData({
-      ...chartData,
-      series: quantities,
-      options: {
-        ...chartData.options,
-        labels: names,
-      },
-    });
+    getAnalyticsData();
   }, []);
+
+  const getAnalyticsData = async () => {
+    let { data } = await AnalyticsData();
+    console.log(data);
+    if (!data?.error) {
+      setAnalyticsData(data?.results);
+    }
+  };
+
+  // const [chartData, setChartData] = useState({
+  //   series: [],
+  //   options: {
+  //     labels: [],
+  //     legend: {
+  //       show: true,
+  //       position: "bottom",
+  //     },
+  //     colors: ["#6AD2FF", "#4318FF", "#EFF4FB"],
+  //   },
+  // });
+
+  // const data = [
+  //   {
+  //     name: "Documents",
+  //     quantity: 65,
+  //   },
+  //   {
+  //     name: "Users",
+  //     quantity: 35,
+  //   },
+  //   {
+  //     name: "Departments",
+  //     quantity: 25,
+  //   },
+  // ];
+
+  // useEffect(() => {
+  //   let names = [];
+  //   let quantities = [];
+  //   data.forEach(function (n) {
+  //     names.push(n.name);
+  //     quantities.push(n.quantity);
+  //   });
+
+  //   setChartData({
+  //     ...chartData,
+  //     series: quantities,
+  //     options: {
+  //       ...chartData.options,
+  //       labels: names,
+  //     },
+  //   });
+  // }, []);
   return (
     <>
       <div className="container-fluid">
@@ -109,18 +125,18 @@ const Analytics = () => {
             <div className="col-12">
               <div className="row">
                 <div className="col-md-12 bg-light rounded my-5 py-5">
-                  <img
-                    src="/images/dashboard/Block.svg"
-                    alt=""
-                    className="dashboard-graph"
+                  <GradientLineChart
+                    activeUserData={analyticsData?.totalActiveUser}
                   />
                 </div>
                 <div className="col-md-12 bg-light rounded mb-5 py-5">
                   <div className="row">
-                    <div className="col-md-6">
-                      <GradientBarChart />
+                    <div className="col-md-12">
+                      <GradientBarChart
+                        tempData={analyticsData?.totalTemplete}
+                      />
                     </div>
-                    <div className="col-md-6">
+                    {/* <div className="col-md-6">
                       <div className="w-100 py-4" id="chart">
                         <div className="d-flex align-item-center justify-content-between">
                           <div className="pie_chart_text">
@@ -140,7 +156,7 @@ const Analytics = () => {
                           type="pie"
                         />
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
