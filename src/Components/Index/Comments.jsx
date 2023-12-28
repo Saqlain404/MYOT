@@ -129,14 +129,18 @@ const Comments = () => {
 
             <div className="container px-4 text-center min-vh-100 ">
               <p className="templates-leave mt-3  d-flex ">Comments</p>
-              {commentList &&
+              {commentList && commentList?.length > 0 ? (
                 commentList?.map((comments, index) => (
                   <>
                     <div className="bg-white rounded p-2 mb-3">
                       <div className="d-flex  justify-content-between">
                         <div className="d-flex justify-content-between">
                           <img
-                            src={`${comments?.creator_Id?.profile_Pic} ? ${comments?.creator_Id?.profile_Pic}: "/images/dashboard/Avatar.png"`}
+                            src={
+                              comments?.creator_Id?.profile_Pic
+                                ? comments?.creator_Id?.profile_Pic
+                                : "/images/dashboard/Avatar.png"
+                            }
                             alt=""
                             className="m-2 w_20_h_20"
                           />
@@ -144,7 +148,7 @@ const Comments = () => {
                             {comments?.creator_Id?.name}
                           </p>
                           <p className="comment-time m-auto">
-                          {moment(comments?.createdAt).calendar()}
+                            {moment(comments?.createdAt).calendar()}
                             {/* {moment(comments?.createdAt).format(
                               "MMM Do YY, h:mm a"
                             )} */}
@@ -208,7 +212,14 @@ const Comments = () => {
                       )}
                     </div>
                   </>
-                ))}
+                ))
+              ) : (
+                <>
+                  <h3 className="bg-white rounded p-2 py-4 mb-3">
+                    No Comments Found
+                  </h3>
+                </>
+              )}
 
               <div className="bg-white rounded p-2 mb-3">
                 <div className="d-flex  justify-content-between">

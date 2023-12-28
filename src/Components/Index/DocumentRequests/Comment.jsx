@@ -149,7 +149,11 @@ const DocComments = () => {
                       <div className="d-flex  justify-content-between">
                         <div className="d-flex justify-content-between">
                           <img
-                            src={`${comments?.creator_Id} ? ${comments?.creator_Id?.profile_Pic}: "/images/dashboard/Avatar.png"`}
+                            src={
+                              comments?.creator_Id?.profile_Pic
+                                ? comments?.creator_Id?.profile_Pic
+                                : "/images/dashboard/Avatar.png"
+                            }
                             alt=""
                             className="m-2 w_20_h_20"
                           />
