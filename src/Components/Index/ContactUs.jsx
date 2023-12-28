@@ -1,8 +1,45 @@
 import React from "react";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import classNames from "classnames";
+import { EmployeeContactUs } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import { toast } from "react-toastify";
 
 const ContactUs = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (datas) => {
+    console.log(datas);
+
+    let formData = {
+      name: datas?.name,
+      email: datas?.email,
+      message: datas?.message,
+      mobileNumber: datas?.phoneNumber,
+    };
+
+    let { data } = await EmployeeContactUs(formData);
+    console.log(data);
+    if (!data?.error) {
+      toast("Your query is submitted, we will respond you soon", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      document.getElementById("resetForm").click();
+    }
+  };
+
   return (
     <>
       <div className="container-fluid">
@@ -59,13 +96,13 @@ const ContactUs = () => {
                     <p className="th-text me-3">Template Guidelines</p>
                   </Link>
                   <Link
-                    to={"/Admin/Help-Support"}
+                    to={"/Admin/Help/Help-Support"}
                     className="text-decoration-none"
                   >
                     <p className="th-text me-3">Help & Support</p>
                   </Link>
                   <Link
-                    to={"/Admin/Contact-us"}
+                    to={"/Admin/Help/Contact-us"}
                     className="text-decoration-none"
                   >
                     <p className="td-text border-bottom">Contact Us</p>
@@ -77,50 +114,124 @@ const ContactUs = () => {
                     <p className="help-support-text">
                       Have any questions? We’d love to hear from you.
                     </p>
-                    <div className="col mb-3">
-                      <p className=" d-flex justify-content-start profile-card-title">
-                        Name*
-                      </p>
-                      <input
-                        type="text"
-                        placeholder="Name"
-                        className="col-12 profile-edit-input p-2"
-                      />
-                    </div>
-                    <div className="col mb-3">
-                      <p className=" d-flex justify-content-start profile-card-title">
-                        Email*
-                      </p>
-                      <input
-                        type="text"
-                        placeholder="Email"
-                        className="col-12 profile-edit-input p-2"
-                      />
-                    </div>
-                    <div className="col mb-3">
-                      <p className=" d-flex justify-content-start profile-card-title">
-                        Phone Number*
-                      </p>
-                      <input
-                        type="text"
-                        placeholder="Phone Number"
-                        className="col-12 profile-edit-input p-2"
-                      />
-                    </div>
-                    <div className="col mb-3">
-                      <p className=" d-flex justify-content-start profile-card-title">
-                        Message
-                      </p>
-                      <textarea
-                        name="message"
-                        id=""
-                        cols="30"
-                        rows="10"
-                        placeholder="Type your message..."
-                        className="col-12 profile-edit-input p-2"
-                      ></textarea>
-                    </div>
-                    <button className="contact-form-btn">Submit</button>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                      <div className="col mb-3">
+                        <p className=" d-flex justify-content-start profile-card-title">
+                          Name*
+                        </p>
+                        <input
+                          type="text"
+                          placeholder="Name"
+                          className={classNames(
+                            "col-12 profile-edit-input p-2",
+                            {
+                              "is-invalid": errors.name,
+                            }
+                          )}
+                          {...register("name", {
+                            required: "* Name is required",
+                            pattern: {
+                              value: /^(?!\s)[^\d]*(?:\s[^\d]+)*$/,
+                              message:
+                                "Spaces at the start & numbers are not allowed",
+                            },
+                          })}
+                        />
+                        {errors.name && (
+                          <div className="invalid-feedback">
+                            {errors.name.message}
+                          </div>
+                        )}
+                      </div>
+                      <div className="col mb-3">
+                        <p className=" d-flex justify-content-start profile-card-title">
+                          Email*
+                        </p>
+                        <input
+                          type="email"
+                          placeholder="Email"
+                          className={classNames(
+                            "col-12 profile-edit-input p-2",
+                            {
+                              "is-invalid": errors.email,
+                            }
+                          )}
+                          {...register("email", {
+                            required: "* Email is required",
+                            pattern: {
+                              value: /^(?!\s)[^\d]*(?:\s[^\d]+)*$/,
+                              message:
+                                "Spaces at the start & numbers are not allowed",
+                            },
+                          })}
+                        />
+                        {errors.email && (
+                          <div className="invalid-feedback">
+                            {errors.email.message}
+                          </div>
+                        )}
+                      </div>
+                      <div className="col mb-3">
+                        <p className=" d-flex justify-content-start profile-card-title">
+                          Phone Number*
+                        </p>
+                        <input
+                          type="number"
+                          placeholder="Phone Number"
+                          className={classNames(
+                            "col-12 profile-edit-input p-2",
+                            {
+                              "is-invalid": errors.phoneNumber,
+                            }
+                          )}
+                          {...register("phoneNumber", {
+                            required: "* Phone Number is required",
+                          })}
+                        />
+                        {errors.phoneNumber && (
+                          <div className="invalid-feedback">
+                            {errors.phoneNumber.message}
+                          </div>
+                        )}
+                      </div>
+                      <div className="col mb-3">
+                        <p className="d-flex justify-content-start profile-card-title">
+                          Message *
+                        </p>
+                        <textarea
+                          {...register("message", {
+                            required: "* Message is required",
+                            pattern: {
+                              value: /^(?!\s)[^\d]*(?:\s[^\d]+)*$/,
+                              message:
+                                "Spaces at the start & numbers are not allowed",
+                            },
+                          })}
+                          name="message"
+                          id="message"
+                          placeholder="Type your message..."
+                          className={classNames(
+                            "col-12 profile-edit-input p-2",
+                            {
+                              "is-invalid": errors.message,
+                            }
+                          )}
+                          style={{ minHeight: "100px" }}
+                        ></textarea>
+                        {errors.message && (
+                          <div className="invalid-feedback">
+                            {errors.message.message}
+                          </div>
+                        )}
+                      </div>
+
+                      <button type="submit" className="contact-form-btn w-100">
+                        Submit
+                      </button>
+                      <button type="reset" id="resetForm" className="d-none">
+                        reset
+                      </button>
+                    </form>
                   </div>
                   <div className="col-6">
                     <img

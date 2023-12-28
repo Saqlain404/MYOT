@@ -10,9 +10,11 @@ export async function adminLogin(formData) {
     
     console.log(data);
     if (!data?.error) {
+      localStorage.setItem("myot_admin_id", data?.results?.employee?._id);
       await localStorage.removeItem("token-company");
       await localStorage.setItem("token-company", headers["x-auth-token-company"]);
       await localStorage.setItem("user_id", data.results.company._id);
+
 
       toast.success("Success");
     } else toast.error(data.message);

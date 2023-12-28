@@ -8,76 +8,6 @@ import SideBarEmpl from "./SideBarEmpl";
 import { EmployeeDashList, searchDash } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const DocHistoryEmploye = () => {
-  const documents = [
-    {
-      id: 1,
-      documentName: "Salary Slip.jpg",
-      creator: [
-        <img src="/images/dashboard/avatar3.png" className="me-2" />,
-        "Eve Leroy",
-      ],
-      department: "Human Resources",
-      Login: "2023-09-16",
-      IP : "17.172.224.47",
-      version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 2,
-      documentName: "Promotion Letter.zip",
-      creator: [
-        <img src="/images/dashboard/avatar2.png" className="me-2" />,
-        "Lana Steiner",
-      ],
-      department: "Sales & Marketing",
-      Login: "2023-09-16",
-      IP : "17.172.224.47",
-      version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 3,
-      documentName: "Create Project Wireframes.xls",
-      creator: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
-        "ByeWind",
-      ],
-      department: "Training & Development",
-      Login: "2023-09-16",
-        IP : "17.172.224.47",
-version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 4,
-      documentName: "Create Project Wireframes.pdf",
-      creator: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Katherine Moss",
-      ],
-      department: "Human Resources",
-      Login: "2023-09-16",
-        IP :"17.172.224.47",
-version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    {
-      id: 5,
-      documentName: "Project tech requirements.zip",
-      creator: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
-        "Natali Craig",
-      ],
-      department: "Training & Development",
-      Login: "2023-09-16",
-        IP : "17.172.224.47",
-        version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-    },
-    
-    // Add more tasks here
-  ];
-
   
   // const navigate = useNavigate();
   const[searchData, setSearchData] = useState("");
@@ -338,7 +268,7 @@ version: "0.1",
   {document.action}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
+    <li ><a class="dropdown-item border-bottom"  href="/Employee/view-details"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
     <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
     <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>IP </a></li>
     <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>

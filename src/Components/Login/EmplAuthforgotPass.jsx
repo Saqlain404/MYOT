@@ -16,13 +16,17 @@ const EmplAuthforgotPassword = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    console.log(data);
-
+    
     const response = await EmplforgotPassword(data);
-    if (response?.data.error) {
-      navigate("/Employee/Forgot-success", { state: { email: data?.email } });
+    if (!response?.data.results.otp) {
+      console.log(response?.data?.results?.otp);
+      navigate("/Employee/Forgot-password");
+    } else {
+      navigate("/Employee/OTP-verification", { state: { email: data?.email } })
     }
   };
+
+
   return (
     
 <>

@@ -118,16 +118,16 @@ const ReceivedDocEmpl = () => {
                 </div>
               </nav>
             </div>
-
+ 
             <p className="table-name mb-2">Received Document & Retrieval Management</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
-                <div className="col-md-3 border-end">
-                  <img
+                <div className="col-md-2 border-end">
+                  {/* <img
                     src="/images/dashboard/Plus-icon.png"
                     alt=""
                     className="p-2 table-searchbar-img"
-                  />
+                  /> */}
                   <img
                     src="/images/dashboard/FunnelSimple.png"
                     alt=""

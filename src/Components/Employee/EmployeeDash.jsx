@@ -3,7 +3,7 @@ import RightSidebar from "../RightSidebar";
 // import "assets/css/style.min.css"
 import { Link, useNavigate } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
-import { DasboardCount, EmployeeDashList, searchDash } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import { DasboardCount, EmployeeDashList, PresentDocumentDash, searchDash, totalTicketCount } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const EmployeeDash = () => {
 
@@ -15,7 +15,7 @@ const EmployeeDash = () => {
  
   const handleSearch = async()=>{
     const result = await searchDash(searchData)
-    console.log(result)
+    // console.log(result)
     const searchResult = result?.data?.results?.document;
 
       if (searchResult && Array.isArray(searchResult)) {
@@ -44,7 +44,7 @@ const EmployeeDash = () => {
        const names = await EmployeeDashList();
       if (names) {
         setTemplateNames(names);
-        console.log(names)
+        // console.log(names)
      }
       
         const requests = names?.[0]?.map((name) => ({
@@ -77,12 +77,37 @@ const EmployeeDash = () => {
       if (!dashbaordCountResult?.error && dashbaordCountResult?.data) {
         const count = dashbaordCountResult?.data?.results.totalDocument;
         const receivedDocCount = dashbaordCountResult?.data?.results?.pendingDocument;
-        console.log(dashbaordCountResult);
+        // console.log(dashbaordCountResult);
         setTotalDocument(count)
         setPendingDocument(receivedDocCount)
     }
   }
     count();
+  },[])
+
+
+  const[docCount,setDocCount] = useState()
+  useEffect(()=>{
+    const id = localStorage.getItem("user_id")
+    const presentDoc = async()=>{
+      const data = await PresentDocumentDash(id);
+      setDocCount(data?.[0]?.results)
+      console.log(data?.[0]?.results)
+
+    }
+    presentDoc()
+  },[])
+
+
+  const[ticketCount,setTotalTicket] = useState()
+  useEffect(()=>{
+    const id = localStorage.getItem("user_id")
+    const totalTicket = async()=>{
+      const data = await totalTicketCount(id);
+      setTotalTicket(data?.[0]?.results)
+      console.log(data?.[0]?.results)
+    }
+    totalTicket()
   },[])
 
   return (
@@ -149,14 +174,14 @@ const EmployeeDash = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {totalDocument !== null && (totalDocument)}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
                         <img
                           src="/images/dashboard/ArrowRise.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -171,14 +196,14 @@ const EmployeeDash = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {pendingDocument !== null && (pendingDocument)}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         -0.56%
                         <img
                           src="/images/dashboard/ArrowFall.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -193,14 +218,14 @@ const EmployeeDash = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {pendingDocument !== null && (pendingDocument)}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         -1.48%
                         <img
                           src="/images/dashboard/ArrowFall.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -213,14 +238,14 @@ const EmployeeDash = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {totalDocument !== null && (totalDocument)}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         +9.15%
                         <img
                           src="/images/dashboard/ArrowRise.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -231,7 +256,6 @@ const EmployeeDash = () => {
                 <div className="col-md-6 ">
                   <div className="dashboard-card bg-light ">
                     <div className="d-flex justify-content-around dashboard-card-text">
-                      <p>Templates </p>
                       <p>Documents </p>
                       <p>Current Week </p>
                       <p>Previous Week</p>
@@ -246,22 +270,22 @@ const EmployeeDash = () => {
                         <tr>
                           <td style={{paddingRight: 70}} className="text-nowrap">
                             <img src="/images/dashboard/active-dot.svg" alt="" /> Active</td>
-                          <td>38.6%</td>
+                          <td>{docCount?.completePresent}%</td>
                         </tr>
                         <tr>
                           <td>
                           <img src="/images/dashboard/under-review-dot.svg" alt="" />Under Review</td>
-                          <td>22.5%</td>
+                          <td>{docCount?.pendingPresent}%</td>
                         </tr>
                         <tr>
                           <td>
                           <img src="/images/dashboard/approve-dot.svg" alt="" />Approved</td>
-                          <td>30.8%</td>
+                          <td>{docCount?.approvedPresent}%</td>
                         </tr>
                         <tr>
                           <td>
                           <img src="/images/dashboard/rejected-dot.svg" alt="" />Rejected</td>
-                          <td>8.1%</td>
+                          <td>{docCount?.rejectedPresent}%</td>
                         </tr>
                       </table>
                     </div>
@@ -271,7 +295,7 @@ const EmployeeDash = () => {
                 <div className="col-md-3 ">
                 <div className="dashboard-card2 bg-danger-subtle">
                     <p className="dashboard-card2-text">Open Tickets</p>
-                    <p className="text-card  mb-3">20 / 50 </p>
+                    <p className="text-card  mb-3">{ticketCount?.totalComplete} / {ticketCount?.totalTicket}</p>
                     <p className=" mb-1 dashboard-card2-text">Profile Completion </p>
                     <img
                       src="/images/dashboard/Frame 427318940.png"
@@ -399,7 +423,7 @@ const EmployeeDash = () => {
   {document.action}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="#"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
+    <li ><a class="dropdown-item border-bottom"  href="/Employee/view-details"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
     <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
     <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
     <li><a class="dropdown-item border-bottom" href="#"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>

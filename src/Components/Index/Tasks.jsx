@@ -23,6 +23,7 @@ const Tasks = () => {
 
   const getTaskData = async () => {
     const { data } = await GetTaskData();
+    console.log(data);
     if (!data?.error) {
       setDocuments(data?.results?.templete);
     }
@@ -250,14 +251,14 @@ const Tasks = () => {
                         <h3 className="card-text-count mb-0 fw-semibold fs-7">
                           320
                         </h3>
-                        <span className="card-insights fw-bold m-auto">
+                        {/* <span className="card-insights fw-bold m-auto">
                           +11.01%
                           <img
                             src="/images/dashboard/ArrowRise.png"
                             alt=""
                             className="ps-1"
                           />
-                        </span>
+                        </span> */}
                       </div>
                     </div>
                   </div>
@@ -272,14 +273,14 @@ const Tasks = () => {
                         <h3 className="card-text-count mb-0 fw-semibold fs-7">
                           20
                         </h3>
-                        <span className="card-insights fw-bold m-auto">
+                        {/* <span className="card-insights fw-bold m-auto">
                           +9.15%
                           <img
                             src="/images/dashboard/ArrowRise.png"
                             alt=""
                             className="ps-1"
                           />
-                        </span>
+                        </span> */}
                       </div>
                     </div>
                   </div>
@@ -294,14 +295,14 @@ const Tasks = () => {
                         <h3 className="card-text-count mb-0 fw-semibold fs-7">
                           1,156
                         </h3>
-                        <span className="card-insights fw-bold m-auto">
+                        {/* <span className="card-insights fw-bold m-auto">
                           -0.65%
                           <img
                             src="/images/dashboard/ArrowFall.png"
                             alt=""
                             className="ps-1"
                           />
-                        </span>
+                        </span> */}
                       </div>
                     </div>
                   </div>
@@ -316,21 +317,21 @@ const Tasks = () => {
                         <h3 className="card-text-count mb-0 fw-semibold fs-7">
                           320
                         </h3>
-                        <span className="card-insights fw-bold m-auto">
+                        {/* <span className="card-insights fw-bold m-auto">
                           -1.48%
                           <img
                             src="/images/dashboard/ArrowFall.png"
                             alt=""
                             className="ps-1"
                           />
-                        </span>
+                        </span> */}
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <p className="table-name mb-2">Templates</p>
+            <p className="table-name mb-2">Tasks</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
                 <div className="col-md-3  table-searchbar-imgs">
@@ -449,7 +450,7 @@ const Tasks = () => {
                     {documents?.map((document) => (
                       <tr className="tr" key={document?._id}>
                         <td className="td-text">{document?.templeteName}</td>
-                        <td className="td-text">
+                        <td className="">
                           <img
                             style={{
                               width: "40px",
@@ -464,7 +465,18 @@ const Tasks = () => {
                               document?.manager?.name.slice(1).toLowerCase()}
                           </span>
                         </td>
-                        <td className="td-text">{document.version}</td>
+                        {/* <td className="td-text">{document.version}</td> */}
+                        <td className="td-text">
+                          {document?.templeteVersion &&
+                          document?.templeteVersion?.length > 0
+                            ? ` ${
+                                document?.templeteVersion[
+                                  document?.templeteVersion.length - 1
+                                ]?.version
+                              }`
+                            : "No templete versions found"}
+                        </td>
+
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
                           {moment(document.createdAt).format("ll")}
