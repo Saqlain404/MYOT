@@ -320,18 +320,31 @@ const Dashboard = () => {
                   <div className="dashboard-card3 bg-light table-card3 dashboard-card3-text">
                     <p className="text-card">Document Request</p>
 
-                      {totalDocument &&
-                        totalDocument.map((count) => (
-                          <>
-                            <div className="my-1 d-flex align-items-center justify-content-between">
-                              <span>
-                                {count?._id.flat(Infinity)[0]?.departmentName}
-                              </span>
-                              <span className="fw-bold">{count?.count}</span>
-                            </div>
-                          </>
-                        ))}
-                      {/* <tr>
+                    {totalDocument &&
+                      totalDocument.map((count) => (
+                        <>
+                          <div className="row">
+                            {/* <div className="my-1 col-6"> */}
+                            <span className="col-6">
+                              {
+                                count?._id
+                                  .flat(Infinity)[0]
+                                  ?.departmentName.split(" ")[0]
+                              }
+                            </span>
+                            <span className="fw-bold col-6">
+                              <progress
+                                className="w-100"
+                                id="file"
+                                value={count?.count * 10}
+                                max="100"
+                              />
+                            </span>
+                            {/* </div> */}
+                          </div>
+                        </>
+                      ))}
+                    {/* <tr>
                         <td>Finance</td>
                         <td>
                           <img
