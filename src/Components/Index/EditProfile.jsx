@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 
 const EditProfile = () => {
   const [files, setFiles] = useState([]);
+  const [profileImgUrl, setProfileImgUrl] = useState();
   const navigate = useNavigate();
 
   const {
@@ -20,6 +21,9 @@ const EditProfile = () => {
   const onFileSelection = (e, key) => {
     // console.log(e.target.files, key);
     setFiles({ ...files, [key]: e.target.files[0] });
+    const selectedFile = e.target.files[0];
+    const imageUrl = URL.createObjectURL(selectedFile);
+    setProfileImgUrl(imageUrl);
   };
 
   const onSubmit = async (data1) => {
@@ -73,6 +77,7 @@ const EditProfile = () => {
         progress: undefined,
         theme: "light",
       });
+      setFiles([]);
       navigate("/Admin/My-profile");
     }
   };
@@ -136,9 +141,13 @@ const EditProfile = () => {
                   <div className=" d-flex justify-content-start mb-4">
                     <div className="position-relative">
                       <img
-                        src="/images/tasks/modal-profile-photo.svg"
+                        src={
+                          profileImgUrl
+                            ? profileImgUrl
+                            : "/images/tasks/modal-profile-photo.svg"
+                        }
                         alt=""
-                        className=""
+                        className="w_100_h_100"
                       />
                       <input
                         autoComplete="false"

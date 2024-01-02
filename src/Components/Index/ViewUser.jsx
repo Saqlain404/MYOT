@@ -10,13 +10,17 @@ const ViewUser = ({ userId }) => {
   }, [userId]);
 
   const getViewUserData = async (id) => {
-    // console.log(id);
-    if (id) {
-      let { data } = await EmployeeView(id);
-      console.log(data);
-      if (!data?.error) {
-        setUserDetails(data?.results?.employee);
+    try {
+      // console.log(id);
+      if (id) {
+        let { data } = await EmployeeView(id);
+        console.log(data);
+        if (!data?.error) {
+          setUserDetails(data?.results?.employee);
+        }
       }
+    } catch (error) {
+      console.log(error);
     }
   };
   const defaultChecked = (roleName) => {
@@ -111,7 +115,10 @@ const ViewUser = ({ userId }) => {
                   <div className="col-4">
                     <div className="title_head">
                       Email :
-                      <span className="title_value text_transform_none"> {userDetails?.email}</span>
+                      <span className="title_value text_transform_none">
+                        {" "}
+                        {userDetails?.email}
+                      </span>
                     </div>
                   </div>
                   <div className="col-4">
@@ -155,6 +162,7 @@ const ViewUser = ({ userId }) => {
                           type="checkbox"
                           name="Approver"
                           defaultChecked={defaultChecked("Approver")}
+                          disabled
                         />
                       </td>
                     </tr>
@@ -165,6 +173,7 @@ const ViewUser = ({ userId }) => {
                           type="checkbox"
                           name="Admin"
                           defaultChecked={defaultChecked("Admin")}
+                          disabled
                         />
                       </td>
                     </tr>
@@ -175,6 +184,7 @@ const ViewUser = ({ userId }) => {
                           type="checkbox"
                           name="Signatory"
                           defaultChecked={defaultChecked("Signatory")}
+                          disabled
                         />
                       </td>
                     </tr>
@@ -185,6 +195,7 @@ const ViewUser = ({ userId }) => {
                           type="checkbox"
                           name="Department Manager"
                           defaultChecked={defaultChecked("Department Manager")}
+                          disabled
                         />
                       </td>
                     </tr>
@@ -195,6 +206,7 @@ const ViewUser = ({ userId }) => {
                           type="checkbox"
                           name="Department Manager"
                           defaultChecked={defaultChecked("Employee")}
+                          disabled
                         />
                       </td>
                     </tr>

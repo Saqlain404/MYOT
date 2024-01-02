@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
+import {
+  approverTempleteList,
+  homeCount,
+  searchDocTemplete,
+  searchTemplete,
+  templeteDocList,
+} from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 // import "../../dist/css/style.min.css"
 
 const HomeAprv = () => {
+
   const tasks = [
     {
       id: 1,
@@ -59,6 +67,177 @@ const HomeAprv = () => {
   ];
 
   
+
+   const [searchData, setSearchData] = useState("");
+  const[searchDocData, setSearchDocData] = useState("")
+  const [documentRequests, setDocumentRequests] = useState([]);
+  const[templeteDoc,setTempleteDoc] = useState([])
+  const [templateNames, setTemplateNames] = useState(null);
+  const [docCount, setDocCount] = useState(null);
+
+  const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
+
+  const handleSearch = async () => {
+    const result = await searchTemplete(searchData,ids);
+    const searchResult = result?.data?.results?.templete;
+    console.log(searchResult);
+
+    if (searchResult && Array.isArray(searchResult)) {
+      const mappedResult = searchResult?.map((document) => ({
+        documentName: document?.templeteName,
+        img: [document?.manager?.[0]?.profile_Pic],
+        version: document?.templeteVersion?.[0]?.version,
+        assignedTo: [document?.manager?.[0]?.name],
+        department: [
+          document?.manager?.[0]?.department?.[0]?.departmentName,
+        ],
+        action: (
+          <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        ),
+        dateofSigning: [document?.createdAt],
+        comments: (
+          <img
+            src="/images/dashboard/Comment.png"
+            className="mx-auto d-block"
+          />
+        ),
+        status: [document?.status],
+      }));
+      setDocumentRequests(mappedResult);
+    }
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchData]);
+
+ 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!searchData || searchData === "") {
+        const names = await approverTempleteList(ids);
+        if (names) {
+          setTemplateNames(names);
+        }
+        // console.log(names);
+
+        const requests = names?.map((name) => ({
+          documentName: name?.templeteName,
+          document_id: name?._id,
+          version: name?.templeteVersion?.[0]?.version,
+          assignedTo: [name?.manager?.name],
+          img: [name?.manager?.profile_Pic],
+          action: (
+            <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+          ),
+          department: [name?.manager?.department_Id?.departmentName],
+          dateofSigning: [name?.createdAt],
+          comments: (
+            <img
+              src="/images/dashboard/Comment.png"
+              className="mx-auto d-block"
+            />
+          ),
+          commentID: name?._id,
+          status: [name?.status],
+        }));
+
+        setDocumentRequests(requests);
+      }
+    };
+    // console.log(documentRequests);
+
+    fetchData();
+  }, [searchData]);
+
+
+
+  // Document Request Data
+
+  const handleDocSearch = async () => {
+    const result = await searchDocTemplete(searchDocData);
+    const searchDocResult = result?.data?.results?.document;
+    console.log(searchDocResult);
+
+    if (searchDocResult && Array.isArray(searchDocResult)) {
+      const mappedDocResult = searchDocResult?.map((document) => ({
+        documentName: document?.templete?.templeteName,
+        img: [document?.templete?.manager?.[0]?.profile_Pic],
+        version: document?.templete_Id?.templeteVersion?.[0]?.version,
+        assignedTo: [document?.templete?.manager?.[0]?.name],
+        department: [
+          document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
+        ],
+        action: (
+          <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        ),
+        dateofSigning: [document?.createdAt],
+        comments: (
+          <img
+            src="/images/dashboard/Comment.png"
+            className="mx-auto d-block"
+          />
+        ),
+        status: [document?.status],
+      }));
+      setTempleteDoc(mappedDocResult);
+    }
+  };
+
+  useEffect(() => {
+    handleDocSearch();
+  }, [searchDocData]);
+
+  useEffect(() => {
+    const fetchDocData = async () => {
+      if (!searchDocData || searchDocData === "") {
+        const documentData = await templeteDocList();
+        // if (names) {
+        //   setTemplateNames(names);
+        // }
+
+        const docData = documentData?.map((doc) => ({
+          documentName: doc?.templete_Id?.templeteName,
+          document_id: doc?.templete_Id?._id,
+          version: doc?.templete_Id?.templeteVersion?.[0]?.version,
+          assignedTo: [doc?.templete_Id?.manager?.name],
+          img: [doc?.templete_Id?.manager?.profile_Pic],
+          action: (
+            <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+          ),
+          department: [doc?.templete_Id?.manager?.department_Id?.departmentName],
+          dateofSigning: [doc?.createdAt],
+          comments: (
+            <img
+              src="/images/dashboard/Comment.png"
+              className="mx-auto d-block"
+            />
+          ),
+          commentID: doc?._id,
+          status: [doc?.status],
+        }));
+
+        setTempleteDoc(docData);
+      }
+    };
+    // console.log(documentRequests);
+
+    fetchDocData();
+  }, [searchDocData]);
+
+
+  useEffect(() => {
+    const count = async () => {
+      const documentCountResult = await homeCount();
+      if (!documentCountResult?.error && documentCountResult) {
+        const counted = documentCountResult;
+        setDocCount(counted);
+      }
+    };
+    count(); 
+  }, []);
+
+
   return (
     <>
       <div className="container-fluid">
@@ -92,11 +271,11 @@ const HomeAprv = () => {
                       className="ms-4 "
                     />
                     <Link to={"/Approver/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -117,7 +296,7 @@ const HomeAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        320
+                        {docCount?.totalEmployee}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -139,7 +318,7 @@ const HomeAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        20
+                        {docCount?.countDepartment}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         +9.15%
@@ -161,7 +340,7 @@ const HomeAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        1,156
+                        {docCount?.totalActiveUser}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         -0.65%
@@ -181,7 +360,7 @@ const HomeAprv = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        320
+                        {docCount?.totalTempleted}
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         -1.48%
@@ -234,6 +413,11 @@ const HomeAprv = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  onChange={(e) => {
+                    setSearchData(e.target.value);
+                    //  handleSearch();
+                  }}
+                  value={searchData.searchTerm}
                 />
               </form>
             </div>
@@ -295,13 +479,27 @@ const HomeAprv = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {tasks.map((task) => (
+                    {documentRequests?.map((task) => (
                       <tr key={task.id}>
-                        <td className="td-text">{task.template}</td>
-                        <td>{task.assignedTo}</td>
+                        <td className="td-text">{task.documentName}</td>
+                        <td className="td-text">
+                          <img className="img_profile" src={task.img} />
+                          {task.assignedTo}
+                        </td>
                         <td className="td-text">{task.version}</td>
-                        <td className="td-text">{task.status}</td>
+                        <td
+                          className={`td-text ${
+                            task?.status == "Completed"
+                              ? "text-success"
+                              : task.status == "Pending"
+                              ? "text-info"
+                              : "text-warning"
+                          }`}
+                        >
+                          {task.status}
+                        </td>
                         <td className="td-text">{task.department}</td>
+
                         <td className="td-text"><div class="dropdown">
   <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
   {task.action}
@@ -315,6 +513,71 @@ const HomeAprv = () => {
   </ul>
 </div>
                           </td>
+
+                        <td className="td-text">
+                          <div class="dropdown">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              {task.action}
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Users Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/PencilLine.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Edit User Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  <img
+                                    src="/images/dashboard/Comment.png"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Comments
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/TextAlignLeft.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Wrap Column
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item text-danger" href="#">
+                                  <img
+                                    src="/images/users/Trash.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Delete User
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
+
                         <td></td>
                       </tr>
                     ))}
@@ -393,6 +656,11 @@ const HomeAprv = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  onChange={(e) => {
+                    setSearchDocData(e.target.value);
+                    //  handleSearch();
+                  }}
+                  value={searchDocData.searchTerm}
                 />
               </form>
             </div>
@@ -454,12 +722,21 @@ const HomeAprv = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {tasks.map((task) => (
+                    {templeteDoc.map((task) => (
                       <tr key={task.id}>
-                        <td className="td-text">{task.template}</td>
-                        <td>{task.assignedTo}</td>
+                        <td className="td-text">{task.documentName}</td>
+                        <td className="td-text">
+                          <img className="img_profile" src={task.img} />
+                          {task.assignedTo}
+                        </td>
                         <td className="td-text">{task.version}</td>
-                        <td className="td-text">{task.status}</td>
+                        <td  className={`td-text ${
+                            task?.status == "Completed"
+                              ? "text-success"
+                              : task.status == "Pending"
+                              ? "text-info"
+                              : "text-warning"
+                          }`}>{task.status}</td>
                         <td className="td-text">{task.department}</td>
                         <td className="td-text"><div class="dropdown">
   <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
@@ -474,6 +751,71 @@ const HomeAprv = () => {
   </ul>
 </div>
                           </td>
+
+                        <td className="td-text">
+                          <div class="">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              {task.action}
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Users Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/PencilLine.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Edit User Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  <img
+                                    src="/images/dashboard/Comment.png"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Comments
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/TextAlignLeft.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Wrap Column
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item text-danger" href="#">
+                                  <img
+                                    src="/images/users/Trash.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Delete User
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
+
                         <td></td>
                       </tr>
                     ))}
@@ -515,9 +857,7 @@ const HomeAprv = () => {
             </div>
 
             <div className="footer">
-              <div>
-              © 2023 MYOT
-              </div>
+              <div>© 2023 MYOT</div>
               <div className="d-flex ">
                 <p className="ms-3">About</p>
                 <p className="ms-3">Support</p>

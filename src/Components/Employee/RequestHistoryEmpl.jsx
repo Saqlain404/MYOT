@@ -5,18 +5,22 @@ import Sidebar from "../Sidebar";
 import { Card } from "antd";
 import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
-import { EmpyHistoryLogList, searchHistoryLog } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import { AddCommentEmply, EmpyHistoryLogList, searchHistoryLog } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import moment from "moment";
 
 const RequestHistoryEmpl = () => {
 
   const[searchData, setSearchData] = useState("");
   const [templateNames, setTemplateNames] = useState(null);
   const [documentRequests, setDocumentRequests] = useState([]);
+  const [comment, setComment] = useState("");
+
+ const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
 
   useEffect(() => {
     const fetchData = async () => {
      if(!searchData || searchData === ""){
-       const names = await EmpyHistoryLogList();
+       const names = await EmpyHistoryLogList(ids);
       if (names) {
         setTemplateNames(names);
         console.log(names?.[0])
@@ -32,6 +36,7 @@ const RequestHistoryEmpl = () => {
           comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
           // status:[name?.status],
           action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+          commentID: name?._id,
         }));
         
 
@@ -69,6 +74,20 @@ const RequestHistoryEmpl = () => {
   useEffect(()=>{
     handleSearch()
   },[searchData])
+
+
+  const handleSubmitComment = async (e, document_Id) => {
+    e.preventDefault();
+    let creator_Id =  localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+    let data = await AddCommentEmply({
+      comment,
+      document_Id,
+      creator_Id,
+    });
+    if (!data?.error) {
+      setComment("");
+    }
+  };
 
 
   return (
@@ -238,7 +257,7 @@ const RequestHistoryEmpl = () => {
                 </tr>
               </thead>
               <tbody >
-                {documentRequests.map((document) => (
+                {documentRequests?.map((document) => (
                   <tr
                     key={document._id}
                     
@@ -259,13 +278,81 @@ const RequestHistoryEmpl = () => {
                     </td>
                     <td className="td-text">
                       <img src="/images/dashboard/CalendarBlank.png" />
-                      {document.dateofSigning}
+                      {moment(document.dateofSigning).calendar()}
                     </td>
                     <td className="td-text">
-                      {document.comments}
-                    </td>
+                          <div className="">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <img
+                                src="/images/dashboard/Comment.png"
+                                className="mx-auto d-block"
+                              />
+                            </a>
+                            <form
+                              className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
+                              onSubmit={(e) =>
+                                handleSubmitComment(e, document?.commentID)
+                              }
+                            >
+                              <div className="mb-3 border-bottom">
+                                <label className="form-label th-text">
+                                  Comment or type
+                                </label>
+
+                                <input
+                                  type="text"
+                                  className="form-control border-0"
+                                  value={comment}
+                                  onChange={(e) => setComment(e.target.value)}
+                                />
+                              </div>
+
+                              <div className="d-flex justify-content-between">
+                                <div>
+                                  <img
+                                    src="/images/tasks/assign comments.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/mention.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/task.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/emoji.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/attach_attachment.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                </div>
+                                <div>
+                                  <button
+                                    type="submit"
+                                    className="comment-btn btn-primary"
+                                  >
+                                    Comment
+                                  </button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </td>
                     <td className="td-text">{document.version}</td>
-                    <td className="td-text"><div class="dropdown">
+                    <td className="td-text"><div class="">
   <a type="" data-bs-toggle="dropdown" aria-expanded="false">
   {document.action}
   </a>

@@ -6,121 +6,33 @@ import { useState } from "react";
 import {
   AddDepartment,
   DepartmentList,
+  DepartmentSearch,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { useEffect } from "react";
 
 const Departments = () => {
-  const photo = <img src="/images/dashboard/Avatar.png" />;
-  const data = [
-    {
-      key: "1",
-      userId: "111125",
-      // image: "./images/dashboard/Avatar.png",
-      name: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" />,
-        "Katherine Moss",
-      ],
-      department: "Human Resourses",
-      roles: (
-        <ul>
-          <li>Employee</li>
-          <li>Approver</li>
-          <li>Signatory</li>
-          <li>DTM</li>
-        </ul>
-      ),
-      lastLoggedIn: "2021-04-16 18:02:55",
-      status: <p className="text-primary m-0">In Progress</p>,
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      key: "2",
-      userId: "101346",
-      name: [
-        <img src="/images/dashboard/Avatar2.png" className="me-2" />,
-        "Natali Craig",
-      ],
-      department: "Human Resourses",
-      roles: (
-        <ul>
-          <li>Employee</li>
-          <li>Approver</li>
-          <li>Signatory</li>
-          <li>DTM</li>
-        </ul>
-      ),
-      lastLoggedIn: "2021-04-16 18:02:55",
-      status: <p className="text-primary m-0">In Progress</p>,
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      key: "3",
-      userId: "101127",
-      name: [
-        <img src="/images/dashboard/Avatar3.png" className="me-2" />,
-        "Orlando Diggs",
-      ],
-      department: "Human Resourses",
-      roles: (
-        <ul>
-          <li>Employee</li>
-          <li>Approver</li>
-          <li>Signatory</li>
-          <li>DTM</li>
-        </ul>
-      ),
-      lastLoggedIn: "2021-04-16 18:02:55",
-      status: <p className="text-primary m-0">In Progress</p>,
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      key: "4",
-      userId: "101128",
-      name: [
-        <img src="/images/dashboard/Avatar2.png" className="me-2" />,
-        "Katherine Moss",
-      ],
-      department: "Human Resourses",
-      roles: (
-        <ul>
-          <li>Employee</li>
-          <li>Approver</li>
-          <li>Signatory</li>
-          <li>DTM</li>
-        </ul>
-      ),
-      lastLoggedIn: "2021-04-16 18:02:55",
-      status: <p className="text-primary m-0">In Progress</p>,
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-  ];
-
-  const navigate = useNavigate();
-
-  const userId = localStorage.getItem("user_id");
-
   const [listItems, setListItems] = useState([]);
-
-  const DepartmentLists = async (key) => {
-    const { data } = await DepartmentList({search: key});
-    if (!data?.error) {
-      setListItems(data?.results?.department);
-    }
-  };
-  console.log(listItems);
+  const [search, setSearch] = useState("");
 
   const [departmentInfo, setDepartmentInfo] = useState({
     departmentname: "",
     description: "",
   });
+
+  useEffect(() => {
+    DepartmentLists();
+  }, []);
+
+  const navigate = useNavigate();
+
+  const userId = localStorage.getItem("user_id");
+
+  const DepartmentLists = async (key) => {
+    const { data } = await DepartmentList({ search: key });
+    if (!data?.error) {
+      setListItems(data?.results?.department);
+    }
+  };
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -157,10 +69,26 @@ const Departments = () => {
       description: "",
     });
   };
-  
-  useEffect(() => {
-    DepartmentLists();
-  }, []);
+
+  const handleSearch = async (e) => {
+    try {
+      const value = e.target.value;
+      console.log(value);
+      setSearch(value);
+      if (value.length > 0) {
+        let { data } = await DepartmentSearch({ search: value });
+        console.log(data);
+        if (!data?.error) {
+          let values = data?.results?.department;
+          setListItems(values);
+        }
+      } else {
+        DepartmentLists();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -344,8 +272,8 @@ const Departments = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
-                  // value={}
-                  onChange={(e) => DepartmentLists(e.target.value)}
+                  value={search}
+                  onChange={(e) => handleSearch(e)}
                 />
               </form>
             </div>
@@ -400,7 +328,10 @@ const Departments = () => {
                               data-bs-toggle="dropdown"
                               aria-expanded="false"
                             >
-                              <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+                              <img
+                                src="/images/sidebar/ThreeDots.svg"
+                                className="w-auto p-3"
+                              />
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                               <li>

@@ -90,6 +90,7 @@ const Home = () => {
     if (!data?.error) {
       const templates = data?.results?.templete;
       setTemplate(templates);
+      console.log(templates)
     }
   };
 
@@ -108,7 +109,8 @@ const Home = () => {
 
   const handleSubmit = async (e, templete_Id) => {
     e.preventDefault();
-    let creator_Id = localStorage.getItem("user_id");
+    let creator_Id = localStorage.getItem("myot_admin_id");
+    console.log(creator_Id, comment, templete_Id)
     let { data } = await AddCommentForTask({
       comment,
       templete_Id,
@@ -463,7 +465,7 @@ const Home = () => {
                                   template?.templeteVersion.length - 1
                                 ]?.version
                               }`
-                            : "No templete versions found"}
+                            : "No versions found"}
                         </td>
                         <td
                           className={`"td-text" ${
@@ -501,7 +503,7 @@ const Home = () => {
                             </a>
                             <form
                               className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
-                              onSubmit={(e) => handleSubmit(e, document?._id)}
+                              onSubmit={(e) => handleSubmit(e, template?._id)}
                             >
                               <div className="mb-3 border-bottom">
                                 <label className="form-label th-text">
@@ -559,7 +561,7 @@ const Home = () => {
                         <td className={`td-text ${
                             hiddenColumns.actions ? "d-none" : "table-cell"
                           }`}>
-                          <div class="dropdown">
+                          <div class="">
                             <a
                               className="cursor_pointer"
                               type=""
@@ -593,14 +595,14 @@ const Home = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item" href="#">
+                                <Link class="dropdown-item" to={`/Admin/Tasks/Comments/${template?._id}`}>
                                   <img
                                     src="/images/dashboard/Comment.png"
                                     alt=""
                                     className="me-2"
                                   />
                                   Comments
-                                </a>
+                                </Link>
                               </li>
                               <li>
                                 <a class="dropdown-item border-bottom" href="#">

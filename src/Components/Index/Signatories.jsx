@@ -5,7 +5,8 @@ import Sidebar from "../Sidebar";
 import { Card } from "antd";
 import { Link } from "react-router-dom";
 import {
-  SignatoryList, SignatorySearch,
+  SignatoryList,
+  SignatorySearch,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
 
@@ -30,7 +31,7 @@ const Signatories = () => {
     setSearchInput(value);
     if (value.length > 0) {
       let { data } = await SignatorySearch({ search: value });
-      console.log(data)
+      console.log(data);
       if (!data?.error) {
         setDocumments(data?.results?.signatory);
       }
@@ -38,101 +39,6 @@ const Signatories = () => {
       getSignatoriesData();
     }
   };
-
-  // const documents1 = [
-  //   {
-  //     id: 1,
-  //     documentName: "Employment Contract",
-  //     creator: [
-  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
-  //       "Katherine Moss",
-  //     ],
-  //     version: "0.1",
-  //     login: "18 Aug 22,09:23 AM",
-  //     ipAddress: "17.172.224.47",
-  //     department: "Human Resources",
-  //     comment: (
-  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-  //     ),
-  //     actions: (
-  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-  //     ),
-  //   },
-  //   {
-  //     id: 2,
-  //     documentName: "Tax Deduction at Source",
-  //     creator: [
-  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
-  //       "Katherine Moss",
-  //     ],
-  //     version: "0.1",
-  //     login: "18 Aug 22,09:23 AM",
-  //     ipAddress: "17.172.224.47",
-  //     department: "Human Resources",
-  //     comment: (
-  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-  //     ),
-  //     actions: (
-  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-  //     ),
-  //   },
-  //   {
-  //     id: 3,
-  //     documentName: "Training Certificates",
-  //     creator: [
-  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
-  //       "Katherine Moss",
-  //     ],
-  //     version: "0.1",
-  //     login: "18 Aug 22,09:23 AM",
-  //     ipAddress: "17.172.224.47",
-  //     department: "Human Resources",
-  //     comment: (
-  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-  //     ),
-  //     actions: (
-  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-  //     ),
-  //   },
-  //   {
-  //     id: 4,
-  //     documentName: "Software Licenses",
-  //     creator: [
-  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
-  //       "Katherine Moss",
-  //     ],
-  //     version: "0.1",
-  //     login: "18 Aug 22,09:23 AM",
-  //     ipAddress: "17.172.224.47",
-  //     department: "Information Technologies",
-  //     comment: (
-  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-  //     ),
-  //     actions: (
-  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-  //     ),
-  //   },
-  //   {
-  //     id: 5,
-  //     documentName: "Reference Letter",
-  //     creator: [
-  //       <img src="/images/dashboard/Avatar.png" className="me-2" />,
-  //       "Katherine Moss",
-  //     ],
-  //     version: "0.1",
-  //     login: "18 Aug 22,09:23 AM",
-  //     ipAddress: "17.172.224.47",
-  //     department: "Human Resources",
-  //     comment: (
-  //       <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
-  //     ),
-  //     actions: (
-  //       <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-  //     ),
-  //   },
-
-  //   // Add more tasks here
-  // ];
 
   return (
     <>
@@ -306,23 +212,23 @@ const Signatories = () => {
                             type="checkbox"
                             value=""
                           />
-                           {document?.name
-                              .charAt(0)
-                              .toUpperCase() +
-                              document?.name.slice(1).toLowerCase()}
+                          {document?.name.charAt(0).toUpperCase() +
+                            document?.name.slice(1).toLowerCase()}
                         </td>
                         {/* <td className="td-text">{document.creator}</td> */}
                         <td className="td-text">
                           {document?.department_Id?.departmentName}
                         </td>
-                        <td className="td-text">
-                          {document?.employId}
-                        </td>
+                        <td className="td-text">{document?.employId}</td>
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
-                          {moment(document?.logIn).format(
-                            '"MMM Do YY", h:mm:ss a'
-                          )}
+                          <span className="ms-2">
+                            {(document?.logIn &&
+                              moment(document?.logIn).format(
+                                '"MMM Do YY", h:mm:ss a'
+                              )) ||
+                              "NA"}
+                          </span>
                         </td>
                         {/* <td className="td-text">{document.ipAddress}</td>
                         <td className="td-text">{document.version}</td> */}

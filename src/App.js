@@ -109,7 +109,16 @@ import ChatboxDept from "./Components/DepartmentManager/ChatboxDept";
 import ChatboxAprv from "./Components/Approver/Chatbox";
 import CalendarMonthDept from "./Components/DepartmentManager/CalendarMonthDept";
 import CalenderYearDept from "./Components/DepartmentManager/CalenderYear";
+
 import CommentsDept from "./Components/DepartmentManager/CommentsDept";
+
+import EmplySetting from "./Components/Employee/EmplySetting";
+import OTPauthEmply from "./Components/Login/OTPauthEmply";
+import CalendarMonthEmply from "./Components/Employee/CalendarMonthEmply";
+import CalenderYearEmply from "./Components/Employee/CalenderYearEmply";
+import DocComments from "./Components/Index/DocumentRequests/Comment";
+import CommentsEmply from "./Components/Employee/CommentsEmply";
+
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -142,7 +151,8 @@ function App() {
         <Route path="Admin/My-profile" element={<Profile />} />
         <Route path="Admin/Edit-profile" element={<EditProfile />} />
         <Route path="Admin/Settings" element={<Settings />} />
-        <Route path="Admin/Comments" element={<Comments />} />
+        <Route path="Admin/Tasks/Comments/:id" element={<Comments />} />
+        <Route path="Admin/Requests/Comments/:id" element={<DocComments />} />
         <Route path="Admin/Help" element={<Help />} />
         <Route path="Admin/Help/Help-Support" element={<HelpSupport />} />
         <Route path="Admin/Help/Contact-us" element={<ContactUs />} />
@@ -268,19 +278,39 @@ function App() {
           path="Employee/received-doc/view-details"
           element={<ViewReceivedDoc />}
         />
+
         {/* <Route path="Employee/OTP-verification" element={<OTPauthEmply />} /> */}
+
+        <Route path="Employee/OTP-verification" element={<OTPauthEmply />} />
+
         <Route path="Employee/profile" element={<EmplProfile />} />
         <Route path="Employee/Edit-Profile" element={<EmplEditProfile />} />
         <Route path="Employee/Help&Support" element={<EmplHelpSupport />} />
         <Route path="Employee/Help" element={<EmplHelp />} />
         <Route path="Employee/Chat" element={<ChatboxEmploy />} />
         <Route path="Employee/Contact" element={<ContactUsEmpl />} />
+
         {/* <Route path="Employee/Settings" element={<EmplySetting />} /> */}
         {/* <Route
           path="Employee/Calendar-month"
           element={<CalendarMonthEmply />}
         /> */}
         {/* <Route path="Employee/Calendar-year" element={<CalenderYearEmply />} /> */}
+
+        <Route path="Employee/Settings" element={<EmplySetting />} />
+        <Route
+          path="Employee/Calendar-month"
+          element={<CalendarMonthEmply />}
+        />
+        <Route path="Employee/Calendar-year" element={<CalenderYearEmply />} />
+        <Route path="Employee/Settings" element={<EmplySetting />} />
+        <Route
+          path="Employee/Calendar-month"
+          element={<CalendarMonthEmply />}
+        />
+        <Route path="Employee/Calendar-year" element={<CalenderYearEmply />} />
+        <Route path="Employee/Comment/:id" element={<CommentsEmply />} />
+
       </Routes>
     </div>
   );

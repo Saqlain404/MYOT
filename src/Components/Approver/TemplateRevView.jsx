@@ -1,12 +1,25 @@
-import React from "react";
+
+import React from "react"
+import React, { useEffect, useState } from "react";
+import RightSidebar from "../RightSidebar";
+import Sidebar from "../Sidebar";
+// import "assets/css/style.min.css"
+import { Card } from "antd";
+
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarAprv";
+import { templeteViewDetails } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 
 const TemplateRevView = () => {
-
-  
- 
-
+  const[viewData, setViewData] = useState()
+  useEffect(()=>{
+    const templeteView = async()=>{
+      const viewDetail = await templeteViewDetails()
+      console.log(viewDetail)
+      setViewData(viewDetail?.templete)
+    }
+    templeteView()
+  },[])
   return (
     <>
       <div className="container-fluid">
