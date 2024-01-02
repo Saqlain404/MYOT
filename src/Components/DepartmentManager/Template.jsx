@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
-import { DepartmentTemplateCount } from "../../ApiServices/departmentHttpService/departmentHttpService";
+import { DepartmentTemplateCount, TemplateList } from "../../ApiServices/departmentHttpService/departmentHttpService";
 
 
 const Template = () => {
@@ -100,6 +100,16 @@ const Template = () => {
 
   const [templateCount, setTemplateCount] = useState();
 
+  const [listItems, setListItems] = useState([]);
+
+  const getTemplateLists = async (key) => {
+    const { data } = await TemplateList ({search: key});
+    if (!data?.error) {
+      setListItems(data?.results?.templete);
+    }
+  };
+  console.log(listItems);
+
   
 
   const getTemplateCount = async () => {
@@ -111,6 +121,7 @@ const Template = () => {
 
   useEffect(() => {
     getTemplateCount();
+    getTemplateLists();
   }, []);
 
   return (
@@ -386,21 +397,21 @@ const Template = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {documents.map((document) => (
-                      <tr key={document.id}>
-                        <td className="td-text">{document.templateName}</td>
-                        <td className="td-text">{document.assignedTo}</td>
-                        <td className="td-text">{document.version}</td>
+                    {listItems?.map((template) => (
+                      <tr key={template.id}>
+                        <td className="td-text">{template}</td>
+                        <td className="td-text">{template.assignedTo}</td>
+                        <td className="td-text">{template.version}</td>
                         <td className="td-text">
                       <img src="/images/dashboard/CalendarBlank.png" alt=""/>
-                          {document.date}</td>
-                        <td className="td-text">{document.status}</td>
-                        <td className="td-text">{document.department}</td>
+                          {template.date}</td>
+                        <td className="td-text">{template.status}</td>
+                        <td className="td-text">{template.department}</td>
                        
                         {/* <td className="td-text"></td> */}
                         <td className="td-text"><div class="dropdown">
   <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
-  {document.actions}
+  {template.actions}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
     <li >
