@@ -42,6 +42,8 @@ const Sidebar = () => {
     localStorage.removeItem("token-company");
     navigate("/Admin/Login");
   };
+
+
   return (
     <div className="container-fluid  sidebar">
       {/* Sidebar scroll*/}
@@ -444,7 +446,7 @@ const Sidebar = () => {
             </div>
           </a>
           <ul class="dropdown-menu">
-            <Link to={"/Approver/Home"} className="text-decoration-none">
+            <Link  to={"/Approver/Home"} className="text-decoration-none">
               <li>
                 <a class="dropdown-item">Approver</a>
               </li>

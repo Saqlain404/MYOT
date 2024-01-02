@@ -115,6 +115,7 @@ import OTPauthEmply from "./Components/Login/OTPauthEmply";
 import CalendarMonthEmply from "./Components/Employee/CalendarMonthEmply";
 import CalenderYearEmply from "./Components/Employee/CalenderYearEmply";
 import DocComments from "./Components/Index/DocumentRequests/Comment";
+import CommentsEmply from "./Components/Employee/CommentsEmply";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -298,6 +299,13 @@ function App() {
           element={<CalendarMonthEmply />}
         />
         <Route path="Employee/Calendar-year" element={<CalenderYearEmply />} />
+        <Route path="Employee/Settings" element={<EmplySetting />} />
+        <Route
+          path="Employee/Calendar-month"
+          element={<CalendarMonthEmply />}
+        />
+        <Route path="Employee/Calendar-year" element={<CalenderYearEmply />} />
+        <Route path="Employee/Comment/:id" element={<CommentsEmply />} />
       </Routes>
     </div>
   );

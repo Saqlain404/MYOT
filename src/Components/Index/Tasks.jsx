@@ -491,7 +491,7 @@ const Tasks = () => {
                                     src="/images/users/PencilLine.svg"
                                     alt=""
                                     className="me-2"
-                                  />
+                                  /> 
                                   Edit User Details
                                 </a>
                               </li>

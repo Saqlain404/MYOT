@@ -18,7 +18,7 @@ const EmplAuthLogin = () => {
   } = useForm();
 
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
     if (!localStorage.getItem("token-company")) {
       navigate("/Employee/Login");

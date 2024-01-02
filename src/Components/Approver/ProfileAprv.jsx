@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
+import { profileDetails } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
+import moment from "moment";
 
 const ProfileAprv = () => {
- 
+  
+  const[profileDetail,setProfileDetail] = useState(null);
+
+  
+
+  const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
+  useEffect(()=>{
+    const details = async ()=>{
+      const detailResults = await profileDetails(ids);
+      const data = detailResults?.[0]?.approver;
+      setProfileDetail(data)
+    }
+    details();
+  },[])
+  console.log(profileDetail)
+
+
+  
 
   return (
     <>
@@ -66,31 +85,42 @@ const ProfileAprv = () => {
       <button className="profile-edit-btn">Edit</button>
       </Link>
     </div>
-   <div className=" d-flex justify-content-start mb-4">
-    <img src="/images/dashboard/AvatarProfile.svg" alt="" />
-   </div>
+  
+    <div className=" d-flex justify-content-start mb-4">
+                  {/* <img src="/images/dashboard/AvatarProfile.svg" alt="" /> */}
+                  <img
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                    }}
+                    src={profileDetail?.profile_Pic}
+                    alt="profile_image"
+                  />
+                </div>
    <div className="bg-white rounded mb-4 p-4 pb-2">
     <p className=" d-flex justify-content-start profile-card-title">Details</p>
     <div className="d-flex justify-content-between">
       <div>
         <p className="profile-info">Full Name</p>
-        <p className="profile-data">Katherine Moss</p>
+        <p className="profile-data">{profileDetail?.name}</p>
       </div>
       <div>
         <p className="profile-info">Email</p>
-        <p className="profile-data">Ase@gmail.com</p>
+        <p className="profile-data">{profileDetail?.email}</p>
       </div>
       <div>
         <p className="profile-info">Phone Number</p>
-        <p className="profile-data">+97 7898788999</p>
+        <p className="profile-data">{profileDetail?.mobileNumber}</p>
       </div>
       <div>
         <p className="profile-info">Date of Birth</p>
-        <p className="profile-data">18 Aug 20, 1999</p>
+        <p className="profile-data">{moment(profileDetail?.DOB).calendar()}</p>
       </div>
     </div>
    </div>
-   <div className="bg-white rounded mb-4 p-4 ">
+   {/* <div className="bg-white rounded mb-4 p-4 ">
     <p className=" d-flex justify-content-start profile-card-title">Doccument</p>
     <div className=" d-flex ">
         <img src="/images/dashboard/pdf-icon.svg" alt="" />
@@ -100,8 +130,8 @@ const ProfileAprv = () => {
         <img src="/images/dashboard/pdf-icon.svg" alt="" />
         <p className="profile-salary-slip m-2">Salaryslip.Pdf</p>
     </div>
-   </div>
-   <div className="bg-white rounded mb-4 p-4 pb-2">
+   </div> */}
+   {/* <div className="bg-white rounded mb-4 p-4 pb-2">
     <p className=" d-flex justify-content-start profile-card-title">Company Information</p>
     <div className="d-flex justify-content-between">
       <div>
@@ -121,7 +151,7 @@ const ProfileAprv = () => {
         <p className="profile-data">Human Resources</p>
       </div>
     </div>
-   </div>
+   </div> */}
   </div>
 </div>
 

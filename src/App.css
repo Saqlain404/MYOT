@@ -43,6 +43,14 @@ height: 960px; */
   flex-shrink: 0;
   margin: 20px;
 }
+.settingLogo {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 50px;
+  margin-right: 8px;
+  object-fit: cover;
+}
 
 .myot {
   color: #000;
@@ -172,6 +180,7 @@ height: 960px; */
   width: 34px;
   height: 34px;
   border-radius: 100%;
+  object-fit: cover;
   margin-left: 20px;
   margin-right: 10px;
 }
@@ -731,7 +740,7 @@ height: 960px; */
   white-space: nowrap;
   overflow: hidden;
   height: 100%;
-  background-color: #fff;
+  background: #fff4ea;
   align-items: flex-start;
   border-radius: 14px;
   padding: 18px 20px;
@@ -1352,7 +1361,7 @@ height: 960px; */
 }
 
 .nav_active .sidebar-btn {
-  color: black !important;
+  color: #3e51ff !important;
   font-weight: bold;
 }
 
@@ -2562,6 +2571,49 @@ height: 960px; */
   border-radius: 50%;
   object-fit: cover;
 }
+
+.comment-section {
+  position: absolute;
+  background: white;
+  z-index: 10;
+}
+.progress-bar {
+  background: rgba(0, 0, 0, 0.05);
+  height: 28px;
+  width: 160px;
+  margin: 0 0 10px 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.progress-container {
+  position: relative;
+  height: 100%;
+}
+
+.progress {
+  background-color: #c6c7f8;
+  color: black;
+  font-weight: 600;
+  line-height: 28px;
+  height: 100%;
+}
+
+.progress-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 14px;
+  transform: translate(-50%, -50%);
+  color: #333; /* Choose a color that contrasts well with your progress bar color */
+  font-weight: 600;
+}
+.doc-req-bar {
+  border-radius: 0px 4px 4px 0px;
+  background: rgba(0, 0, 0, 0.1);
+  height: 6px;
+  flex-shrink: 0;
+}
 .w_20_h_20 {
   width: 20px;
   height: 20px;
@@ -2636,4 +2688,10 @@ div.dataTables_wrapper div.dataTables_paginate {
 }
 .sr-only {
   display: none !important;
+}
+
+.task_reply textarea {
+  border: #3e51ff dashed 2px;
+  border-radius: 5px;
+  outline: none;
 }
