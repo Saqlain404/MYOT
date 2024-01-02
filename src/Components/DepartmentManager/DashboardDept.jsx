@@ -148,7 +148,7 @@ const DashboardDept = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                        {departmentCount?.totalUser}
                       </h3>
-                      
+
                     </div>
                   </div>
                 </div>
@@ -163,7 +163,7 @@ const DashboardDept = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         {departmentCount?.totalTemplete}
                       </h3>
-                     
+
                     </div>
                   </div>
                 </div>
@@ -178,7 +178,7 @@ const DashboardDept = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         {departmentCount?.totalDocument}
                       </h3>
-                     
+
                     </div>
                   </div>
                 </div>
@@ -191,7 +191,7 @@ const DashboardDept = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {departmentCount?.totalActiveUser}
                       </h3>
-                     
+
                     </div>
                   </div>
                 </div>

@@ -178,6 +178,7 @@ const Announcements = () => {
                             name="doc_file"
                             id="doc_file"
                             onChange={(e) => handleImgChange(e, "doc_img")}
+                            accept=".png, .jpg, .jpeg, .pdf"
                           />
                         </div>
                       </div>

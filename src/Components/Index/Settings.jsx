@@ -1,17 +1,77 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
+import {
+  Logos,
+  UpdateLogo,
+} from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import { toast } from "react-toastify";
 
 const Settings = () => {
- 
+  const [logosList, setLogosList] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [cId, setCId] = useState();
 
+  useEffect(() => {
+    getLogos();
+  }, []);
+
+  const getLogos = async () => {
+    let id = localStorage.getItem("myot_admin_id");
+    setCId(id);
+    let { data } = await Logos(id);
+    console.log(data);
+    if (!data?.error) {
+      setLogosList(data?.results?.logoList);
+    }
+  };
+
+  const handleFileSelection = async (e, key) => {
+    setFiles({ ...files, [key]: e.target.files[0] });
+  };
+
+  const handleSubmit = async () => {
+    if (!files?.logo) {
+      toast("Please select an image", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return false;
+    }
+    const formData = new FormData();
+    formData.append("logo", files?.logo);
+    formData.append("creator_Id", cId);
+    let { data } = await UpdateLogo(formData);
+    console.log(data);
+    if (!data?.error) {
+      toast(data?.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      document.getElementById("reset").click();
+      setFiles([]);
+      getLogos();
+    }
+  };
   return (
     <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <Sidebar/>
+            <Sidebar />
           </div>
           <div className="col-7 middle-content bg-body-tertiary p-0 min-vh-100">
             <div className="container-fluid border-bottom sticky-top bg-white mb-4">
@@ -39,11 +99,11 @@ const Settings = () => {
                       className="ms-4 "
                     />
                     <Link to={"/Admin/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -53,53 +113,69 @@ const Settings = () => {
                   </div>
                 </div>
               </nav>
-            
             </div>
 
             <div className="container px-4 text-center min-vh-100 ">
-  <div className="row rounded">
-   
-   
-   <div className="bg-white rounded mb-4 p-4 pb-2">
-   <div className="d-flex">
-              
-              <p className="td-text border-bottom me-3">Business Assets</p>
-              <p className="th-text  ">System Setting</p>
-            </div>
-            <div>
-              <p className="settings-txt">Select Logo</p>
-              <div className="d-flex">
-                <img src="/images/settings/facebook-logo.svg" alt="" className="me-3"/>
-                <img src="/images/settings/Facebook.svg" alt="" />
+              <div className="row rounded">
+                <div className="bg-white rounded mb-4 p-4 pb-2">
+                  <div className="d-flex">
+                    <Link to={"/"} className="text-decoration-none">
+                      <p className="td-text border-bottom me-3">
+                        Business Assets
+                      </p>
+                    </Link>
+                    <Link to={"/"} className="text-decoration-none">
+                      <p className="th-text  ">System Setting</p>
+                    </Link>
+                  </div>
+                  <div>
+                    <p className="settings-txt">Select Logo</p>
+                    <div className="row">
+                      {logosList &&
+                        logosList?.map((logos) => (
+                          <div className="col-2 setting_logo">
+                            <img className="" src={logos?.logo} alt="logo" />
+                          </div>
+                        ))}
+                    </div>
+                    <div className="my-4">
+                      <div>
+                        <p className="settings-txt mt-3">Upload Logo</p>
+                        <label htmlFor="logo" className="w-100">
+                          <input
+                            type="file"
+                            defaultValue=""
+                            id="logo"
+                            name="logo"
+                            className="d-none"
+                            onChange={(e) => handleFileSelection(e, "logo")}
+                          />
+                          <div className="dashed_border w-100 py-5">
+                            <div>
+                              <img
+                                src={require("../../assets/logo/img.png")}
+                                alt=""
+                              />
+                            </div>
+                            <p className="py-3">
+                              Drag and drop logo here, or click add image
+                            </p>
+                            <button onClick={handleSubmit} className="blue_btn">
+                              Add Image
+                            </button>
+                            <button id="reset" type="reset" className="d-none">
+                              reset
+                            </button>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <p className="settings-txt mt-3 mb-2">Upload Logo</p>
-              <div className="bg-body-tertiary rounded p-4 mb-2 import-img-card">
-<img src="/images/dashboard/import-img.svg" alt="" />
-<p className="th-text m-1">Drag and drop logo here, or click add image</p>
-<button className="add-img-btn mt-4">Add Image</button>
-      </div>
             </div>
-   </div>
 
-   <div className="bg-white rounded mb-4 pb-2">
-  
-            <div>
-             
-              
-             
-      <p className="settings-txt mt-3 mb-2">Select Colors</p>
-      <img src="/images/dashboard/color-palete.svg" alt="" className="color-palete"/>
-      <div className="d-flex justify-content-end">
-      <button className="notify-admin-btn mt-4 m-2">Save</button>
-      </div>
-            </div>
-   </div>
-   
-  
-  </div>
-</div>
-
-<div className="footer bg-white">
+            <div className="footer bg-white">
               <div>© 2023 MYOT</div>
               <div className="d-flex ">
                 <p className="ms-3">About</p>
@@ -107,9 +183,9 @@ const Settings = () => {
                 <p className="ms-3">Contact Us</p>
               </div>
             </div>
-        </div>
-        
-        <div className="col">
+          </div>
+
+          <div className="col">
             <RightSidebar />
           </div>
         </div>

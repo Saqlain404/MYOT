@@ -1,10 +1,46 @@
-import React from "react";
+
+// import React from "react";
+
+import React, { useState } from "react";
+import Sidebar from "../Sidebar";
+
 import { Link } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
+import { ToastContainer } from "react-toastify";
+import { contactUsAprv } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 
 const ContactUsAprv = () => {
+
+  const [contactData, setContactData] = useState({
+    name: "",
+    email: "",
+    mobileNumber: "",
+    message: "", 
+  });
+
+  const handleInput = (event) => {
+    setContactData({ ...contactData, [event.target.name]: event.target.value });
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const data = {
+      name:  contactData.name,
+      email:  contactData.email,
+      mobileNumber:  contactData.mobileNumber,
+      message:  contactData.message,
+    };
+    setContactData("")
+
+
+
+    const response = await contactUsAprv(data);
+
+    console.log(response);
+    
+  }
   return (
-    <>
+    <> 
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
@@ -77,50 +113,69 @@ const ContactUsAprv = () => {
                     <p className="help-support-text">
                       Have any questions? We’d love to hear from you.
                     </p>
-                    <div className="col mb-3">
-                      <p className=" d-flex justify-content-start profile-card-title">
-                        Name*
-                      </p>
-                      <input
-                        type="text"
-                        placeholder="Name"
-                        className="col-12 profile-edit-input p-2"
-                      />
-                    </div>
-                    <div className="col mb-3">
-                      <p className=" d-flex justify-content-start profile-card-title">
-                        Email*
-                      </p>
-                      <input
-                        type="text"
-                        placeholder="Email"
-                        className="col-12 profile-edit-input p-2"
-                      />
-                    </div>
-                    <div className="col mb-3">
-                      <p className=" d-flex justify-content-start profile-card-title">
-                        Phone Number*
-                      </p>
-                      <input
-                        type="text"
-                        placeholder="Phone Number"
-                        className="col-12 profile-edit-input p-2"
-                      />
-                    </div>
-                    <div className="col mb-3">
-                      <p className=" d-flex justify-content-start profile-card-title">
-                        Message
-                      </p>
-                      <textarea
-                        name="message"
-                        id=""
-                        cols="30"
-                        rows="10"
-                        placeholder="Type your message..."
-                        className="col-12 profile-edit-input p-2"
-                      ></textarea>
-                    </div>
-                    <button className="contact-form-btn">Submit</button>
+                    <form onSubmit={onSubmit}>
+                      <div className="col mb-3">
+                        <p className=" d-flex justify-content-start profile-card-title">
+                          Name*
+                        </p>
+                        <input
+                          type="text"
+                          id="name"
+                          placeholder="Name"
+                          value={contactData.name}
+                          name="name"
+                          onChange={handleInput}
+                          className="col-12 profile-edit-input p-2"
+                        />
+                      </div>
+                      <div className="col mb-3">
+                        <p className=" d-flex justify-content-start profile-card-title">
+                          Email*
+                        </p>
+                        <input
+                          type="text"
+                          value={contactData.email}
+                          id="email"
+                          placeholder="Email"
+                          name="email"
+                          onChange={handleInput}
+                          className="col-12 profile-edit-input p-2"
+                        />
+                      </div>
+                      <div className="col mb-3">
+                        <p className=" d-flex justify-content-start profile-card-title">
+                          Phone Number*
+                        </p>
+                        <input
+                          type="text"
+                          id="mobileNumber"
+                          placeholder="Phone Number"
+                          value={contactData.mobileNumber}
+                          name="mobileNumber"
+                          onChange={handleInput}
+                          className="col-12 profile-edit-input p-2"
+                        />
+                      </div>
+                      <div className="col mb-3">
+                        <p className=" d-flex justify-content-start profile-card-title">
+                          Message
+                        </p>
+                        <textarea
+                          name="message"
+                          id="message"
+                          cols="30"
+                          rows="10"
+                          value={contactData.message}
+                          onChange={handleInput}
+                          placeholder="Type your message..."
+                          className="col-12 profile-edit-input p-2"
+                        ></textarea>
+                      </div>
+                      <button className="contact-form-btn" type="submit">
+                        Submit
+                      </button>
+                      <ToastContainer/>
+                    </form>
                   </div>
                   <div className="col-6">
                     <img

@@ -98,7 +98,7 @@ const Template = () => {
     // Add more tasks here
   ];
 
-  const [templateCount, setTemplateCount] = useState();
+  const [templateCount, setTemplateCount] = useState([]);
 
   const [listItems, setListItems] = useState();
 
@@ -184,7 +184,7 @@ const Template = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {templateCount?.totalTempleted}
                       </h3>
-                     
+
                     </div>
                   </div>
                 </div>
@@ -199,7 +199,7 @@ const Template = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {templateCount?.totalAwaiting?.[0]?.count}
                       </h3>
-                     
+
                     </div>
                   </div>
                 </div>
@@ -214,7 +214,7 @@ const Template = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {templateCount?.totalApproved?.[0]?.count}
                       </h3>
-                      
+
                     </div>
                   </div>
                 </div>
