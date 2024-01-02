@@ -1,5 +1,5 @@
 
-import React from "react";
+
 import React, { useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
@@ -228,7 +228,11 @@ const HelpSupportAprv = () => {
                                     src="/images/dashboard/green-ticket-ball.svg"
                                     alt=""
                                     className="help-support-dd-img"
-
+                                    />
+                                    </a>
+                              </li>
+                              </ul>
+                              </div>
                     <div class="dropdown">
                       <a
                         type=""

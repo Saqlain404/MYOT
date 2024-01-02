@@ -81,6 +81,7 @@ const TemplateReview = () => {
         <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
       ),
     },
+  ];
 
   const [searchData, setSearchData] = useState("");
   const [documentRequests, setDocumentRequests] = useState([]);

@@ -2437,6 +2437,7 @@ height: 960px; */
   height: 24px;
   border-radius: 16px;
   margin: 10px;
+}
 
 .dashed_border {
   border: 2px #999 dashed;
