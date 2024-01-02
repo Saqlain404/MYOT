@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import SidebarSig from "./SidebarSig";
+import { SignatoryProfileDetails } from "../../ApiServices/SignatoryHttpServices/signatoryHttpServices";
+import moment from "moment";
 
 const ProfileSig = () => {
- 
+  const [profileData, setProfileData] = useState();
+  useEffect(() => {
+    getProfileDetails();
+  }, []);
 
+  const getProfileDetails = async () => {
+    let emp_id = localStorage.getItem("myot_admin_id");
+    let { data } = await SignatoryProfileDetails(emp_id);
+    console.log(data);
+    if (!data?.error) {
+      setProfileData(data?.results?.singnatory);
+    }
+  };
   return (
     <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <SidebarSig/>
+            <SidebarSig />
           </div>
           <div className="col-7 middle-content bg-body-tertiary p-0 min-vh-100">
             <div className="container-fluid border-bottom sticky-top bg-white mb-4">
@@ -40,11 +53,18 @@ const ProfileSig = () => {
                       className="ms-4 "
                     />
                     <Link to={"/Signatory/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
+                    </Link>
+                    <Link to={"/Admin/Chat"}>
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -54,86 +74,95 @@ const ProfileSig = () => {
                   </div>
                 </div>
               </nav>
-            
             </div>
 
             <div className="container px-4 text-center min-vh-100 ">
-  <div className="row rounded">
-    
-    <div className=" d-flex justify-content-between">
-    <div className="d-flex">
-              <Link to={"/Signatory/My-Profile"} className="text-decoration-none">
-              <p className="td-text border-bottom me-3">Profile</p>
-              </Link>
-              <Link to={"/Signatory/Signature-management"} className="text-decoration-none">
-              <p className="th-text">Signature Management</p>
-              </Link>
+              <div className="row rounded">
+                <div className=" d-flex justify-content-between">
+                  <p className="profile-txt m-2">Profile</p>
+                  <Link
+                    to={"/Signatory/Edit-profile"}
+                    className="text-decoration-none"
+                  >
+                    <button className="profile-edit-btn">Edit</button>
+                  </Link>
+                </div>
+                <div className=" d-flex justify-content-start mb-4">
+                  <img
+                    className="w_100_h_100"
+                    src={profileData?.profile_Pic}
+                    alt=""
+                  />
+                </div>
+                <div className="bg-white rounded mb-4 p-4 pb-2">
+                  <p className=" d-flex justify-content-start profile-card-title">
+                    Details
+                  </p>
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <p className="profile-info">Full Name</p>
+                      <p className="profile-data">{profileData?.name}</p>
+                    </div>
+                    <div>
+                      <p className="profile-info">Email</p>
+                      <p className="profile-data">{profileData?.email}</p>
+                    </div>
+                    <div>
+                      <p className="profile-info">Phone Number</p>
+                      <p className="profile-data">
+                        +97 {profileData?.mobileNumber}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="profile-info">Date of Birth</p>
+                      <p className="profile-data">
+                        {moment(profileData?.DOB).format("L")}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white rounded mb-4 p-4 ">
+                  <p className=" d-flex justify-content-start profile-card-title">
+                    Document
+                  </p>
+                  <div className=" d-flex ">
+                    <img src="/images/dashboard/pdf-icon.svg" alt="" />
+                    <p className="profile-salary-slip m-2">Salaryslip.Pdf</p>
+                  </div>
+                  <div className=" d-flex ">
+                    <img src="/images/dashboard/pdf-icon.svg" alt="" />
+                    <p className="profile-salary-slip m-2">Salaryslip.Pdf</p>
+                  </div>
+                </div>
+                <div className="bg-white rounded mb-4 p-4 pb-2">
+                  <p className=" d-flex justify-content-start profile-card-title">
+                    Company Information
+                  </p>
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <p className="profile-info">Company Name</p>
+                      <p className="profile-data">{profileData?.companyName}</p>
+                    </div>
+                    <div>
+                      <p className="profile-info">Company Email</p>
+                      <p className="profile-data">{profileData?.email}</p>
+                    </div>
+                    <div>
+                      <p className="profile-info">Phone Number</p>
+                      <p className="profile-data">
+                        +97 {profileData?.mobileNumber}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="profile-info">Address</p>
+                      <p className="profile-data">{profileData?.address}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-      {/* <p className="profile-txt m-2"></p> */}
-      <Link to={"/Signatory/Edit-profile"} className="text-decoration-none">
-      <button className="profile-edit-btn">Edit</button>
-      </Link>
-    </div>
-   <div className=" d-flex justify-content-start mb-4">
-    <img src="/images/dashboard/AvatarProfile.svg" alt="" />
-   </div>
-   <div className="bg-white rounded mb-4 p-4 pb-2">
-    <p className=" d-flex justify-content-start profile-card-title">Details</p>
-    <div className="d-flex justify-content-between">
-      <div>
-        <p className="profile-info">Full Name</p>
-        <p className="profile-data">Katherine Moss</p>
-      </div>
-      <div>
-        <p className="profile-info">Email</p>
-        <p className="profile-data">Ase@gmail.com</p>
-      </div>
-      <div>
-        <p className="profile-info">Phone Number</p>
-        <p className="profile-data">+97 7898788999</p>
-      </div>
-      <div>
-        <p className="profile-info">Date of Birth</p>
-        <p className="profile-data">18 Aug 20, 1999</p>
-      </div>
-    </div>
-   </div>
-   <div className="bg-white rounded mb-4 p-4 ">
-    <p className=" d-flex justify-content-start profile-card-title">Doccument</p>
-    <div className=" d-flex ">
-        <img src="/images/dashboard/pdf-icon.svg" alt="" />
-        <p className="profile-salary-slip m-2">Salaryslip.Pdf</p>
-    </div>
-    <div className=" d-flex ">
-        <img src="/images/dashboard/pdf-icon.svg" alt="" />
-        <p className="profile-salary-slip m-2">Salaryslip.Pdf</p>
-    </div>
-   </div>
-   <div className="bg-white rounded mb-4 p-4 pb-2">
-    <p className=" d-flex justify-content-start profile-card-title">Company Information</p>
-    <div className="d-flex justify-content-between">
-      <div>
-        <p className="profile-info">Company Name</p>
-        <p className="profile-data">Ava Wright</p>
-      </div>
-      <div>
-        <p className="profile-info">Company Email</p>
-        <p className="profile-data">Weight@gmail.com</p>
-      </div>
-      <div>
-        <p className="profile-info">Phone Number</p>
-        <p className="profile-data">+97 7898788999</p>
-      </div>
-      <div>
-        <p className="profile-info">Address</p>
-        <p className="profile-data">Human Resources</p>
-      </div>
-    </div>
-   </div>
-  </div>
-</div>
 
-<div className="footer bg-white">
+            <div className="footer bg-white">
               <div>© 2023 MYOT</div>
               <div className="d-flex ">
                 <p className="ms-3">About</p>
@@ -141,9 +170,9 @@ const ProfileSig = () => {
                 <p className="ms-3">Contact Us</p>
               </div>
             </div>
-        </div>
-        
-        <div className="col">
+          </div>
+
+          <div className="col">
             <RightSidebar />
           </div>
         </div>

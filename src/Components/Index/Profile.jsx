@@ -123,7 +123,7 @@ const Profile = () => {
                 </div>
                 <div className="bg-white rounded mb-4 p-4 ">
                   <p className=" d-flex justify-content-start profile-card-title">
-                    Doccument
+                    Document
                   </p>
                   <div className=" d-flex ">
                     <img src="/images/dashboard/pdf-icon.svg" alt="" />

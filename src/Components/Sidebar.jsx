@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
@@ -13,6 +13,13 @@ const Sidebar = () => {
   const dispatch = useDispatch();
 
   const location = useLocation();
+
+  useEffect(() => {
+    let id = localStorage.getItem("token-company");
+    if (!id) {
+      navigate("/Admin/Login");
+    }
+  }, []);
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -133,7 +140,7 @@ const Sidebar = () => {
             </li>
             <li
               className={` "nav-item text-dark" ${
-                location.pathname === "/Admin/Tasks" ? "nav_active" : ""
+                location.pathname.match(/^\/Admin\/Tasks/) ? "nav_active" : ""
               }`}
             >
               <Link to={"/Admin/Tasks"} className="text-decoration-none">
@@ -152,7 +159,7 @@ const Sidebar = () => {
             </li>
             <li
               className={` "nav-item text-dark" ${
-                location.pathname === "/Admin/Calendar" ? "nav_active" : ""
+                location.pathname.match(/^\/Admin\/Calendar/) ? "nav_active" : ""
               }`}
             >
               <Link to={"/Admin/Calendar"} className="text-decoration-none">
@@ -174,7 +181,7 @@ const Sidebar = () => {
 
             <li
               className={` "nav-item text-dark" ${
-                location.pathname === "/Admin/Users" ? "nav_active" : ""
+                location.pathname.match(/^\/Admin\/Users/) ? "nav_active" : ""
               }`}
             >
               <Link to={"/Admin/Users"} className="text-decoration-none">
@@ -256,7 +263,7 @@ const Sidebar = () => {
             </li>
             <li
               className={` "nav-item text-dark" ${
-                location.pathname === "/Admin/Requests" ? "nav_active" : ""
+                location.pathname.match(/^\/Admin\/Requests/) ? "nav_active" : ""
               }`}
             >
               <Link to={"/Admin/Requests"} className="text-decoration-none">
@@ -403,7 +410,7 @@ const Sidebar = () => {
             </li>
             <li className="nav-item text-dark" onClick={handleLogout}>
               <a
-                className="nav-link text-dark fs-5 align-middle "
+                className="nav-link text-dark fs-5 align-middle cursor_pointer"
                 aria-current="page"
               >
                 <img

@@ -1,9 +1,9 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-const GradientBarChart = () => {
+const GradientBarChart = ({tempData}) => {
   const initialData = [
-    44, 55, 41, 67, 22, 35, 50, 20, 20, 20, 2, 0, 20, 2, 25, 5, 4, 5,
+    80, 55, 41, 67, 22, 35, 50, 20, 20, 20, 2, 0, 20, 2, 25, 5, 4, 5,
   ];
 
   const options = {
@@ -57,7 +57,7 @@ const GradientBarChart = () => {
     },
   ];
 
-  console.log(series[0].data?.length);
+  // console.log(series[0].data?.length);
   return (
     <>
       <div className="charts ps-3">
