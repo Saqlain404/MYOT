@@ -100,7 +100,7 @@ const Template = () => {
 
   const [templateCount, setTemplateCount] = useState();
 
-  const [listItems, setListItems] = useState([]);
+  const [listItems, setListItems] = useState();
 
   const getTemplateLists = async (key) => {
     const { data } = await TemplateList ({search: key});
@@ -184,14 +184,7 @@ const Template = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {templateCount?.totalTempleted}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        +11.01%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
+                     
                     </div>
                   </div>
                 </div>
@@ -204,16 +197,9 @@ const Template = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                      {templateCount?.totalAwaiting?.[0]}
+                      {templateCount?.totalAwaiting?.[0]?.count}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        +9.15%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
+                     
                     </div>
                   </div>
                 </div>
@@ -226,16 +212,9 @@ const Template = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                      {templateCount?.totalApproved?.[0]}
+                      {templateCount?.totalApproved?.[0]?.count}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        -0.65%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
+                      
                     </div>
                   </div>
                 </div>
@@ -248,14 +227,7 @@ const Template = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {templateCount?.aciveSignatory?.[0]?.count}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        -1.48%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
+                      
                     </div>
                   </div>
                 </div>
