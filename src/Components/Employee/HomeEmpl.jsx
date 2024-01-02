@@ -164,7 +164,7 @@ const HomeEmpl = () => {
 
   const handleSubmitComment = async (e, document_Id) => {
     e.preventDefault();
-    let creator_Id = localStorage.getItem("user_id");
+    let creator_Id =  localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
     let data = await AddCommentEmply({
       comment,
       document_Id,

@@ -50,21 +50,21 @@ const HelpSupportAprv = () => {
   };
 
   const OnGoingList = async () => {
-    let data = await OnGoingAprv(id);
+    let data = await OnGoingAprv(ids);
     console.log(data);
     if (!data?.error) {
       setTicketList(data);
     }
   };
   const resolveList = async () => {
-    let data = await ResolveListEmpl(id);
+    let data = await ResolveListEmpl(ids);
     console.log(data);
     if (!data?.error) {
       setTicketList(data);
     }
   };
   const NewTickets = async () => {
-    let data = await NewTicketEmply(id);
+    let data = await NewTicketEmply(ids);
     console.log(data);
     if (!data?.error) {
       setTicketList(data);
@@ -92,7 +92,7 @@ const HelpSupportAprv = () => {
   const AllData = async () => {
     let emp_id = localStorage.getItem("user_id");
     setId(emp_id);
-    const getData = await TicketListAprv(emp_id);
+    const getData = await TicketListAprv(ids);
     setTicketList(getData);
     console.log(ticketList);
   };

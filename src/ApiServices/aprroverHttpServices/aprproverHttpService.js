@@ -263,10 +263,10 @@ export async function GetLogoEmply(ids) {
   }
 }
 
-export async function TicketListAprv() {
+export async function TicketListAprv(ids) {
   try {
     const response = await employeeHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/${id}`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/${ids}`
     );
 
     if (!response.data?.error) {
@@ -308,10 +308,10 @@ export async function CreateEmplyTicket(formData) {
   }
 }
 
-export async function OnGoingAprv() {
+export async function OnGoingAprv(ids) {
   try {
     const response = await employeeHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/onGoing-ticket/${id}`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/onGoing-ticket/${ids}`
     );
 
     if (!response.data?.error) {

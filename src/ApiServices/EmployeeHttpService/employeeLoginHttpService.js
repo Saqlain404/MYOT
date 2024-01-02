@@ -263,10 +263,10 @@ export async function NewTicketEmply() {
     return null;
   }
 }
-export async function ResolveListEmpl() {
+export async function ResolveListEmpl(ids) {
   try {
     const response = await employeeHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/complete-ticket/${id}`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/complete-ticket/${ids}`
     );
 
     if (!response.data?.error) {

@@ -16,6 +16,8 @@ const EmplHelpSupport = () => {
   const [id, setId] = useState();
   const [selectedDropdown, setSelectedDropdown] = useState("All");
 
+  const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
+
   // Add Ticket
   const [contactData, setContactData] = useState({
     email: "",
@@ -47,21 +49,21 @@ const EmplHelpSupport = () => {
   };
 
   const OnGoingList = async () => {
-    let data = await OnGoingListEmply(id);
+    let data = await OnGoingListEmply(ids);
     console.log(data);
     if (!data?.error) {
       setTicketList(data);
     }
   };
   const resolveList = async () => {
-    let data = await ResolveListEmpl(id);
+    let data = await ResolveListEmpl(ids);
     console.log(data);
     if (!data?.error) {
       setTicketList(data);
     }
   };
   const NewTickets = async () => {
-    let data = await NewTicketEmply(id);
+    let data = await NewTicketEmply(ids);
     console.log(data);
     if (!data?.error) {
       setTicketList(data);
@@ -87,7 +89,7 @@ const EmplHelpSupport = () => {
 
   // Ticket List
   const AllData = async () => {
-    let emp_id = localStorage.getItem("user_id");
+    let emp_id =  localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
     setId(emp_id);
     const getData = await TicketListEmply(emp_id);
     setTicketList(getData);
