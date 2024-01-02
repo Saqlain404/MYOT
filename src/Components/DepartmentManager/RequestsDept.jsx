@@ -262,7 +262,7 @@ const RequestsDept = () => {
                           type="checkbox"
                           value=""
                         />{requests?.templete_Id?.templeteName}</td>
-                        <td className="td-text"><img src={requests?.templete_Id?.manager?.profile_Pic} alt="" className="requester-profile-pic" />{requests?.templete_Id?.manager?.name}</td>
+                        <td className="td-text"><img src={requests?.templete_Id?.manager?.profile_Pic} alt="" className="list-profile-pic" />{requests?.templete_Id?.manager?.name}</td>
                         <td className="td-text"> <img src="/images/dashboard/CalendarBlank.png" alt=""/>{requests?.createdAt}</td>
                         
                         <td className="td-text"><img src="/images/dashboard/Comment.png" className="mx-auto d-block" /></td>

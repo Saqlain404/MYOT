@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
+import { CertificateList } from "../../ApiServices/departmentHttpService/departmentHttpService";
 
 const Certificate = () => {
   const documents = [
@@ -104,6 +105,21 @@ const Certificate = () => {
    
     // Add more tasks here
   ];
+
+  const [listItems, setListItems] = useState([]);
+
+  const getCertificateLists = async (key) => {
+    const { data } = await CertificateList ({search: key});
+    if (!data?.error) {
+      setListItems(data?.results?.certificateList);
+    }
+  };
+  console.log(listItems);
+
+  useEffect(() => {
+    getCertificateLists()
+  }, [])
+  
 
   return (
     <>
@@ -251,7 +267,7 @@ const Certificate = () => {
                 </tr>
               </thead>
               <tbody >
-                {documents.map((document) => (
+                {listItems?.map((document) => (
                   <tr
                     key={document.id}
                     
@@ -263,23 +279,23 @@ const Certificate = () => {
                         value=""
                       />
                       <img src="/images/dashboard/Featured Icon.png" alt="" />
-                      {document.certificateName}
+                      {document?.templeteName}
+                    </td>
+                    <td className="td-text">
+                    <img src={document?.signatory?.profile_Pic} className="list-profile-pic me-2"  alt=""/>
+                      {document?.signatory?.name}
                     </td>
                     <td className="td-text">
                       
-                      {document.assignSignatories}
-                    </td>
-                    <td className="td-text">
-                      
-                      {document.department}
+                      {document?.signatory?.department_Id?.departmentName}
                     </td>
                     <td className="td-text">
                     <img src="/images/dashboard/CalendarBlank.png" alt=""/>
-                    {document.dateOfIssurance}</td>
-                    <td className="td-text">{document.status}</td>
+                    {document.createdAt}</td>
+                    <td className="td-text"><p className="text-primary m-0">{document.status}</p></td>
                     <td className="td-text"><div class="dropdown">
   <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
-  {document.action}
+  <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
     <li >

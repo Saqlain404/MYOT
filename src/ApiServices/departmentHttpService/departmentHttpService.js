@@ -59,6 +59,34 @@ export async function DepartmentDashboardCount () {
     }
   }
 
+  export async function TemplateList () {
+    try {
+      const { data } = await adminHttpService.get(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/templete-list/6569854a7df1d82ae466234e`,
+      );
+      // console.log(data);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+
+  export async function CertificateList () {
+    try {
+      const { data } = await adminHttpService.get(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/certificate-list`,
+      );
+      // console.log(data);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+
   export async function CommentsList () {
     try {
       const { data } = await adminHttpService.get(

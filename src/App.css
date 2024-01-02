@@ -2425,7 +2425,8 @@ height: 960px; */
   padding: 0px;
 }
 
-.requester-profile-pic {
+.list-profile-pic {
+
   width: 24px;
   height: 24px;
   border-radius: 16px;
