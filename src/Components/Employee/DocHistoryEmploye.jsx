@@ -17,6 +17,8 @@ const DocHistoryEmploye = () => {
   const [templateNames, setTemplateNames] = useState(null);
   const [documentRequests, setDocumentRequests] = useState([]);
 
+  const ids =localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
+
   const handleSearch = async () => {
     const result = await searchDash(searchData);
     console.log(result);
@@ -54,7 +56,7 @@ const DocHistoryEmploye = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!searchData || searchData === "") {
-        const names = await EmployeeDashList();
+        const names = await EmployeeDashList(ids);
         if (names) {
           setTemplateNames(names);
           // console.log(names)

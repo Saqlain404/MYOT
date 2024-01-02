@@ -289,10 +289,10 @@ export async function ResolveListEmpl(ids) {
 }
 
 
-export async function PresentDocumentDash() {
+export async function PresentDocumentDash(ids) {
   try {
     const response = await employeeHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/total-document-present/${id}`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/total-document-present/${ids}`
     );
 
     if (!response.data?.error) {
@@ -362,10 +362,10 @@ export async function CommentViewEmply(id) {
   }
 }
 
-export async function totalTicketCount() {
+export async function totalTicketCount(ids) {
   try {
     const response = await employeeHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/total-ticket-count/${id}`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/total-ticket-count/${ids}`
     );
 
     if (!response.data?.error) {
@@ -557,10 +557,10 @@ if (!response.data?.error) {
 
 
 
-export async function EmpyHistoryLogList() {
+export async function EmpyHistoryLogList(ids) {
   try {
     const response = await employeeHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/pendning-document/${id}`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/pendning-document/${ids}`
     );
 
     if (!response.data?.error) {

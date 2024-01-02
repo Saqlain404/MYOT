@@ -18,8 +18,8 @@ const EmployeeDash = () => {
   const [templateNames, setTemplateNames] = useState(null);
   const [documentRequests, setDocumentRequests] = useState([]);
 
-  const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
-
+  const ids =
+    localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
 
   const handleSearch = async () => {
     const result = await searchDash(searchData);
@@ -109,9 +109,8 @@ const EmployeeDash = () => {
 
   const [docCount, setDocCount] = useState();
   useEffect(() => {
-    const id = localStorage.getItem("user_id");
     const presentDoc = async () => {
-      const data = await PresentDocumentDash(id);
+      const data = await PresentDocumentDash(ids);
       setDocCount(data?.[0]?.results);
       console.log(data?.[0]?.results);
     };
@@ -120,9 +119,8 @@ const EmployeeDash = () => {
 
   const [ticketCount, setTotalTicket] = useState();
   useEffect(() => {
-    const id = localStorage.getItem("user_id");
     const totalTicket = async () => {
-      const data = await totalTicketCount(id);
+      const data = await totalTicketCount(ids);
       setTotalTicket(data?.[0]?.results);
       console.log(data?.[0]?.results);
     };
@@ -130,15 +128,15 @@ const EmployeeDash = () => {
   }, []);
 
   // Doc Request Count
-  const[docRequestCount,setDocRequestCount] = useState();
-  useEffect(()=>{
-    const requestCount = async()=>{
+  const [docRequestCount, setDocRequestCount] = useState();
+  useEffect(() => {
+    const requestCount = async () => {
       const data = await DocRequestCount();
-      setDocRequestCount(data?.[0]?.document)
-    } 
-    requestCount()
-  },[])
-  console.log(docRequestCount)
+      setDocRequestCount(data?.[0]?.document);
+    };
+    requestCount();
+  }, []);
+  console.log(docRequestCount);
 
   return (
     <>
@@ -357,7 +355,7 @@ const EmployeeDash = () => {
                     <p className=" mb-1 dashboard-card2-text">
                       Profile Completion
                     </p>
-                    
+
                     <div className="progress-bar">
                       <div className="progress-container">
                         <div
@@ -382,21 +380,24 @@ const EmployeeDash = () => {
                   </div>
                 </div>
                 <div className="col-md-3 ">
-                  <div className="dashboard-card3 bg-light " style={{maxHeight:"400px", overflowY:"auto"}}>
+                  <div
+                    className="dashboard-card3 bg-light "
+                    style={{ maxHeight: "400px", overflowY: "auto" }}
+                  >
                     <p className="text-card">Document Request</p>
                     <div className="table-card3 dashboard-card3-text">
-                        {docRequestCount?.map((doc)=>(
-                      <div className="pb-2 d-flex align-items-center justify-content-between">
-                        <div
-                          className="doc-req-text"
-                        >
-                          {doc?._id?.[0]?.[0]?.[0]?.departmentName && doc._id[0][0][0].departmentName.split(' ')[0]}
+                      {docRequestCount?.map((doc) => (
+                        <div className="pb-2 d-flex align-items-center justify-content-between">
+                          <div className="doc-req-text">
+                            {doc?._id?.[0]?.[0]?.[0]?.departmentName &&
+                              doc._id[0][0][0].departmentName.split(" ")[0]}
+                          </div>
+                          <div
+                            className="doc-req-bar"
+                            style={{ width: `${doc?.count * 10}%` }}
+                          ></div>
                         </div>
-                        <div className="doc-req-bar"
-                          style={{ width: `${doc?.count*10}%` }}>
-                        </div>
-                      </div>
-                        ))}
+                      ))}
                     </div>
                   </div>
                 </div>

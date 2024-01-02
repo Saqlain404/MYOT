@@ -15,10 +15,12 @@ const RequestHistoryEmpl = () => {
   const [documentRequests, setDocumentRequests] = useState([]);
   const [comment, setComment] = useState("");
 
+ const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
+
   useEffect(() => {
     const fetchData = async () => {
      if(!searchData || searchData === ""){
-       const names = await EmpyHistoryLogList();
+       const names = await EmpyHistoryLogList(ids);
       if (names) {
         setTemplateNames(names);
         console.log(names?.[0])
@@ -76,7 +78,7 @@ const RequestHistoryEmpl = () => {
 
   const handleSubmitComment = async (e, document_Id) => {
     e.preventDefault();
-    let creator_Id = localStorage.getItem("user_id");
+    let creator_Id =  localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
     let data = await AddCommentEmply({
       comment,
       document_Id,
