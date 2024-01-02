@@ -34,7 +34,7 @@ const EmplHelpSupport = () => {
       ticketIssue: contactData.ticketIssue,
     };
     const response = await CreateEmplyTicket({
-      creator_Id: localStorage.getItem("user_id"),
+      creator_Id: localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id"),
       email: data.email,
       ticketType: data.ticketType,
       ticketIssue: data.ticketIssue,

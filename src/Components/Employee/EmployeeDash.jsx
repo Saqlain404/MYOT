@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 import {
   DasboardCount,
+  DocRequestCount,
   EmployeeDashList,
   PresentDocumentDash,
   searchDash,
@@ -16,6 +17,8 @@ const EmployeeDash = () => {
   const [searchData, setSearchData] = useState("");
   const [templateNames, setTemplateNames] = useState(null);
   const [documentRequests, setDocumentRequests] = useState([]);
+
+  const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
 
 
   const handleSearch = async () => {
@@ -53,7 +56,7 @@ const EmployeeDash = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!searchData || searchData === "") {
-        const names = await EmployeeDashList();
+        const names = await EmployeeDashList(ids);
         if (names) {
           setTemplateNames(names);
           // console.log(names)
@@ -125,6 +128,17 @@ const EmployeeDash = () => {
     };
     totalTicket();
   }, []);
+
+  // Doc Request Count
+  const[docRequestCount,setDocRequestCount] = useState();
+  useEffect(()=>{
+    const requestCount = async()=>{
+      const data = await DocRequestCount();
+      setDocRequestCount(data?.[0]?.document)
+    } 
+    requestCount()
+  },[])
+  console.log(docRequestCount)
 
   return (
     <>
@@ -367,53 +381,23 @@ const EmployeeDash = () => {
                     </div>
                   </div>
                 </div>
-
                 <div className="col-md-3 ">
-                  <div className="dashboard-card3 bg-light ">
+                  <div className="dashboard-card3 bg-light " style={{maxHeight:"400px", overflowY:"auto"}}>
                     <p className="text-card">Document Request</p>
-                    <table className="table-card3 dashboard-card3-text">
-                      <tr className="pb-2">
-                        <td
-                          style={{ paddingRight: 40 }}
-                          className="text-nowrap"
+                    <div className="table-card3 dashboard-card3-text">
+                        {docRequestCount?.map((doc)=>(
+                      <div className="pb-2 d-flex align-items-center justify-content-between">
+                        <div
+                          className="doc-req-text"
                         >
-                          HR
-                        </td>
-                        <td>
-                          <img src="/images/dashboard/HR.png" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Finance</td>
-                        <td>
-                          <img src="/images/dashboard/Finance.png" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>R&D</td>
-                        <td>
-                          <img src="/images/dashboard/R&D.png" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Transport</td>
-                        <td>
-                          <img src="/images/dashboard/Transport.png" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>IT</td>
-                        <td>
-                          <img src="/images/dashboard/IT.png" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Sales</td>
-                        <td>
-                          <img src="/images/dashboard/sales.png" />
-                        </td>
-                      </tr>
-                    </table>
+                          {doc?._id?.[0]?.[0]?.[0]?.departmentName && doc._id[0][0][0].departmentName.split(' ')[0]}
+                        </div>
+                        <div className="doc-req-bar"
+                          style={{ width: `${doc?.count*10}%` }}>
+                        </div>
+                      </div>
+                        ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -471,7 +455,7 @@ const EmployeeDash = () => {
                         </td>
                         <td className="td-text">{document.status}</td>
                         <td className="td-text">
-                          <div class="dropdown">
+                          <div class="">
                             <a
                               type=""
                               data-bs-toggle="dropdown"

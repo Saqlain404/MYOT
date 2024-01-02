@@ -2573,3 +2573,21 @@ height: 960px; */
   color: #333; /* Choose a color that contrasts well with your progress bar color */
   font-weight: 600;
 }
+.doc-req-bar{
+  border-radius: 0px 4px 4px 0px;
+  background: rgba(0, 0, 0, 0.10);
+  height: 6px;
+  flex-shrink: 0;
+}
+.w_20_h_20{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.task_reply textarea{
+  border: #3E51FF dashed 2px;
+  border-radius: 5px;
+  outline: none;
+}

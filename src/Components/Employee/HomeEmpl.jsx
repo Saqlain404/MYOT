@@ -13,6 +13,7 @@ import {
   searchDoc,
 } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 import { ToastContainer, toast } from "react-toastify";
+import moment from "moment";
 
 const HomeEmpl = () => {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ const HomeEmpl = () => {
   const [shouldRender, setShouldRender] = useState(false);
   const [comment, setComment] = useState("");
 
+  const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
   useEffect(() => {
     const count = async () => {
       const documentCountResult = await DocumentCount();
@@ -86,7 +88,7 @@ const HomeEmpl = () => {
 
     setDocumentInfo({ ...documentInfo, [name]: value });
   };
-  console.log(documentRequests);
+  
 
   const [templateIdList, setTemplateIdList] = useState([]);
 
@@ -128,13 +130,14 @@ const HomeEmpl = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!searchData || searchData === "") {
-        const names = await employeDocumentList();
+        const names = await employeDocumentList(ids);
         if (names) {
           setTemplateNames(names);
         }
 
         const requests = names?.map((name) => ({
           documentName: name?.templete_Id?.templeteName,
+          document_id: name?._id,
           assignedTo: [name?.templete_Id?.manager?.name],
           img: [name?.templete_Id?.manager?.profile_Pic],
           department: [
@@ -154,6 +157,7 @@ const HomeEmpl = () => {
         setDocumentRequests(requests);
       }
     };
+    console.log(documentRequests)
 
     fetchData();
   }, [searchData, shouldRender]);
@@ -164,9 +168,9 @@ const HomeEmpl = () => {
     let data = await AddCommentEmply({
       comment,
       document_Id,
-      creator_Id,
+      creator_Id, 
     });
-    if (!data?.error) {
+    if (!data?.error) { 
       setComment("");
     }
   };
@@ -450,10 +454,10 @@ const HomeEmpl = () => {
                         <td className="td-text">{request.department}</td>
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
-                          {request.dateofSigning}
+                          {moment(request.dateofSigning).calendar()} 
                         </td>
                         <td className="td-text">
-                          <div className="dropdown">
+                          <div className="">
                             <a
                               type=""
                               data-bs-toggle="dropdown"
@@ -527,7 +531,7 @@ const HomeEmpl = () => {
                           {request.status}
                         </td>
                         <td className="td-text">
-                          <div class="dropdown">
+                          <div class="">
                             <a
                               type=""
                               data-bs-toggle="dropdown"
@@ -553,13 +557,33 @@ const HomeEmpl = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item" href="#">
+                                <Link class="dropdown-item" to={`/Employee/Comment/${request?.document_id}`}>
                                   <img
-                                    src="/images/dashboard/Download-Button.png"
+                                    src="/images/dashboard/Comment.png"
                                     alt=""
                                     className="me-2"
                                   />
-                                  Download
+                                  Comments
+                                </Link>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/TextAlignLeft.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Wrap Column
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item text-danger" href="#">
+                                  <img
+                                    src="/images/users/Trash.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Delete Template
                                 </a>
                               </li>
                             </ul>

@@ -3,7 +3,8 @@ import employeeHttpService from "../LoginHttpService/employeeHttpService";
 import { toast } from "react-toastify";
 
 
-const id = localStorage.getItem("user_id")
+const id = localStorage.getItem("user_id") ||  localStorage.getItem("myot_admin_id");
+console.log("id: ",id)
 // const id ="656982002e4c41f286f7dffb"
 
 export async function employeeLogin(formData) {
@@ -18,7 +19,6 @@ export async function employeeLogin(formData) {
       await localStorage.removeItem("token-company");
       await localStorage.setItem("token-company", headers["x-auth-token-company"]);
       await localStorage.setItem("user_id", data?.results?.employee._id);
-
       toast.success("Success");
     } else toast.error(data.message);
 
@@ -140,10 +140,10 @@ export async function fetchTemplateData() {
   }
 }
 
-export async function EmployeeDashList() {
+export async function EmployeeDashList(ids) {
   try {
     const response = await employeeHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/complete-document/${id}`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/complete-document/${ids}`
     );
 
     if (!response.data?.error) {
@@ -292,7 +292,7 @@ export async function ResolveListEmpl() {
 export async function PresentDocumentDash() {
   try {
     const response = await employeeHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/total-document-present/6564816c42ca2ce84e2ed3f2`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/total-document-present/${id}`
     );
 
     if (!response.data?.error) {
@@ -300,6 +300,54 @@ export async function PresentDocumentDash() {
       console.log(docPresent)
 
       return [docPresent];
+    } else {
+      toast.error(response.data.message);
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error('An error occurred while fetching the template IDs.');
+    }
+    return null;
+  }
+}
+export async function DocRequestCount() {
+  try {
+    const response = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/total-document-request/${id}`
+    );
+
+    if (!response.data?.error) {
+      const docData = response?.data?.results;
+      console.log(docData)
+
+      return [docData];
+    } else {
+      toast.error(response.data.message);
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error('An error occurred while fetching the template IDs.');
+    }
+    return null;
+  }
+}
+export async function CommentViewEmply(id) {
+  try {
+    const response = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/comment-view/${id}`
+    );
+
+    if (!response.data?.error) {
+      const commentData = response?.data?.results;
+      console.log(commentData)
+
+      return {commentData};
     } else {
       toast.error(response.data.message);
       return null;
@@ -477,10 +525,10 @@ export async function CreateEmplyTicket(formData) {
 }
 
 
-export async function employeDocumentList(){
+export async function employeDocumentList(ids){
   try {
     const response = await employeeHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-list/${id}`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-list/${ids}`
     );
 
     

@@ -12,22 +12,24 @@ const EmplySetting = () => {
   const onFileSelection = (event) => {
     setLogoData({ ...logoData, logo: event.target.files[0] });
   };
+
+  
   
   const onSubmit = async (event) => {
     event.preventDefault();
     console.log('Form submitted!');
   
 
-    const creator_Id = localStorage.getItem("user_id")
+    const creator_Id = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
     const formData = new FormData();
     formData.append("logo", logoData.logo);
     formData.append("creator_Id",creator_Id)
     
     const response = await AddLogoEmply(formData);
-
+    getLogo()
     if (!response.data?.error) {
       console.log(response);
-    }
+    } 
   };
 
 

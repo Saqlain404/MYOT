@@ -8,10 +8,11 @@ const SideBarEmpl = () => {
   const handleLogOut = async (e) => {
     e.preventDefault();
 
-    let id = await localStorage.getItem("user_id");
+    let id =  localStorage.getItem("user_id");
     let { data } = await LogOutEmply(id);
-    localStorage.removeItem("user_id");
     localStorage.removeItem("token-company");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("myot_admin_id");
     navigate("/Employee/Login");
   };
   return (
@@ -65,7 +66,7 @@ const SideBarEmpl = () => {
                 <stop offset="1" stop-color="#8762DD" />
               </linearGradient>
             </defs>
-          </svg>
+          </svg> 
         </div>
         <div className="col-auto col-mg-3 min-vh-100">
           <p className="th-text">MAIN MENU</p>
@@ -329,9 +330,9 @@ const SideBarEmpl = () => {
                 <a class="dropdown-item">Signatory</a>
               </li>
             </Link>
-            <Link to={"/Employee/Home"} className="text-decoration-none">
+            <Link to={"/Department/Home"} className="text-decoration-none">
               <li>
-                <a class="dropdown-item">Employee</a>
+                <a class="dropdown-item">Department Manager</a>
               </li>
             </Link>
           </ul>

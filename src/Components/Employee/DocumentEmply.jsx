@@ -12,6 +12,7 @@ import {
 } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment";
 
 // import "../../dist/css/style.min.css"
 
@@ -25,6 +26,7 @@ const DocumentEmply = () => {
   const [comment, setComment] = useState("");
 
 
+  const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
 
   const [documentInfo, setDocumentInfo] = useState({
     documentName: "",
@@ -92,7 +94,7 @@ const DocumentEmply = () => {
     await AddDocument({
       documentName: documentData.documentName,
       templete_Id: documentData.templateId,
-      creator_Id: localStorage.getItem("user_id"),
+      creator_Id: localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id"),
     }).then((res) => {
       if (!res.data?.error) {
         setShouldRender(!shouldRender);
@@ -109,7 +111,7 @@ const DocumentEmply = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!searchData || searchData === "") {
-        const names = await employeDocumentList();
+        const names = await employeDocumentList(ids);
         if (names) {
           setTemplateNames(names);
           console.log(names);
@@ -418,10 +420,10 @@ const DocumentEmply = () => {
                         <td className="td-text">{request.department}</td>
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
-                          {request.dateofSigning}
+                          {moment(request.dateofSigning).calendar()}
                         </td>
                         <td className="td-text">
-                          <div className="dropdown">
+                          <div className="">
                             <a
                               type=""
                               data-bs-toggle="dropdown"
@@ -495,7 +497,7 @@ const DocumentEmply = () => {
                           {request.status}
                         </td>
                         <td className="td-text">
-                          <div class="dropdown">
+                          <div class="">
                             <a
                               type=""
                               data-bs-toggle="dropdown"

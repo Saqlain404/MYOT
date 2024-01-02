@@ -6,6 +6,7 @@ import { Card } from "antd";
 import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 import { AddCommentEmply, EmpyHistoryLogList, searchHistoryLog } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import moment from "moment";
 
 const RequestHistoryEmpl = () => {
 
@@ -254,7 +255,7 @@ const RequestHistoryEmpl = () => {
                 </tr>
               </thead>
               <tbody >
-                {documentRequests.map((document) => (
+                {documentRequests?.map((document) => (
                   <tr
                     key={document._id}
                     
@@ -275,10 +276,10 @@ const RequestHistoryEmpl = () => {
                     </td>
                     <td className="td-text">
                       <img src="/images/dashboard/CalendarBlank.png" />
-                      {document.dateofSigning}
+                      {moment(document.dateofSigning).calendar()}
                     </td>
                     <td className="td-text">
-                          <div className="dropdown">
+                          <div className="">
                             <a
                               type=""
                               data-bs-toggle="dropdown"
@@ -349,7 +350,7 @@ const RequestHistoryEmpl = () => {
                           </div>
                         </td>
                     <td className="td-text">{document.version}</td>
-                    <td className="td-text"><div class="dropdown">
+                    <td className="td-text"><div class="">
   <a type="" data-bs-toggle="dropdown" aria-expanded="false">
   {document.action}
   </a>

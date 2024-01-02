@@ -3,64 +3,87 @@ import RightSidebar from "../RightSidebar";
 import "@fortawesome/free-regular-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
-import { AddCommentEmply, EmployeeDashList, searchDash } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import {
+  AddCommentEmply,
+  EmployeeDashList,
+  searchDash,
+} from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import moment from "moment";
 // import "../../dist/css/style.min.css"
 
 const ReceivedDocEmpl = () => {
-  const[searchData, setSearchData] = useState("");
+  const [searchData, setSearchData] = useState("");
   const [templateNames, setTemplateNames] = useState(null);
   const [documentRequests, setDocumentRequests] = useState([]);
   const [comment, setComment] = useState("");
 
+  const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
+
   useEffect(() => {
     const fetchData = async () => {
-     if(!searchData || searchData === ""){
-       const names = await EmployeeDashList();
-      if (names) {
-        setTemplateNames(names);
-        console.log(names)
-     }
-      
+      if (!searchData || searchData === "") {
+        const names = await EmployeeDashList(ids);
+        if (names) {
+          setTemplateNames(names);
+          console.log(names);
+        }
+
         const requests = names?.[0]?.map((name) => ({
           documentName: name?.templete_Id?.templeteName,
-          assignedTo: [name?.templete_Id?.manager?.name], 
-          department: [name?.templete_Id?.manager?.department_Id?.departmentName], 
+          assignedTo: [name?.templete_Id?.manager?.name],
+          department: [
+            name?.templete_Id?.manager?.department_Id?.departmentName,
+          ],
           dateofSigning: [name?.createdAt],
-          img:[name?.templete_Id?.manager?.profile_Pic],
-          comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-          commentID: name?._id, 
-          status:[name?.status],
-          action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+          img: [name?.templete_Id?.manager?.profile_Pic],
+          comments: (
+            <img
+              src="/images/dashboard/Comment.png"
+              className="mx-auto d-block"
+            />
+          ),
+          commentID: name?._id,
+          status: [name?.status],
+          action: (
+            <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+          ),
         }));
-        
 
         setDocumentRequests(requests);
       }
     };
 
     fetchData();
-  },[searchData]);
+  }, [searchData]);
 
-   
-  const handleSearch = async()=>{
-    const result = await searchDash(searchData)
-    console.log(result)
+  const handleSearch = async () => {
+    const result = await searchDash(searchData);
+    console.log(result);
     const searchResult = result?.data?.results?.document;
 
-      if (searchResult && Array.isArray(searchResult)) {
-        const mappedResult = searchResult?.map((document) => ({
-          documentName: document?.templete?.templeteName,
-          img:[document?.templete?.manager?.[0]?.profile_Pic],
-          assignedTo: [document?.templete?.manager?.[0]?.name], 
-          department: [document?.templete?.manager?.[0]?.department?.[0]?.departmentName], 
-          dateofSigning: [document?.createdAt],
-          comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
-          status:[document?.status],
-          action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
-        }));
-        setDocumentRequests(mappedResult);
-      } 
-  }
+    if (searchResult && Array.isArray(searchResult)) {
+      const mappedResult = searchResult?.map((document) => ({
+        documentName: document?.templete?.templeteName,
+        img: [document?.templete?.manager?.[0]?.profile_Pic],
+        assignedTo: [document?.templete?.manager?.[0]?.name],
+        department: [
+          document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
+        ],
+        dateofSigning: [document?.createdAt],
+        comments: (
+          <img
+            src="/images/dashboard/Comment.png"
+            className="mx-auto d-block"
+          />
+        ),
+        status: [document?.status],
+        action: (
+          <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        ),
+      }));
+      setDocumentRequests(mappedResult);
+    }
+  };
 
   const handleSubmitComment = async (e, document_Id) => {
     e.preventDefault();
@@ -75,12 +98,10 @@ const ReceivedDocEmpl = () => {
     }
   };
 
-  
-  useEffect(()=>{
-    handleSearch()
-  },[searchData])
+  useEffect(() => {
+    handleSearch();
+  }, [searchData]);
 
-  
   return (
     <>
       <div className="container-fluid">
@@ -94,7 +115,7 @@ const ReceivedDocEmpl = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link ms-2" href="app-email.html">
-                    Received Document & Retrieval Management
+                      Received Document & Retrieval Management
                     </a>
                   </li>
                 </ul>
@@ -105,10 +126,11 @@ const ReceivedDocEmpl = () => {
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
-                      onChange={(e)=> {setSearchData(e.target.value);
+                      onChange={(e) => {
+                        setSearchData(e.target.value);
                         //  handleSearch();
-                        }}
-                        value={searchData.searchTerm}
+                      }}
+                      value={searchData.searchTerm}
                     />
                   </form>
                   <div className="">
@@ -118,11 +140,11 @@ const ReceivedDocEmpl = () => {
                       className="ms-4 "
                     />
                     <Link to={"/Employee/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -133,8 +155,10 @@ const ReceivedDocEmpl = () => {
                 </div>
               </nav>
             </div>
- 
-            <p className="table-name mb-2">Received Document & Retrieval Management</p>
+
+            <p className="table-name mb-2">
+              Received Document & Retrieval Management
+            </p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
                 <div className="col-md-2 border-end">
@@ -172,10 +196,11 @@ const ReceivedDocEmpl = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
-                  onChange={(e)=> {setSearchData(e.target.value);
+                  onChange={(e) => {
+                    setSearchData(e.target.value);
                     //  handleSearch();
-                    }}
-                    value={searchData.searchTerm}
+                  }}
+                  value={searchData.searchTerm}
                 />
               </form>
             </div>
@@ -245,14 +270,20 @@ const ReceivedDocEmpl = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {documentRequests.map((document) => (
+                    {documentRequests?.map((document) => (
                       <tr key={document.id}>
                         <td className="td-text">{document.documentName}</td>
-                        <td className="td-text"><img className="img_profile" src={document.img}/>{document.assignedTo}</td>
-                        <td className="td-text">{document.department}</td>
-                        <td className="td-text"><img src="/images/dashboard/CalendarBlank.png" />{document.dateofSigning}</td>
                         <td className="td-text">
-                          <div className="dropdown">
+                          <img className="img_profile" src={document.img} />
+                          {document.assignedTo}
+                        </td>
+                        <td className="td-text">{document.department}</td>
+                        <td className="td-text">
+                          <img src="/images/dashboard/CalendarBlank.png" />
+                          {moment(document.dateofSigning).calendar()}
+                        </td>
+                        <td className="td-text">
+                          <div className="">
                             <a
                               type=""
                               data-bs-toggle="dropdown"
@@ -323,16 +354,42 @@ const ReceivedDocEmpl = () => {
                           </div>
                         </td>
                         <td className="td-text">{document.status}</td>
-                        <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
-  {document.action}
-  </a>
-  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="/Employee/received-doc/view-details"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Details</a></li>
-    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Download-Button.png" alt="" className="me-2"/>Download</a></li>
-  </ul>
-</div>
-                          </td>
+                        <td className="td-text">
+                          <div class="">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              {document.action}
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a
+                                  class="dropdown-item border-bottom"
+                                  href="/Employee/received-doc/view-details"
+                                >
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  <img
+                                    src="/images/dashboard/Download-Button.png"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Download
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
                         <td></td>
                       </tr>
                     ))}
@@ -374,9 +431,7 @@ const ReceivedDocEmpl = () => {
             </div>
 
             <div className="footer employ-footer">
-              <div>
-              © 2023 MYOT
-              </div>
+              <div>© 2023 MYOT</div>
               <div className="d-flex ">
                 <p className="ms-3">About</p>
                 <p className="ms-3">Support</p>
