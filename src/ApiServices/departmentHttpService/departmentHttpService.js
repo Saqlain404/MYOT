@@ -100,3 +100,48 @@ export async function DepartmentDashboardCount () {
       return { error };
     }
   }
+
+  export async function SearchCertificate(formData) {
+    try {
+      const { data } = await adminHttpService.post(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/certificate-search`,
+        formData
+      );
+      // console.log(data);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+
+  export async function SearchRequests(formData) {
+    try {
+      const { data } = await adminHttpService.post(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/search-requests`,
+        formData
+      );
+      // console.log(data);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+
+  export async function SearchTemplates(formData) {
+    try {
+      const { data } = await adminHttpService.post(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/templete-search`,
+        formData
+      );
+      // console.log(data);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }

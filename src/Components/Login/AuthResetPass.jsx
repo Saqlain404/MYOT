@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { forgotPassword } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 
-const AuthforgotPass = () => {
+const AuthResetPass = () => {
   const {
     register,
     handleSubmit,
@@ -40,38 +40,52 @@ const AuthforgotPass = () => {
                   <img src='/images/Ellipse-forgot-pass.png' alt=''/>
                   <div className="">
                     <h2 className=" mb-3 d-flex justify-content-center recover-text">
-                    OTP Verification
+                    New Password
                     </h2>
                     <p className="reset-pass-desc">
-                    Enter OTP Code sent to emaple*******gmail.com
+                    Enter your new password here Example***@
                     </p>
                   </div>
                   <form 
                   onSubmit={handleSubmit(onSubmit)}>
                 
                     <div className="row">
-                      <div className="col-12 d-flex pe-0 mb-4 mt-4">
-                        <div className="col-2">
-                          <input type="text" name="" placeholder='5' id="" className='otp-input'/>
-                        </div>
-                        <div className="col-2">
-                          <input type="text" name="" placeholder='' id="" className='otp-input'/>
-                        </div>
-                        <div className="col-2">
-                          <input type="text" name="" placeholder='' id="" className='otp-input'/>
-                        </div>
-                        <div className="col-2">
-                          <input type="text" name="" placeholder='' id="" className='otp-input'/>
-                        </div>
-                        <div className="col-2">
-                          <input type="text" name="" placeholder='' id="" className='otp-input'/>
-                        </div>
-                        <div className="col-2">
-                          <input type="text" name="" placeholder='' id="" className='otp-input'/>
-                        </div>
+                      <div className="col-12  pe-0 mb-4 mt-4">
+                      <input
+                        type="email"
+                        className="form-control form-reset"
+                        aria-describedby="emailHelp"
+                        placeholder='New Password' 
+                        name="email"
+                        id="email"
+                        {...register("email", {
+                          required: "This field is required",
+                          pattern: {
+                            value:
+                              /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                            message: "Invalid email address",
+                          },
+                        })}
+                      />
+                       <input
+                        type="email"
+                        className="form-control form-reset"
+                        aria-describedby="emailHelp"
+                        placeholder='Confirm Password' 
+                        name="email"
+                        id="email"
+                        {...register("email", {
+                          required: "This field is required",
+                          pattern: {
+                            value:
+                              /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                            message: "Invalid email address",
+                          },
+                        })}
+                      />
                       </div>
                     </div>
-                    <Link to={"/Admin/Reset-password"}>
+                    <Link to={"/Admin/Forgot-success"}>
                     <button
                       className="btn  py-8 mb-3 form-reset"
                       type='submit'
@@ -79,14 +93,14 @@ const AuthforgotPass = () => {
                       Reset Your Password
                     </button>
                     </Link>
-                    <div className='d-flex justify-content-center mt-2'>
+                    {/* <div className='d-flex justify-content-center mt-2'>
                     <p className="not-recive-otp me-1">
                     Don’t received OTP code?
                     </p>
                     <p className="resend-otp">
                      Resend Code
                     </p>
-                    </div>
+                    </div> */}
                     
                   </form>
                 
@@ -101,4 +115,4 @@ const AuthforgotPass = () => {
   );
 };
 
-export default AuthforgotPass;
+export default AuthResetPass;

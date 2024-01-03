@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
-import { DepartmentTemplateCount, TemplateList } from "../../ApiServices/departmentHttpService/departmentHttpService";
+import { DepartmentTemplateCount, SearchTemplates, TemplateList } from "../../ApiServices/departmentHttpService/departmentHttpService";
 
 
 const Template = () => {
@@ -99,11 +99,11 @@ const Template = () => {
   ];
 
   const [templateCount, setTemplateCount] = useState();
-
+  const [search, setSearch] = useState("")
   const [listItems, setListItems] = useState();
 
   const getTemplateLists = async (key) => {
-    const { data } = await TemplateList ({search: key});
+    const { data } = await TemplateList ();
     if (!data?.error) {
       setListItems(data?.results?.templete);
     }
@@ -116,6 +116,19 @@ const Template = () => {
     let { data } = await DepartmentTemplateCount();
     if (!data?.error) {
       setTemplateCount(data?.results);
+    }
+  };
+
+  const handleSearch = async (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearch(value);
+    if (value.length > 0) {
+      let { data } = await SearchTemplates({ search: value });
+      if (!data?.error) {
+        setListItems(data?.results?.document);
+      }
+    } else {
+      getTemplateLists();
     }
   };
 
@@ -341,6 +354,8 @@ const Template = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={search}
+                  onChange={(e) => handleSearch(e)}
                 />
               </form>
             </div>

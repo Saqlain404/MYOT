@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
-import { CertificateList } from "../../ApiServices/departmentHttpService/departmentHttpService";
+import { CertificateList, SearchCertificate } from "../../ApiServices/departmentHttpService/departmentHttpService";
 
 const Certificate = () => {
   const documents = [
@@ -107,18 +107,34 @@ const Certificate = () => {
   ];
 
   const [listItems, setListItems] = useState([]);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    getCertificateLists();
+  }, [])
 
   const getCertificateLists = async (key) => {
-    const { data } = await CertificateList ({search: key});
+    const { data } = await CertificateList ();
     if (!data?.error) {
       setListItems(data?.results?.certificateList);
     }
   };
   console.log(listItems);
 
-  useEffect(() => {
-    getCertificateLists()
-  }, [])
+  const handleSearch = async (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearch(value);
+    if (value.length > 0) {
+      let { data } = await SearchCertificate({ search: value });
+      if (!data?.error) {
+        setListItems(data?.results?.certificate);
+      }
+    } else {
+      getCertificateLists();
+    }
+  };
+
+  
   
 
   return (
@@ -208,6 +224,8 @@ const Certificate = () => {
                   type="search"
                   placeholder="Type Something!"
                   aria-label="Search"
+                  value={search}
+                  onChange={(e) => handleSearch(e)}
                 />
               </form>
             </div>

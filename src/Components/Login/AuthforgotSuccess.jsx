@@ -20,10 +20,10 @@ const AuthforgotSuccess = () => {
                   <img src='/images/Forgot-success.png'/>
                   <div className="">
                     <h2 className=" mb-4 d-flex justify-content-center recover-text">
-                    Verified Successfully
+                    Reset Successfully
                     </h2>
                     <p className="reset-pass-desc">
-                    Your OTP verified successfully, Enjoy!
+                    Your password reset successfully, Enjoy!
                     </p>
                   </div>
                   <Link 

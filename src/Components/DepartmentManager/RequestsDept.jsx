@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
-import { RequestsList } from "../../ApiServices/departmentHttpService/departmentHttpService";
+import { RequestsList, SearchRequests } from "../../ApiServices/departmentHttpService/departmentHttpService";
 import { useEffect } from "react";
 
 const RequestsDept = () => {
@@ -102,18 +102,34 @@ const RequestsDept = () => {
   ];
 
   const [listItems, setListItems] = useState([]);
+  const [search, setSearch] = useState("")
+
+  useEffect(() => {
+    getRequestsLists()
+  }, [])
 
   const getRequestsLists = async (key) => {
-    const { data } = await RequestsList ({search: key});
+    const { data } = await RequestsList ();
     if (!data?.error) {
       setListItems(data?.results?.list);
     }
   };
   console.log(listItems);
 
-  useEffect(() => {
-    getRequestsLists()
-  }, [])
+  const handleSearch = async (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearch(value);
+    if (value.length > 0) {
+      let { data } = await SearchRequests({ search: value });
+      if (!data?.error) {
+        setListItems(data?.results?.document);
+      }
+    } else {
+      getRequestsLists();
+    }
+  };
+
+  
   
 
   return (
@@ -202,6 +218,8 @@ const RequestsDept = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={search}
+                  onChange={(e) => handleSearch(e)}
                 />
               </form>
             </div>
@@ -265,7 +283,7 @@ const RequestsDept = () => {
                         <td className="td-text"><img src={requests?.templete_Id?.manager?.profile_Pic} alt="" className="list-profile-pic" />{requests?.templete_Id?.manager?.name}</td>
                         <td className="td-text"> <img src="/images/dashboard/CalendarBlank.png" alt=""/>{requests?.createdAt}</td>
                         
-                        <td className="td-text"><img src="/images/dashboard/Comment.png" className="mx-auto d-block" /></td>
+                        <td className="td-text"><img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt=""/></td>
                         <td className="td-text">
                           <div class="dropdown">
                             <a
