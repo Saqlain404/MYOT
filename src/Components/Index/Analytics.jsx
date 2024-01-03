@@ -19,6 +19,7 @@ const Analytics = () => {
     console.log(data);
     if (!data?.error) {
       setAnalyticsData(data?.results);
+      console.log(data)
     }
   };
 
@@ -126,14 +127,16 @@ const Analytics = () => {
               <div className="row">
                 <div className="col-md-12 bg-light rounded my-5 py-5">
                   <GradientLineChart
-                    activeUserData={analyticsData?.totalActiveUser}
+                  tempData={analyticsData?.totalTemplete}
+                    // activeUserData={analyticsData?.totalActiveUser}
                   />
                 </div>
                 <div className="col-md-12 bg-light rounded mb-5 py-5">
                   <div className="row">
                     <div className="col-md-12">
                       <GradientBarChart
-                        tempData={analyticsData?.totalTemplete}
+                        // tempData={analyticsData?.totalTemplete}
+                        activeUserData={analyticsData?.totalActiveUser}
                       />
                     </div>
                     {/* <div className="col-md-6">

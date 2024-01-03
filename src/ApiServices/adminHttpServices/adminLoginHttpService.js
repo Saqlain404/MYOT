@@ -8,7 +8,7 @@ export async function adminLogin(formData) {
       formData
     );
     
-    console.log(data);
+    // console.log("login Data", data);
     if (!data?.error) {
       localStorage.setItem("myot_admin_id", data?.results?.employee?._id);
       await localStorage.removeItem("token-company");

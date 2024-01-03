@@ -101,6 +101,8 @@ import EmplAuthforgotPassword from "./Components/Login/EmplAuthforgotPass";
 import EmplForgotSuccess from "./Components/Login/EmplForgotSuccess";
 import ViewUser from "./Components/Index/ViewUser";
 import DocComments from "./Components/Index/DocumentRequests/Comment";
+import SigComments from "./Components/Signatory/Comments/Comments";
+import SettingsSig from "./Components/Signatory/SettingsSig";
 
 function App() {
   return (
@@ -200,8 +202,17 @@ function App() {
         <Route path="Signatory/My-profile" element={<ProfileSig />} />
         <Route path="Signatory/Edit-profile" element={<EditProfileSig />} />
         <Route path="Signatory/Help" element={<HelpSig />} />
-        <Route path="Signatory/Help-Support" element={<HelpSupportSig />} />
-        <Route path="Signatory/Contact-us" element={<ContactUsSig />} />
+        <Route
+          path="Signatory/Help/Help-Support"
+          element={<HelpSupportSig />}
+        />
+        <Route path="Signatory/Help/Contact-us" element={<ContactUsSig />} />
+        <Route path="Signatory/Home/Comments/:id" element={<SigComments />} />
+        <Route
+          path="Signatory/Awaiting-sig/Comments/:id"
+          element={<SigComments />}
+        />
+        <Route path="Signatory/Settings" element={<SettingsSig />} />
 
         <Route path="Employee/Login" element={<EmplAuthLogin />} />
         <Route

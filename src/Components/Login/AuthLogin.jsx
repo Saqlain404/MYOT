@@ -24,9 +24,10 @@ const AuthLogin = () => {
   }, []);
 
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
 
     const response = await adminLogin(data);
+    console.log("login Data", response);
     if (!response?.data?.error) {
       toast("Logged in successfully", {
         position: "top-right",

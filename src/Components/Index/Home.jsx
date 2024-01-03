@@ -190,7 +190,7 @@ const Home = () => {
                     </div>
                     <div className="text-center mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {adminCount?.totalEmployee}
+                        {adminCount?.totalEmployee[0]?.count}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -234,7 +234,7 @@ const Home = () => {
                     </div>
                     <div className="text-center mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {adminCount?.totalActiveUser}
+                        {adminCount?.totalActiveUser[0]?.count || 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -0.65%

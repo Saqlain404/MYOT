@@ -13,6 +13,7 @@ import Document from "./Requests/Document";
 
 const HomeSig = () => {
   const [count, setCount] = useState();
+  const [comment, setComment] = useState("");
 
   const [templates, setTemplates] = useState({
     columns: [
@@ -48,6 +49,12 @@ const HomeSig = () => {
         searchable: true,
       },
       {
+        label: "Comment",
+        field: "comment",
+        sort: "asc",
+        width: 100,
+      },
+      {
         label: "Actions",
         field: "actions",
         sort: "asc",
@@ -75,6 +82,7 @@ const HomeSig = () => {
     const newRows = [];
     if (!data?.error) {
       let values = data?.results?.template;
+      console.log(values);
       values?.map((list, index) => {
         const returnData = {};
         returnData.name = list?.templeteName;
@@ -96,9 +104,11 @@ const HomeSig = () => {
               list?.status === "Pending"
                 ? "text-info"
                 : list?.status === "Approved"
-                ? "text-warning"
+                ? "text-success"
                 : list?.status === "In Progress"
                 ? "text-primary"
+                : list?.status === "Rejected"
+                ? "text-danger"
                 : "text-success"
             }`}
           >
@@ -137,7 +147,7 @@ const HomeSig = () => {
               <li>
                 <Link
                   class="dropdown-item"
-                  to={`/Admin/Requests/Comments/${document?._id}`}
+                  to={`/Signatory/Home/Comments/${list?._id}`}
                 >
                   <img src="/images/dashboard/Comment.png" className="me-2" />
                   Comments
@@ -163,11 +173,82 @@ const HomeSig = () => {
           </div>
         );
 
+        returnData.comment = (
+          <div className="">
+            <a type="" data-bs-toggle="dropdown" aria-expanded="false">
+              <img
+                src="/images/dashboard/Comment.png"
+                className="mx-auto d-block pt-2"
+              />
+            </a>
+            <form
+              className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
+              onSubmit={(e) => handleSubmit(e, list?._id)}
+            >
+              <div className="mb-3 border-bottom">
+                <label className="form-label th-text">Comment or type</label>
+
+                <input
+                  type="text"
+                  className="form-control border-0"
+                  placeholder="Enter your comment..."
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                />
+              </div>
+
+              <div className="d-flex justify-content-between">
+                <div>
+                  <img
+                    src="/images/tasks/assign comments.svg"
+                    alt=""
+                    className="comment-img"
+                  />
+                  <img
+                    src="/images/tasks/mention.svg"
+                    alt=""
+                    className="comment-img"
+                  />
+                  <img
+                    src="/images/tasks/task.svg"
+                    alt=""
+                    className="comment-img"
+                  />
+                  <img
+                    src="/images/tasks/emoji.svg"
+                    alt=""
+                    className="comment-img"
+                  />
+                  <img
+                    src="/images/tasks/attach_attachment.svg"
+                    alt=""
+                    className="comment-img"
+                  />
+                </div>
+                <div>
+                  <button type="submit" className="comment-btn btn-primary">
+                    Comment
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        );
+
         newRows.push(returnData);
       });
       setTemplates({ ...templates, rows: newRows });
     }
   };
+
+  const handleSubmit = async (e, id) => {
+    e.preventDefault();
+    let { data } = await SignatoryRequestsData(id, comment);
+    if (!data?.error) {
+      setComment("");
+      getTemplatesData();
+    }
+  }
 
   return (
     <>

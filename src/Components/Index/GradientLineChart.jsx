@@ -1,8 +1,7 @@
 import React from "react";
 import Chart from "react-apexcharts";
 
-const GradientLineChart = ({ activeUserData }) => {
-  // Function to generate additional data points
+const GradientLineChart = ({ tempData }) => {
 
   const getMonthName = (monthNumber) => {
     const date = new Date(null);
@@ -10,30 +9,31 @@ const GradientLineChart = ({ activeUserData }) => {
     return date.toLocaleString("default", { month: "short" });
   };
 
-  const generateAdditionalData = () => {
-    const newData = [];
-    if (Array.isArray(activeUserData) && activeUserData.length === 1) {
-      for (let i = 1; i <= 9; i++) {
-        const newEntry = {
-          _id: activeUserData[0]._id - i,
-          activeUser: Math.floor(Math.random() * 20) + 10,
-        };
-        newData.push(newEntry);
-      }
-    }
-    return newData.reverse();
-  };
+  console.log(tempData)
+  // const generateAdditionalData = () => {
+  //   const newData = [];
+  //   if (Array.isArray(activeUserData) && activeUserData.length >0) {
+  //     for (let i = 1; i <= 9; i++) {
+  //       const newEntry = {
+  //         _id: activeUserData[0]._id - i,
+  //         activeUser: Math.floor(Math.random() * 20) + 10,
+  //       };
+  //       newData.push(newEntry);
+  //     }
+  //   }
+  //   return newData.reverse();
+  // };
 
-  const combinedData = [
-    ...generateAdditionalData(),
-    ...(Array.isArray(activeUserData) ? activeUserData : []),
-  ];
+  // const combinedData = [
+  //   ...generateAdditionalData(),
+  //   ...(Array.isArray(activeUserData) ? activeUserData : []),
+  // ];
 
   const chartData = {
     series: [
       {
-        name: "Active user",
-        data: combinedData.map((data) => data.activeUser),
+        name: "Templates",
+        data: tempData?.map((data) => data?.templete),
       },
     ],
     options: {
@@ -52,7 +52,7 @@ const GradientLineChart = ({ activeUserData }) => {
         enabled: false,
       },
       xaxis: {
-        categories: combinedData?.map((data) => {
+        categories: tempData?.map((data) => {
           const monthName = getMonthName(data._id);
           return `${monthName}`;
         }),
@@ -73,7 +73,7 @@ const GradientLineChart = ({ activeUserData }) => {
     },
   };
 
-  console.log(chartData?.series);
+  // console.log(chartData?.series);
 
   return (
     <div className="gradient-line-chart">

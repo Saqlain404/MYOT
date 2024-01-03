@@ -2492,3 +2492,43 @@ div.dataTables_wrapper div.dataTables_paginate {
 .sr-only {
   display: none !important;
 }
+
+.textarea_h_100px {
+  min-height: 100px !important;
+}
+.nav.nav-tabs {
+  font-size: 14px !important;
+  text-decoration: none !important;
+  font-family: "Nunito" !important;
+  border: none !important;
+}
+
+.nav.nav-tabs .nav-link {
+  color: black !important;
+}
+.custom-progress {
+  accent-color: black;
+}
+.custom-progress2 {
+  /* accent-color: #c6c7f8; */
+  accent-color: rgb(0, 0, 0);
+  height: 50px !important;
+}
+
+.custom-progress2 {
+  position: relative;
+}
+
+.custom-progress2::after {
+  content: attr(value) "%" !important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #0f1048;
+  font-weight: bold;
+}
+
+.signature_logos {
+  height: 100px;
+}

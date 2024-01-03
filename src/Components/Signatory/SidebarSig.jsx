@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 const SidebarSig = () => {
   const location = useLocation();
 
-  console.log(location)
   return (
     <div className="container-fluid  sidebar">
       {/* Sidebar scroll*/}
@@ -108,7 +107,7 @@ const SidebarSig = () => {
             </li>
             <li
               className={`nav-item text-dark ${
-                location.pathname === "/Signatory/Awaiting-sig"
+                location.pathname.match(/^\/Signatory\/Awaiting-sig/)
                   ? "nav_active"
                   : ""
               }`}
@@ -288,8 +287,8 @@ const SidebarSig = () => {
                 location.pathname === "/Signatory/Settings" ? "nav_active" : ""
               }`}
             >
-              <a
-                // href="/"
+              <Link
+                to={"/Signatory/Settings"}
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"
               >
@@ -299,11 +298,13 @@ const SidebarSig = () => {
                 />
 
                 <span className="ms-3 align-middle sidebar-btn">Settings</span>
-              </a>
+              </Link>
             </li>
             <li
               className={`nav-item text-dark ${
-                location.pathname === "/Signatory/Help" ? "nav_active" : ""
+                location.pathname.match(/^\/Signatory\/Help/)
+                  ? "nav_active"
+                  : ""
               }`}
             >
               <Link to={"/Signatory/Help"} className="text-decoration-none">

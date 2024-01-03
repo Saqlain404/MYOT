@@ -321,7 +321,7 @@ export async function DocumentComment(formData) {
 export async function DocumentCommentLists(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/document-comment-details/${id}`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/document-comment-details/${id}`
     );
 
     return { data };
@@ -431,10 +431,10 @@ export async function EmployeeView(id) {
 
 // Announcemnts api
 
-export async function AnnouncementLists() {
+export async function AnnouncementLists(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/announcement-list`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/announcement-list/${id}`
     );
     return { data };
   } catch (error) {
@@ -449,7 +449,12 @@ export async function CreateAnnouncement(formData) {
       `${process.env.REACT_APP_APIENDPOINT}/api/company/create-announcement`,
       formData
     );
-    return { data };
+    if (data?.error) {
+      toast.error(data?.message);
+      return false;
+    } else {
+      return { data };
+    }
   } catch (error) {
     if (error.response) toast.error(error.response.data.message);
     return { error };
@@ -491,6 +496,9 @@ export async function EmployeeContactUs(formData) {
       `${process.env.REACT_APP_APIENDPOINT}/api/employee/contact-us`,
       formData
     );
+    if (data?.error) {
+      toast.error(data?.message);
+    }
     return { data };
   } catch (error) {
     if (error.response) toast.error(error.response.data.message);

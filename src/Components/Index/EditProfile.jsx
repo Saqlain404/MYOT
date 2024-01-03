@@ -30,7 +30,7 @@ const EditProfile = () => {
     console.log(files?.profile_img);
     let emp_id = localStorage.getItem("myot_admin_id");
     if (data1?.password !== data1?.cpassword) {
-      toast("Password does not match", {
+      toast.error("Password does not match", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -40,6 +40,7 @@ const EditProfile = () => {
         progress: undefined,
         theme: "light",
       });
+      return false
     }
     const formData = new FormData();
     formData.append("name", data1?.name);
@@ -55,7 +56,7 @@ const EditProfile = () => {
     let { data } = await UpdateAdminProfile(emp_id, formData);
     console.log(data);
     if (data?.error) {
-      toast(data?.message, {
+      toast.error(data?.message, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -164,7 +165,7 @@ const EditProfile = () => {
                   </div>
                   <div className="row">
                     <div className="col-12 d-flex justify-content-between mb-2">
-                      <div className="col-6 m-2">
+                      {/* <div className="col-6 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Full Name
                         </p>
@@ -192,8 +193,8 @@ const EditProfile = () => {
                             {errors.name.message}
                           </div>
                         )}
-                      </div>
-                      <div className="col-6 m-2">
+                      </div> */}
+                      {/* <div className="col-6 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Email
                         </p>
@@ -216,10 +217,10 @@ const EditProfile = () => {
                             {errors.email.message}
                           </div>
                         )}
-                      </div>
+                      </div> */}
                     </div>
                     <div className="col-12 d-flex justify-content-between mb-2">
-                      <div className="col-6 m-2">
+                      {/* <div className="col-6 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Phone Number
                         </p>
@@ -241,8 +242,8 @@ const EditProfile = () => {
                             {errors.name.message}
                           </div>
                         )}
-                      </div>
-                      <div className="col-6 m-2">
+                      </div> */}
+                      {/* <div className="col-6 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Date of Birth
                         </p>
@@ -259,7 +260,7 @@ const EditProfile = () => {
                           name="dob"
                           {...register("dob")}
                         />
-                      </div>
+                      </div> */}
                     </div>
                     <div className="col-12 d-flex justify-content-between border-bottom mb-2 pb-4">
                       <div className="col-6 m-2">
@@ -337,7 +338,7 @@ const EditProfile = () => {
                         />
                       </div> */}
                     </div>
-                    <div className="col-12 d-flex justify-content-between mb-2">
+                    {/* <div className="col-12 d-flex justify-content-between mb-2">
                       <div className="col-6 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Company Name
@@ -374,7 +375,7 @@ const EditProfile = () => {
                           {...register("companyAddress")}
                         />
                       </div>
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className=" d-flex justify-content-end">
