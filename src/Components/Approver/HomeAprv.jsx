@@ -7,8 +7,10 @@ import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarAprv";
 import SidebarAprv from "./SidebarAprv";
 import {
+  approvedTemplete,
   approverTempleteList,
   homeCount,
+  rejectedTemplete,
   searchDocTemplete,
   searchTemplete,
   templeteDocList,
@@ -22,6 +24,7 @@ const HomeAprv = () => {
   const[templeteDoc,setTempleteDoc] = useState([])
   const [templateNames, setTemplateNames] = useState(null);
   const [docCount, setDocCount] = useState(null);
+  const[updatedStatus,setUpdatedStatus] = useState()
 
   const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
 
@@ -96,7 +99,7 @@ const HomeAprv = () => {
     // console.log(documentRequests);
 
     fetchData();
-  }, [searchData]);
+  }, [searchData,updatedStatus]);
 
 
 
@@ -184,6 +187,15 @@ const HomeAprv = () => {
     };
     count(); 
   }, []);
+
+  const approved = async(document_Id)=>{
+    const approveData = await approvedTemplete(document_Id)
+    setUpdatedStatus((prev)=>!prev)
+  }
+  const rejected = async(document_Id)=>{
+    const rejectedData = await rejectedTemplete(document_Id)
+    setUpdatedStatus((prev)=>!prev)
+  }
 
   return (
     <>
@@ -437,6 +449,26 @@ const HomeAprv = () => {
                                 </a>
                               </li>
                               <li>
+                                  <a onClick={()=>approved(task?.document_id)} class="dropdown-item border-bottom" href="#">
+                                    <img
+                                      src="/images/users/PencilLine.svg"
+                                      alt=""
+                                      className="me-2"
+                                    />
+                                    Approved
+                                </a>
+                              </li>
+                              <li>
+                                <a onClick={()=>rejected(task?.document_id)} class="dropdown-item text-danger" href="#">
+                                  <img
+                                    src="/images/XCircle.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Rejected
+                                </a>
+                              </li>
+                              {/* <li>
                                 <a class="dropdown-item border-bottom" href="#">
                                   <img
                                     src="/images/users/PencilLine.svg"
@@ -475,7 +507,7 @@ const HomeAprv = () => {
                                   />
                                   Delete User
                                 </a>
-                              </li>
+                              </li> */}
                             </ul>
                           </div>
                         </td>
