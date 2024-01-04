@@ -377,13 +377,17 @@ const Tasks = () => {
                         </td>
                         <td
                           className={`"td-text" ${
-                            document.status === "Pending"
-                              ? "text-info"
-                              : document.status === "Approved"
+                            document?.status === "Pending"
                               ? "text-warning"
-                              : document.status === "In Progress"
+                              : document?.status === "Approved"
+                              ? "text-success"
+                              : document?.status === "In Progress"
                               ? "text-primary"
-                              : "text-success"
+                              : document?.status === "Rejected"
+                              ? "text-danger"
+                              : document?.status === "Completed"
+                              ? "text-success"
+                              : "text-muted"
                           }`}
                         >
                           {document.status}

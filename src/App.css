@@ -2559,6 +2559,13 @@ height: 960px; */
   object-fit: cover;
 }
 
+.w_50_h_70 {
+  width: 50px;
+  height: 70px;
+  object-fit: cover;
+  margin-right: 5px;
+  border-radius: 15px;
+}
 .task_reply textarea {
   border: #3e51ff dashed 2px;
   border-radius: 5px;

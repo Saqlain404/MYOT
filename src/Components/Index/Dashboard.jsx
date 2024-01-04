@@ -5,6 +5,7 @@ import Sidebar from "../Sidebar";
 import { Card } from "antd";
 import { Link } from "react-router-dom";
 import {
+  AdminTicketCount,
   DashboardCount,
   DashboardTotalDocument,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
@@ -12,10 +13,12 @@ import {
 const Dashboard = () => {
   const [dataCount, setDataCount] = useState();
   const [totalDocument, setTotalDocument] = useState([]);
+  const [ticketCount, setTicketCount] = useState();
 
   useEffect(() => {
     getDashboardDataCount();
     getDashboardTotalDocument();
+    getTicketCount();
   }, []);
 
   const getDashboardDataCount = async () => {
@@ -23,10 +26,20 @@ const Dashboard = () => {
       let { data } = await DashboardCount();
       if (!data.error) {
         setDataCount(data?.results);
-        console.log(data?.results)
+        console.log(data?.results);
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getTicketCount = async () => {
+    let id = await localStorage.getItem("myot_admin_id");
+    console.log(id);
+    let { data } = await AdminTicketCount(id);
+    console.log(data);
+    if (!data?.error) {
+      setTicketCount(data?.results);
     }
   };
 
@@ -154,7 +167,9 @@ const Dashboard = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {dataCount?.employee && dataCount?.employee[0]?.count || 0}
+                        {(dataCount?.employee &&
+                          dataCount?.employee[0]?.count) ||
+                          0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -216,7 +231,9 @@ const Dashboard = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {dataCount?.totalActiveUser && dataCount?.totalActiveUser[0]?.count || 0}
+                        {(dataCount?.totalActiveUser &&
+                          dataCount?.totalActiveUser[0]?.count) ||
+                          0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +9.15%
@@ -296,7 +313,42 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                <div className="col-lg-3 col-md-6 mb-md-2 ">
+                {
+                  ticketCount && <div className="col-md-3 ">
+                  <div className="dashboard-card2 ">
+                    <p className="dashboard-card2-text">Open Tickets</p>
+                    <p className="text-card  mb-3">
+                      {ticketCount?.totalComplete} / {ticketCount?.totalTicket}
+                    </p>
+                    <p className=" mb-1 dashboard-card2-text">
+                      Profile Completion
+                    </p>
+
+                    <div className="progress-bar">
+                      <div className="progress-container">
+                        <div
+                          className="progress"
+                          style={{ width: `${ticketCount?.completepresent}%` }}
+                        ></div>
+                        <span className="progress-label">{`${ticketCount?.completepresent}%`}</span>
+                      </div>
+                    </div>
+                    <p className=" mb-1 dashboard-card2-text">Status</p>
+                    <div className="progress-bar">
+                      <div className="progress-container">
+                        <div
+                          className="progress"
+                          style={{
+                            width: `${ticketCount?.InprogressPresent}%`,
+                          }}
+                        ></div>
+                        <span className="progress-label">{`In Progress / ${ticketCount?.InprogressPresent}%`}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                }
+                {/* <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="dashboard-card2 bg-danger-subtle">
                     <p className="dashboard-card2-text">Open Tickets</p>
                     <p className="text-card  mb-3">20 / 50 </p>
@@ -315,16 +367,16 @@ const Dashboard = () => {
                       className=" mb-4 dashboard-card-img"
                     />
                   </div>
-                </div>
+                </div> */}
 
                 <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="dashboard-card3 bg-light table-card3 dashboard-card3-text">
                     <p className="text-card">Document Request</p>
 
                     {totalDocument &&
-                      totalDocument?.map((count) => (
+                      totalDocument?.map((count, i) => (
                         <>
-                          <div className="row">
+                          <div key={i} className="row">
                             {/* <div className="my-1 col-6"> */}
                             <span className="col-6">
                               {

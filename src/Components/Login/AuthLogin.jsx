@@ -4,10 +4,14 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { adminLogin } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 import { toast } from "react-toastify";
+// import { useDispatch } from 'react-redux';
+// import { setUserData } from "../app/slice/userSlice";
 
 const AuthLogin = () => {
   const [type, setType] = useState("password");
   const [password, setPassword] = useState("");
+
+  // const dispatch = useDispatch();
 
   const {
     register,
@@ -39,6 +43,7 @@ const AuthLogin = () => {
         progress: undefined,
         theme: "light",
       });
+      // dispatch(setUserData(response?.data?.results?.employee));
       navigate("/Admin/Dashboard");
     }
   };

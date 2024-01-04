@@ -45,6 +45,19 @@ const EditProfileSig = () => {
       });
       return false;
     }
+    if (!files?.profile_img) {
+      toast.error("Please provide profile image", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return false;
+    }
     const formData = new FormData();
     formData.append("name", data1?.name);
     formData.append("email", data1?.email);
@@ -165,7 +178,7 @@ const EditProfileSig = () => {
                     </label>
                   </div>
                   <div className="row">
-                    <div className="col-12 d-flex justify-content-between mb-2">
+                    {/* <div className="col-12 d-flex justify-content-between mb-2">
                       <div className="col-6 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Full Name
@@ -262,7 +275,7 @@ const EditProfileSig = () => {
                           {...register("dob")}
                         />
                       </div>
-                    </div>
+                    </div> */}
                     <div className="col-12 d-flex justify-content-between border-bottom mb-2 pb-4">
                       <div className="col-6 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">

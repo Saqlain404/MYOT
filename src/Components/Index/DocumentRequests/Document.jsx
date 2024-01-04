@@ -327,13 +327,17 @@ const Document = () => {
                   </td>
                   <td
                     className={`"td-text status" ${
-                      document.status === "Pending"
-                        ? "text-info"
-                        : document.status === "Approved"
-                        ? "text-warning"
-                        : document.status === "In Progress"
-                        ? "text-primary"
-                        : "text-success"
+                      document?.status === "Pending"
+                      ? "text-warning"
+                      : document?.status === "Approved"
+                      ? "text-success"
+                      : document?.status === "In Progress"
+                      ? "text-primary"
+                      : document?.status === "Rejected"
+                      ? "text-danger"
+                      : document?.status === "Completed"
+                      ? "text-success"
+                      : "text-muted"
                     }`}
                   >
                     {document.status}

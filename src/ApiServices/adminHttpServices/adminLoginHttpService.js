@@ -7,19 +7,20 @@ export async function adminLogin(formData) {
       `${process.env.REACT_APP_APIENDPOINT}/api/company/login`,
       formData
     );
-    
+
     // console.log("login Data", data);
     if (!data?.error) {
       localStorage.setItem("myot_admin_id", data?.results?.employee?._id);
       await localStorage.removeItem("token-company");
-      await localStorage.setItem("token-company", headers["x-auth-token-company"]);
-      await localStorage.setItem("user_id", data?.results?.company._id);
+      await localStorage.setItem(
+        "token-company",
+        headers["x-auth-token-company"]
+      );
+      await localStorage.setItem("user_id", data?.results?.employee?._id);
 
-
-      toast.success("Success");
+      return { data };
     } else toast.error(data.message);
 
-    
     return { data };
   } catch (error) {
     if (error.response) toast.error(error.response.data.message);
@@ -142,7 +143,7 @@ export async function updateProfile(formData) {
     return { error };
   }
 }
-const masteHook = async ( url,formData ) =>{
+const masteHook = async (url, formData) => {
   try {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/${url}`,
@@ -158,8 +159,7 @@ const masteHook = async ( url,formData ) =>{
     if (error.response) toast.error(error.response.data.message);
     return { error };
   }
-
-}
+};
 
 export async function getAdminData() {
   try {
