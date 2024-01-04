@@ -68,8 +68,8 @@ export async function searchDocTemplete(searchKey) {
     if (!data?.error) {
       const searchTerm = searchKey?.searchTerm?.toLowerCase();
 
-      const filteredDocuments = data?.results?.documentList?.filter(
-        (document) => document.templeteName.toLowerCase().includes(searchTerm)
+      const filteredDocuments = data?.results?.searchDocument?.filter(
+        (document) => document?.templeteName?.toLowerCase().includes(searchTerm)
       );
 
       console.log(filteredDocuments);

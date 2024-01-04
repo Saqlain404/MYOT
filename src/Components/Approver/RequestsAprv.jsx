@@ -13,16 +13,16 @@ const RequestsAprv = () => {
 
   const handleDocSearch = async () => {
     const result = await searchDocTemplete(searchDocData);
-    const searchDocResult = result?.data?.results?.document;
-    console.log(searchDocResult);
+    const searchDocResult = result?.data?.results?.searchDocument;
+    console.log(result);
 
     if (searchDocResult && Array.isArray(searchDocResult)) {
       const mappedDocResult = searchDocResult?.map((document) => ({
         documentName: document?.templete?.templeteName,
         img: [document?.templete?.manager?.[0]?.profile_Pic],
-        requestor: [document?.requester?.[0]?.name],
-        requestor_img: [document?.requester?.[0]?.profile_Pic],
-        version: document?.templete_Id?.templeteVersion?.[0]?.version,
+        requestor: [document?.creator_Id?.[0]?.name],
+        requestor_img: [document?.creator_Id?.[0]?.profile_Pic],
+        version: document?.templete?.templeteVersion?.[0]?.version,
         assignedTo: [document?.templete?.manager?.[0]?.name],
         department: [
           document?.templete?.manager?.[0]?.department?.[0]?.departmentName,

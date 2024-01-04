@@ -179,14 +179,14 @@ const HomeAprv = () => {
 
   const handleDocSearch = async () => {
     const result = await searchDocTemplete(searchDocData);
-    const searchDocResult = result?.data?.results?.document;
-    console.log(searchDocResult);
+    const searchDocResult = result?.data?.results?.searchDocument;
+    console.log(result)
 
     if (searchDocResult && Array.isArray(searchDocResult)) {
       const mappedDocResult = searchDocResult?.map((document) => ({
         documentName: document?.templete?.templeteName,
         img: [document?.templete?.manager?.[0]?.profile_Pic],
-        version: document?.templete_Id?.templeteVersion?.[0]?.version,
+        version: document?.templete?.templeteVersion?.[0]?.version,
         assignedTo: [document?.templete?.manager?.[0]?.name],
         department: [
           document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
@@ -204,6 +204,7 @@ const HomeAprv = () => {
         status: [document?.status],
       }));
       setTempleteDoc(mappedDocResult);
+      console.log(templeteDoc)
     }
   };
 
@@ -822,72 +823,6 @@ const HomeAprv = () => {
                             </ul>
                           </div>
                         </td>
-
-                        <td className="td-text">
-                          <div class="">
-                            <a
-                              type=""
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              {task.action}
-                            </a>
-                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-                              <li>
-                                <a class="dropdown-item border-bottom" href="#">
-                                  <img
-                                    src="/images/users/AddressBook.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  View Users Details
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item border-bottom" href="#">
-                                  <img
-                                    src="/images/users/PencilLine.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Edit User Details
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item" href="#">
-                                  <img
-                                    src="/images/dashboard/Comment.png"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Comments
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item border-bottom" href="#">
-                                  <img
-                                    src="/images/users/TextAlignLeft.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Wrap Column
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item text-danger" href="#">
-                                  <img
-                                    src="/images/users/Trash.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Delete User
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-
-                        <td></td>
                       </tr>
                     ))}
                   </tbody>
