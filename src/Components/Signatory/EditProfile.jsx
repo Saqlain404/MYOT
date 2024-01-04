@@ -29,6 +29,7 @@ const EditProfileSig = () => {
 
   const onSubmit = async (data1) => {
     // e.preventDefault();
+    console.log(data1)
     console.log(files?.profile_img);
     console.log(data1);
     let emp_id = localStorage.getItem("myot_admin_id");
@@ -71,7 +72,7 @@ const EditProfileSig = () => {
 
     let { data } = await SignatoryUpdateProfile(emp_id, formData);
     console.log(data);
-    if (data?.error) {
+    if (data && data?.error) {
       toast.error(data?.message, {
         position: "top-right",
         autoClose: 5000,
@@ -84,7 +85,7 @@ const EditProfileSig = () => {
       });
       return false;
     }
-    if (!data?.error) {
+    if (data&&!data?.error) {
       toast("Profile Updated Successfully", {
         position: "top-right",
         autoClose: 5000,
