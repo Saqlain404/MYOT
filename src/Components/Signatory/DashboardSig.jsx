@@ -16,7 +16,7 @@ import CommonListing from "./CommonListAwaiting/CommonListing";
 const DashboardSig = () => {
   const [count, setCount] = useState([]);
   const [totalDocument, setTotalDocument] = useState([]);
-  const [profileCompleteData, setProfileCompleteData] = useState([]);
+  const [ticketCount, setTicketCount] = useState([]);
 
   useEffect(() => {
     getTotalCount();
@@ -29,7 +29,7 @@ const DashboardSig = () => {
 
     let { data } = await SignatoryProfileCompletion(id);
     if (!data?.error) {
-      setProfileCompleteData(data?.results);
+      setTicketCount(data?.results);
     }
   };
 
@@ -114,7 +114,7 @@ const DashboardSig = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {count?.totalUser || 0}
+                        {(count?.totalUser && count?.totalUser[0]?.count) || 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -225,7 +225,41 @@ const DashboardSig = () => {
                   </div>
                 </div>
 
-                <div className="col-md-6 mb-md-2 ">
+                <div className="col-md-3 ">
+                  <div className="dashboard-card2 ">
+                    <p className="dashboard-card2-text">Open Tickets</p>
+                    <p className="text-card  mb-3">
+                      {ticketCount?.totalComplete} / {ticketCount?.totalTicket}
+                    </p>
+                    <p className=" mb-1 dashboard-card2-text">
+                      Profile Completion
+                    </p>
+
+                    <div className="progress-bar">
+                      <div className="progress-container">
+                        <div
+                          className="progress"
+                          style={{ width: `${ticketCount?.completepresent}%` }}
+                        ></div>
+                        <span className="progress-label">{`${ticketCount?.completepresent}%`}</span>
+                      </div>
+                    </div>
+                    <p className=" mb-1 dashboard-card2-text">Status</p>
+                    <div className="progress-bar">
+                      <div className="progress-container">
+                        <div
+                          className="progress"
+                          style={{
+                            width: `${ticketCount?.InprogressPresent}%`,
+                          }}
+                        ></div>
+                        <span className="progress-label">{`In Progress / ${ticketCount?.InprogressPresent}%`}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* <div className="col-md-6 mb-md-2 ">
                   <div className="dashboard-card2 bg-danger-subtle">
                     <div>
                       <p className="dashboard-card2-text">Open Tickets</p>
@@ -257,7 +291,7 @@ const DashboardSig = () => {
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
 

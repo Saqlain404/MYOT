@@ -308,7 +308,7 @@ const HomeSig = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {count?.totalEmployee}
+                        {count?.totalEmployee && count?.totalEmployee[0]?.count || 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -352,7 +352,7 @@ const HomeSig = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {count?.totalActiveUser}
+                        {count?.totalActiveUser && count?.totalActiveUser[0]?.count ||0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -0.65%

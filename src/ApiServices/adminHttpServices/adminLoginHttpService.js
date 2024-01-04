@@ -13,10 +13,10 @@ export async function adminLogin(formData) {
       localStorage.setItem("myot_admin_id", data?.results?.employee?._id);
       await localStorage.removeItem("token-company");
       await localStorage.setItem("token-company", headers["x-auth-token-company"]);
-      await localStorage.setItem("user_id", data.results.company._id);
+      await localStorage.setItem("user_id", data?.results?.employee?._id);
 
+      return {data}
 
-      toast.success("Success");
     } else toast.error(data.message);
 
     

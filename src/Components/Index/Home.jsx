@@ -472,12 +472,16 @@ const Home = () => {
                             hiddenColumns.status ? "d-none" : "table-cell"
                           } ${
                             template?.status === "Pending"
-                              ? "text-info"
-                              : template?.status === "Approved"
                               ? "text-warning"
+                              : template?.status === "Approved"
+                              ? "text-success"
                               : template?.status === "In Progress"
                               ? "text-primary"
-                              : "text-success"
+                              : template?.status === "Rejected"
+                              ? "text-danger"
+                              : template?.status === "Completed"
+                              ? "text-success"
+                              : "text-muted"
                           }`}
                         >
                           {template?.status}
