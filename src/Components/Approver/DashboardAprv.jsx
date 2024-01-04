@@ -168,7 +168,7 @@ const DashboardAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {countData?.totalUser}
+                        {countData?.totalUser?.[0]?.count}
                       </h3>
                     </div>
                   </div>
@@ -415,23 +415,23 @@ const DashboardAprv = () => {
                   </thead>
                   <tbody>
                     {documentRequests?.map((document) => (
-                      <tr key={document.id}>
+                      <tr key={document?.commentID}>
                         <td className="td-text">
                           <input
                             className="form-check-input checkbox-table me-4"
                             type="checkbox"
                             value=""
                           />
-                          {document.documentName}
+                          {document?.documentName}
                         </td>
                         <td className="td-text">
                           <img className="img_profile" src={document.img} />
-                          {document.assignedTo}
+                          {document?.assignedTo}
                         </td>
-                        <td className="td-text">{document.department}</td>
+                        <td className="td-text">{document?.department}</td>
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
-                          {moment(document.dateofSigning).calendar()}
+                          {moment(document?.dateofSigning).calendar()}
                         </td>
                         <td
                           className={`td-text ${

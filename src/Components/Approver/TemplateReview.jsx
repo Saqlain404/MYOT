@@ -257,7 +257,7 @@ const TemplateReview = () => {
                   </thead>
                   <tbody>
                     {documentRequests?.map((document) => (
-                      <tr key={document.id}>
+                      <tr key={document?.commentID}>
                         <td className="td-text">
                           <input
                             className="form-check-input checkbox-table me-4"

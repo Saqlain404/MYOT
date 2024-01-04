@@ -239,8 +239,8 @@ const RequestsAprv = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {templeteDoc.map((document) => (
-                      <tr key={document.id}>
+                    {templeteDoc?.map((document) => (
+                      <tr key={document.commentID}>
                         <td className="td-text">
                           <input
                             className="form-check-input checkbox-table"
