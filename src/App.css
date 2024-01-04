@@ -2566,19 +2566,17 @@ height: 960px; */
 }
 
 .mdb_table {
-  font-family: "Nunito", sans-serif; /* Change 'Nunito' to the appropriate font name if needed */
+  font-family: "Nunito", sans-serif;
 }
 
 .mdb_table thead th {
   border: none;
 }
 
-/* Remove borders from table body rows */
 .mdb_table tbody tr {
   border: none;
 }
 
-/* Remove borders from table data cells */
 .mdb_table tbody td {
   border: none;
 }
