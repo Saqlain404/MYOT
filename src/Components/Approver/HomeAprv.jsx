@@ -328,7 +328,7 @@ const HomeAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {docCount?.totalEmployee}
+                        {docCount?.totalEmployee?.[0]?.count}
                       </h3>
                     </div>
                   </div>
@@ -480,7 +480,7 @@ const HomeAprv = () => {
                   </thead>
                   <tbody>
                     {documentRequests?.map((task) => (
-                      <tr key={task.id}>
+                      <tr key={task?.commentID}>
                         <td className="td-text">{task.documentName}</td>
                         <td className="td-text">
                           <img className="img_profile" src={task.img} />
