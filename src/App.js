@@ -115,6 +115,7 @@ import OTPauthEmply from "./Components/Login/OTPauthEmply";
 import CalendarMonthEmply from "./Components/Employee/CalendarMonthEmply";
 import CalenderYearEmply from "./Components/Employee/CalenderYearEmply";
 import CommentsEmply from "./Components/Employee/CommentsEmply";
+import UpdatePassEmply from "./Components/Login/UpdatePassEmply";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -267,6 +268,7 @@ function App() {
         <Route path="Employee/Login" element={<EmplAuthLogin />} />
         <Route path="Employee/Forgot-Password" element={<EmplAuthforgotPassword />}/>
         <Route path="Employee/Forgot-Success" element={<EmplForgotSuccess />} />
+        <Route path="Employee/reset-update-password" element={<UpdatePassEmply />} />
         <Route path="Employee/Home" element={<HomeEmpl />} />
         <Route path="Employee/Dashboard" element={<EmployeeDash />} />
         <Route path="Employee/history-log-request" element={<RequestHistoryEmpl />}/>

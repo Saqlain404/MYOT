@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { forgotPassword } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 import { ToastContainer, toast } from "react-toastify";
 import { EmplforgotPassword, OTPverifyEmply } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import UpdatePassEmply from "./UpdatePassEmply";
 
 const OTPauthEmply = () => {
     const { register, handleSubmit } = useForm();
@@ -12,22 +13,28 @@ const OTPauthEmply = () => {
     const location = useLocation();
     const email = location.state?.email;
 
-  
     const onSubmit = async (data) => {
       try {
         
         const otp = `${data["otp-1"]}${data["otp-2"]}${data["otp-3"]}${data["otp-4"]}`;
     
         const response = await OTPverifyEmply({ email, otp });
-
+        localStorage.setItem("email", email)
+        console.log(email)
+      
         console.log(data)
+        let isMounted = true;
         if (response.data.error) {
           toast.error("Incorrect OTP. Please try again.");
         } else {
-        //   toast.success("OTP Verified!");
+          //   toast.success("OTP Verified!");
+      
+          
+          
           setTimeout(()=>{
-
-              navigate("/Employee/Forgot-Success");
+            if(isMounted){
+              navigate("/Employee/reset-update-password");
+            }
           },2000)
         }
       } catch (error) {

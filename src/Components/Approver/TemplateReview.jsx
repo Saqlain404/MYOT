@@ -8,14 +8,18 @@ import SidebarDepartment from "./SidebarAprv";
 import SidebarSig from "../Signatory/SidebarSig";
 import SidebarAprv from "./SidebarAprv";
 import {
+  approvedTemplete,
   approverTempleteList,
+  rejectedTemplete,
   searchTemplete,
 } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 import moment from "moment";
+import { fetchTemplateData } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const TemplateReview = () => {
   const [searchData, setSearchData] = useState("");
   const [documentRequests, setDocumentRequests] = useState([]);
+  const[templeteId,setTempleteId] = useState()
 
   const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
 
@@ -27,6 +31,7 @@ const TemplateReview = () => {
     if (searchResult && Array.isArray(searchResult)) {
       const mappedResult = searchResult?.map((document) => ({
         documentName: document?.templeteName,
+        document_id: document?._id,
         img: [document?.manager?.[0]?.profile_Pic],
         version: document?.templeteVersion?.[0]?.version,
         assignedTo: [document?.manager?.[0]?.name],
@@ -85,6 +90,19 @@ const TemplateReview = () => {
 
     fetchData();
   }, [searchData]);
+
+  
+    const approved = async(document_Id)=>{
+      const approveData = await approvedTemplete(document_Id)
+      console.log(approveData)
+    }
+    const rejected = async(document_Id)=>{
+      const rejectedData = await rejectedTemplete(document_Id)
+      console.log(rejected)
+    }
+    
+
+  
 
   return (
     <>
@@ -262,7 +280,9 @@ const TemplateReview = () => {
                               ? "text-success"
                               : document.status == "Pending"
                               ? "text-info"
-                              : "text-warning"
+                              :document.status== "Rejected"
+                              ?"text-danger"
+                              :"text-warning"
                           }`}
                         >
                           {document.status}
@@ -296,16 +316,16 @@ const TemplateReview = () => {
                                 </Link>
                               </li>
                               <li>
-                                <a class="dropdown-item border-bottom" href="#">
-                                  <img
-                                    src="/images/users/PencilLine.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Edit User Details
+                                  <a onClick={()=>approved(document?.document_id)} class="dropdown-item border-bottom" href="#">
+                                    <img
+                                      src="/images/users/PencilLine.svg"
+                                      alt=""
+                                      className="me-2"
+                                    />
+                                    Approved
                                 </a>
                               </li>
-                              <li>
+                              {/* <li>
                                 <a class="dropdown-item" href="#">
                                   <img
                                     src="/images/dashboard/Comment.png"
@@ -314,8 +334,8 @@ const TemplateReview = () => {
                                   />
                                   Comments
                                 </a>
-                              </li>
-                              <li>
+                              </li> */}
+                              {/* <li>
                                 <a class="dropdown-item border-bottom" href="#">
                                   <img
                                     src="/images/users/TextAlignLeft.svg"
@@ -323,16 +343,16 @@ const TemplateReview = () => {
                                     className="me-2"
                                   />
                                   Wrap Column
-                                </a>
-                              </li>
+                                </a> */}
+                              {/* </li> */}
                               <li>
-                                <a class="dropdown-item text-danger" href="#">
+                                <a onClick={()=>rejected(document?.document_id)} class="dropdown-item text-danger" href="#">
                                   <img
-                                    src="/images/users/Trash.svg"
+                                    src="/images/XCircle.svg"
                                     alt=""
                                     className="me-2"
                                   />
-                                  Delete Template
+                                  Rejected
                                 </a>
                               </li>
                             </ul>

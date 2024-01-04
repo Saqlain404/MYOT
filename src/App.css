@@ -1732,7 +1732,7 @@ height: 960px; */
 }
 
 .announcement-time {
-  margin-left: 100px;
+  /* margin-left: 10px; */
   color: #656668;
   font-family: Nunito;
   font-size: 13px;
