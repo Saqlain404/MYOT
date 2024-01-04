@@ -3,100 +3,124 @@ import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
 import {
+  approvedTemplete,
   approverTempleteList,
+  rejectedTemplete,
   searchTemplete,
 } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 import moment from "moment";
+import { fetchTemplateData } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const TemplateReview = () => {
-
   const documents = [
     {
       id: 1,
       templateName: "Salary Slip.jpg",
       creator: [
-        <img src="/images/dashboard/avatar3.png" className="me-2" alt=""/>,
+        <img src="/images/dashboard/avatar3.png" className="me-2" alt="" />,
         "Eve Leroy",
       ],
       department: "Human Resources",
       dateOfCreation: "2023-09-16",
       status: <p className="text-warning">High</p>,
       action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
       ),
     },
     {
       id: 2,
       templateName: "Promotion Letter.zip",
       creator: [
-        <img src="/images/dashboard/avatar2.png" className="me-2" alt=""/>,
+        <img src="/images/dashboard/avatar2.png" className="me-2" alt="" />,
         "Lana Steiner",
       ],
       department: "Sales & Marketing",
       dateOfCreation: "2023-09-16",
       status: <p className="text-warning">High</p>,
       action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
       ),
     },
     {
       id: 3,
       templateName: "Create Project Wireframes.xls",
       creator: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" alt=""/>,
+        <img src="/images/dashboard/Avatar1.png" className="me-2" alt="" />,
         "ByeWind",
       ],
       department: "Training & Development",
       dateOfCreation: "2023-09-16",
       status: <p className="text-danger">Urgent</p>,
       action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
       ),
     },
     {
       id: 4,
       templateName: "Create Project Wireframes.pdf",
       creator: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" alt=""/>,
+        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
         "Katherine Moss",
       ],
       department: "Human Resources",
       dateOfCreation: "2023-09-16",
       status: <p className="text-secondary">Low</p>,
       action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
       ),
     },
     {
       id: 5,
       templateName: "Project tech requirements.zip",
       creator: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" alt=""/>,
+        <img src="/images/dashboard/Avatar1.png" className="me-2" alt="" />,
         "Natali Craig",
       ],
       department: "Training & Development",
       dateOfCreation: "2023-09-16",
       status: <p className="text-primary">Normal</p>,
       action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
       ),
     },
   ];
 
   const [searchData, setSearchData] = useState("");
   const [documentRequests, setDocumentRequests] = useState([]);
+  const [templeteId, setTempleteId] = useState();
 
-
-  const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
+  const ids =
+    localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
 
   const handleSearch = async () => {
-    const result = await searchTemplete(searchData,ids);
+    const result = await searchTemplete(searchData, ids);
     const searchResult = result?.data?.results?.templete;
     console.log(searchResult);
 
     if (searchResult && Array.isArray(searchResult)) {
       const mappedResult = searchResult?.map((document) => ({
         documentName: document?.templeteName,
+        document_id: document?._id,
         img: [document?.manager?.[0]?.profile_Pic],
         version: document?.templeteVersion?.[0]?.version,
         assignedTo: [document?.manager?.[0]?.name],
@@ -122,7 +146,6 @@ const TemplateReview = () => {
   }, [searchData]);
 
   useEffect(() => {
-   
     const fetchData = async () => {
       if (!searchData || searchData === "") {
         const names = await approverTempleteList(ids);
@@ -155,6 +178,15 @@ const TemplateReview = () => {
 
     fetchData();
   }, [searchData]);
+
+  const approved = async (document_Id) => {
+    const approveData = await approvedTemplete(document_Id);
+    console.log(approveData);
+  };
+  const rejected = async (document_Id) => {
+    const rejectedData = await rejectedTemplete(document_Id);
+    console.log(rejected);
+  };
 
   return (
     <>
@@ -323,7 +355,10 @@ const TemplateReview = () => {
                         </td>
                         <td className="td-text">{document.department}</td>
                         <td className="td-text">
-                          <img src="/images/dashboard/CalendarBlank.png" alt=""/>
+                          <img
+                            src="/images/dashboard/CalendarBlank.png"
+                            alt=""
+                          />
                           {document.dateOfCreation}
 
                           <img src="/images/dashboard/CalendarBlank.png" />
@@ -335,18 +370,20 @@ const TemplateReview = () => {
                               ? "text-success"
                               : document.status == "Pending"
                               ? "text-info"
+                              : document.status == "Rejected"
+                              ? "text-danger"
                               : "text-warning"
                           }`}
                         >
                           {document.status}
-
                         </td>
                         <td className="td-text">
                           <div class="dropdown">
                             <a
                               type=""
                               data-bs-toggle="dropdown"
-                              aria-expanded="false" href="/"
+                              aria-expanded="false"
+                              href="/"
                             >
                               {document.action}
                             </a>
@@ -370,17 +407,23 @@ const TemplateReview = () => {
                                 </Link>
                               </li>
                               <li>
-                                <a class="dropdown-item border-bottom" href="/">
+                                <a
+                                  onClick={() =>
+                                    approved(document?.document_id)
+                                  }
+                                  class="dropdown-item border-bottom"
+                                  href="#"
+                                >
                                   <img
                                     src="/images/users/PencilLine.svg"
                                     alt=""
                                     className="me-2"
                                   />
-                                  Edit User Details
+                                  Approved
                                 </a>
                               </li>
-                              <li>
-                                <a class="dropdown-item" href="/">
+                              {/* <li>
+                                <a class="dropdown-item" href="#">
                                   <img
                                     src="/images/dashboard/Comment.png"
                                     alt=""
@@ -388,25 +431,31 @@ const TemplateReview = () => {
                                   />
                                   Comments
                                 </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item border-bottom" href="/">
+                              </li> */}
+                              {/* <li>
+                                <a class="dropdown-item border-bottom" href="#">
                                   <img
                                     src="/images/users/TextAlignLeft.svg"
                                     alt=""
                                     className="me-2"
                                   />
                                   Wrap Column
-                                </a>
-                              </li>
+                                </a> */}
+                              {/* </li> */}
                               <li>
-                                <a class="dropdown-item text-danger" href="/">
+                                <a
+                                  onClick={() =>
+                                    rejected(document?.document_id)
+                                  }
+                                  class="dropdown-item text-danger"
+                                  href="#"
+                                >
                                   <img
-                                    src="/images/users/Trash.svg"
+                                    src="/images/XCircle.svg"
                                     alt=""
                                     className="me-2"
                                   />
-                                  Delete Template
+                                  Rejected
                                 </a>
                               </li>
                             </ul>

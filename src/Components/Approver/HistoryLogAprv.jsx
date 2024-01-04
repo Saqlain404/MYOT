@@ -1,78 +1,86 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarAprv";
+import {
+  ApprovedTempeleteSearch,
+  HistoryLogApprovedList,
+  dashCount,
+} from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
+import moment from "moment";
 
 const HistoryLogAprv = () => {
-  const documents = [
-    {
-      id: 1,
-      templateName: "Salary Slip.jpg",
-      creator: [
-        <img src="/images/dashboard/avatar3.png" className="me-2"  alt=""/>,
-        "Eve Leroy",
-      ],
-      department: "Human Resources",
-      dateOfCreation: "2023-09-16",
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt=""/>,
-      version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
-    },
-    {
-      id: 2,
-      templateName: "Promotion Letter.zip",
-      creator: [
-        <img src="/images/dashboard/avatar2.png" className="me-2"  alt=""/>,
-        "Lana Steiner",
-      ],
-      department: "Sales & Marketing",
-      dateOfCreation: "2023-09-16",
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt=""/>,
-      version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
-    },
-    {
-      id: 3,
-      templateName: "Create Project Wireframes.xls",
-      creator: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2"  alt=""/>,
-        "ByeWind",
-      ],
-      department: "Training & Development",
-      dateOfCreation: "2023-09-16",
-        comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt=""/>,
-version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
-    },
-    {
-      id: 4,
-      templateName: "Create Project Wireframes.pdf",
-      creator: [
-        <img src="/images/dashboard/Avatar.png" className="me-2"  alt=""/>,
-        "Katherine Moss",
-      ],
-      department: "Human Resources",
-      dateOfCreation: "2023-09-16",
-        comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt=""/>,
-version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
-    },
-    {
-      id: 5,
-      templateName: "Project tech requirements.zip",
-      creator: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2"  alt=""/>,
-        "Natali Craig",
-      ],
-      department: "Training & Development",
-      dateOfCreation: "2023-09-16",
-        comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt=""/>,
-        version: "0.1",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
-    },
-    
-    // Add more tasks here
-  ];
+  const [documentRequests, setDocumentRequests] = useState([]);
+  const [searchData, setSearchData] = useState("");
+
+  const ids =
+    localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!searchData || searchData === "") {
+        const data = await HistoryLogApprovedList(ids);
+
+        const requests = data?.map((doc) => ({
+          documentName: doc?.templeteName,
+          document_id: doc?._id,
+          version: doc?.templeteVersion?.[0]?.version,
+          assignedTo: [doc?.manager?.[0]?.name],
+          img: [doc?.manager?.[0]?.profile_Pic],
+          action: (
+            <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+          ),
+          department: [doc?.manager?.[0]?.department?.[0]?.departmentName],
+          dateofSigning: [doc?.createdAt],
+          comments: (
+            <img
+              src="/images/dashboard/Comment.png"
+              className="mx-auto d-block"
+            />
+          ),
+          commentID: doc?._id,
+          status: [doc?.status],
+        }));
+
+        setDocumentRequests(requests);
+      }
+    };
+    // console.log(documentRequests);
+
+    fetchData();
+  }, [searchData]);
+
+  const handleSearch = async () => {
+    const result = await ApprovedTempeleteSearch(searchData, ids);
+    const searchResult = result?.data?.results?.templete;
+    console.log(searchResult);
+
+    if (searchResult && Array.isArray(searchResult)) {
+      const mappedResult = searchResult?.map((document) => ({
+        documentName: document?.templeteName,
+        img: [document?.manager?.[0]?.profile_Pic],
+        version: document?.templeteVersion?.[0]?.version,
+        assignedTo: [document?.manager?.[0]?.name],
+        department: [document?.manager?.[0]?.department?.[0]?.departmentName],
+        action: (
+          <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        ),
+        dateofSigning: [document?.createdAt],
+        comments: (
+          <img
+            src="/images/dashboard/Comment.png"
+            className="mx-auto d-block"
+          />
+        ),
+        status: [document?.status],
+      }));
+      setDocumentRequests(mappedResult);
+    }
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchData]);
 
   return (
     <>
@@ -87,7 +95,7 @@ version: "0.1",
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link ms-2" href="app-email.html">
-                    History Log / Approved
+                      History Log / Approved
                     </a>
                   </li>
                 </ul>
@@ -107,11 +115,11 @@ version: "0.1",
                       className="ms-4 "
                     />
                     <Link to={"/Approver/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -124,11 +132,17 @@ version: "0.1",
             </div>
 
             <div className="d-flex">
-              <Link to={"/Approver/History-log-approved"} className="text-decoration-none">
-              <p className="td-text border-bottom me-3">Approved</p>
+              <Link
+                to={"/Approver/History-log-approved"}
+                className="text-decoration-none"
+              >
+                <p className="td-text border-bottom me-3">Approved</p>
               </Link>
-              <Link to={"/Approver/History-log-rejected"} className="text-decoration-none">
-              <p className="th-text">Rejected</p>
+              <Link
+                to={"/Approver/History-log-rejected"}
+                className="text-decoration-none"
+              >
+                <p className="th-text">Rejected</p>
               </Link>
             </div>
             <div className=" col-12 d-flex align-items-center table-searchbar">
@@ -168,116 +182,170 @@ version: "0.1",
                   type="search"
                   placeholder="Type Something!"
                   aria-label="Search"
+                  onChange={(e) => {
+                    setSearchData(e.target.value);
+                    //  handleSearch();
+                  }}
+                  value={searchData.searchTerm}
                 />
               </form>
             </div>
-           
+
             <div className="col-12 table_comman mt-3 mb-4">
-                <div className="table-responsive">
-            <table className="table table-borderless">
-              <thead>
-                <tr className="th-text">
-                  <th className="th-text ">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Template Name
-                  </th>
-                  <th className="th-text">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Creator
-                  </th>
-                  <th className="th-text">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Department
-                  </th>
-                  <th className="th-text">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Date of Creation
-                  </th>
-                  <th className="th-text">
-                  <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Comments</th>
-                    <th className="th-text">
-                  <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Version</th>
-                  <th className="th-text">
-                  <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Action</th>
-                </tr>
-              </thead>
-              <tbody >
-                {documents.map((document) => (
-                  <tr
-                    key={document.id}
-                    
-                  >
-                    <td className="td-text">
-                      <input
-                        className="form-check-input checkbox-table me-4"
-                        type="checkbox"
-                        value=""
-                      />
-                      {document.templateName}
-                    </td>
-                    <td className="td-text">
-                      {document.creator}
-                    </td>
-                    <td className="td-text">
-                      {document.department}
-                    </td>
-                    <td className="td-text">
-                      <img src="/images/dashboard/CalendarBlank.png" alt="" />
-                      {document.dateOfCreation}
-                    </td>
-                    <td className="td-text">{document.comments}</td>
-                    <td className="td-text">{document.version}</td>
-                    <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
-  {document.action}
-  </a>
-  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="/"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
-    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="/"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete Template</a></li>
-  </ul>
-</div>
-                          </td>
-                    <td></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            </div>
-            <nav
+              <div className="table-responsive">
+                <table className="table table-borderless">
+                  <thead>
+                    <tr className="th-text">
+                      <th className="th-text ">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Template Name
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Creator
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Department
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Date of Creation
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Comments
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Version
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {documentRequests.map((document) => (
+                      <tr key={document.id}>
+                        <td className="td-text">
+                          <input
+                            className="form-check-input checkbox-table me-4"
+                            type="checkbox"
+                            value=""
+                          />
+                          {document.documentName}
+                        </td>
+                        <td className="td-text">
+                          <img className="img_profile" src={document.img} />
+                          {document.assignedTo}
+                        </td>
+                        <td className="td-text">{document.department}</td>
+                        <td className="td-text">
+                          <img src="/images/dashboard/CalendarBlank.png" />
+                          {moment(document.dateofSigning).calendar()}
+                        </td>
+                        <td className="td-text">{document.comments}</td>
+                        <td className="td-text">{document.version}</td>
+                        <td className="td-text">
+                          <div class="">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              {document.action}
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Users Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/PencilLine.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Edit User Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  <img
+                                    src="/images/dashboard/Comment.png"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Comments
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/TextAlignLeft.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Wrap Column
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item text-danger" href="#">
+                                  <img
+                                    src="/images/users/Trash.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Delete Template
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
+                        <td></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <nav
                 aria-label="Page navigation"
                 className="d-flex justify-content-end page-navigation mt-3"
               >
@@ -312,9 +380,7 @@ version: "0.1",
             </div>
 
             <div className="footer mt-4">
-              <div>
-              © 2023 MYOT
-              </div>
+              <div>© 2023 MYOT</div>
               <div className="d-flex ">
                 <p className="ms-3">About</p>
                 <p className="ms-3">Support</p>

@@ -14,12 +14,12 @@ const EditProfileAprv = () => {
   const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
 
   const [post, setPost] = useState({
-    name: "",
-    email: "",
-    mobileNumber: "",
+    // name: "",
+    // email: "",
+    // mobileNumber: "",
     password: "",
     confirmPassword: "",
-    DOB:'',
+    // DOB:'',
     profile_Pic: null,
   });
 
@@ -31,16 +31,16 @@ const EditProfileAprv = () => {
   const validateForm = () => {
     const errors = {};
 
-    // Name validation
-    if (!post.name.trim()) {
-      errors.name = 'Name is required';
-    }
+    // // Name validation
+    // if (!post.name.trim()) {
+    //   errors.name = 'Name is required';
+    // }
 
-    // Email validation
-    const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!post.email.trim() || !emailRegex.test(post.email)) {
-      errors.email = 'Invalid email address';
-    }
+    // // Email validation
+    // const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    // if (!post.email.trim() || !emailRegex.test(post.email)) {
+    //   errors.email = 'Invalid email address';
+    // }
 
     // Password validation
     if (!post.password.trim() || post.password.length < 6) {
@@ -53,7 +53,7 @@ const EditProfileAprv = () => {
     }
 
     setValidationErrors(errors);
-    return Object.keys(errors).length === 0; // Return true if there are no errors
+    return Object.keys(errors).length === 0; 
   };
 
   const navigate = useNavigate();
@@ -75,19 +75,19 @@ const EditProfileAprv = () => {
     }
 
     const formData = new FormData();
-    formData.append("name", post.name);
-    formData.append("email", post.email);
-    formData.append("mobileNumber", post.mobileNumber);
+    // formData.append("name", post.name);
+    // formData.append("email", post.email);
+    // formData.append("mobileNumber", post.mobileNumber);
     formData.append("password", post.password);
     formData.append("confirmPassword", post.confirmPassword);
     formData.append("profile_Pic", post.profile_Pic);
-    formData.append("DOB", post.DOB);
+    // formData.append("DOB", post.DOB);
 
-    const response = await updateProfile(formData,ids);
+    const response = await updateProfile(formData);
 
     if (!response.data?.error) {
       navigate("/Approver/My-profile");
-      console.log(response);
+      console.log(response); 
     }
   };
  
@@ -168,8 +168,8 @@ const EditProfileAprv = () => {
                       onChange={onFileSelection}
                     />
                   </div>
-                  <div className="col-12 d-flex justify-content-between mb-2">
-                    <div className="col-6 m-2">
+                  {/* <div className="col-12 d-flex justify-content-between mb-2"> */}
+                    {/* <div className="col-6 m-2">
                       <p className=" d-flex justify-content-start profile-card-title">
                         Full Name
                       </p>
@@ -182,8 +182,8 @@ const EditProfileAprv = () => {
                         onChange={handleInput}
                         />
                         {validationErrors.name && <p>{validationErrors.name}</p>}
-                    </div>
-                    <div className="col-6 m-2">
+                    </div> */}
+                    {/* <div className="col-6 m-2">
                       <p className=" d-flex justify-content-start profile-card-title">
                         Email
                       </p>
@@ -196,9 +196,9 @@ const EditProfileAprv = () => {
                         onChange={handleInput}
                         />
                         {validationErrors.email && <p>{validationErrors.email}</p>}
-                    </div>
-                  </div>
-                  <div className="col-12 d-flex justify-content-between mb-2">
+                    </div> */}
+                  {/* </div> */}
+                  {/* <div className="col-12 d-flex justify-content-between mb-2">
                     <div className="col-6 m-2">
                       <p className=" d-flex justify-content-start profile-card-title">
                         Phone Number
@@ -221,7 +221,7 @@ const EditProfileAprv = () => {
                        name="DOB"
                        className="col-12 profile-edit-input p-2" />
                      </div>
-                  </div>
+                  </div> */}
                   <div className="col-12 d-flex justify-content-between border-bottom mb-2 pb-4">
                     <div className="col-6 m-2">
                       <p className=" d-flex justify-content-start profile-card-title">

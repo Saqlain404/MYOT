@@ -120,6 +120,7 @@ import DocComments from "./Components/Index/DocumentRequests/Comment";
 import CommentsEmply from "./Components/Employee/CommentsEmply";
 import SigComments from "./Components/Signatory/Comments/Comments";
 import SettingsSig from "./Components/Signatory/SettingsSig";
+import UpdatePassEmply from "./Components/Login/UpdatePassEmply";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -270,6 +271,10 @@ function App() {
           element={<EmplAuthforgotPassword />}
         />
         <Route path="Employee/Forgot-Success" element={<EmplForgotSuccess />} />
+        <Route
+          path="Employee/reset-update-password"
+          element={<UpdatePassEmply />}
+        />
         <Route path="Employee/Home" element={<HomeEmpl />} />
         <Route path="Employee/Dashboard" element={<EmployeeDash />} />
         <Route

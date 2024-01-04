@@ -298,14 +298,6 @@ const HomeAprv = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         {docCount?.totalEmployee}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        +11.01%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -320,14 +312,6 @@ const HomeAprv = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         {docCount?.countDepartment}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        +9.15%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -342,14 +326,6 @@ const HomeAprv = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         {docCount?.totalActiveUser}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        -0.65%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -362,14 +338,6 @@ const HomeAprv = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         {docCount?.totalTempleted}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        -1.48%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -493,6 +461,8 @@ const HomeAprv = () => {
                               ? "text-success"
                               : task.status == "Pending"
                               ? "text-info"
+                              : task.status == "Rejected" 
+                              ? "text-danger"
                               : "text-warning"
                           }`}
                         >
