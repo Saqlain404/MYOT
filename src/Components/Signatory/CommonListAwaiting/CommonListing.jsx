@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { SignatoryRequestsData } from "../../../ApiServices/SignatoryHttpServices/signatoryHttpServices";
+import { SignatoryAwaitListing } from "../../../ApiServices/SignatoryHttpServices/signatoryHttpServices";
 import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
-const Document = () => {
-  const [requests, setRequests] = useState({
+const CommonListing = () => {
+  const [awaitListing, setAwaitListing] = useState({
     columns: [
       {
         label: "Template Name",
@@ -13,14 +14,21 @@ const Document = () => {
         width: 50,
       },
       {
-        label: "Assigned To",
-        field: "assigned",
+        label: "Requester Name",
+        field: "requester",
         sort: "asc",
         width: 50,
       },
       {
-        label: "Priority",
-        field: "priority",
+        label: "Department",
+        field: "department",
+        sort: "asc",
+        width: 100,
+        searchable: true,
+      },
+      {
+        label: "Request Date",
+        field: "date",
         sort: "asc",
         width: 100,
       },
@@ -31,11 +39,10 @@ const Document = () => {
         width: 100,
       },
       {
-        label: "Department",
-        field: "department",
+        label: "Comments",
+        field: "comments",
         sort: "asc",
         width: 100,
-        searchable: true,
       },
       {
         label: "Actions",
@@ -48,43 +55,42 @@ const Document = () => {
   });
 
   useEffect(() => {
-    getRequestsData();
+    getAwaitListingData();
   }, []);
 
-  const getRequestsData = async () => {
-    let { data } = await SignatoryRequestsData();
+  const getAwaitListingData = async () => {
+    let { data } = await SignatoryAwaitListing("6564816c42ca2ce84e2ed3f2");
     const newRows = [];
     if (!data?.error) {
-      let values = data?.results?.list;
+      let values = data?.results?.template;
       // console.log(values)
       values?.map((list, index) => {
         const returnData = {};
-        returnData.name = list?.templete_Id?.templeteName;
-        returnData.assigned = (
+        returnData.name = list?.templeteName;
+        returnData.requester = (
           <>
             <img
               className="w_20_h_20"
-              src={list?.templete_Id?.manager?.profile_Pic}
+              src={list?.manager?.profile_Pic}
               alt=""
             />
-            <span className="ms-2 text-capitalize">
-              {list?.templete_Id?.manager?.name}
-            </span>
+            <span className="ms-2 text-capitalize">{list?.manager?.name}</span>
           </>
         );
-        returnData.priority = list?.priority;
-        returnData.department =
-          list?.templete_Id?.manager?.department_Id?.departmentName;
+        returnData.date = moment(list?.createdAt).format("L");
+        returnData.department = list?.manager?.department_Id?.departmentName;
         returnData.status = (
           <span
             className={`"td-text status" ${
               list?.status === "Pending"
                 ? "text-info"
                 : list?.status === "Approved"
-                ? "text-warning"
+                ? "text-success"
                 : list?.status === "In Progress"
                 ? "text-primary"
-                : "text-success"
+                : list?.status === "Rejected"
+                ? "text-danger"
+                :"text-success"
             }`}
           >
             {list?.status}
@@ -122,7 +128,7 @@ const Document = () => {
               <li>
                 <Link
                   class="dropdown-item"
-                  //   to={`/Admin/Requests/Comments/${document?._id}`}
+                    to={`/Signatory/Awaiting-sig/Comments/${list?._id}`}
                 >
                   <img src="/images/dashboard/Comment.png" className="me-2" />
                   Comments
@@ -147,14 +153,76 @@ const Document = () => {
             </ul>
           </div>
         );
+        returnData.comments = (
+          <div className="">
+            <a type="" data-bs-toggle="dropdown" aria-expanded="false">
+              <img
+                src="/images/dashboard/Comment.png"
+                className="mx-auto d-block pt-2"
+              />
+            </a>
+            <form
+              className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
+              // onSubmit={(e) => handleSubmit(e, template?._id)}
+            >
+              <div className="mb-3 border-bottom">
+                <label className="form-label th-text">Comment or type</label>
+
+                <input
+                  type="text"
+                  className="form-control border-0"
+                  // value={""}
+                  placeholder="Enter your comment..."
+                  // value={comment}
+                  // onChange={(e) => setComment(e.target.value)}
+                />
+              </div>
+
+              <div className="d-flex justify-content-between">
+                <div>
+                  <img
+                    src="/images/tasks/assign comments.svg"
+                    alt=""
+                    className="comment-img"
+                  />
+                  <img
+                    src="/images/tasks/mention.svg"
+                    alt=""
+                    className="comment-img"
+                  />
+                  <img
+                    src="/images/tasks/task.svg"
+                    alt=""
+                    className="comment-img"
+                  />
+                  <img
+                    src="/images/tasks/emoji.svg"
+                    alt=""
+                    className="comment-img"
+                  />
+                  <img
+                    src="/images/tasks/attach_attachment.svg"
+                    alt=""
+                    className="comment-img"
+                  />
+                </div>
+                <div>
+                  <button type="submit" className="comment-btn btn-primary">
+                    Comment
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        );
 
         newRows.push(returnData);
       });
-      setRequests({ ...requests, rows: newRows });
+      setAwaitListing({ ...awaitListing, rows: newRows });
     }
   };
   return (
-    <div className="position-relative">
+    <div className="position-relative mt-5">
       <p className="table-name mb-2">Document Requests</p>
       <div className=" col-12 d-flex align-items-center table-searchbar">
         <div className="row d-flex  col">
@@ -201,10 +269,10 @@ const Document = () => {
           <MDBDataTable
             bordered
             displayEntries={false}
-            entries={10}
+            entries={5}
             className=""
             hover
-            data={requests}
+            data={awaitListing}
             noBottomColumns
             sortable
             paginationLabel={"«»"}
@@ -377,4 +445,4 @@ const Document = () => {
   );
 };
 
-export default Document;
+export default CommonListing;

@@ -17,7 +17,7 @@ const HelpSig = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link ms-2" href="app-email.html">
-                      Template / Template Version 1.0 / View
+                      Help / Template Guidelines
                     </a>
                   </li>
                 </ul>
@@ -63,13 +63,13 @@ const HelpSig = () => {
                     <p className="td-text border-bottom me-3">Template Guidelines</p>
                   </Link>
                   <Link
-                    to={"/Signatory/Help-Support"}
+                    to={"/Signatory/Help/Help-Support"}
                     className="text-decoration-none"
                   >
                     <p className="th-text me-3">Help & Support</p>
                   </Link>
                   <Link
-                    to={"/Signatory/Contact-Us"}
+                    to={"/Signatory/Help/Contact-Us"}
                     className="text-decoration-none"
                   >
                     <p className="th-text">Contact Us</p>

@@ -15,7 +15,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     getDashboardDataCount();
-    getDasboardTotalDocument();
+    getDashboardTotalDocument();
   }, []);
 
   const getDashboardDataCount = async () => {
@@ -23,13 +23,14 @@ const Dashboard = () => {
       let { data } = await DashboardCount();
       if (!data.error) {
         setDataCount(data?.results);
+        console.log(data?.results)
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getDasboardTotalDocument = async () => {
+  const getDashboardTotalDocument = async () => {
     try {
       let { data } = await DashboardTotalDocument();
       console.log(data);
@@ -153,7 +154,7 @@ const Dashboard = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {dataCount?.employee}
+                        {dataCount?.employee && dataCount?.employee[0]?.count || 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -173,7 +174,7 @@ const Dashboard = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {dataCount?.totalTempleted}
+                        {dataCount?.totalTempleted && dataCount?.totalTempleted}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -0.56%
@@ -215,7 +216,7 @@ const Dashboard = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {dataCount?.totalActiveUser}
+                        {dataCount?.totalActiveUser && dataCount?.totalActiveUser[0]?.count || 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +9.15%
@@ -321,7 +322,7 @@ const Dashboard = () => {
                     <p className="text-card">Document Request</p>
 
                     {totalDocument &&
-                      totalDocument.map((count) => (
+                      totalDocument?.map((count) => (
                         <>
                           <div className="row">
                             {/* <div className="my-1 col-6"> */}
@@ -453,8 +454,8 @@ const Dashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {documents.map((document) => (
-                      <tr key={document.id}>
+                    {documents?.map((document) => (
+                      <tr key={document?.id}>
                         <td className="td-text">
                           <input
                             className="form-check-input checkbox-table"

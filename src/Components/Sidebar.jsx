@@ -161,7 +161,9 @@ const Sidebar = () => {
             </li>
             <li
               className={` "nav-item text-dark" ${
-                location.pathname.match(/^\/Admin\/Calendar/) ? "nav_active" : ""
+                location.pathname.match(/^\/Admin\/Calendar/)
+                  ? "nav_active"
+                  : ""
               }`}
             >
               <Link to={"/Admin/Calendar"} className="text-decoration-none">
@@ -265,7 +267,9 @@ const Sidebar = () => {
             </li>
             <li
               className={` "nav-item text-dark" ${
-                location.pathname.match(/^\/Admin\/Requests/) ? "nav_active" : ""
+                location.pathname.match(/^\/Admin\/Requests/)
+                  ? "nav_active"
+                  : ""
               }`}
             >
               <Link to={"/Admin/Requests"} className="text-decoration-none">

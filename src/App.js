@@ -118,7 +118,8 @@ import CalendarMonthEmply from "./Components/Employee/CalendarMonthEmply";
 import CalenderYearEmply from "./Components/Employee/CalenderYearEmply";
 import DocComments from "./Components/Index/DocumentRequests/Comment";
 import CommentsEmply from "./Components/Employee/CommentsEmply";
-
+import SigComments from "./Components/Signatory/Comments/Comments";
+import SettingsSig from "./Components/Signatory/SettingsSig";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -251,8 +252,17 @@ function App() {
         <Route path="Signatory/My-profile" element={<ProfileSig />} />
         <Route path="Signatory/Edit-profile" element={<EditProfileSig />} />
         <Route path="Signatory/Help" element={<HelpSig />} />
-        <Route path="Signatory/Help-Support" element={<HelpSupportSig />} />
-        <Route path="Signatory/Contact-us" element={<ContactUsSig />} />
+        <Route
+          path="Signatory/Help/Help-Support"
+          element={<HelpSupportSig />}
+        />
+        <Route path="Signatory/Help/Contact-us" element={<ContactUsSig />} />
+        <Route path="Signatory/Home/Comments/:id" element={<SigComments />} />
+        <Route
+          path="Signatory/Awaiting-sig/Comments/:id"
+          element={<SigComments />}
+        />
+        <Route path="Signatory/Settings" element={<SettingsSig />} />
 
         <Route path="Employee/Login" element={<EmplAuthLogin />} />
         <Route
@@ -310,7 +320,6 @@ function App() {
         />
         <Route path="Employee/Calendar-year" element={<CalenderYearEmply />} />
         <Route path="Employee/Comment/:id" element={<CommentsEmply />} />
-
       </Routes>
     </div>
   );

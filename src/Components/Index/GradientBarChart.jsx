@@ -1,10 +1,17 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-const GradientBarChart = ({tempData}) => {
-  const initialData = [
-    80, 55, 41, 67, 22, 35, 50, 20, 20, 20, 2, 0, 20, 2, 25, 5, 4, 5,
-  ];
+const GradientBarChart = ({ activeUserData }) => {
+  // const seriesData = [
+  //   80, 55, 41, 67, 22, 35, 50, 20
+  // ];
+  const getMonthName = (monthNumber) => {
+    const date = new Date(null);
+    date.setUTCMonth(monthNumber - 1);
+    return date.toLocaleString("default", { month: "short" });
+  };
+
+  const seriesData = activeUserData?.map((data) => data?.activeUser);
 
   const options = {
     chart: {
@@ -25,10 +32,11 @@ const GradientBarChart = ({tempData}) => {
       enabled: false,
     },
     xaxis: {
-      categories: [
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-        21,
-      ],
+      // categories:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November"]
+      categories: activeUserData?.map((data) => {
+        const monthName = getMonthName(data._id);
+        return `${monthName}`;
+      }),
     },
     colors: ["#4318FF47"],
     fill: {
@@ -51,12 +59,9 @@ const GradientBarChart = ({tempData}) => {
     },
   };
 
-  const series = [
-    {
-      data: initialData,
-    },
-  ];
+  const series = [{ name: "Active Users", data: seriesData }];
 
+  const chartWidth = Array.isArray(seriesData) ? seriesData.length * 80 : 0;
   // console.log(series[0].data?.length);
   return (
     <>
@@ -66,13 +71,13 @@ const GradientBarChart = ({tempData}) => {
           <span>2547</span> Vistors
         </p>
       </div>
-      <div style={{ overflow: "auto" }}>
+      <div style={{ overflow: "auto", zIndex: "-1" }}>
         <ReactApexChart
           options={options}
           series={series}
           type="bar"
           height={400}
-          width={series[0].data?.length * 80}
+          width={chartWidth}
         />
       </div>
     </>
