@@ -81,7 +81,6 @@ import Settings from "./Components/Index/Settings";
 import Comments from "./Components/Index/Comments";
 import SignManagement from "./Components/Signatory/SignManagement";
 import SettingsAprv from "./Components/Approver/SettingsAprv";
-import SettingsDept from "./Components/DepartmentManager/SettingsDept";
 
 import HomeEmpl from "./Components/Employee/HomeEmpl";
 import EmployeeDash from "./Components/Employee/EmployeeDash";
