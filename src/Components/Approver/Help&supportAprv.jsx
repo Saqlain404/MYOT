@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
@@ -11,15 +9,18 @@ import {
 } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 import moment from "moment";
 import { ToastContainer } from "react-toastify";
-import { NewTicketEmply, ResolveListEmpl } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import {
+  NewTicketEmply,
+  ResolveListEmpl,
+} from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const HelpSupportAprv = () => {
   const [ticketList, setTicketList] = useState();
   const [id, setId] = useState();
   const [selectedDropdown, setSelectedDropdown] = useState("All");
 
-
-  const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
+  const ids =
+    localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
 
   // Add Ticket
   const [contactData, setContactData] = useState({
@@ -39,7 +40,9 @@ const HelpSupportAprv = () => {
       ticketIssue: contactData.ticketIssue,
     };
     const response = await CreateEmplyTicket({
-      creator_Id: localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id"),
+      creator_Id:
+        localStorage.getItem("user_id") ||
+        localStorage.getItem("myot_admin_id"),
       email: data.email,
       ticketType: data.ticketType,
       ticketIssue: data.ticketIssue,
@@ -180,59 +183,60 @@ const HelpSupportAprv = () => {
                     </Link>
                   </div>
                   <div className="d-flex">
-
-                  <div class="dropdown">
-                            <a
-                              type=""
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                              href="/"
-                            >
-                              
-      <button className="help-support-btn1 me-2">Select Priority
-      <img src="/images/dashboard/DownArrowBtn.svg" alt="" /></button>
+                    {/* <div class="dropdown">
+                      <a
+                        type=""
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        href="/"
+                      >
+                        <button className="help-support-btn1 me-2">
+                          Select Priority
+                          <img
+                            src="/images/dashboard/DownArrowBtn.svg"
+                            alt=""
+                          />
+                        </button>
+                      </a> */}
+                      {/* <ul class="dropdown-menu border-0 shadow mt-3  rounded"> */}
+                        {/* <li>
+                          <div
+                            className="d-flex whitespace-nowrap"
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                          >
+                            <a class="dropdown-item border-bottom" href="/">
+                              <img
+                                src="/images/dashboard/blue-ticket-ball.svg"
+                                alt=""
+                                className="help-support-dd-img"
+                              />
+                              New Tickets
                             </a>
-                            <ul class="dropdown-menu border-0 shadow mt-3  rounded">
-                              <li>
-                              <div
-                  className="d-flex whitespace-nowrap"
-                  type="button"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                >
-                  
-                                <a class="dropdown-item border-bottom" href="/">
-                                  <img
-                                    src="/images/dashboard/blue-ticket-ball.svg"
-                                    alt=""
-                                    className="help-support-dd-img"
-                                  />
-                                  New Tickets
-                                </a>
-                </div>
-
-                              </li>
-                              <li>
-                                <a class="dropdown-item border-bottom" href="/">
-                                  <img
-                                   src="/images/dashboard/orange-ticket-ball.svg"
-                                    alt=""
-                                    className="help-support-dd-img"
-                                  />
-                                  On-Going Tickets
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item" href="/">
-                                  <img
-                                    src="/images/dashboard/green-ticket-ball.svg"
-                                    alt=""
-                                    className="help-support-dd-img"
-                                    />
-                                    </a>
-                              </li>
-                              </ul>
-                              </div>
+                          </div>
+                        </li> */}
+                        {/* <li>
+                          <a class="dropdown-item border-bottom" href="/">
+                            <img
+                              src="/images/dashboard/orange-ticket-ball.svg"
+                              alt=""
+                              className="help-support-dd-img"
+                            />
+                            On-Going Tickets
+                          </a>
+                        </li> */}
+                        {/* <li>
+                          <a class="dropdown-item" href="/">
+                            <img
+                              src="/images/dashboard/green-ticket-ball.svg"
+                              alt=""
+                              className="help-support-dd-img"
+                            />
+                          </a>
+                        </li> */}
+                      {/* </ul> */}
+                    {/* </div> */}
                     <div class="dropdown">
                       <a
                         type=""
@@ -255,7 +259,7 @@ const HelpSupportAprv = () => {
                             data-bs-toggle="modal"
                             data-bs-target="#exampleModal"
                           > */}
-                             <a
+                          <a
                             class={`dropdown-item border-bottom ${
                               selectedDropdown === "New" ? "active" : ""
                             }`}
@@ -349,7 +353,6 @@ const HelpSupportAprv = () => {
                                     name="ticketType"
                                     value={contactData.ticketType}
                                     onChange={handleInput}
-
                                   />
                                 </div>
                               </div>
@@ -407,7 +410,7 @@ const HelpSupportAprv = () => {
                   New tickets
                 </p>
                 <div className="col-12 d-flex">
-                <ul className="nav nav-tabs mb-5" id="ex1" role="tablist">
+                  <ul className="nav nav-tabs mb-5" id="ex1" role="tablist">
                     <li className="nav-item" role="presentation">
                       <a
                         className={`nav-link ${
@@ -501,13 +504,13 @@ const HelpSupportAprv = () => {
                                     alt=""
                                     className="me-2"
                                   />
-                                ) : ticket.status === "Completed"?(
+                                ) : ticket.status === "Completed" ? (
                                   <img
-                                  src="/images/dashboard/green-ticket-ball.svg"
+                                    src="/images/dashboard/green-ticket-ball.svg"
                                     alt=""
                                     className="me-2"
                                   />
-                                ): null}
+                                ) : null}
                                 <p className="ticket-number m-1">
                                   {ticket.ticketType}
                                 </p>

@@ -356,12 +356,6 @@ const TemplateReview = () => {
                         </td>
                         <td className="td-text">{document.department}</td>
                         <td className="td-text">
-                          <img
-                            src="/images/dashboard/CalendarBlank.png"
-                            alt=""
-                          />
-                          {document.dateOfCreation}
-
                           <img src="/images/dashboard/CalendarBlank.png" />
                           {moment(document.dateofSigning).calendar()}
                         </td>
