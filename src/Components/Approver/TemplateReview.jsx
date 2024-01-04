@@ -108,6 +108,7 @@ const TemplateReview = () => {
   const [searchData, setSearchData] = useState("");
   const [documentRequests, setDocumentRequests] = useState([]);
   const [templeteId, setTempleteId] = useState();
+  const [updatedStatus, setUpdatedStatus] = useState();
 
   const ids =
     localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
@@ -177,15 +178,15 @@ const TemplateReview = () => {
     // console.log(documentRequests);
 
     fetchData();
-  }, [searchData]);
+  }, [searchData, updatedStatus]);
 
   const approved = async (document_Id) => {
     const approveData = await approvedTemplete(document_Id);
-    console.log(approveData);
+    setUpdatedStatus((prev) => !prev);
   };
   const rejected = async (document_Id) => {
     const rejectedData = await rejectedTemplete(document_Id);
-    console.log(rejected);
+    setUpdatedStatus((prev) => !prev);
   };
 
   return (

@@ -3,8 +3,10 @@ import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
 import {
+  approvedTemplete,
   approverTempleteList,
   dashCount,
+  rejectedTemplete,
   searchTemplete,
 } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 import moment from "moment";
@@ -12,6 +14,8 @@ import moment from "moment";
 const DashboardAprv = () => {
   const [searchData, setSearchData] = useState("");
   const [documentRequests, setDocumentRequests] = useState([]);
+  const [countData, setCountData] = useState();
+  const[updatedStatus,setUpdatedStatus] = useState()
 
   const ids =
     localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
@@ -80,9 +84,9 @@ const DashboardAprv = () => {
     // console.log(documentRequests);
 
     fetchData();
-  }, [searchData]);
+  }, [searchData,updatedStatus]);
 
-  const [countData, setCountData] = useState();
+
 
   const count = async () => {
     const data = await dashCount();
@@ -92,6 +96,15 @@ const DashboardAprv = () => {
   useEffect(() => {
     count();
   }, []);
+
+  const approved = async(document_Id)=>{
+    const approveData = await approvedTemplete(document_Id)
+    setUpdatedStatus((prev)=>!prev)
+  }
+  const rejected = async(document_Id)=>{
+    const rejectedData = await rejectedTemplete(document_Id)
+    setUpdatedStatus((prev)=>!prev)
+  }
 
   return (
     <>
@@ -450,6 +463,26 @@ const DashboardAprv = () => {
                                 </a>
                               </li>
                               <li>
+                                  <a onClick={()=>approved(document?.document_id)} class="dropdown-item border-bottom" href="#">
+                                    <img
+                                      src="/images/users/PencilLine.svg"
+                                      alt=""
+                                      className="me-2"
+                                    />
+                                    Approved
+                                </a>
+                              </li>
+                              <li>
+                                <a onClick={()=>rejected(document?.document_id)} class="dropdown-item text-danger" href="#">
+                                  <img
+                                    src="/images/XCircle.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Rejected
+                                </a>
+                              </li>
+                              {/* <li>
                                 <a class="dropdown-item border-bottom" href="#">
                                   <img
                                     src="/images/users/PencilLine.svg"
@@ -458,8 +491,8 @@ const DashboardAprv = () => {
                                   />
                                   Edit User Details
                                 </a>
-                              </li>
-                              <li>
+                              </li> */}
+                              {/* <li>
                                 <a class="dropdown-item" href="#">
                                   <img
                                     src="/images/dashboard/Comment.png"
@@ -468,8 +501,8 @@ const DashboardAprv = () => {
                                   />
                                   Comments
                                 </a>
-                              </li>
-                              <li>
+                              </li> */}
+                              {/* <li>
                                 <a class="dropdown-item border-bottom" href="#">
                                   <img
                                     src="/images/users/TextAlignLeft.svg"
@@ -478,8 +511,8 @@ const DashboardAprv = () => {
                                   />
                                   Wrap Column
                                 </a>
-                              </li>
-                              <li>
+                              </li> */}
+                              {/* <li>
                                 <a class="dropdown-item text-danger" href="#">
                                   <img
                                     src="/images/users/Trash.svg"
@@ -488,7 +521,7 @@ const DashboardAprv = () => {
                                   />
                                   Delete Template
                                 </a>
-                              </li>
+                              </li> */}
                             </ul>
                           </div>
                         </td>

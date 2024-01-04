@@ -8,27 +8,42 @@ const UpdatePassEmply = () => {
     confirmPassword: "",
     email: "",
   });
+  const [validationErrors, setValidationErrors] = useState({});
 
   const newEmail = localStorage.getItem("email");
 
   const navigate = useNavigate();
   const handleInput = (event) => {
     setPost({ ...post, [event.target.name]: event.target.value });
-  };
+  }
+  
+  const validateForm = () => {
+    const errors = {};
+
+    // Password validation
+    if (!post.password.trim() || post.password.length < 6) {
+      errors.password = 'Please enter valid password ';
+    }
+
+    // ConfirmPassword validation
+    if (post.confirmPassword !== post.password) {
+      errors.confirmPassword = 'Passwords do not match';
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0; // Return true if there are no errors
+  };;
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    // if (!validateForm()) {
-    //   return;
-    // }
+    if (!validateForm()) {
+      return;
+    }
 
     navigate("/Employee/Forgot-Success");
 
-    // const formData = new FormData();
-    // formData.append("password", post.password);
-    // formData.append("confirmPassword", post.confirmPassword);
-    // const response = await updateResetPassword({formData,email});
+    
 
     const formData = {
       password: post.password,
@@ -74,13 +89,13 @@ const UpdatePassEmply = () => {
                             type="text"
                             value={post.password}
                             placeholder="Password"
-                            className="col-12 profile-edit-input p-2"
+                            className="col-12 password-update-input p-2"
                             name="password"
                             onChange={handleInput}
                           />
-                          {/* {validationErrors.password && <p>{validationErrors.password}</p>} */}
+                          {validationErrors.password && <p className="text-danger">{validationErrors.password}</p>}
                         </div>
-                        <div className="col-12 m-2">
+                        <div className="col-12 m-2 mt-4">
                           <p className=" d-flex justify-content-start profile-card-title">
                             Confirm Password
                           </p>
@@ -88,17 +103,17 @@ const UpdatePassEmply = () => {
                             type="text"
                             value={post.confirmPassword}
                             placeholder="Confirm Password"
-                            className="col-12 profile-edit-input p-2"
+                            className="col-12 password-update-input p-2"
                             name="confirmPassword"
                             onChange={handleInput}
                           />
-                          {/* {validationErrors.confirmPassword && <p>{validationErrors.confirmPassword}</p>} */}
+                          {validationErrors.confirmPassword && <p className="text-danger">{validationErrors.confirmPassword}</p>}
                         </div>
                       {/* </div> */}
 
-                      <div className=" d-flex justify-content-end">
+                      <div className=" d-flex justify-content-center">
                         <button
-                          className="profile-edit-submit"
+                          className="password-update-submit"
                           to=""
                           type="submit"
                         >

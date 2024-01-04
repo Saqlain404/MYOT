@@ -4,8 +4,10 @@ import "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
 import {
+  approvedTemplete,
   approverTempleteList,
   homeCount,
+  rejectedTemplete,
   searchDocTemplete,
   searchTemplete,
   templeteDocList,
@@ -13,72 +15,98 @@ import {
 // import "../../dist/css/style.min.css"
 
 const HomeAprv = () => {
-
   const tasks = [
     {
       id: 1,
       template: "Non-Objection Certificate",
-      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" alt="" />,
       version: "1.0",
-      status: 
-        <p className="text-primary m-0">
-          In Progress
-        </p>,
+      status: <p className="text-primary m-0">In Progress</p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
+      action: (
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
+      ),
     },
     {
       id: 2,
       template: "Expense Report",
-      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" alt="" />,
       version: "2.0",
       status: <p className="text-warning m-0"> Approved</p>,
       department: "Finance",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
+      action: (
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
+      ),
     },
     {
       id: 3,
       template: "Salary Slip",
-      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" alt="" />,
       version: "1.5",
       status: <p className="text-info m-0">Pending</p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
+      action: (
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
+      ),
     },
     {
       id: 3,
       template: "Research Proposal",
-      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" alt="" />,
       version: "1.5",
       status: <p className="text-success m-0"> Active</p>,
       department: "R&D",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
+      action: (
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
+      ),
     },
     {
       id: 3,
       template: "Conference Attendance",
-      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" alt="" />,
       version: "1.5",
       status: <p className="text-secondary m-0">Rejected</p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
+      action: (
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
+      ),
     },
     // Add more tasks here
   ];
 
-  
-
-   const [searchData, setSearchData] = useState("");
-  const[searchDocData, setSearchDocData] = useState("")
+  const [searchData, setSearchData] = useState("");
+  const [searchDocData, setSearchDocData] = useState("");
   const [documentRequests, setDocumentRequests] = useState([]);
-  const[templeteDoc,setTempleteDoc] = useState([])
+  const [templeteDoc, setTempleteDoc] = useState([]);
   const [templateNames, setTemplateNames] = useState(null);
   const [docCount, setDocCount] = useState(null);
+  const [updatedStatus, setUpdatedStatus] = useState();
 
-  const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
+  const ids =
+    localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
 
   const handleSearch = async () => {
-    const result = await searchTemplete(searchData,ids);
+    const result = await searchTemplete(searchData, ids);
     const searchResult = result?.data?.results?.templete;
     console.log(searchResult);
 
@@ -88,9 +116,7 @@ const HomeAprv = () => {
         img: [document?.manager?.[0]?.profile_Pic],
         version: document?.templeteVersion?.[0]?.version,
         assignedTo: [document?.manager?.[0]?.name],
-        department: [
-          document?.manager?.[0]?.department?.[0]?.departmentName,
-        ],
+        department: [document?.manager?.[0]?.department?.[0]?.departmentName],
         action: (
           <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
         ),
@@ -111,7 +137,6 @@ const HomeAprv = () => {
     handleSearch();
   }, [searchData]);
 
- 
   useEffect(() => {
     const fetchData = async () => {
       if (!searchData || searchData === "") {
@@ -148,9 +173,7 @@ const HomeAprv = () => {
     // console.log(documentRequests);
 
     fetchData();
-  }, [searchData]);
-
-
+  }, [searchData, updatedStatus]);
 
   // Document Request Data
 
@@ -205,7 +228,9 @@ const HomeAprv = () => {
           action: (
             <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
           ),
-          department: [doc?.templete_Id?.manager?.department_Id?.departmentName],
+          department: [
+            doc?.templete_Id?.manager?.department_Id?.departmentName,
+          ],
           dateofSigning: [doc?.createdAt],
           comments: (
             <img
@@ -225,7 +250,6 @@ const HomeAprv = () => {
     fetchDocData();
   }, [searchDocData]);
 
-
   useEffect(() => {
     const count = async () => {
       const documentCountResult = await homeCount();
@@ -234,9 +258,17 @@ const HomeAprv = () => {
         setDocCount(counted);
       }
     };
-    count(); 
+    count();
   }, []);
 
+  const approved = async (document_Id) => {
+    const approveData = await approvedTemplete(document_Id);
+    setUpdatedStatus((prev) => !prev);
+  };
+  const rejected = async (document_Id) => {
+    const rejectedData = await rejectedTemplete(document_Id);
+    setUpdatedStatus((prev) => !prev);
+  };
 
   return (
     <>
@@ -461,7 +493,7 @@ const HomeAprv = () => {
                               ? "text-success"
                               : task.status == "Pending"
                               ? "text-info"
-                              : task.status == "Rejected" 
+                              : task.status == "Rejected"
                               ? "text-danger"
                               : "text-warning"
                           }`}
@@ -470,19 +502,70 @@ const HomeAprv = () => {
                         </td>
                         <td className="td-text">{task.department}</td>
 
-                        <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
-  {task.action}
-  </a>
-  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="/"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
-    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="/"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete User</a></li>
-  </ul>
-</div>
-                          </td>
+                        <td className="td-text">
+                          <div class="dropdown">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                              href="/"
+                            >
+                              {task.action}
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a class="dropdown-item border-bottom" href="/">
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Users Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="/">
+                                  <img
+                                    src="/images/users/PencilLine.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Edit User Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="/">
+                                  <img
+                                    src="/images/dashboard/Comment.png"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Comments
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="/">
+                                  <img
+                                    src="/images/users/TextAlignLeft.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Wrap Column
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item text-danger" href="/">
+                                  <img
+                                    src="/images/users/Trash.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Delete User
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
 
                         <td className="td-text">
                           <div class="dropdown">
@@ -505,6 +588,34 @@ const HomeAprv = () => {
                                 </a>
                               </li>
                               <li>
+                                <a
+                                  onClick={() => approved(task?.document_id)}
+                                  class="dropdown-item border-bottom"
+                                  href="#"
+                                >
+                                  <img
+                                    src="/images/users/PencilLine.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Approved
+                                </a>
+                              </li>
+                              <li>
+                                <a
+                                  onClick={() => rejected(task?.document_id)}
+                                  class="dropdown-item text-danger"
+                                  href="#"
+                                >
+                                  <img
+                                    src="/images/XCircle.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Rejected
+                                </a>
+                              </li>
+                              {/* <li>
                                 <a class="dropdown-item border-bottom" href="#">
                                   <img
                                     src="/images/users/PencilLine.svg"
@@ -543,7 +654,7 @@ const HomeAprv = () => {
                                   />
                                   Delete User
                                 </a>
-                              </li>
+                              </li> */}
                             </ul>
                           </div>
                         </td>
@@ -700,27 +811,82 @@ const HomeAprv = () => {
                           {task.assignedTo}
                         </td>
                         <td className="td-text">{task.version}</td>
-                        <td  className={`td-text ${
+                        <td
+                          className={`td-text ${
                             task?.status == "Completed"
                               ? "text-success"
                               : task.status == "Pending"
                               ? "text-info"
                               : "text-warning"
-                          }`}>{task.status}</td>
+                          }`}
+                        >
+                          {task.status}
+                        </td>
                         <td className="td-text">{task.department}</td>
-                        <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
-  {task.action}
-  </a>
-  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="/"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
-    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="/"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete User</a></li>
-  </ul>
-</div>
-                          </td>
+                        <td className="td-text">
+                          <div class="dropdown">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                              href="/"
+                            >
+                              {task.action}
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a class="dropdown-item border-bottom" href="/">
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Users Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="/">
+                                  <img
+                                    src="/images/users/PencilLine.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Edit User Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="/">
+                                  <img
+                                    src="/images/dashboard/Comment.png"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Comments
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="/">
+                                  <img
+                                    src="/images/users/TextAlignLeft.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Wrap Column
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item text-danger" href="/">
+                                  <img
+                                    src="/images/users/Trash.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Delete User
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
 
                         <td className="td-text">
                           <div class="">

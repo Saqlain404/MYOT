@@ -1809,6 +1809,37 @@ height: 960px; */
   font-weight: 500;
   line-height: 112.4%; /* 15.736px */
 }
+.password-update-input{
+  width: 430px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #e0e2e7;
+  background: linear-gradient(0deg, #f7f7f8 0%, #f7f7f8 100%), #fff;
+
+  color: rgba(0, 0, 0, 0.4);
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 112.4%; /* 15.736px */
+}
+.password-update-submit{
+  margin-top: 40px;
+  margin-bottom: 50px;
+  width: 430px;
+  height: 45px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #3e51ff;
+  color: #fff;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+}
 
 .profile-edit-submit {
   margin-top: 40px;
