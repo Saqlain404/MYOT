@@ -119,7 +119,7 @@ import CalenderYearEmply from "./Components/Employee/CalenderYearEmply";
 import DocComments from "./Components/Index/DocumentRequests/Comment";
 import CommentsEmply from "./Components/Employee/CommentsEmply";
 import SigComments from "./Components/Signatory/Comments/Comments";
-import SettingsSig from "./Components/Signatory/SettingsSig";
+// import SettingsSig from "./Components/Signatory/SettingsSig";
 import UpdatePassEmply from "./Components/Login/UpdatePassEmply";
 
 function App() {
@@ -246,7 +246,7 @@ function App() {
         <Route path="Signatory/Help-Support" element={<HelpSupportSig />} />
         <Route path="Signatory/Contact-us" element={<ContactUsSig />} />
         <Route path="Signatory/Chat" element={<ChatboxSig />} />
-        <Route path="Signatory/Settings" element={<SettingsSig />} />
+        {/* <Route path="Signatory/Settings" element={<SettingsSig />} /> */}
 
         <Route path="Signatory/Requests" element={<RequestsSig />} />
         <Route path="Signatory/Announcements" element={<AnnouncementsSig />} />
