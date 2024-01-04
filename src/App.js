@@ -80,7 +80,6 @@ import ContactUsDept from "./Components/DepartmentManager/ContactUsDept";
 import Settings from "./Components/Index/Settings";
 import Comments from "./Components/Index/Comments";
 import SignManagement from "./Components/Signatory/SignManagement";
-import SettingsSig from "./Components/Signatory/SettingsSig";
 import SettingsAprv from "./Components/Approver/SettingsAprv";
 import SettingsDept from "./Components/DepartmentManager/SettingsDept";
 
@@ -263,7 +262,6 @@ function App() {
           path="Signatory/Awaiting-sig/Comments/:id"
           element={<SigComments />}
         />
-        <Route path="Signatory/Settings" element={<SettingsSig />} />
 
         <Route path="Employee/Login" element={<EmplAuthLogin />} />
         <Route
