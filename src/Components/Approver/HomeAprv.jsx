@@ -328,7 +328,7 @@ const HomeAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {docCount?.totalEmployee?.[0]?.count}
+                        { docCount?.totalEmployee[0]?.count || 0}
                       </h3>
                     </div>
                   </div>
@@ -356,7 +356,7 @@ const HomeAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {docCount?.totalActiveUser}
+                        {docCount?.totalActiveUser && docCount?.totalActiveUser[0]?.count || 0}
                       </h3>
                     </div>
                   </div>

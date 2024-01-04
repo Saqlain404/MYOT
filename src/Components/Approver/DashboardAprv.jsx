@@ -164,7 +164,7 @@ const DashboardAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {countData?.totalUser?.[0]?.count}
+                        {countData?.totalUser[0]?.count}
                       </h3>
                     </div>
                   </div>
@@ -202,7 +202,7 @@ const DashboardAprv = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {countData?.totalActiveUser}
+                        {countData?.totalActiveUser[0]?.count || 0}
                       </h3>
                     </div>
                   </div>
