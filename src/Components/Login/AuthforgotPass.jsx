@@ -31,7 +31,7 @@ const AuthforgotPass = () => {
 
   const handleOTPsubmit = async (e) => {
     e.preventDefault();
-    console.log(email, otp);
+    // console.log(email, otp);
     if (otp.length < 4) {
       toast.error("OTP must be 4 digits", {
         position: "top-right",
@@ -111,7 +111,7 @@ const AuthforgotPass = () => {
                           <button
                             className="btn py-8 mb-3 form-reset"
                             type="submit"
-                            onClick={onSubmitEmail}
+                            onClick={(e) => onSubmitEmail(e)}
                           >
                             Submit
                           </button>
@@ -127,7 +127,7 @@ const AuthforgotPass = () => {
                             Enter OTP Code sent to {email}
                           </p>
                         </div>
-                        <form onSubmit={handleOTPsubmit}>
+                        <form onSubmit={(e) => handleOTPsubmit(e)}>
                           <div className="otp-input-box">
                             <OtpInput
                               inputType="tel"
@@ -155,7 +155,7 @@ const AuthforgotPass = () => {
                           Don’t received OTP code?{" "}
                           <a
                             type="button"
-                            onClick={onSubmitEmail}
+                            onClick={(e) => onSubmitEmail(e)}
                             className="text-primary text-decoration-none"
                           >
                             Resend Code
@@ -164,7 +164,7 @@ const AuthforgotPass = () => {
                       </>
                     )}
                   </div>
-                  <form onSubmit={handleOTPsubmit(onSubmitEmail)}>
+                  {/* <form onSubmit={handleOTPsubmit(onSubmitEmail)}>
                     <div className="row">
                       <div className="col-12 d-flex pe-0 mb-4 mt-4">
                         <div className="col-2">
@@ -237,7 +237,7 @@ const AuthforgotPass = () => {
                       </p>
                       <p className="resend-otp">Resend Code</p>
                     </div>
-                  </form>
+                  </form> */}
                 </div>
               </div>
             </div>
