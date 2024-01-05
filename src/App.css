@@ -2671,3 +2671,16 @@ div.dataTables_wrapper div.dataTables_paginate {
 .signature_logos {
   height: 100px;
 }
+
+.otp-input-box .form-group{
+  display: flex;
+  align-items: center;
+  justify-content: space-around !important;
+}
+.otp-input-box .form-group input{
+  width: 70px !important;
+  height: 50px;
+  border: 1px solid #e0e2e7;
+  border-radius: 10px;
+  background-color: #F7F7F8;
+}

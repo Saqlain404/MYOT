@@ -38,7 +38,6 @@ export async function forgotPassword(formData) {
 
     if (!data.error) {
       await localStorage.removeItem("token-admin");
-      toast.success(data.results.otp);
     } else toast.error(data.message);
 
     if (!data.error) return { data };
@@ -49,8 +48,25 @@ export async function forgotPassword(formData) {
 }
 export async function verifyOTP(formData) {
   try {
-    const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/admin/verifyOTP`,
+    const { data } = await adminHttpService.put(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/verifyOTP`,
+      formData
+    );
+    console.log(data);
+    if (!data.error) {
+      toast.success(data.message);
+    } else toast.error(data.message);
+
+    if (!data.error) return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+export async function UpdateNewPassword(formData) {
+  try {
+    const { data } = await adminHttpService.put(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/updatePassword`,
       formData
     );
     console.log(data);

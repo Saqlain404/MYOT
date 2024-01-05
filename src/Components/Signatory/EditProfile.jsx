@@ -30,10 +30,9 @@ const EditProfileSig = () => {
   const onSubmit = async (data1) => {
     // e.preventDefault();
     console.log(files?.profile_img);
-    console.log(data1);
     let emp_id = localStorage.getItem("myot_admin_id");
     if (data1?.password !== data1?.cpassword) {
-      toast("Password does not match", {
+      toast.error("Password does not match", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -45,19 +44,19 @@ const EditProfileSig = () => {
       });
       return false;
     }
-    if (!files?.profile_img) {
-      toast.error("Please provide profile image", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      return false;
-    }
+    // if (!files?.profile_img) {
+    //   toast.error("Please provide profile image", {
+    //     position: "top-right",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "light",
+    //   });
+    //   return false;
+    // }
     const formData = new FormData();
     formData.append("name", data1?.name);
     formData.append("email", data1?.email);
@@ -71,7 +70,7 @@ const EditProfileSig = () => {
 
     let { data } = await SignatoryUpdateProfile(emp_id, formData);
     console.log(data);
-    if (data?.error) {
+    if (data && data?.error) {
       toast.error(data?.message, {
         position: "top-right",
         autoClose: 5000,
@@ -84,7 +83,7 @@ const EditProfileSig = () => {
       });
       return false;
     }
-    if (!data?.error) {
+    if (data&&!data?.error) {
       toast("Profile Updated Successfully", {
         position: "top-right",
         autoClose: 5000,

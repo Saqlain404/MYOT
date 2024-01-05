@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import getApiInfo from "../features/getApiInfoSlice";
+import userReducer from '../app/slice/userSlice'
 import {
   persistReducer,
   FLUSH,
@@ -20,12 +21,14 @@ const persistConfig = {
 
 const reducer = combineReducers({
   app: getApiInfo,
+  user: userReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 const store = configureStore({
   reducer: persistedReducer,
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

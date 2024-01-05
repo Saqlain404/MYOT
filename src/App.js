@@ -117,8 +117,8 @@ import CalenderYearEmply from "./Components/Employee/CalenderYearEmply";
 import DocComments from "./Components/Index/DocumentRequests/Comment";
 import CommentsEmply from "./Components/Employee/CommentsEmply";
 import SigComments from "./Components/Signatory/Comments/Comments";
-// import SettingsSig from "./Components/Signatory/SettingsSig";
-import UpdatePassEmply from "./Components/Login/UpdatePassEmply";
+import SettingsSig from "./Components/Signatory/SettingsSig";
+import UpdatePassword from "./Components/Login/UpdatePassword";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -127,9 +127,10 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route path="*" element={<AuthLogin />} />
-        <Route path="Admin/Login" element={<AuthLogin />} />
-        <Route path="Admin/Forgot-password" element={<AuthforgotPass />} />
-        <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} />
+        <Route path="Login" element={<AuthLogin />} />
+        <Route path="Forgot-password" element={<AuthforgotPass />} />
+        <Route path="Update-password" element={<UpdatePassword />} />
+        <Route path="Forgot-success" element={<AuthforgotSuccess />} />
         <Route path="Admin/Home" element={<Home />} />
         <Route path="Admin/Dashboard" element={<Dashboard />} />
         <Route path="Admin/Tasks" element={<Tasks />} />
