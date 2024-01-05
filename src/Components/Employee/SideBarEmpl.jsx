@@ -221,8 +221,8 @@ const SideBarEmpl = () => {
                 location.pathname === "/Employee/profile" ? "nav_active" : ""
               } `}
             >
-              <a
-                href="/Employee/profile"
+              <Link
+                to="/Employee/profile"
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"
               >
@@ -234,15 +234,15 @@ const SideBarEmpl = () => {
                 <span className="ms-3 align-middle sidebar-btn">
                   My Profile
                 </span>
-              </a>
+              </Link>
             </li>
             <li
               className={`"nav-item text-dark" ${
                 location.pathname === "/Employee/Settings" ? "nav_active" : ""
               } `}
             >
-              <a
-                href="/Employee/Settings"
+              <Link
+                to="/Employee/Settings"
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"
               >
@@ -252,15 +252,15 @@ const SideBarEmpl = () => {
                 />
 
                 <span className="ms-3 align-middle sidebar-btn">Settings</span>
-              </a>
+              </Link>
             </li>
             <li
               className={`"nav-item text-dark" ${
                 location.pathname === "/Employee/Help" ? "nav_active" : ""
               } `}
             >
-              <a
-                href="/Employee/Help"
+              <Link
+                to="/Employee/Help"
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"
               >
@@ -270,7 +270,7 @@ const SideBarEmpl = () => {
                 />
 
                 <span className="ms-3 align-middle sidebar-btn">Help</span>
-              </a>
+              </Link>
             </li>
             <li
               onClick={handleLogOut}
@@ -278,8 +278,8 @@ const SideBarEmpl = () => {
                 location.pathname === "/Employee/Login" ? "nav_active" : ""
               } `}
             >
-              <a
-                href="/Employee/Login"
+              <Link
+                to="/Employee/Login"
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"
               >
@@ -289,7 +289,7 @@ const SideBarEmpl = () => {
                 />
 
                 <span className="ms-3 align-middle sidebar-btn">Logout</span>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

@@ -591,3 +591,69 @@ export async function AnnouncementList(ids) {
     return null;
   }
 }
+export async function AnalyticsDataAprv() {
+  try {
+    const { data } = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/approver/total-month-templete`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+export async function totalDocRequestAprv() {
+  try {
+    const { data } = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/approver/total-document-Request`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+export async function AddCommentApprv(formData) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/add-comment`,
+      formData
+    );
+   
+    console.log(data);
+
+    // return { data };
+    if (!data.error) {
+      toast.success(data.message);
+    } else toast.error(data.message);
+
+    if (!data.error) return { data };
+  } catch (error) {
+    if (error?.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+export async function CommentViewApprv(id) {
+  try {
+    const response = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/comment-details/${id}`
+    );
+
+    if (!response.data?.error) {
+      const commentData = response?.data?.results?.commentDetails;
+      console.log(commentData)
+
+      return {commentData};
+    } else {
+      toast.error(response.data.message);
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error('An error occurred while fetching the template IDs.');
+    }
+    return null;
+  }
+}

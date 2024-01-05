@@ -11,6 +11,7 @@ import {
   searchDash,
   totalTicketCount,
 } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import moment from "moment";
 
 const EmployeeDash = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const EmployeeDash = () => {
         department: [
           document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
         ],
-        dateofSigning: [document?.createdAt],
+        dateofSigning: [moment(document?.createdAt).calendar()],
         comments: (
           <img
             src="/images/dashboard/Comment.png"
@@ -68,7 +69,7 @@ const EmployeeDash = () => {
           department: [
             name?.templete_Id?.manager?.department_Id?.departmentName,
           ],
-          dateofSigning: [name?.createdAt],
+          dateofSigning: [moment(name?.createdAt).calendar()],
           comments: (
             <img
               src="/images/dashboard/Comment.png"

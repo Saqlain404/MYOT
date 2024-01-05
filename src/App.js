@@ -119,6 +119,7 @@ import CommentsEmply from "./Components/Employee/CommentsEmply";
 import SigComments from "./Components/Signatory/Comments/Comments";
 // import SettingsSig from "./Components/Signatory/SettingsSig";
 import UpdatePassEmply from "./Components/Login/UpdatePassEmply";
+import CommentsAprv from "./Components/Approver/CommentsAprv";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -213,6 +214,7 @@ function App() {
         <Route path="Approver/Contact-us" element={<ContactUsAprv />} />
         <Route path="Approver/Settings" element={<SettingsAprv />} />
         <Route path="Approver/Chat" element={<ChatboxAprv />} />
+        <Route path="Approver/Comment/:id" element={<CommentsAprv />} />
 
         <Route path="Approver/My-profile" element={<ProfileAprv />} />
         <Route path="Approver/Edit-profile" element={<EditProfileAprv />} />

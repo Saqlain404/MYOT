@@ -3,6 +3,7 @@ import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarAprv";
 import {
+  AddCommentApprv,
   ApprovedTempeleteSearch,
   HistoryLogApprovedList,
   dashCount,
@@ -12,6 +13,7 @@ import moment from "moment";
 const HistoryLogAprv = () => {
   const [documentRequests, setDocumentRequests] = useState([]);
   const [searchData, setSearchData] = useState("");
+  const [comment, setComment] = useState("");
 
   const ids =
     localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
@@ -31,7 +33,7 @@ const HistoryLogAprv = () => {
             <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
           ),
           department: [doc?.manager?.[0]?.department?.[0]?.departmentName],
-          dateofSigning: [doc?.createdAt],
+          dateofSigning: [moment(doc?.createdAt).calendar()],
           comments: (
             <img
               src="/images/dashboard/Comment.png"
@@ -65,7 +67,7 @@ const HistoryLogAprv = () => {
         action: (
           <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
         ),
-        dateofSigning: [document?.createdAt],
+        dateofSigning: [moment(document?.createdAt).calendar()],
         comments: (
           <img
             src="/images/dashboard/Comment.png"
@@ -81,6 +83,20 @@ const HistoryLogAprv = () => {
   useEffect(() => {
     handleSearch();
   }, [searchData]);
+
+  const handleSubmitComment = async (e, templete_Id) => {
+    e.preventDefault();
+    let creator_Id =
+      localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+    let data = await AddCommentApprv({
+      comment,
+      templete_Id,
+      creator_Id,
+    });
+    if (!data?.error) {
+      setComment("");
+    }
+  };
 
   return (
     <>
@@ -272,9 +288,79 @@ const HistoryLogAprv = () => {
                         <td className="td-text">{document.department}</td>
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
-                          {moment(document.dateofSigning).calendar()}
+                          {document.dateofSigning}
                         </td>
-                        <td className="td-text">{document.comments}</td>
+                        <td className="td-text">
+                          <div className="">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <img
+                                src="/images/dashboard/Comment.png"
+                                className="mx-auto d-block"
+                              />
+                            </a>
+                            <form
+                              className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
+                              onSubmit={(e) =>
+                                handleSubmitComment(e, document?.commentID)
+                              }
+                            >
+                              <div className="mb-3 border-bottom">
+                                <label className="form-label th-text">
+                                  Comment or type
+                                </label>
+
+                                <input
+                                  type="text"
+                                  className="form-control border-0"
+                                  value={comment}
+                                  onChange={(e) => setComment(e.target.value)}
+                                />
+                              </div>
+
+                              <div className="d-flex justify-content-between">
+                                <div>
+                                  <img
+                                    src="/images/tasks/assign comments.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/mention.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/task.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/emoji.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/attach_attachment.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                </div>
+                                <div>
+                                  <button
+                                    type="submit"
+                                    className="comment-btn btn-primary"
+                                  >
+                                    Comment
+                                  </button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </td>
                         <td className="td-text">{document.version}</td>
                         <td className="td-text">
                           <div class="">
@@ -307,14 +393,17 @@ const HistoryLogAprv = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item" href="#">
+                                <Link
+                                  class="dropdown-item"
+                                  to={`/Approver/Comment/${document?.document_id}`}
+                                >
                                   <img
                                     src="/images/dashboard/Comment.png"
                                     alt=""
                                     className="me-2"
                                   />
                                   Comments
-                                </a>
+                                </Link>
                               </li>
                               <li>
                                 <a class="dropdown-item border-bottom" href="#">

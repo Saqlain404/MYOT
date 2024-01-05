@@ -34,7 +34,7 @@ const ReceivedDocEmpl = () => {
           department: [
             name?.templete_Id?.manager?.department_Id?.departmentName,
           ],
-          dateofSigning: [name?.createdAt],
+          dateofSigning: [moment(name?.createdAt).calendar()],
           img: [name?.templete_Id?.manager?.profile_Pic],
           comments: (
             <img
@@ -69,7 +69,7 @@ const ReceivedDocEmpl = () => {
         department: [
           document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
         ],
-        dateofSigning: [document?.createdAt],
+        dateofSigning: [moment(document?.createdAt).calendar()],
         comments: (
           <img
             src="/images/dashboard/Comment.png"
@@ -280,7 +280,7 @@ const ReceivedDocEmpl = () => {
                         <td className="td-text">{document.department}</td>
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
-                          {moment(document.dateofSigning).calendar()}
+                          {document.dateofSigning}
                         </td>
                         <td className="td-text">
                           <div className="">

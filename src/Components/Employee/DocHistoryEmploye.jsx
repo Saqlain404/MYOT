@@ -32,7 +32,7 @@ const DocHistoryEmploye = () => {
         department: [
           document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
         ],
-        createdAt: [document?.createdAt],
+        createdAt: [moment(document?.createdAt).calendar()],
         comments: (
           <img
             src="/images/dashboard/Comment.png"
@@ -69,7 +69,7 @@ const DocHistoryEmploye = () => {
           department: [
             name?.templete_Id?.manager?.department_Id?.departmentName,
           ],
-          createdAt: [name?.createdAt],
+          createdAt: [moment(name?.createdAt).calendar()],
           comments: (
             <img
               src="/images/dashboard/Comment.png"
@@ -289,7 +289,7 @@ const DocHistoryEmploye = () => {
                         <td className="td-text">{document.department}</td>
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
-                          {moment(document.createdAt).calendar()}
+                          {document.createdAt}
                         </td>
                         <td className="td-text">{document.IP}</td>
                         <td className="td-text">{document.version}</td>
