@@ -279,7 +279,7 @@ const RequestsDept = () => {
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
-                        />{requests?.templete_Id?.templeteName}</td>
+                        />{requests?.templete?.templeteName}</td>
                         <td className="td-text"><img src={requests?.templete_Id?.manager?.profile_Pic} alt="" className="list-profile-pic" />{requests?.templete_Id?.manager?.name}</td>
                         <td className="td-text"> <img src="/images/dashboard/CalendarBlank.png" alt=""/>{requests?.createdAt}</td>
                         
