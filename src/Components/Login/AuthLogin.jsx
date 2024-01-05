@@ -31,7 +31,7 @@ const AuthLogin = () => {
     // console.log(data);
 
     const response = await adminLogin(data);
-    console.log("login Data", response);
+    // console.log("login Data", response);
     if (!response?.data?.error) {
       toast("Logged in successfully", {
         position: "top-right",
