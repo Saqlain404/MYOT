@@ -1,8 +1,35 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { EmployeeLogout } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import { toast } from "react-toastify";
 
 const SidebarSig = () => {
   const location = useLocation();
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    let id = localStorage.getItem("myot_admin_id");
+    const { data } = await EmployeeLogout(id);
+    console.log(data);
+    if (data && !data?.error) {
+      localStorage.clear();
+      localStorage.removeItem("myot_admin_id");
+
+      toast("Please Select Profile Image", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      
+      navigate("/Admin/Login");
+    }
+  };
 
   return (
     <div className="container-fluid  sidebar">
@@ -322,10 +349,9 @@ const SidebarSig = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li className="nav-item text-dark" onClick={handleLogout}>
               <a
-                // href="/"
-                className="nav-link text-dark fs-5 align-middle "
+                className="nav-link text-dark fs-5 align-middle cursor_pointer"
                 aria-current="page"
               >
                 <img

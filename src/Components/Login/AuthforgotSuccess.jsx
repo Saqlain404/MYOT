@@ -1,7 +1,5 @@
 import React from "react";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { forgotPassword } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
+import { Link } from "react-router-dom";
 
 const AuthforgotSuccess = () => {
   return (
@@ -25,7 +23,7 @@ const AuthforgotSuccess = () => {
                 Your password successfully recover, Enjoy!
               </p>
             </div>
-            <Link to={"/Admin/Login"}>
+            <Link to={"/Login"}>
               <button className="btn  py-8 mb-3 reset-success">
                 Go Back Home
               </button>

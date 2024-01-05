@@ -23,7 +23,7 @@ const AuthLogin = () => {
 
   useEffect(() => {
     if (!localStorage.getItem("token-admin")) {
-      navigate("/Admin/Login");
+      navigate("/Login");
     }
   }, []);
 
@@ -144,7 +144,7 @@ const AuthLogin = () => {
                     Remember me
                   </label>
                 </div>
-                <Link to={"/Employee/Forgot-password"}>
+                <Link to={"/Forgot-password"}>
                   <a
                     className=" fw-medium reset-password"
                     href="authentication-forgot-password.html"

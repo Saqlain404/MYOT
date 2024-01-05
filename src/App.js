@@ -103,6 +103,7 @@ import ViewUser from "./Components/Index/ViewUser";
 import DocComments from "./Components/Index/DocumentRequests/Comment";
 import SigComments from "./Components/Signatory/Comments/Comments";
 import SettingsSig from "./Components/Signatory/SettingsSig";
+import UpdatePassword from "./Components/Login/UpdatePassword";
 
 function App() {
   return (
@@ -110,9 +111,10 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route path="*" element={<AuthLogin />} />
-        <Route path="Admin/Login" element={<AuthLogin />} />
-        {/* <Route path="Admin/Forgot-password" element={<AuthforgotPass />} /> */}
-        {/* <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} /> */}
+        <Route path="Login" element={<AuthLogin />} />
+        <Route path="Forgot-password" element={<AuthforgotPass />} />
+        <Route path="Update-password" element={<UpdatePassword />} />
+        <Route path="Forgot-success" element={<AuthforgotSuccess />} />
         <Route path="Admin/Home" element={<Home />} />
         <Route path="Admin/Dashboard" element={<Dashboard />} />
         <Route path="Admin/Tasks" element={<Tasks />} />
