@@ -225,7 +225,7 @@ const DashboardSig = () => {
                   </div>
                 </div>
 
-                <div className="col-md-3 ">
+                <div className="col-md-6">
                   <div className="dashboard-card2 ">
                     <p className="dashboard-card2-text">Open Tickets</p>
                     <p className="text-card  mb-3">

@@ -40,21 +40,21 @@ const EditProfile = () => {
         progress: undefined,
         theme: "light",
       });
-      return false
+      return false;
     }
-    if (!files?.profile_img) {
-      toast.error("Please Select Profile Image", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      return false
-    }
+    // if (!files?.profile_img) {
+    //   toast.error("Please Select Profile Image", {
+    //     position: "top-right",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "light",
+    //   });
+    //   return false
+    // }
     const formData = new FormData();
     formData.append("name", data1?.name);
     formData.append("email", data1?.email);
@@ -68,7 +68,7 @@ const EditProfile = () => {
 
     let { data } = await UpdateAdminProfile(emp_id, formData);
     console.log(data);
-    if (data?.error) {
+    if (data && data?.error) {
       toast.error(data?.message, {
         position: "top-right",
         autoClose: 5000,
@@ -80,7 +80,7 @@ const EditProfile = () => {
         theme: "light",
       });
     }
-    if (!data?.error) {
+    if (data && !data?.error) {
       toast("Profile Updated Successfully", {
         position: "top-right",
         autoClose: 5000,
@@ -103,7 +103,7 @@ const EditProfile = () => {
             <Sidebar />
           </div>
           <div className="col-7 middle-content p-0 min-vh-100">
-            <div className="container-fluid border-bottom sticky-top bg-white mb-4">
+            <div className="container-fluid sticky-top bg-white mb-4">
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
@@ -275,7 +275,7 @@ const EditProfile = () => {
                         />
                       </div> */}
                     </div>
-                    <div className="col-12 d-flex justify-content-between border-bottom mb-2 pb-4">
+                    <div className="col-12 d-flex justify-content-between mb-2 pb-4">
                       <div className="col-6 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Password
