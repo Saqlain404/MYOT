@@ -119,6 +119,7 @@ import CommentsEmply from "./Components/Employee/CommentsEmply";
 import SigComments from "./Components/Signatory/Comments/Comments";
 import SettingsSig from "./Components/Signatory/SettingsSig";
 import UpdatePassword from "./Components/Login/UpdatePassword";
+import UpdatePassEmply from "./Components/Login/UpdatePassEmply";
 
 function App() {
   const token = localStorage.getItem("token-company");

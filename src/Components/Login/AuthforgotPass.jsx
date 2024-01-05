@@ -164,7 +164,7 @@ const AuthforgotPass = () => {
                       </>
                     )}
                   </div>
-                  <form onSubmit={handleSubmit(onSubmit)}>
+                  <form onSubmit={handleOTPsubmit(onSubmitEmail)}>
                     <div className="row">
                       <div className="col-12 d-flex pe-0 mb-4 mt-4">
                         <div className="col-2">
