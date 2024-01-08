@@ -30,7 +30,7 @@ const RequestHistoryEmpl = () => {
           documentName: name?.templete_Id?.templeteName,
           assignTo: [name?.templete_Id?.manager?.name], 
           department: [name?.templete_Id?.manager?.department_Id?.departmentName], 
-          dateofSigning: [name?.createdAt],
+          dateofSigning: [moment(name?.createdAt).calendar()],
           img:[name?.templete_Id?.manager?.profile_Pic],
           version: [name?.templete_Id?.templeteVersion?.[0]?.version],
           comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
@@ -60,7 +60,7 @@ const RequestHistoryEmpl = () => {
           img:[document?.templete?.manager?.[0]?.profile_Pic],
           assignTo: [document?.templete?.manager?.[0]?.name], 
           department: [document?.templete?.manager?.[0]?.department?.[0]?.departmentName], 
-          dateofSigning: [document?.createdAt],
+          dateofSigning: [moment(document?.createdAt).calendar()],
           comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
           // status:[document?.status],
           version:[document?.templete?.templeteVersion?.[0]?.version],
@@ -278,7 +278,7 @@ const RequestHistoryEmpl = () => {
                     </td>
                     <td className="td-text">
                       <img src="/images/dashboard/CalendarBlank.png" />
-                      {moment(document.dateofSigning).calendar()}
+                      {document.dateofSigning}
                     </td>
                     <td className="td-text">
                           <div className="">

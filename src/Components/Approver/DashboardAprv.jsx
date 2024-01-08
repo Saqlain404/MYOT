@@ -3,13 +3,16 @@ import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
 import {
+  AnalyticsDataAprv,
   approvedTemplete,
   approverTempleteList,
   dashCount,
   rejectedTemplete,
   searchTemplete,
+  totalDocRequestAprv,
 } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 import moment from "moment";
+import GradientLineChartApprv from "./GradientLineChartApprv";
 
 const DashboardAprv = () => {
   const [searchData, setSearchData] = useState("");
@@ -35,7 +38,7 @@ const DashboardAprv = () => {
         action: (
           <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
         ),
-        dateofSigning: [document?.createdAt],
+        dateofSigning: [moment(document?.createdAt).calendar()],
         comments: (
           <img
             src="/images/dashboard/Comment.png"
@@ -67,7 +70,7 @@ const DashboardAprv = () => {
             <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
           ),
           department: [name?.manager?.department_Id?.departmentName],
-          dateofSigning: [name?.createdAt],
+          dateofSigning: [moment(name?.createdAt).calendar()],
           comments: (
             <img
               src="/images/dashboard/Comment.png"
@@ -105,6 +108,30 @@ const DashboardAprv = () => {
     const rejectedData = await rejectedTemplete(document_Id)
     setUpdatedStatus((prev)=>!prev)
   }
+
+  const [analyticsData, setAnalyticsData] = useState([]);
+  const [docTempleteData, setDocTempleteData] = useState([]);
+
+  useEffect(() => {
+    getAnalyticsData();
+    getTotalDocData();
+  }, []);
+
+  const getAnalyticsData = async () => {
+    let { data } = await AnalyticsDataAprv();
+    console.log(data);
+    if (!data?.error) {
+      setAnalyticsData(data?.results);
+      console.log(analyticsData)
+    }
+  };
+  const getTotalDocData = async () => {
+    let { data } = await totalDocRequestAprv();
+    if (!data?.error) {
+      setDocTempleteData(data?.results?.totalDocument);
+      console.log(docTempleteData)
+    }
+  };
 
   return (
     <>
@@ -166,7 +193,7 @@ const DashboardAprv = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         {countData?.totalUser[0]?.count}
                       </h3>
-                    </div>
+                    </div> 
                   </div>
                 </div>
                 <div className="col-md-3 ">
@@ -211,11 +238,10 @@ const DashboardAprv = () => {
             </div>
             <div className="col-12">
               <div className="row">
-                <div className="col-md-9 ">
-                  <img
-                    src="/images/dashboard/Block.svg"
-                    alt=""
-                    className="dashboard-graph"
+                <div className="col-md-9 mt-4 ">
+                <GradientLineChartApprv
+                  tempData={analyticsData?.totalTemplete}
+                    // activeUserData={analyticsData?.totalActiveUser}
                   />
                   {/* <div className="dashboard-card bg-light ">
                     <div className="d-flex justify-content-around dashboard-card-text">
@@ -256,52 +282,26 @@ const DashboardAprv = () => {
                   </div> */}
                 </div>
 
-                <div className="col-md-3 ">
-                  <div className="dashboard-card3 bg-light ">
+                <div className="col-md-3 mt-4">
+                  <div
+                    className="dashboard-card3 bg-light "
+                    style={{ maxHeight: "320px", overflowY: "auto" }}
+                  >
                     <p className="text-card">Document Request</p>
-                    <table className="table-card3 dashboard-card3-text">
-                      <tr className="pb-2">
-                        <td
-                          style={{ paddingRight: 40 }}
-                          className="text-nowrap"
-                        >
-                          HR
-                        </td>
-                        <td>
-                          <img src="/images/dashboard/HR.png" alt="" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Finance</td>
-                        <td>
-                          <img src="/images/dashboard/Finance.png" alt="" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>R&D</td>
-                        <td>
-                          <img src="/images/dashboard/R&D.png" alt="" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Transport</td>
-                        <td>
-                          <img src="/images/dashboard/Transport.png" alt="" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>IT</td>
-                        <td>
-                          <img src="/images/dashboard/IT.png" alt="" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Sales</td>
-                        <td>
-                          <img src="/images/dashboard/sales.png" alt="" />
-                        </td>
-                      </tr>
-                    </table>
+                    <div className="table-card3 dashboard-card3-text">
+                      {docTempleteData?.map((doc) => (
+                        <div className="pb-2 d-flex align-items-center justify-content-between">
+                          <div className="doc-req-text">
+                            {doc?._id?.[0]?.[0]?.[0]?.departmentName &&
+                              doc._id[0][0][0].departmentName.split(" ")[0]}
+                          </div>
+                          <div
+                            className="doc-req-bar"
+                            style={{ width: `${doc?.count * 10}%` }}
+                          ></div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -427,7 +427,7 @@ const DashboardAprv = () => {
                         <td className="td-text">{document?.department}</td>
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
-                          {moment(document?.dateofSigning).calendar()}
+                          {document?.dateofSigning}
                         </td>
                         <td
                           className={`td-text ${

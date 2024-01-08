@@ -46,7 +46,7 @@ const DocumentEmply = () => {
         department: [
           document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
         ],
-        dateofSigning: [document?.createdAt],
+        dateofSigning: [moment(document?.createdAt).calendar()],
         comments: (
           <img
             src="/images/dashboard/Comment.png"
@@ -124,7 +124,7 @@ const DocumentEmply = () => {
           department: [
             name?.templete_Id?.manager?.department_Id?.departmentName,
           ],
-          dateofSigning: [name?.createdAt],
+          dateofSigning: [moment(name?.createdAt).calendar()],
           comments: (
             <img
               src="/images/dashboard/Comment.png"
@@ -420,7 +420,7 @@ const DocumentEmply = () => {
                         <td className="td-text">{request.department}</td>
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
-                          {moment(request.dateofSigning).calendar()}
+                          {request.dateofSigning}
                         </td>
                         <td className="td-text">
                           <div className="">
