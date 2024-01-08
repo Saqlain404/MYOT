@@ -111,6 +111,7 @@ import CalendarMonthDept from "./Components/DepartmentManager/CalendarMonthDept"
 import CalenderYearDept from "./Components/DepartmentManager/CalenderYear";
 import CommentsDept from "./Components/DepartmentManager/CommentsDept";
 import AuthResetPass from "./Components/Login/AuthResetPass";
+import AuthSignUp from "./Components/Login/AuthSignUp";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -120,6 +121,7 @@ function App() {
       <Routes>
         <Route path="*" element={<AuthLogin />} />
         <Route path="Admin/Login" element={<AuthLogin />} />
+        <Route path="Signup" element={<AuthSignUp />} />
         <Route path="Admin/Forgot-password" element={<AuthforgotPass />} />
         <Route path="Admin/Reset-password" element={<AuthResetPass />} />
         <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} />

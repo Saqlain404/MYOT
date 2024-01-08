@@ -1,7 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const SidebarDepartment = () => {
+
+  const location = useLocation();
+
   return (
     <div className='container-fluid  sidebar'>
     {/* Sidebar scroll*/}
@@ -29,118 +32,138 @@ const SidebarDepartment = () => {
       <div className="col-auto col-mg-3 min-vh-100">
       <p className="th-text">MAIN MENU</p>
       <ul className="nav nav-pills flex-column">
-        <li className="nav-item text-dark">
+        <li  className={`"nav-item text-dark" ${
+                location.pathname === "/Department/Home" ? "nav_active" : ""
+              } `}>
           <Link
           to={"/Department/Home"}
           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle" aria-current="page">
         
-                <img src="/images/sidebar/home2.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/home2.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Home</span>
             </a>
             </Link>
         </li>
-        <li className="nav-item text-dark">
+        <li className={`"nav-item text-dark" ${
+                location.pathname === "/Department/Dashboard" ? "nav_active" : ""
+              } `}>
           <Link
            to={"/Department/Dashboard"}
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle" aria-current="page">
         
-                <img src="/images/sidebar/Dashboard.svg" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/Dashboard.svg" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Dashboard</span>
             </a>
             </Link>
         </li>
-        <li className="nav-item text-dark">
+        <li className={`"nav-item text-dark" ${
+                location.pathname === "/Department/Template" ? "nav_active" : ""
+              } `}>
           <Link
           to={"/Department/Template"}
           className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle" aria-current="page">
         
-                <img src="/images/dashboard/templates.svg" className='align-middle sidebar-icon'/>
+                <img src="/images/dashboard/templates.svg" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Template</span>
             </a>
             </Link>
         </li>
-        <li className="nav-item text-dark">
+        <li className={`"nav-item text-dark" ${
+                location.pathname === "/Department/Certificate" ? "nav_active" : ""
+              } `}>
         <Link
            to={"/Department/Certificate"}
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/dashboard/certificate.svg" className='align-middle sidebar-icon'/>
+                <img src="/images/dashboard/certificate.svg" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn ">Certificate Issued</span>
             </a>
             </Link>
         </li>
 
-        <li className="nav-item text-dark">
+        <li className={`"nav-item text-dark" ${
+                location.pathname === "/Department/Calendar" ? "nav_active" : ""
+              } `}>
         <Link
            to={"/Department/Calendar"}
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/user.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/user.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Calendar</span>
             </a>
             </Link>
         </li>
-        <li className="nav-item text-dark">
+        <li className={`"nav-item text-dark" ${
+                location.pathname === "/Department/Departments" ? "nav_active" : ""
+              } `}>
         <Link
            to={"/Department/Departments"}
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/departments.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/departments.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Departments</span>
             </a>
             </Link>
         </li>
-        <li className="nav-item text-dark">
+        <li className={`"nav-item text-dark" ${
+                location.pathname === "/Department/Requests" ? "nav_active" : ""
+              } `}>
         <Link
            to={"/Department/Requests"}
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/request.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/request.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Requests</span>
             </a>
             </Link>
         </li>
-        <li className="nav-item text-dark ">
+        <li className={`"nav-item text-dark" ${
+                location.pathname === "/Department/Announcements" ? "nav_active" : ""
+              } `}>
         <Link
            to={"/Department/Announcements"}
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/announcement.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/announcement.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn ">Announcements</span>
             </a>
             </Link>
         </li>
-        <li className="nav-item text-dark">
+        <li className={`"nav-item text-dark" ${
+                location.pathname === "/Department/Home" ? "nav_active" : ""
+              } `}>
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/files.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/files.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Files</span>
             </a>
         </li>
-        <li className="nav-item text-dark">
+        <li className={`"nav-item text-dark" ${
+                location.pathname === "/Department/Analytics" ? "nav_active" : ""
+              } `}>
         <Link
            to={"/Department/Analytics"}
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/analytics.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/analytics.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Analytics</span>
             </a>
@@ -149,46 +172,54 @@ const SidebarDepartment = () => {
 
         <p className="th-text mt-3">OTHERS</p>
 
-        <li className="nav-item text-dark">
+        <li className={`"nav-item text-dark" ${
+                location.pathname === "/Department/My-profile" ? "nav_active" : ""
+              } `}>
         <Link
            to={"/Department/My-profile"}
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/my-profile.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/my-profile.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">My Profile</span>
             </a>
             </Link>
         </li>
-        <li className="nav-item text-dark">
+        <li className={`"nav-item text-dark" ${
+                location.pathname === "/Department/Settings" ? "nav_active" : ""
+              } `}>
         <Link
            to={"/Department/Settings"}
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/settings.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/settings.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Settings</span>
             </a>
             </Link>
         </li>
-        <li className="nav-item text-dark">
+        <li className={`"nav-item text-dark" ${
+                location.pathname === "/Department/Help" ? "nav_active" : ""
+              } `}>
         <Link
            to={"/Department/Help"}
            className="text-decoration-none">
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/help.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/help.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Help</span>
             </a>
             </Link>
         </li>
-        <li className="nav-item text-dark">
+        <li className={`"nav-item text-dark" ${
+                location.pathname === "/Department/Home" ? "nav_active" : ""
+              } `}>
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         
-                <img src="/images/sidebar/logout.png" className='align-middle sidebar-icon'/>
+                <img src="/images/sidebar/logout.png" className='align-middle sidebar-icon' alt=""/>
               
               <span className="ms-3 align-middle sidebar-btn">Logout</span>
             </a>
@@ -198,10 +229,10 @@ const SidebarDepartment = () => {
       </div>
 
       <div class="dropdown">
-  <a class="text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <a href='/' class="text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         <div className="profile">
           <div>
-            <img src="/images/sidebar/Profile photo.png" alt="" />
+            <img src="/images/sidebar/Profile photo.png" alt=""/>
           </div>
           <div>
             <span className="text-dark">Easin Arafat</span>
@@ -214,16 +245,16 @@ const SidebarDepartment = () => {
   </a>
   <ul class="dropdown-menu">
     <Link to={"/Admin/Home"} className="text-decoration-none">
-    <li><a class="dropdown-item">Admin</a></li>
+    <li><a class="dropdown-item" href='/'>Admin</a></li>
     </Link>
     <Link to={"/Approver/Home"} className="text-decoration-none">
-    <li><a class="dropdown-item">Approver</a></li>
+    <li><a class="dropdown-item" href='/'>Approver</a></li>
     </Link>
     <Link to={"/Signatory/Home"} className="text-decoration-none">
-    <li><a class="dropdown-item">Signatory</a></li>
+    <li><a class="dropdown-item" href='/'>Signatory</a></li>
     </Link>
     <Link to={"/Employee/Home"} className="text-decoration-none">
-       <li><a class="dropdown-item">Employee</a></li>
+       <li><a class="dropdown-item" href='/'>Employee</a></li>
     </Link>
   </ul>
 </div>

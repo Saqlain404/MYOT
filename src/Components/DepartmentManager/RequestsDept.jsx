@@ -272,14 +272,14 @@ const RequestsDept = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {listItems.map((requests) => (
+                    {listItems?.map((requests) => (
                       <tr key={requests._id}>
                         <td className="td-text">
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
-                        />{requests?.templete?.templeteName}</td>
+                        />{requests?.[0]?.templete?.templeteName}</td>
                         <td className="td-text"><img src={requests?.templete_Id?.manager?.profile_Pic} alt="" className="list-profile-pic" />{requests?.templete_Id?.manager?.name}</td>
                         <td className="td-text"> <img src="/images/dashboard/CalendarBlank.png" alt=""/>{requests?.createdAt}</td>
                         
