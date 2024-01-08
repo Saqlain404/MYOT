@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 const AuthLogin = () => {
   const [type, setType] = useState("password");
   const [password, setPassword] = useState("");
+  const [rememberCheck, setRememberCheck] = useState(false);
+  const [loginCreds, setLoginCreds] = useState();
 
   // const dispatch = useDispatch();
 
@@ -27,11 +29,24 @@ const AuthLogin = () => {
     }
   }, []);
 
-  const onSubmit = async (data) => {
-    // console.log(data);
+  useEffect(() => {
+    const LoginCred = localStorage.getItem("myot_login_save");
+    if (LoginCred) {
+      setLoginCreds(LoginCred);
+    }
+  }, []);
 
+  const rememberMe = (data) => {
+    localStorage.setItem("myot_login_save", JSON.stringify(data));
+  };
+
+  const onSubmit = async (data) => {
+    console.log(data);
+
+    rememberCheck && rememberMe(data);
     const response = await adminLogin(data);
     // console.log("login Data", response);
+
     if (!response?.data?.error) {
       toast("Logged in successfully", {
         position: "top-right",
@@ -44,7 +59,7 @@ const AuthLogin = () => {
         theme: "light",
       });
       // dispatch(setUserData(response?.data?.results?.employee));
-      navigate("/Admin/Dashboard");
+      navigate("/Admin/Home");
     }
   };
 
@@ -84,6 +99,7 @@ const AuthLogin = () => {
                   aria-describedby="emailHelp"
                   placeholder="example@gmail.com"
                   autoComplete="off"
+                  defaultValue={loginCreds?.email}
                   {...register("email", {
                     required: "This field is required",
                     pattern: {
@@ -107,6 +123,7 @@ const AuthLogin = () => {
                   name="password"
                   id="password"
                   autoComplete="off"
+                  defaultValue={loginCreds?.password}
                   {...register("password", {
                     required: true,
                     onChange: (e) => {
@@ -136,6 +153,8 @@ const AuthLogin = () => {
                     defaultValue=""
                     id="flexCheckChecked"
                     defaultChecked=""
+                    value={rememberCheck}
+                    onChange={(e) => setRememberCheck(!rememberCheck)}
                   />
                   <label
                     className="form-check-label text-dark remember-me"

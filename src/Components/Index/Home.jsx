@@ -12,6 +12,7 @@ import {
   SearchTask,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import Document from "./DocumentRequests/Document";
+import { MDBDataTable } from "mdbreact";
 // import "../../dist/css/style.min.css"
 
 const Home = () => {
@@ -90,7 +91,7 @@ const Home = () => {
     if (!data?.error) {
       const templates = data?.results?.templete;
       setTemplate(templates);
-      console.log(templates)
+      console.log(templates);
     }
   };
 
@@ -110,7 +111,7 @@ const Home = () => {
   const handleSubmit = async (e, templete_Id) => {
     e.preventDefault();
     let creator_Id = localStorage.getItem("myot_admin_id");
-    console.log(creator_Id, comment, templete_Id)
+    console.log(creator_Id, comment, templete_Id);
     let { data } = await AddCommentForTask({
       comment,
       templete_Id,
@@ -269,7 +270,74 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <p className="table-name mb-2">Home</p>
+
+            <div className="position-relative">
+              <p className="table-name mb-2">Home</p>
+              <div className=" col-12 d-flex align-items-center table-searchbar">
+                <div className="row d-flex  col">
+                  <div className="col-md-3 table-searchbar-imgs">
+                    <img
+                      src="/images/dashboard/Plus-icon.png"
+                      alt=""
+                      className="p-2 table-searchbar-img"
+                    />
+                    <img
+                      src="/images/dashboard/FunnelSimple.png"
+                      alt=""
+                      className="p-2 table-searchbar-img"
+                    />
+                    <img
+                      src="/images/dashboard/ArrowsDownUp.png"
+                      alt=""
+                      className="p-2 table-searchbar-img"
+                    />
+                    <img
+                      src="/images/dashboard/DotsThreeOutlineVertical2.png"
+                      alt=""
+                      className="p-2 table-searchbar-img border-end"
+                    />
+                  </div>
+                  {/* <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
+            <p className="m-0 text-nowrap">
+              {requests?.selectedColumns && requests?.selectedColumns.length}
+              <span> Selected</span>
+            </p>
+            {showClearButton ? (
+              <p
+                className="hide-selected m-0 text-nowrap cursor_pointer "
+                onClick={showAllColumns}
+              >
+                Clear Selection
+              </p>
+            ) : (
+              <p
+                className="hide-selected m-0 text-nowrap cursor_pointer "
+                onClick={hideSelectedColumns}
+              >
+                Hide Selected
+              </p>
+            )}
+          </div> */}
+                </div>
+                <form className="d-flex me-2" role="search"></form>
+              </div>
+              <div className="col-12 mdb_table mt-3 ">
+                <div className="table-responsive">
+                  <MDBDataTable
+                    bordered
+                    displayEntries={false}
+                    entries={5}
+                    className="text-nowrap"
+                    hover
+                    // data={{ ...requests, columns: visibleColumns }}
+                    noBottomColumns
+                    paginationLabel={"«»"}
+                    sortable={false}
+                  />
+                </div>
+              </div>
+            </div>
+            {/* <p className="table-name mb-2">Home</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
                 <div className="col-lg-3 col-md-6 mb-md-2  table-searchbar-imgs">
@@ -668,7 +736,7 @@ const Home = () => {
                   </li>
                 </ul>
               </nav>
-            </div>
+            </div> */}
 
             <Document />
 
