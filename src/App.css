@@ -43,6 +43,14 @@ height: 960px; */
   flex-shrink: 0;
   margin: 20px;
 }
+.settingLogo {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 50px;
+  margin-right: 8px;
+  object-fit: cover;
+}
 
 .myot {
   color: #000;
@@ -172,6 +180,7 @@ height: 960px; */
   width: 34px;
   height: 34px;
   border-radius: 100%;
+  object-fit: cover;
   margin-left: 20px;
   margin-right: 10px;
 }
@@ -391,10 +400,11 @@ height: 960px; */
   /* width: 892px; */
   padding: 2px;
   /* align-items: center; */
-  gap: 16px;
+  /* gap: 16px; */
   border-radius: 8px;
   background: #f7f9fb;
   align-content: center;
+  height: 50px;
 }
 
 .hide-selected {
@@ -716,7 +726,7 @@ height: 960px; */
   white-space: nowrap;
   overflow: hidden;
   height: 100%;
-  background-color: #fff;
+  background: #fff4ea;
   align-items: flex-start;
   border-radius: 14px;
   padding: 18px 20px;
@@ -1334,7 +1344,7 @@ height: 960px; */
 }
 
 .nav_active .sidebar-btn {
-  color: black !important;
+  color: #3e51ff !important;
   font-weight: bold;
 }
 
@@ -1706,7 +1716,7 @@ height: 960px; */
 }
 
 .announcement-time {
-  margin-left: 100px;
+  /* margin-left: 10px; */
   color: #656668;
   font-family: Nunito;
   font-size: 13px;
@@ -1798,6 +1808,37 @@ height: 960px; */
   font-style: normal;
   font-weight: 500;
   line-height: 112.4%; /* 15.736px */
+}
+.password-update-input{
+  width: 430px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #e0e2e7;
+  background: linear-gradient(0deg, #f7f7f8 0%, #f7f7f8 100%), #fff;
+
+  color: rgba(0, 0, 0, 0.4);
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 112.4%; /* 15.736px */
+}
+.password-update-submit{
+  margin-top: 40px;
+  margin-bottom: 50px;
+  width: 430px;
+  height: 45px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #3e51ff;
+  color: #fff;
+  font-family: Nunito;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
 }
 
 .profile-edit-submit {
@@ -2355,8 +2396,102 @@ height: 960px; */
   line-height: normal;
 }
 
-.resend-otp {
-  color: #3e51ff;
+.contact-img {
+  margin-top: 50px;
+  width: 380px;
+  height: 412px;
+}
+
+.task_table .tr {
+  margin: 10px 0 !important;
+}
+
+.user_table .tr {
+  margin: 50px 0 !important;
+  padding: 50px 0 !important;
+}
+
+.cursor_pointer {
+  cursor: pointer !important;
+}
+
+.pagination li {
+  cursor: pointer !important;
+}
+
+.view_user .profile_img {
+  height: 120px;
+  width: 120px;
+  border-radius: 50% !important;
+}
+
+.view_user .profile_img img {
+  border-radius: 50% !important;
+}
+
+/* View employee */
+
+.text_transform_none {
+  text-transform: none !important;
+}
+
+.view_user {
+  font-family: "Nunito" !important;
+}
+.profile_data .title_head {
+  color: black !important;
+  font-weight: bold;
+  margin: 6px 0;
+}
+
+.profile_data .title_value {
+  color: #656668 !important;
+  text-transform: capitalize;
+  font-weight: normal !important;
+}
+
+.tickets ul {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: "Nunito";
+  gap: 20px;
+}
+
+.tickets ul li a {
+  text-decoration: none !important;
+  font-size: 12px;
+  color: black;
+}
+
+.nav-tabs .nav-link {
+  font-weight: bold;
+}
+.nav-tabs .nav-link:hover {
+  border-color: white !important;
+}
+.nav-tabs .nav-link.active {
+  border-color: white !important;
+  border-bottom: 2px solid rgb(0, 0, 0) !important;
+}
+
+/* APEX PIE CHART 1 */
+
+.charts {
+  font-family: "Nunito";
+  color: #05103633;
+}
+
+.charts span {
+  font-size: 35px;
+  color: black;
+  font-weight: 700;
+  line-height: 42px;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+
+.pie_chart_text {
   font-family: Nunito;
   font-size: 14px;
   font-style: normal;
@@ -2414,7 +2549,12 @@ height: 960px; */
   background-color: rgb(91, 146, 255, 0.05);
   padding: 0px;
 }
+
 .list-profile-pic {
+
+
+.requester-profile-pic {
+
   width: 24px;
   height: 24px;
   border-radius: 16px;
@@ -2426,4 +2566,219 @@ height: 960px; */
   height: 24px;
   border-radius: 16px;
   margin: 10px;
+}
+
+.dashed_border {
+  border: 2px #999 dashed;
+  background-color: #f7f7f8;
+  border-radius: 10px;
+}
+
+.blue_btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-family: Nunito;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.005em;
+  text-align: left;
+  color: #3e51ff;
+  background: #dedefa;
+  border: none;
+  outline: none;
+}
+
+.setting_logo img {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.w_100_h_100 {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.comment-section {
+  position: absolute;
+  background: white;
+  z-index: 10;
+}
+.progress-bar {
+  background: rgba(0, 0, 0, 0.05);
+  height: 28px;
+  width: 160px;
+  margin: 0 0 10px 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.progress-container {
+  position: relative;
+  height: 100%;
+}
+
+.progress {
+  background-color: #c6c7f8;
+  color: black;
+  font-weight: 600;
+  line-height: 28px;
+  height: 100%;
+}
+
+.progress-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 14px;
+  transform: translate(-50%, -50%);
+  color: #333; /* Choose a color that contrasts well with your progress bar color */
+  font-weight: 600;
+}
+.doc-req-bar {
+  border-radius: 0px 4px 4px 0px;
+  background: rgba(0, 0, 0, 0.1);
+  height: 6px;
+  flex-shrink: 0;
+}
+.w_20_h_20 {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.w_50_h_50 {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.w_50_h_70 {
+  width: 50px;
+  height: 70px;
+  object-fit: cover;
+  margin-right: 5px;
+  border-radius: 15px;
+}
+.task_reply textarea {
+  border: #3e51ff dashed 2px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.mdb_table {
+  font-family: "Nunito", sans-serif;
+}
+
+.mdb_table thead th {
+  border: none;
+}
+
+.mdb_table tbody tr {
+  border: none;
+}
+
+.mdb_table tbody td {
+  border: none;
+}
+
+.mdb-datatable-filter {
+  position: absolute;
+  top: 35px;
+  margin-right: 20px;
+}
+.mdb-datatable-filter input {
+  width: 100%;
+  height: 100%;
+}
+
+.dataTables_paginate {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+
+.dataTables_wrapper .pagination-page.active span {
+  display: none !important;
+}
+
+.pagination .page-item.active .page-link {
+  color: #131111;
+  background-color: #ebf5ed !important;
+  border-radius: 0.125rem;
+  /* box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%); */
+  transition: all 0.2s linear;
+}
+
+div.dataTables_wrapper div.dataTables_info,
+div.dataTables_wrapper div.dataTables_paginate {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem !important;
+  font-weight: 400;
+}
+.sr-only {
+  display: none !important;
+}
+
+.task_reply textarea {
+  border: #3e51ff dashed 2px;
+  border-radius: 5px;
+  outline: none;
+}
+.textarea_h_100px {
+  min-height: 100px !important;
+}
+.nav.nav-tabs {
+  font-size: 14px !important;
+  text-decoration: none !important;
+  font-family: "Nunito" !important;
+  border: none !important;
+}
+
+.nav.nav-tabs .nav-link {
+  color: black !important;
+}
+.custom-progress {
+  accent-color: black;
+}
+.custom-progress2 {
+  /* accent-color: #c6c7f8; */
+  accent-color: rgb(0, 0, 0);
+  height: 50px !important;
+}
+
+.custom-progress2 {
+  position: relative;
+}
+
+.custom-progress2::after {
+  content: attr(value) "%" !important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #0f1048;
+  font-weight: bold;
+}
+
+.signature_logos {
+  height: 100px;
+}
+
+.otp-input-box .form-group{
+  display: flex;
+  align-items: center;
+  justify-content: space-around !important;
+}
+.otp-input-box .form-group input{
+  width: 70px !important;
+  height: 50px;
+  border: 1px solid #e0e2e7;
+  border-radius: 10px;
+  background-color: #F7F7F8;
 }

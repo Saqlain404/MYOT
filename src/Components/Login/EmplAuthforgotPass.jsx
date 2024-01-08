@@ -19,7 +19,7 @@ const EmplAuthforgotPassword = () => {
     
     const response = await EmplforgotPassword(data);
     if (!response?.data.results.otp) {
-      console.log(response?.data?.results?.otp);
+      console.log(response?.data?.email);
       navigate("/Employee/Forgot-password");
     } else {
       navigate("/Employee/OTP-verification", { state: { email: data?.email } })

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
@@ -6,80 +6,55 @@ import { Card } from "antd";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarSig";
 import SidebarSig from "./SidebarSig";
+import {
+  SignatoryDashboardCount,
+  SignatoryProfileCompletion,
+} from "../../ApiServices/SignatoryHttpServices/signatoryHttpServices";
+import { DashboardTotalDocument } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import CommonListing from "./CommonListAwaiting/CommonListing";
 
 const DashboardSig = () => {
-  const documents = [
-    {
-      id: 1,
-      templateName: "Reimbursement Forms",
-      assignedTo: [
-        <img src="/images/dashboard/avatar3.png" className="me-2" />,
-      ],
-      version: "0.2",
-      department: "Human Resources",
-      date: "26 Oct, 2023",
-      status: <p className="text-primary">In Progress</p>,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 2,
-      templateName: "Client Contracts",
-      assignedTo: [
-        <img src="/images/dashboard/avatar2.png" className="me-2" />,
-      ],
-      version: "0.2",
-      department: "Sales & Marketing",
-      date: "26 Oct, 2023",
-      status: <p className="text-warning">Approved</p>,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 3,
-      templateName: "Skill Assessment Reports",
-      assignedTo: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
-      ],
-      version: "0.2",
-      department: "Training & Development",
-      date: "26 Oct, 2023",
-      status: <p className="text-success">Complete</p>,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 4,
-      templateName: "Incident Reports",
-      assignedTo: [<img src="/images/dashboard/Avatar.png" className="me-2" />],
-      version: "0.2",
-      department: "Human Resources",
-      date: "26 Oct, 2023",
-      status: <p className="text-primary">In Progress</p>,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 5,
-      templateName: "Employment Contract",
-      assignedTo: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" />,
-      ],
-      version: "0.2",
-      department: "Training & Development",
-      date: "26 Oct, 2023",
-      status: <p className="text-info">Pending</p>,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
+  const [count, setCount] = useState([]);
+  const [totalDocument, setTotalDocument] = useState([]);
+  const [ticketCount, setTicketCount] = useState([]);
 
-    // Add more tasks here
-  ];
+  useEffect(() => {
+    getTotalCount();
+    getDashboardTotalDocument();
+    getProfileCompletion();
+  }, []);
+
+  const getProfileCompletion = async () => {
+    let id = localStorage.getItem("myot_admin_id");
+
+    let { data } = await SignatoryProfileCompletion(id);
+    if (!data?.error) {
+      setTicketCount(data?.results);
+    }
+  };
+
+  const getTotalCount = async () => {
+    try {
+      let { data } = await SignatoryDashboardCount();
+      if (!data?.error) {
+        setCount(data?.results);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getDashboardTotalDocument = async () => {
+    try {
+      let { data } = await DashboardTotalDocument();
+      console.log(data);
+      if (!data?.error) {
+        setTotalDocument(data?.results?.document);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -139,16 +114,16 @@ const DashboardSig = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        256
+                        {(count?.totalUser && count?.totalUser[0]?.count) || 0}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
                         <img
                           src="/images/dashboard/ArrowRise.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -159,16 +134,16 @@ const DashboardSig = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        156
+                        {count?.totalTemplete || 0}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         -0.56%
                         <img
                           src="/images/dashboard/ArrowFall.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -181,16 +156,16 @@ const DashboardSig = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        1,320
+                        {count?.totalDocument || 0}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         -1.48%
                         <img
                           src="/images/dashboard/ArrowFall.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -201,16 +176,17 @@ const DashboardSig = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        32
+                        {count?.totalActiveUser &&
+                          count?.totalActiveUser[0]?.count}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
+                      {/* <span className="card-insights fw-bold m-auto">
                         +9.15%
                         <img
                           src="/images/dashboard/ArrowRise.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -219,24 +195,109 @@ const DashboardSig = () => {
             <div className="col-12">
               <div className="row">
                 <div className="col-md-6 ">
-                  <img
-                    src="/images/dashboard/Block1.svg"
-                    alt=""
-                    className="dashboard-graph"
-                  />
+                  <div className="dashboard-card3 bg-light table-card3 dashboard-card3-text">
+                    <p className="text-card">Document Request</p>
+
+                    {totalDocument &&
+                      totalDocument.map((count) => (
+                        <>
+                          <div className="row">
+                            {/* <div className="my-1 col-6"> */}
+                            <span className="col-6">
+                              {
+                                count?._id
+                                  .flat(Infinity)[0]
+                                  ?.departmentName.split(" ")[0]
+                              }
+                            </span>
+                            <span className="fw-bold col-6">
+                              <progress
+                                className="w-100 custom-progress"
+                                id="file"
+                                value={count?.count * 10}
+                                max="100"
+                              />
+                            </span>
+                            {/* </div> */}
+                          </div>
+                        </>
+                      ))}
+                  </div>
                 </div>
 
-                <div className="col-md-6 ">
-                  <img
-                    src="/images/dashboard/Block2.svg"
-                    alt=""
-                    className="dashboard-graph"
-                  />
+                <div className="col-md-6">
+                  <div className="dashboard-card2 ">
+                    <p className="dashboard-card2-text">Open Tickets</p>
+                    <p className="text-card  mb-3">
+                      {ticketCount?.totalComplete} / {ticketCount?.totalTicket}
+                    </p>
+                    <p className=" mb-1 dashboard-card2-text">
+                      Profile Completion
+                    </p>
+
+                    <div className="progress-bar">
+                      <div className="progress-container">
+                        <div
+                          className="progress"
+                          style={{ width: `${ticketCount?.completepresent}%` }}
+                        ></div>
+                        <span className="progress-label">{`${ticketCount?.completepresent}%`}</span>
+                      </div>
+                    </div>
+                    <p className=" mb-1 dashboard-card2-text">Status</p>
+                    <div className="progress-bar">
+                      <div className="progress-container">
+                        <div
+                          className="progress"
+                          style={{
+                            width: `${ticketCount?.InprogressPresent}%`,
+                          }}
+                        ></div>
+                        <span className="progress-label">{`In Progress / ${ticketCount?.InprogressPresent}%`}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
+                {/* <div className="col-md-6 mb-md-2 ">
+                  <div className="dashboard-card2 bg-danger-subtle">
+                    <div>
+                      <p className="dashboard-card2-text">Open Tickets</p>
+                      <p className="text-card  mb-3">
+                        {`${profileCompleteData?.totalComplete} / ${profileCompleteData?.totalTicket}`}{" "}
+                      </p>
+                    </div>
+                    <div>
+                      <p className=" mb-1 dashboard-card2-text">
+                        Completed
+                      </p>
+                      <progress
+                        className="w-100 custom-progress2"
+                        id="file"
+                        // value={50}
+                        value={profileCompleteData?.completepresent}
+                        max="100"
+                      />
+                    </div>
+
+                    <div>
+                      <p className=" mb-1 dashboard-card2-text">Pending</p>
+                      <progress
+                        className="w-100 custom-progress2"
+                        id="file"
+                        // value={50}
+                        value={profileCompleteData?.InprogressPresent}
+                        max="100"
+                      />
+                    </div>
+                  </div>
+                </div> */}
               </div>
             </div>
 
-            <p className="table-name mb-2 mt-4">Templates</p>
+            <CommonListing />
+
+            {/* <p className="table-name mb-2 mt-4">Templates</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
                 <div className="col-md-3 table-searchbar-imgs">
@@ -307,7 +368,7 @@ const DashboardSig = () => {
                         />
                         Version
                       </th>
-                      
+
                       <th className="th-text">
                         <input
                           className="form-check-input checkbox-table"
@@ -355,7 +416,7 @@ const DashboardSig = () => {
                         </td>
                         <td className="td-text">{document.assignedTo}</td>
                         <td className="td-text">{document.version}</td>
-                        
+
                         <td className="td-text">
                           <img src="/images/dashboard/CalendarBlank.png" />
                           {document.date}
@@ -463,7 +524,7 @@ const DashboardSig = () => {
                   </li>
                 </ul>
               </nav>
-            </div>
+            </div> */}
           </div>
           <div className="col">
             <RightSidebar />

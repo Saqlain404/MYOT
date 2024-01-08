@@ -1,73 +1,137 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
+import {
+  AnalyticsDataAprv,
+  approvedTemplete,
+  approverTempleteList,
+  dashCount,
+  rejectedTemplete,
+  searchTemplete,
+  totalDocRequestAprv,
+} from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
+import moment from "moment";
+import GradientLineChartApprv from "./GradientLineChartApprv";
 
 const DashboardAprv = () => {
-  const documents = [
-    {
-      id: 1,
-      templateName: "Salary Slip.jpg",
-      creator: [
-        <img src="/images/dashboard/avatar3.png" alt="" className="me-2" />,
-        "Eve Leroy",
-      ],
-      department: "Human Resources",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-warning">High</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" alt="" className="w-auto p-3"/>,
-    },
-    {
-      id: 2,
-      templateName: "Promotion Letter.zip",
-      creator: [
-        <img src="/images/dashboard/avatar2.png" alt="" className="me-2" />,
-        "Lana Steiner",
-      ],
-      department: "Sales & Marketing",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-warning">High</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" alt="" className="w-auto p-3"/>,
-    },
-    {
-      id: 3,
-      templateName: "Create Project Wireframes.xls",
-      creator: [
-        <img src="/images/dashboard/Avatar1.png" alt="" className="me-2" />,
-        "ByeWind",
-      ],
-      department: "Training & Development",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-danger">Urgent</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" alt="" className="w-auto p-3"/>,
-    },
-    {
-      id: 4,
-      templateName: "Create Project Wireframes.pdf",
-      creator: [
-        <img src="/images/dashboard/Avatar.png" alt="" className="me-2" />,
-        "Katherine Moss",
-      ],
-      department: "Human Resources",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-secondary">Low</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" alt="" className="w-auto p-3"/>,
-    },
-    {
-      id: 5,
-      templateName: "Project tech requirements.zip",
-      creator: [
-        <img src="/images/dashboard/Avatar1.png" alt="" className="me-2" />,
-        "Natali Craig",
-      ],
-      department: "Training & Development",
-      dateOfCreation: "2023-09-16",
-      status: <p className="text-primary">Normal</p>,
-      action: <img src="/images/sidebar/ThreeDots.svg" alt="" className="w-auto p-3"/>,
-    },
-    
-    // Add more tasks here
-  ];
+  const [searchData, setSearchData] = useState("");
+  const [documentRequests, setDocumentRequests] = useState([]);
+  const [countData, setCountData] = useState();
+  const[updatedStatus,setUpdatedStatus] = useState()
+
+  const ids =
+    localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+
+  const handleSearch = async () => {
+    const result = await searchTemplete(searchData, ids);
+    const searchResult = result?.data?.results?.templete;
+    console.log(searchResult);
+
+    if (searchResult && Array.isArray(searchResult)) {
+      const mappedResult = searchResult?.map((document) => ({
+        documentName: document?.templeteName,
+        img: [document?.manager?.[0]?.profile_Pic],
+        version: document?.templeteVersion?.[0]?.version,
+        assignedTo: [document?.manager?.[0]?.name],
+        department: [document?.manager?.[0]?.department?.[0]?.departmentName],
+        action: (
+          <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        ),
+        dateofSigning: [moment(document?.createdAt).calendar()],
+        comments: (
+          <img
+            src="/images/dashboard/Comment.png"
+            className="mx-auto d-block"
+          />
+        ),
+        status: [document?.status],
+      }));
+      setDocumentRequests(mappedResult);
+    }
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchData]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!searchData || searchData === "") {
+        const names = await approverTempleteList(ids);
+
+        const requests = names?.map((name) => ({
+          documentName: name?.templeteName,
+          document_id: name?._id,
+          version: name?.templeteVersion?.[0]?.version,
+          assignedTo: [name?.manager?.name],
+          img: [name?.manager?.profile_Pic],
+          action: (
+            <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+          ),
+          department: [name?.manager?.department_Id?.departmentName],
+          dateofSigning: [moment(name?.createdAt).calendar()],
+          comments: (
+            <img
+              src="/images/dashboard/Comment.png"
+              className="mx-auto d-block"
+            />
+          ),
+          commentID: name?._id,
+          status: [name?.status],
+        }));
+
+        setDocumentRequests(requests);
+      }
+    };
+    // console.log(documentRequests);
+
+    fetchData();
+  }, [searchData,updatedStatus]);
+
+
+
+  const count = async () => {
+    const data = await dashCount();
+    setCountData(data);
+  };
+
+  useEffect(() => {
+    count();
+  }, []);
+
+  const approved = async(document_Id)=>{
+    const approveData = await approvedTemplete(document_Id)
+    setUpdatedStatus((prev)=>!prev)
+  }
+  const rejected = async(document_Id)=>{
+    const rejectedData = await rejectedTemplete(document_Id)
+    setUpdatedStatus((prev)=>!prev)
+  }
+
+  const [analyticsData, setAnalyticsData] = useState([]);
+  const [docTempleteData, setDocTempleteData] = useState([]);
+
+  useEffect(() => {
+    getAnalyticsData();
+    getTotalDocData();
+  }, []);
+
+  const getAnalyticsData = async () => {
+    let { data } = await AnalyticsDataAprv();
+    console.log(data);
+    if (!data?.error) {
+      setAnalyticsData(data?.results);
+      console.log(analyticsData)
+    }
+  };
+  const getTotalDocData = async () => {
+    let { data } = await totalDocRequestAprv();
+    if (!data?.error) {
+      setDocTempleteData(data?.results?.totalDocument);
+      console.log(docTempleteData)
+    }
+  };
 
   return (
     <>
@@ -102,11 +166,11 @@ const DashboardAprv = () => {
                       className="ms-4 "
                     />
                     <Link to={"/Approver/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -127,38 +191,20 @@ const DashboardAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                       256
+                        {countData?.totalUser[0]?.count}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        +11.01%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
-                    </div>
+                    </div> 
                   </div>
                 </div>
                 <div className="col-md-3 ">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">
-                        Total Templates
-                      </h6>
+                      <h6 className="mb-0 header-card-text">Total Templates</h6>
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        156
+                        {countData?.totalTemplete}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        -0.56%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -171,16 +217,8 @@ const DashboardAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        1,320
+                        {countData?.totalDocument}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        -1.48%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -191,16 +229,8 @@ const DashboardAprv = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        32
+                        {countData?.totalActiveUser[0]?.count || 0}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        +9.15%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -208,10 +238,11 @@ const DashboardAprv = () => {
             </div>
             <div className="col-12">
               <div className="row">
-            
-                <div className="col-md-9 ">
-
-                <img src="/images/dashboard/Block.svg" alt="" className="dashboard-graph"/>
+                <div className="col-md-9 mt-4 ">
+                <GradientLineChartApprv
+                  tempData={analyticsData?.totalTemplete}
+                    // activeUserData={analyticsData?.totalActiveUser}
+                  />
                   {/* <div className="dashboard-card bg-light ">
                     <div className="d-flex justify-content-around dashboard-card-text">
                       <p>Templates </p>
@@ -251,55 +282,28 @@ const DashboardAprv = () => {
                   </div> */}
                 </div>
 
-                
-
-                <div className="col-md-3 ">
-                <div className="dashboard-card3 bg-light ">
+                <div className="col-md-3 mt-4">
+                  <div
+                    className="dashboard-card3 bg-light "
+                    style={{ maxHeight: "320px", overflowY: "auto" }}
+                  >
                     <p className="text-card">Document Request</p>
-                    <table className="table-card3 dashboard-card3-text">
-                      <tr className="pb-2">
-                        <td style={{paddingRight: 40}} className="text-nowrap">HR</td>
-                        <td>
-                          <img src="/images/dashboard/HR.png" alt="" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Finance</td>
-                        <td>
-                          <img src="/images/dashboard/Finance.png" alt="" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>R&D</td>
-                        <td>
-                          <img src="/images/dashboard/R&D.png" alt="" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Transport</td>
-                        <td>
-                          <img src="/images/dashboard/Transport.png" alt="" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>IT</td>
-                        <td>
-                          <img src="/images/dashboard/IT.png" alt="" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Sales</td>
-                        <td>
-                          <img src="/images/dashboard/sales.png" alt="" />
-                        </td>
-                      </tr>
-                    </table>
+                    <div className="table-card3 dashboard-card3-text">
+                      {docTempleteData?.map((doc) => (
+                        <div className="pb-2 d-flex align-items-center justify-content-between">
+                          <div className="doc-req-text">
+                            {doc?._id?.[0]?.[0]?.[0]?.departmentName &&
+                              doc._id[0][0][0].departmentName.split(" ")[0]}
+                          </div>
+                          <div
+                            className="doc-req-bar"
+                            style={{ width: `${doc?.count * 10}%` }}
+                          ></div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-
-               
-                
-                
               </div>
             </div>
 
@@ -341,108 +345,193 @@ const DashboardAprv = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  onChange={(e) => {
+                    setSearchData(e.target.value);
+                    //  handleSearch();
+                  }}
+                  value={searchData.searchTerm}
                 />
               </form>
             </div>
-           
-                <div className="col-12 table_comman mt-3 ">
-                <div className="table-responsive">
-            <table className="table table-borderless">
-              <thead>
-                <tr className="th-text">
-                  <th className="th-text ">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Template Name
-                  </th>
-                  <th className="th-text">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Creator
-                  </th>
-                  <th className="th-text">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Department
-                  </th>
-                  <th className="th-text">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Date of Creation
-                  </th>
-                  <th className="th-text">
-                  <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Status</th>
-                  <th className="th-text">
-                  <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Action</th>
-                </tr>
-              </thead>
-              <tbody >
-                {documents.map((document) => (
-                  <tr
-                    key={document.id}
-                    
-                  >
-                    <td className="td-text">
-                      <input
-                        className="form-check-input checkbox-table me-4"
-                        type="checkbox"
-                        value=""
-                      />
-                      {document.templateName}
-                    </td>
-                    <td className="td-text">
-                      {document.creator}
-                    </td>
-                    <td className="td-text">
-                      {document.department}
-                    </td>
-                    <td className="td-text">
-                      <img src="/images/dashboard/CalendarBlank.png" alt="" />
-                      {document.dateOfCreation}
-                    </td>
-                    <td className="td-text">{document.status}</td>
-                    <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
-  {document.action}
-  </a>
-  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="/"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
-    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="/"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete Template</a></li>
-  </ul>
-</div>
-                          </td>
-                    <td></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            </div>
-            <nav
+
+            <div className="col-12 table_comman mt-3 ">
+              <div className="table-responsive">
+                <table className="table table-borderless">
+                  <thead>
+                    <tr className="th-text">
+                      <th className="th-text ">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Template Name
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Creator
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Department
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Date of Creation
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Status
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {documentRequests?.map((document) => (
+                      <tr key={document?.commentID}>
+                        <td className="td-text">
+                          <input
+                            className="form-check-input checkbox-table me-4"
+                            type="checkbox"
+                            value=""
+                          />
+                          {document?.documentName}
+                        </td>
+                        <td className="td-text">
+                          <img className="img_profile" src={document.img} />
+                          {document?.assignedTo}
+                        </td>
+                        <td className="td-text">{document?.department}</td>
+                        <td className="td-text">
+                          <img src="/images/dashboard/CalendarBlank.png" />
+                          {document?.dateofSigning}
+                        </td>
+                        <td
+                          className={`td-text ${
+                            document?.status == "Completed"
+                              ? "text-success"
+                              : document.status == "Pending"
+                              ? "text-info"
+                              : document.status == "Rejected"
+                              ? "text-danger"
+                              : "text-warning"
+                          }`}
+                        >
+                          {document.status}
+                        </td>
+                        <td className="td-text">
+                          <div class="dropdown">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              {document.action}
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Users Details
+                                </a>
+                              </li>
+                              <li>
+                                  <a onClick={()=>approved(document?.document_id)} class="dropdown-item border-bottom" href="#">
+                                    <img
+                                      src="/images/users/PencilLine.svg"
+                                      alt=""
+                                      className="me-2"
+                                    />
+                                    Approved
+                                </a>
+                              </li>
+                              <li>
+                                <a onClick={()=>rejected(document?.document_id)} class="dropdown-item text-danger" href="#">
+                                  <img
+                                    src="/images/XCircle.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Rejected
+                                </a>
+                              </li>
+                              {/* <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/PencilLine.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Edit User Details
+                                </a>
+                              </li> */}
+                              {/* <li>
+                                <a class="dropdown-item" href="#">
+                                  <img
+                                    src="/images/dashboard/Comment.png"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Comments
+                                </a>
+                              </li> */}
+                              {/* <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/TextAlignLeft.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Wrap Column
+                                </a>
+                              </li> */}
+                              {/* <li>
+                                <a class="dropdown-item text-danger" href="#">
+                                  <img
+                                    src="/images/users/Trash.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Delete Template
+                                </a>
+                              </li> */}
+                            </ul>
+                          </div>
+                        </td>
+                        <td></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <nav
                 aria-label="Page navigation"
                 className="d-flex justify-content-end page-navigation mt-3"
               >

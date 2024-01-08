@@ -1,7 +1,36 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { EmployeeLogout } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import { toast } from "react-toastify";
 
 const SidebarSig = () => {
+  const location = useLocation();
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    let id = localStorage.getItem("myot_admin_id");
+    const { data } = await EmployeeLogout(id);
+    console.log(data);
+    if (data && !data?.error) {
+      localStorage.clear();
+      localStorage.removeItem("myot_admin_id");
+
+      toast("Please Select Profile Image", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      
+      navigate("/Admin/Login");
+    }
+  };
+
   return (
     <div className="container-fluid  sidebar">
       {/* Sidebar scroll*/}
@@ -58,7 +87,11 @@ const SidebarSig = () => {
         <div className="col-auto col-mg-3 min-vh-100 mb-4">
           <p className="th-text">MAIN MENU</p>
           <ul className="nav nav-pills flex-column">
-            <li className="nav-item text-dark">
+            <li
+              className={`nav-item text-dark ${
+                location.pathname === "/Signatory/Home" ? "nav_active" : ""
+              }`}
+            >
               <Link to={"/Signatory/Home"} className="text-decoration-none">
                 <a
                   href="/"
@@ -74,7 +107,11 @@ const SidebarSig = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li
+              className={`nav-item text-dark ${
+                location.pathname === "/Signatory/Dashboard" ? "nav_active" : ""
+              }`}
+            >
               <Link
                 to={"/Signatory/Dashboard"}
                 className="text-decoration-none"
@@ -95,7 +132,13 @@ const SidebarSig = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li
+              className={`nav-item text-dark ${
+                location.pathname.match(/^\/Signatory\/Awaiting-sig/)
+                  ? "nav_active"
+                  : ""
+              }`}
+            >
               <Link
                 to={"/Signatory/Awaiting-sig"}
                 className="text-decoration-none"
@@ -116,7 +159,13 @@ const SidebarSig = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li
+              className={`nav-item text-dark ${
+                location.pathname === "/Signatory/History-log-approved"
+                  ? "nav_active"
+                  : ""
+              }`}
+            >
               <Link
                 to={"/Signatory/History-log-approved"}
                 className="text-decoration-none"
@@ -138,7 +187,11 @@ const SidebarSig = () => {
               </Link>
             </li>
 
-            <li className="nav-item text-dark">
+            <li
+              className={`nav-item text-dark ${
+                location.pathname === "/Signatory/Calendar" ? "nav_active" : ""
+              }`}
+            >
               <Link to={"/Signatory/Calendar"} className="text-decoration-none">
                 <a
                   href="/"
@@ -157,7 +210,11 @@ const SidebarSig = () => {
               </Link>
             </li>
 
-            <li className="nav-item text-dark">
+            <li
+              className={`nav-item text-dark ${
+                location.pathname === "/Signatory/Requests" ? "nav_active" : ""
+              }`}
+            >
               <Link to={"/Signatory/Requests"} className="text-decoration-none">
                 <a
                   href="/"
@@ -175,7 +232,13 @@ const SidebarSig = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark ">
+            <li
+              className={`nav-item text-dark ${
+                location.pathname === "/Signatory/Announcements"
+                  ? "nav_active"
+                  : ""
+              }`}
+            >
               <Link
                 to={"/Signatory/Announcements"}
                 className="text-decoration-none"
@@ -196,9 +259,15 @@ const SidebarSig = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li
+              className={`nav-item text-dark ${
+                location.pathname === "/Signatory/Announcements"
+                  ? "nav_active"
+                  : ""
+              }`}
+            >
               <a
-                href="/"
+                // href="/"
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"
               >
@@ -213,7 +282,13 @@ const SidebarSig = () => {
 
             <p className="th-text mt-3">OTHERS</p>
 
-            <li className="nav-item text-dark">
+            <li
+              className={`nav-item text-dark ${
+                location.pathname === "/Signatory/My-Profile"
+                  ? "nav_active"
+                  : ""
+              }`}
+            >
               <Link
                 to={"/Signatory/My-Profile"}
                 className="text-decoration-none"
@@ -234,25 +309,31 @@ const SidebarSig = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
-              <Link to={"/Signatory/Settings"} className="text-decoration-none">
-                <a
-                  href="/"
-                  className="nav-link text-dark fs-5 align-middle "
-                  aria-current="page"
-                >
-                  <img
-                    src="/images/sidebar/settings.png"
-                    className="align-middle sidebar-icon"
-                  />
+            <li
+              className={`nav-item text-dark ${
+                location.pathname === "/Signatory/Settings" ? "nav_active" : ""
+              }`}
+            >
+              <Link
+                to={"/Signatory/Settings"}
+                className="nav-link text-dark fs-5 align-middle "
+                aria-current="page"
+              >
+                <img
+                  src="/images/sidebar/settings.png"
+                  className="align-middle sidebar-icon"
+                />
 
-                  <span className="ms-3 align-middle sidebar-btn">
-                    Settings
-                  </span>
-                </a>
+                <span className="ms-3 align-middle sidebar-btn">Settings</span>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li
+              className={`nav-item text-dark ${
+                location.pathname.match(/^\/Signatory\/Help/)
+                  ? "nav_active"
+                  : ""
+              }`}
+            >
               <Link to={"/Signatory/Help"} className="text-decoration-none">
                 <a
                   href="/"
@@ -268,10 +349,9 @@ const SidebarSig = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li className="nav-item text-dark" onClick={handleLogout}>
               <a
-                href="/"
-                className="nav-link text-dark fs-5 align-middle "
+                className="nav-link text-dark fs-5 align-middle cursor_pointer"
                 aria-current="page"
               >
                 <img
@@ -317,8 +397,10 @@ const SidebarSig = () => {
               </li>
             </Link>
             <Link to={"/Employee/Home"} className="text-decoration-none">
-       <li><a class="dropdown-item">Employee</a></li>
-    </Link>
+              <li>
+                <a class="dropdown-item">Employee</a>
+              </li>
+            </Link>
             <Link to={"/Department/Home"} className="text-decoration-none">
               <li>
                 <a class="dropdown-item">Department Manager</a>

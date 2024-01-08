@@ -80,9 +80,7 @@ import ContactUsDept from "./Components/DepartmentManager/ContactUsDept";
 import Settings from "./Components/Index/Settings";
 import Comments from "./Components/Index/Comments";
 import SignManagement from "./Components/Signatory/SignManagement";
-import SettingsSig from "./Components/Signatory/SettingsSig";
 import SettingsAprv from "./Components/Approver/SettingsAprv";
-import SettingsDept from "./Components/DepartmentManager/SettingsDept";
 
 import HomeEmpl from "./Components/Employee/HomeEmpl";
 import EmployeeDash from "./Components/Employee/EmployeeDash";
@@ -109,9 +107,22 @@ import ChatboxDept from "./Components/DepartmentManager/ChatboxDept";
 import ChatboxAprv from "./Components/Approver/Chatbox";
 import CalendarMonthDept from "./Components/DepartmentManager/CalendarMonthDept";
 import CalenderYearDept from "./Components/DepartmentManager/CalenderYear";
+
 import CommentsDept from "./Components/DepartmentManager/CommentsDept";
 import AuthResetPass from "./Components/Login/AuthResetPass";
 import AuthSignUp from "./Components/Login/AuthSignUp";
+
+import EmplySetting from "./Components/Employee/EmplySetting";
+import OTPauthEmply from "./Components/Login/OTPauthEmply";
+import CalendarMonthEmply from "./Components/Employee/CalendarMonthEmply";
+import CalenderYearEmply from "./Components/Employee/CalenderYearEmply";
+import DocComments from "./Components/Index/DocumentRequests/Comment";
+import CommentsEmply from "./Components/Employee/CommentsEmply";
+import SigComments from "./Components/Signatory/Comments/Comments";
+import SettingsSig from "./Components/Signatory/SettingsSig";
+import UpdatePassword from "./Components/Login/UpdatePassword";
+import UpdatePassEmply from "./Components/Login/UpdatePassEmply";
+import CommentsAprv from "./Components/Approver/CommentsAprv";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -120,11 +131,18 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route path="*" element={<AuthLogin />} />
+
         <Route path="Admin/Login" element={<AuthLogin />} />
         <Route path="Signup" element={<AuthSignUp />} />
         <Route path="Admin/Forgot-password" element={<AuthforgotPass />} />
         <Route path="Admin/Reset-password" element={<AuthResetPass />} />
         <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} />
+
+        <Route path="Login" element={<AuthLogin />} />
+        <Route path="Forgot-password" element={<AuthforgotPass />} />
+        <Route path="Update-password" element={<UpdatePassword />} />
+        <Route path="Forgot-success" element={<AuthforgotSuccess />} />
+
         <Route path="Admin/Home" element={<Home />} />
         <Route path="Admin/Dashboard" element={<Dashboard />} />
         <Route path="Admin/Tasks" element={<Tasks />} />
@@ -146,7 +164,8 @@ function App() {
         <Route path="Admin/My-profile" element={<Profile />} />
         <Route path="Admin/Edit-profile" element={<EditProfile />} />
         <Route path="Admin/Settings" element={<Settings />} />
-        <Route path="Admin/Comments" element={<Comments />} />
+        <Route path="Admin/Tasks/Comments/:id" element={<Comments />} />
+        <Route path="Admin/Requests/Comments/:id" element={<DocComments />} />
         <Route path="Admin/Help" element={<Help />} />
         <Route path="Admin/Help/Help-Support" element={<HelpSupport />} />
         <Route path="Admin/Help/Contact-us" element={<ContactUs />} />
@@ -207,6 +226,7 @@ function App() {
         <Route path="Approver/Contact-us" element={<ContactUsAprv />} />
         <Route path="Approver/Settings" element={<SettingsAprv />} />
         <Route path="Approver/Chat" element={<ChatboxAprv />} />
+        <Route path="Approver/Comment/:id" element={<CommentsAprv />} />
 
         <Route path="Approver/My-profile" element={<ProfileAprv />} />
         <Route path="Approver/Edit-profile" element={<EditProfileAprv />} />
@@ -238,15 +258,23 @@ function App() {
         <Route path="Signatory/Help-Support" element={<HelpSupportSig />} />
         <Route path="Signatory/Contact-us" element={<ContactUsSig />} />
         <Route path="Signatory/Chat" element={<ChatboxSig />} />
-        <Route path="Signatory/Settings" element={<SettingsSig />} />
+        {/* <Route path="Signatory/Settings" element={<SettingsSig />} /> */}
 
         <Route path="Signatory/Requests" element={<RequestsSig />} />
         <Route path="Signatory/Announcements" element={<AnnouncementsSig />} />
         <Route path="Signatory/My-profile" element={<ProfileSig />} />
         <Route path="Signatory/Edit-profile" element={<EditProfileSig />} />
         <Route path="Signatory/Help" element={<HelpSig />} />
-        <Route path="Signatory/Help-Support" element={<HelpSupportSig />} />
-        <Route path="Signatory/Contact-us" element={<ContactUsSig />} />
+        <Route
+          path="Signatory/Help/Help-Support"
+          element={<HelpSupportSig />}
+        />
+        <Route path="Signatory/Help/Contact-us" element={<ContactUsSig />} />
+        <Route path="Signatory/Home/Comments/:id" element={<SigComments />} />
+        <Route
+          path="Signatory/Awaiting-sig/Comments/:id"
+          element={<SigComments />}
+        />
 
         <Route path="Employee/Login" element={<EmplAuthLogin />} />
         <Route
@@ -254,6 +282,10 @@ function App() {
           element={<EmplAuthforgotPassword />}
         />
         <Route path="Employee/Forgot-Success" element={<EmplForgotSuccess />} />
+        <Route
+          path="Employee/reset-update-password"
+          element={<UpdatePassEmply />}
+        />
         <Route path="Employee/Home" element={<HomeEmpl />} />
         <Route path="Employee/Dashboard" element={<EmployeeDash />} />
         <Route
@@ -272,19 +304,38 @@ function App() {
           path="Employee/received-doc/view-details"
           element={<ViewReceivedDoc />}
         />
+
         {/* <Route path="Employee/OTP-verification" element={<OTPauthEmply />} /> */}
+
+        <Route path="Employee/OTP-verification" element={<OTPauthEmply />} />
+
         <Route path="Employee/profile" element={<EmplProfile />} />
         <Route path="Employee/Edit-Profile" element={<EmplEditProfile />} />
         <Route path="Employee/Help&Support" element={<EmplHelpSupport />} />
         <Route path="Employee/Help" element={<EmplHelp />} />
         <Route path="Employee/Chat" element={<ChatboxEmploy />} />
         <Route path="Employee/Contact" element={<ContactUsEmpl />} />
+
         {/* <Route path="Employee/Settings" element={<EmplySetting />} /> */}
         {/* <Route
           path="Employee/Calendar-month"
           element={<CalendarMonthEmply />}
         /> */}
         {/* <Route path="Employee/Calendar-year" element={<CalenderYearEmply />} /> */}
+
+        <Route path="Employee/Settings" element={<EmplySetting />} />
+        <Route
+          path="Employee/Calendar-month"
+          element={<CalendarMonthEmply />}
+        />
+        <Route path="Employee/Calendar-year" element={<CalenderYearEmply />} />
+        <Route path="Employee/Settings" element={<EmplySetting />} />
+        <Route
+          path="Employee/Calendar-month"
+          element={<CalendarMonthEmply />}
+        />
+        <Route path="Employee/Calendar-year" element={<CalenderYearEmply />} />
+        <Route path="Employee/Comment/:id" element={<CommentsEmply />} />
       </Routes>
     </div>
   );

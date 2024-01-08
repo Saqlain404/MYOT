@@ -22,7 +22,8 @@ const Announcements = () => {
   }, []);
 
   const getAnnouncements = async () => {
-    let { data } = await AnnouncementLists();
+    let id = localStorage.getItem("myot_admin_id");
+    let { data } = await AnnouncementLists(id);
     console.log(data);
     if (!data?.error) {
       setDocuments(data?.results?.announcementList);
@@ -35,26 +36,37 @@ const Announcements = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let id = localStorage.getItem("myot_admin_id");
     let formData = new FormData();
     formData.append("categoryName", announcementType);
     formData.append("document", files?.doc_img);
     formData.append("text", description);
+    formData.append("creator_Id", id);
 
-    let { data } = await CreateAnnouncement(formData);
-    console.log(data);
-    if (!data?.error) {
-      toast("New Announcement Created", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      getAnnouncements();
-      document.getElementById("modalClose").click();
+    try {
+      let { data } = await CreateAnnouncement(formData);
+      console.log(data);
+      if (data && !data?.error) {
+        toast("New Announcement Created", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setAnnouncementType("");
+        setDescription("");
+        setFiles([]);
+        document.getElementById("resetForm").click();
+        document.getElementById("modalClose").click();
+        getAnnouncements();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
     }
   };
 
@@ -135,20 +147,20 @@ const Announcements = () => {
             >
               <div class="modal-dialog modal-dialog-centered modal-dialog-department">
                 <div class="modal-content border-0">
-                  <div class="d-flex modal-header border-bottom">
-                    <p class="mb-0" id="exampleModalLabel">
-                      Create New Announcement
-                    </p>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                      id="modalClose"
-                    ></button>
-                  </div>
-
                   <form onSubmit={handleSubmit}>
+                    <div class="d-flex modal-header border-bottom">
+                      <p class="mb-0" id="exampleModalLabel">
+                        Create New Announcement
+                      </p>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        id="modalClose"
+                      ></button>
+                    </div>
+
                     <div className="row p-3">
                       <div className="col-12 mb-3 d-flex">
                         <div className="col-6 pe-3">
@@ -178,6 +190,7 @@ const Announcements = () => {
                             name="doc_file"
                             id="doc_file"
                             onChange={(e) => handleImgChange(e, "doc_img")}
+                            accept=".png, .jpg, .jpeg, .pdf"
                           />
                         </div>
                       </div>
@@ -193,7 +206,7 @@ const Announcements = () => {
                           id="description"
                           value={description}
                           onChange={(e) => setDescription(e.target.value)}
-                          style={{minHeight:'150px'}}
+                          style={{ minHeight: "150px" }}
                         ></textarea>
                       </div>
                     </div>
@@ -201,7 +214,7 @@ const Announcements = () => {
                       <button type="submit" class="user-modal-btn">
                         Send
                       </button>
-                      <button type="reset" id="reset" className="d-none">
+                      <button type="reset" id="resetForm" className="d-none">
                         reset
                       </button>
                     </div>
@@ -212,46 +225,49 @@ const Announcements = () => {
             {/* <!-- Modal End--> */}
 
             <div className="container rounded mb-3">
-              {documents.map((document) => (
-                <>
-                  <div className="row my-4 bg-body-tertiary">
-                    <p className="templates-leave mt-3 ms-2 mb-0 ">
-                      {`Announcement > ${document?.categoryName}`}
-                    </p>
-                    <div className="col-12">
-                      <div className="col rounded bg-white d-flex m-3 p-2 algin-items-center justify-content-between">
-                        <div className="ps-2 pe-3">
-                          <div className="d-flex">
-                            <img
-                              style={{
-                                width: "20px",
-                                height: "20px",
-                                borderRadius: "50%",
-                              }}
-                              src={
-                                document?.document
-                                  ? document?.document
-                                  : "/images/dashboard/user (2) 1.svg"
-                              }
-                              alt=""
-                              className="me-2"
-                            />
-                            <p className="anouncement-text">{document?.text}</p>
+              {documents &&
+                documents?.map((document) => (
+                  <>
+                    <div className="row my-4 bg-body-tertiary">
+                      <p className="templates-leave mt-3 ms-2 mb-0 ">
+                        {`Announcement > ${document?.categoryName}`}
+                      </p>
+                      <div className="col-12">
+                        <div className="col rounded bg-white d-flex m-3 p-2 algin-items-center justify-content-between">
+                          <div className="ps-2 pe-3">
+                            <div className="d-flex">
+                              <img
+                                style={{
+                                  width: "20px",
+                                  height: "20px",
+                                  borderRadius: "50%",
+                                }}
+                                src={
+                                  document?.document
+                                    ? document?.document
+                                    : "/images/dashboard/user (2) 1.svg"
+                                }
+                                alt=""
+                                className="me-2"
+                              />
+                              <p className="anouncement-text">
+                                {document?.text}
+                              </p>
+                            </div>
+                            <div className="d-flex ms-4 mt-1">
+                              <img
+                                src="/images/dashboard/bookmark 1.svg"
+                                alt=""
+                                className="m-1 "
+                              />
+                              <p className="new-feedback">New feedback added</p>
+                            </div>
                           </div>
-                          <div className="d-flex ms-4 mt-1">
-                            <img
-                              src="/images/dashboard/bookmark 1.svg"
-                              alt=""
-                              className="m-1 "
-                            />
-                            <p className="new-feedback">New feedback added</p>
-                          </div>
+                          <p className="announcement-time">
+                            {moment(document?.createdAt).calendar()}
+                          </p>
                         </div>
-                        <p className="announcement-time">
-                          {moment(document?.createdAt).calendar()}
-                        </p>
-                      </div>
-                      {/* <div className="col rounded bg-white d-flex m-3 p-2">
+                        {/* <div className="col rounded bg-white d-flex m-3 p-2">
                         <div className="ps-2 pe-3">
                           <div className="d-flex">
                             <img
@@ -277,10 +293,10 @@ const Announcements = () => {
                           Yesterday at 4:17 Pm
                         </p>
                       </div> */}
+                      </div>
                     </div>
-                  </div>
-                </>
-              ))}
+                  </>
+                ))}
             </div>
 
             <div className="footer">

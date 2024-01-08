@@ -90,6 +90,7 @@ const Home = () => {
     if (!data?.error) {
       const templates = data?.results?.templete;
       setTemplate(templates);
+      console.log(templates)
     }
   };
 
@@ -108,7 +109,8 @@ const Home = () => {
 
   const handleSubmit = async (e, templete_Id) => {
     e.preventDefault();
-    let creator_Id = localStorage.getItem("user_id");
+    let creator_Id = localStorage.getItem("myot_admin_id");
+    console.log(creator_Id, comment, templete_Id)
     let { data } = await AddCommentForTask({
       comment,
       templete_Id,
@@ -188,7 +190,7 @@ const Home = () => {
                     </div>
                     <div className="text-center mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {adminCount?.totalEmployee}
+                        {adminCount?.totalEmployee[0]?.count}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -232,7 +234,7 @@ const Home = () => {
                     </div>
                     <div className="text-center mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {adminCount?.totalActiveUser}
+                        {adminCount?.totalActiveUser[0]?.count || 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -0.65%
@@ -463,19 +465,23 @@ const Home = () => {
                                   template?.templeteVersion.length - 1
                                 ]?.version
                               }`
-                            : "No templete versions found"}
+                            : "No versions found"}
                         </td>
                         <td
                           className={`"td-text" ${
                             hiddenColumns.status ? "d-none" : "table-cell"
                           } ${
                             template?.status === "Pending"
-                              ? "text-info"
-                              : template?.status === "Approved"
                               ? "text-warning"
+                              : template?.status === "Approved"
+                              ? "text-success"
                               : template?.status === "In Progress"
                               ? "text-primary"
-                              : "text-success"
+                              : template?.status === "Rejected"
+                              ? "text-danger"
+                              : template?.status === "Completed"
+                              ? "text-success"
+                              : "text-muted"
                           }`}
                         >
                           {template?.status}
@@ -501,7 +507,7 @@ const Home = () => {
                             </a>
                             <form
                               className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
-                              onSubmit={(e) => handleSubmit(e, document?._id)}
+                              onSubmit={(e) => handleSubmit(e, template?._id)}
                             >
                               <div className="mb-3 border-bottom">
                                 <label className="form-label th-text">
@@ -559,7 +565,7 @@ const Home = () => {
                         <td className={`td-text ${
                             hiddenColumns.actions ? "d-none" : "table-cell"
                           }`}>
-                          <div class="dropdown">
+                          <div class="">
                             <a
                               className="cursor_pointer"
                               type=""
@@ -593,14 +599,14 @@ const Home = () => {
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item" href="#">
+                                <Link class="dropdown-item" to={`/Admin/Tasks/Comments/${template?._id}`}>
                                   <img
                                     src="/images/dashboard/Comment.png"
                                     alt=""
                                     className="me-2"
                                   />
                                   Comments
-                                </a>
+                                </Link>
                               </li>
                               <li>
                                 <a class="dropdown-item border-bottom" href="#">

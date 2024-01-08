@@ -1,103 +1,92 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
+import {
+  searchDocTemplete,
+  templeteDocList,
+} from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 
 const RequestsAprv = () => {
-  const documents = [
-    {
-      id: 1,
-      document: "Employment Contract",
-      requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
-        
-      ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-primary m-0">In Progress</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt="" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt="" />
-      ),
-    },
-    {
-      id: 2,
-      document: "Tax Deduction at Source (TDS)",
-      requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
-        
-      ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-warning m-0"> Approved</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt="" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt="" />
-      ),
-    },
-    {
-      id: 3,
-      document: "Training Certificates",
-      requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
-        
-      ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-success m-0">Complete</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt="" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt="" />
-      ),
-    },
-    {
-      id: 4,
-      document: "Software Licenses",
-      requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
-        
-      ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-primary m-0">In Progress</p>,
-      department: "Information Technologies",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt="" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt="" />
-      ),
-    },
-    {
-      id: 5,
-      document: "Reference Letter",
-      requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
-        
-      ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />,
-      lastLoggedIn: "26 Oct, 2023 18:02:55",
-      status: <p className="text-info m-0">Pending</p>,
-      department: "Human Resources",
-      comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt="" />
-      ),
-      actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt="" />
-      ),
-    },
-   
-    // Add more tasks here
-  ];
+  const [templeteDoc, setTempleteDoc] = useState([]);
+  const [searchDocData, setSearchDocData] = useState("");
+
+  const handleDocSearch = async () => {
+    const result = await searchDocTemplete(searchDocData);
+    const searchDocResult = result?.data?.results?.searchDocument;
+    console.log(result);
+
+    if (searchDocResult && Array.isArray(searchDocResult)) {
+      const mappedDocResult = searchDocResult?.map((document) => ({
+        documentName: document?.templete?.templeteName,
+        img: [document?.templete?.manager?.[0]?.profile_Pic],
+        requestor: [document?.creator_Id?.[0]?.name],
+        requestor_img: [document?.creator_Id?.[0]?.profile_Pic],
+        version: document?.templete?.templeteVersion?.[0]?.version,
+        assignedTo: [document?.templete?.manager?.[0]?.name],
+        department: [
+          document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
+        ],
+        action: (
+          <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+        ),
+        dateofSigning: [document?.createdAt],
+        comments: (
+          <img
+            src="/images/dashboard/Comment.png"
+            className="mx-auto d-block"
+          />
+        ),
+        status: [document?.status],
+      }));
+      setTempleteDoc(mappedDocResult);
+    }
+  };
+
+  useEffect(() => {
+    handleDocSearch();
+  }, [searchDocData]);
+
+  useEffect(() => {
+    const fetchDocData = async () => {
+      if (!searchDocData || searchDocData === "") {
+        const documentData = await templeteDocList();
+        // if (names) {
+        //   setTemplateNames(names);
+        // }
+
+        const docData = documentData?.map((doc) => ({
+          documentName: doc?.templete_Id?.templeteName,
+          document_id: doc?.templete_Id?._id,
+          version: doc?.templete_Id?.templeteVersion?.[0]?.version,
+          assignedTo: [doc?.templete_Id?.manager?.name],
+          img: [doc?.templete_Id?.manager?.profile_Pic],
+          requestor: [doc?.creator_Id?.name],
+          requestor_img: [doc?.creator_Id?.profile_Pic],
+          action: (
+            <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+          ),
+          department: [
+            doc?.templete_Id?.manager?.department_Id?.departmentName,
+          ],
+          dateofSigning: [doc?.createdAt],
+          comments: (
+            <img
+              src="/images/dashboard/Comment.png"
+              className="mx-auto d-block"
+            />
+          ),
+          commentID: doc?._id,
+          status: [doc?.status],
+        }));
+
+        setTempleteDoc(docData);
+      }
+    };
+    // console.log(documentRequests);
+
+    fetchDocData();
+  }, [searchDocData]);
 
   return (
     <>
@@ -185,6 +174,11 @@ const RequestsAprv = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  onChange={(e) => {
+                    setSearchDocData(e.target.value);
+                    //  handleSearch();
+                  }}
+                  value={searchDocData.searchTerm}
                 />
               </form>
             </div>
@@ -224,7 +218,7 @@ const RequestsAprv = () => {
                           type="checkbox"
                           value=""
                         />
-                       Status
+                        Status
                       </th>
                       <th className="th-text">
                         <input
@@ -232,10 +226,10 @@ const RequestsAprv = () => {
                           type="checkbox"
                           value=""
                         />
-                       Department
+                        Department
                       </th>
                       <th className="th-text">
-                      <input
+                        <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
@@ -245,19 +239,40 @@ const RequestsAprv = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {documents.map((document) => (
-                      <tr key={document.id}>
+                    {templeteDoc?.map((document) => (
+                      <tr key={document.commentID}>
                         <td className="td-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />{document.document}</td>
-                        <td className="td-text">{document.requester}</td>
-                        <td className="td-text">{document.assignedTo}</td>
-                        <td className="td-text">{document.status}</td>
+                          <input
+                            className="form-check-input checkbox-table"
+                            type="checkbox"
+                            value=""
+                          />
+                          {document.documentName}
+                        </td>
+                        <td className="td-text">
+                          <img
+                            className="img_profile"
+                            src={document.requestor_img}
+                          />
+                          {document.requestor}
+                        </td>
+                        <td className="td-text">
+                          <img className="img_profile" src={document.img} />
+                          {document.assignedTo}
+                        </td>
+                        <td
+                          className={`td-text ${
+                            document?.status == "Completed"
+                              ? "text-success"
+                              : document.status == "Pending"
+                              ? "text-info"
+                              : "text-warning"
+                          }`}
+                        >
+                          {document.status}
+                        </td>
                         <td className="td-text">{document.department}</td>
-                        
+
                         {/* <td className="td-text"></td> */}
                         <td className="td-text">
                           <div class="dropdown">
@@ -267,7 +282,7 @@ const RequestsAprv = () => {
                               aria-expanded="false"
                               href="/"
                             >
-                              {document.actions}
+                              {document.action}
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                               <li>

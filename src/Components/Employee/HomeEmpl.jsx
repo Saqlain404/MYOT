@@ -4,59 +4,78 @@ import "@fortawesome/free-regular-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 // import "../../dist/css/style.min.css"
-import { AddDocument, DocumentCount, employeDocumentList, fetchTemplateData, searchDoc } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
-import { ToastContainer } from "react-toastify";
+import {
+  AddCommentEmply,
+  AddDocument,
+  DocumentCount,
+  employeDocumentList,
+  fetchTemplateData,
+  searchDoc,
+} from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import { ToastContainer, toast } from "react-toastify";
+import moment from "moment";
 
 const HomeEmpl = () => {
   const navigate = useNavigate();
-  const[searchData, setSearchData] = useState("");
+  const [searchData, setSearchData] = useState("");
   const [templateNames, setTemplateNames] = useState(null);
   const [documentRequests, setDocumentRequests] = useState([]);
-  const[docCount,setDocCount] = useState(null);
-  const[receivedCount,setReceivedCount] = useState(null);
+  const [docCount, setDocCount] = useState(null);
+  const [receivedCount, setReceivedCount] = useState(null);
   const [shouldRender, setShouldRender] = useState(false);
+  const [comment, setComment] = useState("");
 
-  useEffect(()=>{
-    const count = async ()=>{
+  const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
+  useEffect(() => {
+    const count = async () => {
       const documentCountResult = await DocumentCount();
       if (!documentCountResult?.error && documentCountResult?.data) {
         const count = documentCountResult?.data?.results.count;
-        const receivedDocCount = documentCountResult?.data?.results?.countRecivedDocument;
+        const receivedDocCount =
+          documentCountResult?.data?.results?.countRecivedDocument;
         console.log(documentCountResult);
-        setDocCount(count)
-        setReceivedCount(receivedDocCount)
-    }
-  }
-    count();
-  },[shouldRender])
+        setDocCount(count);
+        setReceivedCount(receivedDocCount);
+      }
+    };
+    count(); 
+  }, [shouldRender]);
 
-  
-  
-  const handleSearch = async()=>{
-    const result = await searchDoc(searchData)
-    console.log(result)
+  const [isCommentVisible, setIsCommentVisible] = useState(false);
+
+  const toggleCommentVisibility = () => {
+    setIsCommentVisible(!isCommentVisible);
+  };
+
+  const handleSearch = async () => {
+    const result = await searchDoc(searchData);
+    console.log(result);
     const searchResult = result?.data?.results?.document;
 
-      if (searchResult && Array.isArray(searchResult)) {
-        const mappedResult = searchResult?.map((document) => ({
-          documentName: document?.templete?.templeteName,
-          img: [document?.templete?.manager?.[0]?.profile_Pic],
-          assignedTo: [document?.templete?.manager?.[0]?.name],
-          department: [document?.templete?.manager?.[0]?.department?.[0]?.departmentName],
-          dateofSigning: [document?.createdAt],
-          comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />,
-          status: [document?.status],
-        }));
-        setDocumentRequests(mappedResult);
-      } 
-  }
+    if (searchResult && Array.isArray(searchResult)) {
+      const mappedResult = searchResult?.map((document) => ({
+        documentName: document?.templete?.templeteName,
+        img: [document?.templete?.manager?.[0]?.profile_Pic],
+        assignedTo: [document?.templete?.manager?.[0]?.name],
+        department: [
+          document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
+        ],
+        dateofSigning: [moment(document?.createdAt).calendar()],
+        comments: (
+          <img
+            src="/images/dashboard/Comment.png"
+            className="mx-auto d-block"
+          />
+        ),
+        status: [document?.status],
+      }));
+      setDocumentRequests(mappedResult);
+    }
+  };
 
-  useEffect(()=>{
-    handleSearch()
-  },[searchData])
-
-
-
+  useEffect(() => {
+    handleSearch();
+  }, [searchData]);
 
   const [documentInfo, setDocumentInfo] = useState({
     documentName: "",
@@ -66,15 +85,10 @@ const HomeEmpl = () => {
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    console.log(name, value);
 
     setDocumentInfo({ ...documentInfo, [name]: value });
   };
-  console.log(documentInfo)
-
   
- 
-
 
   const [templateIdList, setTemplateIdList] = useState([]);
 
@@ -83,17 +97,12 @@ const HomeEmpl = () => {
       const [templateList] = await fetchTemplateData();
       if (templateList) {
         setTemplateIdList(templateList);
-        // setTemplateName(names)
-        // console.log(templateList)
-
       }
     };
-  
+
     fetchTemplateIdsData();
   }, []);
-
-
-
+  
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
@@ -104,61 +113,74 @@ const HomeEmpl = () => {
     await AddDocument({
       documentName: documentData.documentName,
       templete_Id: documentData.templateId,
-      creator_Id:localStorage.getItem("user_id")
-  
-      
-    })
-      .then((res) => {
-        if (!res.data?.error) {
-          setShouldRender(!shouldRender)
-          console.log("Success");
-          navigate("");
-        }
-      });
+      creator_Id: localStorage.getItem("user_id"),
+    }).then((res) => {
+      if (!res.data?.error) {
+        setShouldRender(!shouldRender);
+        console.log("Success");
+        navigate("");
+      }
+    });
     setDocumentInfo({
       documentName: "",
-      templateId:""
-
+      templateId: "",
     });
   };
 
-  
-
-
   useEffect(() => {
     const fetchData = async () => {
-     if(!searchData || searchData === ""){
-       const names = await employeDocumentList();
-      if (names) {
-        setTemplateNames(names);
-        console.log(names)
-     }
-      
+      if (!searchData || searchData === "") {
+        const names = await employeDocumentList(ids);
+        if (names) {
+          setTemplateNames(names);
+        }
+
         const requests = names?.map((name) => ({
           documentName: name?.templete_Id?.templeteName,
-          assignedTo: [name?.templete_Id?.manager?.name], 
-          img:[name?.templete_Id?.manager?.profile_Pic],
-          department: [name?.templete_Id?.manager?.department_Id?.departmentName], 
-          dateofSigning: [name?.createdAt],
-          comments:<img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>, 
-          status:[name?.status],
+          document_id: name?._id,
+          assignedTo: [name?.templete_Id?.manager?.name],
+          img: [name?.templete_Id?.manager?.profile_Pic],
+          department: [
+            name?.templete_Id?.manager?.department_Id?.departmentName,
+          ],
+          dateofSigning: [moment(name?.createdAt).calendar()],
+          comments: (
+            <img
+              src="/images/dashboard/Comment.png"
+              className="mx-auto d-block"
+            />
+          ),
+          commentID: name?._id,
+          status: [name?.status],
         }));
-        
 
         setDocumentRequests(requests);
-
       }
     };
+    console.log(documentRequests)
 
     fetchData();
-  }, [searchData,shouldRender]);
- 
+  }, [searchData, shouldRender]);
+
+  const handleSubmitComment = async (e, document_Id) => {
+    e.preventDefault();
+    let creator_Id =  localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+    let data = await AddCommentEmply({
+      comment,
+      document_Id,
+      creator_Id, 
+    });
+    if (!data?.error) { 
+      setComment("");
+    }
+  };
+
   return (
     <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <SideBarEmpl/>
+            <SideBarEmpl />
           </div>
           <div className="col-7 middle-content">
             <div className="container-fluid border-bottom mb-4">
@@ -177,10 +199,11 @@ const HomeEmpl = () => {
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
-                      onChange={(e)=> {setSearchData(e.target.value);
+                      onChange={(e) => {
+                        setSearchData(e.target.value);
                         //  handleSearch();
-                        }}
-                        value={searchData.searchTerm}
+                      }}
+                      value={searchData.searchTerm}
                     />
                   </form>
                   <div className="">
@@ -190,12 +213,12 @@ const HomeEmpl = () => {
                       className="ms-4 "
                     />
                     <Link to={"/Employee/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
-                     </Link>
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
+                    </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
                       alt=""
@@ -206,7 +229,7 @@ const HomeEmpl = () => {
               </nav>
             </div>
 
-             {/* <!-- Modal --> */}
+            {/* <!-- Modal --> */}
             <div
               class="modal fade"
               id="exampleModal"
@@ -255,10 +278,14 @@ const HomeEmpl = () => {
                       className="user-modal-btn"
                       onClick={() => handleSubmit()}
                     >
-                      Request <ToastContainer/>
+                      Request <ToastContainer />
                     </button>
-                    <button type="button" data-bs-dismiss="modal"
-                       aria-label="Close" className="user-modal-btn2">
+                    <button
+                      type="button"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      className="user-modal-btn2"
+                    >
                       Cancle
                     </button>
                   </div>
@@ -272,11 +299,13 @@ const HomeEmpl = () => {
                 <div className="col-md-6">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">Document Requests</h6>
+                      <h6 className="mb-0 header-card-text">
+                        Document Requests
+                      </h6>
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {docCount !== null && (docCount)}
+                        {docCount !== null && docCount}
                       </h3>
                     </div>
                   </div>
@@ -290,7 +319,7 @@ const HomeEmpl = () => {
                     </div>
                     <div className="d-flex justify-content-between mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                      {receivedCount !== null && (receivedCount)}
+                        {receivedCount !== null && receivedCount}
                       </h3>
                     </div>
                   </div>
@@ -300,18 +329,18 @@ const HomeEmpl = () => {
             <div className=" col-12 table-searchbar">
               <div className="row d-flex align-items-center col ">
                 <div className="col-md-3 align-items-center d-flex border-end">
-                <div
-                  className=""
-                  type="button"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                >
-                  <img
-                    src="/images/dashboard/Plus-icon.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
-                  />
-                </div>
+                  <div
+                    className=""
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    <img
+                      src="/images/dashboard/Plus-icon.png"
+                      alt=""
+                      className="p-2 table-searchbar-img"
+                    />
+                  </div>
                   <img
                     src="/images/dashboard/FunnelSimple.png"
                     alt=""
@@ -339,10 +368,11 @@ const HomeEmpl = () => {
                 <input
                   className="form-control table-search-bar"
                   type="text"
-                  onChange={(e)=> {setSearchData(e.target.value);
+                  onChange={(e) => {
+                    setSearchData(e.target.value);
                     //  handleSearch();
-                    }}
-                    value={searchData.searchTerm}
+                  }}
+                  value={searchData.searchTerm}
                   placeholder="Search"
                   aria-label="Search"
                 />
@@ -414,33 +444,180 @@ const HomeEmpl = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {documentRequests?.map((request,index) => (
+                    {documentRequests?.map((request, index) => (
                       <tr key={index}>
                         <td className="td-text">{request.documentName}</td>
-                        <td className="td-text"><img className="img_profile"  src={request.img}/>{request.assignedTo}</td>
+                        <td className="td-text">
+                          <img className="img_profile" src={request.img} />
+                          {request.assignedTo}
+                        </td>
                         <td className="td-text">{request.department}</td>
-                        <td className="td-text"><img src="/images/dashboard/CalendarBlank.png" />{request.dateofSigning}</td>
-                        <td className="td-text">{request.comments}</td>
-                        <td className="td-text text-info m-0">{request.status}</td>
-                        <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
-  <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>
-  </a>
-  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="/Employee/view-details"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Details</a></li>
-    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/Download-Button.png" alt="" className="me-2"/>Download</a></li>
-  </ul>
-</div>
-                          </td>
+                        <td className="td-text">
+                          <img src="/images/dashboard/CalendarBlank.png" />
+                          {request.dateofSigning} 
+                        </td>
+                        <td className="td-text">
+                          <div className="">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <img
+                                src="/images/dashboard/Comment.png"
+                                className="mx-auto d-block"
+                              />
+                            </a>
+                            <form
+                              className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
+                              onSubmit={(e) =>
+                                handleSubmitComment(e, request?.commentID)
+                              }
+                            >
+                              <div className="mb-3 border-bottom">
+                                <label className="form-label th-text">
+                                  Comment or type
+                                </label>
+
+                                <input
+                                  type="text"
+                                  className="form-control border-0"
+                                  value={comment}
+                                  onChange={(e) => setComment(e.target.value)}
+                                />
+                              </div>
+
+                              <div className="d-flex justify-content-between">
+                                <div>
+                                  <img
+                                    src="/images/tasks/assign comments.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/mention.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/task.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/emoji.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                  <img
+                                    src="/images/tasks/attach_attachment.svg"
+                                    alt=""
+                                    className="comment-img"
+                                  />
+                                </div>
+                                <div>
+                                  <button
+                                    type="submit"
+                                    className="comment-btn btn-primary"
+                                  >
+                                    Comment
+                                  </button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </td>
+                        <td className="td-text text-info m-0">
+                          {request.status}
+                        </td>
+                        <td className="td-text">
+                          <div class="">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <img
+                                src="/images/sidebar/ThreeDots.svg"
+                                className="w-auto p-3"
+                              />
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a
+                                  class="dropdown-item border-bottom"
+                                  href="/Employee/view-details"
+                                >
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Details
+                                </a>
+                              </li>
+                              <li>
+                                <Link class="dropdown-item" to={`/Employee/Comment/${request?.document_id}`}>
+                                  <img
+                                    src="/images/dashboard/Comment.png"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Comments
+                                </Link>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="#">
+                                  <img
+                                    src="/images/users/TextAlignLeft.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Wrap Column
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item text-danger" href="#">
+                                  <img
+                                    src="/images/users/Trash.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Delete Template
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
                         <td></td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
+              {/* {isCommentVisible && (
+              <div className='comment-section'>
+              <div  className='comment-input'>
+                  <input type='text' value={commentInput} onChange={handleCommentChange} placeholder='Comment or type'/>
+              </div>
+              <div className='comment-line'></div>
+              <div className='d-flex comment-footer justify-content-between p-4'> 
+                  <div className='comment-icons'>
+                      <img src='../images/comment-icon-4.svg' alt='img'/>
+                      <img src='../images/comment-icon-3.svg' alt='img'/>
+                      <img src='../images/smileyy.svg' alt='img'/>
+                      <img src='../images/comment-icon-2.svg' alt='img'/>
+                      <img src='../images/comment-icon-1.svg' alt='img'/>
+                  </div>
+                  <div>
+                      <button className='comment-btn' onClick={handleCommentSubmit}>Comment</button>
+                  </div>
+              </div>
+          </div>
+              )} */}
               <nav
                 aria-label="Page navigation"
-                className="d-flex justify-content-end page-navigation mt-3"
+                className="d-flex justify-content-end page-navigation mt-3 position-relative"
               >
                 <ul className="pagination">
                   <li class="page-item">
@@ -472,12 +649,8 @@ const HomeEmpl = () => {
               </nav>
             </div>
 
-         
-
             <div className="footer">
-              <div>
-              © 2023 MYOT
-              </div>
+              <div>© 2023 MYOT</div>
               <div className="d-flex ">
                 <p className="ms-3">About</p>
                 <p className="ms-3">Support</p>

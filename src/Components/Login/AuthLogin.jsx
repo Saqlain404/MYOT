@@ -4,10 +4,14 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { adminLogin } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 import { toast } from "react-toastify";
+// import { useDispatch } from 'react-redux';
+// import { setUserData } from "../app/slice/userSlice";
 
 const AuthLogin = () => {
   const [type, setType] = useState("password");
   const [password, setPassword] = useState("");
+
+  // const dispatch = useDispatch();
 
   const {
     register,
@@ -19,14 +23,15 @@ const AuthLogin = () => {
 
   useEffect(() => {
     if (!localStorage.getItem("token-admin")) {
-      navigate("/Admin/Login");
+      navigate("/Login");
     }
   }, []);
 
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
 
     const response = await adminLogin(data);
+    // console.log("login Data", response);
     if (!response?.data?.error) {
       toast("Logged in successfully", {
         position: "top-right",
@@ -38,6 +43,7 @@ const AuthLogin = () => {
         progress: undefined,
         theme: "light",
       });
+      // dispatch(setUserData(response?.data?.results?.employee));
       navigate("/Admin/Dashboard");
     }
   };
@@ -138,7 +144,7 @@ const AuthLogin = () => {
                     Remember me
                   </label>
                 </div>
-                <Link to={"/Admin/Forgot-password"}>
+                <Link to={"/Forgot-password"}>
                   <a
                     className=" fw-medium reset-password"
                     href="authentication-forgot-password.html"

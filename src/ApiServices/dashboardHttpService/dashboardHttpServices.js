@@ -51,6 +51,21 @@ export async function DepartmentDetails(formData) {
     return { error };
   }
 }
+
+export async function DepartmentSearch(formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/department-search`,
+      formData
+    );
+    console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
 // export async function AddEmployee(formData) {
 //   try {
 //     const { data } = await adminHttpService.post(
@@ -128,6 +143,20 @@ export async function SearchTask(formData) {
   }
 }
 
+export async function TemplateCount() {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/total-templete-cout`
+    );
+    // console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 export async function AddCommentForTask(formData) {
   try {
     const { data } = await adminHttpService.post(
@@ -143,10 +172,53 @@ export async function AddCommentForTask(formData) {
   }
 }
 
+export async function TasksCommentList(id) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/comment-details/${id}`
+    );
+    // console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 export async function AdminDashboardCount() {
   try {
     const { data } = await adminHttpService.get(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/department-count`
+    );
+    // console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function DashboardTotalDocument() {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/total-document`
+    );
+    // console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+// ADMIN TICKET COUNT
+export async function AdminTicketCount(id) {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/total-ticket-count/${id}`
     );
     // console.log(data);
 
@@ -261,6 +333,19 @@ export async function DocumentComment(formData) {
   }
 }
 
+export async function DocumentCommentLists(id) {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/document-comment-details/${id}`
+    );
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 // PROFILE
 
 export async function AdminProfile(id) {
@@ -361,10 +446,10 @@ export async function EmployeeView(id) {
 
 // Announcemnts api
 
-export async function AnnouncementLists() {
+export async function AnnouncementLists(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/announcement-list`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/announcement-list/${id}`
     );
     return { data };
   } catch (error) {
@@ -377,6 +462,38 @@ export async function CreateAnnouncement(formData) {
   try {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/create-announcement`,
+      formData
+    );
+    if (data?.error) {
+      toast.error(data?.message);
+      return false;
+    } else {
+      return { data };
+    }
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+// LOGOS
+
+export async function Logos(id) {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/logo-list/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function UpdateLogo(formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/add-logo`,
       formData
     );
     return { data };
@@ -394,6 +511,9 @@ export async function EmployeeContactUs(formData) {
       `${process.env.REACT_APP_APIENDPOINT}/api/employee/contact-us`,
       formData
     );
+    if (data?.error) {
+      toast.error(data?.message);
+    }
     return { data };
   } catch (error) {
     if (error.response) toast.error(error.response.data.message);
@@ -438,10 +558,48 @@ export async function EmployeeOngoingTicketList(id) {
   }
 }
 
+export async function EmployeeNewTicketList(id) {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/new-ticket/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function EmployeeResolvedTicketList(id) {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/complete-ticket/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 export async function EmployeeLogout(id) {
   try {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/employee/employee-logout/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+// ANALYTICS
+
+export async function AnalyticsData() {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/total-active-user`
     );
     return { data };
   } catch (error) {

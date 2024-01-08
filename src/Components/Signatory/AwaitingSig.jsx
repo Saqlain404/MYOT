@@ -2,11 +2,11 @@ import React from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
-import { Card } from 'antd';
+import { Card } from "antd";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarSig";
 import SidebarSig from "./SidebarSig";
-
+import CommonListing from "./CommonListAwaiting/CommonListing";
 
 const AwaitingSig = () => {
   const documents = [
@@ -20,8 +20,12 @@ const AwaitingSig = () => {
       department: "Human Resources",
       requestDate: "2023-09-16",
       status: <p className="text-warning">High</p>,
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      comments: (
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+      ),
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 2,
@@ -33,8 +37,12 @@ const AwaitingSig = () => {
       department: "Sales & Marketing",
       requestDate: "2023-09-16",
       status: <p className="text-warning">High</p>,
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      comments: (
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+      ),
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 3,
@@ -46,8 +54,12 @@ const AwaitingSig = () => {
       department: "Training & Development",
       requestDate: "2023-09-16",
       status: <p className="text-danger">Urgent</p>,
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      comments: (
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+      ),
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 4,
@@ -59,8 +71,12 @@ const AwaitingSig = () => {
       department: "Human Resources",
       requestDate: "2023-09-16",
       status: <p className="text-secondary">Low</p>,
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      comments: (
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+      ),
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 5,
@@ -72,8 +88,12 @@ const AwaitingSig = () => {
       department: "Training & Development",
       requestDate: "2023-09-16",
       status: <p className="text-primary">Normal</p>,
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      comments: (
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+      ),
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 6,
@@ -85,8 +105,12 @@ const AwaitingSig = () => {
       department: "Training & Development",
       requestDate: "2023-09-16",
       status: <p className="text-danger">Urgent</p>,
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      comments: (
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+      ),
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 7,
@@ -98,8 +122,12 @@ const AwaitingSig = () => {
       department: "Human Resources",
       requestDate: "2023-09-16",
       status: <p className="text-secondary">Low</p>,
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      comments: (
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+      ),
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 8,
@@ -111,8 +139,12 @@ const AwaitingSig = () => {
       department: "Training & Development",
       requestDate: "2023-09-16",
       status: <p className="text-primary">Normal</p>,
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      comments: (
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+      ),
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 9,
@@ -124,8 +156,12 @@ const AwaitingSig = () => {
       department: "Human Resources",
       requestDate: "2023-09-16",
       status: <p className="text-secondary">Low</p>,
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      comments: (
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+      ),
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
     {
       id: 10,
@@ -137,20 +173,23 @@ const AwaitingSig = () => {
       department: "Training & Development",
       requestDate: "2023-09-16",
       status: <p className="text-primary">Normal</p>,
-      comments: <img src="/images/dashboard/Comment.png" className="mx-auto d-block"/>,
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"/>,
+      comments: (
+        <img src="/images/dashboard/Comment.png" className="mx-auto d-block" />
+      ),
+      action: (
+        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+      ),
     },
-    
+
     // Add more tasks here
   ];
-
 
   return (
     <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <SidebarSig/>
+            <SidebarSig />
           </div>
           <div className="col-7 middle-content">
             <div className="container-fluid border-bottom sticky-top bg-white mb-4">
@@ -158,7 +197,7 @@ const AwaitingSig = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link ms-2" href="app-email.html">
-                      Template Review /
+                      Awaiting Signatories /
                     </a>
                   </li>
                 </ul>
@@ -177,12 +216,12 @@ const AwaitingSig = () => {
                       alt=""
                       className="ms-4 "
                     />
-                    <Link to={"/Signatory/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                    <Link to={"/Admin/Chat"}>
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -194,7 +233,9 @@ const AwaitingSig = () => {
               </nav>
             </div>
 
-            <div className=" col-12 d-flex align-items-center table-searchbar">
+            <CommonListing />
+
+            {/* <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
                 <div className="col-md-3 table-searchbar-imgs">
                   <img
@@ -234,114 +275,134 @@ const AwaitingSig = () => {
                 />
               </form>
             </div>
-           
-                <div className="col-12 table_comman mt-3 mb-4">
-                <div className="table-responsive">
-            <table className="table table-borderless">
-              <thead>
-                <tr className="th-text">
-                  <th className="th-text ">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Template Name
-                  </th>
-                  <th className="th-text">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Requester Name
-                  </th>
-                  <th className="th-text">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Department
-                  </th>
-                  <th className="th-text">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Request Date
-                  </th>
-                  <th className="th-text">
-                  <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Status</th>
-                    <th className="th-text">
-                  <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Comments</th>
-                  <th className="th-text">
-                  <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    Action</th>
-                </tr>
-              </thead>
-              <tbody >
-                {documents.map((document) => (
-                  <tr
-                    key={document.id}
-                    
-                  >
-                    <td className="td-text">
-                      <input
-                        className="form-check-input checkbox-table me-4"
-                        type="checkbox"
-                        value=""
-                      />
-                      {document.templateName}
-                    </td>
-                    <td className="td-text">
-                      {document.requesterName}
-                    </td>
-                    <td className="td-text">
-                      {document.department}
-                    </td>
-                    <td className="td-text">
-                      <img src="/images/dashboard/CalendarBlank.png" />
-                      {document.requestDate}
-                    </td>
-                    <td className="td-text">{document.status}</td>
-                    <td className="td-text">{document.comments}</td>
-                    <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false">
-  {document.action}
-  </a>
-  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li >
-      <Link to={"/"} className="text-decoration-none">
-      <a class="dropdown-item border-bottom" href="#"><img src="/images/dashboard/eye.svg" alt="" className="me-2"/>View Details</a>
-     </Link>
-      </li>
-    <li><a class="dropdown-item" href="#"><img src="/images/dashboard/XCircle.svg" alt="" className="me-2"/>Rejected</a></li>
-  </ul>
-</div>
-                          </td>
-                    <td></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            </div>
-            <nav
+
+            <div className="col-12 table_comman mt-3 mb-4">
+              <div className="table-responsive">
+                <table className="table table-borderless">
+                  <thead>
+                    <tr className="th-text">
+                      <th className="th-text ">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Template Name
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Requester Name
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Department
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Request Date
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Status
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Comments
+                      </th>
+                      <th className="th-text">
+                        <input
+                          className="form-check-input checkbox-table"
+                          type="checkbox"
+                          value=""
+                        />
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {documents.map((document) => (
+                      <tr key={document.id}>
+                        <td className="td-text">
+                          <input
+                            className="form-check-input checkbox-table me-4"
+                            type="checkbox"
+                            value=""
+                          />
+                          {document.templateName}
+                        </td>
+                        <td className="td-text">{document.requesterName}</td>
+                        <td className="td-text">{document.department}</td>
+                        <td className="td-text">
+                          <img src="/images/dashboard/CalendarBlank.png" />
+                          {document.requestDate}
+                        </td>
+                        <td className="td-text">{document.status}</td>
+                        <td className="td-text">{document.comments}</td>
+                        <td className="td-text">
+                          <div class="dropdown">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              {document.action}
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <Link to={"/"} className="text-decoration-none">
+                                  <a
+                                    class="dropdown-item border-bottom"
+                                    href="#"
+                                  >
+                                    <img
+                                      src="/images/dashboard/eye.svg"
+                                      alt=""
+                                      className="me-2"
+                                    />
+                                    View Details
+                                  </a>
+                                </Link>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" href="#">
+                                  <img
+                                    src="/images/dashboard/XCircle.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Rejected
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
+                        <td></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <nav
                 aria-label="Page navigation"
                 className="d-flex justify-content-end page-navigation mt-3"
               >
@@ -373,12 +434,10 @@ const AwaitingSig = () => {
                   </li>
                 </ul>
               </nav>
-            </div>
+            </div> */}
 
             <div className="footer mt-4">
-              <div>
-              © 2023 MYOT
-              </div>
+              <div>© 2023 MYOT</div>
               <div className="d-flex ">
                 <p className="ms-3">About</p>
                 <p className="ms-3">Support</p>
@@ -391,9 +450,8 @@ const AwaitingSig = () => {
           </div>
         </div>
       </div>
-      </>
+    </>
   );
 };
 
 export default AwaitingSig;
-
