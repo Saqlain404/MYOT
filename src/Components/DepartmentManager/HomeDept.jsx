@@ -110,28 +110,8 @@ const HomeDept = () => {
 
             <div className="col-12 mb-4">
               <div className="row statics_part">
-                <div className="col-md-3">
+              <div className="col-md-3 ">
                   <div className="statics_box card-clr-1-3">
-                    <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">Total Employees</h6>
-                    </div>
-                    <div className="d-flex  mt-4">
-                      <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        320
-                      </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        +11.01%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3 ">
-                  <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
                         Total Departments
@@ -143,6 +123,26 @@ const HomeDept = () => {
                       </h3>
                       <span className="card-insights fw-bold m-auto">
                         +9.15%
+                        <img
+                          src="/images/dashboard/ArrowRise.png"
+                          alt=""
+                          className="ps-1"
+                        />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-3">
+                  <div className="statics_box card-clr-2-4 ">
+                    <div className="statics_left">
+                      <h6 className="mb-0 header-card-text">Total Employees</h6>
+                    </div>
+                    <div className="d-flex  mt-4">
+                      <h3 className="card-text-count mb-0 fw-semibold fs-7">
+                        320
+                      </h3>
+                      <span className="card-insights fw-bold m-auto">
+                        +11.01%
                         <img
                           src="/images/dashboard/ArrowRise.png"
                           alt=""

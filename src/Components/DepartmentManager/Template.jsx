@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
-import { DepartmentTemplateCount } from "../../ApiServices/departmentHttpService/departmentHttpService";
+import { DepartmentTemplateCount, SearchTemplates, TemplateList } from "../../ApiServices/departmentHttpService/departmentHttpService";
 
 
 const Template = () => {
@@ -98,7 +98,21 @@ const Template = () => {
     // Add more tasks here
   ];
 
+
+  const [templateCount, setTemplateCount] = useState();
+  const [search, setSearch] = useState("")
+  const [listItems, setListItems] = useState();
+
+  const getTemplateLists = async (key) => {
+    const { data } = await TemplateList ();
+    if (!data?.error) {
+      setListItems(data?.results?.templete);
+    }
+  };
+  console.log(listItems);
+
   const [templateCount, setTemplateCount] = useState([]);
+
 
   
 
@@ -109,8 +123,22 @@ const Template = () => {
     }
   };
 
+  const handleSearch = async (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearch(value);
+    if (value.length > 0) {
+      let { data } = await SearchTemplates({ search: value });
+      if (!data?.error) {
+        setListItems(data?.results?.document);
+      }
+    } else {
+      getTemplateLists();
+    }
+  };
+
   useEffect(() => {
     getTemplateCount();
+    getTemplateLists();
   }, []);
 
   return (
@@ -173,7 +201,7 @@ const Template = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {templateCount?.totalTempleted}
                       </h3>
-                      
+
                     </div>
                   </div>
                 </div>
@@ -188,7 +216,7 @@ const Template = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {templateCount?.totalAwaiting?.[0]?.count}
                       </h3>
-                      
+
                     </div>
                   </div>
                 </div>
@@ -203,7 +231,6 @@ const Template = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                       {templateCount?.totalApproved?.[0]?.count}
                       </h3>
-                     
                     </div>
                   </div>
                 </div>
@@ -330,6 +357,8 @@ const Template = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={search}
+                  onChange={(e) => handleSearch(e)}
                 />
               </form>
             </div>
@@ -358,21 +387,21 @@ const Template = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {documents.map((document) => (
-                      <tr key={document.id}>
-                        <td className="td-text">{document.templateName}</td>
-                        <td className="td-text">{document.assignedTo}</td>
-                        <td className="td-text">{document.version}</td>
+                    {listItems?.map((template) => (
+                      <tr key={template.id}>
+                        <td className="td-text">{template}</td>
+                        <td className="td-text">{template.assignedTo}</td>
+                        <td className="td-text">{template.version}</td>
                         <td className="td-text">
                       <img src="/images/dashboard/CalendarBlank.png" alt=""/>
-                          {document.date}</td>
-                        <td className="td-text">{document.status}</td>
-                        <td className="td-text">{document.department}</td>
+                          {template.date}</td>
+                        <td className="td-text">{template.status}</td>
+                        <td className="td-text">{template.department}</td>
                        
                         {/* <td className="td-text"></td> */}
                         <td className="td-text"><div class="dropdown">
   <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
-  {document.actions}
+  {template.actions}
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
     <li >
