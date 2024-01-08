@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { EmployeeLogout } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
+import Switcher from "../ProfileSwitcher/Switcher";
 
 const SidebarSig = () => {
   const location = useLocation();
@@ -365,7 +366,11 @@ const SidebarSig = () => {
           </ul>
         </div>
 
-        <div class="dropdown">
+        <div class="dropdown position-fixed bottom-0 bg-light">
+          <Switcher />
+        </div>
+
+        {/* <div class="dropdown">
           <a
             class="text-decoration-none"
             type="button"
@@ -407,7 +412,7 @@ const SidebarSig = () => {
               </li>
             </Link>
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );

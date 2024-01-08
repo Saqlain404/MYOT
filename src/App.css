@@ -2430,9 +2430,9 @@ height: 960px; */
   object-fit: cover;
 }
 
-.w_50_h_70 {
+.w_50_h_50 {
   width: 50px;
-  height: 70px;
+  height: 50px;
   object-fit: cover;
   margin-right: 5px;
   border-radius: 15px;
@@ -2449,10 +2449,16 @@ height: 960px; */
 
 .mdb_table thead th {
   border: none;
+  /* padding: 10px 20px; */
+  /* margin: 20px !important; */
 }
 
 .mdb_table tbody tr {
   border: none;
+}
+
+thead tr th div{
+  margin: 0px 10px !important;
 }
 
 .mdb_table tbody td {
@@ -2538,15 +2544,22 @@ div.dataTables_wrapper div.dataTables_paginate {
   height: 100px;
 }
 
-.otp-input-box .form-group{
+.otp-input-box .form-group {
   display: flex;
   align-items: center;
   justify-content: space-around !important;
 }
-.otp-input-box .form-group input{
+.otp-input-box .form-group input {
   width: 70px !important;
   height: 50px;
   border: 1px solid #e0e2e7;
   border-radius: 10px;
-  background-color: #F7F7F8;
+  background-color: #f7f7f8;
+}
+.errorText {
+  color: red !important;
+  font-size: 13px;
+}
+.pass_toggle_text{
+  
 }

@@ -36,7 +36,7 @@ const Switcher = () => {
   return (
     <>
       <a
-        className="text-decoration-none"
+        className="text-decoration-none pb-2 bg-white"
         type="button"
         data-bs-toggle="dropdown"
         aria-expanded="false"
@@ -44,7 +44,7 @@ const Switcher = () => {
         <div className="profile">
           <div>
             <img
-              className="w_50_h_70"
+              className="w_50_h_50"
               src={
                 userData?.profile_Pic
                   ? userData?.profile_Pic
@@ -54,7 +54,10 @@ const Switcher = () => {
             />
           </div>
           <div>
-            <span className="text-dark">{userData?.name}</span>
+            {/* <span className="text-dark">{userData?.name}</span> */}
+            <span className="text-dark">
+              {userData?.name?.split(" ")?.slice(0, 2)?.join(" ")}
+            </span>
             <p className="th-text">{role}</p>
           </div>
           <div>

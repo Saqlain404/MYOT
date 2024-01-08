@@ -4,16 +4,16 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { adminLogin } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 import { toast } from "react-toastify";
-// import { useDispatch } from 'react-redux';
-// import { setUserData } from "../app/slice/userSlice";
+import { useDispatch } from 'react-redux';
+import { setUserData } from "../app/slice/userSlice";
 
 const AuthLogin = () => {
   const [type, setType] = useState("password");
   const [password, setPassword] = useState("");
   const [rememberCheck, setRememberCheck] = useState(false);
-  const [loginCreds, setLoginCreds] = useState();
+  const [passVisible, setPassVisible] = useState(false);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -29,12 +29,7 @@ const AuthLogin = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const LoginCred = localStorage.getItem("myot_login_save");
-    if (LoginCred) {
-      setLoginCreds(LoginCred);
-    }
-  }, []);
+  let loginCreds = JSON.parse(localStorage.getItem("myot_login_save"));
 
   const rememberMe = (data) => {
     localStorage.setItem("myot_login_save", JSON.stringify(data));
@@ -58,16 +53,12 @@ const AuthLogin = () => {
         progress: undefined,
         theme: "light",
       });
-      // dispatch(setUserData(response?.data?.results?.employee));
+      dispatch(setUserData(response?.data?.results?.employee));
       navigate("/Admin/Home");
     }
   };
-
-  const typeChange = () => {
-    if (type === "password") setType("text");
-    else {
-      setType("password");
-    }
+  const togglePassword = () => {
+    setPassVisible(!passVisible);
   };
 
   const getPasswordValue = (value) => {
@@ -100,6 +91,7 @@ const AuthLogin = () => {
                   placeholder="example@gmail.com"
                   autoComplete="off"
                   defaultValue={loginCreds?.email}
+                  // value={}
                   {...register("email", {
                     required: "This field is required",
                     pattern: {
@@ -110,7 +102,9 @@ const AuthLogin = () => {
                   })}
                 />
                 {errors?.email && (
-                  <p className="form-error mt-1">{errors.email.message}</p>
+                  <small className="errorText mt-1">
+                    {errors.email.message}
+                  </small>
                 )}
               </div>
               <div className="mb-4">
@@ -118,34 +112,39 @@ const AuthLogin = () => {
                   Password
                 </label>
                 <input
-                  type="password"
+                  type={passVisible ? "text" : "password"}
                   className="form-control"
                   name="password"
                   id="password"
                   autoComplete="off"
                   defaultValue={loginCreds?.password}
                   {...register("password", {
-                    required: true,
-                    onChange: (e) => {
-                      getPasswordValue(e.target.value);
-                    },
+                    required: "* Please Enter Your Password",
+                    // pattern: {
+                    //   value:
+                    //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                    //   message:
+                    //     "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
+                    // },
                   })}
                 />
-                {password ? (
-                  <i
-                    className={`fa eyepassword fa-eye${
-                      type === "password" ? "" : "-slash"
-                    }`}
-                    onClick={() => typeChange()}
-                  ></i>
-                ) : (
-                  ""
-                )}
-                {errors?.password && (
-                  <p className="form-error mt-1">This field is required</p>
+                {errors.password && (
+                  <small className="errorText ">
+                    {errors.password?.message}
+                  </small>
                 )}
               </div>
-              <div className="d-flex  justify-content-between mb-4 remember">
+              <div className="text-center mb-2" onClick={togglePassword}>
+                <input
+                  type="checkbox"
+                  className="cursor_pointer"
+                  {...register("passwordToggle")}
+                />
+                <span className="cursor_pointer mx-2 remember-me">
+                  Show Password
+                </span>
+              </div>
+              <div className="d-flex justify-content-between mb-4 remember">
                 <div className="form-check">
                   <input
                     className="form-check-input primary"

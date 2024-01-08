@@ -52,6 +52,20 @@ export async function DepartmentDetails(formData) {
   }
 }
 
+export async function ViewDepartment(id) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/department-view/${id}`
+    );
+    console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 export async function DepartmentSearch(formData) {
   try {
     const { data } = await adminHttpService.post(
