@@ -32,7 +32,7 @@ const HistoryLogReject = () => {
             <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
           ),
           department: [doc?.manager?.[0]?.department?.[0]?.departmentName],
-          dateofSigning: [moment(doc?.createdAt).calendar()],
+          dateofSigning: [moment(doc?.createdAt).format("L")],
           comments: (
             <img
               src="/images/dashboard/Comment.png"
@@ -66,7 +66,7 @@ const HistoryLogReject = () => {
         action: (
           <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
         ),
-        dateofSigning: [moment(document?.createdAt).calendar()],
+        dateofSigning: [moment(document?.createdAt).format("L")],
         comments: (
           <img
             src="/images/dashboard/Comment.png"

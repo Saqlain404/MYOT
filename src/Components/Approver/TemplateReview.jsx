@@ -129,7 +129,7 @@ const TemplateReview = () => {
         action: (
           <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
         ),
-        dateofSigning: [moment(document?.createdAt).calendar()],
+        dateofSigning: [moment(document?.createdAt).format("L")],
         comments: (
           <img
             src="/images/dashboard/Comment.png"
@@ -161,7 +161,7 @@ const TemplateReview = () => {
             <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
           ),
           department: [name?.manager?.department_Id?.departmentName],
-          dateofSigning: [moment(name?.createdAt).calendar()],
+          dateofSigning: [moment(name?.createdAt).format("L")],
           comments: (
             <img
               src="/images/dashboard/Comment.png"
