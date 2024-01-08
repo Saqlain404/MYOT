@@ -87,7 +87,7 @@ const UpdatePassword = () => {
                           type="text"
                           value={password}
                           placeholder="Password"
-                          className="col-12 password-update-input p-2 rounded"
+                          className="col-12 password-update-input p-2 rounded w-100"
                           name="password"
                           onChange={(e) => setPassword(e.target.value)}
                         />
@@ -100,7 +100,7 @@ const UpdatePassword = () => {
                           type="text"
                           value={confirmPassword}
                           placeholder="Confirm Password"
-                          className="col-12 password-update-input p-2 rounded"
+                          className="col-12 password-update-input p-2 rounded w-100"
                           name="confirmPassword"
                           onChange={(e) => setConfirmPassword(e.target.value)}
                         />
