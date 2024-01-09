@@ -370,6 +370,26 @@ const Tasks = () => {
     setTasks({ ...tasks, hiddenColumns: [], selectedColumns: [] });
     setShowClearButton(false);
   };
+  const toggleSortOrder = () => {
+    const currentSortType = tasks.sortType === "asc" ? "desc" : "asc";
+
+    const sortedRows = [...tasks.rows].sort((a, b) => {
+      let comparison = 0;
+      if (a.name < b.name) {
+        comparison = -1;
+      } else if (a.name > b.name) {
+        comparison = 1;
+      }
+      return currentSortType === "asc" ? comparison : comparison * -1;
+    });
+    console.log(sortedRows);
+
+    setTasks({
+      ...tasks,
+      rows: sortedRows,
+      sortType: currentSortType,
+    });
+  };
 
   return (
     <>
@@ -525,20 +545,20 @@ const Tasks = () => {
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">
                   <div className="col-md-3 table-searchbar-imgs">
-                    <img
+                    {/* <img
                       src="/images/dashboard/Plus-icon.png"
                       alt=""
                       className="p-2 table-searchbar-img"
-                    />
+                    /> */}
                     {/* <img
                       src="/images/dashboard/FunnelSimple.png"
                       alt=""
                       className="p-2 table-searchbar-img"
                     /> */}
                     <img
+                      onClick={toggleSortOrder}
                       src="/images/dashboard/ArrowsDownUp.png"
-                      alt=""
-                      className="p-2 table-searchbar-img border-end"
+                      className="p-2 table-searchbar-img border-end cursor_pointer"
                     />
                     {/* <img
                       src="/images/dashboard/DotsThreeOutlineVertical2.png"

@@ -13,14 +13,10 @@ import {
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import Document from "./DocumentRequests/Document";
 import { MDBDataTable } from "mdbreact";
-// import "../../dist/css/style.min.css"
 
 const Home = () => {
   const [showClearButton, setShowClearButton] = useState(false);
-
-  // const [template, setTemplate] = useState();
   const [adminCount, setAdminCount] = useState();
-  const [templateSearch, setTemplateSearch] = useState("");
   const [comment, setComment] = useState("");
 
   const [templates, setTemplates] = useState({
@@ -28,35 +24,31 @@ const Home = () => {
       {
         label: "Template Name",
         field: "name",
-        sort: "asc",
+        sort: false,
         width: 50,
         selected: false,
       },
       {
         label: "Assigned To",
         field: "assigned",
-        sort: "asc",
         width: 50,
         selected: false,
       },
       {
         label: "Version",
         field: "version",
-        sort: "asc",
         width: 100,
         selected: false,
       },
       {
         label: "Status",
         field: "status",
-        sort: "asc",
         width: 100,
         selected: false,
       },
       {
         label: "Department",
         field: "department",
-        sort: "asc",
         width: 100,
         searchable: true,
         selected: false,
@@ -64,14 +56,12 @@ const Home = () => {
       {
         label: "Comments",
         field: "comments",
-        sort: "asc",
         width: 100,
         selected: false,
       },
       {
         label: "Actions",
         field: "actions",
-        sort: "asc",
         width: 100,
         selected: false,
       },
@@ -79,6 +69,8 @@ const Home = () => {
     rows: [],
     hiddenColumns: [],
     selectedColumns: [],
+    sortColumnName: "name",
+    sortType: "asc",
   });
 
   useEffect(() => {
@@ -270,6 +262,25 @@ const Home = () => {
     }
   };
 
+  const toggleSortOrder = () => {
+    const currentSortType = templates.sortType === "asc" ? "desc" : "asc";
+    const sortedRows = [...templates.rows].sort((a, b) => {
+      let comparison = 0;
+      if (a.name < b.name) {
+        comparison = -1;
+      } else if (a.name > b.name) {
+        comparison = 1;
+      }
+      return currentSortType === "asc" ? comparison : comparison * -1;
+    });
+
+    setTemplates({
+      ...templates,
+      rows: sortedRows,
+      sortType: currentSortType,
+    });
+  };
+
   const handleCheckboxChange = (field) => {
     let updatedSelectedColumns = [...templates.selectedColumns];
     const index = updatedSelectedColumns.indexOf(field);
@@ -317,19 +328,6 @@ const Home = () => {
     setTemplates({ ...templates, hiddenColumns: [], selectedColumns: [] });
     setShowClearButton(false);
   };
-
-  // const handleTemplateSearch = async (e) => {
-  //   const value = e.target.value.toLowerCase();
-  //   setTemplateSearch(value);
-  //   if (value.length > 0) {
-  //     let { data } = await SearchTask({ search: value });
-  //     if (!data?.error) {
-  //       setTemplate(data?.results?.Template);
-  //     }
-  //   } else {
-  //     getTaskData();
-  //   }
-  // };
 
   const handleSubmit = async (e, templete_Id) => {
     e.preventDefault();
@@ -499,26 +497,16 @@ const Home = () => {
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">
                   <div className="col-md-3 table-searchbar-imgs">
-                    <img
+                    {/* <img
                       src="/images/dashboard/Plus-icon.png"
                       alt=""
                       className="p-2 table-searchbar-img"
-                    />
-                    {/* <img
-                      src="/images/dashboard/FunnelSimple.png"
-                      alt=""
-                      className="p-2 table-searchbar-img"
                     /> */}
                     <img
+                      onClick={toggleSortOrder}
                       src="/images/dashboard/ArrowsDownUp.png"
-                      alt=""
-                      className="p-2 table-searchbar-img border-end"
+                      className="p-2 table-searchbar-img border-end cursor_pointer"
                     />
-                    {/* <img
-                      src="/images/dashboard/DotsThreeOutlineVertical2.png"
-                      alt=""
-                      className="p-2 table-searchbar-img border-end"
-                    /> */}
                   </div>
                   <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
                     <p className="m-0 text-nowrap">
@@ -554,7 +542,6 @@ const Home = () => {
                     className="text-nowrap"
                     hover
                     data={{ ...templates, columns: visibleColumns }}
-                    // data={templates}
                     noBottomColumns
                     paginationLabel={"«»"}
                     sortable={false}

@@ -197,6 +197,27 @@ const Departments = () => {
     }
   };
 
+  const toggleSortOrder = () => {
+    const currentSortType = department.sortType === "asc" ? "desc" : "asc";
+
+    const sortedRows = [...department.rows].sort((a, b) => {
+      let comparison = 0;
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        comparison = -1;
+      } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
+        comparison = 1;
+      }
+      return currentSortType === "asc" ? comparison : comparison * -1;
+    });
+    console.log(sortedRows);
+
+    setDepartment({
+      ...department,
+      rows: sortedRows,
+      sortType: currentSortType,
+    });
+  };
+
   return (
     <>
       <div className="container-fluid">
@@ -247,7 +268,7 @@ const Departments = () => {
             </div>
 
             <div className="d-flex justify-content-between ">
-              <p className="table-name mb-2">Templates</p>
+              <p className="table-name mb-2"></p>
               <div className="d-flex justify-content-center th-text">
                 <div
                   className="d-flex whitespace-nowrap"
@@ -258,11 +279,11 @@ const Departments = () => {
                   <img src="/images/tasks/Add.svg" alt="" className="pb-3" />
                   <p className="pt-1 text-nowrap">Add Department</p>
                 </div>
-                <img
+                {/* <img
                   src="/images/sidebar/ThreeDots.svg"
                   alt=""
                   className="pb-3 ms-2 text-secondary"
-                />
+                /> */}
               </div>
             </div>
 
@@ -354,7 +375,9 @@ const Departments = () => {
                   <form action="">
                     <div className="row p-3">
                       <div className="text-end">
-                        <p> <span>Created At </span>
+                        <p>
+                          {" "}
+                          <span>Created At </span>
                           {moment(viewDepartmentDetails?.createdAt).format("L")}
                         </p>
                       </div>
@@ -400,13 +423,15 @@ const Departments = () => {
             {/* <!-- Modal End--> */}
 
             <div className="position-relative">
-              <p className="table-name mb-2">Tasks</p>
+              <p className="table-name mb-2">Departments</p>
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">
                   <div className="col-md-3 table-searchbar-imgs">
                     <img
                       src="/images/dashboard/Plus-icon.png"
-                      alt=""
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
                       className="p-2 table-searchbar-img"
                     />
                     {/* <img
@@ -415,9 +440,10 @@ const Departments = () => {
                       className="p-2 table-searchbar-img"
                     /> */}
                     <img
+                      onClick={toggleSortOrder}
                       src="/images/dashboard/ArrowsDownUp.png"
                       alt=""
-                      className="p-2 table-searchbar-img border-end"
+                      className="p-2 table-searchbar-img border-end cursor_pointer"
                     />
                   </div>
                   {/* <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">

@@ -13,8 +13,12 @@ import moment from "moment";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import ViewUser from "./ViewUser";
+import { MDBDataTable } from "mdbreact";
+import EditUserProfile from "./EditUserProfile";
 
 const Users = () => {
+  const [showClearButton, setShowClearButton] = useState(false);
+
   const [employeeData, setEmployeeData] = useState([]);
   const [departmentOptions, setDepartmentOptions] = useState([]);
   const [search, setSearch] = useState("");
@@ -22,9 +26,63 @@ const Users = () => {
   const [profileImgUrl, setProfileImgUrl] = useState();
   const [userId, setUserId] = useState();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(0);
-  const [employeesPerPage] = useState(10);
+  const [users, setUsers] = useState({
+    columns: [
+      {
+        label: "Name",
+        field: "name",
+        sort: "asc",
+        width: 50,
+        selected: false,
+      },
+      {
+        label: "User Id",
+        field: "id",
+        sort: "asc",
+        width: 50,
+        selected: false,
+      },
+      {
+        label: "Department",
+        field: "department",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+      {
+        label: "Role",
+        field: "role",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+      {
+        label: "Salary",
+        field: "salary",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+      {
+        label: "Last Logged In",
+        field: "login",
+        sort: "asc",
+        width: 100,
+        searchable: true,
+        selected: false,
+      },
+      {
+        label: "Actions",
+        field: "actions",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+    ],
+    rows: [],
+    hiddenColumns: [],
+    selectedColumns: [],
+  });
 
   const {
     register,
@@ -37,20 +95,6 @@ const Users = () => {
     getDepartmentList();
   }, []);
 
-  const getEmployeeList = async () => {
-    try {
-      let { data } = await EmployeeLists();
-      console.log(data);
-      if (!data?.error) {
-        let values = data?.results?.list;
-        setEmployeeData(values);
-        setTotalPage(Math.ceil(values.length / employeesPerPage));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const getDepartmentList = async () => {
     try {
       let { data } = await DepartmentList();
@@ -61,6 +105,117 @@ const Users = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getEmployeeList = async () => {
+    let { data } = await EmployeeLists();
+
+    const newRows = [];
+    if (!data?.error) {
+      let values = data?.results?.list;
+      console.log(values);
+      values?.map((list, index) => {
+        const returnData = {};
+        returnData.id = list?.employId;
+        returnData.name = list?.name;
+        returnData.department = list?.department_Id?.departmentName;
+        returnData.role = (
+          <>
+            {list?.employRole.flat()?.map((role, index) => (
+              <span className="d-flex align-items-start py-1" key={index}>
+                • {role}
+                {index !== list.employRole.flat().length - 1}
+              </span>
+            ))}
+          </>
+        );
+        returnData.salary = list?.salary;
+        returnData.login = (
+          <>
+            <img src="/images/dashboard/CalendarBlank.png" className="w-auto" />{" "}
+            <span className="ms-2">
+              {moment(list?.logIn).format("MMM Do YY, h:mm a")}
+            </span>
+          </>
+        );
+        returnData.actions = (
+          <div class="text-center">
+            <a
+              className="cursor_pointer"
+              type=""
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
+            </a>
+            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+              <li>
+                <Link
+                  class="dropdown-item border-bottom"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal1"
+                  onClick={() => setUserId(list?._id)}
+                >
+                  <img
+                    src="/images/users/AddressBook.svg"
+                    alt=""
+                    className="me-2"
+                  />
+                  View Users Details
+                </Link>
+              </li>
+              <li>
+                <Link
+                  class="dropdown-item border-bottom"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal2"
+                  onClick={() => setUserId(list?._id)}
+                >
+                  <img
+                    src="/images/users/PencilLine.svg"
+                    alt=""
+                    className="me-2"
+                  />
+                  Edit User Details
+                </Link>
+              </li>
+              <li>
+                <Link
+                  class="dropdown-item"
+                  to={`/Admin/Requests/Comments/${list?._id}`}
+                >
+                  <img
+                    src="/images/dashboard/Comment.png"
+                    alt=""
+                    className="me-2"
+                  />
+                  Comments
+                </Link>
+              </li>
+              <li>
+                <a class="dropdown-item border-bottom" href="#">
+                  <img
+                    src="/images/users/TextAlignLeft.svg"
+                    alt=""
+                    className="me-2"
+                  />
+                  Wrap Column
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item text-danger" href="#">
+                  <img src="/images/users/Trash.svg" alt="" className="me-2" />
+                  Delete Template
+                </a>
+              </li>
+            </ul>
+          </div>
+        );
+
+        newRows.push(returnData);
+      });
+      setUsers({ ...users, rows: newRows });
     }
   };
 
@@ -91,17 +246,6 @@ const Users = () => {
       const imageUrl = URL.createObjectURL(selectedFile);
       setProfileImgUrl(imageUrl);
     }
-  };
-
-  const indexOfLastEmployee = currentPage * employeesPerPage;
-  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
-  const currentEmployees = employeeData?.slice(
-    indexOfFirstEmployee,
-    indexOfLastEmployee
-  );
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
   };
 
   const onSubmit = async (datas) => {
@@ -199,6 +343,75 @@ const Users = () => {
     }
   };
 
+  const handleCheckboxChange = (field) => {
+    let updatedSelectedColumns = [...users.selectedColumns];
+    const index = updatedSelectedColumns.indexOf(field);
+    if (index > -1) {
+      updatedSelectedColumns.splice(index, 1);
+    } else {
+      updatedSelectedColumns.push(field);
+    }
+    setUsers({ ...users, selectedColumns: updatedSelectedColumns });
+  };
+
+  const toggleSortOrder = () => {
+    const currentSortType = users.sortType === "asc" ? "desc" : "asc";
+
+    const sortedRows = [...users.rows].sort((a, b) => {
+      let comparison = 0;
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        comparison = -1;
+      } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
+        comparison = 1;
+      }
+      return currentSortType === "asc" ? comparison : comparison * -1;
+    });
+    console.log(sortedRows);
+
+    setUsers({
+      ...users,
+      rows: sortedRows,
+      sortType: currentSortType,
+    });
+  };
+
+  const hideSelectedColumns = () => {
+    const updatedHiddenColumns = [
+      ...users.hiddenColumns,
+      ...users.selectedColumns,
+    ];
+    setUsers({
+      ...users,
+      hiddenColumns: updatedHiddenColumns,
+      selectedColumns: [],
+    });
+    setShowClearButton(true);
+  };
+
+  const columnsWithCheckboxes = users.columns.map((column) => ({
+    ...column,
+    label: (
+      <div key={column.field}>
+        <input
+          type="checkbox"
+          checked={users.selectedColumns.includes(column.field)}
+          onChange={() => handleCheckboxChange(column.field)}
+          className="me-1 mt-1"
+        />
+        <label>{column.label}</label>
+      </div>
+    ),
+  }));
+
+  const visibleColumns = columnsWithCheckboxes.filter(
+    (column) => !users.hiddenColumns.includes(column.field)
+  );
+
+  const showAllColumns = () => {
+    setUsers({ ...users, hiddenColumns: [], selectedColumns: [] });
+    setShowClearButton(false);
+  };
+
   return (
     <>
       <div className="container-fluid">
@@ -266,6 +479,76 @@ const Users = () => {
               </div>
             </div>
 
+            <div className="position-relative">
+              <p className="table-name mb-2">All Users</p>
+              <div className=" col-12 d-flex align-items-center table-searchbar">
+                <div className="d-flex ">
+                  <div className="col-md-3 table-searchbar-imgs">
+                    <img
+                      src="/images/dashboard/Plus-icon.png"
+                      className="p-2 table-searchbar-img"
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    />
+                    {/* <img
+                      src="/images/dashboard/FunnelSimple.png"
+                      alt=""
+                      className="p-2 table-searchbar-img"
+                    /> */}
+                    <img
+                      onClick={toggleSortOrder}
+                      src="/images/dashboard/ArrowsDownUp.png"
+                      className="p-2 table-searchbar-img border-end cursor_pointer"
+                    />
+                    {/* <img
+                      src="/images/dashboard/DotsThreeOutlineVertical2.png"
+                      alt=""
+                      className="p-2 table-searchbar-img border-end"
+                    /> */}
+                  </div>
+                  <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
+                    <p className="m-0 text-nowrap">
+                      {users?.selectedColumns && users?.selectedColumns.length}
+                      <span> Selected</span>
+                    </p>
+                    {showClearButton ? (
+                      <p
+                        className="hide-selected ms-2 m-0 text-nowrap cursor_pointer "
+                        onClick={showAllColumns}
+                      >
+                        Clear Selection
+                      </p>
+                    ) : (
+                      <p
+                        className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
+                        onClick={hideSelectedColumns}
+                      >
+                        Hide Selected
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <form className="d-flex me-2" role="search"></form>
+              </div>
+              <div className="col-12 mdb_table mt-3 ">
+                <div className="table-responsive">
+                  <MDBDataTable
+                    bordered
+                    displayEntries={false}
+                    entries={10}
+                    className="text-nowrap"
+                    hover
+                    data={{ ...users, columns: visibleColumns }}
+                    // data={users}
+                    noBottomColumns
+                    paginationLabel={"«»"}
+                    sortable={false}
+                  />
+                </div>
+              </div>
+            </div>
+
             {/* <!-- Modal --> */}
             <div
               class="modal fade"
@@ -301,7 +584,6 @@ const Users = () => {
                             }
                             alt=""
                             className="w_100_h_100"
-                            
                           />
                           <input
                             autoComplete="false"
@@ -661,310 +943,7 @@ const Users = () => {
             </div>
             {/* <!-- Modal End--> */}
 
-            <div className=" col-12 d-flex align-items-center table-searchbar">
-              <div className="row d-flex  col ">
-                <div className="col-md-3 table-searchbar-imgs">
-                  <img
-                    src="/images/dashboard/Plus-icon.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
-                  />
-                  <img
-                    src="/images/dashboard/FunnelSimple.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
-                  />
-                  <img
-                    src="/images/dashboard/ArrowsDownUp.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
-                  />
-                  <img
-                    src="/images/dashboard/DotsThreeOutlineVertical2.png"
-                    alt=""
-                    className="p-2 table-searchbar-img border-end"
-                  />
-                </div>
-                <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
-                  <p className="m-0 text-nowrap">2 Selected</p>
-                  <p className="hide-selected m-0 text-nowrap ">
-                    Hide Selected
-                  </p>
-                </div>
-              </div>
-              <form className="d-flex me-2" role="search">
-                <input
-                  className="form-control table-search-bar"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                  value={search}
-                  onChange={(e) => handleSearch(e)}
-                />
-              </form>
-            </div>
-
-            <div className="col-12 table_comman mt-3 ">
-              <div className="table-responsive">
-                <table className="table table-borderless users-table">
-                  <thead>
-                    <tr className="th-text">
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        User ID
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Name
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Department
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Role
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Salary
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Last Logged In
-                      </th>
-                      {/* <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Status
-                      </th> */}
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="user_table">
-                    {currentEmployees &&
-                      currentEmployees?.map((document, i) => (
-                        <tr key={i} className="ms-0 tr">
-                          <td className="td-text">
-                            <input
-                              className="form-check-input checkbox-table"
-                              type="checkbox"
-                              value=""
-                            />
-                            {document?.employId}
-                          </td>
-                          <td className="td-text">
-                            <img
-                              style={{
-                                width: "30px",
-                                height: "30px",
-                                borderRadius: "50%",
-                                objectFit: "cover",
-                              }}
-                              src={document?.profile_Pic}
-                              alt=""
-                            />
-                            <span className="ms-3">{document?.name}</span>
-                          </td>
-                          <td className="td-text">
-                            {document?.department_Id &&
-                            document?.department_Id?.departmentName
-                              ? document?.department_Id?.departmentName
-                              : document?.department_Id
-                              ? document?.department_Id[0]?.departmentName
-                              : "Not Availabe"}
-                          </td>
-                          <td className="td-text">
-                            {document?.employRole.flat()?.map((role, index) => (
-                              <span
-                                className="d-flex align-items-start py-1"
-                                key={index}
-                              >
-                                • {role}
-                                {index !==
-                                  document.employRole.flat().length - 1}
-                              </span>
-                            ))}
-                          </td>
-
-                          <td className="td-text">{document?.salary}</td>
-                          <td className="td-text">
-                            <img src="/images/dashboard/CalendarBlank.png" />
-                            <span className="ms-2">
-                              {document?.logIn &&
-                                moment(document?.logIn).format(
-                                  "MMM Do YY, h:mm:ss a"
-                                )}
-                            </span>
-                          </td>
-                          {/* <td className="td-text">
-                            {document?.status ? "True" : "False"}
-                          </td> */}
-                          <td className="td-text">
-                            <div class="dropdown">
-                              <a
-                                type=""
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                              >
-                                {/* {document.actions} */}
-                                <img
-                                  src="/images/sidebar/ThreeDots.svg"
-                                  className="w-auto p-3 cursor_pointer"
-                                />
-                              </a>
-                              <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-                                <li>
-                                  <Link
-                                    class="dropdown-item border-bottom"
-                                    // to="/Admin/View-User/123"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal1"
-                                    onClick={() => setUserId(document?._id)}
-                                  >
-                                    <img
-                                      src="/images/users/AddressBook.svg"
-                                      alt=""
-                                      className="me-2"
-                                    />
-                                    View Users Details
-                                  </Link>
-                                </li>
-                                <li>
-                                  <a
-                                    class="dropdown-item border-bottom"
-                                    href="#"
-                                  >
-                                    <img
-                                      src="/images/users/PencilLine.svg"
-                                      alt=""
-                                      className="me-2"
-                                    />
-                                    Edit User Details
-                                  </a>
-                                </li>
-                                <li>
-                                  <a class="dropdown-item" href="#">
-                                    <img
-                                      src="/images/dashboard/Comment.png"
-                                      alt=""
-                                      className="me-2"
-                                    />
-                                    Comments
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    class="dropdown-item border-bottom"
-                                    href="#"
-                                  >
-                                    <img
-                                      src="/images/users/TextAlignLeft.svg"
-                                      alt=""
-                                      className="me-2"
-                                    />
-                                    Wrap Column
-                                  </a>
-                                </li>
-                                <li>
-                                  <a class="dropdown-item text-danger" href="#">
-                                    <img
-                                      src="/images/users/Trash.svg"
-                                      alt=""
-                                      className="me-2"
-                                    />
-                                    Delete Template
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-              </div>
-              <nav
-                aria-label="Page navigation"
-                className="d-flex justify-content-end page-navigation mt-3"
-              >
-                <ul className="pagination">
-                  <li
-                    onClick={() =>
-                      paginate(
-                        currentPage === 1 ? currentPage : currentPage - 1
-                      )
-                    }
-                    class="page-item"
-                  >
-                    <p class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </p>
-                  </li>
-                  {Array.from({
-                    length: Math.ceil(employeeData.length / employeesPerPage),
-                  })?.map((_, index) => (
-                    <li key={index} className="page-item">
-                      <p
-                        onClick={() => paginate(index + 1)}
-                        className="page-link"
-                      >
-                        {index + 1}
-                      </p>
-                    </li>
-                  ))}
-                  <li
-                    onClick={() =>
-                      paginate(
-                        currentPage === totalPage
-                          ? currentPage
-                          : currentPage + 1
-                      )
-                    }
-                    class="page-item"
-                  >
-                    <p class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </p>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-
+            {/* View User Modal */}
             <div
               class="modal fade"
               id="exampleModal1"
@@ -974,6 +953,19 @@ const Users = () => {
             >
               <ViewUser userId={userId} />
             </div>
+            {/* View User Modal Ends*/}
+
+            {/* Edit User Modal */}
+            <div
+              class="modal fade"
+              id="exampleModal2"
+              tabIndex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <EditUserProfile userId={userId} />
+            </div>
+            {/* Edit User Modal Ends*/}
 
             <div className="footer">
               <div>© 2023 MYOT</div>
