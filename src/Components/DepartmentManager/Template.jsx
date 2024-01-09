@@ -505,8 +505,11 @@ const Template = () => {
               <div className="table-responsive">
                 <table className="table table-borderless">
                   <thead>
-                    <tr className="th-text">
-                      <th className="th-text">
+                    <tr className="th-text"
+                    >
+                      <th className={`th-text ${
+                          hiddenColumns.comment ? "d-none" : "table-cell"
+                        }`}>
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
@@ -514,7 +517,9 @@ const Template = () => {
                         />
                         Template name
                       </th>
-                      <th className="th-text">
+                      <th className={`th-text ${
+                          hiddenColumns.comment ? "d-none" : "table-cell"
+                        }`}>
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
@@ -522,7 +527,9 @@ const Template = () => {
                         />
                         Assigned to
                       </th>
-                      <th className="th-text">
+                      <th className={`th-text ${
+                          hiddenColumns.comment ? "d-none" : "table-cell"
+                        }`}>
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
@@ -530,7 +537,9 @@ const Template = () => {
                         />
                         Version
                       </th>
-                      <th className="th-text">
+                      <th className={`th-text ${
+                          hiddenColumns.comment ? "d-none" : "table-cell"
+                        }`}>
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
@@ -538,7 +547,9 @@ const Template = () => {
                         />
                         Date
                       </th>
-                      <th className="th-text">
+                      <th className={`th-text ${
+                          hiddenColumns.comment ? "d-none" : "table-cell"
+                        }`}>
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
@@ -546,7 +557,9 @@ const Template = () => {
                         />
                         Status
                       </th>
-                      <th className="th-text">
+                      <th className={`th-text ${
+                          hiddenColumns.comment ? "d-none" : "table-cell"
+                        }`}>
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
@@ -555,7 +568,9 @@ const Template = () => {
                         Department
                       </th>
 
-                      <th className="th-text">
+                      <th className={`th-text ${
+                          hiddenColumns.comment ? "d-none" : "table-cell"
+                        }`}>
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
