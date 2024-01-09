@@ -28,14 +28,14 @@ const CalenderAprv = () => {
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
-                  <form className="" role="search">
+                  {/* <form className="" role="search">
                     <input
                       className="form-control search-bar"
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
                     />
-                  </form>
+                  </form> */}
                   <div className="">
                     <img
                       src="/images/dashboard/announcement.png"

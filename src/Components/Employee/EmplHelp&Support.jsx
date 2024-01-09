@@ -120,14 +120,14 @@ const EmplHelpSupport = () => {
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
-                  <form className="" role="search">
+                  {/* <form className="" role="search">
                     <input
                       className="form-control search-bar"
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
                     />
-                  </form>
+                  </form> */}
                   <div className="">
                     <img
                       src="/images/dashboard/announcement.png"
@@ -313,7 +313,7 @@ const EmplHelpSupport = () => {
                             </div>
                             <ToastContainer />
                             <div className="d-flex justify-content-end mb-3">
-                              <button type="submit" class="user-modal-btn">
+                              <button type="submit" class="user-modal-btn"  data-bs-dismiss="modal">
                                 Send
                               </button>
                               <button
