@@ -4,6 +4,7 @@ import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
 
 const Document = () => {
+  const [showClearButton, setShowClearButton] = useState(false);
   const [requests, setRequests] = useState({
     columns: [
       {
@@ -11,24 +12,28 @@ const Document = () => {
         field: "name",
         sort: "asc",
         width: 50,
+        selected: false,
       },
       {
         label: "Assigned To",
         field: "assigned",
         sort: "asc",
         width: 50,
+        selected: false,
       },
       {
         label: "Priority",
         field: "priority",
         sort: "asc",
         width: 100,
+        selected: false,
       },
       {
         label: "Status",
         field: "status",
         sort: "asc",
         width: 100,
+        selected: false,
       },
       {
         label: "Department",
@@ -36,15 +41,19 @@ const Document = () => {
         sort: "asc",
         width: 100,
         searchable: true,
+        selected: false,
       },
       {
         label: "Actions",
         field: "actions",
         sort: "asc",
         width: 100,
+        selected: false,
       },
     ],
     rows: [],
+    hiddenColumns: [],
+    selectedColumns: [],
   });
 
   useEffect(() => {
@@ -153,6 +162,54 @@ const Document = () => {
       setRequests({ ...requests, rows: newRows });
     }
   };
+
+  const handleCheckboxChange = (field) => {
+    let updatedSelectedColumns = [...requests.selectedColumns];
+    const index = updatedSelectedColumns.indexOf(field);
+    if (index > -1) {
+      updatedSelectedColumns.splice(index, 1);
+    } else {
+      updatedSelectedColumns.push(field);
+    }
+    setRequests({ ...requests, selectedColumns: updatedSelectedColumns });
+  };
+
+  const hideSelectedColumns = () => {
+    const updatedHiddenColumns = [
+      ...requests.hiddenColumns,
+      ...requests.selectedColumns,
+    ];
+    setRequests({
+      ...requests,
+      hiddenColumns: updatedHiddenColumns,
+      selectedColumns: [],
+    });
+    setShowClearButton(true);
+  };
+
+  const columnsWithCheckboxes = requests.columns.map((column) => ({
+    ...column,
+    label: (
+      <div key={column.field}>
+        <input
+          type="checkbox"
+          checked={requests.selectedColumns.includes(column.field)}
+          onChange={() => handleCheckboxChange(column.field)}
+          className="me-1 mt-1"
+        />
+        <label>{column.label}</label>
+      </div>
+    ),
+  }));
+
+  const visibleColumns = columnsWithCheckboxes.filter(
+    (column) => !requests.hiddenColumns.includes(column.field)
+  );
+
+  const showAllColumns = () => {
+    setRequests({ ...requests, hiddenColumns: [], selectedColumns: [] });
+    setShowClearButton(false);
+  };
   return (
     <div className="position-relative">
       <p className="table-name mb-2">Document Requests</p>
@@ -181,197 +238,43 @@ const Document = () => {
             />
           </div>
           <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
-            <p className="m-0 text-nowrap">2 Selected</p>
-            <p className="hide-selected m-0 text-nowrap ">Hide Selected</p>
+            <p className="m-0 text-nowrap">
+              {requests?.selectedColumns && requests?.selectedColumns.length}
+              <span> Selected</span>
+            </p>
+            {showClearButton ? (
+              <p
+                className="hide-selected m-0 text-nowrap cursor_pointer "
+                onClick={showAllColumns}
+              >
+                Clear Selection
+              </p>
+            ) : (
+              <p
+                className="hide-selected m-0 text-nowrap cursor_pointer "
+                onClick={hideSelectedColumns}
+              >
+                Hide Selected
+              </p>
+            )}
           </div>
         </div>
-        <form className="d-flex me-2" role="search">
-          {/* <input
-        className="form-control table-search-bar"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-      /> */}
-        </form>
+        <form className="d-flex me-2" role="search"></form>
       </div>
-
-      {/* <div className="col-12 table_comman mt-3 "> */}
       <div className="col-12 mdb_table mt-3 ">
         <div className="table-responsive">
           <MDBDataTable
             bordered
             displayEntries={false}
-            entries={10}
-            className=""
+            entries={5}
+            className="text-nowrap"
             hover
-            data={requests}
+            data={{ ...requests, columns: visibleColumns }}
             noBottomColumns
-            sortable
             paginationLabel={"«»"}
+            sortable={false}
           />
-          {/* <table className="table table-borderless">
-        <thead>
-          <tr className="th-text">
-            <th className="th-text">
-              <input
-                className="form-check-input checkbox-table"
-                type="checkbox"
-                value=""
-              />
-              Template name
-            </th>
-
-            <th className="th-text">
-              <input
-                className="form-check-input checkbox-table"
-                type="checkbox"
-                value=""
-              />
-              Assigned To
-            </th>
-            <th className="th-text">
-              <input
-                className="form-check-input checkbox-table"
-                type="checkbox"
-                value=""
-              />
-              Version
-            </th>
-            <th className="th-text">
-              <input
-                className="form-check-input checkbox-table"
-                type="checkbox"
-                value=""
-              />
-              Status
-            </th>
-            <th className="th-text">
-              <input
-                className="form-check-input checkbox-table"
-                type="checkbox"
-                value=""
-              />
-              Department
-            </th>
-            <th className="th-text">
-              <input
-                className="form-check-input checkbox-table"
-                type="checkbox"
-                value=""
-              />
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {tasks.map((task) => (
-            <tr key={task.id}>
-              <td className="td-text">{task.template}</td>
-              <td>{task.assignedTo}</td>
-              <td className="td-text">{task.version}</td>
-              <td className="td-text">{task.status}</td>
-              <td className="td-text">{task.department}</td>
-              <td className="td-text">
-                <div class="dropdown">
-                  <a
-                    type=""
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    {task.action}
-                  </a>
-                  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-                    <li>
-                      <a class="dropdown-item border-bottom" href="#">
-                        <img
-                          src="/images/users/AddressBook.svg"
-                          alt=""
-                          className="me-2"
-                        />
-                        View Users Details
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item border-bottom" href="#">
-                        <img
-                          src="/images/users/PencilLine.svg"
-                          alt=""
-                          className="me-2"
-                        />
-                        Edit User Details
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <img
-                          src="/images/dashboard/Comment.png"
-                          alt=""
-                          className="me-2"
-                        />
-                        Comments
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item border-bottom" href="#">
-                        <img
-                          src="/images/users/TextAlignLeft.svg"
-                          alt=""
-                          className="me-2"
-                        />
-                        Wrap Column
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item text-danger" href="#">
-                        <img
-                          src="/images/users/Trash.svg"
-                          alt=""
-                          className="me-2"
-                        />
-                        Delete User
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </td>
-              <td></td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
         </div>
-        {/* <nav
-      aria-label="Page navigation"
-      className="d-flex justify-content-end page-navigation mt-3"
-    >
-      <ul className="pagination">
-        <li className="page-item">
-          <a className="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li className="page-item">
-          <button className="page-link" href="#">
-            1
-          </button>
-        </li>
-        <li className="page-item">
-          <button className="page-link" href="#">
-            2
-          </button>
-        </li>
-        <li className="page-item">
-          <button className="page-link" href="#">
-            3
-          </button>
-        </li>
-        <li className="page-item">
-          <button className="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </button>
-        </li>
-      </ul>
-    </nav> */}
       </div>
     </div>
   );

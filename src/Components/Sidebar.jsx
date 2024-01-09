@@ -7,6 +7,7 @@ import {
 } from "../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 import { EmployeeLogout } from "../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
+import ProfileSwitcher from "./ProfileSwitcher/Switcher";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const Sidebar = () => {
     <div className="container-fluid  sidebar">
       {/* Sidebar scroll*/}
 
-      <div className="row">
+      <div className="row position-relative">
         <div className="mb-4 sticky-top bg-white">
           {/* <img src='/images/Myot-logo.png' className="logo pb-1"/> */}
           <svg
@@ -97,7 +98,7 @@ const Sidebar = () => {
             </defs>
           </svg>
         </div>
-        <div className="col-auto col-mg-3 min-vh-100 mb-4">
+        <div className="col-auto col-mg-3 pb-5 mb-5">
           <p className="th-text">MAIN MENU</p>
           <ul className="nav nav-pills flex-column">
             <li
@@ -429,8 +430,9 @@ const Sidebar = () => {
             </li>
           </ul>
         </div>
-        <div class="dropdown">
-          <a
+        <div class="dropdown position-fixed bottom-0">
+          <ProfileSwitcher />
+          {/* <a
             class="text-decoration-none"
             type="button"
             data-bs-toggle="dropdown"
@@ -470,7 +472,7 @@ const Sidebar = () => {
                 <a class="dropdown-item">Employee</a>
               </li>
             </Link>
-          </ul>
+          </ul> */}
         </div>
       </div>
     </div>

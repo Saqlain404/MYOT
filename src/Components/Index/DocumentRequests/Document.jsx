@@ -1,86 +1,339 @@
 import React, { useEffect, useState } from "react";
+import { MDBDataTable } from "mdbreact";
+import { Link } from "react-router-dom";
 import {
   DocumentComment,
   RequestorList,
-  SearchRequestor,
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 
 const Document = () => {
-  const [documents, setDocuments] = useState();
+  const [showClearButton, setShowClearButton] = useState(false);
   const [search, setSearch] = useState("");
   const [comment, setComment] = useState("");
   const [document_Id, setDocument_Id] = useState();
-  const [selectedCount, setSelectedCount] = useState(0);
-  const [checkBoxes, setCheckBoxes] = useState({
-    document: false,
-    requestor: false,
-    assignedTo: false,
-    priority: false,
-    status: false,
-    department: false,
-    comment: false,
-    actions: false,
+
+  const [documents, setDocuments] = useState({
+    columns: [
+      {
+        label: "Document",
+        field: "document",
+        sort: "asc",
+        width: 50,
+        selected: false,
+      },
+      {
+        label: "Requester",
+        field: "requester",
+        sort: "asc",
+        width: 50,
+        selected: false,
+      },
+      {
+        label: "Assigned To",
+        field: "assigned",
+        sort: "asc",
+        width: 50,
+        selected: false,
+      },
+      {
+        label: "Priority",
+        field: "priority",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+      {
+        label: "Status",
+        field: "status",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+      {
+        label: "Department",
+        field: "department",
+        sort: "asc",
+        width: 100,
+        searchable: true,
+        selected: false,
+      },
+      {
+        label: "Comments",
+        field: "comments",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+      {
+        label: "Actions",
+        field: "actions",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+    ],
+    rows: [],
+    hiddenColumns: [],
+    selectedColumns: [],
   });
 
   useEffect(() => {
     getRequestorList();
   }, []);
 
-  useEffect(() => {
-    updateSelectedCount();
-  }, [checkBoxes]);
-
-  const updateSelectedCount = () => {
-    const count = Object.values(checkBoxes).filter((value) => value).length;
-    setSelectedCount(count);
-  };
-
-  const handleCheckboxClick = (checkboxName) => {
-    setCheckBoxes((prevCheckboxes) => ({
-      ...prevCheckboxes,
-      [checkboxName]: !prevCheckboxes[checkboxName],
-    }));
-  };
-  const handleHideSelected = () => {
-    for (const key in checkBoxes) {
-      if (checkBoxes[key]) {
-        const thElement = document.querySelector(`th.${key}`);
-        const tdElements = document.querySelectorAll(`td.${key}`);
-
-        if (thElement) {
-          thElement.classList.add("d-none");
-        }
-
-        tdElements.forEach((td) => {
-          td.classList.add("d-none");
-        });
-      }
-    }
-  };
   const getRequestorList = async () => {
-    try {
-      let { data } = await RequestorList();
-      if (!data.error) {
-        setDocuments(data?.results?.list);
-        console.log(data?.results?.list);
-      }
-    } catch (error) {}
+    let { data } = await RequestorList();
+
+    const newRows = [];
+    if (!data?.error) {
+      let values = data?.results?.list;
+      console.log(values);
+      values?.map((list, index) => {
+        const returnData = {};
+        returnData.document = list?.templete_Id?.templeteName;
+        returnData.assigned = (
+          <>
+            <img
+              className="w_20_h_20"
+              src={list?.templete_Id?.manager?.profile_Pic}
+              alt=""
+            />
+            <span className="ms-2 text-capitalize">
+              {list?.templete_Id?.manager?.name}
+            </span>
+          </>
+        );
+        returnData.requester = (
+          <>
+            <img
+              className="w_20_h_20"
+              src={list?.creator_Id?.profile_Pic}
+              alt=""
+            />
+            <span className="ms-2 text-capitalize">
+              {list?.creator_Id?.name}
+            </span>
+          </>
+        );
+        returnData.priority = list?.priority;
+        returnData.department =
+          list?.templete_Id?.manager?.department_Id?.departmentName;
+        returnData.status = (
+          <span
+            className={`"td-text status" ${
+              list?.status === "Pending"
+                ? "text-info"
+                : list?.status === "Approved"
+                ? "text-warning"
+                : list?.status === "In Progress"
+                ? "text-primary"
+                : "text-success"
+            }`}
+          >
+            {list?.status}
+          </span>
+        );
+        returnData.comments = (
+          <>
+            <div className="text-center">
+              <a type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img
+                  src="/images/dashboard/Comment.png"
+                  className="mx-auto d-block"
+                  onClick={() => setDocument_Id(document?._id)}
+                />
+              </a>
+              <form
+                className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
+                onSubmit={(e) => handleSubmit(e, list?._id)}
+              >
+                <div className="mb-3 border-bottom">
+                  <label className="form-label th-text">Comment or type</label>
+
+                  <input
+                    type="text"
+                    className="form-control border-0"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                </div>
+
+                <div className="d-flex justify-content-between">
+                  <div>
+                    <img
+                      src="/images/tasks/assign comments.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/mention.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/task.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/emoji.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/attach_attachment.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                  </div>
+                  <div>
+                    <button type="submit" className="comment-btn btn-primary">
+                      Comment
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </>
+        );
+        returnData.actions = (
+          <div class="">
+            <a
+              className="cursor_pointer"
+              type=""
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
+            </a>
+            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+              {/* <li>
+                <a class="dropdown-item border-bottom" href="#">
+                  <img
+                    src="/images/users/AddressBook.svg"
+                    alt=""
+                    className="me-2"
+                  />
+                  View Users Details
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item border-bottom" href="#">
+                  <img
+                    src="/images/users/PencilLine.svg"
+                    alt=""
+                    className="me-2"
+                  />
+                  Edit User Details
+                </a>
+              </li> */}
+              <li>
+                <Link
+                  class="dropdown-item"
+                  to={`/Admin/Requests/Comments/${list?._id}`}
+                >
+                  <img
+                    src="/images/dashboard/Comment.png"
+                    alt=""
+                    className="me-2"
+                  />
+                  Comments
+                </Link>
+              </li>
+              <li>
+                <a class="dropdown-item border-bottom" href="#">
+                  <img
+                    src="/images/users/TextAlignLeft.svg"
+                    alt=""
+                    className="me-2"
+                  />
+                  Wrap Column
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item text-danger" href="#">
+                  <img src="/images/users/Trash.svg" alt="" className="me-2" />
+                  Delete Template
+                </a>
+              </li>
+            </ul>
+          </div>
+        );
+
+        newRows.push(returnData);
+      });
+      setDocuments({ ...documents, rows: newRows });
+    }
   };
 
-  const handleSearch = async (e) => {
-    const value = e.target.value.toLowerCase();
-    setSearch(value);
-    if (value.length > 0) {
-      let { data } = await SearchRequestor({ search: value });
-      console.log(data);
-      if (!data?.error) {
-        setDocuments(data?.results?.document);
+  const toggleSortOrder = () => {
+    const currentSortType = documents.sortType === "asc" ? "desc" : "asc";
+
+    const sortedRows = [...documents.rows].sort((a, b) => {
+      let comparison = 0;
+      if (a.document < b.document) {
+        comparison = -1;
+      } else if (a.document > b.document) {
+        comparison = 1;
       }
+      return currentSortType === "asc" ? comparison : comparison * -1;
+    });
+    console.log(sortedRows);
+
+    setDocuments({
+      ...documents,
+      rows: sortedRows,
+      sortType: currentSortType,
+    });
+  };
+
+  const handleCheckboxChange = (field) => {
+    let updatedSelectedColumns = [...documents.selectedColumns];
+    const index = updatedSelectedColumns.indexOf(field);
+    if (index > -1) {
+      updatedSelectedColumns.splice(index, 1);
     } else {
-      getRequestorList();
+      updatedSelectedColumns.push(field);
     }
+    setDocuments({ ...documents, selectedColumns: updatedSelectedColumns });
+  };
+
+  const hideSelectedColumns = () => {
+    const updatedHiddenColumns = [
+      ...documents.hiddenColumns,
+      ...documents.selectedColumns,
+    ];
+    setDocuments({
+      ...documents,
+      hiddenColumns: updatedHiddenColumns,
+      selectedColumns: [],
+    });
+    setShowClearButton(true);
+  };
+
+  const columnsWithCheckboxes = documents.columns.map((column) => ({
+    ...column,
+    label: (
+      <div key={column.field}>
+        <input
+          type="checkbox"
+          checked={documents.selectedColumns.includes(column.field)}
+          onChange={() => handleCheckboxChange(column.field)}
+          className="me-1 mt-1"
+        />
+        <label>{column.label}</label>
+      </div>
+    ),
+  }));
+
+  const visibleColumns = columnsWithCheckboxes.filter(
+    (column) => !documents.hiddenColumns.includes(column.field)
+  );
+
+  const showAllColumns = () => {
+    setDocuments({ ...documents, hiddenColumns: [], selectedColumns: [] });
+    setShowClearButton(false);
   };
 
   const handleSubmit = async (e) => {
@@ -113,426 +366,60 @@ const Document = () => {
   };
 
   return (
-    <div>
-      <p className="table-name mb-2">Document Request</p>
+    <div className="position-relative">
+      <p className="table-name mb-2">Document Requests</p>
       <div className=" col-12 d-flex align-items-center table-searchbar">
-        <div className="row d-flex  col ">
-          <div className="col-md-3  table-searchbar-imgs">
-            <img
+        <div className="d-flex ">
+          <div className="col-md-3 table-searchbar-imgs">
+            {/* <img
               src="/images/dashboard/Plus-icon.png"
               alt=""
               className="p-2 table-searchbar-img"
-            />
-            <img
-              src="/images/dashboard/FunnelSimple.png"
-              alt=""
-              className="p-2 table-searchbar-img"
-            />
+            /> */}
             <img
               src="/images/dashboard/ArrowsDownUp.png"
-              alt=""
-              className="p-2 table-searchbar-img"
-            />
-            <img
-              src="/images/dashboard/DotsThreeOutlineVertical2.png"
-              alt=""
-              className="p-2 table-searchbar-img border-end"
+              onClick={toggleSortOrder}
+              className="p-2 table-searchbar-img border-end cursor_pointer"
             />
           </div>
-          <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
-            <p className="m-0 mx-2 text-nowrap">{selectedCount} Selected</p>
-            <div>
+          <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
+            <p className="m-0 text-nowrap">
+              {documents?.selectedColumns && documents?.selectedColumns.length}
+              <span> Selected</span>
+            </p>
+            {showClearButton ? (
               <p
-                className="hide-selected m-0 text-nowrap cursor_pointer"
-                onClick={handleHideSelected}
+                className="hide-selected ms-2 m-0 text-nowrap cursor_pointer "
+                onClick={showAllColumns}
+              >
+                Clear Selection
+              </p>
+            ) : (
+              <p
+                className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
+                onClick={hideSelectedColumns}
               >
                 Hide Selected
               </p>
-            </div>
+            )}
           </div>
         </div>
-        <form className="d-flex me-2" role="search">
-          <input
-            className="form-control table-search-bar"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-            value={search}
-            onChange={(e) => handleSearch(e)}
-          />
-        </form>
+        <form className="d-flex me-2" role="search"></form>
       </div>
-
-      <div className="col-12 table_comman mt-3 ">
+      <div className="col-12 mdb_table mt-3 ">
         <div className="table-responsive">
-          <table className="table table-borderless">
-            <thead>
-              <tr className="th-text">
-                <th className="th-text document">
-                  <input
-                    className="form-check-input checkbox-table"
-                    type="checkbox"
-                    value=""
-                    onClick={() => handleCheckboxClick("document")}
-                    checked={checkBoxes.document}
-                  />
-                  Document
-                </th>
-                <th className="th-text requestor">
-                  <input
-                    className="form-check-input checkbox-table"
-                    type="checkbox"
-                    value=""
-                    onClick={() => handleCheckboxClick("requestor")}
-                    checked={checkBoxes.requestor}
-                  />
-                  Requester
-                </th>
-                <th className="th-text assignedTo">
-                  <input
-                    className="form-check-input checkbox-table"
-                    type="checkbox"
-                    value=""
-                    onClick={() => handleCheckboxClick("assignedTo")}
-                    checked={checkBoxes.assignedTo}
-                  />
-                  Assigned to
-                </th>
-                <th className="th-text priority">
-                  <input
-                    className="form-check-input checkbox-table"
-                    type="checkbox"
-                    value=""
-                    onClick={() => handleCheckboxClick("priority")}
-                    checked={checkBoxes.priority}
-                  />
-                  Priority
-                </th>
-                <th className="th-text status">
-                  <input
-                    className="form-check-input checkbox-table"
-                    type="checkbox"
-                    value=""
-                    onClick={() => handleCheckboxClick("status")}
-                    checked={checkBoxes.status}
-                  />
-                  Status
-                </th>
-                <th className="th-text department">
-                  <input
-                    className="form-check-input checkbox-table"
-                    type="checkbox"
-                    value=""
-                    onClick={() => handleCheckboxClick("department")}
-                    checked={checkBoxes.department}
-                  />
-                  Department
-                </th>
-                <th className="th-text comment">
-                  <input
-                    className="form-check-input checkbox-table"
-                    type="checkbox"
-                    value=""
-                    onClick={() => handleCheckboxClick("comment")}
-                    checked={checkBoxes.comment}
-                  />
-                  Comment
-                </th>
-                <th className="th-text actions">
-                  <input
-                    className="form-check-input checkbox-table"
-                    type="checkbox"
-                    value=""
-                    onClick={() => handleCheckboxClick("actions")}
-                    checked={checkBoxes.actions}
-                  />
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {documents?.map((document) => (
-                <tr key={document.id}>
-                  <td className="td-text document">
-                    <input
-                      className="form-check-input checkbox-table"
-                      type="checkbox"
-                      value=""
-                    />
-                    {document?.templete_Id?.templeteName ||
-                      document?.templete?.templeteName}
-                  </td>
-                  <td className="td-text requestor">
-                    <img
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        borderRadius: "50%",
-                      }}
-                      src={
-                        document?.creator_Id?.profile_Pic ||
-                        (document?.creator_Id &&
-                          document?.creator_Id[0]?.profile_Pic)
-                      }
-                      // alt={
-                      //   document?.creator_Id?.name ||
-                      //   document?.creator_Id[0]?.name
-                      // }
-                    />
-                    <span className="ms-3">
-                      {document?.creator_Id?.name ||
-                        (document?.creator_Id && document?.creator_Id[0]?.name)}
-                    </span>
-                  </td>
-                  <td className="td-text assignedTo">
-                    {/* {document?.templete_Id?.manager?.name} */}
-                    <img
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        borderRadius: "50%",
-                      }}
-                      src={
-                        document?.templete_Id?.manager?.profile_Pic ||
-                        document?.templete?.manager[0]?.profile_Pic
-                      }
-                      alt={
-                        document?.templete_Id?.manager?.name ||
-                        document?.templete?.manager[0]?.name
-                      }
-                    />
-                    <span className="ms-3 text-capitalize">
-                      {document?.templete_Id?.manager?.name ||
-                        document?.templete?.manager[0]?.name}
-                    </span>
-                  </td>
-                  <td className="td-text priority">
-                    <img
-                      // style={{
-                      //   width: "20px",
-                      //   height: "20px",
-                      //   borderRadius: "50%",
-                      // }}
-                      src={
-                        document?.priority === "Urgent"
-                          ? require("../../../assets/logo/urgent.png")
-                          : document?.priority === "High"
-                          ? require("../../../assets/logo/high.png")
-                          : document?.priority === "Low"
-                          ? require("../../../assets/logo/low.png")
-                          : require("../../../assets/logo/normal.png")
-                      }
-                    />
-                    <span className="ms-2">{document?.priority}</span>
-                  </td>
-                  <td
-                    className={`"td-text status" ${
-                      document?.status === "Pending"
-                      ? "text-warning"
-                      : document?.status === "Approved"
-                      ? "text-success"
-                      : document?.status === "In Progress"
-                      ? "text-primary"
-                      : document?.status === "Rejected"
-                      ? "text-danger"
-                      : document?.status === "Completed"
-                      ? "text-success"
-                      : "text-muted"
-                    }`}
-                  >
-                    {document.status}
-                  </td>
-                  <td className="td-text department">
-                    {document?.templete_Id?.manager?.department_Id
-                      ?.departmentName ||
-                      document?.templete?.manager[0]?.department[0]
-                        ?.departmentName}
-                  </td>
-
-                  <td className="td-text comment">
-                    <div className="">
-                      <a
-                        type=""
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        <img
-                          src="/images/dashboard/Comment.png"
-                          className="mx-auto d-block cursor_pointer"
-                          onClick={() =>
-                            setDocument_Id(document?._id)
-                          }
-                        />
-                      </a>
-                      <form
-                        className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
-                        onSubmit={(e) => handleSubmit(e)}
-                      >
-                        <div className="mb-3 border-bottom">
-                          <label className="form-label th-text">
-                            Comment or type
-                          </label>
-
-                          <input
-                            type="text"
-                            className="form-control border-0"
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                          />
-                        </div>
-
-                        <div className="d-flex justify-content-between">
-                          <div>
-                            <img
-                              src="/images/tasks/assign comments.svg"
-                              alt=""
-                              className="comment-img"
-                            />
-                            <img
-                              src="/images/tasks/mention.svg"
-                              alt=""
-                              className="comment-img"
-                            />
-                            <img
-                              src="/images/tasks/task.svg"
-                              alt=""
-                              className="comment-img"
-                            />
-                            <img
-                              src="/images/tasks/emoji.svg"
-                              alt=""
-                              className="comment-img"
-                            />
-                            <img
-                              src="/images/tasks/attach_attachment.svg"
-                              alt=""
-                              className="comment-img"
-                            />
-                          </div>
-                          <div>
-                            <button
-                              type="submit"
-                              className="comment-btn btn-primary"
-                            >
-                              Comment
-                            </button>
-                            <button
-                              type="reset"
-                              className="d-none"
-                              id="resetComment"
-                            >
-                              reset
-                            </button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </td>
-                  <td className="td-text actions">
-                    <div class="">
-                      <a
-                        type=""
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        <img
-                          src="/images/sidebar/ThreeDots.svg"
-                          className="w-auto p-3 cursor_pointer"
-                        />
-                      </a>
-                      <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-                        <li>
-                          <a class="dropdown-item border-bottom" href="#">
-                            <img
-                              src="/images/users/AddressBook.svg"
-                              alt=""
-                              className="me-2"
-                            />
-                            View Users Details
-                          </a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item border-bottom" href="#">
-                            <img
-                              src="/images/users/PencilLine.svg"
-                              alt=""
-                              className="me-2"
-                            />
-                            Edit User Details
-                          </a>
-                        </li>
-                        <li>
-                          <Link
-                            class="dropdown-item"
-                            to={`/Admin/Requests/Comments/${document?._id}`}
-                          >
-                            <img
-                              src="/images/dashboard/Comment.png"
-                              className="me-2"
-                            />
-                            Comments
-                          </Link>
-                        </li>
-                        <li>
-                          <a class="dropdown-item border-bottom" href="#">
-                            <img
-                              src="/images/users/TextAlignLeft.svg"
-                              alt=""
-                              className="me-2"
-                            />
-                            Wrap Column
-                          </a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item text-danger" href="#">
-                            <img
-                              src="/images/users/Trash.svg"
-                              alt=""
-                              className="me-2"
-                            />
-                            Delete Template
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <MDBDataTable
+            bordered
+            displayEntries={false}
+            entries={5}
+            className="text-nowrap"
+            hover
+            data={{ ...documents, columns: visibleColumns }}
+            noBottomColumns
+            paginationLabel={"«»"}
+            sortable={false}
+          />
         </div>
-        <nav
-          aria-label="Page navigation"
-          className="d-flex justify-content-end page-navigation mt-3"
-        >
-          <ul className="pagination">
-            <li className="page-item">
-              <a className="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li className="page-item">
-              <button className="page-link" href="#">
-                1
-              </button>
-            </li>
-            <li className="page-item">
-              <button className="page-link" href="#">
-                2
-              </button>
-            </li>
-            <li className="page-item">
-              <button className="page-link" href="#">
-                3
-              </button>
-            </li>
-            <li className="page-item">
-              <button className="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </button>
-            </li>
-          </ul>
-        </nav>
       </div>
     </div>
   );

@@ -291,8 +291,21 @@ const EditProfile = () => {
                             }
                           )}
                           name="password"
-                          {...register("password")}
+                          {...register("password", {
+                            required: "* Please Enter Your Password",
+                            pattern: {
+                              value:
+                                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                              message:
+                                "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
+                            },
+                          })}
                         />
+                        {errors.password && (
+                          <small className="errorText ">
+                            {errors.password?.message}
+                          </small>
+                        )}
                       </div>
                       <div className="col-6 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
@@ -309,8 +322,21 @@ const EditProfile = () => {
                             }
                           )}
                           name="cpassword"
-                          {...register("cpassword")}
+                          {...register("cpassword", {
+                            required: "* Please Confirm Your Password",
+                            pattern: {
+                              value:
+                                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                              message:
+                                "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
+                            },
+                          })}
                         />
+                        {errors.cpassword && (
+                          <small className="errorText ">
+                            {errors.cpassword?.message}
+                          </small>
+                        )}
                       </div>
                     </div>
                     <div className="col-12 d-flex justify-content-between mb-2">
