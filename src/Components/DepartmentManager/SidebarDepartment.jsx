@@ -103,7 +103,7 @@ const SidebarDepartment = () => {
             </a>
             </Link>
         </li>
-        <li className={`"nav-item text-dark" ${
+        {/* <li className={`"nav-item text-dark" ${
                 location.pathname === "/Department/Departments" ? "nav_active" : ""
               } `}>
         <Link
@@ -116,7 +116,7 @@ const SidebarDepartment = () => {
               <span className="ms-3 align-middle sidebar-btn">Departments</span>
             </a>
             </Link>
-        </li>
+        </li> */}
         <li className={`"nav-item text-dark" ${
                 location.pathname === "/Department/Requests" ? "nav_active" : ""
               } `}>
@@ -146,7 +146,7 @@ const SidebarDepartment = () => {
             </Link>
         </li>
         <li className={`"nav-item text-dark" ${
-                location.pathname === "/Department/Home" ? "nav_active" : ""
+                location.pathname === "/Department/Files" ? "nav_active" : ""
               } `}>
           <a href="/" className="nav-link text-dark fs-5 align-middle " aria-current="page">
         

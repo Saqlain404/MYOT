@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
-import { DepartmentDashboardCount } from "../../ApiServices/departmentHttpService/departmentHttpService";
+import { DashboardList, DepartmentDashboardCount, DocumentCount, TicketCount } from "../../ApiServices/departmentHttpService/departmentHttpService";
 
 const DashboardDept = () => {
   const documents = [
@@ -74,7 +74,10 @@ const DashboardDept = () => {
   ];
 
   const [departmentCount, setDepartmentCount] = useState();
-
+  const [documentCount, setDocumentCount] = useState();
+  const [ticketCount, setTicketCount] = useState();
+  const [search, setSearch] = useState("");
+  const [listItems, setListItems] = useState();
   
 
   const getDepartmentCount = async () => {
@@ -84,8 +87,33 @@ const DashboardDept = () => {
     }
   };
 
+  const getDocumentCount = async () => {
+    let { data } = await DocumentCount();
+    if (!data?.error) {
+      setDocumentCount(data?.results);
+    }
+  };
+
+  const getTicketCount = async () => {
+    let { data } = await TicketCount();
+    if (!data?.error) {
+      setTicketCount(data?.results);
+    }
+  };
+
+  const getDashboardLists = async (key) => {
+    const { data } = await DashboardList();
+    if (!data?.error) {
+      setListItems(data?.results?.approvedTemplete);
+    }
+  };
+  console.log(listItems);
+
   useEffect(() => {
     getDepartmentCount();
+    getDashboardLists();
+    getTicketCount();
+    getDocumentCount();
   }, []);
 
   return (
@@ -217,22 +245,22 @@ const DashboardDept = () => {
                         <tr>
                           <td style={{paddingRight: 70}} className="text-nowrap">
                             <img src="/images/dashboard/active-dot.svg" alt="" /> Active</td>
-                          <td>38.6%</td>
+                          <td>{documentCount?.completePresent} %</td>
                         </tr>
                         <tr>
                           <td>
                           <img src="/images/dashboard/under-review-dot.svg" alt="" />Under Review</td>
-                          <td>22.5%</td>
+                          <td>{documentCount?.pendingPresent} %</td>
                         </tr>
                         <tr>
                           <td>
                           <img src="/images/dashboard/approve-dot.svg" alt="" />Approved</td>
-                          <td>30.8%</td>
+                          <td>{documentCount?.approvedPresent} %</td>
                         </tr>
                         <tr>
                           <td>
                           <img src="/images/dashboard/rejected-dot.svg" alt="" />Rejected</td>
-                          <td>8.1%</td>
+                          <td>{documentCount?.rejectedPresent} %</td>
                         </tr>
                       </table>
                     </div>
@@ -242,19 +270,29 @@ const DashboardDept = () => {
                 <div className="col-md-3 ">
                 <div className="dashboard-card2 bg-danger-subtle">
                     <p className="dashboard-card2-text">Open Tickets</p>
-                    <p className="text-card  mb-3">20 / 50 </p>
+                    <p className="text-card  mb-3">{ticketCount?.totalComplete} / {ticketCount?.totalTicket} </p>
                     <p className=" mb-1 dashboard-card2-text">Profile Completion </p>
-                    <img
-                      src="/images/dashboard/Frame 427318940.png"
-                      alt=""
-                      className="pb-3"
-                    />
+                    <div className="progress-bar">
+                      <div className="progress-container">
+                        <div
+                          className="progress"
+                          style={{ width: `${ticketCount?.completepresent}%` }}
+                        ></div>
+                        <span className="progress-label">{`${ticketCount?.completepresent}%`}</span>
+                      </div>
+                    </div>
                     <p className=" mb-1 dashboard-card2-text">Status</p>
-                    <img
-                      src="/images/dashboard/Info/Frame 427318940.png"
-                      alt=""
-                      className=" mb-4"
-                    />
+                    <div className="progress-bar">
+                      <div className="progress-container">
+                        <div
+                          className="progress"
+                          style={{
+                            width: `${ticketCount?.InprogressPresent}%`,
+                          }}
+                        ></div>
+                        <span className="progress-label">{`In Progress / ${ticketCount?.InprogressPresent}%`}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -352,7 +390,7 @@ const DashboardDept = () => {
                       type="checkbox"
                       value=""
                     />
-                    Login
+                    Requester Name
                   </th>
                   <th className="th-text">
                     <input
@@ -360,16 +398,16 @@ const DashboardDept = () => {
                       type="checkbox"
                       value=""
                     />
-                    Login
+                    Date
                   </th>
                   <th className="th-text">Status</th>
                   <th className="th-text">Action</th>
                 </tr>
               </thead>
               <tbody >
-                {documents.map((document) => (
+                {listItems?.map((document) => (
                   <tr
-                    key={document.id}
+                    // key={document.id}
                     
                   >
                     <td className="td-text">
@@ -378,21 +416,21 @@ const DashboardDept = () => {
                         type="checkbox"
                         value=""
                       />
-                      <img src="/images/dashboard/Featured Icon.png" alt=""/>
-                      {document.activity}
+                      <img src={document?.templete} alt="" className="list-profile-pic mt-1"/>
+                      {document?.templeteName}
                     </td>
                     <td className="td-text">
-                      <img src="/images/dashboard/CalendarBlank.png" alt=""/>
-                      {document.login}
+                      <img src={document?.manager?.[0]?.profile_Pic} alt="" className="list-profile-pic"/>
+                      {document?.manager?.[0]?.name}
                     </td>
                     <td className="td-text">
-                      <img src="/images/dashboard/CalendarBlank.png" alt=""/>
-                      {document.login2}
+                      <img src="/images/dashboard/CalendarBlank.png" alt="" className="mb-1"/>
+                      {document?.createdAt}
                     </td>
-                    <td className="td-text">{document.status}</td>
+                    <td className="td-text">{document?.status}</td>
                     <td className="td-text"><div class="dropdown">
   <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
-  {document.action}
+  <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
   </a>
   <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
     <li ><a class="dropdown-item border-bottom" href="/"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>

@@ -34,6 +34,7 @@ const AuthforgotSuccess = () => {
                     </button>
                     </Link>
               </div>
+              </div>
 
     <>
       <div
@@ -67,7 +68,11 @@ const AuthforgotSuccess = () => {
           <button className="btn  py-8 mb-3 reset-success">Go Back Home</button>
         </Link>
       </div>
+    
     </>
+    </div>
+  </>
+    
   );
 };
 

@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
+import {
+  DepartmentHomeCount,
+  RequestsList,
+  SearchRequests,
+  TemplateList,
+} from "../../ApiServices/departmentHttpService/departmentHttpService";
 // import "../../dist/css/style.min.css"
 
 const HomeDept = () => {
@@ -10,55 +16,225 @@ const HomeDept = () => {
     {
       id: 1,
       template: "Non-Objection Certificate",
-      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" alt="" />,
       version: "1.0",
-      status: 
-        <p className="text-primary m-0">
-          In Progress
-        </p>,
+      status: <p className="text-primary m-0">In Progress</p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
+      action: (
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
+      ),
     },
     {
       id: 2,
       template: "Expense Report",
-      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" alt="" />,
       version: "2.0",
       status: <p className="text-warning m-0"> Approved</p>,
       department: "Finance",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
+      action: (
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
+      ),
     },
     {
       id: 3,
       template: "Salary Slip",
-      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" alt="" />,
       version: "1.5",
       status: <p className="text-info m-0">Pending</p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
+      action: (
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
+      ),
     },
     {
       id: 3,
       template: "Research Proposal",
-      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" alt="" />,
       version: "1.5",
       status: <p className="text-success m-0"> Active</p>,
       department: "R&D",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
+      action: (
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
+      ),
     },
     {
       id: 3,
       template: "Conference Attendance",
-      assignedTo: <img src="/images/dashboard/Avatar2.png"  alt=""/>,
+      assignedTo: <img src="/images/dashboard/Avatar2.png" alt="" />,
       version: "1.5",
       status: <p className="text-secondary m-0">Rejected</p>,
       department: "Human Resources",
-      action: <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>,
+      action: (
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
+      ),
     },
     // Add more tasks here
   ];
 
-  const [departmentCount, setDepartmentCount] = useState();
+  const [homeCount, setHomeCount] = useState();
+
+  const [listItems, setListItems] = useState([]);
+  const [templateItems, setTemplateItems] = useState();
+  const [search, setSearch] = useState("");
+  const [checkedCheckboxes, setCheckedCheckboxes] = useState({
+    templateName: false,
+    requesterName: false,
+    date: false,
+    actions: false,
+    comment: false,
+  });
+  const [hiddenColumns, setHiddenColumns] = useState({
+    templateName: false,
+    requesterName: false,
+    date: false,
+    actions: false,
+    comment: false,
+  });
+  const [checkedCheckbox, setCheckedCheckbox] = useState({
+    templateName: false,
+    assignedTo: false,
+    version: false,
+    status: false,
+    department: false,
+    actions: false,
+  });
+  const [hideColumns, setHideColumns] = useState({
+    templateName: false,
+    assignedTo: false,
+    version: false,
+    status: false,
+    department: false,
+    actions: false,
+  });
+
+  const handleCheckboxChange = (checkboxName) => {
+    setCheckedCheckbox({
+      ...checkedCheckbox,
+      [checkboxName]: !checkedCheckbox[checkboxName],
+    });
+  };
+  const handleCheckboxesChange = (checkboxName) => {
+    setCheckedCheckboxes({
+      ...checkedCheckboxes,
+      [checkboxName]: !checkedCheckboxes[checkboxName],
+    });
+  };
+  const countCheckedCheckboxes = () => {
+    let count = 0;
+    for (const checkbox in checkedCheckboxes) {
+      if (checkedCheckboxes[checkbox]) {
+        count++;
+      }
+    }
+    return count;
+  };
+  const countCheckedCheckbox = () => {
+    let count = 0;
+    for (const checkbox in checkedCheckbox) {
+      if (checkedCheckbox[checkbox]) {
+        count++;
+      }
+    }
+    return count;
+  };
+
+  const handleHideSelected = () => {
+    const updatedHideColumns = { ...hideColumns };
+    for (const checkbox in checkedCheckbox) {
+      if (checkedCheckbox[checkbox]) {
+        updatedHideColumns[checkbox] = true;
+      }
+    }
+    setHideColumns(updatedHideColumns);
+    setCheckedCheckbox({
+      templateName: false,
+      assignedTo: false,
+      version: false,
+      status: false,
+      department: false,
+      actions: false,
+    });
+  };
+
+  const handleHiddenSelected = () => {
+    const updatedHiddenColumns = { ...hiddenColumns };
+    for (const checkbox in checkedCheckboxes) {
+      if (checkedCheckboxes[checkbox]) {
+        updatedHiddenColumns[checkbox] = true;
+      }
+    }
+    setHiddenColumns(updatedHiddenColumns);
+    setCheckedCheckboxes({
+      templateName: false,
+      requesterName: false,
+      date: false,
+      actions: false,
+      comment: false,
+    });
+  };
+
+  useEffect(() => {
+    getRequestsLists();
+    getTemplateLists();
+    getHomeCount();
+  }, []);
+
+  const getRequestsLists = async (key) => {
+    const { data } = await RequestsList();
+    if (!data?.error) {
+      setListItems(data?.results?.list);
+    }
+  };
+  console.log(listItems);
+
+  const getTemplateLists = async (key) => {
+    const { data } = await TemplateList();
+    if (!data?.error) {
+      setTemplateItems(data?.results?.templete);
+    }
+  };
+  console.log(templateItems);
+
+  const getHomeCount = async () => {
+    let { data } = await DepartmentHomeCount();
+    if (!data?.error) {
+      setHomeCount(data?.results);
+    }
+  };
+
+  const handleSearch = async (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearch(value);
+    if (value.length > 0) {
+      let { data } = await SearchRequests({ search: value });
+      if (!data?.error) {
+        setListItems(data?.results?.document);
+      }
+    } else {
+      getRequestsLists();
+    }
+  };
+
   return (
     <>
       <div className="container-fluid">
@@ -92,11 +268,11 @@ const HomeDept = () => {
                       className="ms-4 "
                     />
                     <Link to={"/Department/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -110,7 +286,7 @@ const HomeDept = () => {
 
             <div className="col-12 mb-4">
               <div className="row statics_part">
-              <div className="col-md-3 ">
+                <div className="col-md-3 ">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
@@ -119,16 +295,8 @@ const HomeDept = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        20
+                        {homeCount?.totalDepartment}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        +9.15%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -139,16 +307,8 @@ const HomeDept = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        320
+                        {homeCount?.totalEmployee?.[0]?.count}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        +11.01%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -161,16 +321,8 @@ const HomeDept = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        1,156
+                        {homeCount?.totalActiveUser?.[0]?.count}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        -0.65%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -181,16 +333,8 @@ const HomeDept = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        320
+                        {homeCount?.totalTemplete}
                       </h3>
-                      <span className="card-insights fw-bold m-auto">
-                        -1.48%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -222,8 +366,13 @@ const HomeDept = () => {
                   />
                 </div>
                 <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
-                  <p className="m-0 text-nowrap">2 Selected</p>
-                  <p className="hide-selected m-0 text-nowrap ">
+                  <p className="m-0 text-nowrap">
+                    {countCheckedCheckbox()} Selected
+                  </p>
+                  <p
+                    className="hide-selected m-0 text-nowrap "
+                    onClick={handleHideSelected}
+                  >
                     Hide Selected
                   </p>
                 </div>
@@ -234,6 +383,8 @@ const HomeDept = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={search}
+                  onChange={(e) => handleSearch(e)}
                 />
               </form>
             </div>
@@ -243,80 +394,201 @@ const HomeDept = () => {
                 <table className="table table-borderless">
                   <thead>
                     <tr className="th-text">
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hideColumns.templateName ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckbox.templateName}
+                          onChange={() => handleCheckboxChange("templateName")}
                         />
                         Template name
                       </th>
 
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hideColumns.assignedTo ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckbox.assignedTo}
+                          onChange={() => handleCheckboxChange("assignedTo")}
                         />
                         Assigned To
                       </th>
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hideColumns.version ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckbox.version}
+                          onChange={() => handleCheckboxChange("version")}
                         />
                         Version
                       </th>
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hideColumns.status ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckbox.status}
+                          onChange={() => handleCheckboxChange("status")}
                         />
                         Status
                       </th>
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hideColumns.department ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckbox.department}
+                          onChange={() => handleCheckboxChange("department")}
                         />
                         Department
                       </th>
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hideColumns.action ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckbox.action}
+                          onChange={() => handleCheckboxChange("action")}
                         />
                         Actions
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {tasks.map((task) => (
-                      <tr key={task.id}>
-                        <td className="td-text">{task.template}</td>
-                        <td>{task.assignedTo}</td>
-                        <td className="td-text">{task.version}</td>
-                        <td className="td-text">{task.status}</td>
-                        <td className="td-text">{task.department}</td>
-                        <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
-  {task.action}
-  </a>
-  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="/"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
-    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><Link to={"/Department/Comments"} className="text-decoration-none">
-      <a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a>
-      </Link></li>
-    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="/"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete User</a></li>
-  </ul>
-</div>
-                          </td>
+                    {templateItems?.map((template) => (
+                      <tr key={template.id}>
+                        <td
+                          className={`th-text ${
+                            hideColumns.templateName ? "d-none" : "table-cell"
+                          }`}
+                        >
+                          {template.template}
+                        </td>
+                        <td className={`th-text ${
+                            hideColumns.assignedTo ? "d-none" : "table-cell"
+                          }`}
+                          >{template.assignedTo}</td>
+                        <td
+                          className={`th-text ${
+                            hideColumns.version ? "d-none" : "table-cell"
+                          }`}
+                        >
+                          {template.version}
+                        </td>
+                        <td
+                          className={`th-text ${
+                            hideColumns.status ? "d-none" : "table-cell"
+                          }`}
+                        >
+                          {template.status}
+                        </td>
+                        <td
+                          className={`th-text ${
+                            hideColumns.department ? "d-none" : "table-cell"
+                          }`}
+                        >
+                          {template.department}
+                        </td>
+                        <td
+                          className={`th-text ${
+                            hideColumns.action ? "d-none" : "table-cell"
+                          }`}
+                        >
+                          <div class="dropdown">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                              href="/"
+                            >
+                              {template.action}
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a class="dropdown-item border-bottom" href="/">
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Users Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="/">
+                                  <img
+                                    src="/images/users/PencilLine.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Edit User Details
+                                </a>
+                              </li>
+                              <li>
+                                <Link
+                                  to={"/Department/Comments"}
+                                  className="text-decoration-none"
+                                >
+                                  <a class="dropdown-item" href="/">
+                                    <img
+                                      src="/images/dashboard/Comment.png"
+                                      alt=""
+                                      className="me-2"
+                                    />
+                                    Comments
+                                  </a>
+                                </Link>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="/">
+                                  <img
+                                    src="/images/users/TextAlignLeft.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Wrap Column
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item text-danger" href="/">
+                                  <img
+                                    src="/images/users/Trash.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Delete User
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
                         <td></td>
                       </tr>
                     ))}
@@ -383,8 +655,13 @@ const HomeDept = () => {
                   />
                 </div>
                 <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
-                  <p className="m-0 text-nowrap">2 Selected</p>
-                  <p className="hide-selected m-0 text-nowrap ">
+                  <p className="m-0 text-nowrap">
+                    {countCheckedCheckboxes()} Selected
+                  </p>
+                  <p
+                    className="hide-selected m-0 text-nowrap "
+                    onClick={handleHiddenSelected}
+                  >
                     Hide Selected
                   </p>
                 </div>
@@ -395,6 +672,8 @@ const HomeDept = () => {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  value={search}
+                  onChange={(e) => handleSearch(e)}
                 />
               </form>
             </div>
@@ -404,79 +683,209 @@ const HomeDept = () => {
                 <table className="table table-borderless">
                   <thead>
                     <tr className="th-text">
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hiddenColumns.templateName ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.templateName}
+                          onChange={() => handleCheckboxesChange("templateName")}
                         />
-                        Template name
+                        Template Name
                       </th>
-
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hiddenColumns.requesterName ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.requesterName}
+                          onChange={() => handleCheckboxesChange("requesterName")}
                         />
-                        Assigned To
+                        Requester Name
                       </th>
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hiddenColumns.date ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.date}
+                          onChange={() => handleCheckboxesChange("date")}
                         />
-                        Version
+                        Date
                       </th>
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hiddenColumns.comment ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.comment}
+                          onChange={() => handleCheckboxesChange("comment")}
                         />
-                        Status
+                        Comment
                       </th>
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hiddenColumns.actions ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
-                        />
-                        Department
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
+                          checked={checkedCheckboxes.actions}
+                          onChange={() => handleCheckboxesChange("actions")}
                         />
                         Actions
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {tasks.map((task) => (
-                      <tr key={task.id}>
-                        <td className="td-text">{task.template}</td>
-                        <td>{task.assignedTo}</td>
-                        <td className="td-text">{task.version}</td>
-                        <td className="td-text">{task.status}</td>
-                        <td className="td-text">{task.department}</td>
-                        <td className="td-text"><div class="dropdown">
-  <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
-  {task.action}
-  </a>
-  <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-    <li ><a class="dropdown-item border-bottom" href="/"><img src="/images/users/AddressBook.svg" alt="" className="me-2"/>View Users Details</a></li>
-    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/PencilLine.svg" alt="" className="me-2"/>Edit User Details</a></li>
-    <li><a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a></li>
-    <li><a class="dropdown-item border-bottom" href="/"><img src="/images/users/TextAlignLeft.svg" alt="" className="me-2"/>Wrap Column</a></li>
-    <li><a class="dropdown-item text-danger" href="/"><img src="/images/users/Trash.svg" alt="" className="me-2"/>Delete User</a></li>
-  </ul>
-</div>
-                          </td>
-                        <td></td>
+                    {listItems?.map((requests) => (
+                      <tr key={requests._id}>
+                        <td
+                          className={`th-text ${
+                            hiddenColumns.templateName ? "d-none" : "table-cell"
+                          }`}
+                        >
+                          <input
+                            className="form-check-input checkbox-table"
+                            type="checkbox"
+                            value=""
+                          />
+                          {requests?.templete?.[0]?.templeteName}
+                        </td>
+                        <td
+                          className={`th-text ${
+                            hiddenColumns.requesterName
+                              ? "d-none"
+                              : "table-cell"
+                          }`}
+                        >
+                          <img
+                            src={
+                              requests?.templete?.[0]?.manager?.[0]?.profile_Pic
+                            }
+                            alt=""
+                            className="list-profile-pic"
+                          />
+                          {requests?.templete?.[0]?.manager?.[0]?.name}
+                        </td>
+                        <td
+                          className={`th-text ${
+                            hiddenColumns.date ? "d-none" : "table-cell"
+                          }`}
+                        >
+                          <img
+                            src="/images/dashboard/CalendarBlank.png"
+                            alt=""
+                          />
+                          {requests?.createdAt}
+                        </td>
+
+                        <td
+                          className={`th-text ${
+                            hiddenColumns.comment ? "d-none" : "table-cell"
+                          }`}
+                        >
+                          <img
+                            src="/images/dashboard/Comment.png"
+                            className="mx-auto d-block"
+                            alt=""
+                          />
+                        </td>
+                        <td
+                          className={`th-text ${
+                            hiddenColumns.actions ? "d-none" : "table-cell"
+                          }`}
+                        >
+                          <div class="dropdown">
+                            <a
+                              type=""
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                              href="/"
+                            >
+                              <img
+                                src="/images/sidebar/ThreeDots.svg"
+                                className="w-auto p-3"
+                                alt=""
+                              />
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+                              <li>
+                                <a class="dropdown-item border-bottom" href="/">
+                                  <img
+                                    src="/images/users/AddressBook.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  View Users Details
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="/">
+                                  <img
+                                    src="/images/users/PencilLine.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Edit User Details
+                                </a>
+                              </li>
+                              <li>
+                                <Link
+                                  to={"/Department/Comments"}
+                                  className="text-decoration-none"
+                                >
+                                  <a class="dropdown-item" href="/">
+                                    <img
+                                      src="/images/dashboard/Comment.png"
+                                      alt=""
+                                      className="me-2"
+                                    />
+                                    Comments
+                                  </a>
+                                </Link>
+                              </li>
+                              <li>
+                                <a class="dropdown-item border-bottom" href="/">
+                                  <img
+                                    src="/images/users/TextAlignLeft.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Wrap Column
+                                </a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item text-danger" href="/">
+                                  <img
+                                    src="/images/users/Trash.svg"
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  Delete Template
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -517,9 +926,7 @@ const HomeDept = () => {
             </div>
 
             <div className="footer">
-              <div>
-              © 2023 MYOT
-              </div>
+              <div>© 2023 MYOT</div>
               <div className="d-flex ">
                 <p className="ms-3">About</p>
                 <p className="ms-3">Support</p>

@@ -31,6 +31,48 @@ export async function DepartmentDashboardCount () {
     }
   }
 
+  export async function DepartmentHomeCount () {
+    try {
+      const { data } = await adminHttpService.get(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/dashboads-total-department`,
+      );
+      // console.log(data);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+
+  export async function TicketCount () {
+    try {
+      const { data } = await adminHttpService.get(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/total-ticket-count/65607377c34695508b3551dc`,
+      );
+      // console.log(data);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+
+  export async function DocumentCount () {
+    try {
+      const { data } = await adminHttpService.get(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/total-templete-present/65607377c34695508b3551dc`,
+      );
+      // console.log(data);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+
   export async function ProfileDetails () {
     try {
       const { data } = await adminHttpService.get(
@@ -59,12 +101,31 @@ export async function DepartmentDashboardCount () {
     }
   }
 
-  export async function TemplateList () {
+  export async function DashboardList () {
     try {
       const { data } = await adminHttpService.get(
-        `${process.env.REACT_APP_APIENDPOINT}/api/department/templete-list/6569854a7df1d82ae466234e`,
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/home-approved-templete/656995d2c152b587fb27a180`,
       );
       // console.log(data);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+
+  export async function TemplateList() {
+    try {
+      const { data } = await adminHttpService.post(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/templete-list/${id}`
+      );
+      // console.log(data, "template");
+        
+      // if (!data.error) {
+      //   toast.success(data?.message);
+      //   // await localStorage.getItem("x-auth-token-company");
+      // } else toast.error(data?.message);
   
       return { data };
     } catch (error) {
@@ -145,3 +206,96 @@ export async function DepartmentDashboardCount () {
       return { error };
     }
   }
+
+  export async function ApproverList(formData) {
+    try {
+      const { data } = await adminHttpService.post(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/aprrover-list`,
+        formData
+      );
+      console.log(data);
+      if (!data.error) {
+        // toast.success(data.message);
+        // await localStorage.getItem("x-auth-token-company");
+      } else toast.error(data.message);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+  export async function SignatoryList(formData) {
+    try {
+      const { data } = await adminHttpService.post(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/signatory-list`,
+        formData
+      );
+      console.log(data);
+      if (!data.error) {
+        // toast.success(data.message);
+        // await localStorage.getItem("x-auth-token-company");
+      } else toast.error(data.message);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+  export async function AdminsList(formData) {
+    try {
+      const { data } = await adminHttpService.post(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/admin-list`,
+        formData
+      );
+      console.log(data);
+      if (!data.error) {
+        // toast.success(data.message);
+        // await localStorage.getItem("x-auth-token-company");
+      } else toast.error(data.message);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+  export async function ManagerList(formData) {
+    try {
+      const { data } = await adminHttpService.post(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/manager-list`,
+        formData
+      );
+      console.log(data);
+      if (!data.error) {
+        // toast.success(data.message);
+        // await localStorage.getItem("x-auth-token-company");
+      } else toast.error(data.message);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+  
+  export async function AddTemplates(formData) {
+    try {
+      const { data } = await adminHttpService.post(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/add-templete`,
+        formData
+      );
+      // console.log(data);
+      if (!data.error) {
+        toast.success(data.message);
+        // await localStorage.getItem("x-auth-token-company");
+      } else toast.error(data.message);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+  
