@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-import 'sweetalert2/src/sweetalert2.scss'
+import 'sweetalert2/dist/sweetalert2.css'
 
 import AuthLogin from "./Components/Login/AuthLogin";
 import AuthforgotPass from "./Components/Login/AuthforgotPass";

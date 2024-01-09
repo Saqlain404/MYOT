@@ -153,43 +153,25 @@ const Departments = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(departmentInfo);
+    Swal.fire({
+      toast: true,
+      position: "bottom-center", // Set position to bottom center
+      icon: "success",
+      title: "New Department Added",
+      showConfirmButton: false,
+      timerProgressBar: true,
+      timer: 3000,
+    });
     try {
-      let { data } = await AddDepartment({
-        departmentName: departmentInfo?.departmentname,
-        description: departmentInfo?.description,
-      });
-      if (!data?.error) {
-        console.log(data?.results);
-        Swal.fire({
-          toast: true,
-          position: "top-end",
-          icon: "error",
-          title: "Message can not be empty",
-          showConfirmButton: false,
-          timerProgressBar: true,
-          timer: 3000,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleSearch = async (e) => {
-    try {
-      const value = e.target.value;
-      console.log(value);
-      setSearch(value);
-      if (value.length > 0) {
-        let { data } = await DepartmentSearch({ search: value });
-        console.log(data);
-        if (!data?.error) {
-          let values = data?.results?.department;
-          setListItems(values);
-        }
-      } else {
-        DepartmentLists();
-      }
+      // let { data } = await AddDepartment({
+      //   departmentName: departmentInfo?.departmentname,
+      //   description: departmentInfo?.description,
+      // });
+      // if (!data?.error) {
+      //   console.log(data?.results);
+        
+        
+      // }
     } catch (error) {
       console.log(error);
     }
@@ -300,14 +282,17 @@ const Departments = () => {
                       Add Departments
                     </p>
                     <button
-                      type="button"
+                      type="reset"
                       class="btn-close"
                       data-bs-dismiss="modal"
                       aria-label="Close"
+                      onClick={() =>
+                        document.getElementById("formReset").click()
+                      }
                     ></button>
                   </div>
 
-                  <form action="" onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit}>
                     <div className="row p-3">
                       <div className="col-12 mb-3 ">
                         <input
@@ -340,6 +325,9 @@ const Departments = () => {
                         class="user-modal-btn2"
                         data-bs-dismiss="modal"
                         aria-label="Close"
+                        onClick={() =>
+                          document.getElementById("formReset").click()
+                        }
                       >
                         Cancel
                       </button>
@@ -347,7 +335,7 @@ const Departments = () => {
                         type="reset"
                         class="d-none"
                         data-bs-dismiss="modal"
-                        aria-label="Close"
+                        id="formReset"
                       >
                         reset
                       </button>
