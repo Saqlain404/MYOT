@@ -345,6 +345,7 @@ const Template = () => {
     }
   };
 
+
   const handleCheckboxChange = (field) => {
     let updatedSelectedColumns = [...listItems.selectedColumns];
     const index = updatedSelectedColumns.indexOf(field);
@@ -355,6 +356,9 @@ const Template = () => {
     }
     setListItems({ ...listItems, selectedColumns: updatedSelectedColumns });
   };
+
+  // const [templateCount, setTemplateCount] = useState([]);
+
 
   const toggleSortOrder = () => {
     const currentSortType = listItems.sortType === "asc" ? "desc" : "asc";
