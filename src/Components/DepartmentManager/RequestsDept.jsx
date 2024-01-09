@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
-import { RequestsList, SearchRequests } from "../../ApiServices/departmentHttpService/departmentHttpService";
+import {
+  RequestsList,
+  SearchRequests,
+} from "../../ApiServices/departmentHttpService/departmentHttpService";
 import { useEffect } from "react";
 
 const RequestsDept = () => {
@@ -11,105 +14,197 @@ const RequestsDept = () => {
       id: 1,
       document: "Employment Contract",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2"  alt=""/>,
-        
+        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2"  alt=""/>,
+      assignedTo: (
+        <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />
+      ),
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-primary m-0">In Progress</p>,
       department: "Human Resources",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block"  alt=""/>
+        <img
+          src="/images/dashboard/Comment.png"
+          className="mx-auto d-block"
+          alt=""
+        />
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"  alt=""/>
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
       ),
     },
     {
       id: 2,
       document: "Tax Deduction at Source (TDS)",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2"  alt=""/>,
-        
+        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2"  alt=""/>,
+      assignedTo: (
+        <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />
+      ),
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-warning m-0"> Approved</p>,
       department: "Human Resources",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block"  alt=""/>
+        <img
+          src="/images/dashboard/Comment.png"
+          className="mx-auto d-block"
+          alt=""
+        />
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"  alt=""/>
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
       ),
     },
     {
       id: 3,
       document: "Training Certificates",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2"  alt=""/>,
-        
+        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2"  alt=""/>,
+      assignedTo: (
+        <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />
+      ),
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-success m-0">Complete</p>,
       department: "Human Resources",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block"  alt=""/>
+        <img
+          src="/images/dashboard/Comment.png"
+          className="mx-auto d-block"
+          alt=""
+        />
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"  alt=""/>
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
       ),
     },
     {
       id: 4,
       document: "Software Licenses",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2"  alt=""/>,
-        
+        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2"  alt=""/>,
+      assignedTo: (
+        <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />
+      ),
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-primary m-0">In Progress</p>,
       department: "Information Technologies",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block"  alt=""/>
+        <img
+          src="/images/dashboard/Comment.png"
+          className="mx-auto d-block"
+          alt=""
+        />
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"  alt=""/>
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
       ),
     },
     {
       id: 5,
       document: "Reference Letter",
       requester: [
-        <img src="/images/dashboard/Avatar.png" className="me-2"  alt=""/>,
-        
+        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
       ],
-      assignedTo: <img src="/images/dashboard/Avatar2.png" className="me-2"  alt=""/>,
+      assignedTo: (
+        <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />
+      ),
       lastLoggedIn: "26 Oct, 2023 18:02:55",
       status: <p className="text-info m-0">Pending</p>,
       department: "Human Resources",
       comment: (
-        <img src="/images/dashboard/Comment.png" className="mx-auto d-block"  alt=""/>
+        <img
+          src="/images/dashboard/Comment.png"
+          className="mx-auto d-block"
+          alt=""
+        />
       ),
       actions: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"  alt=""/>
+        <img
+          src="/images/sidebar/ThreeDots.svg"
+          className="w-auto p-3"
+          alt=""
+        />
       ),
     },
-   
+
     // Add more tasks here
   ];
 
   const [listItems, setListItems] = useState([]);
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState("");
+  const [checkedCheckboxes, setCheckedCheckboxes] = useState({
+    templateName: false,
+    requesterName: false,
+    date: false,
+    actions: false,
+    comment: false,
+  });
+  const [hiddenColumns, setHiddenColumns] = useState({
+    templateName: false,
+    requesterName: false,
+    date: false,
+    actions: false,
+    comment: false,
+  });
+
+  const handleCheckboxChange = (checkboxName) => {
+    setCheckedCheckboxes({
+      ...checkedCheckboxes,
+      [checkboxName]: !checkedCheckboxes[checkboxName],
+    });
+  };
+  const countCheckedCheckboxes = () => {
+    let count = 0;
+    for (const checkbox in checkedCheckboxes) {
+      if (checkedCheckboxes[checkbox]) {
+        count++;
+      }
+    }
+    return count;
+  };
+
+  const handleHideSelected = () => {
+    const updatedHiddenColumns = { ...hiddenColumns };
+    for (const checkbox in checkedCheckboxes) {
+      if (checkedCheckboxes[checkbox]) {
+        updatedHiddenColumns[checkbox] = true;
+      }
+    }
+    setHiddenColumns(updatedHiddenColumns);
+    setCheckedCheckboxes({
+      templateName: false,
+      requesterName: false,
+      date: false,
+      actions: false,
+      comment: false,
+    });
+  };
 
   useEffect(() => {
-    getRequestsLists()
-  }, [])
+    getRequestsLists();
+  }, []);
 
   const getRequestsLists = async (key) => {
-    const { data } = await RequestsList ();
+    const { data } = await RequestsList();
     if (!data?.error) {
       setListItems(data?.results?.list);
     }
@@ -128,9 +223,6 @@ const RequestsDept = () => {
       getRequestsLists();
     }
   };
-
-  
-  
 
   return (
     <>
@@ -206,8 +298,13 @@ const RequestsDept = () => {
                   />
                 </div>
                 <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
-                  <p className="m-0 text-nowrap">2 Selected</p>
-                  <p className="hide-selected m-0 text-nowrap ">
+                  <p className="m-0 text-nowrap">
+                    {countCheckedCheckboxes()} Selected
+                  </p>
+                  <p
+                    className="hide-selected m-0 text-nowrap "
+                    onClick={handleHideSelected}
+                  >
                     Hide Selected
                   </p>
                 </div>
@@ -229,43 +326,73 @@ const RequestsDept = () => {
                 <table className="table table-borderless">
                   <thead>
                     <tr className="th-text">
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hiddenColumns.templateName ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.templateName}
+                          onChange={() => handleCheckboxChange("templateName")}
                         />
                         Template Name
                       </th>
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hiddenColumns.requesterName ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.requesterName}
+                          onChange={() => handleCheckboxChange("requesterName")}
                         />
-                       Requester Name
+                        Requester Name
                       </th>
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hiddenColumns.date ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.date}
+                          onChange={() => handleCheckboxChange("date")}
                         />
                         Date
                       </th>
-                      <th className="th-text">
+                      <th
+                        className={`th-text ${
+                          hiddenColumns.comment ? "d-none" : "table-cell"
+                        }`}
+                      >
                         <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.comment}
+                          onChange={() => handleCheckboxChange("comment")}
                         />
-                       Comment
+                        Comment
                       </th>
-                      <th className="th-text">
-                      <input
+                      <th
+                        className={`th-text ${
+                          hiddenColumns.actions ? "d-none" : "table-cell"
+                        }`}
+                      >
+                        <input
                           className="form-check-input checkbox-table"
                           type="checkbox"
                           value=""
+                          checked={checkedCheckboxes.actions}
+                          onChange={() => handleCheckboxChange("actions")}
                         />
                         Actions
                       </th>
@@ -274,24 +401,72 @@ const RequestsDept = () => {
                   <tbody>
                     {listItems?.map((requests) => (
                       <tr key={requests._id}>
-                        <td className="td-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />{requests?.[0]?.templete?.templeteName}</td>
-                        <td className="td-text"><img src={requests?.templete_Id?.manager?.profile_Pic} alt="" className="list-profile-pic" />{requests?.templete_Id?.manager?.name}</td>
-                        <td className="td-text"> <img src="/images/dashboard/CalendarBlank.png" alt=""/>{requests?.createdAt}</td>
-                        
-                        <td className="td-text"><img src="/images/dashboard/Comment.png" className="mx-auto d-block" alt=""/></td>
-                        <td className="td-text">
+                        <td
+                          className={`th-text ${
+                            hiddenColumns.templateName ? "d-none" : "table-cell"
+                          }`}
+                        >
+                          <input
+                            className="form-check-input checkbox-table"
+                            type="checkbox"
+                            value=""
+                          />
+                          {requests?.templete?.[0]?.templeteName}
+                        </td>
+                        <td
+                          className={`th-text ${
+                            hiddenColumns.requesterName ? "d-none" : "table-cell"
+                          }`}
+                        >
+                          <img
+                            src={
+                              requests?.templete?.[0]?.manager?.[0]?.profile_Pic
+                            }
+                            alt=""
+                            className="list-profile-pic"
+                          />
+                          {requests?.templete?.[0]?.manager?.[0]?.name}
+                        </td>
+                        <td
+                          className={`th-text ${
+                            hiddenColumns.date ? "d-none" : "table-cell"
+                          }`}
+                        >
+                          <img
+                            src="/images/dashboard/CalendarBlank.png"
+                            alt=""
+                          />
+                          {requests?.createdAt}
+                        </td>
+
+                        <td
+                          className={`th-text ${
+                            hiddenColumns.comment ? "d-none" : "table-cell"
+                          }`}
+                        >
+                          <img
+                            src="/images/dashboard/Comment.png"
+                            className="mx-auto d-block"
+                            alt=""
+                          />
+                        </td>
+                        <td
+                          className={`th-text ${
+                            hiddenColumns.actions ? "d-none" : "table-cell"
+                          }`}
+                        >
                           <div class="dropdown">
                             <a
                               type=""
                               data-bs-toggle="dropdown"
-                              aria-expanded="false" href="/"
+                              aria-expanded="false"
+                              href="/"
                             >
-                            <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3"  alt=""/>
+                              <img
+                                src="/images/sidebar/ThreeDots.svg"
+                                className="w-auto p-3"
+                                alt=""
+                              />
                             </a>
                             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                               <li>
@@ -315,9 +490,19 @@ const RequestsDept = () => {
                                 </a>
                               </li>
                               <li>
-                              <Link to={"/Department/Comments"} className="text-decoration-none">
-      <a class="dropdown-item" href="/"><img src="/images/dashboard/Comment.png" alt="" className="me-2"/>Comments</a>
-      </Link>
+                                <Link
+                                  to={"/Department/Comments"}
+                                  className="text-decoration-none"
+                                >
+                                  <a class="dropdown-item" href="/">
+                                    <img
+                                      src="/images/dashboard/Comment.png"
+                                      alt=""
+                                      className="me-2"
+                                    />
+                                    Comments
+                                  </a>
+                                </Link>
                               </li>
                               <li>
                                 <a class="dropdown-item border-bottom" href="/">

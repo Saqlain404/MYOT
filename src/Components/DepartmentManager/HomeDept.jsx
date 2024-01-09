@@ -200,11 +200,11 @@ const HomeDept = () => {
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col ">
                 <div className="col-md-3 table-searchbar-imgs">
-                  <img
+                  {/* <img
                     src="/images/dashboard/Plus-icon.png"
                     alt=""
                     className="p-2 table-searchbar-img"
-                  />
+                  /> */}
                   <img
                     src="/images/dashboard/FunnelSimple.png"
                     alt=""
@@ -361,11 +361,11 @@ const HomeDept = () => {
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="row d-flex  col">
                 <div className="col-md-3 table-searchbar-imgs">
-                  <img
+                  {/* <img
                     src="/images/dashboard/Plus-icon.png"
                     alt=""
                     className="p-2 table-searchbar-img"
-                  />
+                  /> */}
                   <img
                     src="/images/dashboard/FunnelSimple.png"
                     alt=""
