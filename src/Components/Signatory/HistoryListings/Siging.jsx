@@ -4,7 +4,9 @@ import { SignatoryDocsAccessLog } from "../../../ApiServices/SignatoryHttpServic
 import moment from "moment";
 import { Link } from "react-router-dom";
 
-const Signing = ({ admin_id }) => {
+const Siging = ({ admin_id }) => {
+  const [showClearButton, setShowClearButton] = useState(false);
+
   const [completedDocs, setCompletedDocs] = useState({
     columns: [
       {
@@ -52,6 +54,8 @@ const Signing = ({ admin_id }) => {
       },
     ],
     rows: [],
+    hiddenColumns: [],
+    selectedColumns: [],
   });
 
   useEffect(() => {
@@ -62,7 +66,7 @@ const Signing = ({ admin_id }) => {
   }, [admin_id]);
 
   const getDocsAccessLog = async () => {
-    let { data } = await SignatoryDocsAccessLog(admin_id);
+    let { data } = await SignatoryDocsAccessLog("6564816c42ca2ce84e2ed3f2");
     const newRows = [];
     if (!data?.error) {
       let values = data?.results?.completTemplete;
@@ -225,36 +229,123 @@ const Signing = ({ admin_id }) => {
       setCompletedDocs({ ...completedDocs, rows: newRows });
     }
   };
+
+  const toggleSortOrder = () => {
+    const currentSortType = completedDocs.sortType === "asc" ? "desc" : "asc";
+
+    const sortedRows = [...completedDocs.rows].sort((a, b) => {
+      let comparison = 0;
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        comparison = -1;
+      } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
+        comparison = 1;
+      }
+      return currentSortType === "asc" ? comparison : comparison * -1;
+    });
+    console.log(sortedRows);
+
+    setCompletedDocs({
+      ...completedDocs,
+      rows: sortedRows,
+      sortType: currentSortType,
+    });
+  };
+
+  const handleCheckboxChange = (field) => {
+    let updatedSelectedColumns = [...completedDocs.selectedColumns];
+    const index = updatedSelectedColumns.indexOf(field);
+    if (index > -1) {
+      updatedSelectedColumns.splice(index, 1);
+    } else {
+      updatedSelectedColumns.push(field);
+    }
+    setCompletedDocs({
+      ...completedDocs,
+      selectedColumns: updatedSelectedColumns,
+    });
+  };
+
+  const hideSelectedColumns = () => {
+    const updatedHiddenColumns = [
+      ...completedDocs.hiddenColumns,
+      ...completedDocs.selectedColumns,
+    ];
+    setCompletedDocs({
+      ...completedDocs,
+      hiddenColumns: updatedHiddenColumns,
+      selectedColumns: [],
+    });
+    setShowClearButton(true);
+  };
+
+  const columnsWithCheckboxes = completedDocs.columns.map((column) => ({
+    ...column,
+    label: (
+      <div key={column.field}>
+        <input
+          type="checkbox"
+          checked={completedDocs.selectedColumns.includes(column.field)}
+          onChange={() => handleCheckboxChange(column.field)}
+          className="me-1 mt-1"
+        />
+        <label>{column.label}</label>
+      </div>
+    ),
+  }));
+
+  const visibleColumns = columnsWithCheckboxes.filter(
+    (column) => !completedDocs.hiddenColumns.includes(column.field)
+  );
+
+  const showAllColumns = () => {
+    setCompletedDocs({
+      ...completedDocs,
+      hiddenColumns: [],
+      selectedColumns: [],
+    });
+    setShowClearButton(false);
+  };
+
   return (
     <div className="position-relative">
       <p className="table-name mb-2">Document Requests</p>
       <div className=" col-12 d-flex align-items-center table-searchbar">
-        <div className="row d-flex  col">
+        <div className="d-flex ">
           <div className="col-md-3 table-searchbar-imgs">
-            <img
+            {/* <img
               src="/images/dashboard/Plus-icon.png"
-              alt=""
               className="p-2 table-searchbar-img"
-            />
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            /> */}
             <img
-              src="/images/dashboard/FunnelSimple.png"
-              alt=""
-              className="p-2 table-searchbar-img"
-            />
-            <img
+              onClick={toggleSortOrder}
               src="/images/dashboard/ArrowsDownUp.png"
-              alt=""
-              className="p-2 table-searchbar-img"
-            />
-            <img
-              src="/images/dashboard/DotsThreeOutlineVertical2.png"
-              alt=""
-              className="p-2 table-searchbar-img border-end"
+              className="p-2 table-searchbar-img border-end cursor_pointer"
             />
           </div>
-          <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
-            <p className="m-0 text-nowrap">2 Selected</p>
-            <p className="hide-selected m-0 text-nowrap ">Hide Selected</p>
+          <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
+            <p className="m-0 text-nowrap">
+              {completedDocs?.selectedColumns &&
+                completedDocs?.selectedColumns.length}
+              <span> Selected</span>
+            </p>
+            {showClearButton ? (
+              <p
+                className="hide-selected ms-2 m-0 text-nowrap cursor_pointer "
+                onClick={showAllColumns}
+              >
+                Clear Selection
+              </p>
+            ) : (
+              <p
+                className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
+                onClick={hideSelectedColumns}
+              >
+                Hide Selected
+              </p>
+            )}
           </div>
         </div>
         <form className="d-flex me-2" role="search">
@@ -267,186 +358,24 @@ const Signing = ({ admin_id }) => {
         </form>
       </div>
 
-      {/* <div className="col-12 table_comman mt-3 "> */}
       <div className="col-12 mdb_table mt-3 ">
         <div className="table-responsive">
           <MDBDataTable
             bordered
             displayEntries={false}
             entries={5}
-            className=""
+            className="text-nowrap"
             hover
-            data={completedDocs}
+            // data={awaitListing}
+            data={{ ...completedDocs, columns: visibleColumns }}
             noBottomColumns
-            sortable
+            sortable={false}
             paginationLabel={"«»"}
           />
-          {/* <table className="table table-borderless">
-      <thead>
-        <tr className="th-text">
-          <th className="th-text">
-            <input
-              className="form-check-input checkbox-table"
-              type="checkbox"
-              value=""
-            />
-            Template name
-          </th>
-
-          <th className="th-text">
-            <input
-              className="form-check-input checkbox-table"
-              type="checkbox"
-              value=""
-            />
-            Assigned To
-          </th>
-          <th className="th-text">
-            <input
-              className="form-check-input checkbox-table"
-              type="checkbox"
-              value=""
-            />
-            Version
-          </th>
-          <th className="th-text">
-            <input
-              className="form-check-input checkbox-table"
-              type="checkbox"
-              value=""
-            />
-            Status
-          </th>
-          <th className="th-text">
-            <input
-              className="form-check-input checkbox-table"
-              type="checkbox"
-              value=""
-            />
-            Department
-          </th>
-          <th className="th-text">
-            <input
-              className="form-check-input checkbox-table"
-              type="checkbox"
-              value=""
-            />
-            Actions
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {tasks.map((task) => (
-          <tr key={task.id}>
-            <td className="td-text">{task.template}</td>
-            <td>{task.assignedTo}</td>
-            <td className="td-text">{task.version}</td>
-            <td className="td-text">{task.status}</td>
-            <td className="td-text">{task.department}</td>
-            <td className="td-text">
-              <div class="dropdown">
-                <a
-                  type=""
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  {task.action}
-                </a>
-                <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-                  <li>
-                    <a class="dropdown-item border-bottom" href="#">
-                      <img
-                        src="/images/users/AddressBook.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      View Users Details
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item border-bottom" href="#">
-                      <img
-                        src="/images/users/PencilLine.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      Edit User Details
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      <img
-                        src="/images/dashboard/Comment.png"
-                        alt=""
-                        className="me-2"
-                      />
-                      Comments
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item border-bottom" href="#">
-                      <img
-                        src="/images/users/TextAlignLeft.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      Wrap Column
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item text-danger" href="#">
-                      <img
-                        src="/images/users/Trash.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      Delete User
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </td>
-            <td></td>
-          </tr>
-        ))}
-      </tbody>
-    </table> */}
         </div>
-        {/* <nav
-    aria-label="Page navigation"
-    className="d-flex justify-content-end page-navigation mt-3"
-  >
-    <ul className="pagination">
-      <li className="page-item">
-        <a className="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li className="page-item">
-        <button className="page-link" href="#">
-          1
-        </button>
-      </li>
-      <li className="page-item">
-        <button className="page-link" href="#">
-          2
-        </button>
-      </li>
-      <li className="page-item">
-        <button className="page-link" href="#">
-          3
-        </button>
-      </li>
-      <li className="page-item">
-        <button className="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </button>
-      </li>
-    </ul>
-  </nav> */}
       </div>
     </div>
   );
 };
 
-export default Signing;
+export default Siging;

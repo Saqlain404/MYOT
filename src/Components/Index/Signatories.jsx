@@ -303,6 +303,7 @@ const Signatories = () => {
                     data={{ ...signatories, columns: visibleColumns }}
                     // data={signatories}
                     noBottomColumns
+                    // paging={signatories?.length < 5 ? true: false}
                     paginationLabel={"«»"}
                     sortable={false}
                   />

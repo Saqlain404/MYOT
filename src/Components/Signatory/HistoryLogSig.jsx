@@ -20,7 +20,6 @@ const HistoryLogSig = () => {
 
   console.log("admin_id", admin_id)
 
-
   return (
     <>
       <div className="container-fluid">

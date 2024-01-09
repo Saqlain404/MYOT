@@ -119,14 +119,14 @@ const Settings = () => {
               <div className="row rounded">
                 <div className="bg-white rounded mb-4 p-4 pb-2">
                   <div className="d-flex">
-                    <Link to={"/"} className="text-decoration-none">
+                    <Link className="text-decoration-none">
                       <p className="td-text border-bottom me-3">
                         Business Assets
                       </p>
                     </Link>
-                    <Link to={"/"} className="text-decoration-none">
+                    {/* <Link className="text-decoration-none">
                       <p className="th-text  ">System Setting</p>
-                    </Link>
+                    </Link> */}
                   </div>
                   <div>
                     <p className="settings-txt">Select Logo</p>

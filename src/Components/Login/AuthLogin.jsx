@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { adminLogin } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 import { toast } from "react-toastify";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { setUserData } from "../app/slice/userSlice";
 
 const AuthLogin = () => {
@@ -40,9 +40,9 @@ const AuthLogin = () => {
 
     rememberCheck && rememberMe(data);
     const response = await adminLogin(data);
-    // console.log("login Data", response);
+    console.log("login Data", response);
 
-    if (!response?.data?.error) {
+    if (response?.data && !response?.data?.error) {
       toast("Logged in successfully", {
         position: "top-right",
         autoClose: 5000,

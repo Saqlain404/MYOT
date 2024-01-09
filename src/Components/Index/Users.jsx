@@ -6,6 +6,7 @@ import classNames from "classnames";
 import {
   AddEmployee,
   DepartmentList,
+  EmployeeDelete,
   EmployeeLists,
   EmployeeSearch,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
@@ -15,6 +16,7 @@ import { toast } from "react-toastify";
 import ViewUser from "./ViewUser";
 import { MDBDataTable } from "mdbreact";
 import EditUserProfile from "./EditUserProfile";
+import Swal from "sweetalert2";
 
 const Users = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -122,10 +124,10 @@ const Users = () => {
         returnData.department = list?.department_Id?.departmentName;
         returnData.role = (
           <>
-            {list?.employRole.flat()?.map((role, index) => (
+            {list?.employRole?.map((role, index) => (
               <span className="d-flex align-items-start py-1" key={index}>
                 • {role}
-                {index !== list.employRole.flat().length - 1}
+                {index !== list.employRole?.length - 1}
               </span>
             ))}
           </>
@@ -135,7 +137,9 @@ const Users = () => {
           <>
             <img src="/images/dashboard/CalendarBlank.png" className="w-auto" />{" "}
             <span className="ms-2">
-              {moment(list?.logIn).format("MMM Do YY, h:mm a")}
+              {(list?.logIn &&
+                moment(list?.logIn).format("MMM Do YY, h:mm a")) ||
+                "NA"}
             </span>
           </>
         );
@@ -152,7 +156,7 @@ const Users = () => {
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
               <li>
                 <Link
-                  class="dropdown-item border-bottom"
+                  class="dropdown-item"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal1"
                   onClick={() => setUserId(list?._id)}
@@ -165,9 +169,9 @@ const Users = () => {
                   View Users Details
                 </Link>
               </li>
-              <li>
+              <li className="border-bottom">
                 <Link
-                  class="dropdown-item border-bottom"
+                  class="dropdown-item"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal2"
                   onClick={() => setUserId(list?._id)}
@@ -182,6 +186,17 @@ const Users = () => {
               </li>
               <li>
                 <Link
+                  class="dropdown-item text-danger"
+                  onClick={() => {
+                    handleDeleteUser(list?._id);
+                  }}
+                >
+                  <img src="/images/users/Trash.svg" alt="" className="me-2" />
+                  Delete User
+                </Link>
+              </li>
+              {/* <li>
+                <Link
                   class="dropdown-item"
                   to={`/Admin/Requests/Comments/${list?._id}`}
                 >
@@ -192,8 +207,8 @@ const Users = () => {
                   />
                   Comments
                 </Link>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a class="dropdown-item border-bottom" href="#">
                   <img
                     src="/images/users/TextAlignLeft.svg"
@@ -202,13 +217,13 @@ const Users = () => {
                   />
                   Wrap Column
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a class="dropdown-item text-danger" href="#">
                   <img src="/images/users/Trash.svg" alt="" className="me-2" />
                   Delete Template
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         );
@@ -219,32 +234,33 @@ const Users = () => {
     }
   };
 
-  const handleSearch = async (e) => {
-    try {
-      const value = e.target.value.toLowerCase();
-      console.log(value);
-      setSearch(value);
-      if (value.length > 0) {
-        let { data } = await EmployeeSearch({ search: value });
-        console.log(data);
-        if (!data?.error) {
-          let values = data?.results?.employee;
-          setEmployeeData(values);
-        }
-      } else {
-        getEmployeeList();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const onFileSelection = (e, key) => {
     setFiles({ ...files, [key]: e.target.files[0] });
     if (key === "profile_img") {
       const selectedFile = e.target.files[0];
       const imageUrl = URL.createObjectURL(selectedFile);
       setProfileImgUrl(imageUrl);
+    }
+  };
+
+  const handleDeleteUser = async (id) => {
+    try {
+      let { data } = await EmployeeDelete(id);
+      console.log(data);
+      if (data && !data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "User Data Deleted successfully",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        getEmployeeList();
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -309,7 +325,6 @@ const Users = () => {
       });
       return false;
     }
-    console.log("hhhhh", JSON.stringify(selectedRoles));
     const formData = new FormData();
     formData.append("name", datas?.name);
     formData.append("email", datas?.email);
@@ -327,18 +342,18 @@ const Users = () => {
     let { data } = await AddEmployee(formData);
     console.log(data);
     if (data && !data?.error) {
-      toast("New employee added successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "New Employee Added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       // document.getElementById("formReset").click();
       document.getElementById("closeFormModal").click();
+      setFiles([]);
       getEmployeeList();
     }
   };
@@ -359,14 +374,13 @@ const Users = () => {
 
     const sortedRows = [...users.rows].sort((a, b) => {
       let comparison = 0;
-      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+      if (a?.name?.toLowerCase() < b?.name?.toLowerCase()) {
         comparison = -1;
-      } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
+      } else if (a?.name?.toLowerCase() > b?.name?.toLowerCase()) {
         comparison = 1;
       }
       return currentSortType === "asc" ? comparison : comparison * -1;
     });
-    console.log(sortedRows);
 
     setUsers({
       ...users,
@@ -460,7 +474,7 @@ const Users = () => {
             </div>
 
             <div className="d-flex justify-content-between">
-              <p className="table-name mb-2">Users</p>
+              <p className="table-name mb-2"></p>
               <div className="d-flex justify-content-center th-text">
                 <div
                   className="d-flex whitespace-nowrap"
@@ -471,11 +485,11 @@ const Users = () => {
                   <img src="/images/tasks/Add.svg" alt="" className="pb-3" />
                   <p className="pt-1 text-nowrap">Add Employee</p>
                 </div>
-                <img
+                {/* <img
                   src="/images/sidebar/ThreeDots.svg"
                   alt=""
                   className="pb-3 ms-2 text-secondary"
-                />
+                /> */}
               </div>
             </div>
 
@@ -569,7 +583,9 @@ const Users = () => {
                       id="closeFormModal"
                       aria-label="Closebtn"
                       type="reset"
-                      onClick={() => document.getElementById("formReset").click()}
+                      onClick={() =>
+                        document.getElementById("formReset").click()
+                      }
                     ></button>
                   </div>
                   <div class="modal-body">
@@ -822,13 +838,19 @@ const Users = () => {
                                   }
                                 )}
                                 {...register("password", {
-                                  required: "Please enter password",
+                                  required: "* Please Enter Your Password",
+                                  pattern: {
+                                    value:
+                                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                                    message:
+                                      "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
+                                  },
                                 })}
                               />
                               {errors.password && (
-                                <div className="invalid-feedback">
-                                  {errors.password.message}
-                                </div>
+                                <small className="errorText ">
+                                  {errors.password?.message}
+                                </small>
                               )}
                             </div>
                           </div>

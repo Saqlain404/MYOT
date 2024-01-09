@@ -214,7 +214,7 @@ const DashboardSig = () => {
                               <progress
                                 className="w-100 custom-progress"
                                 id="file"
-                                value={count?.count * 10}
+                                value={count?.count}
                                 max="100"
                               />
                             </span>

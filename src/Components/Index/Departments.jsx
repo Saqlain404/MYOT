@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
   AddDepartment,
+  DepartmentDelete,
   DepartmentDetails,
   DepartmentList,
   DepartmentSearch,
@@ -71,7 +72,7 @@ const Departments = () => {
         returnData.description = data?.description;
         returnData.actions = (
           <>
-            <div class="dropdown">
+            <div class="">
               <a
                 type=""
                 className="mx-auto"
@@ -86,8 +87,7 @@ const Departments = () => {
               <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                 <li onClick={() => departmentDetails(data?._id)}>
                   <a
-                    class="dropdown-item border-bottom"
-                    // className="d-flex whitespace-nowrap"
+                    class="dropdown-item"
                     type="button"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal1"
@@ -110,8 +110,8 @@ const Departments = () => {
                     Wrap Column
                   </a>
                 </li>
-                <li>
-                  <a class="dropdown-item text-danger" href="#">
+                <li className="cursor_pointer" onClick={() => deleteDepartment(data?._id)}>
+                  <a class="dropdown-item text-danger">
                     <img
                       src="/images/users/Trash.svg"
                       alt=""
@@ -142,6 +142,23 @@ const Departments = () => {
     }
   };
 
+  const deleteDepartment = async (id) => {
+    let { data } = await DepartmentDelete(id);
+    if (data && !data?.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Department Deleted successfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+
+      DepartmentLists();
+    }
+  };
+
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -152,26 +169,28 @@ const Departments = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(departmentInfo);
-    Swal.fire({
-      toast: true,
-      position: "bottom-center", // Set position to bottom center
-      icon: "success",
-      title: "New Department Added",
-      showConfirmButton: false,
-      timerProgressBar: true,
-      timer: 3000,
-    });
+
     try {
-      // let { data } = await AddDepartment({
-      //   departmentName: departmentInfo?.departmentname,
-      //   description: departmentInfo?.description,
-      // });
-      // if (!data?.error) {
-      //   console.log(data?.results);
-        
-        
-      // }
+      let { data } = await AddDepartment({
+        departmentName: departmentInfo?.departmentname,
+        description: departmentInfo?.description,
+      });
+      if (data && !data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "error",
+          title: "New Department Added",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        setDepartmentInfo({
+          departmentname: "",
+          description: "",
+        });
+        document.getElementById("closeModal").click();
+        DepartmentLists();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -283,7 +302,8 @@ const Departments = () => {
                     </p>
                     <button
                       type="reset"
-                      class="btn-close"
+                      class="btn-close "
+                      id="closeModal"
                       data-bs-dismiss="modal"
                       aria-label="Close"
                       onClick={() =>

@@ -55,7 +55,7 @@ const Switcher = () => {
           </div>
           <div>
             {/* <span className="text-dark">{userData?.name}</span> */}
-            <span className="text-dark">
+            <span className="text-dark text-capitalize">
               {userData?.name?.split(" ")?.slice(0, 2)?.join(" ")}
             </span>
             <p className="th-text">{role}</p>

@@ -260,7 +260,7 @@ const SidebarSig = () => {
                 </a>
               </Link>
             </li>
-            <li
+            {/* <li
               className={`nav-item text-dark ${
                 location.pathname === "/Signatory/Announcements"
                   ? "nav_active"
@@ -268,7 +268,6 @@ const SidebarSig = () => {
               }`}
             >
               <a
-                // href="/"
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"
               >
@@ -279,7 +278,7 @@ const SidebarSig = () => {
 
                 <span className="ms-3 align-middle sidebar-btn">Files</span>
               </a>
-            </li>
+            </li> */}
 
             <p className="th-text mt-3">OTHERS</p>
 
@@ -366,7 +365,7 @@ const SidebarSig = () => {
           </ul>
         </div>
 
-        <div class="dropdown position-fixed bottom-0 bg-light">
+        <div class="dropdown position-fixed bottom-0 bg-white">
           <Switcher />
         </div>
 

@@ -2475,6 +2475,18 @@ thead tr th div{
   height: 100%;
 }
 
+/* .dataTables_wrapper > div:nth-child(3) {
+  position: relative !important;
+}
+.dataTables_wrapper > div:nth-child(3) > div:first-child {
+  position: sticky;
+  left: 0;
+}
+.dataTables_wrapper > div:nth-child(3) > div:nth-child(2) {
+  position: sticky;
+  right: 0;
+} */
+
 .dataTables_paginate {
   display: flex !important;
   align-items: center !important;
@@ -2559,7 +2571,4 @@ div.dataTables_wrapper div.dataTables_paginate {
 .errorText {
   color: red !important;
   font-size: 13px;
-}
-.pass_toggle_text{
-  
 }

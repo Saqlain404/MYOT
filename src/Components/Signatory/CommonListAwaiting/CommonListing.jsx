@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 
 const CommonListing = () => {
+  const [showClearButton, setShowClearButton] = useState(false);
   const [awaitListing, setAwaitListing] = useState({
     columns: [
       {
@@ -52,6 +53,8 @@ const CommonListing = () => {
       },
     ],
     rows: [],
+    hiddenColumns: [],
+    selectedColumns: [],
   });
 
   useEffect(() => {
@@ -90,7 +93,7 @@ const CommonListing = () => {
                 ? "text-primary"
                 : list?.status === "Rejected"
                 ? "text-danger"
-                :"text-success"
+                : "text-success"
             }`}
           >
             {list?.status}
@@ -128,7 +131,7 @@ const CommonListing = () => {
               <li>
                 <Link
                   class="dropdown-item"
-                    to={`/Signatory/Awaiting-sig/Comments/${list?._id}`}
+                  to={`/Signatory/Awaiting-sig/Comments/${list?._id}`}
                 >
                   <img src="/images/dashboard/Comment.png" className="me-2" />
                   Comments
@@ -221,36 +224,122 @@ const CommonListing = () => {
       setAwaitListing({ ...awaitListing, rows: newRows });
     }
   };
+
+  const handleCheckboxChange = (field) => {
+    let updatedSelectedColumns = [...awaitListing.selectedColumns];
+    const index = updatedSelectedColumns.indexOf(field);
+    if (index > -1) {
+      updatedSelectedColumns.splice(index, 1);
+    } else {
+      updatedSelectedColumns.push(field);
+    }
+    setAwaitListing({
+      ...awaitListing,
+      selectedColumns: updatedSelectedColumns,
+    });
+  };
+
+  const hideSelectedColumns = () => {
+    const updatedHiddenColumns = [
+      ...awaitListing.hiddenColumns,
+      ...awaitListing.selectedColumns,
+    ];
+    setAwaitListing({
+      ...awaitListing,
+      hiddenColumns: updatedHiddenColumns,
+      selectedColumns: [],
+    });
+    setShowClearButton(true);
+  };
+
+  const columnsWithCheckboxes = awaitListing.columns.map((column) => ({
+    ...column,
+    label: (
+      <div key={column.field}>
+        <input
+          type="checkbox"
+          checked={awaitListing.selectedColumns.includes(column.field)}
+          onChange={() => handleCheckboxChange(column.field)}
+          className="me-1 mt-1"
+        />
+        <label>{column.label}</label>
+      </div>
+    ),
+  }));
+
+  const visibleColumns = columnsWithCheckboxes.filter(
+    (column) => !awaitListing.hiddenColumns.includes(column.field)
+  );
+
+  const showAllColumns = () => {
+    setAwaitListing({
+      ...awaitListing,
+      hiddenColumns: [],
+      selectedColumns: [],
+    });
+    setShowClearButton(false);
+  };
+
+  const toggleSortOrder = () => {
+    const currentSortType = awaitListing.sortType === "asc" ? "desc" : "asc";
+
+    const sortedRows = [...awaitListing.rows].sort((a, b) => {
+      let comparison = 0;
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        comparison = -1;
+      } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
+        comparison = 1;
+      }
+      return currentSortType === "asc" ? comparison : comparison * -1;
+    });
+    console.log(sortedRows);
+
+    setAwaitListing({
+      ...awaitListing,
+      rows: sortedRows,
+      sortType: currentSortType,
+    });
+  };
   return (
     <div className="position-relative mt-5">
       <p className="table-name mb-2">Document Requests</p>
       <div className=" col-12 d-flex align-items-center table-searchbar">
-        <div className="row d-flex  col">
+        <div className="d-flex ">
           <div className="col-md-3 table-searchbar-imgs">
-            <img
+            {/* <img
               src="/images/dashboard/Plus-icon.png"
-              alt=""
               className="p-2 table-searchbar-img"
-            />
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            /> */}
             <img
-              src="/images/dashboard/FunnelSimple.png"
-              alt=""
-              className="p-2 table-searchbar-img"
-            />
-            <img
+              onClick={toggleSortOrder}
               src="/images/dashboard/ArrowsDownUp.png"
-              alt=""
-              className="p-2 table-searchbar-img"
-            />
-            <img
-              src="/images/dashboard/DotsThreeOutlineVertical2.png"
-              alt=""
-              className="p-2 table-searchbar-img border-end"
+              className="p-2 table-searchbar-img border-end cursor_pointer"
             />
           </div>
-          <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
-            <p className="m-0 text-nowrap">2 Selected</p>
-            <p className="hide-selected m-0 text-nowrap ">Hide Selected</p>
+          <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
+            <p className="m-0 text-nowrap">
+              {awaitListing?.selectedColumns &&
+                awaitListing?.selectedColumns.length}
+              <span> Selected</span>
+            </p>
+            {showClearButton ? (
+              <p
+                className="hide-selected ms-2 m-0 text-nowrap cursor_pointer "
+                onClick={showAllColumns}
+              >
+                Clear Selection
+              </p>
+            ) : (
+              <p
+                className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
+                onClick={hideSelectedColumns}
+              >
+                Hide Selected
+              </p>
+            )}
           </div>
         </div>
         <form className="d-flex me-2" role="search">
@@ -270,11 +359,12 @@ const CommonListing = () => {
             bordered
             displayEntries={false}
             entries={5}
-            className=""
+            className="text-nowrap"
             hover
-            data={awaitListing}
+            // data={awaitListing}
+            data={{ ...awaitListing, columns: visibleColumns }}
             noBottomColumns
-            sortable
+            sortable={false}
             paginationLabel={"«»"}
           />
           {/* <table className="table table-borderless">

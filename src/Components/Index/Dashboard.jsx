@@ -389,7 +389,7 @@ const Dashboard = () => {
                               <progress
                                 className="w-100"
                                 id="file"
-                                value={count?.count * 10}
+                                value={count?.count}
                                 max="100"
                               />
                             </span>
