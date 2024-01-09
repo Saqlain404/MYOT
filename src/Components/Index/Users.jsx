@@ -564,11 +564,12 @@ const Users = () => {
                       Add New Employee
                     </p>
                     <button
-                      type="button"
                       class="btn-close"
                       data-bs-dismiss="modal"
                       id="closeFormModal"
-                      aria-label="Close"
+                      aria-label="Closebtn"
+                      type="reset"
+                      onClick={() => document.getElementById("formReset").click()}
                     ></button>
                   </div>
                   <div class="modal-body">
@@ -929,7 +930,12 @@ const Users = () => {
                         <button type="submit" class="user-modal-btn">
                           Save
                         </button>
-                        <button type="button" class="user-modal-btn2">
+                        <button
+                          type="reset"
+                          class="user-modal-btn2"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        >
                           Cancel
                         </button>
                         <button type="reset" id="formReset" className="d-none">

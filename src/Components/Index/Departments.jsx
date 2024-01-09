@@ -13,6 +13,7 @@ import {
 import { useEffect } from "react";
 import { MDBDataTable } from "mdbreact";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 const Departments = () => {
   const [listItems, setListItems] = useState([]);
@@ -150,31 +151,28 @@ const Departments = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log({ e });
     e.preventDefault();
-    const departmentData = {
-      ...departmentInfo,
-      user: localStorage.getItem("user_id"),
-    };
-    console.log(departmentData);
-
-    await AddDepartment({
-      departmentName: departmentData.departmentname,
-      description: departmentData.description,
-    })
-      .catch((error) => {
-        console.log(error);
-      })
-      .then((res) => {
-        if (!res.data?.error) {
-          console.log("Success");
-          navigate("");
-        }
+    console.log(departmentInfo);
+    try {
+      let { data } = await AddDepartment({
+        departmentName: departmentInfo?.departmentname,
+        description: departmentInfo?.description,
       });
-    setDepartmentInfo({
-      departmentname: "",
-      description: "",
-    });
+      if (!data?.error) {
+        console.log(data?.results);
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "error",
+          title: "Message can not be empty",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSearch = async (e) => {
@@ -334,15 +332,24 @@ const Departments = () => {
                       </div>
                     </div>
                     <div className="d-flex justify-content-end mb-3">
-                      <button
-                        type="submit"
-                        class="user-modal-btn"
-                        onClick={AddDepartment}
-                      >
+                      <button type="submit" class="user-modal-btn">
                         Add New
                       </button>
-                      <button type="button" class="user-modal-btn2">
-                        Cancle
+                      <button
+                        type="reset"
+                        class="user-modal-btn2"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="reset"
+                        class="d-none"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        reset
                       </button>
                     </div>
                   </form>
