@@ -109,6 +109,8 @@ import CalendarMonthDept from "./Components/DepartmentManager/CalendarMonthDept"
 import CalenderYearDept from "./Components/DepartmentManager/CalenderYear";
 
 import CommentsDept from "./Components/DepartmentManager/CommentsDept";
+import AuthResetPass from "./Components/Login/AuthResetPass";
+import AuthSignUp from "./Components/Login/AuthSignUp";
 
 import EmplySetting from "./Components/Employee/EmplySetting";
 import OTPauthEmply from "./Components/Login/OTPauthEmply";
@@ -129,10 +131,18 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route path="*" element={<AuthLogin />} />
+
+        <Route path="Admin/Login" element={<AuthLogin />} />
+        <Route path="Signup" element={<AuthSignUp />} />
+        <Route path="Admin/Forgot-password" element={<AuthforgotPass />} />
+        <Route path="Admin/Reset-password" element={<AuthResetPass />} />
+        <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} />
+
         <Route path="Login" element={<AuthLogin />} />
         <Route path="Forgot-password" element={<AuthforgotPass />} />
         <Route path="Update-password" element={<UpdatePassword />} />
         <Route path="Forgot-success" element={<AuthforgotSuccess />} />
+
         <Route path="Admin/Home" element={<Home />} />
         <Route path="Admin/Dashboard" element={<Dashboard />} />
         <Route path="Admin/Tasks" element={<Tasks />} />

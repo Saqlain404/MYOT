@@ -223,6 +223,15 @@ const AuthforgotPass = () => {
                         </div>
                       </div>
                     </div>
+
+                    <Link to={"/Admin/Reset-password"}>
+                    <button
+                      className="btn  py-8 mb-3 form-reset"
+                      type='submit'
+                    >
+                      Reset Your Password
+                    </button>
+
                     <Link to={"/Admin/Forgot-success"}>
                       <button
                         className="btn  py-8 mb-3 form-reset"
@@ -230,6 +239,7 @@ const AuthforgotPass = () => {
                       >
                         Reset Your Password
                       </button>
+
                     </Link>
                     <div className="d-flex justify-content-center mt-2">
                       <p className="not-recive-otp me-1">

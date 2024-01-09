@@ -104,21 +104,21 @@ const ProfileDept = () => {
         <p className="profile-data">{profileDetail?.employRole}</p>
       </div>
     </div>
-    <div className="d-flex justify-content-between">
+    <div className="d-flex justify-content-between me-4">
       <div>
-        <p className="profile-info">Employee Tittle</p>
+        <p className="profile-info me-4">Employee Tittle</p>
         <p className="profile-data">{profileDetail?.employTitle}</p>
       </div>
       <div>
-        <p className="profile-info">Employee Id</p>
+        <p className="profile-info me-4">Employee Id</p>
         <p className="profile-data">{profileDetail?.employId}</p>
       </div>
       <div>
-        <p className="profile-info">Gender</p>
+        <p className="profile-info  me-4">Gender</p>
         <p className="profile-data">{profileDetail?.gender}</p>
       </div>
       <div>
-        <p className="profile-info">Salary</p>
+        <p className="profile-info me-4">Salary</p>
         <p className="profile-data">{profileDetail?.salary}</p>
       </div>
     </div>
