@@ -111,7 +111,7 @@ const Template = () => {
   };
   console.log(listItems);
 
-  const [templateCount, setTemplateCount] = useState([]);
+  // const [templateCount, setTemplateCount] = useState([]);
 
 
   
