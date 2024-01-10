@@ -45,10 +45,11 @@ const HomeAprv = () => {
         selected: false,
       },
       {
-        label: "Version",
-        field: "version",
+        label: "Department",
+        field: "department",
         sort: "asc",
         width: 100,
+        searchable: true,
         selected: false,
       },
       {
@@ -59,20 +60,21 @@ const HomeAprv = () => {
         selected: false,
       },
       {
+        label: "Version",
+        field: "version",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+      
+      {
         label: "Status",
         field: "status",
         sort: "asc",
         width: 100,
         selected: false,
       },
-      {
-        label: "Department",
-        field: "department",
-        sort: "asc",
-        width: 100,
-        searchable: true,
-        selected: false,
-      },
+      
       // {
       //   label: "Comments",
       //   field: "comments",
@@ -632,6 +634,7 @@ const HomeAprv = () => {
                     data={{ ...tasks, columns: visibleColumns }}
                     // data={tasks}
                     noBottomColumns
+                    // paging={tasks?.rows?.length > 5 ? true:false}
                     paginationLabel={"«»"}
                     sortable={false}
                   />
@@ -640,7 +643,6 @@ const HomeAprv = () => {
             </div>
 
             <DocumentRequestHome />
-
             <div className="footer">
               <div>© 2023 MYOT</div>
               <div className="d-flex ">
