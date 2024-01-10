@@ -141,6 +141,18 @@ export async function GetTaskData() {
     return { error };
   }
 }
+export async function GetApprovedTemplates() {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/approved-templete`
+    );
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
 
 export async function SearchTask(formData) {
   try {
@@ -212,6 +224,18 @@ export async function TasksCommentList(id) {
   }
 }
 
+export async function TasksCommentDelete(id) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/delete-comment/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 export async function AdminDashboardCount() {
   try {
     const { data } = await adminHttpService.get(
@@ -276,6 +300,18 @@ export async function AdminTicketCount(id) {
   }
 }
 
+// Admin Dashboard Listing
+export async function AdminDashboardListing() {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/complete-templete`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
 // APPROVER API
 export async function ApproverList() {
   try {
@@ -371,6 +407,32 @@ export async function DocumentComment(formData) {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/add-document-comment`,
       formData
+    );
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function DocumentDelete(id) {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/delete-document/${id}`
+    );
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function RequestCommentDelete(id) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/delete-comment/${id}`
     );
 
     return { data };

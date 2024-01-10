@@ -7,8 +7,9 @@ import RightSidebar from "../../RightSidebar";
 import {
   DocumentComment,
   DocumentCommentLists,
+  RequestCommentDelete,
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const DocComments = () => {
   const [commentList, setCommentList] = useState([]);
@@ -37,6 +38,26 @@ const DocComments = () => {
     }
   };
 
+  const handleDeleteComment = async (e, id) => {
+    e.preventDefault();
+    try {
+      let { data } = await RequestCommentDelete(id);
+      if (!data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "bottom",
+          title: "Comment deleted successfully",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        getCommentLists();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const toggleReply = (index) => {
     setReply((prevState) => ({
       ...prevState,
@@ -54,15 +75,14 @@ const DocComments = () => {
 
   const handleSubmit = async () => {
     if (newReply === "") {
-      toast.error("Please enter your reply", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "bottom",
+        title: "Please enter a reply",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       return false;
     }
@@ -75,15 +95,14 @@ const DocComments = () => {
     let { data } = await DocumentComment(formData);
     console.log(data);
     if (!data?.error) {
-      toast("Comment added successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "bottom",
+        title: "New comment added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       document.getElementById("reset").click();
       setNewReply("");
@@ -167,26 +186,42 @@ const DocComments = () => {
                             )} */}
                           </p>
                         </div>
-                        <div
-                          className="cursor_pointer"
-                          // onClick={() => setReply(!reply)}
-                          onClick={() => toggleReply(index)}
-                        >
-                          {reply[index] ? (
-                            <Link className="ticket-link mt-3 me-1 text-decoration-none">
-                              Cancel
-                            </Link>
-                          ) : (
-                            <>
-                              <img
-                                src="/images/dashboard/reply-arrow.svg"
-                                className="m-2"
-                              />
+                        <div className="d-flex align-items-center justify-content-end">
+                          <div
+                            className="cursor_pointer"
+                            // onClick={() => setReply(!reply)}
+                            onClick={() => toggleReply(index)}
+                          >
+                            {reply[index] ? (
                               <Link className="ticket-link mt-3 me-1 text-decoration-none">
-                                Reply
+                                Cancel
                               </Link>
-                            </>
-                          )}
+                            ) : (
+                              <>
+                                <img
+                                  src="/images/dashboard/reply-arrow.svg"
+                                  className="m-2"
+                                />
+                                <Link className="ticket-link mt-3 me-1 text-decoration-none">
+                                  Reply
+                                </Link>
+                              </>
+                            )}
+                          </div>
+                          <div
+                            onClick={(e) =>
+                              handleDeleteComment(e, comments?._id)
+                            }
+                            className="ms-2"
+                          >
+                            <img
+                              src="/images/icons/delete_icon.png"
+                              className=""
+                            />
+                            <Link className="ticket-link me-1 text-decoration-none text-danger">
+                              Delete
+                            </Link>
+                          </div>
                         </div>
                       </div>
                       <p className="comment-txt p-2 mb-0">

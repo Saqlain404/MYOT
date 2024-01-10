@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
-import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
+
 import { Link, useParams } from "react-router-dom";
-import {
-  AddCommentForTask,
-  TasksCommentDelete,
-  TasksCommentList,
-} from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
-import { toast } from "react-toastify";
+import RightSidebar from "../../RightSidebar";
+import {
+  DocumentComment,
+  DocumentCommentLists,
+} from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import SidebarSig from "../SidebarSig";
 import Swal from "sweetalert2";
 
-const Comments = () => {
+const SigDocComments = () => {
   const [commentList, setCommentList] = useState([]);
   const [reply, setReply] = useState(false);
-  const [replyMsg, setReplyMsg] = useState("");
+  const [newReply, setNewReply] = useState("");
+  const [replyText, setReplyText] = useState({});
+  const [localId, setLocalId] = useState();
 
   const { id } = useParams();
-  console.log(id);
 
   useEffect(() => {
     getCommentLists();
@@ -25,10 +25,12 @@ const Comments = () => {
 
   const getCommentLists = async () => {
     try {
-      let { data } = await TasksCommentList(id);
+      let lid = localStorage.getItem("myot_admin_id");
+      setLocalId(lid);
+      let { data } = await DocumentCommentLists(id);
       if (!data?.error) {
-        setCommentList(data?.results?.commentDetails);
-        console.log(data?.results?.commentDetails);
+        setCommentList(data?.results?.commentDetailsList);
+        console.log(data?.results);
       }
     } catch (error) {
       console.log(error);
@@ -42,70 +44,58 @@ const Comments = () => {
     }));
   };
 
-  const handleDeleteComment = async (e, id) => {
-    e.preventDefault();
-    try {
-      let { data } = await TasksCommentDelete(id);
-      if (data && !data.error) {
-        Swal.fire({
-          toast: true,
-          icon: "success",
-          position: "bottom",
-          title: "Comment deleted successfully",
-          showConfirmButton: false,
-          timerProgressBar: true,
-          timer: 3000,
-        });
-        getCommentLists();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   const handleReplyChange = (e, index) => {
+  //     const { value } = e.target;
+  //     setReplyText((prevState) => ({
+  //       ...prevState,
+  //       [index]: value,
+  //     }));
+  //   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (replyMsg === "") {
+    if (newReply === "") {
       Swal.fire({
         toast: true,
         icon: "success",
         position: "bottom",
-        title: "Please enter reply",
+        title: "Please enter a reply",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
       });
       return false;
     }
-    let creator_Id = localStorage.getItem("myot_admin_id");
-    let { data } = await AddCommentForTask({
-      comment: replyMsg,
-      templete_Id: id,
-      creator_Id,
-    });
+    let formData = {
+      creator_Id: localId,
+      document_Id: id,
+      comment: newReply,
+    };
+    console.log(formData);
+    let { data } = await DocumentComment(formData);
     console.log(data);
     if (!data?.error) {
-      toast("Comment added successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "bottom",
+        title: "New comment added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
-      setReplyMsg("");
       document.getElementById("reset").click();
+      setNewReply("");
       getCommentLists();
     }
   };
+
   return (
     <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <Sidebar />
+            <SidebarSig />
           </div>
           <div className="col-7 middle-content bg-body-tertiary p-0 min-vh-100">
             <div className="container-fluid border-bottom sticky-top bg-white mb-4">
@@ -113,7 +103,7 @@ const Comments = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link ms-2" href="app-email.html">
-                      Tasks / Comments
+                      / Requests / Comments
                     </a>
                   </li>
                 </ul>
@@ -151,7 +141,7 @@ const Comments = () => {
 
             <div className="container px-4 text-center min-vh-100 ">
               <p className="templates-leave mt-3  d-flex ">Comments</p>
-              {commentList && commentList?.length > 0 ? (
+              {commentList &&
                 commentList?.map((comments, index) => (
                   <>
                     <div className="bg-white rounded p-2 mb-3">
@@ -171,43 +161,31 @@ const Comments = () => {
                           </p>
                           <p className="comment-time m-auto">
                             {moment(comments?.createdAt).calendar()}
+                            {/* {moment(comments?.createdAt).format(
+                              "MMM Do YY, h:mm a"
+                            )} */}
                           </p>
                         </div>
-                        <div className="d-flex align-items-center justify-content-end">
-                          <div
-                            className="cursor_pointer d-flex align-items-center"
-                            onClick={() => toggleReply(index)}
-                          >
-                            {reply[index] ? (
-                              <Link className="ticket-link me-1 text-decoration-none">
-                                Cancel
-                              </Link>
-                            ) : (
-                              <>
-                                <img
-                                  src="/images/dashboard/reply-arrow.svg"
-                                  className=""
-                                />
-                                <Link className="ticket-link me-1 text-decoration-none">
-                                  Reply
-                                </Link>
-                              </>
-                            )}
-                          </div>
-                          <div
-                            onClick={(e) =>
-                              handleDeleteComment(e, comments?._id)
-                            }
-                            className="ms-2"
-                          >
-                            <img
-                              src="/images/icons/delete_icon.png"
-                              className=""
-                            />
-                            <Link className="ticket-link me-1 text-decoration-none text-danger">
-                              Delete
+                        <div
+                          className="cursor_pointer"
+                          // onClick={() => setReply(!reply)}
+                          onClick={() => toggleReply(index)}
+                        >
+                          {reply[index] ? (
+                            <Link className="ticket-link mt-3 me-1 text-decoration-none">
+                              Cancel
                             </Link>
-                          </div>
+                          ) : (
+                            <>
+                              <img
+                                src="/images/dashboard/reply-arrow.svg"
+                                className="m-2"
+                              />
+                              <Link className="ticket-link mt-3 me-1 text-decoration-none">
+                                Reply
+                              </Link>
+                            </>
+                          )}
                         </div>
                       </div>
                       <p className="comment-txt p-2 mb-0">
@@ -227,15 +205,17 @@ const Comments = () => {
                                 className="p-2 w-100 mx-2 comment-txt"
                                 name="reply"
                                 placeholder="Reply..."
+                                //   value={replyText[index] || ""}
+                                //   onChange={(e) => handleReplyChange(e, index)}
                                 defaultValue=""
-                                onChange={(e) => setReplyMsg(e.target.value)}
+                                onChange={(e) => setNewReply(e.target.value)}
                               />
                               <button type="submit" className="reply-btn">
                                 Reply
                               </button>
                               <button
-                                type="reset"
                                 id="reset"
+                                type="reset"
                                 className="d-none"
                               >
                                 reset
@@ -246,14 +226,7 @@ const Comments = () => {
                       )}
                     </div>
                   </>
-                ))
-              ) : (
-                <>
-                  <h3 className="bg-white rounded p-2 py-4 mb-3">
-                    No Comments Found
-                  </h3>
-                </>
-              )}
+                ))}
 
               <div className="bg-white rounded p-2 mb-3">
                 <div className="d-flex  justify-content-between">
@@ -296,4 +269,4 @@ const Comments = () => {
   );
 };
 
-export default Comments;
+export default SigDocComments;

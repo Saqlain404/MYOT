@@ -3,6 +3,7 @@ import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
 import {
   DocumentComment,
+  DocumentDelete,
   RequestorList,
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
@@ -126,9 +127,13 @@ const Document = () => {
               list?.status === "Pending"
                 ? "text-info"
                 : list?.status === "Approved"
-                ? "text-warning"
+                ? "text-success"
                 : list?.status === "In Progress"
                 ? "text-primary"
+                : list?.status === "In Progress"
+                ? "text-danger"
+                : list?.status === "Rejected"
+                ? "text-danger"
                 : "text-success"
             }`}
           >
@@ -207,10 +212,13 @@ const Document = () => {
                 </a>
               </li>
               <li>
-                <a class="dropdown-item text-danger" href="#">
+                <Link
+                  class="dropdown-item text-danger"
+                  onClick={() => handleDelete(list?._id)}
+                >
                   <img src="/images/users/Trash.svg" alt="" className="me-2" />
-                  Delete Template
-                </a>
+                  Delete Document
+                </Link>
               </li>
             </ul>
           </div>
@@ -219,6 +227,26 @@ const Document = () => {
         newRows.push(returnData);
       });
       setDocuments({ ...documents, rows: newRows });
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      let { data } = await DocumentDelete(id);
+      if (!data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "bottom",
+          title: "Document deleted successfully",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        getRequestorList()
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

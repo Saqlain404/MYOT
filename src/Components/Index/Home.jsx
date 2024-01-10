@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import {
   AddCommentForTask,
   AdminDashboardCount,
-  GetTaskData,
+  GetApprovedTemplates,
   SearchTask,
   TemplateDelete,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
@@ -77,7 +77,7 @@ const Home = () => {
   });
 
   useEffect(() => {
-    getTaskData();
+    getApprovedTemplates();
     getAdminCount();
   }, []);
 
@@ -88,11 +88,12 @@ const Home = () => {
     }
   };
 
-  const getTaskData = async () => {
-    let { data } = await GetTaskData();
+  const getApprovedTemplates = async () => {
+    let { data } = await GetApprovedTemplates();
+    console.log(data);
     const newRows = [];
     if (!data?.error) {
-      let values = data?.results?.templete;
+      let values = data?.results?.templeteList;
       console.log(values);
       values?.map((list, index) => {
         const returnData = {};
@@ -101,10 +102,10 @@ const Home = () => {
           <>
             <img
               className="w_20_h_20"
-              src={list?.manager?.profile_Pic}
+              src={list?.manager[0]?.profile_Pic}
               alt=""
             />
-            <span className="ms-2 text-capitalize">{list?.manager?.name}</span>
+            <span className="ms-2 text-capitalize">{list?.manager[0]?.name}</span>
           </>
         );
         returnData.version = (
@@ -117,14 +118,14 @@ const Home = () => {
               : "No versions found"}
           </>
         );
-        returnData.department = list?.manager?.department_Id?.departmentName;
+        returnData.department = list?.manager[0]?.department[0]?.departmentName;
         returnData.status = (
           <span
             className={`"td-text status" ${
               list?.status === "Pending"
                 ? "text-info"
                 : list?.status === "Approved"
-                ? "text-warning"
+                ? "text-success"
                 : list?.status === "In Progress"
                 ? "text-primary"
                 : "text-success"
@@ -216,7 +217,7 @@ const Home = () => {
           timerProgressBar: true,
           timer: 3000,
         });
-        getTaskData();
+        getApprovedTemplates();
       }
     } catch (error) {
       console.log(error);
@@ -454,7 +455,7 @@ const Home = () => {
             </div>
 
             <div className="position-relative">
-              <p className="table-name mb-2">Home</p>
+              <p className="table-name mb-2">Approved Templates</p>
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">
                   <div className="col-md-3 table-searchbar-imgs">

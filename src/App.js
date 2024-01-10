@@ -106,6 +106,7 @@ import DocComments from "./Components/Index/DocumentRequests/Comment";
 import SigComments from "./Components/Signatory/Comments/Comments";
 import SettingsSig from "./Components/Signatory/SettingsSig";
 import UpdatePassword from "./Components/Login/UpdatePassword";
+import SigDocComments from "./Components/Signatory/Comments/SigDocComments";
 
 function App() {
   return (
@@ -212,6 +213,7 @@ function App() {
         />
         <Route path="Signatory/Help/Contact-us" element={<ContactUsSig />} />
         <Route path="Signatory/Home/Comments/:id" element={<SigComments />} />
+        <Route path="Signatory/Requests/Comments/:id" element={<SigDocComments />} />
         <Route
           path="Signatory/Awaiting-sig/Comments/:id"
           element={<SigComments />}

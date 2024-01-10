@@ -1,27 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { SignatoryAwaitListing } from "../../../ApiServices/SignatoryHttpServices/signatoryHttpServices";
 import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
-import moment from "moment";
+import {
+  AdminDashboardListing,
+  DocumentComment,
+} from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
-const CommonListing = () => {
+const DashboardListing = () => {
   const [showClearButton, setShowClearButton] = useState(false);
-  const [template_Id, setTemplateId] = useState("");
+  const [search, setSearch] = useState("");
   const [comment, setComment] = useState("");
-  const [awaitListing, setAwaitListing] = useState({
+  const [document_Id, setDocument_Id] = useState();
+
+  const [documents, setDocuments] = useState({
     columns: [
       {
         label: "Template Name",
         field: "name",
         sort: "asc",
         width: 50,
+        selected: false,
       },
       {
-        label: "Requester Name",
-        field: "requester",
+        label: "Assigned To",
+        field: "assigned",
         sort: "asc",
         width: 50,
+        selected: false,
       },
       {
         label: "Department",
@@ -29,30 +36,35 @@ const CommonListing = () => {
         sort: "asc",
         width: 100,
         searchable: true,
+        selected: false,
       },
       {
-        label: "Request Date",
-        field: "date",
+        label: "Version",
+        field: "version",
         sort: "asc",
         width: 100,
+        selected: false,
       },
       {
         label: "Status",
         field: "status",
         sort: "asc",
         width: 100,
+        selected: false,
       },
       {
-        label: "Comments",
-        field: "comments",
+        label: "Comment",
+        field: "comment",
         sort: "asc",
         width: 100,
+        selected: false,
       },
       {
         label: "Actions",
         field: "actions",
         sort: "asc",
         width: 100,
+        selected: false,
       },
     ],
     rows: [],
@@ -61,82 +73,107 @@ const CommonListing = () => {
   });
 
   useEffect(() => {
-    getAwaitListingData();
+    getList();
   }, []);
 
-  const getAwaitListingData = async () => {
-    let { data } = await SignatoryAwaitListing("6564816c42ca2ce84e2ed3f2");
+  const getList = async () => {
+    let { data } = await AdminDashboardListing();
+
+    console.log(data);
     const newRows = [];
     if (!data?.error) {
-      let values = data?.results?.template;
-      // console.log(values)
+      let values = data?.results?.templeteList;
+      console.log(values);
       values?.map((list, index) => {
         const returnData = {};
         returnData.name = list?.templeteName;
+        returnData.assigned = (
+          <>
+            <img
+              className="w_20_h_20"
+              src={list?.manager[0]?.profile_Pic}
+              alt=""
+            />
+            <span className="ms-2 text-capitalize">
+              {list?.manager[0]?.name}
+            </span>
+          </>
+        );
         returnData.requester = (
           <>
             <img
               className="w_20_h_20"
-              src={list?.manager?.profile_Pic}
+              src={list?.creator_Id?.profile_Pic}
               alt=""
             />
-            <span className="ms-2 text-capitalize">{list?.manager?.name}</span>
+            <span className="ms-2 text-capitalize">
+              {list?.creator_Id?.name}
+            </span>
           </>
         );
-        returnData.date = moment(list?.createdAt).format("L");
-        returnData.department = list?.manager?.department_Id?.departmentName;
+        returnData.version = (
+          <>
+            <span>
+              {list?.templeteVersion &&
+                list.templeteVersion.length > 0 &&
+                list.templeteVersion[list.templeteVersion.length - 1]?.version}
+            </span>
+          </>
+        );
+        returnData.department = list?.manager[0]?.department[0]?.departmentName;
         returnData.status = (
           <span
             className={`"td-text status" ${
               list?.status === "Pending"
                 ? "text-info"
                 : list?.status === "Approved"
-                ? "text-success"
+                ? "text-warning"
                 : list?.status === "In Progress"
                 ? "text-primary"
-                : list?.status === "Rejected"
-                ? "text-danger"
                 : "text-success"
             }`}
           >
             {list?.status}
           </span>
         );
+        returnData.comment = (
+          <>
+            <div className="text-center">
+              <a
+                onClick={() => setDocument_Id(list?._id)}
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                <img
+                  src="/images/dashboard/Comment.png"
+                  className="mx-auto d-block"
+                />
+              </a>
+            </div>
+          </>
+        );
         returnData.actions = (
-          <div class="">
-            <a type="" data-bs-toggle="dropdown" aria-expanded="false">
-              <img
-                src="/images/sidebar/ThreeDots.svg"
-                className="w-auto cursor_pointer"
-              />
+          <div class="text-center">
+            <a
+              className="cursor_pointer"
+              type=""
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-              {/* <li>
-                <a class="dropdown-item border-bottom" href="#">
-                  <img
-                    src="/images/users/AddressBook.svg"
-                    alt=""
-                    className="me-2"
-                  />
-                  View Users Details
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item border-bottom" href="#">
-                  <img
-                    src="/images/users/PencilLine.svg"
-                    alt=""
-                    className="me-2"
-                  />
-                  Edit User Details
-                </a>
-              </li> */}
               <li>
                 <Link
                   class="dropdown-item"
-                  to={`/Signatory/Awaiting-sig/Comments/${list?._id}`}
+                  to={`/Admin/Requests/Comments/${list?._id}`}
                 >
-                  <img src="/images/dashboard/Comment.png" className="me-2" />
+                  <img
+                    src="/images/dashboard/Comment.png"
+                    alt=""
+                    className="me-2"
+                  />
                   Comments
                 </Link>
               </li>
@@ -150,71 +187,74 @@ const CommonListing = () => {
                   Wrap Column
                 </a>
               </li>
-              {/* <li>
+              <li>
                 <a class="dropdown-item text-danger" href="#">
                   <img src="/images/users/Trash.svg" alt="" className="me-2" />
                   Delete Template
                 </a>
-              </li> */}
+              </li>
             </ul>
-          </div>
-        );
-        returnData.comments = (
-          <div className="text-center">
-            <a
-              onClick={() => setTemplateId(list?._id)}
-              type="button"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
-              <img
-                src="/images/dashboard/Comment.png"
-                className="mx-auto d-block"
-              />
-            </a>
           </div>
         );
 
         newRows.push(returnData);
       });
-      setAwaitListing({ ...awaitListing, rows: newRows });
+      setDocuments({ ...documents, rows: newRows });
     }
   };
 
+  const toggleSortOrder = () => {
+    const currentSortType = documents.sortType === "asc" ? "desc" : "asc";
+
+    const sortedRows = [...documents.rows].sort((a, b) => {
+      let comparison = 0;
+      if (a.name < b.name) {
+        comparison = -1;
+      } else if (a.name > b.name) {
+        comparison = 1;
+      }
+      return currentSortType === "asc" ? comparison : comparison * -1;
+    });
+    console.log(sortedRows);
+
+    setDocuments({
+      ...documents,
+      rows: sortedRows,
+      sortType: currentSortType,
+    });
+  };
+
   const handleCheckboxChange = (field) => {
-    let updatedSelectedColumns = [...awaitListing.selectedColumns];
+    let updatedSelectedColumns = [...documents.selectedColumns];
     const index = updatedSelectedColumns.indexOf(field);
     if (index > -1) {
       updatedSelectedColumns.splice(index, 1);
     } else {
       updatedSelectedColumns.push(field);
     }
-    setAwaitListing({
-      ...awaitListing,
-      selectedColumns: updatedSelectedColumns,
-    });
+    setDocuments({ ...documents, selectedColumns: updatedSelectedColumns });
   };
 
   const hideSelectedColumns = () => {
     const updatedHiddenColumns = [
-      ...awaitListing.hiddenColumns,
-      ...awaitListing.selectedColumns,
+      ...documents.hiddenColumns,
+      ...documents.selectedColumns,
     ];
-    setAwaitListing({
-      ...awaitListing,
+    setDocuments({
+      ...documents,
       hiddenColumns: updatedHiddenColumns,
       selectedColumns: [],
     });
     setShowClearButton(true);
   };
 
-  const columnsWithCheckboxes = awaitListing.columns.map((column) => ({
+  const columnsWithCheckboxes = documents.columns.map((column) => ({
     ...column,
     label: (
       <div key={column.field}>
         <input
           type="checkbox"
-          checked={awaitListing.selectedColumns.includes(column.field)}
+          checked={documents.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
           className="me-1 mt-1"
         />
@@ -224,51 +264,25 @@ const CommonListing = () => {
   }));
 
   const visibleColumns = columnsWithCheckboxes.filter(
-    (column) => !awaitListing.hiddenColumns.includes(column.field)
+    (column) => !documents.hiddenColumns.includes(column.field)
   );
 
   const showAllColumns = () => {
-    setAwaitListing({
-      ...awaitListing,
-      hiddenColumns: [],
-      selectedColumns: [],
-    });
+    setDocuments({ ...documents, hiddenColumns: [], selectedColumns: [] });
     setShowClearButton(false);
-  };
-
-  const toggleSortOrder = () => {
-    const currentSortType = awaitListing.sortType === "asc" ? "desc" : "asc";
-
-    const sortedRows = [...awaitListing.rows].sort((a, b) => {
-      let comparison = 0;
-      if (a.name.toLowerCase() < b.name.toLowerCase()) {
-        comparison = -1;
-      } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
-        comparison = 1;
-      }
-      return currentSortType === "asc" ? comparison : comparison * -1;
-    });
-    console.log(sortedRows);
-
-    setAwaitListing({
-      ...awaitListing,
-      rows: sortedRows,
-      sortType: currentSortType,
-    });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let creator_Id = localStorage.getItem("myot_admin_id");
     try {
+      let id = localStorage.getItem("myot_admin_id");
       let formData = {
-        creator_Id,
-        template_Id,
+        creator_Id: id,
+        document_Id,
         comment,
       };
       console.log(formData);
-      // let { data } = await DocumentComment(formData);
+      let { data } = await DocumentComment(formData);
       console.log(data);
-      let data = true;
       if (!data?.error) {
         Swal.fire({
           toast: true,
@@ -282,33 +296,29 @@ const CommonListing = () => {
         document.getElementById("close").click();
         setComment("");
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
+
   return (
     <div className="position-relative mt-5">
-      <p className="table-name mb-2">Templates</p>
+      <p className="table-name mb-2">Completed Templates</p>
       <div className=" col-12 d-flex align-items-center table-searchbar">
         <div className="d-flex ">
           <div className="col-md-3 table-searchbar-imgs">
             {/* <img
               src="/images/dashboard/Plus-icon.png"
+              alt=""
               className="p-2 table-searchbar-img"
-              type="button"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
             /> */}
             <img
-              onClick={toggleSortOrder}
               src="/images/dashboard/ArrowsDownUp.png"
+              onClick={toggleSortOrder}
               className="p-2 table-searchbar-img border-end cursor_pointer"
             />
           </div>
           <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
             <p className="m-0 text-nowrap">
-              {awaitListing?.selectedColumns &&
-                awaitListing?.selectedColumns.length}
+              {documents?.selectedColumns && documents?.selectedColumns.length}
               <span> Selected</span>
             </p>
             {showClearButton ? (
@@ -328,17 +338,8 @@ const CommonListing = () => {
             )}
           </div>
         </div>
-        <form className="d-flex me-2" role="search">
-          {/* <input
-        className="form-control table-search-bar"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-      /> */}
-        </form>
+        <form className="d-flex me-2" role="search"></form>
       </div>
-
-      {/* <div className="col-12 table_comman mt-3 "> */}
       <div className="col-12 mdb_table mt-3 ">
         <div className="table-responsive">
           <MDBDataTable
@@ -347,16 +348,14 @@ const CommonListing = () => {
             entries={10}
             className="text-nowrap"
             hover
-            // data={awaitListing}
-            data={{ ...awaitListing, columns: visibleColumns }}
+            data={{ ...documents, columns: visibleColumns }}
             noBottomColumns
-            sortable={false}
             paginationLabel={"«»"}
+            sortable={false}
           />
         </div>
       </div>
 
-      {/* modal */}
       <div
         class="modal fade"
         id="exampleModal"
@@ -434,4 +433,4 @@ const CommonListing = () => {
   );
 };
 
-export default CommonListing;
+export default DashboardListing;
