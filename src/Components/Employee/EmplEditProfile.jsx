@@ -5,13 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 import { updateProfile } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 import { ToastContainer } from "react-toastify";
+import Swal from "sweetalert2";
 
 const EmplEditProfile = () => {
   const [type, setType] = useState("password");
   const [password, setPassword] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
   const[profileDetail,setProfileDetail] = useState(null);
-
+  const [profileImgUrl, setProfileImgUrl] = useState();
 
   const [post, setPost] = useState({
     // name: "",
@@ -25,6 +26,9 @@ const EmplEditProfile = () => {
 
   const onFileSelection = (event) => {
     setPost({ ...post, profile_Pic: event.target.files[0] });
+    const selectedFile = event.target.files[0];
+    const imageUrl = URL.createObjectURL(selectedFile);
+    setProfileImgUrl(imageUrl);
   };
 
 
@@ -44,16 +48,20 @@ const EmplEditProfile = () => {
 
     // Password validation
     if (!post.password.trim() || post.password.length < 6) {
-      errors.password = 'Password must be at least 6 characters long';
+      errors.password = 'Password must be minimum 6 characters long';
     }
 
     // ConfirmPassword validation
     if (post.confirmPassword !== post.password) {
       errors.confirmPassword = 'Passwords do not match';
     }
+    if (post.profile_Pic == null) {
+      errors.profile_Pic = 'Please select file';
+    }
+    
 
     setValidationErrors(errors);
-    return Object.keys(errors).length === 0; // Return true if there are no errors
+    return Object.keys(errors).length === 0; 
   };
 
   const navigate = useNavigate();
@@ -87,6 +95,15 @@ const EmplEditProfile = () => {
 
     if (!response.data?.error) {
       navigate("/Employee/profile");
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"bottom",
+        title: "Profile Updated",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       console.log(response);
     }
   };
@@ -110,14 +127,14 @@ const EmplEditProfile = () => {
                   </li>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">
-                  <form className="" role="search">
+                  {/* <form className="" role="search">
                     <input
                       className="form-control search-bar"
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
                     />
-                  </form>
+                  </form> */}
                   <div className="">
                     <img
                       src="/images/dashboard/announcement.png"
@@ -148,12 +165,16 @@ const EmplEditProfile = () => {
                 </div>
 
                 <form className="row" onSubmit={onSubmit}>
-                  <div className=" d-flex justify-content-start mb-4">
+                  <div className=" d-flex flex-column align-items-start mb-4">
                    <label htmlFor="new_img">
                    <img
-                      src="/images/tasks/modal-profile-photo.svg"
-                      alt=""
-                      className=""
+                     src={
+                      profileImgUrl
+                        ? profileImgUrl
+                        : "/images/tasks/modal-profile-photo.svg"
+                    }
+                    alt=""
+                    className="w_100_h_100"
                       style={{cursor:"pointer"}}
                     />
                    </label>
@@ -167,6 +188,7 @@ const EmplEditProfile = () => {
                       // onChange={(e) => onFileSelection(e, "image")}
                       onChange={onFileSelection}
                     />
+                     {validationErrors.profile_Pic && <p className=" d-flex align-items-end text-danger ms-2 mt-2">{validationErrors.profile_Pic}</p>}
                   </div>
                   {/* <div className="col-12 d-flex justify-content-between mb-2">
                     <div className="col-6 m-2">
@@ -235,7 +257,7 @@ const EmplEditProfile = () => {
                         name="password"
                         onChange={handleInput}
                       />
-                         {validationErrors.password && <p>{validationErrors.password}</p>}
+                         {validationErrors.password && <p className="d-flex text-danger ms-2 justify-content-start">{validationErrors.password}</p>}
                     </div>
                     <div className="col-6 m-2">
                       <p className=" d-flex justify-content-start profile-card-title">
@@ -249,14 +271,13 @@ const EmplEditProfile = () => {
                         name="confirmPassword"
                         onChange={handleInput}
                       />
-                      {validationErrors.confirmPassword && <p>{validationErrors.confirmPassword}</p>}
+                      {validationErrors.confirmPassword && <p className="d-flex text-danger justify-content-start ms-2">{validationErrors.confirmPassword}</p>}
                     </div>
                   </div>
 
                   <div className=" d-flex justify-content-end">
                     <button className="profile-edit-submit" to="" type="submit">
-                      <ToastContainer/>
-                      Submit
+                      Update Profile
                     </button>
                   </div>
                 </form>

@@ -13,7 +13,7 @@ const SideBarEmpl = () => {
     localStorage.removeItem("token-company");
     localStorage.removeItem("user_id");
     localStorage.removeItem("myot_admin_id");
-    navigate("/Employee/Login");
+    navigate("/Login");
   };
   return (
     <div className="container-fluid  sidebar">
@@ -279,7 +279,7 @@ const SideBarEmpl = () => {
               } `}
             >
               <Link
-                to="/Employee/Login"
+                to="/Login"
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"
               >

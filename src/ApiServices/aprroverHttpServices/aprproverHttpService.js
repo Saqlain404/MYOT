@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import employeeHttpService from "../LoginHttpService/employeeHttpService";
+import Swal from "sweetalert2";
 
 const id =
   localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
@@ -193,10 +194,27 @@ export async function profileDetails(ids) {
     if (!response.data?.error) {
       const templateList = response?.data?.results;
       console.log(templateList);
+      // Swal.fire({
+      //   toast: true,
+      //   icon: "success",
+      //   position:"bottom",
+      //   title: "Profile Updated",
+      //   showConfirmButton: false,
+      //   timerProgressBar: true,
+      //   timer: 3000,
+      // });
 
       return [templateList];
     } else {
-      toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"bottom",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
@@ -217,14 +235,15 @@ export async function updateProfile(formData) {
     );
     console.log(data);
     if (!data.error) {
-      toast.success(data.message);
+      // toast.success(data.message);
       const templateId = data?.results;
       return { data, templateId };
     } else toast.error(data.message);
 
     return { data };
   } catch (error) {
-    if (error.response) toast.error(error.response.data.message);
+    if (error.response) 
+    // toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -256,14 +275,33 @@ export async function AddLogoAprv(formData) {
     );
     console.log(data);
     if (!data.error) {
-      toast.success(data.message);
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"bottom",
+        title: "Logo Added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       const templateId = data?.results;
       return { data, templateId };
-    } else toast.error(data.message);
+    } else{
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"bottom",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
 
     return { data };
   } catch (error) {
-    if (error.response) toast.error(error.response.data.message);
+    if (error.response) 
+    // toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -326,14 +364,33 @@ export async function CreateEmplyTicket(formData) {
     );
     // console.log(data);
     if (!data.error) {
-      toast.success(data.message);
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"bottom",
+        title: "Ticket Created",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       const templateId = data?.results?.document.templete_Id;
       return { data, templateId };
-    } else toast.error(data.message);
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"bottom",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
 
     return { data };
   } catch (error) {
-    if (error.response) toast.error(error.response.data.message);
+    if (error.response) 
+    // toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -391,11 +448,31 @@ export async function LogoutAprv() {
     if (!data?.error) {
       // toast.success(data.message);
       console.log(data.message);
-    } else toast?.error(data.message);
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"bottom",
+        title: "Logout Successfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    } else{
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"bottom",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
 
     if (!data?.error) return { data };
   } catch (error) {
-    if (error?.response) toast.error(error.response.data.message);
+    if (error?.response)
+    //  toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -453,16 +530,33 @@ export async function approvedTemplete(documentIds) {
     if (!response.data?.error) {
       const templeteList = response?.data;
       console.log(templeteList);
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"bottom",
+        title: "Templete Approved",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return templeteList;
     } else {
-      toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"bottom",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error("An error occurred while fetching the template IDs.");
+      // toast.error("An error occurred while fetching the template IDs.");
     }
     return null;
   }
@@ -475,16 +569,33 @@ export async function rejectedTemplete(documentIds) {
     if (!response.data?.error) {
       const templeteList = response?.data;
       console.log(templeteList);
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"bottom",
+        title: "Templete Rejected",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return templeteList;
     } else {
-      toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"bottom",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error("An error occurred while fetching the template IDs.");
+      // toast.error("An error occurred while fetching the template IDs.");
     }
     return null;
   }
@@ -555,14 +666,33 @@ export async function AddAnnouncement(formData,creator_Id) {
     );
     console.log(data);
     if (!data.error) {
-      toast.success(data.message);
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"bottom",
+        title: "Announcement Added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       const templateId = data?.results;
       return { data, templateId };
-    } else toast.error(data.message);
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"bottom",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
 
     return { data };
   } catch (error) {
-    if (error.response) toast.error(error.response.data.message);
+    if (error.response) 
+    toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -624,12 +754,32 @@ export async function AddCommentApprv(formData) {
 
     // return { data };
     if (!data.error) {
-      toast.success(data.message);
-    } else toast.error(data.message);
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"bottom",
+        title: "Comment Added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"bottom",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
 
     if (!data.error) return { data };
   } catch (error) {
-    if (error?.response) toast.error(error.response.data.message);
+    if (error?.response) 
+    // toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -657,3 +807,30 @@ export async function CommentViewApprv(id) {
     return null;
   }
 }
+export async function DeleteCommentAprv(comment_id) {
+  try {
+    const response = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/delete-comment/${comment_id}`
+    );
+
+    if (!response.data?.error) {
+      const commentData = response?.data.message;
+      console.log(commentData)
+      // toast.success(commentData)
+      
+
+      return {commentData};
+    } else {
+      toast.error(response.data.message);
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error('An error occurred while fetching the template IDs.');
+    }
+    return null;
+  }
+}
+
