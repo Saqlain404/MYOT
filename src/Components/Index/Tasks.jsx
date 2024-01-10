@@ -242,7 +242,7 @@ const Tasks = () => {
               <li>
                 <Link
                   class="dropdown-item"
-                  to={`/Admin/Requests/Comments/${list?._id}`}
+                  to={`/Admin/Tasks/Comments/${list?._id}`}
                 >
                   <img
                     src="/images/dashboard/Comment.png"

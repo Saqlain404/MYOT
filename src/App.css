@@ -1810,7 +1810,7 @@ height: 960px; */
   font-weight: 500;
   line-height: 112.4%; /* 15.736px */
 }
-.password-update-input{
+.password-update-input {
   width: 430px;
   height: 52px;
   flex-shrink: 0;
@@ -1825,7 +1825,7 @@ height: 960px; */
   font-weight: 500;
   line-height: 112.4%; /* 15.736px */
 }
-.password-update-submit{
+.password-update-submit {
   margin-top: 40px;
   margin-bottom: 50px;
   width: 430px;
@@ -2683,7 +2683,7 @@ height: 960px; */
   border: none;
 }
 
-thead tr th div{
+thead tr th div {
   margin: 0px 10px !important;
 }
 
@@ -2700,6 +2700,18 @@ thead tr th div{
   width: 100%;
   height: 100%;
 }
+
+/* .dataTables_wrapper > div:nth-child(3) {
+  position: relative !important;
+}
+.dataTables_wrapper > div:nth-child(3) > div:first-child {
+  position: sticky;
+  left: 0;
+}
+.dataTables_wrapper > div:nth-child(3) > div:nth-child(2) {
+  position: sticky;
+  right: 0;
+} */
 
 .dataTables_paginate {
   display: flex !important;
@@ -2791,6 +2803,7 @@ div.dataTables_wrapper div.dataTables_paginate {
   color: red !important;
   font-size: 13px;
 }
+
 .pass_toggle_text{
   
 }
@@ -2801,3 +2814,4 @@ div.dataTables_wrapper div.dataTables_paginate {
   position: relative !important;
   top: 13.8rem !important;
 }
+

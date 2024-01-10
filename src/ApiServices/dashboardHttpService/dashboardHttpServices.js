@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import adminHttpService from "../adminHttpService";
 import { toast } from "react-toastify";
 
@@ -9,7 +10,6 @@ export async function AddDepartment(formData) {
     );
     console.log(data);
     if (!data.error) {
-      toast.success(data.message);
     } else toast.error(data.message);
 
     return { data };
@@ -157,6 +157,18 @@ export async function SearchTask(formData) {
   }
 }
 
+export async function TemplateDelete(id) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/delete-templete/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 export async function TemplateCount() {
   try {
     const { data } = await adminHttpService.get(
@@ -210,6 +222,27 @@ export async function AdminDashboardCount() {
     return { data };
   } catch (error) {
     if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function DepartmentDelete(id) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/department-delete/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response)
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: error?.response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
     return { error };
   }
 }
@@ -450,6 +483,31 @@ export async function EmployeeView(id) {
   try {
     const { data } = await adminHttpService.get(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/employee-view/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function EmployeeEdit(id, formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/employee-edit/${id}`,
+      formData
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function EmployeeDelete(id) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/employee-delete/${id}`
     );
     return { data };
   } catch (error) {

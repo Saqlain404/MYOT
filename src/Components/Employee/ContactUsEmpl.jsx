@@ -9,7 +9,7 @@ const ContactUsEmpl = () => {
     name: "",
     email: "",
     mobileNumber: "",
-    message: "", 
+    message: "",
   });
 
   const handleInput = (event) => {
@@ -19,17 +19,22 @@ const ContactUsEmpl = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     const data = {
-      name:  contactData.name,
-      email:  contactData.email,
-      mobileNumber:  contactData.mobileNumber,
-      message:  contactData.message,
+      name: contactData.name,
+      email: contactData.email,
+      mobileNumber: contactData.mobileNumber,
+      message: contactData.message,
     };
 
-
-
     const response = await ContactUsEmployee(data);
-
     console.log(response);
+
+    setContactData({
+      name: '',
+      email: '',
+      mobileNumber: '',
+      message: '',
+    });
+  
   };
 
   return (
@@ -167,7 +172,7 @@ const ContactUsEmpl = () => {
                       <button className="contact-form-btn" type="submit">
                         Submit
                       </button>
-                      <ToastContainer/>
+                      <ToastContainer />
                     </form>
                   </div>
                   <div className="col-6">

@@ -5,8 +5,10 @@ import moment from "moment";
 import {
   AddCommentApprv,
   CommentViewApprv,
+  DeleteCommentAprv,
 } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 import SidebarAprv from "./SidebarAprv";
+import { ToastContainer } from "react-toastify";
 
 const CommentsAprv = () => {
   const [commentList, setCommentList] = useState([]);
@@ -29,6 +31,14 @@ const CommentsAprv = () => {
       console.log(error);
     }
   };
+
+   const handleDelete = async(comment_id) => {
+    const deleteComment = DeleteCommentAprv(comment_id)
+    setTimeout(()=>{
+      getCommentLists()
+    },200)
+   }
+  
 
   const toggleReply = (index) => {
     setReply((prevState) => ({
@@ -69,14 +79,14 @@ const CommentsAprv = () => {
                   </li>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">
-                  <form className="" role="search">
+                  {/* <form className="" role="search">
                     <input
                       className="form-control search-bar"
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
                     />
-                  </form>
+                  </form> */}
                   <div className="">
                     <img
                       src="/images/dashboard/announcement.png"
@@ -122,11 +132,12 @@ const CommentsAprv = () => {
                             )}
                           </p>
                         </div>
+                        <div className="d-flex align-items-center">
                         <div
                           className="cursor_pointer"
                           // onClick={() => setReply(!reply)}
                           onClick={() => toggleReply(index)}
-                        >
+                          >
                           {reply[index] ? (
                             <Link className="ticket-link mt-3 me-1 text-decoration-none">
                               Cancel
@@ -142,6 +153,8 @@ const CommentsAprv = () => {
                               </Link>
                             </>
                           )}
+                        </div>
+                        <Link className="text-danger text-decoration-none" onClick={()=>handleDelete(comments?._id)}>Delete</Link>
                         </div>
                       </div>
                       <p className="comment-txt p-2 mb-0">

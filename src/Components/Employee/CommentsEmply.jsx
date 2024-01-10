@@ -3,7 +3,7 @@ import RightSidebar from "../RightSidebar";
 import SideBarEmpl from "../Employee/SideBarEmpl" 
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
-import { AddCommentEmply, CommentViewEmply } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import { AddCommentEmply, CommentViewEmply, DeleteCommentEmpl } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 
 const CommentsEmply = () => {
   const [commentList, setCommentList] = useState([]);
@@ -28,6 +28,13 @@ const CommentsEmply = () => {
       console.log(error);
     }
   };
+
+  const handleDelete = async(comment_id) => {
+    const deleteComment = DeleteCommentEmpl(comment_id)
+    setTimeout(()=>{
+      getCommentLists()
+    },200)
+   }
 
 
   const toggleReply = (index) => {
@@ -124,6 +131,7 @@ const CommentsEmply = () => {
                             )}
                           </p>
                         </div>
+                        <div className="d-flex align-items-center">
                         <div
                           className="cursor_pointer"
                           // onClick={() => setReply(!reply)}
@@ -144,6 +152,8 @@ const CommentsEmply = () => {
                               </Link>
                             </>
                           )}
+                        </div>
+                        <Link className="text-danger text-decoration-none" onClick={()=>handleDelete(comments?._id)}>Delete</Link>
                         </div>
                       </div>
                       <p className="comment-txt p-2 mb-0">

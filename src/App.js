@@ -6,6 +6,8 @@ import "./Responsive.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/dist/sweetalert2.css'
 
 import AuthLogin from "./Components/Login/AuthLogin";
 import AuthforgotPass from "./Components/Login/AuthforgotPass";
@@ -123,6 +125,10 @@ import SettingsSig from "./Components/Signatory/SettingsSig";
 import UpdatePassword from "./Components/Login/UpdatePassword";
 import UpdatePassEmply from "./Components/Login/UpdatePassEmply";
 import CommentsAprv from "./Components/Approver/CommentsAprv";
+import Login from "./Components/superAdmin/login";
+import MainForgotPass from "./Components/superAdmin/forgotPassword";
+import MainUpdatePassword from "./Components/superAdmin/updatePassword";
+import MainForgotSuccess from "./Components/superAdmin/forgotSucess";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -133,7 +139,7 @@ function App() {
         <Route path="*" element={<AuthLogin />} />
 
         <Route path="Admin/Login" element={<AuthLogin />} />
-        <Route path="Signup" element={<AuthSignUp />} />
+        <Route path="/Admin/Signup" element={<AuthSignUp />} />
         <Route path="Admin/Forgot-password" element={<AuthforgotPass />} />
         <Route path="Admin/Reset-password" element={<AuthResetPass />} />
         <Route path="Admin/Forgot-success" element={<AuthforgotSuccess />} />
@@ -336,6 +342,11 @@ function App() {
         />
         <Route path="Employee/Calendar-year" element={<CalenderYearEmply />} />
         <Route path="Employee/Comment/:id" element={<CommentsEmply />} />
+
+        <Route path="/main/login" element={<Login />} />
+        <Route path="/main/forgot-password" element={<MainForgotPass />} />
+        <Route path="/main/update-password" element={<MainUpdatePassword />} />
+        <Route path="/main/success" element={<MainForgotSuccess />} />
       </Routes>
     </div>
   );

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { adminSignUp } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
+import { mainAdminLogin } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 import { toast } from "react-toastify";
 
-const AuthSignUp = () => {
+const Login = () => {
   const [passVisible, setPassVisible] = useState(false);
 
   const {
@@ -16,15 +16,19 @@ const AuthSignUp = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // if (!localStorage.getItem("token-admin")) {
+    //   navigate("/Login");
+    // }
+  }, []);
+
   const onSubmit = async (data) => {
     console.log(data);
 
-    const response = await adminSignUp(data);
+    const response = await mainAdminLogin(data);
 
     if (!response.data.error) {
-      console.log(response.data);
-
-      toast(response.data.message, {
+      toast("Logged in successfully", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -34,7 +38,8 @@ const AuthSignUp = () => {
         progress: undefined,
         theme: "light",
       });
-      if (response.data.results.status) navigate("/Admin/login");
+
+      //   navigate("/Admin/Home");
     }
   };
   const togglePassword = () => {
@@ -50,27 +55,10 @@ const AuthSignUp = () => {
               <img src="/images/Myot-logo.png" className="logo" />
               <h2 className="mb-3 fs-7 fw-bolder myot">Myot</h2>
               <p className="login-desc">
-                Please fill your detail to create new account.
+                Please fill your detail to access your account.
               </p>
             </div>
             <form className="form-login" onSubmit={handleSubmit(onSubmit)}>
-              <div className="mb-3">
-                <label for="" className="form-label">
-                  Company Name
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="companyName"
-                  name="companyName"
-                  placeholder="Company name"
-                  autoComplete="off"
-                  {...register("companyName", { required: true })}
-                />
-                {errors.companyName && (
-                  <small className="errorText ">This field is required</small>
-                )}
-              </div>
               <div className="mb-3">
                 <label for="" className="form-label">
                   Email Address
@@ -124,32 +112,32 @@ const AuthSignUp = () => {
                   </small>
                 )}
               </div>
-              <div className=" mb-4" onClick={togglePassword}>
-                <input
-                  type="checkbox"
-                  className="cursor_pointer"
-                  {...register("passwordToggle")}
-                />
-                <span className="cursor_pointer mx-2 remember-me">
-                  Show Password
-                </span>
+
+              <div className="d-flex justify-content-between remember">
+                <div className=" mb-1" onClick={togglePassword}>
+                  <input
+                    type="checkbox"
+                    className="cursor_pointer"
+                    {...register("passwordToggle")}
+                  />
+                  <span className="cursor_pointer mx-2 remember-me">
+                    Show Password
+                  </span>
+                </div>
+                <Link
+                  to="/main/forgot-password"
+                  className=" fw-medium reset-password mb-1"
+                >
+                  Forgot Password?
+                </Link>
               </div>
 
               <button className="btn py-8 mb-1  rounded-2" type="submit">
-                Sign Up
+                Log In
               </button>
-              <label className="form-check-label text-dark remember-me mb-4">
-                Already have an account?{" "}
-                <Link
-                  className=" fw-medium reset-password ms-2"
-                  to="/Admin/Login"
-                >
-                  Sign In
-                </Link>
-              </label>
             </form>
           </div>
-          <div className="col-8 d-flex justify-content-between">
+          <div className="col-8 m-auto d-flex justify-content-center ">
             <img
               src="/images/Login.png"
               alt=""
@@ -162,4 +150,4 @@ const AuthSignUp = () => {
   );
 };
 
-export default AuthSignUp;
+export default Login;

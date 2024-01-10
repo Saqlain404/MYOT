@@ -13,6 +13,7 @@ import {
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
+import { MDBDataTable } from "mdbreact";
 
 // import "../../dist/css/style.min.css"
 
@@ -24,44 +25,334 @@ const DocumentEmply = () => {
   const [shouldRender, setShouldRender] = useState(false);
   const [templateIdList, setTemplateIdList] = useState([]);
   const [comment, setComment] = useState("");
-
-
-  const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
-
   const [documentInfo, setDocumentInfo] = useState({
     documentName: "",
     templateId: "",
   });
 
-  const handleSearch = async () => {
-    const result = await searchDoc(searchData);
-    console.log(result);
-    const searchResult = result?.data?.results?.document;
+  const [showClearButton, setShowClearButton] = useState(false);
 
-    if (searchResult && Array.isArray(searchResult)) {
-      const mappedResult = searchResult?.map((document) => ({
-        documentName: document?.templete?.templeteName,
-        img: [document?.templete?.manager?.[0]?.profile_Pic],
-        assignedTo: [document?.templete?.manager?.[0]?.name],
-        department: [
-          document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
-        ],
-        dateofSigning: [moment(document?.createdAt).calendar()],
-        comments: (
-          <img
-            src="/images/dashboard/Comment.png"
-            className="mx-auto d-block"
-          />
-        ),
-        status: [document?.status],
-      }));
-      setDocumentRequests(mappedResult);
+  const [tasks, setTasks] = useState({
+    columns: [
+      {
+        label: "Document Name",
+        field: "name",
+        sort: "asc",
+        width: 50,
+        selected: false,
+      },
+      {
+        label: "Requester's Name",
+        field: "assigned",
+        sort: "asc",
+        width: 50,
+        selected: false,
+      },
+      {
+        label: "Department",
+        field: "department",
+        sort: "asc",
+        width: 100,
+        searchable: true,
+        selected: false,
+      },
+      {
+        label: "Version",
+        field: "version",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+      {
+        label: "Date of Signing",
+        field: "date",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+      {
+        label: "Status",
+        field: "status",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+
+      {
+        label: "Comments",
+        field: "comments",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+      {
+        label: "Actions",
+        field: "actions",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+    ],
+    rows: [],
+    hiddenColumns: [],
+    selectedColumns: [],
+  });
+
+  const ids =
+    localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+
+  useEffect(() => {
+    // handleSearch
+    getTaskData();
+  }, []);
+
+  const getTaskData = async () => {
+    let data = await employeDocumentList(ids);
+    console.log(data);
+
+    const newRows = [];
+    if (!data?.error) {
+      let values = data;
+      console.log(values);
+      values?.map((list, index) => {
+        const returnData = {};
+        returnData.name = list?.templete_Id?.templeteName;
+        returnData.assigned = (
+          <>
+            <img
+              className="w_20_h_20"
+              src={list?.templete_Id?.manager?.profile_Pic}
+              alt=""
+            />
+            <span className="ms-2 text-capitalize">
+              {list?.templete_Id?.manager?.name}
+            </span>
+          </>
+        );
+        returnData.version = (
+          <>
+            {list?.templete_Id?.templeteVersion
+              ? ` ${list?.templete_Id?.templeteVersion[0]?.version}`
+              : "No versions found"}
+          </>
+        );
+        returnData.date = (
+          <>
+            <img src="/images/dashboard/CalendarBlank.png" />{" "}
+            <span className="ms-2">{moment(list?.createdAt).format("L")}</span>
+          </>
+        );
+        returnData.department =
+          list?.templete_Id?.manager?.department_Id?.departmentName;
+        returnData.status = (
+          <span
+            className={`"td-text status" ${
+              list?.status === "Pending"
+                ? "text-info"
+                : list?.status === "Approved"
+                ? "text-warning"
+                : list?.status === "In Progress"
+                ? "text-primary"
+                : list?.status == "Completed"
+                ? "text-success"
+                : "text-danger"
+            }`}
+          >
+            {list?.status}
+          </span>
+        );
+        returnData.comments = (
+          <>
+            <div className="text-center">
+              <a type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img
+                  src="/images/dashboard/Comment.png"
+                  className="mx-auto d-block"
+                />
+              </a>
+              <form
+                className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
+                onSubmit={(e) => handleSubmitComment(e, list?._id)}
+              >
+                <div className="mb-3 border-bottom">
+                  <label className="form-label th-text">Comment or type</label>
+
+                  <input
+                    type="text"
+                    className="form-control border-0"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    placeholder="Enter comment"
+                  />
+                </div>
+
+                <div className="d-flex justify-content-between">
+                  <div>
+                    <img
+                      src="/images/tasks/assign comments.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/mention.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/task.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/emoji.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/attach_attachment.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                  </div>
+                  <div>
+                    <button type="submit" className="comment-btn btn-primary">
+                      Comment
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </>
+        );
+        returnData.actions = (
+          <div class="text-center">
+            <a
+              className="cursor_pointer"
+              type=""
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
+            </a>
+            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+              <li>
+                <a
+                  class="dropdown-item border-bottom"
+                  href="/Employee/view-details"
+                >
+                  <img
+                    src="/images/users/AddressBook.svg"
+                    alt=""
+                    className="me-2"
+                  />
+                  View Details
+                </a>
+              </li>
+              <li>
+                <Link
+                  class="dropdown-item"
+                  to={`/Employee/Comment/${list?._id}`}
+                >
+                  <img
+                    src="/images/dashboard/Comment.png"
+                    alt=""
+                    className="me-2"
+                  />
+                  Comments
+                </Link>
+              </li>
+              <li>
+                <a class="dropdown-item border-bottom" href="#">
+                  <img
+                    src="/images/users/TextAlignLeft.svg"
+                    alt=""
+                    className="me-2"
+                  />
+                  Wrap Column
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item text-danger" href="#">
+                  <img src="/images/users/Trash.svg" alt="" className="me-2" />
+                  Delete Template
+                </a>
+              </li>
+            </ul>
+          </div>
+        );
+
+        newRows.push(returnData);
+      });
+      setTasks({ ...tasks, rows: newRows });
     }
   };
 
-  useEffect(() => {
-    handleSearch();
-  }, [searchData]);
+  const handleCheckboxChange = (field) => {
+    let updatedSelectedColumns = [...tasks.selectedColumns];
+    const index = updatedSelectedColumns.indexOf(field);
+    if (index > -1) {
+      updatedSelectedColumns.splice(index, 1);
+    } else {
+      updatedSelectedColumns.push(field);
+    }
+    setTasks({ ...tasks, selectedColumns: updatedSelectedColumns });
+  };
+
+  const hideSelectedColumns = () => {
+    const updatedHiddenColumns = [
+      ...tasks.hiddenColumns,
+      ...tasks.selectedColumns,
+    ];
+    setTasks({
+      ...tasks,
+      hiddenColumns: updatedHiddenColumns,
+      selectedColumns: [],
+    });
+    setShowClearButton(true);
+  };
+
+  const columnsWithCheckboxes = tasks.columns.map((column) => ({
+    ...column,
+    label: (
+      <div key={column.field}>
+        <input
+          type="checkbox"
+          checked={tasks.selectedColumns.includes(column.field)}
+          onChange={() => handleCheckboxChange(column.field)}
+          className="me-1 mt-1"
+        />
+        <label>{column.label}</label>
+      </div>
+    ),
+  }));
+
+  const visibleColumns = columnsWithCheckboxes.filter(
+    (column) => !tasks.hiddenColumns.includes(column.field)
+  );
+
+  const showAllColumns = () => {
+    setTasks({ ...tasks, hiddenColumns: [], selectedColumns: [] });
+    setShowClearButton(false);
+  };
+
+  const toggleSortOrder = () => {
+    const currentSortType = tasks.sortType === "asc" ? "desc" : "asc";
+    const sortedRows = [...tasks.rows].sort((a, b) => {
+      let comparison = 0;
+      if (a.name?.toLowerCase() < b.name?.toLowerCase()) {
+        comparison = -1;
+      } else if (a.name?.toLowerCase() > b.name?.toLowerCase()) {
+        comparison = 1;
+      }
+      return currentSortType === "asc" ? comparison : comparison * -1;
+    });
+    console.log(sortedRows);
+    setTasks({
+      ...tasks,
+      rows: sortedRows,
+      sortType: currentSortType,
+    });
+  };
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -72,7 +363,6 @@ const DocumentEmply = () => {
   };
   console.log(documentInfo);
 
- 
   useEffect(() => {
     const fetchTemplateIdsData = async () => {
       const [templateList] = await fetchTemplateData();
@@ -94,7 +384,9 @@ const DocumentEmply = () => {
     await AddDocument({
       documentName: documentData.documentName,
       templete_Id: documentData.templateId,
-      creator_Id: localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id"),
+      creator_Id:
+        localStorage.getItem("user_id") ||
+        localStorage.getItem("myot_admin_id"),
     }).then((res) => {
       if (!res.data?.error) {
         setShouldRender(!shouldRender);
@@ -108,41 +400,6 @@ const DocumentEmply = () => {
     });
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!searchData || searchData === "") {
-        const names = await employeDocumentList(ids);
-        if (names) {
-          setTemplateNames(names);
-          console.log(names);
-        }
-
-        const requests = names?.map((name) => ({
-          documentName: name?.templete_Id?.templeteName,
-          assignedTo: [name?.templete_Id?.manager?.name],
-          img: [name?.templete_Id?.manager?.profile_Pic],
-          department: [
-            name?.templete_Id?.manager?.department_Id?.departmentName,
-          ],
-          dateofSigning: [moment(name?.createdAt).calendar()],
-          comments: (
-            <img
-              src="/images/dashboard/Comment.png"
-              className="mx-auto d-block"
-            />
-          ),
-          commentID: name?._id,
-          status: [name?.status],
-        }));
-
-        setDocumentRequests(requests);
-      }
-    };
-
-    fetchData();
-  }, [searchData,shouldRender]);
-
-  
   const handleSubmitComment = async (e, document_Id) => {
     e.preventDefault();
     let creator_Id = localStorage.getItem("user_id");
@@ -155,7 +412,6 @@ const DocumentEmply = () => {
       setComment("");
     }
   };
-
 
   return (
     <>
@@ -175,7 +431,7 @@ const DocumentEmply = () => {
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
-                  <form className="" role="search">
+                  {/* <form className="" role="search">
                     <input
                       className="form-control search-bar"
                       type="search"
@@ -186,7 +442,7 @@ const DocumentEmply = () => {
                         //  handleSearch();
                       }}
                     />
-                  </form>
+                  </form> */}
                   <div className="">
                     <img
                       src="/images/dashboard/announcement.png"
@@ -277,12 +533,17 @@ const DocumentEmply = () => {
                     <button
                       type="submit"
                       className="user-modal-btn"
+                      data-bs-dismiss="modal"
                       onClick={() => handleSubmit()}
                     >
                       Request <ToastContainer />
                     </button>
-                    <button type="button" data-bs-dismiss="modal"
-                       aria-label="Close" className="user-modal-btn2">
+                    <button
+                      type="button"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      className="user-modal-btn2"
+                    >
                       Cancle
                     </button>
                   </div>
@@ -291,288 +552,75 @@ const DocumentEmply = () => {
             </div>
             {/* <!-- Modal End--> */}
 
-            <div className=" col-12 d-flex align-items-center table-searchbar">
-              <div className="row col ">
-                <div className="col-md-3 border-end d-flex align-items-center">
-                <div
-                  className=""
-                  type="button"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                >
-                  <img
-                    src="/images/dashboard/Plus-icon.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
-                  />
+            <div className="position-relative">
+              <p className="table-name mb-2">Documents</p>
+              <div className=" col-12 d-flex align-items-center table-searchbar">
+                <div className="d-flex ">
+                  <div className="col-md-3 table-searchbar-imgs">
+                    <img
+                      src="/images/dashboard/Plus-icon.png"
+                      className="p-2 table-searchbar-img"
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    />
+                    {/* <img
+                      src="/images/dashboard/FunnelSimple.png"
+                      alt=""
+                      className="p-2 table-searchbar-img"
+                    /> */}
+                    <img
+                      src="/images/dashboard/ArrowsDownUp.png"
+                      onClick={toggleSortOrder}
+                      className="p-2 table-searchbar-img border-end cursor_pointer"
+                    />
+                    {/* <img
+                      src="/images/dashboard/DotsThreeOutlineVertical2.png"
+                      alt=""
+                      className="p-2 table-searchbar-img border-end"
+                    /> */}
+                  </div>
+                  <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
+                    <p className="m-0 text-nowrap">
+                      {tasks?.selectedColumns && tasks?.selectedColumns.length}
+                      <span> Selected</span>
+                    </p>
+                    {showClearButton ? (
+                      <p
+                        className="hide-selected ms-2 m-0 text-nowrap cursor_pointer "
+                        onClick={showAllColumns}
+                      >
+                        Clear Selection
+                      </p>
+                    ) : (
+                      <p
+                        className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
+                        onClick={hideSelectedColumns}
+                      >
+                        Hide Selected
+                      </p>
+                    )}
+                  </div>
                 </div>
-                 
-                  <img
-                    src="/images/dashboard/FunnelSimple.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
+                <form className="d-flex me-2" role="search"></form>
+              </div>
+
+              <div className="col-12 mdb_table mt-3 mb-4">
+                <div className="table-responsive">
+                  <MDBDataTable
+                    bordered
+                    displayEntries={false}
+                    entries={5}
+                    className="text-nowrap"
+                    hover
+                    data={{ ...tasks, columns: visibleColumns }}
+                    // data={tasks}
+                    noBottomColumns
+                    paginationLabel={"«»"}
+                    sortable={false}
                   />
-                  <img
-                    src="/images/dashboard/ArrowsDownUp.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
-                  />
-                  <img
-                    src="/images/dashboard/DotsThreeOutlineVertical2.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
-                  />
-                </div>
-                <div className="col-4 d-flex align-items-center justify-content-around ">
-                  <p className="m-0 text-nowrap">1 Selected</p>
-                  <p className="hide-selected m-0 text-nowrap ">
-                    Clear Selection
-                  </p>
                 </div>
               </div>
-              <form className="d-flex me-2" role="search">
-                <input
-                  className="form-control table-search-bar"
-                  type="text"
-                  onChange={(e) => {
-                    setSearchData(e.target.value);
-                    //  handleSearch();
-                  }}
-                  value={searchData.searchTerm}
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-              </form>
-            </div>
-
-            <div className="col-12 table_comman mt-3 ">
-              <div className="table-responsive">
-                <table className="table table-borderless">
-                  <thead>
-                    <tr className="th-text">
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Document name
-                      </th>
-
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Requestor's Name
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Department
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Date of Signing
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Comments
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Status
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {documentRequests?.map((request, index) => (
-                      <tr key={index}>
-                        <td className="td-text">{request.documentName}</td>
-                        <td className="td-text">
-                          <img className="img_profile" src={request.img} />
-                          {request.assignedTo}
-                        </td>
-                        <td className="td-text">{request.department}</td>
-                        <td className="td-text">
-                          <img src="/images/dashboard/CalendarBlank.png" />
-                          {request.dateofSigning}
-                        </td>
-                        <td className="td-text">
-                          <div className="">
-                            <a
-                              type=""
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              <img
-                                src="/images/dashboard/Comment.png"
-                                className="mx-auto d-block"
-                              />
-                            </a>
-                            <form
-                              className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
-                              onSubmit={(e) =>
-                                handleSubmitComment(e, request?.commentID)
-                              }
-                            >
-                              <div className="mb-3 border-bottom">
-                                <label className="form-label th-text">
-                                  Comment or type
-                                </label>
-
-                                <input
-                                  type="text"
-                                  className="form-control border-0"
-                                  value={comment}
-                                  onChange={(e) => setComment(e.target.value)} 
-                                />
-                              </div>
-
-                              <div className="d-flex justify-content-between">
-                                <div>
-                                  <img
-                                    src="/images/tasks/assign comments.svg"
-                                    alt=""
-                                    className="comment-img"
-                                  />
-                                  <img
-                                    src="/images/tasks/mention.svg"
-                                    alt=""
-                                    className="comment-img"
-                                  />
-                                  <img
-                                    src="/images/tasks/task.svg"
-                                    alt=""
-                                    className="comment-img"
-                                  />
-                                  <img
-                                    src="/images/tasks/emoji.svg"
-                                    alt=""
-                                    className="comment-img"
-                                  />
-                                  <img
-                                    src="/images/tasks/attach_attachment.svg"
-                                    alt=""
-                                    className="comment-img"
-                                  />
-                                </div>
-                                <div>
-                                  <button
-                                    type="submit"
-                                    className="comment-btn btn-primary"
-                                  >
-                                    Comment
-                                  </button>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </td>
-                        <td className="td-text text-info m-0">
-                          {request.status}
-                        </td>
-                        <td className="td-text">
-                          <div class="">
-                            <a
-                              type=""
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              <img
-                                src="/images/sidebar/ThreeDots.svg"
-                                className="w-auto p-3"
-                              />
-                            </a>
-                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-                              <li>
-                                <a
-                                  class="dropdown-item border-bottom"
-                                  href="/Employee/view-details"
-                                >
-                                  <img
-                                    src="/images/users/AddressBook.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  View Details
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item" href="#">
-                                  <img
-                                    src="/images/dashboard/Download-Button.png"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Download
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                        <td></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <nav
-                aria-label="Page navigation"
-                className="d-flex justify-content-end page-navigation mt-3"
-              >
-                <ul className="pagination employe-pageination">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <button class="page-link" href="#">
-                      1
-                    </button>
-                  </li>
-                  <li class="page-item">
-                    <button class="page-link" href="#">
-                      2
-                    </button>
-                  </li>
-                  <li class="page-item">
-                    <button class="page-link" href="#">
-                      3
-                    </button>
-                  </li>
-                  <li class="page-item">
-                    <button class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </button>
-                  </li>
-                </ul>
-              </nav>
             </div>
 
             <div className="footer employ-footer">

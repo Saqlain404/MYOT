@@ -13,7 +13,7 @@ const SidebarAprv = () => {
     localStorage.removeItem("user_id");
     localStorage.removeItem("myot_admin_id");
     localStorage.removeItem("token-company");
-    navigate("/Employee/Login");
+    navigate("/Login");
   };
 
   return (
@@ -336,7 +336,7 @@ const SidebarAprv = () => {
               } `}
             >
               <a
-                href="/Employee/Login"
+                href="/Login"
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"
               >

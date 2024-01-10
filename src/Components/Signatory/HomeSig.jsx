@@ -14,6 +14,7 @@ import Document from "./Requests/Document";
 const HomeSig = () => {
   const [count, setCount] = useState();
   const [comment, setComment] = useState("");
+  const [showClearButton, setShowClearButton] = useState(false);
 
   const [templates, setTemplates] = useState({
     columns: [
@@ -62,6 +63,8 @@ const HomeSig = () => {
       },
     ],
     rows: [],
+    hiddenColumns: [],
+    selectedColumns: [],
   });
 
   useEffect(() => {
@@ -116,7 +119,7 @@ const HomeSig = () => {
           </span>
         );
         returnData.actions = (
-          <div class="">
+          <div class="text-center">
             <a type="" data-bs-toggle="dropdown" aria-expanded="false">
               <img
                 src="/images/sidebar/ThreeDots.svg"
@@ -124,7 +127,7 @@ const HomeSig = () => {
               />
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-              <li>
+              {/* <li>
                 <a class="dropdown-item border-bottom" href="#">
                   <img
                     src="/images/users/AddressBook.svg"
@@ -143,7 +146,7 @@ const HomeSig = () => {
                   />
                   Edit User Details
                 </a>
-              </li>
+              </li> */}
               <li>
                 <Link
                   class="dropdown-item"
@@ -153,7 +156,7 @@ const HomeSig = () => {
                   Comments
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <a class="dropdown-item border-bottom" href="#">
                   <img
                     src="/images/users/TextAlignLeft.svg"
@@ -168,7 +171,7 @@ const HomeSig = () => {
                   <img src="/images/users/Trash.svg" alt="" className="me-2" />
                   Delete Template
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         );
@@ -248,7 +251,76 @@ const HomeSig = () => {
       setComment("");
       getTemplatesData();
     }
-  }
+  };
+
+  const toggleSortOrder = () => {
+    const currentSortType = templates.sortType === "asc" ? "desc" : "asc";
+
+    const sortedRows = [...templates.rows].sort((a, b) => {
+      let comparison = 0;
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        comparison = -1;
+      } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
+        comparison = 1;
+      }
+      return currentSortType === "asc" ? comparison : comparison * -1;
+    });
+    console.log(sortedRows);
+
+    setTemplates({
+      ...templates,
+      rows: sortedRows,
+      sortType: currentSortType,
+    });
+  };
+
+  const handleCheckboxChange = (field) => {
+    let updatedSelectedColumns = [...templates.selectedColumns];
+    const index = updatedSelectedColumns.indexOf(field);
+    if (index > -1) {
+      updatedSelectedColumns.splice(index, 1);
+    } else {
+      updatedSelectedColumns.push(field);
+    }
+    setTemplates({ ...templates, selectedColumns: updatedSelectedColumns });
+  };
+
+  const hideSelectedColumns = () => {
+    const updatedHiddenColumns = [
+      ...templates.hiddenColumns,
+      ...templates.selectedColumns,
+    ];
+    setTemplates({
+      ...templates,
+      hiddenColumns: updatedHiddenColumns,
+      selectedColumns: [],
+    });
+    setShowClearButton(true);
+  };
+
+  const columnsWithCheckboxes = templates.columns.map((column) => ({
+    ...column,
+    label: (
+      <div key={column.field}>
+        <input
+          type="checkbox"
+          checked={templates.selectedColumns.includes(column.field)}
+          onChange={() => handleCheckboxChange(column.field)}
+          className="me-1 mt-1"
+        />
+        <label>{column.label}</label>
+      </div>
+    ),
+  }));
+
+  const visibleColumns = columnsWithCheckboxes.filter(
+    (column) => !templates.hiddenColumns.includes(column.field)
+  );
+
+  const showAllColumns = () => {
+    setTemplates({ ...templates, hiddenColumns: [], selectedColumns: [] });
+    setShowClearButton(false);
+  };
 
   return (
     <>
@@ -308,7 +380,9 @@ const HomeSig = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {count?.totalEmployee && count?.totalEmployee[0]?.count || 0}
+                        {(count?.totalEmployee &&
+                          count?.totalEmployee[0]?.count) ||
+                          0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -352,7 +426,9 @@ const HomeSig = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {count?.totalActiveUser && count?.totalActiveUser[0]?.count ||0}
+                        {(count?.totalActiveUser &&
+                          count?.totalActiveUser[0]?.count) ||
+                          0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -0.65%
@@ -391,34 +467,42 @@ const HomeSig = () => {
             <div className="position-relative">
               <p className="table-name mb-2">Templates</p>
               <div className=" col-12 d-flex align-items-center table-searchbar">
-                <div className="row d-flex col ">
+                <div className="d-flex ">
                   <div className="col-md-3 table-searchbar-imgs">
+                    {/* <img
+              src="/images/dashboard/Plus-icon.png"
+              className="p-2 table-searchbar-img"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            /> */}
                     <img
-                      src="/images/dashboard/Plus-icon.png"
-                      alt=""
-                      className="p-2 table-searchbar-img"
-                    />
-                    <img
-                      src="/images/dashboard/FunnelSimple.png"
-                      alt=""
-                      className="p-2 table-searchbar-img"
-                    />
-                    <img
+                      onClick={toggleSortOrder}
                       src="/images/dashboard/ArrowsDownUp.png"
-                      alt=""
-                      className="p-2 table-searchbar-img"
-                    />
-                    <img
-                      src="/images/dashboard/DotsThreeOutlineVertical2.png"
-                      alt=""
-                      className="p-2 table-searchbar-img border-end"
+                      className="p-2 table-searchbar-img border-end cursor_pointer"
                     />
                   </div>
-                  <div className="col-4 d-flex align-items-center table-searchbar-txt">
-                    <p className="m-0 text-nowrap">2 Selected</p>
-                    <p className="hide-selected m-0 text-nowrap ">
-                      Hide Selected
+                  <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
+                    <p className="m-0 text-nowrap">
+                      {templates?.selectedColumns &&
+                        templates?.selectedColumns.length}
+                      <span> Selected</span>
                     </p>
+                    {showClearButton ? (
+                      <p
+                        className="hide-selected ms-2 m-0 text-nowrap cursor_pointer "
+                        onClick={showAllColumns}
+                      >
+                        Clear Selection
+                      </p>
+                    ) : (
+                      <p
+                        className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
+                        onClick={hideSelectedColumns}
+                      >
+                        Hide Selected
+                      </p>
+                    )}
                   </div>
                 </div>
                 <form className="d-flex me-2" role="search">
@@ -437,176 +521,15 @@ const HomeSig = () => {
                     bordered
                     displayEntries={false}
                     entries={5}
-                    className=""
+                    className="text-nowrap"
                     hover
-                    data={templates}
+                    // data={awaitListing}
+                    data={{ ...templates, columns: visibleColumns }}
                     noBottomColumns
-                    sortable
+                    sortable={false}
                     paginationLabel={"«»"}
                   />
-                  {/* <table className="table table-borderless">
-                  <thead>
-                    <tr className="th-text">
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Template name
-                      </th>
-
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Assigned To
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Version
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Status
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Department
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {tasks.map((task) => (
-                      <tr key={task.id}>
-                        <td className="td-text">{task.template}</td>
-                        <td>{task.assignedTo}</td>
-                        <td className="td-text">{task.version}</td>
-                        <td className="td-text">{task.status}</td>
-                        <td className="td-text">{task.department}</td>
-                        <td className="td-text">
-                          <div class="dropdown">
-                            <a
-                              type=""
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              {task.action}
-                            </a>
-                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-                              <li>
-                                <a class="dropdown-item border-bottom" href="#">
-                                  <img
-                                    src="/images/users/AddressBook.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  View Users Details
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item border-bottom" href="#">
-                                  <img
-                                    src="/images/users/PencilLine.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Edit User Details
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item" href="#">
-                                  <img
-                                    src="/images/dashboard/Comment.png"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Comments
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item border-bottom" href="#">
-                                  <img
-                                    src="/images/users/TextAlignLeft.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Wrap Column
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item text-danger" href="#">
-                                  <img
-                                    src="/images/users/Trash.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Delete User
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                        <td></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table> */}
                 </div>
-                {/* <nav
-                aria-label="Page navigation"
-                className="d-flex justify-content-end page-navigation mt-3"
-              >
-                <ul className="pagination">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <button class="page-link" href="#">
-                      1
-                    </button>
-                  </li>
-                  <li class="page-item">
-                    <button class="page-link" href="#">
-                      2
-                    </button>
-                  </li>
-                  <li class="page-item">
-                    <button class="page-link" href="#">
-                      3
-                    </button>
-                  </li>
-                  <li class="page-item">
-                    <button class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </button>
-                  </li>
-                </ul>
-              </nav> */}
               </div>
             </div>
 
