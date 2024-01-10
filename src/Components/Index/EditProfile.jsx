@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import { UpdateAdminProfile } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const EditProfile = () => {
   const [files, setFiles] = useState([]);
@@ -71,27 +72,25 @@ const EditProfile = () => {
     let { data } = await UpdateAdminProfile(emp_id, formData);
     console.log(data);
     if (data && data?.error) {
-      toast.error(data?.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "bottom",
+        title: data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
     }
     if (data && !data?.error) {
-      toast("Profile Updated Successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "bottom",
+        title: "Profile update successfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       setFiles([]);
       navigate("/Admin/My-profile");
@@ -333,7 +332,7 @@ const EditProfile = () => {
                         </p>
                         <input
                           autoComplete="false"
-                          type={cPassVisible ? 'text' : "password"}
+                          type={cPassVisible ? "text" : "password"}
                           placeholder="Confirm Password"
                           className={classNames(
                             "col-12 profile-edit-input p-2",
