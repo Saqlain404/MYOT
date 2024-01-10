@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import adminHttpService from "../adminHttpService";
 import { toast } from "react-toastify";
+import mainAdminHttpService from "../mainAdminHttpService";
 
 export async function AddDepartment(formData) {
   try {
@@ -673,6 +674,58 @@ export async function AnalyticsData() {
     const { data } = await adminHttpService.get(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/total-active-user`
     );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function CompanyList() {
+  try {
+    const { data } = await mainAdminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/admin/company-list`
+    );
+    console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function acceptPermission(id) {
+  try {
+    const { data } = await mainAdminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/admin/accept-permission/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function rejectedPermission(id) {
+  try {
+    const { data } = await mainAdminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/admin/rejected-permission/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function MainDashboardCount() {
+  try {
+    const { data } = await mainAdminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/admin/total-company`
+    );
+    console.log(data);
+
     return { data };
   } catch (error) {
     if (error.response) toast.error(error.response.data.message);

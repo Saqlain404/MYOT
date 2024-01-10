@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { mainAdminLogin } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [passVisible, setPassVisible] = useState(false);
@@ -17,9 +17,11 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // if (!localStorage.getItem("token-admin")) {
-    //   navigate("/Login");
-    // }
+    if (localStorage.getItem("token-main-admin")) {
+      navigate("/main/home");
+    } else {
+      navigate("/main/login");
+    }
   }, []);
 
   const onSubmit = async (data) => {
@@ -28,18 +30,17 @@ const Login = () => {
     const response = await mainAdminLogin(data);
 
     if (!response.data.error) {
-      toast("Logged in successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Logged in successfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
 
-      //   navigate("/Admin/Home");
+      navigate("/main/home");
     }
   };
   const togglePassword = () => {

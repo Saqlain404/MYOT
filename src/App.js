@@ -6,8 +6,8 @@ import "./Responsive.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Swal from 'sweetalert2/dist/sweetalert2.js'
-import 'sweetalert2/dist/sweetalert2.css'
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/dist/sweetalert2.css";
 
 import AuthLogin from "./Components/Login/AuthLogin";
 import AuthforgotPass from "./Components/Login/AuthforgotPass";
@@ -129,6 +129,7 @@ import Login from "./Components/superAdmin/login";
 import MainForgotPass from "./Components/superAdmin/forgotPassword";
 import MainUpdatePassword from "./Components/superAdmin/updatePassword";
 import MainForgotSuccess from "./Components/superAdmin/forgotSucess";
+import MainHome from "./Components/superAdmin/home";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -347,6 +348,7 @@ function App() {
         <Route path="/main/forgot-password" element={<MainForgotPass />} />
         <Route path="/main/update-password" element={<MainUpdatePassword />} />
         <Route path="/main/success" element={<MainForgotSuccess />} />
+        <Route path="main/Home" element={<MainHome />} />
       </Routes>
     </div>
   );

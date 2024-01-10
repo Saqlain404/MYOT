@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
-  forgotPassword,
   mainForgotPassword,
   mainVerifyOTP,
-  verifyOTP,
 } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 import OtpInput from "react-otp-input";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const MainForgotPass = () => {
   const [formToShow, setFormToShow] = useState("EmailForm");
@@ -22,8 +19,17 @@ const MainForgotPass = () => {
     try {
       let { data } = await mainForgotPassword({ email });
       console.log(data);
-      if (data && !data?.error) {
-        toast.success("OTP sent successfully");
+      if (!data.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "OTP sent successfully",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+
         setFormToShow("OTPform");
       }
     } catch (error) {
@@ -33,24 +39,22 @@ const MainForgotPass = () => {
 
   const handleOTPsubmit = async (e) => {
     e.preventDefault();
-    // console.log(email, otp);
     if (otp.length < 4) {
-      toast.error("OTP must be 4 digits", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "warning",
+        position: "top-end",
+        title: "OTP must be 4 digits",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
+
       return false;
     }
     try {
       let { data } = await mainVerifyOTP({ email, otp });
-      if (data && !data?.error) {
-        // toast.success("OTP verified successfully");
+      if (!data.error) {
         navigate("/main/update-password", { state: { email } });
       }
     } catch (error) {

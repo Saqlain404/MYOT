@@ -21,7 +21,6 @@ export async function adminLogin(formData) {
 
       return { data };
     } else toast.error(data.message);
-
   } catch (error) {
     if (error.response) toast.error(error.response.data.message);
     return { error };
@@ -279,7 +278,6 @@ export async function mainVerifyOTP(formData) {
     );
     console.log(data);
     if (!data.error) {
-      toast.success(data.message);
     } else toast.error(data.message);
 
     if (!data.error) return { data };
@@ -296,7 +294,6 @@ export async function mainUpdateNewPassword(formData) {
     );
     console.log(data);
     if (!data.error) {
-      toast.success(data.message);
     } else toast.error(data.message);
 
     if (!data.error) return { data };

@@ -1,46 +1,45 @@
 import React, { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-
-import { toast } from "react-toastify";
-import {
-  UpdateNewPassword,
-  mainUpdateNewPassword,
-} from "../../ApiServices/adminHttpServices/adminLoginHttpService";
+import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { mainUpdateNewPassword } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
+import { useForm } from "react-hook-form";
 
 const MainUpdatePassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
+  });
 
   const navigate = useNavigate();
-
   const location = useLocation();
   const { state } = location;
 
-  const handleUpdatePass = async (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      toast.error("Password must be same", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+  const handleUpdatePass = async (d) => {
+    console.log(d);
+    if (d.password !== d.confirmPassword) {
+      Swal.fire({
+        toast: true,
+        icon: "warning",
+        position: "top-end",
+        title: "Password must be same",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
 
       return false;
     }
     console.log(state.email, password, confirmPassword);
+    d.email = state.email;
     try {
-      let { data } = await mainUpdateNewPassword({
-        email: state.email,
-        password,
-        confirmPassword,
-      });
+      let { data } = await mainUpdateNewPassword(d);
       console.log(data);
-      if (data && !data?.error) {
+      if (!data.error) {
         setConfirmPassword("");
         setPassword("");
         navigate("/main/success");
@@ -81,19 +80,32 @@ const MainUpdatePassword = () => {
                         Update Password
                       </h2>
                     </div>
-                    <form onSubmit={handleUpdatePass}>
+                    <form onSubmit={handleSubmit(handleUpdatePass)}>
                       <div className="col-12">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Password
                         </p>
                         <input
                           type="text"
-                          value={password}
                           placeholder="Password"
                           className="col-12 password-update-input p-2 rounded w-100"
                           name="password"
-                          onChange={(e) => setPassword(e.target.value)}
+                          id="password"
+                          {...register("password", {
+                            required: "* Please Enter Your Password",
+                            pattern: {
+                              value:
+                                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                              message:
+                                "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
+                            },
+                          })}
                         />
+                        {errors.password && (
+                          <small className="errorText ">
+                            {errors.password?.message}
+                          </small>
+                        )}
                       </div>
                       <div className="col-12 mt-4">
                         <p className=" d-flex justify-content-start profile-card-title">
@@ -101,12 +113,25 @@ const MainUpdatePassword = () => {
                         </p>
                         <input
                           type="text"
-                          value={confirmPassword}
                           placeholder="Confirm Password"
                           className="col-12 password-update-input p-2 rounded w-100"
                           name="confirmPassword"
-                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          id="confirmPassword"
+                          {...register("confirmPassword", {
+                            required: "* Please Enter Your Password",
+                            pattern: {
+                              value:
+                                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                              message:
+                                "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
+                            },
+                          })}
                         />
+                        {errors.confirmPassword && (
+                          <small className="errorText ">
+                            {errors.confirmPassword?.message}
+                          </small>
+                        )}
                       </div>
 
                       <div className="mt-4 d-flex justify-content-center">

@@ -2681,9 +2681,9 @@ height: 960px; */
   border: none;
 }
 
-thead tr th div {
+/* thead tr th div {
   margin: 0px 10px !important;
-}
+} */
 
 .mdb_table tbody td {
   border: none;
@@ -2810,4 +2810,13 @@ div.dataTables_wrapper div.dataTables_paginate {
   height: 100%;
   position: relative !important;
   top: 13.8rem !important;
+}
+.signup-form {
+  overflow-y: auto;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
