@@ -140,7 +140,7 @@ const Home = () => {
                 onClick={() => setTemplete_Id(list?._id)}
                 type="button"
                 data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
+                data-bs-target="#exampleModal1"
               >
                 <img
                   src="/images/dashboard/Comment.png"
@@ -161,26 +161,6 @@ const Home = () => {
               <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-              {/* <li>
-                <a class="dropdown-item border-bottom" href="#">
-                  <img
-                    src="/images/users/AddressBook.svg"
-                    alt=""
-                    className="me-2"
-                  />
-                  View Users Details
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item border-bottom" href="#">
-                  <img
-                    src="/images/users/PencilLine.svg"
-                    alt=""
-                    className="me-2"
-                  />
-                  Edit User Details
-                </a>
-              </li> */}
               <li>
                 <Link
                   class="dropdown-item"
@@ -230,7 +210,7 @@ const Home = () => {
         Swal.fire({
           toast: true,
           icon: "success",
-          position: "top-end",
+          position: "bottom",
           title: "Templates deleted successfully",
           showConfirmButton: false,
           timerProgressBar: true,
@@ -324,13 +304,13 @@ const Home = () => {
       Swal.fire({
         toast: true,
         icon: "success",
-        position: "top-end",
+        position: "bottom",
         title: "New comment added successfully",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
       });
-      document.getElementById('closeForm').click()
+      document.getElementById("closeForm").click();
       setComment("");
     }
   };
@@ -549,7 +529,7 @@ const Home = () => {
           {/* Comment Modal */}
           <div
             class="modal fade"
-            id="exampleModal"
+            id="exampleModal1"
             tabindex="-1"
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
