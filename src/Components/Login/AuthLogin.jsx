@@ -53,7 +53,10 @@ const AuthLogin = () => {
         timer: 3000,
       });
       dispatch(setUserData(response?.data?.results?.employee));
-      navigate("/Admin/Home");
+      let navigateToRoles = await response?.data?.results?.employee?.employRole[0]
+      // console.log(navigateToRoles)
+      // console.log(`${navigateToRoles}/Home`)
+      navigate(`/${navigateToRoles}/Home`);
     }
   };
   const togglePassword = () => {
