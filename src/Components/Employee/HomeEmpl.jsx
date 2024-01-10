@@ -187,9 +187,9 @@ const HomeEmpl = () => {
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
             <li>
-                                <a
+                                <Link
                                   class="dropdown-item border-bottom"
-                                  href="/Employee/view-details"
+                                  to={`/Employee/view-details/${list?._id}`}
                                 >
                                   <img
                                     src="/images/users/AddressBook.svg"
@@ -197,7 +197,7 @@ const HomeEmpl = () => {
                                     className="me-2"
                                   />
                                   View Details
-                                </a>
+                                </Link>
                               </li>
                               <li>
                                 <Link class="dropdown-item" to={`/Employee/Comment/${list?._id}`}>

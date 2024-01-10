@@ -328,7 +328,7 @@ const HomeAprv = () => {
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
               <li>
                 <Link
-                  to={"/Approver/Template-view"}
+                  to={`/Approver/Template-view/${list?._id}`}
                   className="text-decoration-none"
                 >
                   <a class="dropdown-item border-bottom" href="/">
@@ -517,7 +517,7 @@ const HomeAprv = () => {
                 <div className="col-md-3">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">Total Employees</h6>
+                      <h6 className="mb-0 header-card-text">Total Approvers</h6>
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">

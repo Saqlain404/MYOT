@@ -162,7 +162,7 @@ export async function dashCount() {
   }
 }
 
-export async function templeteViewDetails() {
+export async function templeteViewDetails(id) {
   try {
     const response = await employeeHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/approver/templete-details/${id}`
@@ -368,7 +368,7 @@ export async function CreateEmplyTicket(formData) {
         toast: true,
         icon: "success",
         position:"bottom",
-        title: "Ticket Created",
+        title: "Ticket Created Successfully",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -430,12 +430,32 @@ export async function contactUsAprv(formData) {
 
     if (!data.error) {
       // await localStorage.removeItem("token-company");
-      toast.success(data.message);
-    } else toast.error(data.message);
+      // toast.success(data.message);
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"bottom",
+        title: "Create Contact Successfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"bottom",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
 
     if (!data.error) return { data };
   } catch (error) {
-    if (error?.response) toast.error(error.response.data.message);
+    if (error?.response) 
+    // toast.error(error.response.data.message);
     return { error };
   }
 }

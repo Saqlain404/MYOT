@@ -254,7 +254,7 @@ const DashboardAprv = () => {
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
               <li>
                 <Link
-                  to={"/Approver/Template-view"}
+                  to={`/Approver/Template-view/${list?._id}`}
                   className="text-decoration-none"
                 >
                   <a class="dropdown-item border-bottom" href="/">

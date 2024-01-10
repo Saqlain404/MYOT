@@ -13,6 +13,8 @@ const EmplEditProfile = () => {
   const [validationErrors, setValidationErrors] = useState({});
   const[profileDetail,setProfileDetail] = useState(null);
   const [profileImgUrl, setProfileImgUrl] = useState();
+  const [passVisible, setPassVisible] = useState(false);
+  const [cPassVisible, setCPassVisible] = useState(false);
 
   const [post, setPost] = useState({
     // name: "",
@@ -245,12 +247,13 @@ const EmplEditProfile = () => {
                      </div>
                   </div> */}
                   <div className="col-12 d-flex justify-content-between border-bottom mb-2 pb-4">
-                    <div className="col-6 m-2">
+                    <div className="col-6 m-2 position-relative">
                       <p className=" d-flex justify-content-start profile-card-title">
                         Password
                       </p>
                       <input
-                        type="text"
+                        type={passVisible ? "text" : "password"}
+                        autoComplete="false"
                         value={post.password}
                         placeholder="Password"
                         className="col-12 profile-edit-input p-2"
@@ -258,13 +261,31 @@ const EmplEditProfile = () => {
                         onChange={handleInput}
                       />
                          {validationErrors.password && <p className="d-flex text-danger ms-2 justify-content-start">{validationErrors.password}</p>}
+                         <div
+                          className="eye_container pt-1"
+                          onClick={() => setPassVisible(!passVisible)}
+                        >
+                          {passVisible ? (
+                            <img
+                              className="eye_icon"
+                              src="/images/icons/hide.png"
+                              alt=""
+                            />
+                          ) : (
+                            <img
+                              className="eye_icon"
+                              src="/images/icons/view.png"
+                              alt=""
+                            />
+                          )}
+                        </div>
                     </div>
-                    <div className="col-6 m-2">
+                    <div className="col-6 m-2 position-relative">
                       <p className=" d-flex justify-content-start profile-card-title">
                         Confirm Password
                       </p>
                       <input
-                        type="text"
+                        type={cPassVisible ? 'text' : "password"}
                         value={post.confirmPassword}
                         placeholder="Confirm Password"
                         className="col-12 profile-edit-input p-2"
@@ -272,6 +293,24 @@ const EmplEditProfile = () => {
                         onChange={handleInput}
                       />
                       {validationErrors.confirmPassword && <p className="d-flex text-danger justify-content-start ms-2">{validationErrors.confirmPassword}</p>}
+                      <div
+                          className="eye_container pt-1"
+                          onClick={() => setCPassVisible(!cPassVisible)}
+                        >
+                          {cPassVisible ? (
+                            <img
+                              className="eye_icon"
+                              src="/images/icons/hide.png"
+                              alt=""
+                            />
+                          ) : (
+                            <img
+                              className="eye_icon"
+                              src="/images/icons/view.png"
+                              alt=""
+                            />
+                          )}
+                        </div>
                     </div>
                   </div>
 

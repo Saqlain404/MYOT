@@ -210,7 +210,7 @@ function App() {
         <Route path="Approver/Home" element={<HomeAprv />} />
         <Route path="Approver/Dashboard" element={<DashboardAprv />} />
         <Route path="Approver/Template-review" element={<TemplateReview />} />
-        <Route path="Approver/Template-view" element={<TemplateRevView />} />
+        <Route path="Approver/Template-view/:id" element={<TemplateRevView />} />
         <Route path="Approver/Requests" element={<RequestsAprv />} />
         <Route path="Approver/Announcements" element={<AnnouncementsAprv />} />
         <Route
@@ -305,7 +305,7 @@ function App() {
         <Route path="Employee/document" element={<DocumentEmply />} />
         <Route path="Employee/received-doc" element={<ReceivedDocEmpl />} />
         <Route path="Employee/Calender" element={<CalenderEmply />} />
-        <Route path="Employee/view-details" element={<ViewDocumentEmply />} />
+        <Route path="Employee/view-details/:id" element={<ViewDocumentEmply />} />
         <Route
           path="Employee/received-doc/view-details"
           element={<ViewReceivedDoc />}

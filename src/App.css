@@ -2811,3 +2811,8 @@ div.dataTables_wrapper div.dataTables_paginate {
   position: relative !important;
   top: 13.8rem !important;
 }
+.view-detail-page{
+  width: 100%;
+  margin-top: 20px;
+}
+
