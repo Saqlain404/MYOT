@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { adminLogin } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 import { toast } from "react-toastify";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { setUserData } from "../app/slice/userSlice";
 
 const AuthLogin = () => {
@@ -120,12 +120,12 @@ const AuthLogin = () => {
                   defaultValue={loginCreds?.password}
                   {...register("password", {
                     required: "* Please Enter Your Password",
-                    // pattern: {
-                    //   value:
-                    //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                    //   message:
-                    //     "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
-                    // },
+                    pattern: {
+                      value:
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                      message:
+                        "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
+                    },
                   })}
                 />
                 {errors.password && (
@@ -172,9 +172,18 @@ const AuthLogin = () => {
                 </Link>
               </div>
 
-              <button className="btn py-8 mb-4 rounded-2" type="submit">
+              <button className="btn py-8 mb-1  rounded-2" type="submit">
                 Log In
               </button>
+              <label className="form-check-label text-dark remember-me mb-4">
+                New to Myot? Create an account
+                <Link
+                  className=" fw-medium reset-password ms-2"
+                  to="/Admin/Signup"
+                >
+                  Sign Up
+                </Link>
+              </label>
             </form>
           </div>
           <div className="col-8 m-auto ">
