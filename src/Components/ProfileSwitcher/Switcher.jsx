@@ -63,8 +63,8 @@ const Switcher = () => {
         </div>
       </a>
       <ul className="dropdown-menu">
-        {rolesToShow.map((roleToShow) => {
-          if (allRoleOfUser.includes(roleToShow)) {
+        {rolesToShow?.map((roleToShow) => {
+          if (allRoleOfUser?.includes(roleToShow)) {
             const adjustedRole =
               roleToShow === "Department Manager" ? "Department" : roleToShow;
             return (
