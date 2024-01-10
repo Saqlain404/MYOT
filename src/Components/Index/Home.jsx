@@ -519,7 +519,7 @@ const Home = () => {
                   <MDBDataTable
                     bordered
                     displayEntries={false}
-                    entries={5}
+                    entries={10}
                     className="text-nowrap"
                     hover
                     data={{ ...templates, columns: visibleColumns }}

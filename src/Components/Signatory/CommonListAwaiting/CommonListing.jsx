@@ -358,7 +358,7 @@ const CommonListing = () => {
           <MDBDataTable
             bordered
             displayEntries={false}
-            entries={5}
+            entries={10}
             className="text-nowrap"
             hover
             // data={awaitListing}

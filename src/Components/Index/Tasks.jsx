@@ -13,14 +13,15 @@ import {
 import moment from "moment";
 import { toast } from "react-toastify";
 import { MDBDataTable } from "mdbreact";
+import Swal from "sweetalert2";
 
 const Tasks = () => {
   const [showClearButton, setShowClearButton] = useState(false);
 
-  const [documents, setDocuments] = useState();
   const [search, setSearch] = useState("");
   const [comment, setComment] = useState("");
   const [totalCount, setTotalCount] = useState("");
+  const [templete_Id, setTempleteId] = useState("");
 
   const [tasks, setTasks] = useState({
     columns: [
@@ -147,64 +148,17 @@ const Tasks = () => {
         returnData.comments = (
           <>
             <div className="text-center">
-              <a type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a
+                onClick={() => setTempleteId(list?._id)}
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
                 <img
                   src="/images/dashboard/Comment.png"
                   className="mx-auto d-block"
-                  // onClick={() => setDocument_Id(lits?._id)}
                 />
               </a>
-              <form
-                className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
-                onSubmit={(e) => handleSubmit(e, list?._id)}
-              >
-                <div className="mb-3 border-bottom">
-                  <label className="form-label th-text">Comment or type</label>
-
-                  <input
-                    type="text"
-                    className="form-control border-0"
-                    // value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    placeholder="Enter comment"
-                  />
-                </div>
-
-                <div className="d-flex justify-content-between">
-                  <div>
-                    <img
-                      src="/images/tasks/assign comments.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/mention.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/task.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/emoji.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/attach_attachment.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                  </div>
-                  <div>
-                    <button type="submit" className="comment-btn btn-primary">
-                      Comment
-                    </button>
-                  </div>
-                </div>
-              </form>
             </div>
           </>
         );
@@ -278,20 +232,7 @@ const Tasks = () => {
     }
   };
 
-  const handleSearch = async (e) => {
-    const value = e.target.value.toLowerCase();
-    setSearch(value);
-    if (value.length > 0) {
-      let { data } = await SearchTask({ search: value });
-      if (!data?.error) {
-        setDocuments(data?.results?.Template);
-      }
-    } else {
-      getTaskData();
-    }
-  };
-
-  const handleSubmit = async (e, templete_Id) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let creator_Id = localStorage.getItem("myot_admin_id");
     let { data } = await AddCommentForTask({
@@ -301,16 +242,16 @@ const Tasks = () => {
     });
     console.log(data);
     if (!data?.error) {
-      toast("Comment added successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "New comment added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
+      document.getElementById("close").click();
       setComment("");
     }
   };
@@ -595,7 +536,7 @@ const Tasks = () => {
                   <MDBDataTable
                     bordered
                     displayEntries={false}
-                    entries={5}
+                    entries={10}
                     className="text-nowrap"
                     hover
                     data={{ ...tasks, columns: visibleColumns }}
@@ -607,6 +548,89 @@ const Tasks = () => {
                 </div>
               </div>
             </div>
+
+            {/* COMMENT MODAL */}
+
+            <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title th-text" id="exampleModalLabel">
+                      Add comment
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      id="close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <form className="rounded" onSubmit={handleSubmit}>
+                      <div className="mb-3 border-bottom">
+                        <label className="form-label th-text">
+                          Comment or type
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control border-0 w-100"
+                          placeholder="Type comment..."
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                        />
+                      </div>
+
+                      <div className="d-flex justify-content-between">
+                        <div>
+                          <img
+                            src="/images/tasks/assign comments.svg"
+                            alt=""
+                            className="comment-img"
+                          />
+                          <img
+                            src="/images/tasks/mention.svg"
+                            alt=""
+                            className="comment-img"
+                          />
+                          <img
+                            src="/images/tasks/task.svg"
+                            alt=""
+                            className="comment-img"
+                          />
+                          <img
+                            src="/images/tasks/emoji.svg"
+                            alt=""
+                            className="comment-img"
+                          />
+                          <img
+                            src="/images/tasks/attach_attachment.svg"
+                            alt=""
+                            className="comment-img"
+                          />
+                        </div>
+                        <div>
+                          <button
+                            type="submit"
+                            className="comment-btn btn-primary"
+                          >
+                            Comment
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* COMMENT MODAL CLOSE */}
 
             <div className="footer">
               <div>© 2023 MYOT</div>
