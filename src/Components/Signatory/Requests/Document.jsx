@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 const Document = () => {
   const [showClearButton, setShowClearButton] = useState(false);
+  const [comment, setComment] = useState('');
   const [requests, setRequests] = useState({
     columns: [
       {
@@ -231,6 +232,30 @@ const Document = () => {
       sortType: currentSortType,
     });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let creator_Id = localStorage.getItem("myot_admin_id");
+    // let { data } = await AddCommentForTask({
+    //   comment,
+    //   templete_Id,
+    //   creator_Id,
+    // });
+    // console.log(data);
+    // if (!data?.error) {
+    //   Swal.fire({
+    //     toast: true,
+    //     icon: "success",
+    //     position: "top-end",
+    //     title: "New comment added",
+    //     showConfirmButton: false,
+    //     timerProgressBar: true,
+    //     timer: 3000,
+    //   });
+    //   document.getElementById("close").click();
+    //   setComment("");
+    // }
+  };
   return (
     <div className="position-relative">
       <p className="table-name mb-2">Document Requests</p>
@@ -279,7 +304,7 @@ const Document = () => {
           <MDBDataTable
             bordered
             displayEntries={false}
-            entries={5}
+            entries={10}
             className="text-nowrap"
             hover
             data={{ ...requests, columns: visibleColumns }}
@@ -289,6 +314,83 @@ const Document = () => {
           />
         </div>
       </div>
+
+      {/* MODAL COMMENT */}
+
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title th-text" id="exampleModalLabel">
+                Add comment
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                id="close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form className="rounded" onSubmit={handleSubmit}>
+                <div className="mb-3 border-bottom">
+                  <label className="form-label th-text">Comment or type</label>
+                  <input
+                    type="text"
+                    className="form-control border-0 w-100"
+                    placeholder="Type comment..."
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                </div>
+
+                <div className="d-flex justify-content-between">
+                  <div>
+                    <img
+                      src="/images/tasks/assign comments.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/mention.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/task.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/emoji.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/attach_attachment.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                  </div>
+                  <div>
+                    <button type="submit" className="comment-btn btn-primary">
+                      Comment
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/*CLOSE MODAL COMMENT */}
     </div>
   );
 };

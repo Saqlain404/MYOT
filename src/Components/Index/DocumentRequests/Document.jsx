@@ -6,6 +6,7 @@ import {
   RequestorList,
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const Document = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -137,63 +138,17 @@ const Document = () => {
         returnData.comments = (
           <>
             <div className="text-center">
-              <a type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a
+                onClick={() => setDocument_Id(list?._id)}
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
                 <img
                   src="/images/dashboard/Comment.png"
                   className="mx-auto d-block"
-                  onClick={() => setDocument_Id(document?._id)}
                 />
               </a>
-              <form
-                className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
-                onSubmit={(e) => handleSubmit(e, list?._id)}
-              >
-                <div className="mb-3 border-bottom">
-                  <label className="form-label th-text">Comment or type</label>
-
-                  <input
-                    type="text"
-                    className="form-control border-0"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                </div>
-
-                <div className="d-flex justify-content-between">
-                  <div>
-                    <img
-                      src="/images/tasks/assign comments.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/mention.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/task.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/emoji.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/attach_attachment.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                  </div>
-                  <div>
-                    <button type="submit" className="comment-btn btn-primary">
-                      Comment
-                    </button>
-                  </div>
-                </div>
-              </form>
             </div>
           </>
         );
@@ -349,17 +304,17 @@ const Document = () => {
       let { data } = await DocumentComment(formData);
       console.log(data);
       if (!data?.error) {
-        toast("Comment added successfully", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "New comment added",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
         });
-        document.getElementById("resetComment").click();
+        document.getElementById("close").click();
+        setComment("");
         getRequestorList();
       }
     } catch (error) {}
@@ -411,7 +366,7 @@ const Document = () => {
           <MDBDataTable
             bordered
             displayEntries={false}
-            entries={5}
+            entries={10}
             className="text-nowrap"
             hover
             data={{ ...documents, columns: visibleColumns }}
@@ -419,6 +374,80 @@ const Document = () => {
             paginationLabel={"«»"}
             sortable={false}
           />
+        </div>
+      </div>
+
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title th-text" id="exampleModalLabel">
+                Add comment
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                id="close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form className="rounded" onSubmit={handleSubmit}>
+                <div className="mb-3 border-bottom">
+                  <label className="form-label th-text">Comment or type</label>
+                  <input
+                    type="text"
+                    className="form-control border-0 w-100"
+                    placeholder="Type comment..."
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                </div>
+
+                <div className="d-flex justify-content-between">
+                  <div>
+                    <img
+                      src="/images/tasks/assign comments.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/mention.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/task.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/emoji.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                    <img
+                      src="/images/tasks/attach_attachment.svg"
+                      alt=""
+                      className="comment-img"
+                    />
+                  </div>
+                  <div>
+                    <button type="submit" className="comment-btn btn-primary">
+                      Comment
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
