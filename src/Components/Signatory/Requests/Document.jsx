@@ -245,9 +245,9 @@ const Document = () => {
 
     const sortedRows = [...requests.rows].sort((a, b) => {
       let comparison = 0;
-      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+      if (a?.name?.toLowerCase() < b?.name?.toLowerCase()) {
         comparison = -1;
-      } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
+      } else if (a?.name?.toLowerCase() > b?.name?.toLowerCase()) {
         comparison = 1;
       }
       return currentSortType === "asc" ? comparison : comparison * -1;

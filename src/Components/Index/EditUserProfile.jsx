@@ -130,7 +130,7 @@ const EditUserProfile = ({ userId }) => {
     const formData = new FormData();
     formData.append("name", datas?.name);
     formData.append("email", datas?.email);
-    formData.append("password", datas?.password);
+    // formData.append("password", datas?.password);
     formData.append("employTitle", datas?.employTitle);
     formData.append("department_Id", datas?.department_id);
     formData.append("mobileNumber", datas?.mobileNumber);

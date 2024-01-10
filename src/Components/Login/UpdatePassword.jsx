@@ -3,18 +3,30 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import { UpdateNewPassword } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
+import Swal from "sweetalert2";
 
 const UpdatePassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passVal, setPassVal] = useState(false);
 
   const navigate = useNavigate();
 
   const location = useLocation();
   const { state } = location;
 
+  const validatePassword = (password) => {
+    const regex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(password);
+  };
+
   const handleUpdatePass = async (e) => {
     e.preventDefault();
+    if (!validatePassword(password)) {
+      setPassVal(true);
+      return false;
+    }
     if (password !== confirmPassword) {
       toast.error("Password must be same", {
         position: "top-right",
@@ -26,10 +38,8 @@ const UpdatePassword = () => {
         progress: undefined,
         theme: "light",
       });
-
       return false;
     }
-    console.log(state.email, password, confirmPassword);
     try {
       let { data } = await UpdateNewPassword({
         email: state.email,
@@ -72,7 +82,7 @@ const UpdatePassword = () => {
                       src="/images/Myot-logo.png"
                       alt=""
                     /> */}
-                     <img src="/images/Ellipse-forgot-pass.png" alt="" />
+                    <img src="/images/Ellipse-forgot-pass.png" alt="" />
                     <div className="">
                       <h2 className=" mb-3 d-flex justify-content-center recover-text">
                         Update Password
@@ -89,8 +99,18 @@ const UpdatePassword = () => {
                           placeholder="Password"
                           className="col-12 password-update-input p-2 rounded w-100"
                           name="password"
-                          onChange={(e) => setPassword(e.target.value)}
+                          onChange={(e) => {
+                            setPassword(e.target.value);
+                            setPassVal(false);
+                          }}
                         />
+                        {passVal && (
+                          <p className="text-danger">
+                            * Password must contain at least 1 special
+                            character, 1 uppercase letter, 1 lowercase letter,
+                            and be at least 8 characters long
+                          </p>
+                        )}
                       </div>
                       <div className="col-12 mt-4">
                         <p className=" d-flex justify-content-start profile-card-title">
