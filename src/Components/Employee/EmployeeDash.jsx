@@ -736,15 +736,6 @@ const EmployeeDash = () => {
           <div className="col">
             <RightSidebar />
           </div>
-
-          <div className="middle-section">
-            <div className="body-wrapper">
-              <div className="container-fluid">
-                <div className="row d-flex flex-direction-row cards-row"></div>
-                <div className="d-flex cardss"></div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </>

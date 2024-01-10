@@ -14,7 +14,7 @@ const HistoryLogReject = () => {
   const [documentRequests, setDocumentRequests] = useState([]);
   const [searchData, setSearchData] = useState("");
   const [comment, setComment] = useState("");
-
+  const [templete_Id, setTemplete_Id] = useState();
   const [showClearButton, setShowClearButton] = useState(false);
 
   const [tasks, setTasks] = useState({
@@ -147,65 +147,17 @@ const HistoryLogReject = () => {
         returnData.comments = (
           <>
             <div className="text-center">
-              <a type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a
+                onClick={() => setTemplete_Id(list?._id)}
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#commentModal"
+              >
                 <img
                   src="/images/dashboard/Comment.png"
                   className="mx-auto d-block"
                 />
               </a>
-              <form
-                className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
-                onSubmit={(e) =>
-                  handleSubmitComment(e, list?._id)
-                }
-              >
-                <div className="mb-3 border-bottom">
-                  <label className="form-label th-text">Comment or type</label>
-
-                  <input
-                    type="text"
-                    className="form-control border-0"
-                    placeholder="Enter comment"
-                    defaultValue={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                </div>
-
-                <div className="d-flex justify-content-between">
-                  <div>
-                    <img
-                      src="/images/tasks/assign comments.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/mention.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/task.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/emoji.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/attach_attachment.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                  </div>
-                  <div>
-                    <button type="submit" className="comment-btn btn-primary">
-                      Comment
-                    </button>
-                  </div>
-                </div>
-              </form>
             </div>
           </>
         );
@@ -333,7 +285,7 @@ const HistoryLogReject = () => {
   };
 
 
-  const handleSubmitComment = async (e, templete_Id) => {
+  const handleSubmitComment = async (e) => {
     e.preventDefault();
     let creator_Id =
       localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
@@ -558,6 +510,7 @@ const HistoryLogReject = () => {
                     className="text-nowrap"
                     hover
                     data={{ ...tasks, columns: visibleColumns }}
+                    paging={tasks?.rows?.length > 5 ? true:false}
                     // data={tasks}
                     noBottomColumns
                     paginationLabel={"«»"}
@@ -581,15 +534,87 @@ const HistoryLogReject = () => {
           <div className="col">
             <RightSidebar />
           </div>
+           {/* Comment Modal */}
+           <div
+            class="modal fade"
+            id="commentModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title th-text" id="exampleModalLabel">
+                    Add comment
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    id="closeForm"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form className="rounded" onSubmit={handleSubmitComment}>
+                    <div className="mb-3 border-bottom">
+                      <label className="form-label th-text">
+                        Comment or type
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control border-0 w-100"
+                        placeholder="Type comment..."
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      />
+                    </div>
 
-          <div className="middle-section">
-            <div className="body-wrapper">
-              <div className="container-fluid">
-                <div className="row d-flex flex-direction-row cards-row"></div>
-                <div className="d-flex cardss"></div>
+                    <div className="d-flex justify-content-between">
+                      <div>
+                        <img
+                          src="/images/tasks/assign comments.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/mention.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/task.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/emoji.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/attach_attachment.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                      </div>
+                      <div>
+                        <button
+                          type="submit"
+                          className="comment-btn btn-primary"
+                        >
+                          Comment
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
+
+          {/* Comment Modal close */}
         </div>
       </div>
     </>

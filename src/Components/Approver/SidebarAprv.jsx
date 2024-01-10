@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LogOutEmply } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import Switcher from "../ProfileSwitcher/Switcher";
 
 const SidebarAprv = () => {
   const navigate = useNavigate();
@@ -351,7 +352,11 @@ const SidebarAprv = () => {
           </ul>
         </div>
 
-        <div class="dropdown">
+        <div class="dropdown position-fixed bottom-0 bg-white">
+          <Switcher/>
+        </div>
+
+        {/* <div class="dropdown">
           <a
             class="text-decoration-none"
             type="button"
@@ -393,7 +398,7 @@ const SidebarAprv = () => {
               </Link>
             </Link>
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );
