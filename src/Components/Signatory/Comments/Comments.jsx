@@ -6,6 +6,7 @@ import moment from "moment";
 import {
   DocumentComment,
   DocumentCommentLists,
+  TasksCommentList,
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
 import RightSidebar from "../../RightSidebar";
@@ -28,10 +29,10 @@ const SigComments = () => {
     try {
       let lid = localStorage.getItem("myot_admin_id");
       setLocalId(lid);
-      let { data } = await DocumentCommentLists(id);
+      let { data } = await TasksCommentList(id);
       if (!data?.error) {
-        setCommentList(data?.results?.commentDetailsList);
-        console.log(data?.results);
+        setCommentList(data?.results?.commentDetails);
+        console.log(data?.results?.commentDetails);
       }
     } catch (error) {
       console.log(error);
@@ -147,7 +148,7 @@ const SigComments = () => {
                 commentList?.map((comments, index) => (
                   <>
                     <div className="bg-white rounded p-2 mb-3">
-                      <div className="d-flex  justify-content-between">
+                      <div className="d-flex justify-content-between">
                         <div className="d-flex justify-content-between">
                           <img
                             src={

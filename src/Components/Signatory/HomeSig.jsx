@@ -10,11 +10,14 @@ import {
 } from "../../ApiServices/SignatoryHttpServices/signatoryHttpServices";
 import { MDBDataTable } from "mdbreact";
 import Document from "./Requests/Document";
+import { AddCommentForTask } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import Swal from "sweetalert2";
 
 const HomeSig = () => {
   const [count, setCount] = useState();
   const [comment, setComment] = useState("");
   const [showClearButton, setShowClearButton] = useState(false);
+  const [templete_Id, setTemplateId] = useState("");
 
   const [templates, setTemplates] = useState({
     columns: [
@@ -177,65 +180,21 @@ const HomeSig = () => {
         );
 
         returnData.comment = (
-          <div className="">
-            <a type="" data-bs-toggle="dropdown" aria-expanded="false">
-              <img
-                src="/images/dashboard/Comment.png"
-                className="mx-auto d-block pt-2"
-              />
-            </a>
-            <form
-              className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
-              onSubmit={(e) => handleSubmit(e, list?._id)}
-            >
-              <div className="mb-3 border-bottom">
-                <label className="form-label th-text">Comment or type</label>
-
-                <input
-                  type="text"
-                  className="form-control border-0"
-                  placeholder="Enter your comment..."
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
+          <>
+            <div className="text-center">
+              <a
+                onClick={() => setTemplateId(list?._id)}
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal1"
+              >
+                <img
+                  src="/images/dashboard/Comment.png"
+                  className="mx-auto d-block"
                 />
-              </div>
-
-              <div className="d-flex justify-content-between">
-                <div>
-                  <img
-                    src="/images/tasks/assign comments.svg"
-                    alt=""
-                    className="comment-img"
-                  />
-                  <img
-                    src="/images/tasks/mention.svg"
-                    alt=""
-                    className="comment-img"
-                  />
-                  <img
-                    src="/images/tasks/task.svg"
-                    alt=""
-                    className="comment-img"
-                  />
-                  <img
-                    src="/images/tasks/emoji.svg"
-                    alt=""
-                    className="comment-img"
-                  />
-                  <img
-                    src="/images/tasks/attach_attachment.svg"
-                    alt=""
-                    className="comment-img"
-                  />
-                </div>
-                <div>
-                  <button type="submit" className="comment-btn btn-primary">
-                    Comment
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
+              </a>
+            </div>
+          </>
         );
 
         newRows.push(returnData);
@@ -244,12 +203,28 @@ const HomeSig = () => {
     }
   };
 
-  const handleSubmit = async (e, id) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let { data } = await SignatoryRequestsData(id, comment);
+    let creator_Id = localStorage.getItem("myot_admin_id");
+    console.log(creator_Id, comment, templete_Id);
+    let { data } = await AddCommentForTask({
+      comment,
+      templete_Id,
+      creator_Id,
+    });
+    console.log(data);
     if (!data?.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "bottom",
+        title: "New comment added successfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      document.getElementById("closeForm").click();
       setComment("");
-      getTemplatesData();
     }
   };
 
@@ -520,7 +495,7 @@ const HomeSig = () => {
                   <MDBDataTable
                     bordered
                     displayEntries={false}
-                    entries={10}
+                    entries={5}
                     className="text-nowrap"
                     hover
                     // data={awaitListing}
@@ -544,6 +519,87 @@ const HomeSig = () => {
               </div>
             </div>
           </div>
+
+          {/* Modal */}
+          <div
+            class="modal fade"
+            id="exampleModal1"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title th-text" id="exampleModalLabel">
+                    Add comment
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    id="closeForm"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form className="rounded" onSubmit={handleSubmit}>
+                    <div className="mb-3 border-bottom">
+                      <label className="form-label th-text">
+                        Comment or type
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control border-0 w-100"
+                        placeholder="Type comment..."
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="d-flex justify-content-between">
+                      <div>
+                        <img
+                          src="/images/tasks/assign comments.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/mention.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/task.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/emoji.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/attach_attachment.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                      </div>
+                      <div>
+                        <button
+                          type="submit"
+                          className="comment-btn btn-primary"
+                        >
+                          Comment
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="col">
             <RightSidebar />
           </div>
