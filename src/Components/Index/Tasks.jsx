@@ -348,7 +348,7 @@ const Tasks = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link ms-2" href="app-email.html">
-                      /Tasks
+                      Tasks
                     </a>
                   </li>
                 </ul>

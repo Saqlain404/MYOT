@@ -134,6 +134,7 @@ const MainHome = () => {
           timerProgressBar: true,
           timer: 3000,
         });
+        getAdminCount();
         getCompanyListing();
       }
     } catch (error) {
@@ -153,6 +154,7 @@ const MainHome = () => {
           timerProgressBar: true,
           timer: 3000,
         });
+        getAdminCount();
         getCompanyListing();
       }
     } catch (error) {

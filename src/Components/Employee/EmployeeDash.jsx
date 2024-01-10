@@ -227,9 +227,9 @@ const EmployeeDash = () => {
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
               <li>
-                <a
+                <Link
                   class="dropdown-item border-bottom"
-                  href="/Employee/view-details"
+                  to={`/Employee/view-details/${list?._id}`}
                 >
                   <img
                     src="/images/users/AddressBook.svg"
@@ -237,7 +237,7 @@ const EmployeeDash = () => {
                     className="me-2"
                   />
                   View Details
-                </a>
+                </Link>
               </li>
               <li>
                 <Link
@@ -255,19 +255,19 @@ const EmployeeDash = () => {
               <li> 
                 <a class="dropdown-item border-bottom" href="#">
                   <img
-                    src="/images/users/TextAlignLeft.svg"
+                    src="/images/DownloadSimple.svg"
                     alt=""
                     className="me-2"
                   />
-                  Wrap Column
+                  Download
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a class="dropdown-item text-danger" href="#">
                   <img src="/images/users/Trash.svg" alt="" className="me-2" />
                   Delete Template
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         );
