@@ -268,6 +268,19 @@ const DashboardAprv = () => {
                 </Link>{" "}
               </li>
               <li>
+                <Link
+                  class="dropdown-item"
+                  to={`/Approver/Comment/${list?._id}`}
+                >
+                  <img
+                    src="/images/dashboard/Comment.png"
+                    alt=""
+                    className="me-2"
+                  />
+                  Comments
+                </Link>
+              </li>
+              <li>
                 <a
                   onClick={() => approved(list?._id)}
                   class="dropdown-item border-bottom"

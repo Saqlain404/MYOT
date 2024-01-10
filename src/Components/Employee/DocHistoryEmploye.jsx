@@ -212,19 +212,19 @@ const DocHistoryEmploye = () => {
               <li>
                 <a class="dropdown-item border-bottom" href="#">
                   <img
-                    src="/images/users/TextAlignLeft.svg"
+                     src="/images/DownloadSimple.svg"
                     alt=""
                     className="me-2"
                   />
-                  Wrap Column
+                  Download
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a class="dropdown-item text-danger" href="#">
                   <img src="/images/users/Trash.svg" alt="" className="me-2" />
                   Delete Template
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         );
