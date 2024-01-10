@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react";
 import { SignatoryRequestsData } from "../../../ApiServices/SignatoryHttpServices/signatoryHttpServices";
 import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
+import { DocumentComment } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import Swal from "sweetalert2";
 
 const Document = () => {
   const [showClearButton, setShowClearButton] = useState(false);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
+  const [document_Id, setDocument_Id] = useState("");
+
   const [requests, setRequests] = useState({
     columns: [
       {
-        label: "Template Name",
+        label: "Document Name",
         field: "name",
         sort: "asc",
         width: 50,
@@ -42,6 +46,13 @@ const Document = () => {
         sort: "asc",
         width: 100,
         searchable: true,
+        selected: false,
+      },
+      {
+        label: "Comment",
+        field: "comment",
+        sort: "asc",
+        width: 100,
         selected: false,
       },
       {
@@ -100,6 +111,23 @@ const Document = () => {
             {list?.status}
           </span>
         );
+        returnData.comment = (
+          <>
+            <div className="text-center">
+              <a
+                onClick={() => setDocument_Id(list?._id)}
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                <img
+                  src="/images/dashboard/Comment.png"
+                  className="mx-auto d-block"
+                />
+              </a>
+            </div>
+          </>
+        );
         returnData.actions = (
           <div class="text-center">
             <a type="" data-bs-toggle="dropdown" aria-expanded="false">
@@ -132,7 +160,7 @@ const Document = () => {
               <li>
                 <Link
                   class="dropdown-item"
-                  //   to={`/Admin/Requests/Comments/${document?._id}`}
+                    to={`/Signatory/Requests/Comments/${list?._id}`}
                 >
                   <img src="/images/dashboard/Comment.png" className="me-2" />
                   Comments
@@ -217,9 +245,9 @@ const Document = () => {
 
     const sortedRows = [...requests.rows].sort((a, b) => {
       let comparison = 0;
-      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+      if (a?.name?.toLowerCase() < b?.name?.toLowerCase()) {
         comparison = -1;
-      } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
+      } else if (a?.name?.toLowerCase() > b?.name?.toLowerCase()) {
         comparison = 1;
       }
       return currentSortType === "asc" ? comparison : comparison * -1;
@@ -236,25 +264,30 @@ const Document = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let creator_Id = localStorage.getItem("myot_admin_id");
-    // let { data } = await AddCommentForTask({
-    //   comment,
-    //   templete_Id,
-    //   creator_Id,
-    // });
-    // console.log(data);
-    // if (!data?.error) {
-    //   Swal.fire({
-    //     toast: true,
-    //     icon: "success",
-    //     position: "top-end",
-    //     title: "New comment added",
-    //     showConfirmButton: false,
-    //     timerProgressBar: true,
-    //     timer: 3000,
-    //   });
-    //   document.getElementById("close").click();
-    //   setComment("");
-    // }
+    try {
+      let formData = {
+        creator_Id,
+        document_Id,
+        comment,
+      };
+      console.log(formData);
+      let { data } = await DocumentComment(formData);
+      console.log(data);
+      if (!data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "bottom",
+          title: "New comment added",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        document.getElementById("close").click();
+        setComment("");
+        getRequestsData();
+      }
+    } catch (error) {}
   };
   return (
     <div className="position-relative">

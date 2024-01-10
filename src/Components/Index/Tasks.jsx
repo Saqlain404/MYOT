@@ -136,9 +136,11 @@ const Tasks = () => {
               list?.status === "Pending"
                 ? "text-info"
                 : list?.status === "Approved"
-                ? "text-warning"
+                ? "text-success"
                 : list?.status === "In Progress"
                 ? "text-primary"
+                : list?.status === "Rejected"
+                ? "text-danger"
                 : "text-success"
             }`}
           >
@@ -245,7 +247,7 @@ const Tasks = () => {
       Swal.fire({
         toast: true,
         icon: "success",
-        position: "top-end",
+        position: "bottom",
         title: "New comment added",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -255,6 +257,7 @@ const Tasks = () => {
       setComment("");
     }
   };
+
 
   const getTotalCount = async () => {
     try {

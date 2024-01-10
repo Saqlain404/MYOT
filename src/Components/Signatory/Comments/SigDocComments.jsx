@@ -2,17 +2,15 @@ import React, { useEffect, useState } from "react";
 
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
-
+import RightSidebar from "../../RightSidebar";
 import {
   DocumentComment,
   DocumentCommentLists,
-  TasksCommentList,
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
-import { toast } from "react-toastify";
-import RightSidebar from "../../RightSidebar";
 import SidebarSig from "../SidebarSig";
+import Swal from "sweetalert2";
 
-const SigComments = () => {
+const SigDocComments = () => {
   const [commentList, setCommentList] = useState([]);
   const [reply, setReply] = useState(false);
   const [newReply, setNewReply] = useState("");
@@ -29,10 +27,10 @@ const SigComments = () => {
     try {
       let lid = localStorage.getItem("myot_admin_id");
       setLocalId(lid);
-      let { data } = await TasksCommentList(id);
+      let { data } = await DocumentCommentLists(id);
       if (!data?.error) {
-        setCommentList(data?.results?.commentDetails);
-        console.log(data?.results?.commentDetails);
+        setCommentList(data?.results?.commentDetailsList);
+        console.log(data?.results);
       }
     } catch (error) {
       console.log(error);
@@ -54,17 +52,17 @@ const SigComments = () => {
   //     }));
   //   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (newReply === "") {
-      toast.error("Please enter your reply", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "bottom",
+        title: "Please enter a reply",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       return false;
     }
@@ -77,15 +75,14 @@ const SigComments = () => {
     let { data } = await DocumentComment(formData);
     console.log(data);
     if (!data?.error) {
-      toast("Comment added successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "bottom",
+        title: "New comment added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       document.getElementById("reset").click();
       setNewReply("");
@@ -148,7 +145,7 @@ const SigComments = () => {
                 commentList?.map((comments, index) => (
                   <>
                     <div className="bg-white rounded p-2 mb-3">
-                      <div className="d-flex justify-content-between">
+                      <div className="d-flex  justify-content-between">
                         <div className="d-flex justify-content-between">
                           <img
                             src={
@@ -272,4 +269,4 @@ const SigComments = () => {
   );
 };
 
-export default SigComments;
+export default SigDocComments;

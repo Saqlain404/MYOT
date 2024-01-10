@@ -9,6 +9,7 @@ import {
   DashboardCount,
   DashboardTotalDocument,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import DashboardListing from "./DashboardListing/DashboardListing";
 
 const Dashboard = () => {
   const [dataCount, setDataCount] = useState();
@@ -472,7 +473,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="col-12 table_comman mt-3 ">
+            {/* <div className="col-12 table_comman mt-3 ">
               <div className="table-responsive">
                 <table className="table table-borderless">
                   <thead>
@@ -595,7 +596,9 @@ const Dashboard = () => {
                   </tbody>
                 </table>
               </div>
-            </div>
+            </div> */}
+
+            <DashboardListing />
           </div>
           <div className="col">
             <RightSidebar />

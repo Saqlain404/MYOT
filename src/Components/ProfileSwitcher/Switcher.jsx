@@ -48,7 +48,7 @@ const Switcher = () => {
               src={
                 userData?.profile_Pic
                   ? userData?.profile_Pic
-                  : "/images/sidebar/ArrowLineDown2.svg"
+                  : "/images/sidebar/Profile_photo.png"
               }
               alt="hh"
             />

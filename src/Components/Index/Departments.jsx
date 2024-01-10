@@ -148,7 +148,7 @@ const Departments = () => {
       Swal.fire({
         toast: true,
         icon: "success",
-        position: "top-end",
+        position: "bottom",
         title: "Department Deleted successfully",
         showConfirmButton: false,
         timerProgressBar: true,

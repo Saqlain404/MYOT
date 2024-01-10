@@ -2820,3 +2820,14 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+.eye_container {
+  position: absolute;
+  top: 43px;
+  right: 10px;
+}
+
+.eye_container .eye_icon {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}

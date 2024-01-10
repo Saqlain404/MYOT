@@ -130,6 +130,7 @@ import MainForgotPass from "./Components/superAdmin/forgotPassword";
 import MainUpdatePassword from "./Components/superAdmin/updatePassword";
 import MainForgotSuccess from "./Components/superAdmin/forgotSucess";
 import MainHome from "./Components/superAdmin/home";
+import SigDocComments from "./Components/Signatory/Comments/SigDocComments";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -278,6 +279,10 @@ function App() {
         />
         <Route path="Signatory/Help/Contact-us" element={<ContactUsSig />} />
         <Route path="Signatory/Home/Comments/:id" element={<SigComments />} />
+        <Route
+          path="Signatory/Requests/Comments/:id"
+          element={<SigDocComments />}
+        />
         <Route
           path="Signatory/Awaiting-sig/Comments/:id"
           element={<SigComments />}

@@ -4,10 +4,12 @@ import Sidebar from "../Sidebar";
 import { Link, useParams } from "react-router-dom";
 import {
   AddCommentForTask,
+  TasksCommentDelete,
   TasksCommentList,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const Comments = () => {
   const [commentList, setCommentList] = useState([]);
@@ -40,18 +42,38 @@ const Comments = () => {
     }));
   };
 
+  const handleDeleteComment = async (e, id) => {
+    e.preventDefault();
+    try {
+      let { data } = await TasksCommentDelete(id);
+      if (data && !data.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "bottom",
+          title: "Comment deleted successfully",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        getCommentLists();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (replyMsg === "") {
-      toast.error("Please enter you reply", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "bottom",
+        title: "Please enter reply",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       return false;
     }
@@ -149,31 +171,43 @@ const Comments = () => {
                           </p>
                           <p className="comment-time m-auto">
                             {moment(comments?.createdAt).calendar()}
-                            {/* {moment(comments?.createdAt).format(
-                              "MMM Do YY, h:mm a"
-                            )} */}
                           </p>
                         </div>
-                        <div
-                          className="cursor_pointer"
-                          // onClick={() => setReply(!reply)}
-                          onClick={() => toggleReply(index)}
-                        >
-                          {reply[index] ? (
-                            <Link className="ticket-link mt-3 me-1 text-decoration-none">
-                              Cancel
-                            </Link>
-                          ) : (
-                            <>
-                              <img
-                                src="/images/dashboard/reply-arrow.svg"
-                                className="m-2"
-                              />
-                              <Link className="ticket-link mt-3 me-1 text-decoration-none">
-                                Reply
+                        <div className="d-flex align-items-center justify-content-end">
+                          <div
+                            className="cursor_pointer d-flex align-items-center"
+                            onClick={() => toggleReply(index)}
+                          >
+                            {reply[index] ? (
+                              <Link className="ticket-link me-1 text-decoration-none">
+                                Cancel
                               </Link>
-                            </>
-                          )}
+                            ) : (
+                              <>
+                                <img
+                                  src="/images/dashboard/reply-arrow.svg"
+                                  className=""
+                                />
+                                <Link className="ticket-link me-1 text-decoration-none">
+                                  Reply
+                                </Link>
+                              </>
+                            )}
+                          </div>
+                          <div
+                            onClick={(e) =>
+                              handleDeleteComment(e, comments?._id)
+                            }
+                            className="ms-2"
+                          >
+                            <img
+                              src="/images/icons/delete_icon.png"
+                              className=""
+                            />
+                            <Link className="ticket-link me-1 text-decoration-none text-danger">
+                              Delete
+                            </Link>
+                          </div>
                         </div>
                       </div>
                       <p className="comment-txt p-2 mb-0">

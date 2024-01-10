@@ -130,7 +130,7 @@ const EditUserProfile = ({ userId }) => {
     const formData = new FormData();
     formData.append("name", datas?.name);
     formData.append("email", datas?.email);
-    formData.append("password", datas?.password);
+    // formData.append("password", datas?.password);
     formData.append("employTitle", datas?.employTitle);
     formData.append("department_Id", datas?.department_id);
     formData.append("mobileNumber", datas?.mobileNumber);
@@ -146,7 +146,7 @@ const EditUserProfile = ({ userId }) => {
         Swal.fire({
           toast: true,
           icon: "success",
-          position: "top-end",
+          position: "bottom",
           title: "User data updated successfully",
           showConfirmButton: false,
           timerProgressBar: true,

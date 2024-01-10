@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 const EditProfile = () => {
   const [files, setFiles] = useState([]);
   const [profileImgUrl, setProfileImgUrl] = useState();
+  const [passVisible, setPassVisible] = useState(false);
+  const [cPassVisible, setCPassVisible] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -276,13 +278,13 @@ const EditProfile = () => {
                       </div> */}
                     </div>
                     <div className="col-12 d-flex justify-content-between mb-2 pb-4">
-                      <div className="col-6 m-2">
+                      <div className="col-6 m-2 position-relative">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Password
                         </p>
                         <input
                           autoComplete="false"
-                          type="password"
+                          type={passVisible ? "text" : "password"}
                           placeholder="Password"
                           className={classNames(
                             "col-12 profile-edit-input p-2",
@@ -301,19 +303,37 @@ const EditProfile = () => {
                             },
                           })}
                         />
+                        <div
+                          className="eye_container pt-1"
+                          onClick={() => setPassVisible(!passVisible)}
+                        >
+                          {passVisible ? (
+                            <img
+                              className="eye_icon"
+                              src="/images/icons/hide.png"
+                              alt=""
+                            />
+                          ) : (
+                            <img
+                              className="eye_icon"
+                              src="/images/icons/view.png"
+                              alt=""
+                            />
+                          )}
+                        </div>
                         {errors.password && (
                           <small className="errorText ">
                             {errors.password?.message}
                           </small>
                         )}
                       </div>
-                      <div className="col-6 m-2">
+                      <div className="col-6 m-2 position-relative">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Confirm Password
                         </p>
                         <input
                           autoComplete="false"
-                          type="text"
+                          type={cPassVisible ? 'text' : "password"}
                           placeholder="Confirm Password"
                           className={classNames(
                             "col-12 profile-edit-input p-2",
@@ -332,6 +352,24 @@ const EditProfile = () => {
                             },
                           })}
                         />
+                        <div
+                          className="eye_container pt-1"
+                          onClick={() => setCPassVisible(!cPassVisible)}
+                        >
+                          {cPassVisible ? (
+                            <img
+                              className="eye_icon"
+                              src="/images/icons/hide.png"
+                              alt=""
+                            />
+                          ) : (
+                            <img
+                              className="eye_icon"
+                              src="/images/icons/view.png"
+                              alt=""
+                            />
+                          )}
+                        </div>
                         {errors.cpassword && (
                           <small className="errorText ">
                             {errors.cpassword?.message}

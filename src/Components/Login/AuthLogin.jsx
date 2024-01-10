@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { adminLogin } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../app/slice/userSlice";
+import Swal from "sweetalert2";
 
 const AuthLogin = () => {
   const [type, setType] = useState("password");
@@ -43,15 +43,14 @@ const AuthLogin = () => {
     console.log("login Data", response);
 
     if (response?.data && !response?.data?.error) {
-      toast("Logged in successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "bottom",
+        title: "Login successfull",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       dispatch(setUserData(response?.data?.results?.employee));
       navigate("/Admin/Home");
@@ -107,7 +106,7 @@ const AuthLogin = () => {
                   </small>
                 )}
               </div>
-              <div className="mb-4">
+              <div className="mb-4 position-relative">
                 <label for="" className="form-label">
                   Password
                 </label>
@@ -128,13 +127,31 @@ const AuthLogin = () => {
                     },
                   })}
                 />
+                <div
+                  className="eye_container"
+                  onClick={() => setPassVisible(!passVisible)}
+                >
+                  {passVisible ? (
+                    <img
+                      className="eye_icon"
+                      src="/images/icons/hide.png"
+                      alt=""
+                    />
+                  ) : (
+                    <img
+                      className="eye_icon"
+                      src="/images/icons/view.png"
+                      alt=""
+                    />
+                  )}
+                </div>
                 {errors.password && (
                   <small className="errorText ">
                     {errors.password?.message}
                   </small>
                 )}
               </div>
-              <div className="text-center mb-2" onClick={togglePassword}>
+              {/* <div className="text-center mb-2" onClick={togglePassword}>
                 <input
                   type="checkbox"
                   className="cursor_pointer"
@@ -143,7 +160,7 @@ const AuthLogin = () => {
                 <span className="cursor_pointer mx-2 remember-me">
                   Show Password
                 </span>
-              </div>
+              </div> */}
               <div className="d-flex justify-content-between mb-4 remember">
                 <div className="form-check">
                   <input
