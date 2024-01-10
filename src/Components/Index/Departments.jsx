@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
   AddDepartment,
+  DepartmentDelete,
   DepartmentDetails,
   DepartmentList,
   DepartmentSearch,
@@ -13,6 +14,7 @@ import {
 import { useEffect } from "react";
 import { MDBDataTable } from "mdbreact";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 const Departments = () => {
   const [listItems, setListItems] = useState([]);
@@ -70,7 +72,7 @@ const Departments = () => {
         returnData.description = data?.description;
         returnData.actions = (
           <>
-            <div class="dropdown">
+            <div class="">
               <a
                 type=""
                 className="mx-auto"
@@ -85,8 +87,7 @@ const Departments = () => {
               <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
                 <li onClick={() => departmentDetails(data?._id)}>
                   <a
-                    class="dropdown-item border-bottom"
-                    // className="d-flex whitespace-nowrap"
+                    class="dropdown-item"
                     type="button"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal1"
@@ -109,8 +110,8 @@ const Departments = () => {
                     Wrap Column
                   </a>
                 </li>
-                <li>
-                  <a class="dropdown-item text-danger" href="#">
+                <li className="cursor_pointer" onClick={() => deleteDepartment(data?._id)}>
+                  <a class="dropdown-item text-danger">
                     <img
                       src="/images/users/Trash.svg"
                       alt=""
@@ -141,6 +142,23 @@ const Departments = () => {
     }
   };
 
+  const deleteDepartment = async (id) => {
+    let { data } = await DepartmentDelete(id);
+    if (data && !data?.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Department Deleted successfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+
+      DepartmentLists();
+    }
+  };
+
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -150,46 +168,27 @@ const Departments = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log({ e });
     e.preventDefault();
-    const departmentData = {
-      ...departmentInfo,
-      user: localStorage.getItem("user_id"),
-    };
-    console.log(departmentData);
 
-    await AddDepartment({
-      departmentName: departmentData.departmentname,
-      description: departmentData.description,
-    })
-      .catch((error) => {
-        console.log(error);
-      })
-      .then((res) => {
-        if (!res.data?.error) {
-          console.log("Success");
-          navigate("");
-        }
-      });
-    setDepartmentInfo({
-      departmentname: "",
-      description: "",
-    });
-  };
-
-  const handleSearch = async (e) => {
     try {
-      const value = e.target.value;
-      console.log(value);
-      setSearch(value);
-      if (value.length > 0) {
-        let { data } = await DepartmentSearch({ search: value });
-        console.log(data);
-        if (!data?.error) {
-          let values = data?.results?.department;
-          setListItems(values);
-        }
-      } else {
+      let { data } = await AddDepartment({
+        departmentName: departmentInfo?.departmentname,
+        description: departmentInfo?.description,
+      });
+      if (data && !data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "error",
+          title: "New Department Added",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        setDepartmentInfo({
+          departmentname: "",
+          description: "",
+        });
+        document.getElementById("closeModal").click();
         DepartmentLists();
       }
     } catch (error) {
@@ -302,14 +301,18 @@ const Departments = () => {
                       Add Departments
                     </p>
                     <button
-                      type="button"
-                      class="btn-close"
+                      type="reset"
+                      class="btn-close "
+                      id="closeModal"
                       data-bs-dismiss="modal"
                       aria-label="Close"
+                      onClick={() =>
+                        document.getElementById("formReset").click()
+                      }
                     ></button>
                   </div>
 
-                  <form action="" onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit}>
                     <div className="row p-3">
                       <div className="col-12 mb-3 ">
                         <input
@@ -334,15 +337,27 @@ const Departments = () => {
                       </div>
                     </div>
                     <div className="d-flex justify-content-end mb-3">
-                      <button
-                        type="submit"
-                        class="user-modal-btn"
-                        onClick={AddDepartment}
-                      >
+                      <button type="submit" class="user-modal-btn">
                         Add New
                       </button>
-                      <button type="button" class="user-modal-btn2">
-                        Cancle
+                      <button
+                        type="reset"
+                        class="user-modal-btn2"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        onClick={() =>
+                          document.getElementById("formReset").click()
+                        }
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="reset"
+                        class="d-none"
+                        data-bs-dismiss="modal"
+                        id="formReset"
+                      >
+                        reset
                       </button>
                     </div>
                   </form>

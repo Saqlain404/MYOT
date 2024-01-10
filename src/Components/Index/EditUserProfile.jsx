@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 
 import {
   DepartmentList,
+  EmployeeEdit,
   EmployeeView,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { useForm } from "react-hook-form";
 import classNames from "classnames";
+import Swal from "sweetalert2";
 
 const EditUserProfile = ({ userId }) => {
   const [userDetails, setUserDetails] = useState();
@@ -18,18 +20,7 @@ const EditUserProfile = ({ userId }) => {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm({
-    defaultValues: {
-      name: userDetails?.name || "", // Set default value for name
-      employTitle: userDetails?.employTitle || "", // Set default value for employTitle
-      email: userDetails?.email || "", // Set default value for email
-      mobileNumber: userDetails?.mobileNumber || "", // Set default value for mobileNumber
-      salary: userDetails?.salary || "", // Set default value for salary
-      employId: userDetails?.employId || "", // Set default value for employid
-      department_id: userDetails?.department_Id?._id || "", // Set default value for department_id
-      gender: userDetails?.gender || "", // Set default value for gender
-    },
-  });
+  } = useForm();
 
   useEffect(() => {
     getViewUserData(userId);
@@ -81,9 +72,6 @@ const EditUserProfile = ({ userId }) => {
       console.log(error);
     }
   };
-  const defaultChecked = (roleName) => {
-    return userDetails?.employRole?.flat()?.includes(roleName);
-  };
 
   const onFileSelection = (e, key) => {
     setFiles({ ...files, [key]: e.target.files[0] });
@@ -94,9 +82,101 @@ const EditUserProfile = ({ userId }) => {
     }
   };
 
-  const onSubmit = async (data) => {
-    console.log(files);
-    console.log(data);
+  const onSubmit = async (datas) => {
+    let selectedRoles = [];
+    const roles = [
+      "employrole_admin",
+      "employrole_approver",
+      "employrole_department",
+      "employrole_signatory",
+      "employrole_employee",
+    ];
+    roles.forEach((role) => {
+      if (datas[role]) {
+        switch (role) {
+          case "employrole_admin":
+            selectedRoles.push("Admin");
+            break;
+          case "employrole_approver":
+            selectedRoles.push("Approver");
+            break;
+          case "employrole_department":
+            selectedRoles.push("Department Manager");
+            break;
+          case "employrole_signatory":
+            selectedRoles.push("Signatory");
+            break;
+          case "employrole_employee":
+            selectedRoles.push("Employee");
+            break;
+          default:
+            break;
+        }
+      }
+    });
+    if (selectedRoles.length === 0) {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "bottom",
+        title: "Please select roles",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return false;
+    }
+    console.log(selectedRoles);
+    const formData = new FormData();
+    formData.append("name", datas?.name);
+    formData.append("email", datas?.email);
+    formData.append("password", datas?.password);
+    formData.append("employTitle", datas?.employTitle);
+    formData.append("department_Id", datas?.department_id);
+    formData.append("mobileNumber", datas?.mobileNumber);
+    formData.append("salary", datas?.salary);
+    formData.append("gender", datas?.gender);
+    formData.append("employId", datas?.employId);
+    formData.append("employRole", JSON.stringify(selectedRoles));
+    formData.append("profile_Pic", files?.profile_img);
+    console.log(datas);
+    try {
+      let { data } = await EmployeeEdit(userId, formData);
+      if (data && !data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "User data updated successfully",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        document.getElementById("modalClose").click();
+        document.getElementById("formReset").click();
+        getViewUserData();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCheckboxChange = (roleName) => {
+    setUserDetails((prevUserDetails) => {
+      const updatedRoles = prevUserDetails?.employRole || [];
+
+      if (updatedRoles.includes(roleName)) {
+        return {
+          ...prevUserDetails,
+          employRole: updatedRoles.filter((role) => role !== roleName),
+        };
+      } else {
+        return {
+          ...prevUserDetails,
+          employRole: [...updatedRoles, roleName],
+        };
+      }
+    });
   };
 
   return (
@@ -111,7 +191,7 @@ const EditUserProfile = ({ userId }) => {
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
-              id="closeFormModal"
+              id="modalClose"
               aria-label="Close"
             ></button>
           </div>
@@ -295,9 +375,7 @@ const EditUserProfile = ({ userId }) => {
                             "is-invalid": errors.department_id,
                           }
                         )}
-                        {...register("department_id", {
-                          required: "* Please select a department",
-                        })}
+                        {...register("department_id")}
                       >
                         {departmentOptions &&
                           departmentOptions.map((options) => (
@@ -306,19 +384,13 @@ const EditUserProfile = ({ userId }) => {
                               key={options?._id}
                               value={options?._id}
                               selected={
-                                options?.departmentName ===
-                                userDetails?.department_Id?.departmentName
+                                options?._id === userDetails?.department_Id?._id
                               }
                             >
                               {options?.departmentName}
                             </option>
                           ))}
                       </select>
-                      {errors.department_id && (
-                        <div className="invalid-feedback">
-                          {errors.department_id.message}
-                        </div>
-                      )}
                     </div>
                     <div className="col-md-6 mt-3">
                       <select
@@ -328,20 +400,22 @@ const EditUserProfile = ({ userId }) => {
                             "is-invalid": errors.gender,
                           }
                         )}
-                        {...register("gender", {
-                          required: "* Please select a gender",
-                        })}
                         name="gender"
+                        {...register("gender")}
                       >
-                        <option value="">Select Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option
+                          selected={userDetails?.gender === "male"}
+                          value="male"
+                        >
+                          Male
+                        </option>
+                        <option
+                          selected={userDetails?.gender === "female"}
+                          value="female"
+                        >
+                          Female
+                        </option>
                       </select>
-                      {errors.gender && (
-                        <div className="invalid-feedback">
-                          {errors.gender.message}
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>
@@ -360,8 +434,14 @@ const EditUserProfile = ({ userId }) => {
                         <td>
                           <input
                             type="checkbox"
-                            name="Approver"
-                            defaultChecked={defaultChecked("Approver")}
+                            name="employrole_approver"
+                            {...register("employrole_approver", {
+                              disabled: false,
+                            })}
+                            checked={userDetails?.employRole.includes(
+                              "Approver"
+                            )}
+                            onChange={() => handleCheckboxChange("Approver")}
                           />
                         </td>
                       </tr>
@@ -370,8 +450,12 @@ const EditUserProfile = ({ userId }) => {
                         <td>
                           <input
                             type="checkbox"
-                            name="Admin"
-                            defaultChecked={defaultChecked("Admin")}
+                            name="employrole_admin"
+                            {...register("employrole_admin", {
+                              disabled: false,
+                            })}
+                            checked={userDetails?.employRole.includes("Admin")}
+                            onChange={() => handleCheckboxChange("Admin")}
                           />
                         </td>
                       </tr>
@@ -380,8 +464,14 @@ const EditUserProfile = ({ userId }) => {
                         <td>
                           <input
                             type="checkbox"
-                            name="Signatory"
-                            defaultChecked={defaultChecked("Signatory")}
+                            name="employrole_signatory"
+                            {...register("employrole_signatory", {
+                              disabled: false,
+                            })}
+                            checked={userDetails?.employRole.includes(
+                              "Signatory"
+                            )}
+                            onChange={() => handleCheckboxChange("Signatory")}
                           />
                         </td>
                       </tr>
@@ -390,10 +480,16 @@ const EditUserProfile = ({ userId }) => {
                         <td>
                           <input
                             type="checkbox"
-                            name="Department Manager"
-                            defaultChecked={defaultChecked(
+                            name="employrole_department"
+                            {...register("employrole_department", {
+                              disabled: false,
+                            })}
+                            checked={userDetails?.employRole.includes(
                               "Department Manager"
                             )}
+                            onChange={() =>
+                              handleCheckboxChange("Department Manager")
+                            }
                           />
                         </td>
                       </tr>
@@ -402,8 +498,14 @@ const EditUserProfile = ({ userId }) => {
                         <td>
                           <input
                             type="checkbox"
-                            name="Department Manager"
-                            defaultChecked={defaultChecked("Employee")}
+                            name="employrole_employee"
+                            {...register("employrole_employee", {
+                              disabled: false,
+                            })}
+                            checked={userDetails?.employRole.includes(
+                              "Employee"
+                            )}
+                            onChange={() => handleCheckboxChange("Employee")}
                           />
                         </td>
                       </tr>

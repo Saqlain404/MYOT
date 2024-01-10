@@ -10,14 +10,17 @@ import {
   AdminDashboardCount,
   GetTaskData,
   SearchTask,
+  TemplateDelete,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import Document from "./DocumentRequests/Document";
 import { MDBDataTable } from "mdbreact";
+import Swal from "sweetalert2";
 
 const Home = () => {
   const [showClearButton, setShowClearButton] = useState(false);
   const [adminCount, setAdminCount] = useState();
   const [comment, setComment] = useState("");
+  const [templete_Id, setTemplete_Id] = useState();
 
   const [templates, setTemplates] = useState({
     columns: [
@@ -133,67 +136,22 @@ const Home = () => {
         returnData.comments = (
           <>
             <div className="text-center">
-              <a type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a
+                onClick={() => setTemplete_Id(list?._id)}
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
                 <img
                   src="/images/dashboard/Comment.png"
                   className="mx-auto d-block"
                 />
               </a>
-              <form
-                className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
-                onSubmit={(e) => handleSubmit(e, list?._id)}
-              >
-                <div className="mb-3 border-bottom">
-                  <label className="form-label th-text">Comment or type</label>
-
-                  <input
-                    type="text"
-                    className="form-control border-0"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                </div>
-
-                <div className="d-flex justify-content-between">
-                  <div>
-                    <img
-                      src="/images/tasks/assign comments.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/mention.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/task.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/emoji.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/attach_attachment.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                  </div>
-                  <div>
-                    <button type="submit" className="comment-btn btn-primary">
-                      Comment
-                    </button>
-                  </div>
-                </div>
-              </form>
             </div>
           </>
         );
         returnData.actions = (
-          <div class="">
+          <div class="text-center">
             <a
               className="cursor_pointer"
               type=""
@@ -246,8 +204,11 @@ const Home = () => {
                   Wrap Column
                 </a>
               </li>
-              <li>
-                <a class="dropdown-item text-danger" href="#">
+              <li
+                className="cursor_pointer"
+                onClick={() => deleteTemplate(list?._id)}
+              >
+                <a class="dropdown-item text-danger">
                   <img src="/images/users/Trash.svg" alt="" className="me-2" />
                   Delete Template
                 </a>
@@ -259,6 +220,26 @@ const Home = () => {
         newRows.push(returnData);
       });
       setTemplates({ ...templates, rows: newRows });
+    }
+  };
+
+  const deleteTemplate = async (id) => {
+    try {
+      let { data } = await TemplateDelete(id);
+      if (data && !data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "Templates deleted successfully",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        getTaskData();
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -329,7 +310,7 @@ const Home = () => {
     setShowClearButton(false);
   };
 
-  const handleSubmit = async (e, templete_Id) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let creator_Id = localStorage.getItem("myot_admin_id");
     console.log(creator_Id, comment, templete_Id);
@@ -340,16 +321,16 @@ const Home = () => {
     });
     console.log(data);
     if (!data?.error) {
-      toast("Comment added successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "New comment added successfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
+      document.getElementById('closeForm').click()
       setComment("");
     }
   };
@@ -564,6 +545,88 @@ const Home = () => {
           <div className="col">
             <RightSidebar />
           </div>
+
+          {/* Comment Modal */}
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title th-text" id="exampleModalLabel">
+                    Add comment
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    id="closeForm"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form className="rounded" onSubmit={handleSubmit}>
+                    <div className="mb-3 border-bottom">
+                      <label className="form-label th-text">
+                        Comment or type
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control border-0 w-100"
+                        placeholder="Type comment..."
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="d-flex justify-content-between">
+                      <div>
+                        <img
+                          src="/images/tasks/assign comments.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/mention.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/task.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/emoji.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/attach_attachment.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                      </div>
+                      <div>
+                        <button
+                          type="submit"
+                          className="comment-btn btn-primary"
+                        >
+                          Comment
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Comment Modal close */}
         </div>
       </div>
     </>

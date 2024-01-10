@@ -198,7 +198,7 @@ const Document = () => {
           </>
         );
         returnData.actions = (
-          <div class="">
+          <div class="text-center">
             <a
               className="cursor_pointer"
               type=""

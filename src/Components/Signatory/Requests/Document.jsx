@@ -100,7 +100,7 @@ const Document = () => {
           </span>
         );
         returnData.actions = (
-          <div class="">
+          <div class="text-center">
             <a type="" data-bs-toggle="dropdown" aria-expanded="false">
               <img
                 src="/images/sidebar/ThreeDots.svg"
@@ -108,7 +108,7 @@ const Document = () => {
               />
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-              <li>
+              {/* <li>
                 <a class="dropdown-item border-bottom" href="#">
                   <img
                     src="/images/users/AddressBook.svg"
@@ -117,8 +117,8 @@ const Document = () => {
                   />
                   View Users Details
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a class="dropdown-item border-bottom" href="#">
                   <img
                     src="/images/users/PencilLine.svg"
@@ -127,7 +127,7 @@ const Document = () => {
                   />
                   Edit User Details
                 </a>
-              </li>
+              </li> */}
               <li>
                 <Link
                   class="dropdown-item"
@@ -210,48 +210,61 @@ const Document = () => {
     setRequests({ ...requests, hiddenColumns: [], selectedColumns: [] });
     setShowClearButton(false);
   };
+
+  const toggleSortOrder = () => {
+    const currentSortType = requests.sortType === "asc" ? "desc" : "asc";
+
+    const sortedRows = [...requests.rows].sort((a, b) => {
+      let comparison = 0;
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        comparison = -1;
+      } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
+        comparison = 1;
+      }
+      return currentSortType === "asc" ? comparison : comparison * -1;
+    });
+    console.log(sortedRows);
+
+    setRequests({
+      ...requests,
+      rows: sortedRows,
+      sortType: currentSortType,
+    });
+  };
   return (
     <div className="position-relative">
       <p className="table-name mb-2">Document Requests</p>
       <div className=" col-12 d-flex align-items-center table-searchbar">
-        <div className="row d-flex  col">
+        <div className="d-flex ">
           <div className="col-md-3 table-searchbar-imgs">
-            <img
+            {/* <img
               src="/images/dashboard/Plus-icon.png"
-              alt=""
               className="p-2 table-searchbar-img"
-            />
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            /> */}
             <img
-              src="/images/dashboard/FunnelSimple.png"
-              alt=""
-              className="p-2 table-searchbar-img"
-            />
-            <img
+              onClick={toggleSortOrder}
               src="/images/dashboard/ArrowsDownUp.png"
-              alt=""
-              className="p-2 table-searchbar-img"
-            />
-            <img
-              src="/images/dashboard/DotsThreeOutlineVertical2.png"
-              alt=""
-              className="p-2 table-searchbar-img border-end"
+              className="p-2 table-searchbar-img border-end cursor_pointer"
             />
           </div>
-          <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
+          <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
             <p className="m-0 text-nowrap">
               {requests?.selectedColumns && requests?.selectedColumns.length}
               <span> Selected</span>
             </p>
             {showClearButton ? (
               <p
-                className="hide-selected m-0 text-nowrap cursor_pointer "
+                className="hide-selected ms-2 m-0 text-nowrap cursor_pointer "
                 onClick={showAllColumns}
               >
                 Clear Selection
               </p>
             ) : (
               <p
-                className="hide-selected m-0 text-nowrap cursor_pointer "
+                className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
                 onClick={hideSelectedColumns}
               >
                 Hide Selected

@@ -205,7 +205,7 @@ export async function SignatoryUpdateSignature(formData) {
 export async function SignatoryProfileCompletion(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/signatory/total-ticket-count/${id}`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/signatory/total-ticket-count/${id}`
     );
 
     if (!data?.error) return { data };

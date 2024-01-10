@@ -22,7 +22,6 @@ export async function adminLogin(formData) {
       return { data };
     } else toast.error(data.message);
 
-    return { data };
   } catch (error) {
     if (error.response) toast.error(error.response.data.message);
     return { error };

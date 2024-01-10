@@ -44,7 +44,6 @@ const Sidebar = () => {
     navigate("/Admin/Login");
   };
 
-
   return (
     <div className="container-fluid  sidebar">
       {/* Sidebar scroll*/}
@@ -432,47 +431,6 @@ const Sidebar = () => {
         </div>
         <div class="dropdown position-fixed bottom-0">
           <ProfileSwitcher />
-          {/* <a
-            class="text-decoration-none"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <div className="profile">
-              <div>
-                <img src="/images/sidebar/Profile photo.png" alt="" />
-              </div>
-              <div>
-                <span className="text-dark">Easin Arafat</span>
-                <p className="th-text">Admin</p>
-              </div>
-              <div>
-                <img src="/images/sidebar/ArrowLineDown2.svg" alt="hh" />
-              </div>
-            </div>
-          </a>
-          <ul class="dropdown-menu">
-            <Link  to={"/Approver/Home"} className="text-decoration-none">
-              <li>
-                <a class="dropdown-item">Approver</a>
-              </li>
-            </Link>
-            <Link to={"/Department/Home"} className="text-decoration-none">
-              <li>
-                <a class="dropdown-item">Department Manager</a>
-              </li>
-            </Link>
-            <Link to={"/Signatory/Home"} className="text-decoration-none">
-              <li>
-                <a class="dropdown-item">Signatory</a>
-              </li>
-            </Link>
-            <Link to={"/Employee/Home"} className="text-decoration-none">
-              <li>
-                <a class="dropdown-item">Employee</a>
-              </li>
-            </Link>
-          </ul> */}
         </div>
       </div>
     </div>
