@@ -105,7 +105,9 @@ const Home = () => {
               src={list?.manager[0]?.profile_Pic}
               alt=""
             />
-            <span className="ms-2 text-capitalize">{list?.manager[0]?.name}</span>
+            <span className="ms-2 text-capitalize">
+              {list?.manager[0]?.name}
+            </span>
           </>
         );
         returnData.version = (
