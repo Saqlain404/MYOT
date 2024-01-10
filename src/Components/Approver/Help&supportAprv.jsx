@@ -372,7 +372,7 @@ const HelpSupportAprv = () => {
                             </div>
                             <ToastContainer />
                             <div className="d-flex justify-content-end mb-3">
-                              <button type="submit" class="user-modal-btn">
+                              <button type="submit" class="user-modal-btn" data-bs-dismiss="modal">
                                 Send
                               </button>
                               <button

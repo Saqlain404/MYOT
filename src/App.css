@@ -2831,3 +2831,7 @@ input::-webkit-inner-spin-button {
   height: 25px;
   cursor: pointer;
 }
+.view-detail-page {
+  width: 100%;
+  margin-top: 20px;
+}

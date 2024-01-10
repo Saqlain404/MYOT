@@ -30,9 +30,14 @@ const ContactUsAprv = () => {
       mobileNumber:  contactData.mobileNumber,
       message:  contactData.message,
     };
-    setContactData("")
+    // setContactData("")
 
-
+    setContactData({
+      name: '',
+      email: '',
+      mobileNumber: '',
+      message: '',
+    });
 
     const response = await contactUsAprv(data);
 

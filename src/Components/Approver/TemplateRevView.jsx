@@ -6,15 +6,18 @@ import Sidebar from "../Sidebar";
 // import "assets/css/style.min.css"
 import { Card } from "antd";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import SidebarDepartment from "./SidebarAprv";
 import { templeteViewDetails } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 
 const TemplateRevView = () => {
   const[viewData, setViewData] = useState()
+
+  const { id } = useParams();
+
   useEffect(()=>{
     const templeteView = async()=>{
-      const viewDetail = await templeteViewDetails()
+      const viewDetail = await templeteViewDetails(id)
       console.log(viewDetail)
       setViewData(viewDetail?.templete)
     }
@@ -85,36 +88,17 @@ const TemplateRevView = () => {
       <img src="/images/template/template-view-logo.svg" alt="" />
       
       </div>
-      <p className="col-12 mb-4 text-start mt-4 pb-3">4304 Liberty Avenue <br/> 
-92680 Tustin, CA<br/> 
-VAT no.: 12345678<br/> <br/> 
+      <p className="col-12 mb-4 text-start mt-4 pb-3">{viewData?.templeteName} <br/> 
+{/* 92680 Tustin, CA<br/> 
+VAT no.: 12345678<br/> <br/>  */}
 
-Date : 09 Oct, 2023</p>
-<p className="col-12 mb-4 text-start mt-4">
-  Susan Lewis<br/> 
-  4304 Liberty Avenue<br/> 
-  92680 Tustin, CA<br/>
+Date : {viewData?.createdAt}</p>
 
-  VAT no.: 12345678</p>
 
-  <p className="col-12 mb-4 text-start mt-4">
-  Dear Nancy Walker,
-  </p>
-  <p className="col-12 mb-4 text-start mt-4">
-  We are pleased to inform you that, effective from [Effective Date], you have been promoted to the position of [New Position]. This promotion is in recognition of your outstanding performance, dedication, 
-and contribution to [Department Name] and TechFusion Corp.. <br/> <br/>
+  <div>
+    <img className="view-detail-page" src={viewData?.templete[0]}/>
+  </div>
 
-Your new salary will be [New Salary], effective from [Effective Date]. You will also be entitled to [Additional Benefits, if any]. <br/><br/>
-
-[Additional Information or Details] <br/><br/>
-
-Congratulations on your well-deserved promotion. We look forward to your continued dedication and exceptional work. <br/><br/>
-
-Warm regards,<br/><br/>
-
-Susan Lewis <br/>
-[Signatory Position]
-  </p>
   
   <div className="d-flex justify-content-start mt-4  col-4">
       <img src="/images/template/template-view-signature.svg" alt="" className="pb-4 mb-4" />

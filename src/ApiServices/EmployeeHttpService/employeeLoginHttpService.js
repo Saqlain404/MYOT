@@ -87,7 +87,7 @@ export async function ContactUsEmployee(formData) {
         toast: true,
         icon: "success",
         position:"bottom",
-        title: "Success",
+        title: "Create Contact Successfully",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -201,7 +201,7 @@ export async function EmployeeDashList(ids) {
   }
 }
 
-export async function documentViewDetails() {
+export async function documentViewDetails(id) {
   try {
     const response = await employeeHttpService.get(
       `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-details/${id}`

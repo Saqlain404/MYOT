@@ -181,7 +181,7 @@ const TemplateReview = () => {
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
               <li>
                 <Link
-                  to={"/Approver/Template-view"}
+                   to={`/Approver/Template-view/${list?._id}`}
                   className="text-decoration-none"
                 >
                   <a class="dropdown-item border-bottom" href="/">
@@ -193,6 +193,19 @@ const TemplateReview = () => {
                     View Users Details
                   </a>
                 </Link>{" "}
+              </li>
+              <li>
+                <Link
+                  class="dropdown-item"
+                  to={`/Approver/Comment/${list?._id}`}
+                >
+                  <img
+                    src="/images/dashboard/Comment.png"
+                    alt=""
+                    className="me-2"
+                  />
+                  Comments
+                </Link>
               </li>
               <li>
                 <a

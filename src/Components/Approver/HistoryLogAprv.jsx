@@ -175,7 +175,7 @@ const HistoryLogAprv = () => {
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
               <li>
                 <Link
-                  to={"/Approver/Template-view"}
+                   to={`/Approver/Template-view/${list?._id}`}
                   className="text-decoration-none"
                 >
                   <a class="dropdown-item border-bottom" href="/">
@@ -188,16 +188,16 @@ const HistoryLogAprv = () => {
                   </a>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <a class="dropdown-item border-bottom" href="#">
                   <img
                     src="/images/users/PencilLine.svg"
                     alt=""
                     className="me-2"
                   />
-                  Edit User Details
+                  View Details
                 </a>
-              </li>
+              </li> */}
               <li>
                 <Link
                   class="dropdown-item"
@@ -211,7 +211,7 @@ const HistoryLogAprv = () => {
                   Comments
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <a class="dropdown-item border-bottom" href="#">
                   <img
                     src="/images/users/TextAlignLeft.svg"
@@ -220,13 +220,13 @@ const HistoryLogAprv = () => {
                   />
                   Wrap Column
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a class="dropdown-item text-danger" href="#">
                   <img src="/images/users/Trash.svg" alt="" className="me-2" />
                   Delete Template
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         );
