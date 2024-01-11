@@ -97,8 +97,8 @@ export async function SignatoryDashboardCount() {
 
 export async function SignatoryAwaitListing(id) {
   try {
-    const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/signatory/templete-list/${id}`
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/signatory/awaiting-templete/${id}`
     );
 
     if (!data?.error) return { data };
