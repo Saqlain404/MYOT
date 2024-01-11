@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 import { employeProfileDetail } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 import EmplEditProfile from "./EmplEditProfile";
+import moment from "moment";
 
 const ProfileEmpl = () => {
  
@@ -21,10 +22,6 @@ const ProfileEmpl = () => {
   },[])
   console.log(profileDetail)
 
-
-  const originalDate = new Date(profileDetail?.DOB);
-  const options = { year: 'numeric', month: 'long', day: 'numeric', };
-  const formattedDate = originalDate.toLocaleDateString('en-US', options);
 
 
   return (
@@ -117,7 +114,7 @@ const ProfileEmpl = () => {
       </div>
       <div>
         <p className="profile-info">Date of Birth</p>
-        <p className="profile-data">{formattedDate}</p>
+        <p className="profile-data">{moment(profileDetail?.CreatedAT).format("L")}</p>
       </div>
     </div>
    </div>
