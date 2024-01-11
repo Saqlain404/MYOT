@@ -42,13 +42,13 @@ const DocumentEmply = () => {
         width: 50,
         selected: false,
       },
-      {
-        label: "Requester's Name",
-        field: "assigned",
-        sort: "asc",
-        width: 50,
-        selected: false,
-      },
+      // {
+      //   label: "Requester's Name",
+      //   field: "assigned",
+      //   sort: "asc",
+      //   width: 50,
+      //   selected: false,
+      // },
       {
         label: "Department",
         field: "department",
@@ -65,7 +65,7 @@ const DocumentEmply = () => {
         selected: false,
       },
       {
-        label: "Date of Signing",
+        label: "Date of Request",
         field: "date",
         sort: "asc",
         width: 100,
@@ -353,6 +353,7 @@ const DocumentEmply = () => {
       documentName: "",
       templateId: "",
     });
+    getTaskData()
   };
 
   const handleSubmitComment = async (e) => {

@@ -47,13 +47,13 @@ const EmployeeDash = () => {
         selected: false,
       },
 
-      {
-        label: "Login",
-        field: "date",
-        sort: "asc",
-        width: 100,
-        selected: false,
-      },
+      // {
+      //   label: "Login",
+      //   field: "date",
+      //   sort: "asc",
+      //   width: 100,
+      //   selected: false,
+      // },
       // {
       //   label: "Version",
       //   field: "version",
@@ -408,8 +408,8 @@ const EmployeeDash = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
-                      /Dashboard
+                    <a className="nav-link ms-2" >
+                      Dashboard
                     </a>
                   </li>
                 </ul>
@@ -452,7 +452,7 @@ const EmployeeDash = () => {
 
             <div className="col-12 mb-4">
               <div className="row statics_part">
-                <div className="col-md-3">
+                <div className="col-md-4">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">Total Document</h6>
@@ -472,7 +472,7 @@ const EmployeeDash = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-3 ">
+                <div className="col-md-4 ">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
@@ -494,11 +494,11 @@ const EmployeeDash = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-3 ">
+                <div className="col-md-4 ">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
-                        Recently Documents
+                        Recent Documents
                       </h6>
                     </div>
                     <div className="d-flex  mt-4">
@@ -516,7 +516,7 @@ const EmployeeDash = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-3 ">
+                {/* <div className="col-md-3 ">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
@@ -527,27 +527,27 @@ const EmployeeDash = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         {totalDocument !== null && totalDocument}
                       </h3>
-                      {/* <span className="card-insights fw-bold m-auto">
+                      <span className="card-insights fw-bold m-auto">
                         +9.15%
                         <img
                           src="/images/dashboard/ArrowRise.png"
                           alt=""
                           className="ps-1"
                         />
-                      </span> */}
+                      </span>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="col-12">
               <div className="row">
                 <div className="col-md-6 ">
                   <div className="dashboard-card bg-light ">
-                    <div className="d-flex justify-content-around dashboard-card-text">
+                    <div className="d-flex  dashboard-card-text">
                       <p>Documents </p>
-                      <p>Current Week </p>
-                      <p>Previous Week</p>
+                      {/* <p>Current Week </p> */}
+                      {/* <p>Previous Week</p> */}
                     </div>
                     <div className="d-flex justify-content-around">
                       <img

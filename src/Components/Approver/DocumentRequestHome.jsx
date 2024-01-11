@@ -12,7 +12,7 @@ const DocumentRequestHome = () => {
     const [tasks, setTasks] = useState({
         columns: [
           {
-            label: "Template Name",
+            label: "Document Name",
             field: "name",
             sort: "asc",
             width: 50,

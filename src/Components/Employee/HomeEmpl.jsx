@@ -9,6 +9,7 @@ import {
   AddDocument,
   DocumentCount,
   employeDocumentList,
+  employeProfileDetail,
   fetchTemplateData,
   searchDoc,
 } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
@@ -33,19 +34,19 @@ const HomeEmpl = () => {
   const [tasks, setTasks] = useState({
     columns: [
       {
-        label: "Template Name",
+        label: "Document",
         field: "name",
         sort: "asc",
         width: 50,
         selected: false,
       },
-      {
-        label: "Requester's Name",
-        field: "assigned",
-        sort: "asc",
-        width: 50,
-        selected: false,
-      },
+      // {
+      //   label: "Requester's Name",
+      //   field: "assigned",
+      //   sort: "asc",
+      //   width: 50,
+      //   selected: false,
+      // },
       {
         label: "Department",
         field: "department",
@@ -54,15 +55,15 @@ const HomeEmpl = () => {
         searchable: true,
         selected: false,
       },
+      // {
+      //   label: "Version",
+      //   field: "version",
+      //   sort: "asc",
+      //   width: 100,
+      //   selected: false,
+      // },
       {
-        label: "Version",
-        field: "version",
-        sort: "asc",
-        width: 100,
-        selected: false,
-      },
-      {
-        label: "Date of Creation",
+        label: "Date of Request",
         field: "date",
         sort: "asc",
         width: 100,
@@ -409,6 +410,20 @@ const HomeEmpl = () => {
     setDocumentInfo({ ...documentInfo, [name]: value });
     
   };
+
+  const[profileDetail,setProfileDetail] = useState(null);
+
+  
+
+  useEffect(()=>{
+    const details = async ()=>{
+      const detailResults = await employeProfileDetail();
+      const data = detailResults?.[0]?.results?.employee;
+      setProfileDetail(data)
+    }
+    details();
+  },[])
+  console.log(profileDetail)
   
 
   // const [templateIdList, setTemplateIdList] = useState([]);
@@ -489,8 +504,8 @@ const HomeEmpl = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
-                      /Home
+                    <a className="nav-link ms-2">
+                      Home
                     </a>
                   </li>
                 </ul>
@@ -589,7 +604,7 @@ const HomeEmpl = () => {
                       aria-label="Close"
                       className="user-modal-btn2"
                     >
-                      Cancle
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -600,7 +615,21 @@ const HomeEmpl = () => {
            
             <div className="col-12 mb-4">
               <div className="row statics_part">
-                <div className="col-md-6">
+              <div className="col-md-4 ">
+                  <div className="statics_box card-clr-2-4">
+                    <div className="statics_left">
+                      <h6 className="mb-0 header-card-text">
+                        My Department
+                      </h6>
+                    </div>
+                    <div className="d-flex  mt-4">
+                      <h3 className="department-name mb-0 fw-semibold fs-7">
+                        {profileDetail?.department_Id?.departmentName}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-4">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
@@ -614,7 +643,7 @@ const HomeEmpl = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
@@ -632,7 +661,7 @@ const HomeEmpl = () => {
             </div>
            
             <div className="position-relative">
-              <p className="table-name mb-2">Templetes</p>
+              <p className="table-name mb-2">Documents</p>
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">
                   <div className="col-md-3 table-searchbar-imgs">

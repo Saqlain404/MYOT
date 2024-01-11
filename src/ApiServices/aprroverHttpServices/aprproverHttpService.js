@@ -837,18 +837,36 @@ export async function DeleteCommentAprv(comment_id) {
       const commentData = response?.data.message;
       console.log(commentData)
       // toast.success(commentData)
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"bottom",
+        title: "Comment Deleted",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       
 
       return {commentData};
     } else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"bottom",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }

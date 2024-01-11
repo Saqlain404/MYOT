@@ -7,6 +7,7 @@ import {
   approvedTemplete,
   approverTempleteList,
   homeCount,
+  profileDetails,
   rejectedTemplete,
   searchDocTemplete,
   searchTemplete,
@@ -463,6 +464,19 @@ const HomeAprv = () => {
   };
 
 
+  const[profileDetail,setProfileDetail] = useState(null);
+  useEffect(()=>{
+    const details = async ()=>{
+      const detailResults = await profileDetails(ids);
+      const data = detailResults?.[0]?.approver;
+      setProfileDetail(data)
+    }
+    details();
+  },[])
+  console.log(profileDetail)
+
+
+
   return (
     <>
       <div className="container-fluid">
@@ -514,6 +528,20 @@ const HomeAprv = () => {
 
             <div className="col-12 mb-4">
               <div className="row statics_part">
+                <div className="col-md-3 ">
+                  <div className="statics_box card-clr-2-4">
+                    <div className="statics_left">
+                      <h6 className="mb-0 header-card-text">
+                        My Department
+                      </h6>
+                    </div>
+                    <div className="d-flex  mt-4">
+                      <h3 className="department-name mb-0 fw-semibold fs-7">
+                        {profileDetail?.department_Id?.departmentName}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
                 <div className="col-md-3">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
@@ -522,20 +550,6 @@ const HomeAprv = () => {
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         {docCount?.totalEmployee[0]?.count || 0}
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3 ">
-                  <div className="statics_box card-clr-2-4">
-                    <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">
-                        Total Departments
-                      </h6>
-                    </div>
-                    <div className="d-flex  mt-4">
-                      <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {docCount?.countDepartment}
                       </h3>
                     </div>
                   </div>
@@ -571,7 +585,7 @@ const HomeAprv = () => {
               </div>
             </div>
             <div className="position-relative">
-              <p className="table-name mb-2">Templetes</p>
+              <p className="table-name mb-2">Templates</p>
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">
                   <div className="col-md-3 table-searchbar-imgs">
