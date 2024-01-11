@@ -803,6 +803,46 @@ export async function AddCommentApprv(formData) {
     return { error };
   }
 }
+export async function AddReplyCommentApprv(formData) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/reply-comment`,
+      formData
+    );
+   
+    console.log(data);
+
+    // return { data };
+    if (!data.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"top-end",
+        title: "Reply Added Succesfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
+
+    if (!data.error) return { data };
+  } catch (error) {
+    if (error?.response) 
+    // toast.error(error.response.data.message);
+    return { error };
+  }
+}
 export async function CommentViewApprv(id) {
   try {
     const response = await employeeHttpService.post(

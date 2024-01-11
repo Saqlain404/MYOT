@@ -15,7 +15,6 @@ const CommentsEmply = () => {
   const [reply, setReply] = useState(false);
   const [comment, setComment] = useState("");
   const [replyMsg, setReplyMsg] = useState("");
-  const [focusedCommentId, setFocusedCommentId] = useState(null);
 
   const { id } = useParams();
   console.log(id);
@@ -44,11 +43,9 @@ const CommentsEmply = () => {
   const toggleReply = (comment_Id) => {
     setReply((prevState) => {
       const newState = { ...prevState };
-      // Close all reply fields
       Object.keys(newState).forEach((key) => {
         newState[key] = false;
       });
-      // Toggle the reply field for the specific comment
       newState[comment_Id] = !prevState[comment_Id];
       return newState;
     });
