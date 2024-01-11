@@ -298,4 +298,116 @@ export async function DepartmentDashboardCount () {
       return { error };
     }
   }
+
+  export async function TicketList(formData) {
+    try {
+      const { data } = await adminHttpService.get(
+        `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/656982002e4c41f286f7dffb`,
+        formData
+      );
+      console.log(data);
+      if (!data.error) {
+        // toast.success(data.message);
+        // await localStorage.getItem("x-auth-token-company");
+      } else toast.error(data.message);
   
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+  
+  export async function OngoingTicketList(formData) {
+    try {
+      const { data } = await adminHttpService.get(
+        `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/656982002e4c41f286f7dffb`,
+        formData
+      );
+      console.log(data);
+      if (!data.error) {
+        // toast.success(data.message);
+        // await localStorage.getItem("x-auth-token-company");
+      } else toast.error(data.message);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+
+  export async function NewTicketList(formData) {
+    try {
+      const { data } = await adminHttpService.get(
+        `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/656982002e4c41f286f7dffb`,
+        formData
+      );
+      console.log(data);
+      if (!data.error) {
+        // toast.success(data.message);
+        // await localStorage.getItem("x-auth-token-company");
+      } else toast.error(data.message);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+
+  export async function NewTicket(formData) {
+    try {
+      const { data } = await adminHttpService.post(
+        `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/656982002e4c41f286f7dffb`,
+        formData
+      );
+      console.log(data);
+      if (!data.error) {
+        // toast.success(data.message);
+        // await localStorage.getItem("x-auth-token-company");
+      } else toast.error(data.message);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+
+  export async function CompletedTemplateList(formData) {
+    try {
+      const { data } = await adminHttpService.get(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/templete-listing`,
+        formData
+      );
+      console.log(data);
+      if (!data.error) {
+        // toast.success(data.message);
+        // await localStorage.getItem("x-auth-token-company");
+      } else toast.error(data.message);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
+  export async function AssignTemplate(formData) {
+    try {
+      const { data } = await adminHttpService.post(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/assign-templete`,
+        formData
+      );
+      // console.log(data);
+      if (!data.error) {
+        toast.success(data.message);
+        // await localStorage.getItem("x-auth-token-company");
+      } else toast.error(data.message);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }

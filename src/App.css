@@ -1666,7 +1666,7 @@ td {
   text-align: start;
   color: #000;
   font-family: Nunito;
-  font-size: 12px !important;
+  font-size: 13px !important;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -1679,7 +1679,7 @@ td {
   text-align: start;
   color: #000;
   font-family: Nunito;
-  font-size: 14px !important; 
+  font-size: 13px !important; 
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -2558,7 +2558,8 @@ td {
   width: 24px;
   height: 24px;
   border-radius: 16px;
-  margin: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .table-profile-pic {
@@ -2804,45 +2805,26 @@ div.dataTables_wrapper div.dataTables_paginate {
   color: red !important;
   font-size: 13px;
 }
+.pass_toggle_text {
+}
 
 /* .pass_toggle_text {
 } */
 
-.mdb_table2 .mdb-datatable-filter input {
+.depart_table {
+  position: relative;
+}
+.depart_table .mdb-datatable-filter input {
   width: 100%;
-  height: 100%;
+  height: auto;
   position: relative !important;
-  top: 13.8rem !important;
+  top: -6rem;
 }
-.signup-form {
-  overflow-y: auto;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-.eye_container {
-  position: absolute;
-  top: 43px;
-  right: 20px;
-}
-
-.eye_container .eye_icon {
-  width: 25px;
-  height: 25px;
+.active_tab {
+  text-underline-offset: unset;
+  text-decoration: underline;
   cursor: pointer;
 }
-.view-detail-page {
-  width: 100%;
-  margin-top: 20px;
-}
-.department-name{
-  font-size: 15px;
-  color: #051036;
-  font-family: Nunito;
-  font-style: normal;
-  font-weight: 900;
-  line-height: 36px; /* 150% */
+.cal_tab {
+  cursor: pointer;
 }

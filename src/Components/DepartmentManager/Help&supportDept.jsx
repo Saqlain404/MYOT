@@ -1,8 +1,87 @@
-import React from "react";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { NewTicket, NewTicketList, OngoingTicketList, TicketList } from "../../ApiServices/departmentHttpService/departmentHttpService";
 import SidebarDepartment from "./SidebarDepartment";
 
 const HelpSupportDept = () => {
+
+  const [email, setEmail] = useState("");
+  const [requestType, setRequestType] = useState("");
+  const [message, setMessage] = useState("");
+  const [id, setId] = useState();
+  const [ticketList, setTicketList] = useState();
+  const [newTicketList, setNewTicketList] = useState();
+
+  
+
+  const getTicketList = async () => {
+    // let emp_id = localStorage.getItem("myot_admin_id");
+    // setId(emp_id);
+    let { data } = await TicketList();
+    console.log(data);
+    if (!data?.error) {
+      setTicketList(data?.results?.ticketList);
+    }
+  };
+
+  const showOngoingTickets = async () => {
+    let { data } = await OngoingTicketList();
+    console.log(data);
+    if (!data?.error) {
+      setTicketList(data?.results?.onGoingTicket);
+    }
+  };
+  const showNewTickets = async () => {
+    let { data } = await NewTicketList();
+    console.log(data);
+    if (!data?.error) {
+      setNewTicketList(data?.results?.ticket);
+    }
+  };
+  // const showResolvedTickets = async () => {
+  //   let { data } = await EmployeeResolvedTicketList(id);
+  //   console.log(data);
+  //   if (!data?.error) {
+  //     setTicketList(data?.results?.ticket);
+  //   }
+  // };
+
+  const handleCreateRequest = async (e) => {
+    e.preventDefault();
+    let id = localStorage.getItem("myot_admin_id");
+    let formData = {
+      email,
+      ticketType: requestType,
+      ticketIssue: message,
+      creator_Id: id,
+    };
+    let { data } = await NewTicket(formData);
+    console.log(data);
+    if (!data?.error) {
+      toast(data?.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      document.getElementById("closeTicketModal").click();
+      document.getElementById("reset").click();
+      getTicketList();
+    }
+  };
+
+  useEffect(() => {
+    getTicketList();
+    showOngoingTickets();
+    showNewTickets();
+  }, []);
+
   return (
     <>
       <div className="container-fluid">
@@ -76,7 +155,7 @@ const HelpSupportDept = () => {
                   </Link>
                   </div>
                   <div className="d-flex">
-                  <div class="dropdown">
+                  {/* <div class="dropdown">
                             <a
                               type=""
                               data-bs-toggle="dropdown"
@@ -128,219 +207,445 @@ const HelpSupportDept = () => {
                               </li>
                               
                             </ul>
+                          </div> */}
+                           {/* <!-- Modal --> */}
+                    <div
+                      class="modal fade"
+                      id="exampleModal"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog modal-dialog-centered modal-dialog-department">
+                        <div class="modal-content border-0">
+                          <div class="d-flex modal-header border-bottom">
+                            <p class="mb-0" id="exampleModalLabel">
+                              Create New Ticket
+                            </p>
+                            <button
+                              type="button"
+                              class="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                              id="closeTicketModal"
+                            ></button>
                           </div>
-                          {/* <!-- Modal --> */}
-            <div
-              class="modal fade"
-              id="exampleModal"
-              tabindex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-dialog-centered modal-dialog-department">
-                <div class="modal-content border-0">
-                  <div class="d-flex modal-header border-bottom">
-                    <p class="" id="exampleModalLabel">
-                    Create New Ticket
-                    </p>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
 
-                  <form action="" 
-                  // onSubmit={handleSubmit}
-                  >
-                    <div className="row p-3">
-                      <div className="col-12 mb-3 d-flex">
-                        <div className="col-6 pe-3">
-                        <input
-                          type="text"
-                          placeholder="Email *"
-                          className="col-12 modal-input td-text  p-2"
-                          name="departmentname"
-                          // value={departmentInfo.departmentname}
-                          // onChange={handleChange}
-                        />
-                      </div>
-                      <div className="col-6 ps-3">
-                        <input
-                          type=""
-                          placeholder="Request Ticket Type *"
-                          className="col-12 modal-input td-text  p-2"
-                          name="departmentname"
-                          // value={departmentInfo.departmentname}
-                          // onChange={handleChange}
-                        />
-                      </div>
-                      </div>
-                      <p className="d-flex" id="exampleModalLabel">
-                    Enter text here
-                    </p>
-                      <div className="col-12 mb-3 ">
-                        <textarea
-                          type="text"
-                          placeholder="Type ticket issue here..."
-                          className="col-12 modal-input td-text p-2"
-                          name="description"
-                          // value={departmentInfo.description}
-                          // onChange={handleChange}
-                        ></textarea>
-                        {/* <input type="text" placeholder="Phone Number" className="col-6 modal-input th-text p-2"/> */}
+                          <form action="" onSubmit={handleCreateRequest}>
+                            <div className="row p-3">
+                              <div className="col-12 mb-3 d-flex">
+                                <div className="col-6 pe-3">
+                                  <input
+                                    type="email"
+                                    placeholder="Email *"
+                                    className="col-12 modal-input td-text  p-2"
+                                    name="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                  />
+                                </div>
+                                <div className="col-6 ps-3">
+                                  <input
+                                    type="text"
+                                    placeholder="Request Ticket Type *"
+                                    className="col-12 modal-input td-text  p-2"
+                                    name="request type"
+                                    value={requestType}
+                                    onChange={(e) =>
+                                      setRequestType(e.target.value)
+                                    }
+                                  />
+                                </div>
+                              </div>
+                              <p className="d-flex" id="exampleModalLabel">
+                                Enter text here
+                              </p>
+                              <div className="col-12 mb-3">
+                                <textarea
+                                  style={{ minHeight: "100px" }}
+                                  type="text"
+                                  placeholder="Type ticket issue here..."
+                                  className="col-12 modal-input td-text p-2"
+                                  name="message"
+                                  value={message}
+                                  onChange={(e) => setMessage(e.target.value)}
+                                ></textarea>
+                              </div>
+                            </div>
+                            <div className="d-flex justify-content-end mb-3">
+                              <button type="submit" class="user-modal-btn">
+                                Send
+                              </button>
+                              <button type="button" class="user-modal-btn2">
+                                Cancel
+                              </button>
+                              <button type="reset" id="reset" class="d-none">
+                                reset
+                              </button>
+                            </div>
+                          </form>
+                        </div>
                       </div>
                     </div>
-                    <div className="d-flex justify-content-end mb-3">
-                      <button
-                        type="submit"
-                        class="user-modal-btn"
-                        // onClick={AddDepartment}
-                      >
-                        Send
-                      </button>
-                      <button type="button" class="user-modal-btn2">
-                        Cancle
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            {/* <!-- Modal End--> */}
+                    {/* <!-- Modal End--> */}
       <Link to={"/"} className="text-decoration-none">
       <button className="help-support-btn1 me-2">This Week
       <img src="/images/dashboard/DownArrowBtn.svg" alt="" /> 
       </button>
       </Link>
-                  <Link to={"/"} className="text-decoration-none">
-      <button className="help-support-btn">New Ticket</button>
-      </Link>
+      <Link
+                      className="text-decoration-none"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
+                      <button className="help-support-btn">New Ticket</button>
+                    </Link>
                   </div>
                 </div>
 
                 <p className="help-support-heading">Get in Touch</p>
-                <p className="help-support-text">Please get in touch and we will be happy to help you. Create New tickets</p>
-                <div className="col-12 d-flex">
-                  <Link
-                    to={"/"}
-                    className="text-decoration-none"
-                  >
-                    <p className="td-text border-bottom me-3">All Tickets</p>
-                  </Link>
-                  <Link
-                    to={"/Department/Help-Support"}
-                    className="text-decoration-none"
-                  >
-                    <p className="th-text me-3">New</p>
-                  </Link>
-                  <Link
-                    to={"/"}
-                    className="text-decoration-none"
-                  >
-                    <p className="th-text me-3">On Going</p>
-                  </Link>
-                  <Link
-                    to={"/"}
-                    className="text-decoration-none"
-                  >
-                    <p className="th-text">Resolved</p>
-                  </Link>
-                  
+                <p className="help-support-text">
+                  Please get in touch and we will be happy to help you. Create
+                  New tickets
+                </p>
+                <div className="tickets">
+                  <ul className="nav nav-tabs mb-5" id="ex1" role="tablist">
+                    <li className="nav-item" role="presentation">
+                      <a
+                        class="nav-link active"
+                        id="ex1-tab-1"
+                        data-bs-toggle="tab"
+                        href="#ex1-tabs-1"
+                        role="tab"
+                        aria-controls="ex1-tabs-1"
+                        aria-selected="true"
+                        onClick={getTicketList}
+                      >
+                        All Tickets
+                      </a>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                      <a
+                        className="nav-link"
+                        id="ex1-tab-2"
+                        data-bs-toggle="tab"
+                        href="#ex1-tabs-2"
+                        role="tab"
+                        aria-controls="ex1-tabs-2"
+                        aria-selected="false"
+                        onClick={showNewTickets}
+                      >
+                        New Tickets
+                      </a>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                       <a
+                        className="nav-link"
+                        id="ex1-tab-3"
+                        data-bs-toggle="tab"
+                        href="#ex1-tabs-3"
+                        role="tab"
+                        aria-controls="ex1-tabs-3"
+                        aria-selected="false"
+                        onClick={showOngoingTickets}
+                      >
+                        Ongoing Tickets
+                      </a>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                      <a
+                        className="nav-link"
+                        id="ex1-tab-4"
+                        data-bs-toggle="tab"
+                        href="#ex1-tabs-4"
+                        role="tab"
+                        aria-controls="ex1-tabs-4"
+                        aria-selected="false"
+                        // onClick={showResolvedTickets}
+                      >
+                        Resolved Tickets
+                      </a>
+                    </li>
+                  </ul>
+                  <div className="tab-content" id="ex1-content">
+                    <div
+                      className="tab-pane fade show active"
+                      id="ex1-tabs-1"
+                      role="tabpanel"
+                      aria-labelledby="ex1-tab-1"
+                    >
+                      <div className="col-12">
+                        {ticketList && ticketList?.length > 0
+                          ? ticketList?.map((ticket) => (
+                              <div className="rounded border bg-white mb-3 p-2">
+                                <div>
+                                  <div className="d-flex justify-content-between align-items-center">
+                                    <div className="d-flex align-items-center">
+                                      <img
+                                        src="/images/dashboard/orange-ticket-ball.svg"
+                                        alt=""
+                                        className="me-2"
+                                      />
+                                      <p className="ticket-number m-1">
+                                        {ticket?.ticketType}
+                                      </p>
+                                    </div>
+                                    <div>
+                                      <p className="ticket-post-time text-end">
+                                        {moment(ticket.createdAt).calendar()}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className="text-start mt-3">
+                                    <p>{ticket?.ticketIssue}</p>
+                                    <p>
+                                      Lorem, ipsum dolor sit amet consectetur
+                                      adipisicing elit. Voluptas veritatis,
+                                      ratione officiis voluptate nostrum ipsum
+                                      eos iste mollitia aliquid accusamus?
+                                    </p>
+                                  </div>
+                                  <hr />
+                                </div>
+
+                                <div className="d-flex justify-content-between">
+                                  <div className="d-flex">
+                                    <img
+                                      style={{
+                                        width: "30px",
+                                        height: "30px",
+                                        borderRadius: "50%",
+                                      }}
+                                      src={
+                                        ticket?.creator_Id?.profile_Pic
+                                          ? ticket?.creator_Id?.profile_Pic
+                                          : "/images/dashboard/Avatar.png"
+                                      }
+                                      alt=""
+                                      className="m-2 object-fit-cover"
+                                    />
+                                    <p className="th-text m-auto text-capitalize">
+                                      {ticket?.creator_Id?.name}
+                                    </p>
+                                  </div>
+                                  <a className="ticket-link mt-3 me-1">
+                                    Open Ticket
+                                  </a>
+                                </div>
+                              </div>
+                            ))
+                          : "Sorry no ticket available"}
+                      </div>
+                    </div>
+                    <div
+                      className="tab-pane fade"
+                      id="ex1-tabs-2"
+                      role="tabpanel"
+                      aria-labelledby="ex1-tab-2"
+                    >
+                      <div className="col-12">
+                        {ticketList && ticketList?.length > 0
+                          ? ticketList?.map((ticket) => (
+                              <div className="rounded border bg-white mb-3 p-2">
+                                <div>
+                                  <div className="d-flex justify-content-between align-items-center">
+                                    <div className="d-flex align-items-center">
+                                      <img
+                                        src="/images/dashboard/orange-ticket-ball.svg"
+                                        alt=""
+                                        className="me-2"
+                                      />
+                                      <p className="ticket-number m-1">
+                                        {ticket?.ticketType}
+                                      </p>
+                                    </div>
+                                    <div>
+                                      <p className="ticket-post-time text-end">
+                                        {moment(ticket.createdAt).calendar()}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className="text-start mt-3">
+                                    <p>{ticket?.ticketIssue}</p>
+                                    <p>
+                                      Lorem, ipsum dolor sit amet consectetur
+                                      adipisicing elit. Voluptas veritatis,
+                                      ratione officiis voluptate nostrum ipsum
+                                      eos iste mollitia aliquid accusamus?
+                                    </p>
+                                  </div>
+                                  <hr />
+                                </div>
+
+                                <div className="d-flex justify-content-between">
+                                  <div className="d-flex">
+                                    <img
+                                      style={{
+                                        width: "30px",
+                                        height: "30px",
+                                        borderRadius: "50%",
+                                      }}
+                                      src={
+                                        ticket?.creator_Id?.profile_Pic
+                                          ? ticket?.creator_Id?.profile_Pic
+                                          : "/images/dashboard/Avatar.png"
+                                      }
+                                      alt=""
+                                      className="m-2 object-fit-cover"
+                                    />
+                                    <p className="th-text m-auto text-capitalize">
+                                      {ticket?.creator_Id?.name}
+                                    </p>
+                                  </div>
+                                  <a className="ticket-link mt-3 me-1">
+                                    Open Ticket
+                                  </a>
+                                </div>
+                              </div>
+                            ))
+                          : "Sorry no ticket available"}
+                      </div>
+                    </div>
+                    <div
+                      className="tab-pane fade"
+                      id="ex1-tabs-3"
+                      role="tabpanel"
+                      aria-labelledby="ex1-tab-3"
+                    >
+                      <div className="col-12">
+                        {ticketList && ticketList?.length > 0
+                          ? ticketList?.map((ticket) => (
+                              <div className="rounded border bg-white mb-3 p-2">
+                                <div>
+                                  <div className="d-flex justify-content-between align-items-center">
+                                    <div className="d-flex align-items-center">
+                                      <img
+                                        src="/images/dashboard/orange-ticket-ball.svg"
+                                        alt=""
+                                        className="me-2"
+                                      />
+                                      <p className="ticket-number m-1">
+                                        {ticket?.ticketType}
+                                      </p>
+                                    </div>
+                                    <div>
+                                      <p className="ticket-post-time text-end">
+                                        {moment(ticket.createdAt).calendar()}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className="text-start mt-3">
+                                    <p>{ticket?.ticketIssue}</p>
+                                    <p>
+                                      Lorem, ipsum dolor sit amet consectetur
+                                      adipisicing elit. Voluptas veritatis,
+                                      ratione officiis voluptate nostrum ipsum
+                                      eos iste mollitia aliquid accusamus?
+                                    </p>
+                                  </div>
+                                  <hr />
+                                </div>
+
+                                <div className="d-flex justify-content-between">
+                                  <div className="d-flex">
+                                    <img
+                                      style={{
+                                        width: "30px",
+                                        height: "30px",
+                                        borderRadius: "50%",
+                                      }}
+                                      src={
+                                        ticket?.creator_Id?.profile_Pic
+                                          ? ticket?.creator_Id?.profile_Pic
+                                          : "/images/dashboard/Avatar.png"
+                                      }
+                                      alt=""
+                                      className="m-2 object-fit-cover"
+                                    />
+                                    <p className="th-text m-auto text-capitalize">
+                                      {ticket?.creator_Id?.name}
+                                    </p>
+                                  </div>
+                                  <a className="ticket-link mt-3 me-1">
+                                    Open Ticket
+                                  </a>
+                                </div>
+                              </div>
+                            ))
+                          : "Sorry no ticket available"}
+                      </div>
+                    </div>
+                    <div
+                      className="tab-pane fade"
+                      id="ex1-tabs-4"
+                      role="tabpanel"
+                      aria-labelledby="ex1-tab-4"
+                    >
+                      <div className="col-12">
+                        {ticketList && ticketList?.length > 0
+                          ? ticketList?.map((ticket) => (
+                              <div className="rounded border bg-white mb-3 p-2">
+                                <div>
+                                  <div className="d-flex justify-content-between align-items-center">
+                                    <div className="d-flex align-items-center">
+                                      <img
+                                        src="/images/dashboard/orange-ticket-ball.svg"
+                                        alt=""
+                                        className="me-2"
+                                      />
+                                      <p className="ticket-number m-1">
+                                        {ticket?.ticketType}
+                                      </p>
+                                    </div>
+                                    <div>
+                                      <p className="ticket-post-time text-end">
+                                        {moment(ticket.createdAt).calendar()}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className="text-start mt-3">
+                                    <p>{ticket?.ticketIssue}</p>
+                                    <p>
+                                      Lorem, ipsum dolor sit amet consectetur
+                                      adipisicing elit. Voluptas veritatis,
+                                      ratione officiis voluptate nostrum ipsum
+                                      eos iste mollitia aliquid accusamus?
+                                    </p>
+                                  </div>
+                                  <hr />
+                                </div>
+
+                                <div className="d-flex justify-content-between">
+                                  <div className="d-flex">
+                                    <img
+                                      style={{
+                                        width: "30px",
+                                        height: "30px",
+                                        borderRadius: "50%",
+                                      }}
+                                      src={
+                                        ticket?.creator_Id?.profile_Pic
+                                          ? ticket?.creator_Id?.profile_Pic
+                                          : "/images/dashboard/Avatar.png"
+                                      }
+                                      alt=""
+                                      className="m-2 object-fit-cover"
+                                    />
+                                    <p className="th-text m-auto text-capitalize">
+                                      {ticket?.creator_Id?.name}
+                                    </p>
+                                  </div>
+                                  <a className="ticket-link mt-3 me-1">
+                                    Open Ticket
+                                  </a>
+                                </div>
+                              </div>
+                            ))
+                          : "Sorry no ticket available"}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="col-12">
-                  <div className="col rounded border bg-white mb-3 p-2">
-                    <div className="d-flex border-bottom">
-                  <div className="ps-2 pe-4">
-                    <div className="d-flex mb-3">
-                      <img
-                        src="/images/dashboard/orange-ticket-ball.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      <p className="ticket-number m-1">
-                      Ticket# 2023-CS123
-                      </p>
-                    </div>
-                    <div className=" mt-1">
-                      <p className="ticket-question mb-1">
-                      How to deposit money to my portal?
-                      </p>
-                      <p className="td-text mt-0">Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You’ve nailed the design and the responsiveness at various breakpoints works really well.</p>
-                    </div>
-                  </div>
-                  <p className="ticket-post-time mt-2">Posted at 12:45 AM</p>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <div className="d-flex">
-                      <img src="/images/dashboard/Avatar.png" alt="" className="m-2"/>
-                      <p className="th-text m-auto">John snow</p>
-                    </div>
-                    <a href="/" className="ticket-link mt-3 me-1">Open Ticket</a>
-                  </div>
-                </div>
-                <div className="col rounded border bg-white mb-3 p-2">
-                    <div className="d-flex border-bottom">
-                  <div className="ps-2 pe-4">
-                    <div className="d-flex mb-3">
-                      <img
-                        src="/images/dashboard/blue-ticket-ball.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      <p className="ticket-number m-1">
-                      Ticket# 2023-CS123
-                      </p>
-                    </div>
-                    <div className=" mt-1">
-                      <p className="ticket-question mb-1">
-                      How to deposit money to my portal?
-                      </p>
-                      <p className="td-text mt-0">Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You’ve nailed the design and the responsiveness at various breakpoints works really well.</p>
-                    </div>
-                  </div>
-                  <p className="ticket-post-time mt-2">Posted at 12:45 AM</p>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <div className="d-flex">
-                      <img src="/images/dashboard/Avatar3.png" alt="" className="m-2"/>
-                      <p className="th-text m-auto">John snow</p>
-                    </div>
-                    <a href="/" className="ticket-link mt-3 me-1">Open Ticket</a>
-                  </div>
-                </div>
-                <div className="col rounded border bg-white  p-2">
-                    <div className="d-flex border-bottom">
-                  <div className="ps-2 pe-4">
-                    <div className="d-flex mb-3">
-                      <img
-                        src="/images/dashboard/green-ticket-ball.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      <p className="ticket-number m-1">
-                      Ticket# 2023-CS123
-                      </p>
-                    </div>
-                    <div className=" mt-1">
-                      <p className="ticket-question mb-1">
-                      How to deposit money to my portal?
-                      </p>
-                      <p className="td-text mt-0">Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You’ve nailed the design and the responsiveness at various breakpoints works really well.</p>
-                    </div>
-                  </div>
-                  <p className="ticket-post-time mt-2">Posted at 12:45 AM</p>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <div className="d-flex">
-                      <img src="/images/dashboard/Avatar2.png" alt="" className="m-2"/>
-                      <p className="th-text m-auto">John snow</p>
-                    </div>
-                    <a href="/" className="ticket-link mt-3 me-1">Open Ticket</a>
-                  </div>
-                </div>
-                  </div>
               </div>
              
             </div>
