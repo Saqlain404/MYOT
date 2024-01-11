@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { approvedTemplete, rejectedTemplete, templeteDocList } from '../../ApiServices/aprroverHttpServices/aprproverHttpService';
+import { approvedDocumentRequest, approvedTemplete, rejectedDocumentRequest, rejectedTemplete, templeteDocList } from '../../ApiServices/aprroverHttpServices/aprproverHttpService';
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import { Link } from 'react-router-dom';
@@ -174,7 +174,7 @@ const DocumentRequestHome = () => {
                   </li>
                   <li>
                     <a
-                      onClick={() => approved(list?._id)}
+                      onClick={() => approveDocumentRequest(list?._id)}
                       class="dropdown-item border-bottom"
                       href="#"
                     >
@@ -188,7 +188,7 @@ const DocumentRequestHome = () => {
                   </li>
                   <li>
                     <a
-                      onClick={() => rejected(list?._id)}
+                      onClick={() => rejectDocumentRequest(list?._id)}
                       class="dropdown-item text-danger"
                       href="#"
                     >
@@ -272,6 +272,15 @@ const DocumentRequestHome = () => {
           rows: sortedRows,
           sortType: currentSortType,
         });
+      };
+
+      const approveDocumentRequest = async (document_Id) => {
+        const approveData = await approvedDocumentRequest(document_Id);
+        getDocTaskData()
+      };
+      const rejectDocumentRequest = async (document_Id) => {
+        const approveData = await rejectedDocumentRequest(document_Id);
+        getDocTaskData()
       };
 
       
