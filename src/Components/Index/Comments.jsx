@@ -16,6 +16,7 @@ const Comments = () => {
   const [commentList, setCommentList] = useState([]);
   const [reply, setReply] = useState(false);
   const [replyMsg, setReplyMsg] = useState("");
+  const [comment, setComment] = useState('')
 
   const { id } = useParams();
 
@@ -60,6 +61,30 @@ const Comments = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const addComment = async (e) => {
+    e.preventDefault();
+    let creator_Id = localStorage.getItem("myot_admin_id");
+    let { data } = await AddCommentForTask({
+      comment,
+      templete_Id:id,
+      creator_Id,
+    });
+    console.log(data);
+    if (!data?.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "New comment added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      getCommentLists()
+      setComment("");
     }
   };
 
@@ -300,13 +325,13 @@ const Comments = () => {
                     />
                     <textarea
                       name="comment"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
                       placeholder="Add a comment…"
                       id=""
-                      cols="30"
-                      rows="10"
                       className="comment-inbox m-2 p-2"
                     ></textarea>
-                    <button className="reply-btn">Send</button>
+                    <button onClick={addComment} className="reply-btn">Send</button>
                   </div>
                 </div>
               </div>
