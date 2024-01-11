@@ -228,7 +228,7 @@ height: 960px; */
   display: flex;
   justify-content: space-between;
   width: 348px;
-  height: 50px;
+  /* height: 50px; */
   flex-shrink: 0;
 }
 
@@ -869,6 +869,9 @@ height: 960px; */
 
 .table_comman tbody tr td:first-child {
   text-align: left;
+}
+td {
+  text-transform: capitalize !important;
 }
 /* .table_comman tbody tr td:nth-child(2){
   text-align: left;
@@ -1663,7 +1666,7 @@ height: 960px; */
   text-align: start;
   color: #000;
   font-family: Nunito;
-  font-size: 12px !important;
+  font-size: 13px !important;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -1676,7 +1679,7 @@ height: 960px; */
   text-align: start;
   color: #000;
   font-family: Nunito;
-  font-size: 14px !important; 
+  font-size: 13px !important; 
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -2555,7 +2558,8 @@ height: 960px; */
   width: 24px;
   height: 24px;
   border-radius: 16px;
-  margin: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .table-profile-pic {
@@ -2673,17 +2677,18 @@ height: 960px; */
 
 .mdb_table thead th {
   border: none;
-  /* padding: 10px 20px; */
-  /* margin: 20px !important; */
+}
+.mdb_table td {
+  border: none !important;
 }
 
 .mdb_table tbody tr {
   border: none;
 }
 
-/* thead tr th div {
+thead tr th div {
   margin: 0px 10px !important;
-} */
+}
 
 .mdb_table tbody td {
   border: none;
@@ -2805,41 +2810,31 @@ div.dataTables_wrapper div.dataTables_paginate {
 /* .pass_toggle_text {
 } */
 
-.mdb_table2 .mdb-datatable-filter input {
+.depart_table {
+  position: relative;
+}
+.depart_table .mdb-datatable-filter input {
   width: 100%;
-  height: 100%;
+  height: auto;
   position: relative !important;
-  top: 13.8rem !important;
+  top: -6rem;
 }
-.signup-form {
-  overflow-y: auto;
+.active_tab {
+  text-underline-offset: unset;
+  text-decoration: underline;
+  cursor: pointer;
 }
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.cal_tab {
+  cursor: pointer;
 }
 .eye_container {
   position: absolute;
   top: 43px;
-  right: 10px;
+  right: 20px;
 }
 
 .eye_container .eye_icon {
-  width: 25px;
-  height: 25px;
   cursor: pointer;
-}
-.view-detail-page {
-  width: 100%;
-  margin-top: 20px;
-}
-.department-name{
-  font-size: 15px;
-  color: #051036;
-  font-family: Nunito;
-  font-style: normal;
-  font-weight: 900;
-  line-height: 36px; /* 150% */
+  height: 18px;
+  width: 16px;
 }

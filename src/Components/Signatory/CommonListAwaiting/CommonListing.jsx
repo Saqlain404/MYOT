@@ -4,10 +4,11 @@ import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import Swal from "sweetalert2";
+import { AddCommentForTask } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 
 const CommonListing = () => {
   const [showClearButton, setShowClearButton] = useState(false);
-  const [template_Id, setTemplateId] = useState("");
+  const [templete_Id, setTemplateId] = useState();
   const [comment, setComment] = useState("");
   const [awaitListing, setAwaitListing] = useState({
     columns: [
@@ -65,11 +66,12 @@ const CommonListing = () => {
   }, []);
 
   const getAwaitListingData = async () => {
-    let { data } = await SignatoryAwaitListing("6564816c42ca2ce84e2ed3f2");
+    let id = localStorage.getItem("myot_admin_id");
+    let { data } = await SignatoryAwaitListing(id);
     const newRows = [];
     if (!data?.error) {
-      let values = data?.results?.template;
-      // console.log(values)
+      let values = data?.results?.templete;
+      console.log(values);
       values?.map((list, index) => {
         const returnData = {};
         returnData.name = list?.templeteName;
@@ -77,14 +79,16 @@ const CommonListing = () => {
           <>
             <img
               className="w_20_h_20"
-              src={list?.manager?.profile_Pic}
+              src={list?.manager[0]?.profile_Pic}
               alt=""
             />
-            <span className="ms-2 text-capitalize">{list?.manager?.name}</span>
+            <span className="ms-2 text-capitalize">
+              {list?.manager[0]?.name}
+            </span>
           </>
         );
         returnData.date = moment(list?.createdAt).format("L");
-        returnData.department = list?.manager?.department_Id?.departmentName;
+        returnData.department = list?.manager[0]?.department[0]?.departmentName;
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -103,7 +107,7 @@ const CommonListing = () => {
           </span>
         );
         returnData.actions = (
-          <div class="">
+          <div class="text-center">
             <a type="" data-bs-toggle="dropdown" aria-expanded="false">
               <img
                 src="/images/sidebar/ThreeDots.svg"
@@ -259,21 +263,19 @@ const CommonListing = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let creator_Id = localStorage.getItem("myot_admin_id");
+    // console.log(creator_Id, comment, templete_Id);
     try {
-      let formData = {
-        creator_Id,
-        template_Id,
+      let { data } = await AddCommentForTask({
         comment,
-      };
-      console.log(formData);
-      // let { data } = await DocumentComment(formData);
+        templete_Id,
+        creator_Id,
+      });
       console.log(data);
-      let data = true;
       if (!data?.error) {
         Swal.fire({
           toast: true,
           icon: "success",
-          position: "bottom",
+          position: "top-end",
           title: "New comment added",
           showConfirmButton: false,
           timerProgressBar: true,
@@ -288,7 +290,7 @@ const CommonListing = () => {
   };
   return (
     <div className="position-relative mt-5">
-      <p className="table-name mb-2">Templates</p>
+      <p className="table-name mb-2">Awaiting Templates</p>
       <div className=" col-12 d-flex align-items-center table-searchbar">
         <div className="d-flex ">
           <div className="col-md-3 table-searchbar-imgs">

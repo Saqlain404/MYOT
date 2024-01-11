@@ -67,24 +67,24 @@ const EditProfileDept = () => {
    </div>
    <div className="row">
     <div className="col-12 d-flex justify-content-between mb-2">
-      <div className="col-6 m-2">
+      {/* <div className="col-6 m-2">
     <p className=" d-flex justify-content-start profile-card-title">Full Name</p>
     <input type="text" placeholder="Full Name" className="col-12 profile-edit-input p-2"/>
       </div>
       <div className="col-6 m-2">
     <p className=" d-flex justify-content-start profile-card-title">Email</p>
     <input type="text" placeholder="Email" className="col-12 profile-edit-input p-2"/>
-      </div>
+      </div> */}
     </div>
     <div className="col-12 d-flex justify-content-between mb-2">
-      <div className="col-6 m-2">
+      {/* <div className="col-6 m-2">
     <p className=" d-flex justify-content-start profile-card-title">Phone Number</p>
     <input type="text" placeholder="Phone Number" className="col-12 profile-edit-input p-2"/>
       </div>
       <div className="col-6 m-2">
     <p className=" d-flex justify-content-start profile-card-title">Date of Birth</p>
     <input type="text" placeholder="Date of Birth" className="col-12 profile-edit-input p-2"/>
-      </div>
+      </div> */}
     </div>
     <div className="col-12 d-flex justify-content-between border-bottom mb-2 pb-4">
       <div className="col-6 m-2">
@@ -96,7 +96,7 @@ const EditProfileDept = () => {
     <input type="text" placeholder="Confirm Password" className="col-12 profile-edit-input p-2"/>
       </div>
     </div>
-    <div className="col-12 d-flex justify-content-between mb-2">
+    {/* <div className="col-12 d-flex justify-content-between mb-2">
       <div className="col-6 m-2">
     <p className=" d-flex justify-content-start profile-card-title">Company Name</p>
     <input type="text" placeholder="Company Name" className="col-12 profile-edit-input p-2"/>
@@ -115,7 +115,7 @@ const EditProfileDept = () => {
     <p className=" d-flex justify-content-start profile-card-title">Address</p>
     <input type="text" placeholder="Address" className="col-12 profile-edit-input p-2"/>
       </div>
-    </div>
+    </div> */}
    </div>
 
    <div className=" d-flex justify-content-end">

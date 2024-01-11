@@ -27,7 +27,7 @@ const SidebarSig = () => {
         progress: undefined,
         theme: "light",
       });
-      
+
       navigate("/Admin/Login");
     }
   };
@@ -365,7 +365,10 @@ const SidebarSig = () => {
           </ul>
         </div>
 
-        <div class="dropdown position-fixed bottom-0 bg-white">
+        <div
+          style={{ width: "14rem" }}
+          class="dropdown position-fixed bottom-0 bg-white"
+        >
           <Switcher />
         </div>
 

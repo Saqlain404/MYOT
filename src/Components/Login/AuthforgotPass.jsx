@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -12,8 +12,13 @@ const AuthforgotPass = () => {
   const [formToShow, setFormToShow] = useState("EmailForm");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
+  const [counter, setCounter] = useState(0);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+  }, [counter]);
 
   const onSubmitEmail = async (e) => {
     e.preventDefault();
@@ -54,6 +59,12 @@ const AuthforgotPass = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const ResendOtp = async (e) => {
+    onSubmitEmail(e)
+    setCounter(60);
+    e.preventDefault();
   };
   return (
     <>
@@ -151,15 +162,25 @@ const AuthforgotPass = () => {
                             Verify OTP
                           </button>
                         </form>
+                        {/* <div className="form-group col-12 text-center">
+                          {counter ? (
+                            <span className="count_Sec"> 00:{counter}</span>
+                          ) : null}
+                        </div> */}
                         <p>
                           Don’t received OTP code?{" "}
-                          <a
-                            type="button"
-                            onClick={(e) => onSubmitEmail(e)}
-                            className="text-primary text-decoration-none"
-                          >
-                            Resend Code
-                          </a>
+                          {counter ? (
+                            <span className="count_Sec">Resend after 00:{counter}</span>
+                          ) : (
+                            <span
+                              className="otp-sec mx-1 text-primary"
+                              id="resendOTP"
+                              onClick={(e) => ResendOtp(e)}
+                              style={{ cursor: "pointer" }}
+                            >
+                              <b>Request again</b>
+                            </span>
+                          )}
                         </p>
                       </>
                     )}

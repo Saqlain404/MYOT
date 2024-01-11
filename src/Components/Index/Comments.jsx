@@ -6,6 +6,7 @@ import {
   AddCommentForTask,
   TasksCommentDelete,
   TasksCommentList,
+  TemplateReply,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
 import { toast } from "react-toastify";
@@ -17,7 +18,6 @@ const Comments = () => {
   const [replyMsg, setReplyMsg] = useState("");
 
   const { id } = useParams();
-  console.log(id);
 
   useEffect(() => {
     getCommentLists();
@@ -50,7 +50,7 @@ const Comments = () => {
         Swal.fire({
           toast: true,
           icon: "success",
-          position: "bottom",
+          position: "top-end",
           title: "Comment deleted successfully",
           showConfirmButton: false,
           timerProgressBar: true,
@@ -63,13 +63,13 @@ const Comments = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, comment_Id) => {
     e.preventDefault();
     if (replyMsg === "") {
       Swal.fire({
         toast: true,
         icon: "success",
-        position: "bottom",
+        position: "top-end",
         title: "Please enter reply",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -78,14 +78,14 @@ const Comments = () => {
       return false;
     }
     let creator_Id = localStorage.getItem("myot_admin_id");
-    let { data } = await AddCommentForTask({
-      comment: replyMsg,
-      templete_Id: id,
+    let { data } = await TemplateReply({
+      text: replyMsg,
+      comment_Id,
       creator_Id,
     });
     console.log(data);
-    if (!data?.error) {
-      toast("Comment added successfully", {
+    if (data && !data?.error) {
+      toast("Reply added", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -186,7 +186,7 @@ const Comments = () => {
                               <>
                                 <img
                                   src="/images/dashboard/reply-arrow.svg"
-                                  className=""
+                                  className="me-1"
                                 />
                                 <Link className="ticket-link me-1 text-decoration-none">
                                   Reply
@@ -202,7 +202,7 @@ const Comments = () => {
                           >
                             <img
                               src="/images/icons/delete_icon.png"
-                              className=""
+                              className="me-1"
                             />
                             <Link className="ticket-link me-1 text-decoration-none text-danger">
                               Delete
@@ -215,7 +215,9 @@ const Comments = () => {
                       </p>
                       {reply[index] && (
                         <div className="bg-white rounded p-2 my-3 task_reply">
-                          <form onSubmit={handleSubmit}>
+                          <form
+                            onSubmit={(e) => handleSubmit(e, comments?._id)}
+                          >
                             <div className="d-flex justify-content-between">
                               <img
                                 src="/images/dashboard/Avatar2.png"
@@ -242,6 +244,39 @@ const Comments = () => {
                               </button>
                             </div>
                           </form>
+                        </div>
+                      )}
+
+                      {comments?.replyText && (
+                        <div
+                          style={{ borderLeft: "2px solid #f8f9fa" }}
+                          className="text-start ms-5"
+                        >
+                          {comments?.replyText.map((reply) => (
+                            <div className="bg-white p-2 mb-3">
+                              <div className="d-flex align-items-center justify-content-between">
+                                <div>
+                                  <div className="d-flex align-items-center">
+                                    <img
+                                      className="w_20_h_20 me-3"
+                                      src={reply?.creator_Id?.profile_Pic}
+                                      alt=""
+                                    />
+                                    <p className="commenter-name m-auto">
+                                      {reply?.creator_Id?.name}
+                                    </p>
+                                    {/* <p className="comment-time m-auto">
+                                      {moment(reply?.createdAt).calendar()}
+                                    </p> */}
+                                  </div>
+                                  <p className="comment-txt p-2 mb-0">
+                                    {reply?.text}
+                                  </p>
+                                </div>
+                                <div></div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       )}
                     </div>

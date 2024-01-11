@@ -66,6 +66,7 @@ const Departments = () => {
     if (!data?.error) {
       // setListItems(data?.results?.department);
       let values = data?.results?.department;
+      values.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       values?.map((data) => {
         let returnData = {};
         returnData.name = data?.departmentName;
@@ -110,7 +111,10 @@ const Departments = () => {
                     Wrap Column
                   </a>
                 </li>
-                <li className="cursor_pointer" onClick={() => deleteDepartment(data?._id)}>
+                <li
+                  className="cursor_pointer"
+                  onClick={() => deleteDepartment(data?._id)}
+                >
                   <a class="dropdown-item text-danger">
                     <img
                       src="/images/users/Trash.svg"
@@ -148,7 +152,7 @@ const Departments = () => {
       Swal.fire({
         toast: true,
         icon: "success",
-        position: "bottom",
+        position: "top-end",
         title: "Department Deleted successfully",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -178,7 +182,8 @@ const Departments = () => {
       if (data && !data?.error) {
         Swal.fire({
           toast: true,
-          icon: "error",
+          icon: "success",
+          position: "top-end",
           title: "New Department Added",
           showConfirmButton: false,
           timerProgressBar: true,
@@ -230,7 +235,7 @@ const Departments = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link ms-2" href="app-email.html">
-                      /Departments
+                      Departments
                     </a>
                   </li>
                 </ul>

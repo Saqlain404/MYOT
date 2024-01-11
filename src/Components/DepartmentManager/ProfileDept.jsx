@@ -82,7 +82,16 @@ const ProfileDept = () => {
       </Link>
     </div>
    <div className=" d-flex justify-content-start mb-4">
-   <img src="/images/dashboard/AvatarProfile.svg" alt="" />
+   <img
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                    }}
+                    src={profileDetail?.profile_Pic}
+                    alt="profile_image"
+                  />
    </div>
    <div className="bg-white rounded mb-4 p-4 pb-2">
     <p className=" d-flex justify-content-start profile-card-title">Details</p>
@@ -128,11 +137,9 @@ const ProfileDept = () => {
     <div className=" d-flex ">
     <img src="/images/dashboard/pdf-icon.svg" alt="" />
         <p className="profile-salary-slip m-2">Salaryslip.Pdf</p>
+        <img src={profileDetail?.document_Img} alt="" />
     </div>
-    <div className=" d-flex ">
-        <img src="/images/dashboard/pdf-icon.svg" alt="" />
-        <p className="profile-salary-slip m-2">Salaryslip.Pdf</p>
-    </div>
+    
    </div>
    
   </div>

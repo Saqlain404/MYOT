@@ -122,9 +122,7 @@ const Dashboard = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
-                      /Dashboard
-                    </a>
+                    <a className="nav-link ms-2">Dashboard</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center justify-content-end ">
@@ -314,41 +312,44 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                {
-                  ticketCount && <div className="col-md-3 ">
-                  <div className="dashboard-card2 ">
-                    <p className="dashboard-card2-text">Open Tickets</p>
-                    <p className="text-card  mb-3">
-                      {ticketCount?.totalComplete} / {ticketCount?.totalTicket}
-                    </p>
-                    <p className=" mb-1 dashboard-card2-text">
-                      Profile Completion
-                    </p>
+                {ticketCount && (
+                  <div className="col-md-3 ">
+                    <div className="dashboard-card2 ">
+                      <p className="dashboard-card2-text">Open Tickets</p>
+                      <p className="text-card  mb-3">
+                        {ticketCount?.totalComplete} /{" "}
+                        {ticketCount?.totalTicket}
+                      </p>
+                      <p className=" mb-1 dashboard-card2-text">
+                        Profile Completion
+                      </p>
 
-                    <div className="progress-bar">
-                      <div className="progress-container">
-                        <div
-                          className="progress"
-                          style={{ width: `${ticketCount?.completepresent}%` }}
-                        ></div>
-                        <span className="progress-label">{`${ticketCount?.completepresent}%`}</span>
+                      <div className="progress-bar">
+                        <div className="progress-container">
+                          <div
+                            className="progress"
+                            style={{
+                              width: `${ticketCount?.completepresent}%`,
+                            }}
+                          ></div>
+                          <span className="progress-label">{`${ticketCount?.completepresent}%`}</span>
+                        </div>
                       </div>
-                    </div>
-                    <p className=" mb-1 dashboard-card2-text">Status</p>
-                    <div className="progress-bar">
-                      <div className="progress-container">
-                        <div
-                          className="progress"
-                          style={{
-                            width: `${ticketCount?.InprogressPresent}%`,
-                          }}
-                        ></div>
-                        <span className="progress-label">{`In Progress / ${ticketCount?.InprogressPresent}%`}</span>
+                      <p className=" mb-1 dashboard-card2-text">Status</p>
+                      <div className="progress-bar">
+                        <div className="progress-container">
+                          <div
+                            className="progress"
+                            style={{
+                              width: `${ticketCount?.InprogressPresent}%`,
+                            }}
+                          ></div>
+                          <span className="progress-label">{`In Progress / ${ticketCount?.InprogressPresent}%`}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                }
+                )}
                 {/* <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="dashboard-card2 bg-danger-subtle">
                     <p className="dashboard-card2-text">Open Tickets</p>
@@ -450,154 +451,29 @@ const Dashboard = () => {
 
             <div className="col-12 mt-4">
               <div className="row bg-light management">
-                <div className="col">
+                <Link to={"/Admin/Users"} className="col">
                   <img src="/images/dashboard/search.png" />
                   <p className="management-text">Manage Users</p>
-                </div>
-                <div className="col ">
+                </Link>
+                <Link to={"/Admin/Departments"} className="col ">
                   <img src="/images/dashboard/image 2.png" />
                   <p className="management-text">Manage Departments</p>
-                </div>
-                <div className="col ">
+                </Link>
+                <Link to={"/Admin/Requests"} className="col ">
                   <img src="/images/dashboard/manage-reports.png" />
                   <p className="management-text">Manage Reports</p>
-                </div>
-                <div className="col ">
+                </Link>
+                <Link to={"/Admin/Settings"} className="col ">
                   <img src="/images/dashboard/manage-settings.png" />
                   <p className="management-text">Manage Settings</p>
-                </div>
-                <div className="col  ">
+                </Link>
+                <Link to={"/Admin/My-profile"} className="col  ">
                   <img src="/images/dashboard/manage-branding.png" />
-                  <p className="management-text">Manage Branding</p>
-                </div>
+                  <p className="management-text">Manage Profile</p>
+                </Link>
               </div>
             </div>
-
-            {/* <div className="col-12 table_comman mt-3 ">
-              <div className="table-responsive">
-                <table className="table table-borderless">
-                  <thead>
-                    <tr className="th-text">
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Activity
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Login
-                      </th>
-                      <th className="th-text">
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                        />
-                        Login
-                      </th>
-                      <th className="th-text">Status</th>
-                      <th className="th-text">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {documents?.map((document) => (
-                      <tr key={document?.id}>
-                        <td className="td-text">
-                          <input
-                            className="form-check-input checkbox-table"
-                            type="checkbox"
-                            value=""
-                          />
-                          <img src="/images/dashboard/Featured Icon.png" />
-                          {document.activity}
-                        </td>
-                        <td className="td-text">
-                          <img src="/images/dashboard/CalendarBlank.png" />
-                          {document.login}
-                        </td>
-                        <td className="td-text">
-                          <img src="/images/dashboard/CalendarBlank.png" />
-                          {document.login2}
-                        </td>
-                        <td className="td-text">{document.status}</td>
-                        <td className="td-text">
-                          <div class="dropdown">
-                            <a
-                              type=""
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              {document.action}
-                            </a>
-                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-                              <li>
-                                <a class="dropdown-item border-bottom" href="#">
-                                  <img
-                                    src="/images/users/AddressBook.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  View Users Details
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item border-bottom" href="#">
-                                  <img
-                                    src="/images/users/PencilLine.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Edit User Details
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item" href="#">
-                                  <img
-                                    src="/images/dashboard/Comment.png"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Comments
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item border-bottom" href="#">
-                                  <img
-                                    src="/images/users/TextAlignLeft.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Wrap Column
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item text-danger" href="#">
-                                  <img
-                                    src="/images/users/Trash.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Delete Template
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                        <td></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div> */}
-
+            
             <DashboardListing />
           </div>
           <div className="col">

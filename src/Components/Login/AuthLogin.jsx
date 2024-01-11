@@ -46,14 +46,23 @@ const AuthLogin = () => {
       Swal.fire({
         toast: true,
         icon: "success",
-        position: "bottom",
+        position: "top-end",
         title: "Login successfull",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
       });
       dispatch(setUserData(response?.data?.results?.employee));
-      navigate("/Admin/Home");
+      let navigateToRoles = await response?.data?.results?.employee
+        ?.employRole[0];
+
+      if (navigateToRoles === "Department Manager") {
+        navigate(`/Department/Home`);
+      } else {
+        navigate(`/${navigateToRoles}/Home`);
+      }
+      // console.log(navigateToRoles)
+      // console.log(`${navigateToRoles}/Home`)
     }
   };
   const togglePassword = () => {
@@ -106,7 +115,7 @@ const AuthLogin = () => {
                   </small>
                 )}
               </div>
-              <div className="mb-4 position-relative">
+              <div className="mb-2 position-relative">
                 <label for="" className="form-label">
                   Password
                 </label>

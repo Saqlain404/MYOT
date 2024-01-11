@@ -83,7 +83,7 @@ const EditProfileSig = () => {
       });
       return false;
     }
-    if (data&&!data?.error) {
+    if (data && !data?.error) {
       toast("Profile Updated Successfully", {
         position: "top-right",
         autoClose: 5000,
@@ -106,7 +106,7 @@ const EditProfileSig = () => {
             <SidebarSig />
           </div>
           <div className="col-7 middle-content p-0 min-vh-100">
-            <div className="container-fluid border-bottom sticky-top bg-white mb-4">
+            <div className="container-fluid sticky-top bg-white mb-4">
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
@@ -176,230 +176,56 @@ const EditProfileSig = () => {
                       </div>
                     </label>
                   </div>
-                  <div className="row">
-                    {/* <div className="col-12 d-flex justify-content-between mb-2">
-                      <div className="col-6 m-2">
-                        <p className=" d-flex justify-content-start profile-card-title">
-                          Full Name
-                        </p>
-                        <input
-                          autoComplete="false"
-                          type="text"
-                          placeholder="Full Name"
-                          className={classNames(
-                            "col-12 profile-edit-input p-2",
-                            {
-                              "is-invalid": errors.name,
-                            }
-                          )}
-                          name="name"
-                          {...register("name", {
-                            pattern: {
-                              value: /^(?!\s)[^\d]*(?:\s[^\d]+)*$/,
-                              message:
-                                "Spaces at the start & numbers are not allowed",
-                            },
-                          })}
-                        />
-                        {errors.name && (
-                          <div className="invalid-feedback">
-                            {errors.name.message}
-                          </div>
-                        )}
-                      </div>
-                      <div className="col-6 m-2">
-                        <p className=" d-flex justify-content-start profile-card-title">
-                          Email
-                        </p>
-                        <input
-                          autoComplete="off"
-                          type="email"
-                          placeholder="Email"
-                          className={`col-12 profile-edit-input p-2 ${
-                            errors.email ? "is-invalid" : ""
-                          }`}
-                          {...register("email", {
-                            pattern: {
-                              value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                              message: "Please enter a valid email address",
-                            },
-                          })}
-                        />
-                        {errors.email && (
-                          <div className="invalid-feedback">
-                            {errors.email.message}
-                          </div>
-                        )}
-                      </div>
+                  <div className="row m-0 p-0">
+                    <div className="col-12">
+                      <p className="text-start profile-card-title">Name</p>
+                      <input
+                        autoComplete="false"
+                        type="text"
+                        placeholder="Name"
+                        className={classNames("w-100 profile-edit-input p-2", {
+                          "is-invalid": errors.name,
+                        })}
+                        name="name"
+                        {...register("name")}
+                      />
                     </div>
-                    <div className="col-12 d-flex justify-content-between mb-2">
-                      <div className="col-6 m-2">
-                        <p className=" d-flex justify-content-start profile-card-title">
-                          Phone Number
-                        </p>
-                        <input
-                          autoComplete="false"
-                          type="number"
-                          placeholder="Phone Number"
-                          className={classNames(
-                            "col-12 profile-edit-input p-2",
-                            {
-                              "is-invalid": errors.number,
-                            }
-                          )}
-                          name="number"
-                          {...register("number")}
-                        />
-                        {errors.name && (
-                          <div className="invalid-feedback">
-                            {errors.name.message}
-                          </div>
-                        )}
-                      </div>
-                      <div className="col-6 m-2">
-                        <p className=" d-flex justify-content-start profile-card-title">
-                          Date of Birth
-                        </p>
-                        <input
-                          autoComplete="false"
-                          type="date"
-                          placeholder="Date of Birth"
-                          className={classNames(
-                            "col-12 profile-edit-input p-2",
-                            {
-                              "is-invalid": errors.dob,
-                            }
-                          )}
-                          name="dob"
-                          {...register("dob")}
-                        />
-                      </div>
-                    </div> */}
-                    <div className="col-12 d-flex justify-content-between border-bottom mb-2 pb-4">
-                      <div className="col-6 m-2">
-                        <p className=" d-flex justify-content-start profile-card-title">
-                          Password
-                        </p>
-                        <input
-                          autoComplete="false"
-                          type="password"
-                          placeholder="Password"
-                          className={classNames(
-                            "col-12 profile-edit-input p-2",
-                            {
-                              "is-invalid": errors.password,
-                            }
-                          )}
-                          name="password"
-                          {...register("password")}
-                        />
-                      </div>
-                      <div className="col-6 m-2">
-                        <p className=" d-flex justify-content-start profile-card-title">
-                          Confirm Password
-                        </p>
-                        <input
-                          autoComplete="false"
-                          type="text"
-                          placeholder="Confirm Password"
-                          className={classNames(
-                            "col-12 profile-edit-input p-2",
-                            {
-                              "is-invalid": errors.cpassword,
-                            }
-                          )}
-                          name="cpassword"
-                          {...register("cpassword")}
-                        />
-                      </div>
+                    <div className="col-6 mt-4">
+                      <p className="text-start profile-card-title">Password</p>
+                      <input
+                        autoComplete="false"
+                        type="password"
+                        placeholder="Password"
+                        className={classNames("w-100 profile-edit-input p-2", {
+                          "is-invalid": errors.password,
+                        })}
+                        name="password"
+                        {...register("password")}
+                      />
                     </div>
-                    <div className="col-12 d-flex justify-content-between mb-2">
-                      {/* <div className="col-6 m-2">
-                        <p className=" d-flex justify-content-start profile-card-title">
-                          Company Email
-                        </p>
-                        <input
-                          autoComplete="false"
-                          type="email"
-                          placeholder="Company Email"
-                          className={classNames(
-                            "col-12 profile-edit-input p-2",
-                            {
-                              "is-invalid": errors.companyEmail,
-                            }
-                          )}
-                          name="companyEmail"
-                          {...register("companyEmail")}
-                        />
-                      </div> */}
-                      {/* <div className="col-6 m-2">
-                        <p className=" d-flex justify-content-start profile-card-title">
-                          Company Phone Number
-                        </p>
-                        <input
-                          autoComplete="false"
-                          type="number"
-                          placeholder="Company Phone Number"
-                          className={classNames(
-                            "col-12 profile-edit-input p-2",
-                            {
-                              "is-invalid": errors.companyNumber,
-                            }
-                          )}
-                          name="companyNumber"
-                          {...register("companyNumber")}
-                        />
-                      </div> */}
+                    <div className="col-6 mt-4">
+                      <p className="text-start profile-card-title">Confirm Password</p>
+                      <input
+                        autoComplete="false"
+                        type="text"
+                        placeholder="Confirm Password"
+                        className={classNames("w-100 profile-edit-input p-2", {
+                          "is-invalid": errors.cpassword,
+                        })}
+                        name="cpassword"
+                        {...register("cpassword")}
+                      />
                     </div>
-                    {/* <div className="col-12 d-flex justify-content-between mb-2">
-                      <div className="col-6 m-2">
-                        <p className=" d-flex justify-content-start profile-card-title">
-                          Company Name
-                        </p>
-                        <input
-                          autoComplete="false"
-                          type="text"
-                          placeholder="Company Name"
-                          className={classNames(
-                            "col-12 profile-edit-input p-2",
-                            {
-                              "is-invalid": errors.companyName,
-                            }
-                          )}
-                          name="companyName"
-                          {...register("companyName")}
-                        />
-                      </div>
-                      <div className="col-6 m-2">
-                        <p className=" d-flex justify-content-start profile-card-title">
-                          Address
-                        </p>
-                        <input
-                          autoComplete="false"
-                          type="text"
-                          placeholder="Address"
-                          className={classNames(
-                            "col-12 profile-edit-input p-2",
-                            {
-                              "is-invalid": errors.companyAddress,
-                            }
-                          )}
-                          name="companyAddress"
-                          {...register("companyAddress")}
-                        />
-                      </div>
-                    </div> */}
                   </div>
+                </div>
 
-                  <div className=" d-flex justify-content-end">
-                    {/* <p className="profile-txt m-2">Profile</p> */}
-                    <button type="submit" className="profile-edit-submit">
-                      Update Profile
-                    </button>
-                    <button type="reset" id="reset" className="d-none">
-                      reset
-                    </button>
-                  </div>
+                <div className="text-end mt-4">
+                  <button type="submit" className="profile-edit-submit m-0">
+                    Update Profile
+                  </button>
+                  <button type="reset" id="reset" className="d-none">
+                    reset
+                  </button>
                 </div>
               </form>
             </div>

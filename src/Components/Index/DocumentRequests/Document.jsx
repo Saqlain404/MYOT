@@ -237,7 +237,7 @@ const Document = () => {
         Swal.fire({
           toast: true,
           icon: "success",
-          position: "bottom",
+          position: "top-end",
           title: "Document deleted successfully",
           showConfirmButton: false,
           timerProgressBar: true,
@@ -335,7 +335,7 @@ const Document = () => {
         Swal.fire({
           toast: true,
           icon: "success",
-          position: "bottom",
+          position: "top-end",
           title: "New comment added",
           showConfirmButton: false,
           timerProgressBar: true,

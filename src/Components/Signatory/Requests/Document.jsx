@@ -102,8 +102,10 @@ const Document = () => {
               list?.status === "Pending"
                 ? "text-info"
                 : list?.status === "Approved"
-                ? "text-warning"
+                ? "text-success"
                 : list?.status === "In Progress"
+                ? "text-primary"
+                : list?.status === "Rejected"
                 ? "text-primary"
                 : "text-success"
             }`}
@@ -277,7 +279,7 @@ const Document = () => {
         Swal.fire({
           toast: true,
           icon: "success",
-          position: "bottom",
+          position: "top-end",
           title: "New comment added",
           showConfirmButton: false,
           timerProgressBar: true,

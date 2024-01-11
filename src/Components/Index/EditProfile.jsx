@@ -4,8 +4,14 @@ import Sidebar from "../Sidebar";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import classNames from "classnames";
-import { UpdateAdminProfile } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import {
+  EmployeeLists,
+  UpdateAdminProfile,
+} from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { updateProfilePic, updateUserName } from "../app/slice/userSlice";
 
 const EditProfile = () => {
   const [files, setFiles] = useState([]);
@@ -13,12 +19,17 @@ const EditProfile = () => {
   const [passVisible, setPassVisible] = useState(false);
   const [cPassVisible, setCPassVisible] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const getEmployeeList = async () => {
+    let { data } = await EmployeeLists();
+  };
 
   const onFileSelection = (e, key) => {
     // console.log(e.target.files, key);
@@ -58,11 +69,13 @@ const EditProfile = () => {
     //   return false
     // }
     const formData = new FormData();
-    formData.append("name", data1?.name);
-    formData.append("email", data1?.email);
-    formData.append("phone_number", data1?.number);
+    if (data1?.name) {
+      formData.append("name", data1?.name);
+    }
+    // formData.append("email", data1?.email);
+    // formData.append("phone_number", data1?.number);
     formData.append("profile_Pic", files?.profile_img);
-    formData.append("DOB", data1?.dob);
+    // formData.append("DOB", data1?.dob);
     formData.append("password", data1?.password);
     formData.append("confirmPassword", data1?.cpassword);
     formData.append("address", data1?.companyAddress);
@@ -71,30 +84,32 @@ const EditProfile = () => {
     let { data } = await UpdateAdminProfile(emp_id, formData);
     console.log(data);
     if (data && data?.error) {
-      toast.error(data?.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
+      return false;
     }
     if (data && !data?.error) {
-      toast("Profile Updated Successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Profile update successfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       setFiles([]);
+      dispatch(updateProfilePic(data?.results?.admin?.profile_Pic));
+      dispatch(updateUserName(data?.results?.admin?.name));
       navigate("/Admin/My-profile");
+      getEmployeeList();
     }
   };
   return (
@@ -235,29 +250,29 @@ const EditProfile = () => {
                       </div> */}
                     </div>
                     <div className="col-12 d-flex justify-content-between mb-2">
-                      {/* <div className="col-6 m-2">
+                      <div className="col-12 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
-                          Phone Number
+                          Name
                         </p>
                         <input
                           autoComplete="false"
-                          type="number"
-                          placeholder="Phone Number"
+                          type="text"
+                          placeholder="name"
                           className={classNames(
                             "col-12 profile-edit-input p-2",
                             {
-                              "is-invalid": errors.number,
+                              "is-invalid": errors.name,
                             }
                           )}
-                          name="number"
-                          {...register("number")}
+                          name="name"
+                          {...register("name")}
                         />
                         {errors.name && (
                           <div className="invalid-feedback">
                             {errors.name.message}
                           </div>
                         )}
-                      </div> */}
+                      </div>
                       {/* <div className="col-6 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Date of Birth
@@ -277,7 +292,7 @@ const EditProfile = () => {
                         />
                       </div> */}
                     </div>
-                    <div className="col-12 d-flex justify-content-between mb-2 pb-4">
+                    <div className="col-12 d-flex justify-content-between">
                       <div className="col-6 m-2 position-relative">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Password
@@ -294,7 +309,6 @@ const EditProfile = () => {
                           )}
                           name="password"
                           {...register("password", {
-                            required: "* Please Enter Your Password",
                             pattern: {
                               value:
                                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
@@ -333,7 +347,7 @@ const EditProfile = () => {
                         </p>
                         <input
                           autoComplete="false"
-                          type={cPassVisible ? 'text' : "password"}
+                          type={cPassVisible ? "text" : "password"}
                           placeholder="Confirm Password"
                           className={classNames(
                             "col-12 profile-edit-input p-2",
@@ -343,7 +357,7 @@ const EditProfile = () => {
                           )}
                           name="cpassword"
                           {...register("cpassword", {
-                            required: "* Please Confirm Your Password",
+                            // required: "* Please Confirm Your Password",
                             pattern: {
                               value:
                                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
@@ -454,16 +468,11 @@ const EditProfile = () => {
                       </div>
                     </div> */}
                   </div>
-
-                  <div className=" d-flex justify-content-end">
-                    {/* <p className="profile-txt m-2">Profile</p> */}
-                    <button type="submit" className="profile-edit-submit">
-                      Update Profile
-                    </button>
-                    <button type="reset" id="reset" className="d-none">
-                      reset
-                    </button>
-                  </div>
+                </div>
+                <div className="text-end">
+                  <button type="submit" className="profile-edit-submit m-0">
+                    Update Profile
+                  </button>
                 </div>
               </form>
             </div>

@@ -251,7 +251,7 @@ const Users = () => {
         Swal.fire({
           toast: true,
           icon: "success",
-          position: "bottom",
+          position: "top-end",
           title: "User Data Deleted successfully",
           showConfirmButton: false,
           timerProgressBar: true,
@@ -345,7 +345,7 @@ const Users = () => {
       Swal.fire({
         toast: true,
         icon: "success",
-        position: "bottom",
+        position: "top-end",
         title: "New Employee Added",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -438,7 +438,7 @@ const Users = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <Link className="nav-link ms-2">/Users</Link>
+                    <Link className="nav-link ms-2">Users</Link>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">

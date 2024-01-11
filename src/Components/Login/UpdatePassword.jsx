@@ -32,7 +32,7 @@ const UpdatePassword = () => {
       Swal.fire({
         toast: true,
         icon: "error",
-        position: "bottom",
+        position: "top-end",
         title: "Password must be same",
         showConfirmButton: false,
         timerProgressBar: true,
