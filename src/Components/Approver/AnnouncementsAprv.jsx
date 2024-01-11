@@ -211,7 +211,7 @@ const AnnouncementsAprv = () => {
                         aria-label="Close"
                         class="user-modal-btn2"
                       >
-                        Cancle
+                        Cancel
                       </button>
                     </div>
                   </form>

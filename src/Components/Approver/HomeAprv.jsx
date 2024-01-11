@@ -205,6 +205,7 @@ const HomeAprv = () => {
     const newRows = [];
     if (!data?.error) {
       let values = data;
+      values?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
       console.log(values);
       values?.map((list, index) => {
         const returnData = {};
@@ -645,7 +646,7 @@ const HomeAprv = () => {
                   <MDBDataTable
                     bordered
                     displayEntries={false}
-                    entries={5}
+                    entries={10}
                     className="text-nowrap"
                     hover
                     data={{ ...tasks, columns: visibleColumns }}

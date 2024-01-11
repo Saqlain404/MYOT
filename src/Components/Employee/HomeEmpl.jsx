@@ -113,6 +113,7 @@ const HomeEmpl = () => {
     if (!data?.error) {
       let values = data;
       console.log(values);
+      values?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
       values?.map((list, index) => {
         const returnData = {};
         returnData.name = list?.templete_Id?.templeteName;
@@ -718,7 +719,7 @@ const HomeEmpl = () => {
                   <MDBDataTable
                     bordered
                     displayEntries={false}
-                    entries={5}
+                    entries={10}
                     className="text-nowrap"
                     hover
                     data={{ ...tasks, columns: visibleColumns }}

@@ -79,7 +79,7 @@ const EmplEditProfile = () => {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "Profile Updated",
         showConfirmButton: false,
         timerProgressBar: true,
