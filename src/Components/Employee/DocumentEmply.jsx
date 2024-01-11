@@ -381,7 +381,7 @@ const DocumentEmply = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
+                    <a className="nav-link ms-2">
                       Document Requests Management
                     </a>
                   </li>
