@@ -16,7 +16,7 @@ $(function () {
           width: 200,
         },
         legend: {
-          position: "bottom",
+          position: "top-end",
         },
       },
     }, ],
@@ -49,7 +49,7 @@ $(function () {
           width: 200,
         },
         legend: {
-          position: "bottom",
+          position: "top-end",
         },
       },
     }, ],

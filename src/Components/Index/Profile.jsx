@@ -17,7 +17,6 @@ const Profile = () => {
     const { data } = await AdminProfile(emp_id);
     if (!data?.error) {
       setProfileData(data?.results?.employee);
-      console.log(data?.results?.employee);
     }
   };
 
@@ -114,14 +113,14 @@ const Profile = () => {
                       </p>
                     </div>
                     <div>
-                      <p className="profile-info">Date of Birth</p>
+                      <p className="profile-info">Creation Date</p>
                       <p className="profile-data">
-                        {moment(profileData?.DOB).format("L")}
+                        {moment(profileData?.createdAt).format("L")}
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white rounded mb-4 p-4 ">
+                {/* <div className="bg-white rounded mb-4 p-4 ">
                   <p className=" d-flex justify-content-start profile-card-title">
                     Document
                   </p>
@@ -133,7 +132,7 @@ const Profile = () => {
                     <img src="/images/dashboard/pdf-icon.svg" alt="" />
                     <p className="profile-salary-slip m-2">Salaryslip.Pdf</p>
                   </div>
-                </div>
+                </div> */}
                 <div className="bg-white rounded mb-4 p-4 pb-2">
                   <p className=" d-flex justify-content-start profile-card-title">
                     Company Information

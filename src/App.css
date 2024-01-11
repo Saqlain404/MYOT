@@ -219,7 +219,7 @@ height: 960px; */
   display: flex;
   justify-content: space-between;
   width: 348px;
-  height: 50px;
+  /* height: 50px; */
   flex-shrink: 0;
 }
 
@@ -873,6 +873,9 @@ height: 960px; */
 
 .table_comman tbody tr td:first-child {
   text-align: left;
+}
+td {
+  text-transform: capitalize !important;
 }
 /* .table_comman tbody tr td:nth-child(2){
   text-align: left;
@@ -2457,7 +2460,7 @@ height: 960px; */
   border: none;
 }
 
-thead tr th div{
+thead tr th div {
   margin: 0px 10px !important;
 }
 
@@ -2572,14 +2575,18 @@ div.dataTables_wrapper div.dataTables_paginate {
   color: red !important;
   font-size: 13px;
 }
-.eye_container{
+.eye_container {
   position: absolute;
   top: 43px;
-  right: 10px;
+  right: 20px;
 }
 
-.eye_container .eye_icon{
-  width: 25px;
-  height: 25px;
+.eye_container .eye_icon {
   cursor: pointer;
+  height: 18px;
+  width: 16px;
+}
+
+.password-update-input {
+  color: black !important;
 }

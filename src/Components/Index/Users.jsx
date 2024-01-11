@@ -251,7 +251,7 @@ const Users = () => {
         Swal.fire({
           toast: true,
           icon: "success",
-          position: "bottom",
+          position: "top-end",
           title: "User Data Deleted successfully",
           showConfirmButton: false,
           timerProgressBar: true,
@@ -345,7 +345,7 @@ const Users = () => {
       Swal.fire({
         toast: true,
         icon: "success",
-        position: "bottom",
+        position: "top-end",
         title: "New Employee Added",
         showConfirmButton: false,
         timerProgressBar: true,

@@ -36,7 +36,7 @@ const Switcher = () => {
   return (
     <>
       <a
-        className="text-decoration-none pb-2 bg-white"
+        className="text-decoration-none pb-2 bg-white w-100"
         type="button"
         data-bs-toggle="dropdown"
         aria-expanded="false"
