@@ -53,10 +53,16 @@ const AuthLogin = () => {
         timer: 3000,
       });
       dispatch(setUserData(response?.data?.results?.employee));
-      let navigateToRoles = await response?.data?.results?.employee?.employRole[0]
+      let navigateToRoles = await response?.data?.results?.employee
+        ?.employRole[0];
+
+      if (navigateToRoles === "Department Manager") {
+        navigate(`/Department/Home`);
+      } else {
+        navigate(`/${navigateToRoles}/Home`);
+      }
       // console.log(navigateToRoles)
       // console.log(`${navigateToRoles}/Home`)
-      navigate(`/${navigateToRoles}/Home`);
     }
   };
   const togglePassword = () => {
