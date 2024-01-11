@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
 import {
   AddCommentApprv,
+  approvedDocumentRequest,
   approvedTemplete,
+  rejectedDocumentRequest,
   rejectedTemplete,
   searchDocTemplete,
   templeteDocList,
@@ -238,7 +240,7 @@ const getDocTaskData = async () => {
               </li>
               <li>
                 <a
-                  onClick={() => approved(list?._id)}
+                  onClick={() => approveDocumentRequest(list?._id)}
                   class="dropdown-item border-bottom"
                   href="#"
                 >
@@ -252,7 +254,7 @@ const getDocTaskData = async () => {
               </li>
               <li>
                 <a
-                  onClick={() => rejected(list?._id)}
+                  onClick={() => rejectDocumentRequest(list?._id)}
                   class="dropdown-item text-danger"
                   href="#"
                 >
@@ -389,6 +391,14 @@ const getDocTaskData = async () => {
     }
   };
 
+  const approveDocumentRequest = async (document_Id) => {
+    const approveData = await approvedDocumentRequest(document_Id);
+    getDocTaskData()
+  };
+  const rejectDocumentRequest = async (document_Id) => {
+    const approveData = await rejectedDocumentRequest(document_Id);
+    getDocTaskData()
+  };
  
   return (
     <>

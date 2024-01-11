@@ -872,3 +872,84 @@ export async function DeleteCommentAprv(comment_id) {
   }
 }
 
+
+export async function approvedDocumentRequest(documentIds) {
+  try {
+    const response = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/approver/approved-document/${documentIds}`
+    );
+    if (!response.data?.error) {
+      const templeteList = response?.data;
+      console.log(templeteList);
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"bottom",
+        title: "Template Approved",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return templeteList;
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"bottom",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      // toast.error(error.response.data.message);
+    } else {
+      // toast.error("An error occurred while fetching the template IDs.");
+    }
+    return null;
+  }
+}
+
+export async function rejectedDocumentRequest(documentIds) {
+  try {
+    const response = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/approver/rejected-document/${documentIds}`
+    );
+    if (!response.data?.error) {
+      const templeteList = response?.data;
+      console.log(templeteList);
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"bottom",
+        title: "Template Rejected",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return templeteList;
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"bottom",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      // toast.error(error.response.data.message);
+    } else {
+      // toast.error("An error occurred while fetching the template IDs.");
+    }
+    return null;
+  }
+}
+
