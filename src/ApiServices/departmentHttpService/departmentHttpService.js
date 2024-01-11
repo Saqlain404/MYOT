@@ -298,6 +298,24 @@ export async function DepartmentDashboardCount () {
       return { error };
     }
   }
+  export async function ProfileDeptUpdate(formData) {
+    try {
+      const { data } = await adminHttpService.post(
+        `${process.env.REACT_APP_APIENDPOINT}/api/department/update-profile/656995d2c152b587fb27a180`,
+        formData
+      );
+      // console.log(data);
+      if (!data.error) {
+        toast.success(data.message);
+        // await localStorage.getItem("x-auth-token-company");
+      } else toast.error(data.message);
+  
+      return { data };
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      return { error };
+    }
+  }
 
   export async function TicketList(formData) {
     try {

@@ -10,7 +10,7 @@ const SidebarDepartment = () => {
       {/* Sidebar scroll*/}
 
       <div className="row">
-        <div className="mb-4">
+        <div className="mb-4 sticky-top bg-white">
           {/* <img src='/images/Myot-logo.png' className="logo pb-1"/> */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -58,9 +58,9 @@ const SidebarDepartment = () => {
             </defs>
           </svg>
         </div>
-        <div className="col-auto col-mg-3 min-vh-100">
+        <div className="col-auto col-mg-3 min-vh-100  mb-4">
           <p className="th-text">MAIN MENU</p>
-          <ul className="nav nav-pills flex-column">
+          <ul className="nav nav-pills flex-column logout-margin">
             <li
               className={`"nav-item text-dark" ${
                 location.pathname === "/Department/Home" ? "nav_active" : ""
@@ -99,7 +99,7 @@ const SidebarDepartment = () => {
                   aria-current="page"
                 >
                   <img
-                    src="/images/sidebar/Dashboard.svg"
+                    src="/images/sidebar/dashboard.svg"
                     className="align-middle sidebar-icon"
                     alt=""
                   />
@@ -260,11 +260,11 @@ const SidebarDepartment = () => {
               </Link>
             </li>
             <li
-              className={`"nav-item text-dark" ${
-                location.pathname === "/Department/Files" ? "nav_active" : ""
-              } `}
+              // className={`"nav-item text-dark" ${
+              //   location.pathname === "/Department/Files" ? "nav_active" : ""
+              // } `}
             >
-              <a
+              {/* <a
                 href="/"
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"
@@ -276,7 +276,7 @@ const SidebarDepartment = () => {
                 />
 
                 <span className="ms-3 align-middle sidebar-btn">Files</span>
-              </a>
+              </a> */}
             </li>
             <li
               className={`"nav-item text-dark" ${
@@ -400,7 +400,7 @@ const SidebarDepartment = () => {
                   alt=""
                 />
 
-                <span className="ms-3 align-middle sidebar-btn">Logout</span>
+                <span className="ms-3 align-middle  sidebar-btn ">Logout</span>
               </a>
             </li>
           </ul>
@@ -408,7 +408,7 @@ const SidebarDepartment = () => {
 
         <div
           style={{ width: "14rem" }}
-          class="dropdown position-fixed bottom-0 bg-white"
+          className="dropdown position-fixed bottom-0 bg-white"
         >
           <Switcher />
         </div>

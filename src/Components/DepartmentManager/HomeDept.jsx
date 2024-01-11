@@ -189,67 +189,9 @@ const HomeDept = () => {
           </>
         );
         returnData.actions = (
-          <div class="">
-            <a
-              className="cursor_pointer"
-              type=""
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
-            </a>
-            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-              {/* <li>
-                <a class="dropdown-item border-bottom" href="#">
-                  <img
-                    src="/images/users/AddressBook.svg"
-                    alt=""
-                    className="me-2"
-                  />
-                  View Users Details
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item border-bottom" href="#">
-                  <img
-                    src="/images/users/PencilLine.svg"
-                    alt=""
-                    className="me-2"
-                  />
-                  Edit User Details
-                </a>
-              </li> */}
-              <li>
-                <Link
-                  class="dropdown-item"
-                  to={`/Admin/Tasks/Comments/${list?._id}`}
-                >
-                  <img
-                    src="/images/dashboard/Comment.png"
-                    alt=""
-                    className="me-2"
-                  />
-                  Comments
-                </Link>
-              </li>
-              <li>
-                <a class="dropdown-item border-bottom" href="#">
-                  <img
-                    src="/images/users/TextAlignLeft.svg"
-                    alt=""
-                    className="me-2"
-                  />
-                  Wrap Column
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item text-danger" href="#">
-                  <img src="/images/users/Trash.svg" alt="" className="me-2" />
-                  Delete Template
-                </a>
-              </li>
-            </ul>
-          </div>
+          <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
+
+          
         );
 
         newRows.push(returnData);
@@ -409,7 +351,7 @@ const HomeDept = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link ms-2" href="app-email.html">
-                      /Home
+                      Home
                     </a>
                   </li>
                 </ul>

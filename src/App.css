@@ -2827,26 +2827,7 @@ div.dataTables_wrapper div.dataTables_paginate {
 .cal_tab {
   cursor: pointer;
 }
-.eye_container {
-  position: absolute;
-  top: 43px;
-  right: 20px;
-}
 
-.eye_container .eye_icon {
-  cursor: pointer;
-  height: 18px;
-  width: 16px;
-}
-.view-detail-page {
-  width: 100%;
-  margin-top: 20px;
-}
-.department-name{
-  font-size: 15px;
-  color: #051036;
-  font-family: Nunito;
-  font-style: normal;
-  font-weight: 900;
-  line-height: 36px; /* 150% */
+.logout-margin{
+  margin-bottom: 100px;
 }

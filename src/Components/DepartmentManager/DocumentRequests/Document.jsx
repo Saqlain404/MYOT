@@ -6,6 +6,8 @@ import {
   RequestorList,
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
+import { RequestsList } from "../../../ApiServices/departmentHttpService/departmentHttpService";
+import moment from "moment";
 
 const Document = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -16,51 +18,29 @@ const Document = () => {
   const [documents, setDocuments] = useState({
     columns: [
       {
-        label: "Document",
-        field: "document",
+        label: "Template name",
+        field: "template",
         sort: "asc",
         width: 50,
         selected: false,
       },
       {
-        label: "Requester",
+        label: "Requester Name",
         field: "requester",
         sort: "asc",
         width: 50,
         selected: false,
       },
       {
-        label: "Assigned To",
-        field: "assigned",
+        label: "Date",
+        field: "date",
         sort: "asc",
         width: 50,
         selected: false,
       },
       {
-        label: "Priority",
-        field: "priority",
-        sort: "asc",
-        width: 100,
-        selected: false,
-      },
-      {
-        label: "Status",
-        field: "status",
-        sort: "asc",
-        width: 100,
-        selected: false,
-      },
-      {
-        label: "Department",
-        field: "department",
-        sort: "asc",
-        width: 100,
-        searchable: true,
-        selected: false,
-      },
-      {
-        label: "Comments",
-        field: "comments",
+        label: "Comment",
+        field: "comment",
         sort: "asc",
         width: 100,
         selected: false,
@@ -83,7 +63,7 @@ const Document = () => {
   }, []);
 
   const getRequestorList = async () => {
-    let { data } = await RequestorList();
+    let { data } = await RequestsList();
 
     const newRows = [];
     if (!data?.error) {
@@ -91,174 +71,90 @@ const Document = () => {
       console.log(values);
       values?.map((list, index) => {
         const returnData = {};
-        returnData.document = list?.templete_Id?.templeteName;
-        returnData.assigned = (
-          <>
-            <img
-              className="w_20_h_20"
-              src={list?.templete_Id?.manager?.profile_Pic}
-              alt=""
-            />
-            <span className="ms-2 text-capitalize">
-              {list?.templete_Id?.manager?.name}
-            </span>
-          </>
-        );
+        returnData.template = list?.templete?.[0]?.templeteName;
         returnData.requester = (
           <>
             <img
               className="w_20_h_20"
-              src={list?.creator_Id?.profile_Pic}
+              src={list?.templete?.[0]?.manager?.[0]?.profile_Pic}
               alt=""
             />
             <span className="ms-2 text-capitalize">
-              {list?.creator_Id?.name}
+              {list?.templete?.[0]?.manager?.[0]?.name}
             </span>
           </>
         );
-        returnData.priority = list?.priority;
+        
+        returnData.date = (list?.createdAt && moment(list?.createdAt).format("L")) || "NA";
         returnData.department =
           list?.templete_Id?.manager?.department_Id?.departmentName;
-        returnData.status = (
-          <span
-            className={`"td-text status" ${
-              list?.status === "Pending"
-                ? "text-info"
-                : list?.status === "Approved"
-                ? "text-warning"
-                : list?.status === "In Progress"
-                ? "text-primary"
-                : "text-success"
-            }`}
-          >
-            {list?.status}
-          </span>
-        );
-        returnData.comments = (
-          <>
-            <div className="text-center">
-              <a type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img
-                  src="/images/dashboard/Comment.png"
-                  className="mx-auto d-block"
-                  onClick={() => setDocument_Id(document?._id)}
-                />
-              </a>
-              <form
-                className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
-                onSubmit={(e) => handleSubmit(e, list?._id)}
-              >
-                <div className="mb-3 border-bottom">
-                  <label className="form-label th-text">Comment or type</label>
-
-                  <input
-                    type="text"
-                    className="form-control border-0"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                </div>
-
-                <div className="d-flex justify-content-between">
-                  <div>
-                    <img
-                      src="/images/tasks/assign comments.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/mention.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/task.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/emoji.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                    <img
-                      src="/images/tasks/attach_attachment.svg"
-                      alt=""
-                      className="comment-img"
-                    />
-                  </div>
-                  <div>
-                    <button type="submit" className="comment-btn btn-primary">
-                      Comment
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </>
-        );
+        
+          returnData.comment = (
+            <img
+            src="/images/dashboard/Comment.png"
+            className="mx-auto d-block"
+          />
+            // <>
+            //   <div className="text-center">
+            //     <a type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                 
+            //     </a>
+            //     <form
+            //       className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
+            //       // onSubmit={(e) => handleSubmit(e, list?._id)}
+            //     >
+            //       <div className="mb-3 border-bottom">
+            //         <label className="form-label th-text">Comment or type</label>
+  
+            //         <input
+            //           type="text"
+            //           className="form-control border-0"
+            //           // value={comment}
+            //           // onChange={(e) => setComment(e.target.value)}
+            //         />
+            //       </div>
+  
+            //       <div className="d-flex justify-content-between">
+            //         <div>
+            //           <img
+            //             src="/images/tasks/assign comments.svg"
+            //             alt=""
+            //             className="comment-img"
+            //           />
+            //           <img
+            //             src="/images/tasks/mention.svg"
+            //             alt=""
+            //             className="comment-img"
+            //           />
+            //           <img
+            //             src="/images/tasks/task.svg"
+            //             alt=""
+            //             className="comment-img"
+            //           />
+            //           <img
+            //             src="/images/tasks/emoji.svg"
+            //             alt=""
+            //             className="comment-img"
+            //           />
+            //           <img
+            //             src="/images/tasks/attach_attachment.svg"
+            //             alt=""
+            //             className="comment-img"
+            //           />
+            //         </div>
+            //         <div>
+            //           <button type="submit" className="comment-btn btn-primary">
+            //             Comment
+            //           </button>
+            //         </div>
+            //       </div>
+            //     </form>
+            //   </div>
+            // </>
+          );
         returnData.actions = (
-          <div class="">
-            <a
-              className="cursor_pointer"
-              type=""
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
-            </a>
-            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-              {/* <li>
-                <a class="dropdown-item border-bottom" href="#">
-                  <img
-                    src="/images/users/AddressBook.svg"
-                    alt=""
-                    className="me-2"
-                  />
-                  View Users Details
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item border-bottom" href="#">
-                  <img
-                    src="/images/users/PencilLine.svg"
-                    alt=""
-                    className="me-2"
-                  />
-                  Edit User Details
-                </a>
-              </li> */}
-              <li>
-                <Link
-                  class="dropdown-item"
-                  to={`/Admin/Requests/Comments/${list?._id}`}
-                >
-                  <img
-                    src="/images/dashboard/Comment.png"
-                    alt=""
-                    className="me-2"
-                  />
-                  Comments
-                </Link>
-              </li>
-              <li>
-                <a class="dropdown-item border-bottom" href="#">
-                  <img
-                    src="/images/users/TextAlignLeft.svg"
-                    alt=""
-                    className="me-2"
-                  />
-                  Wrap Column
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item text-danger" href="#">
-                  <img src="/images/users/Trash.svg" alt="" className="me-2" />
-                  Delete Template
-                </a>
-              </li>
-            </ul>
-          </div>
+          <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
+          
         );
 
         newRows.push(returnData);
