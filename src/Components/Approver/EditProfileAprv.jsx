@@ -19,7 +19,7 @@ const EditProfileAprv = () => {
     localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
 
   const [post, setPost] = useState({
-    // name: "",
+    name: "",
     // email: "",
     // mobileNumber: "",
     password: "",
@@ -64,7 +64,7 @@ const EditProfileAprv = () => {
       return false;
     }
     const formData = new FormData();
-    // formData.append("name", post.name);
+    formData.append("name", post.name);
     // formData.append("email", post.email);
     // formData.append("mobileNumber", post.mobileNumber);
     formData.append("password", post.password);
@@ -170,8 +170,7 @@ const EditProfileAprv = () => {
                     />
                     {/* {validationErrors.profile_Pic && <p className=" d-flex align-items-end text-danger ms-2 mt-2">{validationErrors.profile_Pic}</p>} */}
                   </div>
-                  {/* <div className="col-12 d-flex justify-content-between mb-2"> */}
-                  {/* <div className="col-6 m-2">
+                   <div className="col-12 m-2">
                       <p className=" d-flex justify-content-start profile-card-title">
                         Full Name
                       </p>
@@ -183,8 +182,8 @@ const EditProfileAprv = () => {
                         value={post.name}
                         onChange={handleInput}
                         />
-                        {validationErrors.name && <p>{validationErrors.name}</p>}
-                    </div> */}
+                    </div>
+                  {/* <div className="col-12 d-flex justify-content-between mb-2"> */}
                   {/* <div className="col-6 m-2">
                       <p className=" d-flex justify-content-start profile-card-title">
                         Email
@@ -224,7 +223,7 @@ const EditProfileAprv = () => {
                        className="col-12 profile-edit-input p-2" />
                      </div>
                   </div> */}
-                  <div className="col-12 d-flex justify-content-between ">
+                  <div className="col-12 d-flex justify-content-between mt-3 ">
                     <div className="col-6 m-2 position-relative">
                       <p className=" d-flex justify-content-start profile-card-title">
                         Password

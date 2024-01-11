@@ -604,7 +604,7 @@ const HomeEmpl = () => {
                       aria-label="Close"
                       className="user-modal-btn2"
                     >
-                      Cancle
+                      Cancel
                     </button>
                   </div>
                 </div>

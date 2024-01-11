@@ -353,6 +353,7 @@ const DocumentEmply = () => {
       documentName: "",
       templateId: "",
     });
+    getTaskData()
   };
 
   const handleSubmitComment = async (e) => {

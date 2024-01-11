@@ -421,7 +421,7 @@ const DocHistoryEmploye = () => {
               </Link>
             </div>
             <div className="position-relative mt-2">
-              <p className="table-name mb-2">Completed Documents</p>
+              <p className="table-name mb-2">Documents</p>
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">
                   <div className="col-md-3 table-searchbar-imgs">
