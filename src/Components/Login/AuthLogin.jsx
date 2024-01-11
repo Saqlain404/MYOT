@@ -174,7 +174,7 @@ const AuthLogin = () => {
 
               <div className="d-flex justify-content-between mb-4 remember">
                 <div className="">
-                  <Checkbox defaultChecked> Remember Me</Checkbox>
+                  <Checkbox > Remember Me</Checkbox>
                 </div>
               </div>
 

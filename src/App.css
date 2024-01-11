@@ -2842,25 +2842,10 @@ div.dataTables_wrapper div.dataTables_paginate {
   right: 27px;
 }
 
-/* .pass_toggle_text {
-} */
-
-.depart_table {
-  position: relative;
-}
-.depart_table .mdb-datatable-filter input {
-  width: 100%;
-  height: auto;
-  position: relative !important;
-  top: -6rem;
-}
-.active_tab {
-  text-underline-offset: unset;
-  text-decoration: underline;
+.eye_container .eye_icon {
   cursor: pointer;
-}
-.cal_tab {
-  cursor: pointer;
+  height: 18px;
+  width: 16px;
 }
 .password_field {
   position: relative;
