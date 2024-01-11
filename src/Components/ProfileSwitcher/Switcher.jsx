@@ -43,15 +43,19 @@ const Switcher = () => {
       >
         <div className="profile">
           <div>
+            {userData?.profile_Pic ? (
+              <img
+                className="w_50_h_50"
+                src={userData?.profile_Pic}
+                alt="Profile"
+              />
+            ) : 
             <img
-              className="w_50_h_50"
-              src={
-                userData?.profile_Pic
-                  ? userData?.profile_Pic
-                  : "/images/sidebar/Profile_photo.png"
-              }
-              alt="hh"
-            />
+                className="w_50_h_50"
+                src='/images/icons/user.jpg'
+                alt="Profile"
+              />
+            }
           </div>
           <div>
             {/* <span className="text-dark">{userData?.name}</span> */}

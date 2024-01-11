@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { AddCommentForTask } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import { Checkbox } from "rsuite";
 
 const CommonListing = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -215,14 +216,15 @@ const CommonListing = () => {
   const columnsWithCheckboxes = awaitListing.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={awaitListing.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked
+        >
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -328,6 +330,12 @@ const CommonListing = () => {
                 Hide Selected
               </p>
             )}
+          </div>
+          <div class="search_icon">
+            <img
+              width={20}
+              src={require("../../../assets/logo/search.png")}
+            ></img>
           </div>
         </div>
         <form className="d-flex me-2" role="search">

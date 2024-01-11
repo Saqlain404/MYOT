@@ -62,7 +62,7 @@ const AuthforgotPass = () => {
   };
 
   const ResendOtp = async (e) => {
-    onSubmitEmail(e)
+    onSubmitEmail(e);
     setCounter(60);
     e.preventDefault();
   };
@@ -135,7 +135,9 @@ const AuthforgotPass = () => {
                             OTP Verification
                           </h2>
                           <p className="reset-pass-desc">
-                            Enter OTP Code sent to {email}
+                            Enter OTP Code sent to {email.substring(0, 3)}
+                            {"*".repeat(email.length - 6)}
+                            {email.slice(-3)}
                           </p>
                         </div>
                         <form onSubmit={handleOTPsubmit}>
@@ -170,7 +172,9 @@ const AuthforgotPass = () => {
                         <p>
                           Don’t received OTP code?{" "}
                           {counter ? (
-                            <span className="count_Sec">Resend after 00:{counter}</span>
+                            <span className="count_Sec">
+                              Resend after 00:{counter}
+                            </span>
                           ) : (
                             <span
                               className="otp-sec mx-1 text-primary"

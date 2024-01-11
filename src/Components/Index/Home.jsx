@@ -15,6 +15,7 @@ import {
 import Document from "./DocumentRequests/Document";
 import { MDBDataTable } from "mdbreact";
 import Swal from "sweetalert2";
+import { Checkbox } from "rsuite";
 
 const Home = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -76,20 +77,33 @@ const Home = () => {
     sortType: "asc",
   });
 
+  const searchLabelHtml = `
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">
+        <i class="fa fa-search"></i>
+      </span>
+    </div>
+  Search..
+  </div>
+`;
+
   useEffect(() => {
     getApprovedTemplates();
     getAdminCount();
   }, []);
 
   const getAdminCount = async () => {
-    let { data } = await AdminDashboardCount();
+    let id = localStorage.getItem('myot_admin_id')
+    let { data } = await AdminDashboardCount(id);
     if (!data?.error) {
       setAdminCount(data?.results);
     }
   };
 
   const getApprovedTemplates = async () => {
-    let { data } = await GetApprovedTemplates();
+    let id = localStorage.getItem('myot_admin_id')
+    let { data } = await GetApprovedTemplates(id);
     console.log(data);
     const newRows = [];
     if (!data?.error) {
@@ -105,7 +119,9 @@ const Home = () => {
               src={list?.manager[0]?.profile_Pic}
               alt=""
             />
-            <span className="ms-2 text-capitalize">{list?.manager[0]?.name}</span>
+            <span className="ms-2 text-capitalize">
+              {list?.manager[0]?.name}
+            </span>
           </>
         );
         returnData.version = (
@@ -129,8 +145,7 @@ const Home = () => {
                 : list?.status === "In Progress"
                 ? "text-primary"
                 : "text-success"
-            }`}
-          >
+            }`}>
             {list?.status}
           </span>
         );
@@ -141,8 +156,7 @@ const Home = () => {
                 onClick={() => setTemplete_Id(list?._id)}
                 type="button"
                 data-bs-toggle="modal"
-                data-bs-target="#exampleModal1"
-              >
+                data-bs-target="#exampleModal1">
                 <img
                   src="/images/dashboard/Comment.png"
                   className="mx-auto d-block"
@@ -157,16 +171,14 @@ const Home = () => {
               className="cursor_pointer"
               type=""
               data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
+              aria-expanded="false">
               <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
               <li>
                 <Link
                   class="dropdown-item"
-                  to={`/Admin/Tasks/Comments/${list?._id}`}
-                >
+                  to={`/Admin/Tasks/Comments/${list?._id}`}>
                   <img
                     src="/images/dashboard/Comment.png"
                     alt=""
@@ -187,8 +199,7 @@ const Home = () => {
               </li>
               <li
                 className="cursor_pointer"
-                onClick={() => deleteTemplate(list?._id)}
-              >
+                onClick={() => deleteTemplate(list?._id)}>
                 <a class="dropdown-item text-danger">
                   <img src="/images/users/Trash.svg" alt="" className="me-2" />
                   Delete Template
@@ -270,14 +281,15 @@ const Home = () => {
   const columnsWithCheckboxes = templates.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={templates.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
           className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked>
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -328,20 +340,11 @@ const Home = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" >
-                      Home
-                    </a>
+                    <a className="nav-link  fw-bold  ">Home</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
-                  <form className="" role="search">
-                    <input
-                      className="form-control search-bar"
-                      type="search"
-                      placeholder="Search"
-                      aria-label="Search"
-                    />
-                  </form>
+                
                   <div className="">
                     <img
                       src="/images/dashboard/announcement.png"
@@ -374,7 +377,7 @@ const Home = () => {
                     </div>
                     <div className="text-center mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {adminCount?.totalEmployee[0]?.count}
+                        {adminCount?.totalEmployee[0]?.count || 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -396,7 +399,7 @@ const Home = () => {
                     </div>
                     <div className="text-center mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {adminCount?.countDepartment}
+                        {adminCount?.countDepartment || 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +9.15%
@@ -438,7 +441,7 @@ const Home = () => {
                     </div>
                     <div className="text-center mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7 ">
-                        {adminCount?.totalTempleted}
+                        {adminCount?.totalTempleted || 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -1.48%
@@ -454,7 +457,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="position-relative">
+            <div className="position-relative mb-3">
               <p className="table-name mb-2">Approved Templates</p>
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">
@@ -479,18 +482,19 @@ const Home = () => {
                     {showClearButton ? (
                       <p
                         className="hide-selected m-0 text-nowrap cursor_pointer "
-                        onClick={showAllColumns}
-                      >
+                        onClick={showAllColumns}>
                         Clear Selection
                       </p>
                     ) : (
                       <p
                         className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
-                        onClick={hideSelectedColumns}
-                      >
+                        onClick={hideSelectedColumns}>
                         Hide Selected
                       </p>
                     )}
+                  </div>
+                  <div class="search_icon">
+                  <img width={20} src={require("../../assets/logo/search.png")}></img>
                   </div>
                 </div>
                 <form className="d-flex me-2" role="search"></form>
@@ -507,6 +511,7 @@ const Home = () => {
                     noBottomColumns
                     paginationLabel={"«»"}
                     sortable={false}
+                    searching
                   />
                 </div>
               </div>
@@ -533,8 +538,7 @@ const Home = () => {
             id="exampleModal1"
             tabindex="-1"
             aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
@@ -546,8 +550,7 @@ const Home = () => {
                     class="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
-                    id="closeForm"
-                  ></button>
+                    id="closeForm"></button>
                 </div>
                 <div class="modal-body">
                   <form className="rounded" onSubmit={handleSubmit}>
@@ -595,8 +598,7 @@ const Home = () => {
                       <div>
                         <button
                           type="submit"
-                          className="comment-btn btn-primary"
-                        >
+                          className="comment-btn btn-primary">
                           Comment
                         </button>
                       </div>

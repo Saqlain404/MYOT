@@ -18,19 +18,16 @@ export async function AddDepartment(formData) {
     return { error };
   }
 }
-export async function DepartmentList(formData) {
+export async function DepartmentList(id, formData) {
   try {
     const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/department-list`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/department-list/${id}`,
       formData
     );
     console.log(data);
-    if (!data.error) {
-      // toast.success(data.message);
-      await localStorage.getItem("x-auth-token-company");
-    } else toast.error(data.message);
-
-    return { data };
+    if (!data?.error) {
+      return { data };
+    } else toast.error(data?.message);
   } catch (error) {
     if (error.response) toast.error(error.response.data.message);
     return { error };
@@ -128,10 +125,10 @@ export async function getClinicianSessionHistory(formData) {
 }
 
 // TASK API
-export async function GetTaskData() {
+export async function GetTaskData(id) {
   try {
     const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/template-list`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/template-list/${id}`
     );
     // console.log(data);
 
@@ -141,10 +138,10 @@ export async function GetTaskData() {
     return { error };
   }
 }
-export async function GetApprovedTemplates() {
+export async function GetApprovedTemplates(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/approved-templete`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/approved-templete/${id}`
     );
 
     return { data };
@@ -181,10 +178,10 @@ export async function TemplateDelete(id) {
   }
 }
 
-export async function TemplateCount() {
+export async function TemplateCount(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/total-templete-cout`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/total-templete-cout/${id}`
     );
     // console.log(data);
 
@@ -236,10 +233,10 @@ export async function TasksCommentDelete(id) {
   }
 }
 
-export async function AdminDashboardCount() {
+export async function AdminDashboardCount(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/department-count`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/department-count/${id}`
     );
     // console.log(data);
 
@@ -301,10 +298,10 @@ export async function AdminTicketCount(id) {
 }
 
 // Admin Dashboard Listing
-export async function AdminDashboardListing() {
+export async function AdminDashboardListing(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/complete-templete`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/complete-templete/${id}`
     );
     return { data };
   } catch (error) {
@@ -313,13 +310,11 @@ export async function AdminDashboardListing() {
   }
 }
 // APPROVER API
-export async function ApproverList() {
+export async function ApproverList(id) {
   try {
     const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/approver-list`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/approver-list/${id}`
     );
-    // console.log(data);
-
     return { data };
   } catch (error) {
     if (error.response) toast.error(error.response.data.message);
@@ -344,10 +339,10 @@ export async function ApproverSearch(formData) {
 
 // SIGNATORY
 
-export async function SignatoryList() {
+export async function SignatoryList(id) {
   try {
     const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/signatory-list`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/signatory-list/${id}`
     );
     // console.log(data);
 
@@ -379,6 +374,19 @@ export async function RequestorList() {
   try {
     const { data } = await adminHttpService.get(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/requests-list`
+    );
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function HomeRequestorList(id) {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/admin-request-list/${id}`
     );
 
     return { data };
@@ -458,7 +466,7 @@ export async function DocumentCommentLists(id) {
 export async function TemplateReply(formData) {
   try {
     const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/reply-comment`, 
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/reply-comment`,
       formData
     );
 
@@ -500,10 +508,10 @@ export async function UpdateAdminProfile(id, formData) {
 
 // DASHBOARD DATA
 
-export async function DashboardCount() {
+export async function DashboardCount(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/employe-count`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/employe-count/${id}`
     );
 
     return { data };
@@ -515,10 +523,10 @@ export async function DashboardCount() {
 
 //  Users Section api / Employee list
 
-export async function AddEmployee(formData) {
+export async function AddEmployee(id, formData) {
   try {
     const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/register-employee`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/register-employee/${id}`,
       formData
     );
     if (data?.error) {
@@ -531,10 +539,10 @@ export async function AddEmployee(formData) {
   }
 }
 
-export async function EmployeeLists() {
+export async function EmployeeLists(id) {
   try {
     const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/employee-list`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/employee-list/${id}`
     );
     return { data };
   } catch (error) {

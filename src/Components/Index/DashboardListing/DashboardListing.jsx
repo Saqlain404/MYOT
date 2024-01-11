@@ -7,6 +7,7 @@ import {
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { Checkbox } from "rsuite";
 
 const DashboardListing = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -77,7 +78,8 @@ const DashboardListing = () => {
   }, []);
 
   const getList = async () => {
-    let { data } = await AdminDashboardListing();
+    let id = await localStorage.getItem('myot_admin_id');
+    let { data } = await AdminDashboardListing(id);
 
     console.log(data);
     const newRows = [];
@@ -251,14 +253,14 @@ const DashboardListing = () => {
   const columnsWithCheckboxes = documents.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={documents.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked>
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -336,6 +338,11 @@ const DashboardListing = () => {
                 Hide Selected
               </p>
             )}
+          </div>
+          <div class="search_icon">
+            <img
+              width={20}
+              src={require("../../../assets/logo/search.png")}></img>
           </div>
         </div>
         <form className="d-flex me-2" role="search"></form>

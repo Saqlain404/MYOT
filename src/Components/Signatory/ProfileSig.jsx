@@ -148,7 +148,7 @@ const ProfileSig = () => {
                             </p>
                           </div>
                           <div>
-                            <p className="profile-info">Date of Birth</p>
+                            <p className="profile-info">Creation Date</p>
                             <p className="profile-data">
                               {moment(profileData?.DOB).format("L")}
                             </p>

@@ -61,16 +61,17 @@ const Departments = () => {
   const userId = localStorage.getItem("user_id");
 
   const DepartmentLists = async (key) => {
-    const { data } = await DepartmentList({ search: key });
+
+    const { data } = await DepartmentList(userId, { search: key });
     const newRows = [];
     if (!data?.error) {
       // setListItems(data?.results?.department);
       let values = data?.results?.department;
-      values.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      values?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
       values?.map((data) => {
         let returnData = {};
         returnData.name = data?.departmentName;
-        returnData.description = data?.description;
+        returnData.description = (<><span style={{maxWidth:"250px"}} className="d-inline-block text-truncate">{data?.description}</span></>);
         returnData.actions = (
           <>
             <div class="">
@@ -173,11 +174,12 @@ const Departments = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    let creator_Id = localStorage.getItem("myot_admin_id");
     try {
       let { data } = await AddDepartment({
         departmentName: departmentInfo?.departmentname,
         description: departmentInfo?.description,
+        creator_Id,
       });
       if (data && !data?.error) {
         Swal.fire({
@@ -414,6 +416,7 @@ const Departments = () => {
                       </div>
                       <div className="col-12 mb-3 ">
                         <textarea
+                        style={{minHeight:'120px'}}
                           type="text"
                           placeholder="Description"
                           className="col-12 modal-input td-text p-2"

@@ -11,12 +11,15 @@ import {
 import moment from "moment";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../app/slice/userSlice";
 
 const Comments = () => {
   const [commentList, setCommentList] = useState([]);
   const [reply, setReply] = useState(false);
   const [replyMsg, setReplyMsg] = useState("");
-  const [comment, setComment] = useState('')
+  const [comment, setComment] = useState("");
+  const userData = useSelector(selectUserData);
 
   const { id } = useParams();
 
@@ -69,7 +72,7 @@ const Comments = () => {
     let creator_Id = localStorage.getItem("myot_admin_id");
     let { data } = await AddCommentForTask({
       comment,
-      templete_Id:id,
+      templete_Id: id,
       creator_Id,
     });
     console.log(data);
@@ -83,7 +86,7 @@ const Comments = () => {
         timerProgressBar: true,
         timer: 3000,
       });
-      getCommentLists()
+      getCommentLists();
       setComment("");
     }
   };
@@ -121,7 +124,8 @@ const Comments = () => {
         theme: "light",
       });
       setReplyMsg("");
-      document.getElementById("reset").click();
+      setReply(false);
+      // document.getElementById("reset").click();
       getCommentLists();
     }
   };
@@ -238,39 +242,6 @@ const Comments = () => {
                       <p className="comment-txt p-2 mb-0">
                         {comments?.comment}
                       </p>
-                      {reply[index] && (
-                        <div className="bg-white rounded p-2 my-3 task_reply">
-                          <form
-                            onSubmit={(e) => handleSubmit(e, comments?._id)}
-                          >
-                            <div className="d-flex justify-content-between">
-                              <img
-                                src="/images/dashboard/Avatar2.png"
-                                alt=""
-                                className="comment-avatar m-auto mt-2"
-                              />
-                              <textarea
-                                type="text"
-                                className="p-2 w-100 mx-2 comment-txt"
-                                name="reply"
-                                placeholder="Reply..."
-                                defaultValue=""
-                                onChange={(e) => setReplyMsg(e.target.value)}
-                              />
-                              <button type="submit" className="reply-btn">
-                                Reply
-                              </button>
-                              <button
-                                type="reset"
-                                id="reset"
-                                className="d-none"
-                              >
-                                reset
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                      )}
 
                       {comments?.replyText && (
                         <div
@@ -304,6 +275,39 @@ const Comments = () => {
                           ))}
                         </div>
                       )}
+                      {reply[index] && (
+                        <div className="bg-white rounded p-2 my-3 task_reply">
+                          <form
+                            onSubmit={(e) => handleSubmit(e, comments?._id)}
+                          >
+                            <div className="d-flex justify-content-between">
+                              <img
+                                src={userData?.profile_Pic}
+                                alt=""
+                                className="comment-avatar m-auto mt-2 w_20_h_20"
+                              />
+                              <textarea
+                                type="text"
+                                className="p-2 w-100 mx-2 comment-txt"
+                                name="reply"
+                                placeholder="Reply..."
+                                defaultValue=""
+                                onChange={(e) => setReplyMsg(e.target.value)}
+                              />
+                              <button type="submit" className="reply-btn">
+                                Reply
+                              </button>
+                              <button
+                                type="reset"
+                                id="reset"
+                                className="d-none"
+                              >
+                                reset
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      )}
                     </div>
                   </>
                 ))
@@ -319,9 +323,9 @@ const Comments = () => {
                 <div className="d-flex  justify-content-between">
                   <div className="d-flex justify-content-between">
                     <img
-                      src="/images/dashboard/Avatar2.png"
+                      src={userData?.profile_Pic}
                       alt=""
-                      className="comment-avatar m-auto mt-2"
+                      className="comment-avatar m-auto mt-2 w_50_h_50"
                     />
                     <textarea
                       name="comment"
@@ -331,7 +335,9 @@ const Comments = () => {
                       id=""
                       className="comment-inbox m-2 p-2"
                     ></textarea>
-                    <button onClick={addComment} className="reply-btn">Send</button>
+                    <button onClick={addComment} className="reply-btn">
+                      Send
+                    </button>
                   </div>
                 </div>
               </div>
