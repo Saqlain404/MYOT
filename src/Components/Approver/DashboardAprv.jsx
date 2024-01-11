@@ -597,7 +597,7 @@ const DashboardAprv = () => {
             </div>
 
             <div className="position-relative mt-4">
-              <p className="table-name mb-2">Templetes</p>
+              <p className="table-name mb-2">Templates</p>
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">
                   <div className="col-md-3 table-searchbar-imgs">

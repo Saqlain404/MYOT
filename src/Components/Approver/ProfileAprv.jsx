@@ -114,7 +114,7 @@ const ProfileAprv = () => {
         <p className="profile-data">{profileDetail?.mobileNumber}</p>
       </div>
       <div>
-        <p className="profile-info">Date of Birth</p>
+        <p className="profile-info">Date of Creation</p>
         <p className="profile-data">{moment(profileDetail?.CreatedAT).format("L")}</p>
       </div>
     </div>

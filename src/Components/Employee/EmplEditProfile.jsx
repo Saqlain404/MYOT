@@ -12,6 +12,8 @@ const EmplEditProfile = () => {
   const [password, setPassword] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
   const[profileDetail,setProfileDetail] = useState(null);
+  const [error, setError] = useState();
+  const [cError, setCError] = useState();
   const [profileImgUrl, setProfileImgUrl] = useState();
   const [passVisible, setPassVisible] = useState(false);
   const [cPassVisible, setCPassVisible] = useState(false);
@@ -33,42 +35,10 @@ const EmplEditProfile = () => {
     setProfileImgUrl(imageUrl);
   };
 
-
-  const validateForm = () => {
-    const errors = {};
-
-    // Name validation
-    // if (!post.name.trim()) {
-    //   errors.name = 'Name is required';
-    // }
-
-    // Email validation
-    // const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    // if (!post.email.trim() || !emailRegex.test(post.email)) {
-    //   errors.email = 'Invalid email address';
-    // }
-
-    // Password validation
-    if (!post.password.trim() || post.password.length < 6) {
-      errors.password = 'Password must be minimum 6 characters long';
-    }
-
-    // ConfirmPassword validation
-    if (post.confirmPassword !== post.password) {
-      errors.confirmPassword = 'Passwords do not match';
-    }
-    if (post.profile_Pic == null) {
-      errors.profile_Pic = 'Please select file';
-    }
-    
-
-    setValidationErrors(errors);
-    return Object.keys(errors).length === 0; 
-  };
-
   const navigate = useNavigate();
   const handleInput = (event) => {
     setPost({ ...post, [event.target.name]: event.target.value });
+    setError("")
   };
 
   useEffect(() => {
@@ -77,13 +47,22 @@ const EmplEditProfile = () => {
     }
   }, []);
 
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+
   const onSubmit = async (event) => {
     event.preventDefault();
- 
-    if (!validateForm()) {
-      return;
+    if  (post.password && !passwordRegex.test(post.password)) {
+      setError(
+        "Password must be at least 8 characters long, contain one uppercase letter, and one special character"
+      );
+      return false;
     }
 
+    if (post.confirmPassword !== post.password) {
+      setCError("Passwords do not match");
+    }  
+
+ 
     const formData = new FormData();
     // formData.append("name", post.name);
     // formData.append("email", post.email);
@@ -119,7 +98,7 @@ const EmplEditProfile = () => {
             <SideBarEmpl />
           </div>
           <div className="col-7 middle-content p-0 min-vh-100">
-            <div className="container-fluid border-bottom sticky-top bg-white mb-4">
+            <div className="container-fluid  sticky-top bg-white mb-4">
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
@@ -190,7 +169,6 @@ const EmplEditProfile = () => {
                       // onChange={(e) => onFileSelection(e, "image")}
                       onChange={onFileSelection}
                     />
-                     {validationErrors.profile_Pic && <p className=" d-flex align-items-end text-danger ms-2 mt-2">{validationErrors.profile_Pic}</p>}
                   </div>
                   {/* <div className="col-12 d-flex justify-content-between mb-2">
                     <div className="col-6 m-2">
@@ -246,7 +224,7 @@ const EmplEditProfile = () => {
                        className="col-12 profile-edit-input p-2" />
                      </div>
                   </div> */}
-                  <div className="col-12 d-flex justify-content-between border-bottom mb-2 pb-4">
+                  <div className="col-12 d-flex justify-content-between ">
                     <div className="col-6 m-2 position-relative">
                       <p className=" d-flex justify-content-start profile-card-title">
                         Password
@@ -260,7 +238,7 @@ const EmplEditProfile = () => {
                         name="password"
                         onChange={handleInput}
                       />
-                         {validationErrors.password && <p className="d-flex text-danger ms-2 justify-content-start">{validationErrors.password}</p>}
+                         {error && <p className="errorText">{error}</p>}
                          <div
                           className="eye_container pt-1"
                           onClick={() => setPassVisible(!passVisible)}
@@ -276,7 +254,7 @@ const EmplEditProfile = () => {
                               className="eye_icon"
                               src="/images/icons/view.png"
                               alt=""
-                            />
+                            /> 
                           )}
                         </div>
                     </div>
@@ -292,7 +270,7 @@ const EmplEditProfile = () => {
                         name="confirmPassword"
                         onChange={handleInput}
                       />
-                      {validationErrors.confirmPassword && <p className="d-flex text-danger justify-content-start ms-2">{validationErrors.confirmPassword}</p>}
+                      {cError && <p className="d-flex errorText ms-2 justify-content-start">{cError}</p>}
                       <div
                           className="eye_container pt-1"
                           onClick={() => setCPassVisible(!cPassVisible)}
@@ -314,8 +292,8 @@ const EmplEditProfile = () => {
                     </div>
                   </div>
 
-                  <div className=" d-flex justify-content-end">
-                    <button className="profile-edit-submit" to="" type="submit">
+                  <div className=" text-end ">
+                    <button className="profile-edit-submit m-0"  type="submit">
                       Update Profile
                     </button>
                   </div>
