@@ -132,12 +132,12 @@ const EmplySetting = () => {
 
                 <div className="bg-white rounded mb-4 pb-2">
                   <div>
-                    <p className="settings-txt mt-3 mb-2">Select Colors</p>
+                    {/* <p className="settings-txt mt-3 mb-2">Select Colors</p>
                     <img
                       src="/images/dashboard/color-palete.svg"
                       alt=""
                       className="color-palete"
-                    />
+                    /> */}
                     <div className="d-flex justify-content-end">
                       <button type="submit" className="notify-admin-btn mt-4 m-2">
                         Save
