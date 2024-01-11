@@ -186,7 +186,7 @@ const Comments = () => {
                               <>
                                 <img
                                   src="/images/dashboard/reply-arrow.svg"
-                                  className=""
+                                  className="me-1"
                                 />
                                 <Link className="ticket-link me-1 text-decoration-none">
                                   Reply
@@ -202,7 +202,7 @@ const Comments = () => {
                           >
                             <img
                               src="/images/icons/delete_icon.png"
-                              className=""
+                              className="me-1"
                             />
                             <Link className="ticket-link me-1 text-decoration-none text-danger">
                               Delete
