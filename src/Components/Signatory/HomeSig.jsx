@@ -217,7 +217,7 @@ const HomeSig = () => {
       Swal.fire({
         toast: true,
         icon: "success",
-        position: "bottom",
+        position: "top-end",
         title: "New comment added successfully",
         showConfirmButton: false,
         timerProgressBar: true,

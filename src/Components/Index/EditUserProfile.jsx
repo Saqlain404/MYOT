@@ -118,7 +118,7 @@ const EditUserProfile = ({ userId }) => {
       Swal.fire({
         toast: true,
         icon: "error",
-        position: "bottom",
+        position: "top-end",
         title: "Please select roles",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -146,7 +146,7 @@ const EditUserProfile = ({ userId }) => {
         Swal.fire({
           toast: true,
           icon: "success",
-          position: "bottom",
+          position: "top-end",
           title: "User data updated successfully",
           showConfirmButton: false,
           timerProgressBar: true,

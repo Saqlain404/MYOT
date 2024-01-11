@@ -213,7 +213,7 @@ const Home = () => {
         Swal.fire({
           toast: true,
           icon: "success",
-          position: "bottom",
+          position: "top-end",
           title: "Templates deleted successfully",
           showConfirmButton: false,
           timerProgressBar: true,
@@ -307,7 +307,7 @@ const Home = () => {
       Swal.fire({
         toast: true,
         icon: "success",
-        position: "bottom",
+        position: "top-end",
         title: "New comment added successfully",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -330,7 +330,7 @@ const Home = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
+                    <a className="nav-link ms-2" >
                       Home
                     </a>
                   </li>

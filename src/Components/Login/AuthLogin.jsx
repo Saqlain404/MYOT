@@ -46,7 +46,7 @@ const AuthLogin = () => {
       Swal.fire({
         toast: true,
         icon: "success",
-        position: "bottom",
+        position: "top-end",
         title: "Login successfull",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -109,7 +109,7 @@ const AuthLogin = () => {
                   </small>
                 )}
               </div>
-              <div className="mb-4 position-relative">
+              <div className="mb-2 position-relative">
                 <label for="" className="form-label">
                   Password
                 </label>

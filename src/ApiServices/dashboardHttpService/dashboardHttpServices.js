@@ -456,6 +456,20 @@ export async function DocumentCommentLists(id) {
   }
 }
 
+export async function TemplateReply(formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/reply-comment`, 
+      formData
+    );
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 // PROFILE
 
 export async function AdminProfile(id) {

@@ -277,7 +277,7 @@ const Document = () => {
         Swal.fire({
           toast: true,
           icon: "success",
-          position: "bottom",
+          position: "top-end",
           title: "New comment added",
           showConfirmButton: false,
           timerProgressBar: true,

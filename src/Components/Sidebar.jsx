@@ -429,7 +429,10 @@ const Sidebar = () => {
             </li>
           </ul>
         </div>
-        <div class="dropdown position-fixed bottom-0">
+        <div
+          style={{ width: "14rem" }}
+          class="dropdown position-fixed bottom-0"
+        >
           <ProfileSwitcher />
         </div>
       </div>

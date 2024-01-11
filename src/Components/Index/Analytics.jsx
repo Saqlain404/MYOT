@@ -29,7 +29,7 @@ const Analytics = () => {
   //     labels: [],
   //     legend: {
   //       show: true,
-  //       position: "bottom",
+  //       position: "top-end",
   //     },
   //     colors: ["#6AD2FF", "#4318FF", "#EFF4FB"],
   //   },

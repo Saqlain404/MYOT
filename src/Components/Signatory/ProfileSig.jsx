@@ -160,7 +160,7 @@ const ProfileSig = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="bg-white rounded mb-4 p-4 ">
+                      {/* <div className="bg-white rounded mb-4 p-4 ">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Document
                         </p>
@@ -176,7 +176,7 @@ const ProfileSig = () => {
                             Salaryslip.Pdf
                           </p>
                         </div>
-                      </div>
+                      </div> */}
                       <div className="bg-white rounded mb-4 p-4 pb-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Company Information

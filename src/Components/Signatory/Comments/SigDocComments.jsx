@@ -58,7 +58,7 @@ const SigDocComments = () => {
       Swal.fire({
         toast: true,
         icon: "success",
-        position: "bottom",
+        position: "top-end",
         title: "Please enter a reply",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -78,7 +78,7 @@ const SigDocComments = () => {
       Swal.fire({
         toast: true,
         icon: "success",
-        position: "bottom",
+        position: "top-end",
         title: "New comment added",
         showConfirmButton: false,
         timerProgressBar: true,

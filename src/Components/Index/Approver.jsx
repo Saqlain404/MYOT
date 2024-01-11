@@ -10,10 +10,12 @@ import {
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
+import ViewUser from "./ViewUser";
 
 const Approver = () => {
   const [searchInput, setSearchInput] = useState("");
   const [showClearButton, setShowClearButton] = useState(false);
+  const [userId, setUserId] = useState();
 
   const [approvers, setApprovers] = useState({
     columns: [
@@ -88,7 +90,12 @@ const Approver = () => {
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
               <li>
-                <Link class="dropdown-item">
+                <Link
+                  class="dropdown-item"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal1"
+                  onClick={() => setUserId(list?._id)}
+                >
                   <img
                     src="/images/users/AddressBook.svg"
                     alt=""
@@ -309,6 +316,16 @@ const Approver = () => {
                     sortable={false}
                   />
                 </div>
+              </div>
+
+              <div
+                class="modal fade"
+                id="exampleModal1"
+                tabIndex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <ViewUser userId={userId} />
               </div>
             </div>
 
