@@ -597,7 +597,7 @@ export async function updateProfile(formData) {
         toast: true,
         icon: "error",
         position:"top-end",
-        title: "Error",
+        title: "Error in Update Password",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -606,7 +606,8 @@ export async function updateProfile(formData) {
 
     return { data };
   } catch (error) {
-    if (error.response) toast.error(error.response.data.message);
+    if (error.response) 
+    // toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -888,11 +889,24 @@ export async function DocumentCount() {
     if (!data?.error) {
       // toast.success(data.message);
       console.log(data.message)
-    } else toast.error(data.message);
+    } else
+    //  toast.error(data.message);
+    {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        title: "Error",
+        position:"top-end",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+    });
+    }
 
     if (!data?.error) return { data };
   } catch (error) {
-    if (error?.response) toast.error(error.response.data.message);
+    if (error?.response) 
+    // toast.error(error.response.data.message);
     return { error };
   }
 }

@@ -298,7 +298,7 @@ const EditProfileAprv = () => {
                     </div>
                   </div>
 
-                  <div className="text-end">
+                  <div className="text-end  ms-4 mt-1 ">
                     <button className="profile-edit-submit m-0" type="submit">
                       Update Profile
                     </button>

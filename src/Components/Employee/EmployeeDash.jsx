@@ -460,7 +460,7 @@ const EmployeeDash = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {totalDocument !== null && totalDocument}
+                        {totalDocument !== null ? totalDocument : 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -482,7 +482,7 @@ const EmployeeDash = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {pendingDocument !== null && pendingDocument}
+                        {pendingDocument !== null ? pendingDocument : 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -0.56%
@@ -504,7 +504,7 @@ const EmployeeDash = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {pendingDocument !== null && pendingDocument}
+                        {pendingDocument !== null ? pendingDocument : 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -1.48%
@@ -546,7 +546,7 @@ const EmployeeDash = () => {
                 <div className="col-md-6 ">
                   <div className="dashboard-card bg-light ">
                     <div className="d-flex  dashboard-card-text">
-                      <p>Documents </p>
+                      <p className="fs-6 fw-normal">Documents </p>
                       {/* <p>Current Week </p> */}
                       {/* <p>Previous Week</p> */}
                     </div>
@@ -653,7 +653,7 @@ const EmployeeDash = () => {
                           </div>
                           <div
                             className="doc-req-bar col-6"
-                            style={{ width: `${doc?.count * 10}%` }}
+                            style={{ width: `${doc?.count}%` }}
                           ></div>
                         </div>
                       ))}

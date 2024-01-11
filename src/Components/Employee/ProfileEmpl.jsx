@@ -129,27 +129,27 @@ const ProfileEmpl = () => {
         <p className="profile-salary-slip m-2">Salaryslip.Pdf</p>
     </div>
    </div> */}
-   {/* <div className="bg-white rounded mb-4 p-4 pb-2">
+                   <div className="bg-white rounded mb-4 p-4 pb-2">
     <p className=" d-flex justify-content-start profile-card-title">Company Information</p>
     <div className="d-flex justify-content-between">
       <div>
         <p className="profile-info">Company Name</p>
-        <p className="profile-data">Ava Wright</p>
+        <p className="profile-data">{profileDetail?.company_Id?.name}</p>
       </div>
       <div>
         <p className="profile-info">Company Email</p>
-        <p className="profile-data">Weight@gmail.com</p>
+        <p className="profile-data">{profileDetail?.company_Id?.email}</p>
       </div>
       <div>
         <p className="profile-info">Phone Number</p>
-        <p className="profile-data">+97 7898788999</p>
+        <p className="profile-data">{profileDetail?.company_Id?.phone_number}</p>
       </div>
       <div>
         <p className="profile-info">Address</p>
-        <p className="profile-data">Human Resources</p>
+        <p className="profile-data">{profileDetail?.company_Id?.address}</p>
       </div>
     </div>
-   </div> */}
+   </div>
   </div>
 </div>
 

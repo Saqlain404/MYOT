@@ -19,12 +19,12 @@ import { MDBDataTable } from "mdbreact";
 
 const HomeEmpl = () => {
   const navigate = useNavigate();
-  const [searchData, setSearchData] = useState("");
-  const [templateNames, setTemplateNames] = useState(null);
-  const [documentRequests, setDocumentRequests] = useState([]);
+  // const [searchData, setSearchData] = useState("");
+  // const [templateNames, setTemplateNames] = useState(null);
+  // const [documentRequests, setDocumentRequests] = useState([]);
   const [docCount, setDocCount] = useState(null);
   const [receivedCount, setReceivedCount] = useState(null);
-  const [shouldRender, setShouldRender] = useState(false);
+  // const [shouldRender, setShouldRender] = useState(false);
   const [comment, setComment] = useState("");
   const [templateIdList, setTemplateIdList] = useState([]);
   const [document_Id, setDocument_Id] = useState();
@@ -307,7 +307,7 @@ const HomeEmpl = () => {
         localStorage.getItem("myot_admin_id"),
     }).then((res) => {
       if (!res.data?.error) {
-        setShouldRender(!shouldRender);
+        // setShouldRender(!shouldRender);
         console.log("Success");
         navigate("");
       }
@@ -361,7 +361,7 @@ const HomeEmpl = () => {
       }
     };
     count(); 
-  }, [shouldRender]);
+  }, []);
 
   const [isCommentVisible, setIsCommentVisible] = useState(false);
 
@@ -369,35 +369,35 @@ const HomeEmpl = () => {
     setIsCommentVisible(!isCommentVisible);
   };
 
-  const handleSearch = async () => {
-    const result = await searchDoc(searchData);
-    console.log(result);
-    const searchResult = result?.data?.results?.document;
+  // const handleSearch = async () => {
+  //   const result = await searchDoc(searchData);
+  //   console.log(result);
+  //   const searchResult = result?.data?.results?.document;
 
-    if (searchResult && Array.isArray(searchResult)) {
-      const mappedResult = searchResult?.map((document) => ({
-        documentName: document?.templete?.templeteName,
-        img: [document?.templete?.manager?.[0]?.profile_Pic],
-        assignedTo: [document?.templete?.manager?.[0]?.name],
-        department: [
-          document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
-        ],
-        dateofSigning: [moment(document?.createdAt).calendar()],
-        comments: (
-          <img
-            src="/images/dashboard/Comment.png"
-            className="mx-auto d-block"
-          />
-        ),
-        status: [document?.status],
-      }));
-      setDocumentRequests(mappedResult);
-    }
-  };
+  //   if (searchResult && Array.isArray(searchResult)) {
+  //     const mappedResult = searchResult?.map((document) => ({
+  //       documentName: document?.templete?.templeteName,
+  //       img: [document?.templete?.manager?.[0]?.profile_Pic],
+  //       assignedTo: [document?.templete?.manager?.[0]?.name],
+  //       department: [
+  //         document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
+  //       ],
+  //       dateofSigning: [moment(document?.createdAt).calendar()],
+  //       comments: (
+  //         <img
+  //           src="/images/dashboard/Comment.png"
+  //           className="mx-auto d-block"
+  //         />
+  //       ),
+  //       status: [document?.status],
+  //     }));
+  //     setDocumentRequests(mappedResult);
+  //   }
+  // };
 
-  useEffect(() => {
-    handleSearch();
-  }, [searchData]);
+  // useEffect(() => {
+  //   handleSearch();
+  // }, [searchData]);
 
   const [documentInfo, setDocumentInfo] = useState({
     documentName: "",
@@ -625,7 +625,7 @@ const HomeEmpl = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="department-name mb-0 fw-semibold fs-7">
-                        {profileDetail?.department_Id?.departmentName}
+                        {profileDetail?.department ?( profileDetail?.department_Id?.departmentName): " Not Available"}
                       </h3>
                     </div>
                   </div>
@@ -639,7 +639,7 @@ const HomeEmpl = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {docCount !== null && docCount}
+                        {docCount !== null ? docCount : 0}
                       </h3>
                     </div>
                   </div>
@@ -653,7 +653,7 @@ const HomeEmpl = () => {
                     </div>
                     <div className="d-flex justify-content-between mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {receivedCount !== null && receivedCount}
+                        {receivedCount !== null ? receivedCount : 0}
                       </h3>
                     </div>
                   </div>

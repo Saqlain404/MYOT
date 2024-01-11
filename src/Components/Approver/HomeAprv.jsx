@@ -97,71 +97,6 @@ const HomeAprv = () => {
     selectedColumns: [],
   });
 
-  const [docTask, setDocTask] = useState({
-    columns: [
-      {
-        label: "Template Name",
-        field: "name",
-        sort: "asc",
-        width: 50,
-        selected: false,
-      },
-      {
-        label: "Creator",
-        field: "assigned",
-        sort: "asc",
-        width: 50,
-        selected: false,
-      },
-      {
-        label: "Version",
-        field: "version",
-        sort: "asc",
-        width: 100,
-        selected: false,
-      },
-      {
-        label: "Date of Creation",
-        field: "date",
-        sort: "asc",
-        width: 100,
-        selected: false,
-      },
-      {
-        label: "Status",
-        field: "status",
-        sort: "asc",
-        width: 100,
-        selected: false,
-      },
-      {
-        label: "Department",
-        field: "department",
-        sort: "asc",
-        width: 100,
-        searchable: true,
-        selected: false,
-      },
-      // {
-      //   label: "Comments",
-      //   field: "comments",
-      //   sort: "asc",
-      //   width: 100,
-      //   selected: false,
-      // },
-      {
-        label: "Actions",
-        field: "actions",
-        sort: "asc",
-        width: 100,
-        selected: false,
-      },
-    ],
-    rows: [],
-    hiddenColumns: [],
-    selectedColumns: [],
-  });
-
   const ids =
     localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
 
@@ -493,7 +428,7 @@ const HomeAprv = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
+                    <a className="nav-link fw-bold ms-2">
                       Home
                     </a>
                   </li>
@@ -541,7 +476,7 @@ const HomeAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="department-name mb-0 fw-semibold fs-7">
-                        {profileDetail?.department_Id?.departmentName}
+                        {profileDetail?.department ?( profileDetail?.department_Id?.departmentName): " Not Available"}
                       </h3>
                     </div>
                   </div>

@@ -238,11 +238,33 @@ export async function updateProfile(formData) {
       // toast.success(data.message);
       const templateId = data?.results;
       return { data, templateId };
-    } else toast.error(data.message);
+    } else
+    //  toast.error(data.message);
+    {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Error in Update Password",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      })
+    }
 
     return { data };
   } catch (error) {
-    if (error.response) 
+    if (error.response) {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Error in Update Password",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      })
+    }
     // toast.error(error.response.data.message);
     return { error };
   }
