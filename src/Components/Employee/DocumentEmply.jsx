@@ -14,6 +14,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
+import { Checkbox } from "antd";
 
 // import "../../dist/css/style.min.css"
 
@@ -115,6 +116,7 @@ const DocumentEmply = () => {
     if (!data?.error) {
       let values = data;
       console.log(values);
+      values?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
       values?.map((list, index) => {
         const returnData = {};
         returnData.name = list?.templete_Id?.templeteName;
@@ -269,14 +271,14 @@ const DocumentEmply = () => {
   const columnsWithCheckboxes = tasks.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={tasks.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked>
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -492,7 +494,7 @@ const DocumentEmply = () => {
                       data-bs-dismiss="modal"
                       onClick={() => handleSubmit()}
                     >
-                      Request <ToastContainer />
+                      Request
                     </button>
                     <button
                       type="button"
@@ -500,7 +502,7 @@ const DocumentEmply = () => {
                       aria-label="Close"
                       className="user-modal-btn2"
                     >
-                      Cancle
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -566,7 +568,7 @@ const DocumentEmply = () => {
                   <MDBDataTable
                     bordered
                     displayEntries={false}
-                    entries={5}
+                    entries={10}
                     className="text-nowrap"
                     hover
                     data={{ ...tasks, columns: visibleColumns }}

@@ -10,6 +10,7 @@ import {
 } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
+import { Checkbox } from "antd";
 // import "../../dist/css/style.min.css"
 
 const ReceivedDocEmpl = () => {
@@ -105,6 +106,7 @@ const ReceivedDocEmpl = () => {
     if (!data?.error) {
       let values = data[0];
       console.log(values);
+      values?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
       values?.map((list, index) => {
         const returnData = {};
         returnData.name = list?.templete_Id?.templeteName;
@@ -259,14 +261,14 @@ const ReceivedDocEmpl = () => {
   const columnsWithCheckboxes = tasks.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={tasks.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked>
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -458,7 +460,7 @@ const ReceivedDocEmpl = () => {
                   <MDBDataTable
                     bordered
                     displayEntries={false}
-                    entries={5}
+                    entries={10}
                     className="text-nowrap"
                     hover
                     data={{ ...tasks, columns: visibleColumns }}
