@@ -364,7 +364,7 @@ const HistoryLogAprv = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
+                    <a className="nav-link ms-2">
                       History Log / Approved
                     </a>
                   </li>
@@ -417,7 +417,7 @@ const HistoryLogAprv = () => {
             </div>
            
             <div className="position-relative">
-              <p className="table-name mb-2">Approved Templetes</p>
+              <p className="table-name mb-2">Approved Templates</p>
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">
                   <div className="col-md-3 table-searchbar-imgs">
