@@ -294,6 +294,7 @@ const SideBarEmpl = () => {
             </li>
           </ul>
         </div>
+        {/* console */}
 
         {/* <div class="dropdown">
           <a
