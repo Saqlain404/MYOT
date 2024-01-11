@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import MiniCalendar from "./MiniCalendar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
-
-
-
+import Calendar from "react-calendar";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import listPlugin from "@fullcalendar/list";
 
 const CalenderDept = () => {
-  
-
+  const [calType, setCalType] = useState("day");
+  const events = [
+    // Add your events here
+    { title: "Event 1", start: "2024-01-11T10:00:00" },
+    { title: "Event 2", start: "2024-01-22T14:30:00" },
+    // Add more events as needed
+  ];
   return (
     <>
-    <div className="container-fluid">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar pe-0">
             <SidebarDepartment />
@@ -42,11 +49,11 @@ const CalenderDept = () => {
                       className="ms-4 "
                     />
                     <Link to={"/Department/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -56,177 +63,112 @@ const CalenderDept = () => {
                   </div>
                 </div>
               </nav>
-            
             </div>
 
             <div className="d-flex ps-3 ">
-              <p className="p-2 text-decoration-underline td-text">Day</p>
-              <p className="p-2 th-text ">Week</p>
-              <Link to={"/Department/Calendar-month"} className="text-decoration-none">
-              <p className="p-2 th-text">Month</p>
-              </Link>
-              <Link to={"/Department/Calendar-year"} className="text-decoration-none">
-              <p className="p-2 th-text">Year</p>
-              </Link>
-            </div>
-            <div className="container px-4 text-center">
-  <div className="row gx-5">
-    <div className="col-3  ">
-     <div className=" bg-white min-vh-100 p-4 ">
-      <button className="create-task-btn ">
-         +{" "}Create Task
-      </button>
-      <MiniCalendar className="mini-calendar"/>
-     </div>
-    </div>
-    <div className="col-9 ">
-      <div className="row bg-white">
-        <div className="col float-start ms-2 mt-4">
-      <h4 className="text-align-left float-start current-day">September 03, 2023</h4>
-        </div>
-        <div className="col float-end">
-          <div className=" float-end me-3 mt-4">
-          <img src="/images/calendar/Arrow-down.svg" alt="" className="me-2" />
-          <img src="/images/calendar/Arrow-forward.svg" alt="" className="ms-2" />
-          </div>
-        </div>
-      </div>
-   
-      <div>
-      
-      
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 09.00 AM</p>
-          </div>
-        <div className="col border-bottom d-flex">
-          <div className="event-9am">
-          
-            <p>Invited by HR </p>
-          </div>
-        </div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 10.00 AM</p>
-          </div>
-        <div className="col border-bottom"></div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1 ">
-          <p className="day-time"> 11.00 AM</p>
-          </div>
-        <div className="col border-bottom"></div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 12.00 PM</p>
-          </div>
-        <div className="col border-bottom d-flex">
-        <div className="event-12pm">
-          <p>Promotion Letter</p>
-        </div>
-        </div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 01.00 PM</p>
-          </div>
-        <div className="col border-bottom"></div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 02.00 PM</p>
-          </div>
-        <div className="col border-bottom"></div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 03.00 PM</p>
-          </div>
-        <div className="col border-bottom"></div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 04.00 PM</p>
-          </div>
-        <div className="col border-bottom d-flex">
-        <div className="event1-4pm">
-          <p>Onboarding Process</p>
-        </div>
-        <div className="event2-4pm">
-          <p>Offer Letter</p>
-        </div>
-        </div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 05.00 PM</p>
-          </div>
-        <div className="col border-bottom"></div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 06.00 PM</p>
-          </div>
-        <div className="col border-bottom"></div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 07.00 PM</p>
-          </div>
-        <div className="col border-bottom"></div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 08.00 PM</p>
-          </div>
-        <div className="col border-bottom"></div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 09.00 PM</p>
-          </div>
-        <div className="col border-bottom"></div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 10.00 PM</p>
-          </div>
-        <div className="col border-bottom"></div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 11.00 PM</p>
-          </div>
-        <div className="col border-bottom d-flex">
-        <div className="event-11pm">
-          <p>Salary Credit</p>
-        </div>
-        </div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 12.00 AM</p>
-          </div>
-        <div className="col border-bottom"></div>
-      </div>
-      <div className="row bg-white">
-        <div className="col-1">
-          <p className="day-time"> 01.00 AM</p>
-          </div>
-        <div className="col border-bottom"></div>
-      </div>
-      </div>
-    </div>
-  </div>
-</div>
+              <p
+                onClick={() => setCalType("day")}
+                className={
+                  calType === "day"
+                    ? "active_tab th-text p-2"
+                    : "p-2 th-text cal_tab"
+                }>
+                Day
+              </p>
+              <p
+                onClick={() => setCalType("week")}
+                className={
+                  calType === "week"
+                    ? "active_tab th-text p-2"
+                    : "p-2 th-text cal_tab"
+                }>
+                Week
+              </p>
+              <p
+                onClick={() => setCalType("month")}
+                className={
+                  calType === "month"
+                    ? "active_tab th-text p-2"
+                    : "p-2 th-text cal_tab"
+                }>
+                Month
+              </p>
 
-          
+              <p
+                onClick={() => setCalType("year")}
+                className={
+                  calType === "year"
+                    ? "active_tab th-text p-2"
+                    : "p-2 th-text cal_tab"
+                }>
+                Year
+              </p>
+            </div>
+
+            <div className="container px-4 text-center">
+              <div className="row gx-5">
+                <div className="col-3  ">
+                  <div className=" bg-white min-vh-100 p-4 ">
+                    <button className="create-task-btn ">+ Create Task</button>
+                    {(calType === "day" && (
+                      <Calendar className="mini-calendar" />
+                    )) ||
+                      (calType === "week" && (
+                        <Calendar className="mini-calendar" />
+                      )) ||
+                      (calType === "month" && (
+                        <Calendar
+                          defaultView="year"
+                          className="mini-calendar"
+                        />
+                      )) ||
+                      (calType === "year" && (
+                        <Calendar className="mini-calendar" />
+                      ))}
+                  </div>
+                </div>
+                {(calType === "day" && (
+                  <div className="col-9 bg-white shadow" key={calType}>
+                    <FullCalendar
+                      plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
+                      initialView="timeGridDay" // You can change this to 'dayGridDay', 'timeGridWeek', 'timeGridDay', or 'listWeek'
+                      events={events}
+                    />
+                  </div>
+                )) ||
+                  (calType === "week" && (
+                    <div className="col-9 bg-white shadow" key={calType}>
+                      <FullCalendar
+                        plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
+                        initialView="listWeek" // You can change this to 'dayGridDay', 'timeGridWeek', 'timeGridDay', or 'listWeek'
+                        events={events}
+                      />
+                    </div>
+                  )) ||
+                  (calType === "month" && (
+                    <div className="col-9 bg-white shadow" key={calType}>
+                      <FullCalendar
+                        plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
+                        initialView="dayGridMonth" // You can change this to 'dayGridDay', 'timeGridWeek', 'timeGridDay', or 'listWeek'
+                        events={events}
+                      />
+                    </div>
+                  )) ||
+                  (calType === "year" && (
+                    <div className="col-9 bg-white shadow" key={calType}>
+                      <FullCalendar
+                        plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
+                        initialView="dayGridYear" // You can change this to 'dayGridDay', 'timeGridWeek', 'timeGridDay', or 'listWeek'
+                        events={events}
+                      />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      </div>
-      </>
+    </>
   );
 };
 

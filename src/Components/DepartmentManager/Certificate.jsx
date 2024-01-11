@@ -3,238 +3,318 @@ import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
 import {
+  AssignTemplate,
   CertificateList,
-  SearchCertificate,
+  CompletedTemplateList,
+  DepartmentTemplateCount,
+  SearchTemplates,
+  SignatoryList,
 } from "../../ApiServices/departmentHttpService/departmentHttpService";
+import { useForm } from "react-hook-form";
+import classNames from "classnames";
+import { toast } from "react-toastify";
+import moment from "moment";
+import { MDBDataTable } from "mdbreact";
 
 const Certificate = () => {
-  const documents = [
-    {
-      id: 1,
-      certificateName: "Salary Slip.jpg",
-      assignSignatories: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
-        "Katherine Moss",
-      ],
-      department: "Human Resources",
-      dateOfIssurance: "2021-04-16",
-      status: <p className="text-primary m-0">Online</p>,
-      action: (
-        <img
-          src="/images/sidebar/ThreeDots.svg"
-          className="w-auto p-3"
-          alt=""
-        />
-      ),
-    },
-    {
-      id: 1,
-      certificateName: "Salary Slip.jpg",
-      assignSignatories: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" alt="" />,
-        "Katherine Moss",
-      ],
-      department: "Human Resources",
-      dateOfIssurance: "2021-04-16",
-      status: <p className="text-primary m-0">Online</p>,
-      action: (
-        <img
-          src="/images/sidebar/ThreeDots.svg"
-          className="w-auto p-3"
-          alt=""
-        />
-      ),
-    },
-    {
-      id: 1,
-      certificateName: "Salary Slip.jpg",
-      assignSignatories: [
-        <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />,
-        "Katherine Moss",
-      ],
-      department: "Human Resources",
-      dateOfIssurance: "2021-04-16",
-      status: <p className="text-primary m-0">Online</p>,
-      action: (
-        <img
-          src="/images/sidebar/ThreeDots.svg"
-          className="w-auto p-3"
-          alt=""
-        />
-      ),
-    },
-    {
-      id: 1,
-      certificateName: "Salary Slip.jpg",
-      assignSignatories: [
-        <img src="/images/dashboard/Avatar3.png" className="me-2" alt="" />,
-        "Katherine Moss",
-      ],
-      department: "Human Resources",
-      dateOfIssurance: "2021-04-16",
-      status: <p className="text-primary m-0">Online</p>,
-      action: (
-        <img
-          src="/images/sidebar/ThreeDots.svg"
-          className="w-auto p-3"
-          alt=""
-        />
-      ),
-    },
-    {
-      id: 1,
-      certificateName: "Salary Slip.jpg",
-      assignSignatories: [
-        <img src="/images/dashboard/Avatar.png" className="me-2" alt="" />,
-        "Katherine Moss",
-      ],
-      department: "Human Resources",
-      dateOfIssurance: "2021-04-16",
-      status: <p className="text-primary m-0">Online</p>,
-      action: (
-        <img
-          src="/images/sidebar/ThreeDots.svg"
-          className="w-auto p-3"
-          alt=""
-        />
-      ),
-    },
-    {
-      id: 1,
-      certificateName: "Salary Slip.jpg",
-      assignSignatories: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" alt="" />,
-        "Katherine Moss",
-      ],
-      department: "Human Resources",
-      dateOfIssurance: "2021-04-16",
-      status: <p className="text-primary m-0">Online</p>,
-      action: (
-        <img
-          src="/images/sidebar/ThreeDots.svg"
-          className="w-auto p-3"
-          alt=""
-        />
-      ),
-    },
-    {
-      id: 1,
-      certificateName: "Salary Slip.jpg",
-      assignSignatories: [
-        <img src="/images/dashboard/Avatar2.png" className="me-2" alt="" />,
-        "Katherine Moss",
-      ],
-      department: "Human Resources",
-      dateOfIssurance: "2021-04-16",
-      status: <p className="text-primary m-0">Online</p>,
-      action: (
-        <img
-          src="/images/sidebar/ThreeDots.svg"
-          className="w-auto p-3"
-          alt=""
-        />
-      ),
-    },
-    {
-      id: 1,
-      certificateName: "Salary Slip.jpg",
-      assignSignatories: [
-        <img src="/images/dashboard/Avatar1.png" className="me-2" alt="" />,
-        "Katherine Moss",
-      ],
-      department: "Human Resources",
-      dateOfIssurance: "2021-04-16",
-      status: <p className="text-primary m-0">Online</p>,
-      action: (
-        <img
-          src="/images/sidebar/ThreeDots.svg"
-          className="w-auto p-3"
-          alt=""
-        />
-      ),
-    },
+  const [showClearButton, setShowClearButton] = useState(false);
 
-    // Add more tasks here
-  ];
-
-  const [listItems, setListItems] = useState([]);
   const [search, setSearch] = useState("");
+  const [templates, setTemplates] = useState([]);
+  const [signOptions, setSignOptions] = useState([]);
+  const [files, setFiles] = useState([]);
+  const id = localStorage.getItem("user_id");
 
-  const [checkedCheckboxes, setCheckedCheckboxes] = useState({
-    certificateName: false,
-    assignSignatories: false,
-    department: false,
-    date: false,
-    action: false,
-    status: false,
-  });
-  const [hiddenColumns, setHiddenColumns] = useState({
-    certificateName: false,
-    assignSignatories: false,
-    department: false,
-    date: false,
-    action: false,
-    status: false,
-  });
-
-  const handleCheckboxChange = (checkboxName) => {
-    setCheckedCheckboxes({
-      ...checkedCheckboxes,
-      [checkboxName]: !checkedCheckboxes[checkboxName],
-    });
-  };
-  const countCheckedCheckboxes = () => {
-    let count = 0;
-    for (const checkbox in checkedCheckboxes) {
-      if (checkedCheckboxes[checkbox]) {
-        count++;
-      }
-    }
-    return count;
-  };
-
-  const handleHideSelected = () => {
-    const updatedHiddenColumns = { ...hiddenColumns };
-    for (const checkbox in checkedCheckboxes) {
-      if (checkedCheckboxes[checkbox]) {
-        updatedHiddenColumns[checkbox] = true;
-      }
-    }
-    setHiddenColumns(updatedHiddenColumns);
-    setCheckedCheckboxes({
-      certificateName: false,
-      assignSignatories: false,
-      department: false,
-      date: false,
-      action: false,
-      status: false,
-    });
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm();
 
   useEffect(() => {
-    getCertificateLists();
+    getTemplateLists();
+    getSignatoryList();
+    getDocumentList();
   }, []);
 
-  const getCertificateLists = async (key) => {
-    const { data } = await CertificateList();
-    if (!data?.error) {
-      setListItems(data?.results?.certificateList);
+  const getSignatoryList = async () => {
+    try {
+      let { data } = await SignatoryList();
+      console.log(data);
+      if (!data?.error) {
+        let values = data?.results?.approver;
+        setSignOptions(values);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
-  console.log(listItems);
+
+  const getDocumentList = async () => {
+    try {
+      let { data } = await CompletedTemplateList();
+      console.log(data);
+      if (!data?.error) {
+        let values = data?.results?.templete;
+        setTemplates(values);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [listItems, setListItems] = useState({
+    columns: [
+      {
+        label: "Certificate Name",
+        field: "name",
+        sort: "asc",
+        width: 50,
+        selected: false,
+      },
+      {
+        label: "Assign Signatories",
+        field: "assignTo",
+        sort: "asc",
+        width: 50,
+        selected: false,
+      },
+      {
+        label: "Department",
+        field: "dep",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+      {
+        label: "Date of Issurance",
+        field: "date",
+        sort: "asc",
+        width: 100,
+        searchable: true,
+        selected: false,
+      },
+      {
+        label: "Status",
+        field: "status",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+      {
+        label: "Actions",
+        field: "actions",
+        sort: "asc",
+        width: 100,
+        selected: false,
+      },
+    ],
+    rows: [],
+    hiddenColumns: [],
+    selectedColumns: [],
+  });
+
+  const columnsWithCheckboxes = listItems?.columns?.map((column) => ({
+    ...column,
+    label: (
+      <div key={column.field}>
+        <input
+          type="checkbox"
+          checked={listItems.selectedColumns.includes(column.field)}
+          onChange={() => handleCheckboxChange(column.field)}
+          className="me-1 mt-1"
+        />
+        <label>{column.label}</label>
+      </div>
+    ),
+  }));
+
+  const visibleColumns = columnsWithCheckboxes?.filter(
+    (column) => !listItems.hiddenColumns.includes(column.field)
+  );
+
+  const getTemplateLists = async (key) => {
+    const { data } = await CertificateList();
+    const newRows = [];
+    if (!data?.error) {
+      let values = data?.results?.certificateList;
+      values?.map((list, index) => {
+        let returnData = {};
+        returnData.name = (
+          <div>
+            <input
+              className="form-check-input checkbox-table"
+              type="checkbox"
+              value=""
+            />{" "}
+            <img src="/images/dashboard/Featured Icon.png" alt="" />
+            {list?.templeteName}
+          </div>
+        );
+
+        returnData.assignTo = (
+          <div className="p-0">
+            <img
+              src={list?.signatory?.profile_Pic}
+              className="list-profile-pic pt-0"
+              alt=""
+            />
+            {list?.signatory?.name}
+          </div>
+        );
+
+        returnData.version = list?.templeteVersion[0]?.version;
+        returnData.date = (
+          <div>
+            <img src="/images/dashboard/CalendarBlank.png" alt="" />
+            {moment(list?.createdAt).format("L")}
+          </div>
+        );
+
+        returnData.status = list?.status;
+        returnData.dep = list?.signatory?.department_Id?.departmentName;
+        returnData.actions = (
+          <div class="text-center">
+            <a
+              className="cursor_pointer"
+              type=""
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
+            </a>
+            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+              <li>
+                <Link class="dropdown-item">
+                  <img
+                    src="/images/users/AddressBook.svg"
+                    alt=""
+                    className="me-2"
+                  />
+                  View Temp Details
+                </Link>
+              </li>
+              <li>
+                <a class="dropdown-item">
+                  <img
+                    src="/images/users/TextAlignLeft.svg"
+                    alt=""
+                    className="me-2"
+                  />
+                  Wrap Column
+                </a>
+              </li>
+            </ul>
+          </div>
+        );
+        newRows.push(returnData);
+      });
+      setListItems({ ...listItems, rows: newRows });
+    }
+  };
+
+  const handleCheckboxChange = (field) => {
+    let updatedSelectedColumns = [...listItems.selectedColumns];
+    const index = updatedSelectedColumns.indexOf(field);
+    if (index > -1) {
+      updatedSelectedColumns.splice(index, 1);
+    } else {
+      updatedSelectedColumns.push(field);
+    }
+    setListItems({ ...listItems, selectedColumns: updatedSelectedColumns });
+  };
+
+  // const [templateCount, setTemplateCount] = useState([]);
+
+  const toggleSortOrder = () => {
+    const currentSortType = listItems.sortType === "asc" ? "desc" : "asc";
+    const sortedRows = [...listItems.rows].sort((a, b) => {
+      let comparison = 0;
+      if (a.name < b.name) {
+        comparison = -1;
+      } else if (a.name > b.name) {
+        comparison = 1;
+      }
+      return currentSortType === "asc" ? comparison : comparison * -1;
+    });
+
+    setListItems({
+      ...listItems,
+      rows: sortedRows,
+      sortType: currentSortType,
+    });
+  };
+
+  const showAllColumns = () => {
+    setListItems({ ...listItems, hiddenColumns: [], selectedColumns: [] });
+    setShowClearButton(false);
+  };
+
+  const hideSelectedColumns = () => {
+    const updatedHiddenColumns = [
+      ...listItems.hiddenColumns,
+      ...listItems.selectedColumns,
+    ];
+    setListItems({
+      ...listItems,
+      hiddenColumns: updatedHiddenColumns,
+      selectedColumns: [],
+    });
+    setShowClearButton(true);
+  };
+  const [templateCount, setTemplateCount] = useState([]);
+
+  const getTemplateCount = async () => {
+    let { data } = await DepartmentTemplateCount();
+    if (!data?.error) {
+      setTemplateCount(data?.results);
+    }
+  };
 
   const handleSearch = async (e) => {
     const value = e.target.value.toLowerCase();
     setSearch(value);
     if (value.length > 0) {
-      let { data } = await SearchCertificate({ search: value });
+      let { data } = await SearchTemplates({ search: value });
       if (!data?.error) {
-        setListItems(data?.results?.certificate);
+        setListItems(data?.results?.document);
       }
     } else {
-      getCertificateLists();
+      getTemplateLists();
     }
   };
+
+  const onSubmit = async (info) => {
+
+    const { data } = AssignTemplate({
+      templete_Id: info?.templates,
+      signatory: info?.signatory,
+      creator_Id: id,
+    });
+    if (!data?.error) {
+      console.log(data);
+      toast.success(data?.message);
+      setTimeout(() => {
+        getTemplateLists();
+        document.getElementById("closeModal").click();
+        document.getElementById("reset-modal").click();
+      }, [2000]);
+    }
+  };
+
+  const onFileSelection = (e, key) => {
+    setFiles({ ...files, [key]: e.target.files[0] });
+    if (key === "profile_img") {
+      const selectedFile = e.target.files[0];
+      const imageUrl = URL.createObjectURL(selectedFile);
+      // setProfileImgUrl(imageUrl);
+    }
+  };
+
+  useEffect(() => {
+    getTemplateCount();
+    getTemplateLists();
+  }, []);
 
   return (
     <>
@@ -249,14 +329,14 @@ const Certificate = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link ms-2" href="app-email.html">
-                      Certificate Issued /
+                      /Certificates
                     </a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
-                  <form class="" role="search">
+                  <form className="" role="search">
                     <input
-                      class="form-control search-bar"
+                      className="form-control search-bar"
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
@@ -285,24 +365,25 @@ const Certificate = () => {
               </nav>
             </div>
 
-            <p className="table-name mb-2">Certificate</p>
+            <p className="table-name mb-2">Certificate List</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
-              <div className="row d-flex  col ">
-                <div className="col-md-3 table-searchbar-imgs">
-                  {/* <img
+              <div className="d-flex ">
+                <div
+                  className="mt-1"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal">
+                  <img
                     src="/images/dashboard/Plus-icon.png"
                     alt=""
                     className="p-2 table-searchbar-img"
-                  /> */}
-                  <img
-                    src="/images/dashboard/FunnelSimple.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
                   />
+                </div>
+                <div className="col-md-3 table-searchbar-imgs">
                   <img
+                    onClick={toggleSortOrder}
                     src="/images/dashboard/ArrowsDownUp.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
+                    className="p-2 table-searchbar-img border-end cursor_pointer"
                   />
                   <img
                     src="/images/dashboard/DotsThreeOutlineVertical2.png"
@@ -310,281 +391,169 @@ const Certificate = () => {
                     className="p-2 table-searchbar-img border-end"
                   />
                 </div>
-                <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
-                <p className="m-0 text-nowrap">
-                    {countCheckedCheckboxes()} Selected
+
+                <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
+                  <p className="m-0 text-nowrap">
+                    {listItems?.selectedColumns &&
+                      listItems?.selectedColumns.length}
+                    <span> Selected</span>
                   </p>
-                  <p
-                    className="hide-selected m-0 text-nowrap "
-                    onClick={handleHideSelected}
-                  >
-                    Hide Selected
-                  </p>
+                  {showClearButton ? (
+                    <p
+                      className="hide-selected m-0 text-nowrap cursor_pointer "
+                      onClick={showAllColumns}>
+                      Clear Selection
+                    </p>
+                  ) : (
+                    <p
+                      className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
+                      onClick={hideSelectedColumns}>
+                      Hide Selected
+                    </p>
+                  )}
                 </div>
               </div>
-              <form className="d-flex me-2" role="search">
-                <input
-                  className="form-control table-search-bar"
-                  type="search"
-                  placeholder="Type Something!"
-                  aria-label="Search"
-                  value={search}
-                  onChange={(e) => handleSearch(e)}
-                />
-              </form>
+              <form className="d-flex me-2" role="search"></form>
             </div>
 
-            <div className="col-12 table_comman mt-3 ">
+            <div className="col-12 mdb_table depart_table mt-3 ">
               <div className="table-responsive">
-                <table className="table table-borderless">
-                  <thead>
-                    <tr className="th-text">
-                      <th
-                        className={`th-text ${
-                          hiddenColumns.certificateName ? "d-none" : "table-cell"
-                        }`}
-                      >
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                          checked={checkedCheckboxes.certificateName}
-                          onChange={() => handleCheckboxChange("certificateName")}
-                        />
-                        Certificate Name
-                      </th>
-                      <th
-                        className={`th-text ${
-                          hiddenColumns.assignSignatories ? "d-none" : "table-cell"
-                        }`}
-                      >
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                          checked={checkedCheckboxes.assignSignatories}
-                          onChange={() => handleCheckboxChange("assignSignatories")}
-                        />
-                        Assign Signatories
-                      </th>
-                      <th
-                        className={`th-text ${
-                          hiddenColumns.department ? "d-none" : "table-cell"
-                        }`}
-                      >
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                          checked={checkedCheckboxes.department}
-                          onChange={() => handleCheckboxChange("department")}
-                        />
-                        Department
-                      </th>
-                      <th
-                        className={`th-text ${
-                          hiddenColumns.date ? "d-none" : "table-cell"
-                        }`}
-                      >
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                          checked={checkedCheckboxes.date}
-                          onChange={() => handleCheckboxChange("date")}
-                        />
-                        Date of Issurance
-                      </th>
-                      <th
-                        className={`th-text ${
-                          hiddenColumns.status ? "d-none" : "table-cell"
-                        }`}
-                      >
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                          checked={checkedCheckboxes.status}
-                          onChange={() => handleCheckboxChange("status")}
-                        />
-                        Status
-                      </th>
-                      <th
-                        className={`th-text ${
-                          hiddenColumns.action ? "d-none" : "table-cell"
-                        }`}
-                      >
-                        <input
-                          className="form-check-input checkbox-table"
-                          type="checkbox"
-                          value=""
-                          checked={checkedCheckboxes.action}
-                          onChange={() => handleCheckboxChange("action")}
-                        />
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {listItems?.map((document) => (
-                      <tr key={document.id}>
-                        <td
-                          className={`th-text ${
-                            hiddenColumns.certificateName ? "d-none" : "table-cell"
-                          }`}
-                        >
-                          <input
-                            className="form-check-input checkbox-table"
-                            type="checkbox"
-                            value=""
-                          />
-                          <img
-                            src="/images/dashboard/Featured Icon.png"
-                            alt=""
-                          />
-                          {document?.templeteName}
-                        </td>
-                        <td
-                          className={`th-text ${
-                            hiddenColumns.assignSignatories ? "d-none" : "table-cell"
-                          }`}
-                        >
-                          <img
-                            src={document?.signatory?.profile_Pic}
-                            className="list-profile-pic me-2"
-                            alt=""
-                          />
-                          {document?.signatory?.name}
-                        </td>
-                        <td
-                          className={`th-text ${
-                            hiddenColumns.departmentName ? "d-none" : "table-cell"
-                          }`}
-                        >
-                          {document?.signatory?.department_Id?.departmentName}
-                        </td>
-                        <td
-                          className={`th-text ${
-                            hiddenColumns.date ? "d-none" : "table-cell"
-                          }`}
-                        >
-                          <img
-                            src="/images/dashboard/CalendarBlank.png"
-                            alt=""
-                          />
-                          {document.createdAt}
-                        </td>
-                        <td
-                          className={`th-text ${
-                            hiddenColumns.status ? "d-none" : "table-cell"
-                          }`}
-                        >
-                          <p className="text-primary m-0">{document.status}</p>
-                        </td>
-                        <td
-                          className={`th-text ${
-                            hiddenColumns.action ? "d-none" : "table-cell"
-                          }`}
-                        >
-                          <div class="dropdown">
-                            <a
-                              type=""
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                              href="/"
-                            >
-                              <img
-                                src="/images/sidebar/ThreeDots.svg"
-                                className="w-auto p-3"
-                                alt=""
-                              />
-                            </a>
-                            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-                              <li>
-                                <Link
-                                  to={"/Department/Certificate-view"}
-                                  className="text-decoration-none"
-                                >
-                                  <a
-                                    class="dropdown-item border-bottom"
-                                    href="/"
-                                  >
-                                    <img
-                                      src="/images/users/AddressBook.svg"
-                                      alt=""
-                                      className="me-2"
-                                    />
-                                    View Certificate
-                                  </a>
-                                </Link>
-                              </li>
-                              <li>
-                                <a class="dropdown-item border-bottom" href="/">
-                                  <img
-                                    src="/images/users/PencilLine.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Edit User Details
-                                </a>
-                              </li>
-                              <li>
-                                <Link
-                                  to={"/Department/Comments"}
-                                  className="text-decoration-none"
-                                >
-                                  <a class="dropdown-item" href="/">
-                                    <img
-                                      src="/images/dashboard/Comment.png"
-                                      alt=""
-                                      className="me-2"
-                                    />
-                                    Comments
-                                  </a>
-                                </Link>
-                              </li>
-                              <li>
-                                <a class="dropdown-item border-bottom" href="/">
-                                  <img
-                                    src="/images/users/TextAlignLeft.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Wrap Column
-                                </a>
-                              </li>
-                              <li>
-                                <a class="dropdown-item text-danger" href="/">
-                                  <img
-                                    src="/images/users/Trash.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Delete Template
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                        <td></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <MDBDataTable
+                  key={listItems}
+                  bordered
+                  displayEntries={false}
+                  entries={5}
+                  className="text-nowrap"
+                  hover
+                  data={{ ...listItems, columns: visibleColumns }}
+                  // data={approvers}
+                  noBottomColumns
+                  paginationLabel={"«»"}
+                  sortable={false}
+                />
+              </div>
+            </div>
+
+            <div className="footer">
+              <div>© 2023 MYOT</div>
+              <div className="d-flex ">
+                <p className="ms-3">About</p>
+                <p className="ms-3">Support</p>
+                <p className="ms-3">Contact Us</p>
               </div>
             </div>
           </div>
           <div className="col">
             <RightSidebar />
           </div>
+        </div>
+      </div>
 
-          <div className="middle-section">
-            <div className="body-wrapper">
-              <div className="container-fluid">
-                <div className="row d-flex flex-direction-row cards-row"></div>
-                <div className="d-flex cardss"></div>
-              </div>
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-department">
+          <div class="modal-content border-0">
+            <div class="d-flex modal-header border-bottom">
+              <p class="" id="exampleModalLabel">
+                Add Signatory
+              </p>
+              <button
+                type="button"
+                class="btn-close"
+                id="closeModal"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
             </div>
+
+            <form onSubmit={handleSubmit(onSubmit)} action="">
+              <div className="row p-3">
+                <div className="col-md-12 mb-3">
+                  <select
+                    name="templates"
+                    className={classNames(
+                      " col modal-input th-text p-2 me-3 w-100",
+                      {
+                        "is-invalid": errors.approver,
+                      }
+                    )}
+                    {...register("templates", {
+                      required: "* Please select a Template",
+                    })}>
+                    <option className="w-100">Select Document</option>
+                    {templates &&
+                      templates.map((options) => (
+                        <option
+                          className="w-100"
+                          key={options?._id}
+                          value={options?._id}>
+                          {options?.templeteName}
+                        </option>
+                      ))}
+                  </select>
+                  {errors.templates && (
+                    <div className="invalid-feedback">
+                      {errors.templates.message}
+                    </div>
+                  )}
+                </div>
+
+                <div className="col-12 mb-3 ">
+                  <p className="bg-primary-subtle th-text ps-4 p-2">Assign</p>
+                </div>
+
+                <div className="col-12 border-bottom border-light mb-3 ">
+                  <div className="row">
+                    <p className="col-4 td-text p-2">
+                      <input
+                        className=" form-check-input checkbox-table ms-4 me-4"
+                        type="checkbox"
+                        value=""
+                      />
+                      Signatory
+                    </p>
+                    <select
+                      name="signatory"
+                      className={classNames(
+                        " col modal-input th-text p-2 me-3",
+                        {
+                          "is-invalid": errors.signatory,
+                        }
+                      )}
+                      {...register("signatory", {
+                        required: "* Please select a signatory",
+                      })}>
+                      <option className="w-100">Select signatory</option>
+                      {signOptions &&
+                        signOptions?.map((options) => (
+                          <option
+                            className="w-100"
+                            key={options?._id}
+                            value={options?._id}>
+                            {options?.name}
+                          </option>
+                        ))}
+                    </select>
+                    {errors.signatory && (
+                      <div className="invalid-feedback">
+                        {errors.signatory.message}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="d-flex justify-content-end mb-3">
+                <button type="submit" class="user-modal-btn">
+                  Add New
+                </button>
+                <button type="reset" id="reset-modal" class="user-modal-btn2">
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
