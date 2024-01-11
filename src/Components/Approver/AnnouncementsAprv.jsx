@@ -74,7 +74,7 @@ const AnnouncementsAprv = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link th-text ms-2" href="app-email.html">
+                    <a className="nav-link th-text ms-2">
                       Announcements / Report Management
                     </a>
                   </li>
