@@ -11,6 +11,7 @@ import {
 } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
+import { Checkbox } from "antd";
 
 const TemplateReview = () => {
   const [searchData, setSearchData] = useState("");
@@ -278,14 +279,14 @@ const TemplateReview = () => {
   const columnsWithCheckboxes = tasks.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={tasks.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked>
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));

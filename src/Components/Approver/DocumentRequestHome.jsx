@@ -3,6 +3,7 @@ import { approvedDocumentRequest, approvedTemplete, rejectedDocumentRequest, rej
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import { Link } from 'react-router-dom';
+import { Checkbox } from 'antd';
 
 
 const DocumentRequestHome = () => {
@@ -221,14 +222,14 @@ const DocumentRequestHome = () => {
       const columnsWithCheckboxes = tasks.columns.map((column) => ({
         ...column,
         label: (
-          <div key={column.field}>
-            <input
-              type="checkbox"
+          <div key={column.field} className="">
+            <Checkbox
               checked={tasks.selectedColumns.includes(column.field)}
               onChange={() => handleDocCheckboxChange(column.field)}
-              className="me-1 mt-1"
-            />
-            <label>{column.label}</label>
+              defaultChecked>
+              {" "}
+              {column.label}
+            </Checkbox>
           </div>
         ),
       }));

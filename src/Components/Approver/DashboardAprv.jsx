@@ -14,6 +14,7 @@ import {
 import moment from "moment";
 import GradientLineChartApprv from "./GradientLineChartApprv";
 import { MDBDataTable } from "mdbreact";
+import { Checkbox } from "antd";
 
 const DashboardAprv = () => {
   const [searchData, setSearchData] = useState("");
@@ -351,14 +352,14 @@ const DashboardAprv = () => {
   const columnsWithCheckboxes = tasks.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={tasks.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked>
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
