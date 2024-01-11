@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import {
@@ -20,6 +20,10 @@ const EditProfile = () => {
   const [cPassVisible, setCPassVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const location = useLocation();
+  const { state } = location;
+  // console.log(state);
 
   const {
     register,
@@ -172,11 +176,7 @@ const EditProfile = () => {
                   <div className=" d-flex justify-content-start mb-4">
                     <div className="position-relative">
                       <img
-                        src={
-                          profileImgUrl
-                            ? profileImgUrl
-                            : "/images/tasks/modal-profile-photo.svg"
-                        }
+                        src={profileImgUrl ? profileImgUrl : state?.profile_Pic}
                         alt=""
                         className="w_100_h_100"
                       />
@@ -257,9 +257,10 @@ const EditProfile = () => {
                         <input
                           autoComplete="false"
                           type="text"
+                          defaultValue={state?.name}
                           placeholder="name"
                           className={classNames(
-                            "col-12 profile-edit-input p-2",
+                            "col-12 profile-edit-input p-2 text-capitalize",
                             {
                               "is-invalid": errors.name,
                             }
@@ -313,7 +314,7 @@ const EditProfile = () => {
                               value:
                                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                               message:
-                                "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
+                                "* Minimun 8 characters, One Uppercase, One Lowercase & One Special Character Allowed",
                             },
                           })}
                         />
@@ -324,13 +325,13 @@ const EditProfile = () => {
                           {passVisible ? (
                             <img
                               className="eye_icon"
-                              src="/images/icons/hide.png"
+                              src="/images/icons/view.png"
                               alt=""
                             />
                           ) : (
                             <img
                               className="eye_icon"
-                              src="/images/icons/view.png"
+                              src="/images/icons/hide.png"
                               alt=""
                             />
                           )}
@@ -362,7 +363,7 @@ const EditProfile = () => {
                               value:
                                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                               message:
-                                "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
+                                "* Minimun 8 characters, One Uppercase, One Lowercase & One Special Character Allowed",
                             },
                           })}
                         />
@@ -373,13 +374,13 @@ const EditProfile = () => {
                           {cPassVisible ? (
                             <img
                               className="eye_icon"
-                              src="/images/icons/hide.png"
+                              src="/images/icons/view.png"
                               alt=""
                             />
                           ) : (
                             <img
                               className="eye_icon"
-                              src="/images/icons/view.png"
+                              src="/images/icons/hide.png"
                               alt=""
                             />
                           )}

@@ -17,16 +17,19 @@ import ViewUser from "./ViewUser";
 import { MDBDataTable } from "mdbreact";
 import EditUserProfile from "./EditUserProfile";
 import Swal from "sweetalert2";
+import { Checkbox } from "rsuite";
 
 const Users = () => {
   const [showClearButton, setShowClearButton] = useState(false);
-
+  const [passVisible, setPassVisible] = useState(false);
   const [employeeData, setEmployeeData] = useState([]);
   const [departmentOptions, setDepartmentOptions] = useState([]);
   const [search, setSearch] = useState("");
   const [files, setFiles] = useState([]);
   const [profileImgUrl, setProfileImgUrl] = useState();
   const [userId, setUserId] = useState();
+
+  let id = localStorage.getItem("myot_admin_id");
 
   const [users, setUsers] = useState({
     columns: [
@@ -99,7 +102,7 @@ const Users = () => {
 
   const getDepartmentList = async () => {
     try {
-      let { data } = await DepartmentList();
+      let { data } = await DepartmentList(id, { search: "" });
       console.log(data);
       if (!data?.error) {
         let values = data?.results?.department;
@@ -111,12 +114,11 @@ const Users = () => {
   };
 
   const getEmployeeList = async () => {
-    let { data } = await EmployeeLists();
-
+    let { data } = await EmployeeLists(id);
+    console.log(data);
     const newRows = [];
     if (!data?.error) {
       let values = data?.results?.list;
-      console.log(values);
       values?.map((list, index) => {
         const returnData = {};
         returnData.id = list?.employId;
@@ -265,8 +267,7 @@ const Users = () => {
   };
 
   const onSubmit = async (datas) => {
-    // console.log(datas);
-    // console.log(datas?.document_img[0]);
+    let id = localStorage.getItem("myot_admin_id");
     let selectedRoles = [];
     const roles = [
       "employrole_admin",
@@ -339,7 +340,7 @@ const Users = () => {
     formData.append("document_Img", datas?.document_img[0]);
     formData.append("profile_Pic", files?.profile_img);
 
-    let { data } = await AddEmployee(formData);
+    let { data } = await AddEmployee(id, formData);
     console.log(data);
     if (data && !data?.error) {
       Swal.fire({
@@ -405,14 +406,14 @@ const Users = () => {
   const columnsWithCheckboxes = users.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={users.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked>
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -541,6 +542,12 @@ const Users = () => {
                         Hide Selected
                       </p>
                     )}
+                  </div>
+                  <div class="search_icon">
+                    <img
+                      width={20}
+                      src={require("../../assets/logo/search.png")}
+                    ></img>
                   </div>
                 </div>
                 <form className="d-flex me-2" role="search"></form>
@@ -825,9 +832,9 @@ const Users = () => {
                                 </div>
                               )}
                             </div>
-                            <div className="col-4">
+                            <div className="col-4 position-relative">
                               <input
-                                type="password"
+                                type={passVisible ? "text" : "password"}
                                 placeholder="Password *"
                                 // className="col-4 modal-input td-text w-100 p-2"
                                 name="password"
@@ -843,10 +850,29 @@ const Users = () => {
                                     value:
                                       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                                     message:
-                                      "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
+                                      "* Minimun 8 characters, One Uppercase, One Lowercase & One Special Character Allowed",
                                   },
                                 })}
                               />
+                              <div
+                                style={{ top: "6px" }}
+                                className="eye_container"
+                                onClick={() => setPassVisible(!passVisible)}
+                              >
+                                {passVisible ? (
+                                  <img
+                                    className="eye_icon"
+                                    src="/images/icons/hide.png"
+                                    alt=""
+                                  />
+                                ) : (
+                                  <img
+                                    className="eye_icon"
+                                    src="/images/icons/view.png"
+                                    alt=""
+                                  />
+                                )}
+                              </div>
                               {errors.password && (
                                 <small className="errorText ">
                                   {errors.password?.message}

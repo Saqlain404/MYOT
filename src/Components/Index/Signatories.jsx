@@ -11,6 +11,7 @@ import {
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import ViewUser from "./ViewUser";
+import { Checkbox } from "rsuite";
 
 const Signatories = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -64,7 +65,8 @@ const Signatories = () => {
   }, []);
 
   const getSignatoriesData = async () => {
-    let { data } = await SignatoryList();
+    let id = await localStorage.getItem("myot_admin_id")
+    let { data } = await SignatoryList(id);
     const newRows = [];
     if (!data?.error) {
       let values = data?.results?.signatory;
@@ -72,7 +74,7 @@ const Signatories = () => {
       values?.map((list, index) => {
         let returnData = {};
         returnData.name = list?.name;
-        returnData.department = list?.department_Id?.departmentName;
+        returnData.department = list?.department_Id[0]?.departmentName;
         returnData.empId = list?.employId;
         returnData.login =
           (list?.login && moment(list?.login).format("L")) || "NA";
@@ -155,14 +157,14 @@ const Signatories = () => {
   const columnsWithCheckboxes = signatories.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={signatories.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked>
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -295,6 +297,12 @@ const Signatories = () => {
                         Hide Selected
                       </p>
                     )}
+                  </div>
+                  <div class="search_icon">
+                    <img
+                      width={20}
+                      src={require("../../assets/logo/search.png")}
+                    ></img>
                   </div>
                 </div>
                 <form className="d-flex me-2" role="search"></form>

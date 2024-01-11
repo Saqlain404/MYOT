@@ -23,9 +23,10 @@ const Dashboard = () => {
   }, []);
 
   const getDashboardDataCount = async () => {
+    let id = localStorage.getItem("myot_admin_id")
     try {
-      let { data } = await DashboardCount();
-      if (!data.error) {
+      let { data } = await DashboardCount(id);
+      if (!data?.error) {
         setDataCount(data?.results);
         console.log(data?.results);
       }
@@ -56,59 +57,6 @@ const Dashboard = () => {
     }
   };
 
-  const documents = [
-    {
-      id: 1,
-      activity: "Salary Slip.jpg",
-      login: "18 Aug 22,09:23 AM",
-      login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 2,
-      activity: "Promotion Letter.zip",
-      login: "18 Aug 22,09:23 AM",
-      login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 3,
-      activity: "Create Project Wireframes.xls",
-      login: "18 Aug 22,09:23 AM",
-      login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 4,
-      activity: "Create Project Wireframes.pdf",
-      login: "18 Aug 22,09:23 AM",
-      login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 5,
-      activity: "Project tech requirements.zip",
-      login: "18 Aug 22,09:23 AM",
-      login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    // Add more tasks here
-  ];
 
   return (
     <>
@@ -461,7 +409,7 @@ const Dashboard = () => {
                 </Link>
                 <Link to={"/Admin/Requests"} className="col ">
                   <img src="/images/dashboard/manage-reports.png" />
-                  <p className="management-text">Manage Reports</p>
+                  <p className="management-text">Manage Requests</p>
                 </Link>
                 <Link to={"/Admin/Settings"} className="col ">
                   <img src="/images/dashboard/manage-settings.png" />

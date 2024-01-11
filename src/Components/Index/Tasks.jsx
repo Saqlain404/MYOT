@@ -14,6 +14,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import { MDBDataTable } from "mdbreact";
 import Swal from "sweetalert2";
+import { Checkbox } from "rsuite";
 
 const Tasks = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -94,7 +95,8 @@ const Tasks = () => {
   }, []);
 
   const getTaskData = async () => {
-    let { data } = await GetTaskData();
+    let id = localStorage.getItem("myot_admin_id");
+    let { data } = await GetTaskData(id);
 
     const newRows = [];
     if (!data?.error) {
@@ -258,10 +260,10 @@ const Tasks = () => {
     }
   };
 
-
   const getTotalCount = async () => {
+    let id = await localStorage.getItem("myot_admin_id");
     try {
-      let { data } = await TemplateCount();
+      let { data } = await TemplateCount(id);
       console.log(data);
       setTotalCount(data?.results);
     } catch (error) {}
@@ -294,14 +296,15 @@ const Tasks = () => {
   const columnsWithCheckboxes = tasks.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={tasks.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked
+        >
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -395,7 +398,7 @@ const Tasks = () => {
                       </div>
                       <div className="d-flex  mt-4">
                         <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                          {totalCount?.totalTemplete}
+                          {totalCount?.totalTemplete || 0}
                         </h3>
                         {/* <span className="card-insights fw-bold m-auto">
                           +11.01%
@@ -530,6 +533,12 @@ const Tasks = () => {
                         Hide Selected
                       </p>
                     )}
+                  </div>
+                  <div class="search_icon">
+                    <img
+                      width={20}
+                      src={require("../../assets/logo/search.png")}
+                    ></img>
                   </div>
                 </div>
                 <form className="d-flex me-2" role="search"></form>

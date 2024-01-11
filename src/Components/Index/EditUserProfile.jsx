@@ -61,8 +61,9 @@ const EditUserProfile = ({ userId }) => {
     }
   };
   const getDepartmentList = async () => {
+    let id = await localStorage.getItem("myot_admin_id");
     try {
-      let { data } = await DepartmentList();
+      let { data } = await DepartmentList(id);
       console.log(data);
       if (!data?.error) {
         let values = data?.results?.department;

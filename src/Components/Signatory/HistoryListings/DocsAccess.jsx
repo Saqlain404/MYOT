@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { SignatoryDocsAccessLog } from "../../../ApiServices/SignatoryHttpServices/signatoryHttpServices";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { Checkbox } from "rsuite";
 
 const DocsAccess = ({ admin_id }) => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -281,14 +282,15 @@ const DocsAccess = ({ admin_id }) => {
   const columnsWithCheckboxes = completedDocs.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={completedDocs.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked
+        >
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -346,6 +348,12 @@ const DocsAccess = ({ admin_id }) => {
                 Hide Selected
               </p>
             )}
+          </div>
+          <div class="search_icon">
+            <img
+              width={20}
+              src={require("../../../assets/logo/search.png")}
+            ></img>
           </div>
         </div>
         <form className="d-flex me-2" role="search">
