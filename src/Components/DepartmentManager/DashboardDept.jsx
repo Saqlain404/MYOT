@@ -107,7 +107,7 @@ const DashboardDept = () => {
       setListItems(data?.results?.approvedTemplete);
     }
   };
-  console.log(listItems);
+  // console.log(listItems);
 
   useEffect(() => {
     getDepartmentCount();
@@ -174,7 +174,7 @@ const DashboardDept = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                       {departmentCount?.totalUser?.[0]?.count}
+                       {departmentCount?.totalUser?.[0]?.count || 0}
                       </h3>
 
                     </div>
@@ -189,7 +189,7 @@ const DashboardDept = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {departmentCount?.totalTemplete}
+                        {departmentCount?.totalTemplete || 0}
                       </h3>
 
                     </div>
@@ -204,7 +204,7 @@ const DashboardDept = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {departmentCount?.totalDocument}
+                        {departmentCount?.totalDocument || 0}
                       </h3>
 
                     </div>
@@ -217,7 +217,7 @@ const DashboardDept = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                      {departmentCount?.totalActiveUser}
+                      {departmentCount?.totalActiveUser?.[0]?.count || 0}
                       </h3>
 
                     </div>

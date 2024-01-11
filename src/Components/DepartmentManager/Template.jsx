@@ -20,7 +20,6 @@ import { MDBDataTable } from "mdbreact";
 
 const Template = () => {
   const [showClearButton, setShowClearButton] = useState(false);
-
   const documents = [
     {
       id: 1,
@@ -345,6 +344,7 @@ const Template = () => {
     }
   };
 
+
   const handleCheckboxChange = (field) => {
     let updatedSelectedColumns = [...listItems.selectedColumns];
     const index = updatedSelectedColumns.indexOf(field);
@@ -355,6 +355,9 @@ const Template = () => {
     }
     setListItems({ ...listItems, selectedColumns: updatedSelectedColumns });
   };
+
+  // const [templateCount, setTemplateCount] = useState([]);
+
 
   const toggleSortOrder = () => {
     const currentSortType = listItems.sortType === "asc" ? "desc" : "asc";
@@ -428,13 +431,15 @@ const Template = () => {
     const { data } = AddTemplates(formData);
     if (!data?.error) {
       console.log(data);
-      getTemplateLists();
+      
       toast.success(data?.message);
+      setTimeout(() => {
+        getTemplateLists();
+        document.getElementById("closeModal").click();
+        document.getElementById("reset-modal").click();
+      }, [2000]);
     }
-    setTimeout(() => {
-      getTemplateLists();
-      document.getElementById("closeModal").click();
-    }, [2000]);
+   
   };
 
   const onFileSelection = (e, key) => {
@@ -606,7 +611,7 @@ const Template = () => {
               <form className="d-flex me-2" role="search"></form>
             </div>
 
-            <div className="col-12 mdb_table mt-3 ">
+            <div className="col-12 mdb_table depart_table mt-3 ">
               <div className="table-responsive">
                 <MDBDataTable
                   key={listItems}
@@ -783,45 +788,7 @@ const Template = () => {
                     )}
                   </div>
                 </div>
-                <div className="col-12 border-bottom border-light mb-3">
-                  <div className="row">
-                    <p className="col-4 td-text p-2">
-                      <input
-                        className=" form-check-input checkbox-table ms-4 me-4"
-                        type="checkbox"
-                        value=""
-                      />
-                      Admin
-                    </p>
-                    <select
-                      name="creator_Id"
-                      className={classNames(
-                        " col modal-input th-text p-2 me-3",
-                        {
-                          "is-invalid": errors.creator_Id,
-                        }
-                      )}
-                      {...register("creator_Id", {
-                        required: "* Please select a Admin",
-                      })}>
-                      <option className="w-100">Select Admin</option>
-                      {adminOptions &&
-                        adminOptions?.map((options) => (
-                          <option
-                            className="w-100"
-                            key={options?._id}
-                            value={options?._id}>
-                            {options?.name}
-                          </option>
-                        ))}
-                    </select>
-                    {errors.creator_Id && (
-                      <div className="invalid-feedback">
-                        {errors.creator_Id.message}
-                      </div>
-                    )}
-                  </div>
-                </div>
+             
                 <div className="col-12  mb-3 ">
                   <div className="row">
                     <p className="col-4 td-text p-2">
@@ -830,7 +797,7 @@ const Template = () => {
                         type="checkbox"
                         value=""
                       />
-                      Department Manger
+                      Departments
                     </p>
                     <select
                       name="manager"

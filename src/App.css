@@ -1663,7 +1663,7 @@ height: 960px; */
   text-align: start;
   color: #000;
   font-family: Nunito;
-  font-size: 10px;
+  font-size: 13px !important;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -1676,7 +1676,7 @@ height: 960px; */
   text-align: start;
   color: #000;
   font-family: Nunito;
-  font-size: 12px;
+  font-size: 13px !important; 
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -1810,7 +1810,7 @@ height: 960px; */
   font-weight: 500;
   line-height: 112.4%; /* 15.736px */
 }
-.password-update-input{
+.password-update-input {
   width: 430px;
   height: 52px;
   flex-shrink: 0;
@@ -1825,7 +1825,7 @@ height: 960px; */
   font-weight: 500;
   line-height: 112.4%; /* 15.736px */
 }
-.password-update-submit{
+.password-update-submit {
   margin-top: 40px;
   margin-bottom: 50px;
   width: 430px;
@@ -2552,11 +2552,11 @@ height: 960px; */
 }
 
 .list-profile-pic {
-
   width: 24px;
   height: 24px;
   border-radius: 16px;
-  margin: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .table-profile-pic {
@@ -2682,7 +2682,7 @@ height: 960px; */
   border: none;
 }
 
-thead tr th div{
+thead tr th div {
   margin: 0px 10px !important;
 }
 
@@ -2790,13 +2790,26 @@ div.dataTables_wrapper div.dataTables_paginate {
   color: red !important;
   font-size: 13px;
 }
-.pass_toggle_text{
-  
+.pass_toggle_text {
 }
 
-.mdb-datatable-filter input {
+/* .pass_toggle_text {
+} */
+
+.depart_table {
+  position: relative;
+}
+.depart_table .mdb-datatable-filter input {
   width: 100%;
-  height: 100%;
+  height: auto;
   position: relative !important;
-  top: 13.8rem !important;
+  top: -6rem;
+}
+.active_tab {
+  text-underline-offset: unset;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.cal_tab {
+  cursor: pointer;
 }
