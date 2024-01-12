@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 import { updateProfile } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 import { ToastContainer } from "react-toastify";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { updateProfilePic, updateUserName } from "../app/slice/userSlice";
 
 const EmplEditProfile = () => {
   const [type, setType] = useState("password");
   const [password, setPassword] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
-  const[profileDetail,setProfileDetail] = useState(null);
+  const [profileDetail, setProfileDetail] = useState(null);
   const [error, setError] = useState();
   const [cError, setCError] = useState();
   const [profileImgUrl, setProfileImgUrl] = useState();
@@ -28,6 +30,11 @@ const EmplEditProfile = () => {
     profile_Pic: null,
   });
 
+  const dispatch = useDispatch();
+
+  const location = useLocation();
+  const { state } = location;
+
   const onFileSelection = (event) => {
     setPost({ ...post, profile_Pic: event.target.files[0] });
     const selectedFile = event.target.files[0];
@@ -38,20 +45,21 @@ const EmplEditProfile = () => {
   const navigate = useNavigate();
   const handleInput = (event) => {
     setPost({ ...post, [event.target.name]: event.target.value });
-    setError("")
+    setError("");
   };
 
   useEffect(() => {
     if (!localStorage.getItem("token-company")) {
       navigate("/Employee/edit-profile");
     }
-  }, []);
+  }, []); 
 
   const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    if  (post.password && !passwordRegex.test(post.password)) {
+    
+    if (post.password && !passwordRegex.test(post.password)) {
       setError(
         "Password must be at least 8 characters long, contain one uppercase letter, and one special character"
       );
@@ -60,9 +68,8 @@ const EmplEditProfile = () => {
 
     if (post.confirmPassword !== post.password) {
       setCError("Passwords do not match");
-    }  
+    }
 
- 
     const formData = new FormData();
     formData.append("name", post.name);
     // formData.append("email", post.email);
@@ -73,23 +80,25 @@ const EmplEditProfile = () => {
     // formData.append("DOB", post.DOB);
 
     const response = await updateProfile(formData);
+    console.log(response)
 
     if (!response.data?.error) {
       navigate("/Employee/profile");
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"top-end",
+        position: "top-end",
         title: "Profile Updated",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
       });
+      dispatch(updateProfilePic(response?.data?.results?.employee?.profile_Pic));
+      dispatch(updateUserName(response?.data?.results?.employee?.name));
       console.log(response);
     }
   };
 
-  
   return (
     <>
       <div className="container-fluid">
@@ -147,21 +156,17 @@ const EmplEditProfile = () => {
 
                 <form className="row" onSubmit={onSubmit}>
                   <div className=" d-flex flex-column align-items-start mb-4">
-                   <label htmlFor="new_img">
-                   <img
-                     src={
-                      profileImgUrl
-                        ? profileImgUrl
-                        : "/images/tasks/modal-profile-photo.svg"
-                    }
-                    alt=""
-                    className="w_100_h_100"
-                      style={{cursor:"pointer"}}
-                    />
-                   </label>
+                    <label htmlFor="new_img">
+                      <img
+                        src={profileImgUrl ? profileImgUrl : state?.profile_Pic}
+                        alt=""
+                        className="w_100_h_100"
+                        style={{ cursor: "pointer" }}
+                      />
+                    </label>
                     <input
                       className="file-upload"
-                      style={{display: 'none'}}
+                      style={{ display: "none" }}
                       type="file"
                       id="new_img"
                       accept="image/*"
@@ -171,19 +176,20 @@ const EmplEditProfile = () => {
                     />
                   </div>
                   <div className="col-12 m-2">
-                      <p className=" d-flex justify-content-start profile-card-title">
-                        Full Name
-                      </p>
-                      <input
-                        type="text"
-                        placeholder="Full Name"
-                        className="col-12 profile-edit-input p-2"
-                        name="name"
-                        value={post.name}
-                        onChange={handleInput}
-                        />
-                        {/* {validationErrors.name && <p>{validationErrors.name}</p>} */}
-                    </div>
+                    <p className=" d-flex justify-content-start profile-card-title">
+                      Full Name
+                    </p>
+                    <input
+                      type="text"
+                      placeholder="Full Name"
+                      className="col-12 profile-edit-input p-2"
+                      name="name"
+                      defaultValue={state?.name}
+                      // value={post.name}
+                      onChange={handleInput}
+                    />
+                    {/* {validationErrors.name && <p>{validationErrors.name}</p>} */}
+                  </div>
                   {/* <div className="col-12 d-flex justify-content-between mb-2">
                    
                     <div className="col-6 m-2">
@@ -239,62 +245,65 @@ const EmplEditProfile = () => {
                         name="password"
                         onChange={handleInput}
                       />
-                         {error && <p className="errorText">{error}</p>}
-                         <div
-                          className="eye_container pt-1"
-                          onClick={() => setPassVisible(!passVisible)}
-                        >
-                          {passVisible ? (
-                            <img
-                              className="eye_icon"
-                              src="/images/icons/hide.png"
-                              alt=""
-                            />
-                          ) : (
-                            <img
-                              className="eye_icon"
-                              src="/images/icons/view.png"
-                              alt=""
-                            /> 
-                          )}
-                        </div>
+                      {error && <p className="errorText">{error}</p>}
+                      <div
+                        className="eye_container  pt-1"
+                        onClick={() => setPassVisible(!passVisible)}
+                      >
+                        {passVisible ? (
+                          <img
+                            className="eye_icon"
+                            src="/images/icons/hide.png"
+                            alt=""
+                          />
+                        ) : (
+                          <img
+                            className="eye_icon"
+                            src="/images/icons/view.png"
+                            alt=""
+                          />
+                        )}
+                      </div>
                     </div>
                     <div className="col-6 m-2 position-relative">
                       <p className=" d-flex justify-content-start profile-card-title">
                         Confirm Password
                       </p>
                       <input
-                        type={cPassVisible ? 'text' : "password"}
+                        type={cPassVisible ? "text" : "password"}
                         value={post.confirmPassword}
                         placeholder="Confirm Password"
                         className="col-12 profile-edit-input p-2"
                         name="confirmPassword"
                         onChange={handleInput}
                       />
-                      {cError && <p className="d-flex errorText ms-2 justify-content-start">{cError}</p>}
+                      {cError && (
+                        <p className="d-flex errorText ms-2 justify-content-start">
+                          {cError}
+                        </p>
+                      )}
                       <div
-                          className="eye_container pt-1"
-                          onClick={() => setCPassVisible(!cPassVisible)}
-                        >
-                          {cPassVisible ? (
-                            <img
-                              className="eye_icon"
-                              src="/images/icons/hide.png"
-                              alt=""
-                            />
-                          ) : (
-                            <img
-                              className="eye_icon"
-                              src="/images/icons/view.png"
-                              alt=""
-                            />
-                          )}
-                        </div>
+                        className="eye_container pt-1"
+                        onClick={() => setCPassVisible(!cPassVisible)}
+                      >
+                        {cPassVisible ? (
+                          <img
+                            className="eye_icon"
+                            src="/images/icons/hide.png"
+                            alt=""
+                          />
+                        ) : (
+                          <img
+                            className="eye_icon"
+                            src="/images/icons/view.png"
+                            alt=""
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
-
                   <div className=" text-end ms-4 mt-1 ">
-                    <button className="profile-edit-submit m-0"  type="submit">
+                    <button className="profile-edit-submit m-0" type="submit">
                       Update Profile
                     </button>
                   </div>

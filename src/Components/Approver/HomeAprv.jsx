@@ -101,38 +101,38 @@ const HomeAprv = () => {
   const ids =
     localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
 
-  const handleSearch = async () => {
-    const result = await searchTemplete(searchData, ids);
-    const searchResult = result?.data?.results?.templete;
-    console.log(searchResult);
+  // const handleSearch = async () => {
+  //   const result = await searchTemplete(searchData, ids);
+  //   const searchResult = result?.data?.results?.templete;
+  //   console.log(searchResult);
 
-    if (searchResult && Array.isArray(searchResult)) {
-      const mappedResult = searchResult?.map((document) => ({
-        documentName: document?.templeteName,
-        img: [document?.manager?.[0]?.profile_Pic],
-        version: document?.templeteVersion?.[0]?.version,
-        assignedTo: [document?.manager?.[0]?.name],
-        department: [document?.manager?.[0]?.department?.[0]?.departmentName],
-        action: (
-          <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-        ),
-        dateofSigning: [document?.createdAt],
-        comments: (
-          <img
-            src="/images/dashboard/Comment.png"
-            className="mx-auto d-block"
-          />
-        ),
-        status: [document?.status],
-      }));
-      setDocumentRequests(mappedResult);
-    }
-  };
+  //   if (searchResult && Array.isArray(searchResult)) {
+  //     const mappedResult = searchResult?.map((document) => ({
+  //       documentName: document?.templeteName,
+  //       img: [document?.manager?.[0]?.profile_Pic],
+  //       version: document?.templeteVersion?.[0]?.version,
+  //       assignedTo: [document?.manager?.[0]?.name],
+  //       department: [document?.manager?.[0]?.department?.[0]?.departmentName],
+  //       action: (
+  //         <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //       ),
+  //       dateofSigning: [document?.createdAt],
+  //       comments: (
+  //         <img
+  //           src="/images/dashboard/Comment.png"
+  //           className="mx-auto d-block"
+  //         />
+  //       ),
+  //       status: [document?.status],
+  //     }));
+  //     setDocumentRequests(mappedResult);
+  //   }
+  // };
 
-  useEffect(() => {
-    handleSearch();
-    getTaskData();
-  }, [searchData]);
+  // useEffect(() => {
+  //   handleSearch();
+  //   getTaskData();
+  // }, [searchData]);
 
   const getTaskData = async () => {
     let data = await approverTempleteList(ids);

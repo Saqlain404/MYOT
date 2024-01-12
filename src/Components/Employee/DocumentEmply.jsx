@@ -146,7 +146,7 @@ const DocumentEmply = () => {
           </>
         );
         returnData.department =
-          list?.templete_Id?.manager?.department_Id?.departmentName;
+          list?.templete_Id?.manager?.department_Id?.departmentName  || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -510,7 +510,7 @@ const DocumentEmply = () => {
             </div>
             {/* <!-- Modal End--> */}
 
-            <div className="position-relative">
+            <div className="position-relative mt-2">
               <p className="table-name mb-2">Documents</p>
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">

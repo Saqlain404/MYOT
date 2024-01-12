@@ -73,6 +73,7 @@ const ProfileAprv = () => {
                   <p className="profile-txt m-2">Profile</p>
                   <Link
                     to={"/Approver/Edit-profile"}
+                    state={profileDetail}
                     className="text-decoration-none"
                   >
                     <button className="profile-edit-btn">Edit</button>
@@ -93,7 +94,7 @@ const ProfileAprv = () => {
                   />
                 </div>
                 <div className="bg-white rounded mb-4 p-4 pb-2">
-                  <p className=" d-flex justify-content-start profile-card-title">
+                  <p className=" d-flex justify-content-start profile-card-title mb-1">
                     Details
                   </p>
                   <div className="d-flex justify-content-between">
@@ -136,7 +137,7 @@ const ProfileAprv = () => {
     </div>
    </div> */}
                 <div className="bg-white rounded mb-4 p-4 pb-2">
-    <p className=" d-flex justify-content-start profile-card-title">Company Information</p>
+    <p className=" d-flex justify-content-start profile-card-title mb-1">Company Information</p>
     <div className="d-flex justify-content-between">
       <div>
         <p className="profile-info">Company Name</p>

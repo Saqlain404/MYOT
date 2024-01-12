@@ -94,15 +94,15 @@ const EmplySetting = () => {
             <div className="container px-4 text-center min-vh-100 ">
               <div className="row rounded">
                 <div className="bg-white rounded mb-4 p-4 pb-2">
-                  <div className="d-flex">
+                  <div className="d-flex  align-items-center">
                     <p className="td-text border-bottom me-3">
                       Business Assets 
                     </p>
-                    <p className="th-text  ">System Setting</p>
+                    <p className="th-text mb-2">System Setting</p>
                   </div>
                   <div>
-                    <p className="settings-txt">Select Logo</p>
-                    <div className="d-flex">
+                    {/* <p className="settings-txt">Select Logo</p> */}
+                    <div className="d-flex mt-1">
                     {logoImage?.map((logo)=>(
                         <img className="settingLogo" alt="logo" src={logo?.logo}/>
                       ))}

@@ -96,14 +96,14 @@ const SettingsAprv = () => {
               <div className="row rounded">
                 <div className="bg-white rounded mb-4 p-4 pb-2">
                   <div className="d-flex">
-                    <p className="td-text border-bottom me-3">
+                    <p className="td-text border-bottom mt-2 me-3">
                       Business Assets
                     </p>
                     <p className="th-text  ">System Setting</p>
                   </div>
                   <div>
-                    <p className="settings-txt">Select Logo</p>
-                    <div className="d-flex">
+                    {/* <p className="settings-txt">Select Logo</p> */}
+                    <div className="d-flex mt-2">
                     {logoImage?.map((logo)=>(
                         <img className="settingLogo" alt="logo" src={logo?.logo}/>
                       ))}

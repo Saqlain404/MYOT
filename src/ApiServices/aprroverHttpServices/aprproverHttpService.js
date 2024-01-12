@@ -112,6 +112,30 @@ export async function templeteDocList() {
     return null;
   }
 }
+export async function requestDocAprv(ids) {
+  try {
+    const response = await employeeHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/admin-request-list/${ids}`
+    );
+
+    if (!response.data?.error) {
+      const templeteDocList = response?.data?.results?.list;
+      console.log(templeteDocList);
+
+      return templeteDocList;
+    } else {
+      toast.error(response?.data.message);
+      return null;
+    }
+  } catch (error) {
+    if (error.response) {
+      // toast.error(error.response?.data.message);
+    } else {
+      // toast.error("An error occurred while fetching the template IDs.");
+    }
+    return null;
+  }
+}
 
 export async function homeCount() {
   try {

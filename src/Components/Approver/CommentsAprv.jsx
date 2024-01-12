@@ -137,14 +137,14 @@ const CommentsAprv = () => {
                 commentList?.map((comments, index) => (
                   <>
                     <div className="bg-white rounded p-2 mb-3">
-                      <div className="d-flex  justify-content-between">
-                        <div className="d-flex justify-content-between">
+                      <div className="d-flex  align-items-center  justify-content-between">
+                        <div className="d-flex  align-items-center justify-content-between">
                           <img
                             src={comments?.creator_Id?.profile_Pic}
                             alt=""
                             className="m-2 w_20_h_20"
                           />
-                          <p className="commenter-name m-auto">
+                          <p className="commenter-name ">
                             {comments?.creator_Id?.name}
                           </p>
                           <p className="comment-time m-auto">
@@ -209,7 +209,7 @@ const CommentsAprv = () => {
                                       src={reply?.creator_Id?.profile_Pic}
                                       alt=""
                                     />
-                                    <p className="commenter-name m-auto">
+                                    <p className="commenter-name ">
                                       {reply?.creator_Id?.name}
                                     </p>
                                     {/* <p className="comment-time m-auto">
@@ -229,7 +229,7 @@ const CommentsAprv = () => {
                       {reply[index] && (
                         <div className="bg-white rounded p-2 my-3 task_reply">
                           <form onSubmit={(e) => handleReply(e, comments?._id)}>
-                            <div className="d-flex justify-content-between">
+                            <div className="d-flex align-items-center justify-content-between">
                               <img
                                 src="/images/dashboard/Avatar2.png"
                                 alt=""
@@ -262,10 +262,10 @@ const CommentsAprv = () => {
                 ))}
 
               <div className="bg-white rounded p-2 mb-3">
-                <div className="d-flex  justify-content-between">
+                <div className="d-flex  align-items-center  justify-content-between">
                   <form
                     onSubmit={(e) => handleSubmitComment(e)}
-                    className="d-flex justify-content-between"
+                    className="d-flex  justify-content-between"
                   >
                     <img
                       src="/images/dashboard/Avatar2.png"
