@@ -71,7 +71,7 @@ const Document = () => {
       console.log(values);
       values?.map((list, index) => {
         const returnData = {};
-        returnData.template = list?.templete?.[0]?.templeteName;
+        returnData.template = list?.templete?.[0]?.templeteName || "NA";
         returnData.requester = (
           <>
             <img
@@ -80,81 +80,83 @@ const Document = () => {
               alt=""
             />
             <span className="ms-2 text-capitalize">
-              {list?.templete?.[0]?.manager?.[0]?.name}
+              {list?.templete?.[0]?.manager?.[0]?.name || "NA"}
             </span>
           </>
         );
-        
-        returnData.date = (list?.createdAt && moment(list?.createdAt).format("L")) || "NA";
+
+        returnData.date =
+          (list?.createdAt && moment(list?.createdAt).format("L")) || "NA";
         returnData.department =
           list?.templete_Id?.manager?.department_Id?.departmentName;
-        
-          returnData.comment = (
+
+        returnData.comment = (
+          <div className="text-center">
             <img
-            src="/images/dashboard/Comment.png"
-            className="mx-auto d-block"
-          />
-            // <>
-            //   <div className="text-center">
-            //     <a type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                 
-            //     </a>
-            //     <form
-            //       className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
-            //       // onSubmit={(e) => handleSubmit(e, list?._id)}
-            //     >
-            //       <div className="mb-3 border-bottom">
-            //         <label className="form-label th-text">Comment or type</label>
-  
-            //         <input
-            //           type="text"
-            //           className="form-control border-0"
-            //           // value={comment}
-            //           // onChange={(e) => setComment(e.target.value)}
-            //         />
-            //       </div>
-  
-            //       <div className="d-flex justify-content-between">
-            //         <div>
-            //           <img
-            //             src="/images/tasks/assign comments.svg"
-            //             alt=""
-            //             className="comment-img"
-            //           />
-            //           <img
-            //             src="/images/tasks/mention.svg"
-            //             alt=""
-            //             className="comment-img"
-            //           />
-            //           <img
-            //             src="/images/tasks/task.svg"
-            //             alt=""
-            //             className="comment-img"
-            //           />
-            //           <img
-            //             src="/images/tasks/emoji.svg"
-            //             alt=""
-            //             className="comment-img"
-            //           />
-            //           <img
-            //             src="/images/tasks/attach_attachment.svg"
-            //             alt=""
-            //             className="comment-img"
-            //           />
-            //         </div>
-            //         <div>
-            //           <button type="submit" className="comment-btn btn-primary">
-            //             Comment
-            //           </button>
-            //         </div>
-            //       </div>
-            //     </form>
-            //   </div>
-            // </>
-          );
+              src="/images/dashboard/Comment.png"
+              className="mx-auto d-block"
+            />
+          </div>
+          // <>
+          //   <div className="text-center">
+          //     <a type="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+          //     </a>
+          //     <form
+          //       className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
+          //       // onSubmit={(e) => handleSubmit(e, list?._id)}
+          //     >
+          //       <div className="mb-3 border-bottom">
+          //         <label className="form-label th-text">Comment or type</label>
+
+          //         <input
+          //           type="text"
+          //           className="form-control border-0"
+          //           // value={comment}
+          //           // onChange={(e) => setComment(e.target.value)}
+          //         />
+          //       </div>
+
+          //       <div className="d-flex justify-content-between">
+          //         <div>
+          //           <img
+          //             src="/images/tasks/assign comments.svg"
+          //             alt=""
+          //             className="comment-img"
+          //           />
+          //           <img
+          //             src="/images/tasks/mention.svg"
+          //             alt=""
+          //             className="comment-img"
+          //           />
+          //           <img
+          //             src="/images/tasks/task.svg"
+          //             alt=""
+          //             className="comment-img"
+          //           />
+          //           <img
+          //             src="/images/tasks/emoji.svg"
+          //             alt=""
+          //             className="comment-img"
+          //           />
+          //           <img
+          //             src="/images/tasks/attach_attachment.svg"
+          //             alt=""
+          //             className="comment-img"
+          //           />
+          //         </div>
+          //         <div>
+          //           <button type="submit" className="comment-btn btn-primary">
+          //             Comment
+          //           </button>
+          //         </div>
+          //       </div>
+          //     </form>
+          //   </div>
+          // </>
+        );
         returnData.actions = (
           <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
-          
         );
 
         newRows.push(returnData);

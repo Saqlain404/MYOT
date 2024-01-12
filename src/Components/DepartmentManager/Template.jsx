@@ -17,6 +17,7 @@ import classNames from "classnames";
 import { toast } from "react-toastify";
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
+import Swal from "sweetalert2";
 
 const Template = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -299,19 +300,49 @@ const Template = () => {
       let values = data?.results?.templete;
       values?.map((list, index) => {
         let returnData = {};
-        returnData.name = list?.templeteName;
-        returnData.assignTo = list?.signatory?.name;
+        returnData.name = list?.templeteName || "NA";
+        returnData.assignTo =
+          (
+            <>
+              <img
+                className="w_20_h_20"
+                src={list?.signatory?.profile_Pic}
+                alt=""
+              />
+              <span className="ms-2 text-capitalize">
+                {list?.signatory?.name}
+              </span>
+            </>
+          ) || "NA";
         returnData.version = list?.templeteVersion[0]?.version;
         returnData.date = moment(list?.createdAt).format("L");
-        returnData.status = list?.status;
-        returnData.department = list?.manager?.department_Id?.departmentName;
+        returnData.status = (
+          <>
+            <span
+              className={`"td-text status" ${
+                list?.status === "Pending"
+                  ? "text-info"
+                  : list?.status === "Approved"
+                  ? "text-warning"
+                  : list?.status === "In Progress"
+                  ? "text-primary"
+                  : "text-success"
+              }`}
+            >
+              {list?.status}
+            </span>
+          </>
+        );
+        returnData.department =
+          list?.manager?.department_Id?.departmentName || "NA";
         returnData.actions = (
           <div class="text-center">
             <a
               className="cursor_pointer"
               type=""
               data-bs-toggle="dropdown"
-              aria-expanded="false">
+              aria-expanded="false"
+            >
               <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
@@ -344,7 +375,6 @@ const Template = () => {
     }
   };
 
-
   const handleCheckboxChange = (field) => {
     let updatedSelectedColumns = [...listItems.selectedColumns];
     const index = updatedSelectedColumns.indexOf(field);
@@ -357,7 +387,6 @@ const Template = () => {
   };
 
   // const [templateCount, setTemplateCount] = useState([]);
-
 
   const toggleSortOrder = () => {
     const currentSortType = listItems.sortType === "asc" ? "desc" : "asc";
@@ -431,15 +460,20 @@ const Template = () => {
     const { data } = AddTemplates(formData);
     if (!data?.error) {
       console.log(data);
-      
-      toast.success(data?.message);
-      setTimeout(() => {
-        getTemplateLists();
-        document.getElementById("closeModal").click();
-        document.getElementById("reset-modal").click();
-      }, [2000]);
+
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Template Added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      document.getElementById("closeModal").click();
+      document.getElementById("reset-modal").click();
+      getTemplateLists();
     }
-   
   };
 
   const onFileSelection = (e, key) => {
@@ -573,7 +607,8 @@ const Template = () => {
                   className="mt-1"
                   type="button"
                   data-bs-toggle="modal"
-                  data-bs-target="#exampleModal">
+                  data-bs-target="#exampleModal"
+                >
                   <img
                     src="/images/dashboard/Plus-icon.png"
                     alt=""
@@ -596,13 +631,15 @@ const Template = () => {
                   {showClearButton ? (
                     <p
                       className="hide-selected m-0 text-nowrap cursor_pointer "
-                      onClick={showAllColumns}>
+                      onClick={showAllColumns}
+                    >
                       Clear Selection
                     </p>
                   ) : (
                     <p
                       className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
-                      onClick={hideSelectedColumns}>
+                      onClick={hideSelectedColumns}
+                    >
                       Hide Selected
                     </p>
                   )}
@@ -649,7 +686,8 @@ const Template = () => {
         id="exampleModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+        aria-hidden="true"
+      >
         <div class="modal-dialog modal-dialog-centered modal-dialog-department">
           <div class="modal-content border-0">
             <div class="d-flex modal-header border-bottom">
@@ -661,7 +699,8 @@ const Template = () => {
                 class="btn-close"
                 id="closeModal"
                 data-bs-dismiss="modal"
-                aria-label="Close"></button>
+                aria-label="Close"
+              ></button>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} action="">
@@ -730,14 +769,16 @@ const Template = () => {
                       )}
                       {...register("approver", {
                         required: "* Please select a Approver",
-                      })}>
+                      })}
+                    >
                       <option className="w-100">Select Approver</option>
                       {approverOptions &&
                         approverOptions.map((options) => (
                           <option
                             className="w-100"
                             key={options?._id}
-                            value={options?._id}>
+                            value={options?._id}
+                          >
                             {options?.name}
                           </option>
                         ))}
@@ -769,14 +810,16 @@ const Template = () => {
                       )}
                       {...register("signatory", {
                         required: "* Please select a signatory",
-                      })}>
+                      })}
+                    >
                       <option className="w-100">Select signatory</option>
                       {signOptions &&
                         signOptions?.map((options) => (
                           <option
                             className="w-100"
                             key={options?._id}
-                            value={options?._id}>
+                            value={options?._id}
+                          >
                             {options?.name}
                           </option>
                         ))}
@@ -788,7 +831,7 @@ const Template = () => {
                     )}
                   </div>
                 </div>
-             
+
                 <div className="col-12  mb-3 ">
                   <div className="row">
                     <p className="col-4 td-text p-2">
@@ -809,14 +852,16 @@ const Template = () => {
                       )}
                       {...register("manager", {
                         required: "* Please select a Manager",
-                      })}>
+                      })}
+                    >
                       <option className="w-100">Select Manager</option>
                       {depManagerOptions &&
                         depManagerOptions?.map((options) => (
                           <option
                             className="w-100"
                             key={options?._id}
-                            value={options?._id}>
+                            value={options?._id}
+                          >
                             {options?.name}
                           </option>
                         ))}

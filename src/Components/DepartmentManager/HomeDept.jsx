@@ -94,10 +94,10 @@ const HomeDept = () => {
           <>
             <img
               className="w_20_h_20"
-              src={list?.manager?.profile_Pic}
+              src={list?.signatory?.profile_Pic}
               alt=""
             />
-            <span className="ms-2 text-capitalize">{list?.manager?.name}</span>
+            <span className="ms-2 text-capitalize">{list?.signatory?.name}</span>
           </>
         );
         returnData.version = (
@@ -110,7 +110,7 @@ const HomeDept = () => {
               : "No versions found"}
           </>
         );
-        returnData.department = list?.manager?.department_Id?.departmentName;
+        returnData.department = list?.manager?.department_Id?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -189,9 +189,9 @@ const HomeDept = () => {
           </>
         );
         returnData.actions = (
-          <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
-
-          
+          <div className="text-center">
+            <img src="/images/sidebar/ThreeDots.svg" className="w-auto mx-auto" />
+          </div>
         );
 
         newRows.push(returnData);
