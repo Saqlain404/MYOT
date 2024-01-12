@@ -197,7 +197,7 @@ export async function profileDetails(ids) {
       // Swal.fire({
       //   toast: true,
       //   icon: "success",
-      //   position:"bottom",
+      //   position:"top-end",
       //   title: "Profile Updated",
       //   showConfirmButton: false,
       //   timerProgressBar: true,
@@ -209,7 +209,7 @@ export async function profileDetails(ids) {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
+        position:"top-end",
         title: "Error",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -238,11 +238,33 @@ export async function updateProfile(formData) {
       // toast.success(data.message);
       const templateId = data?.results;
       return { data, templateId };
-    } else toast.error(data.message);
+    } else
+    //  toast.error(data.message);
+    {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Error in Update Password",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      })
+    }
 
     return { data };
   } catch (error) {
-    if (error.response) 
+    if (error.response) {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Error in Update Password",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      })
+    }
     // toast.error(error.response.data.message);
     return { error };
   }
@@ -278,7 +300,7 @@ export async function AddLogoAprv(formData) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "Logo Added",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -290,7 +312,7 @@ export async function AddLogoAprv(formData) {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
+        position:"top-end",
         title: "Error",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -367,7 +389,7 @@ export async function CreateEmplyTicket(formData) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "Ticket Created Successfully",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -379,7 +401,7 @@ export async function CreateEmplyTicket(formData) {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
+        position:"top-end",
         title: "Error",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -434,7 +456,7 @@ export async function contactUsAprv(formData) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "Create Contact Successfully",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -444,7 +466,7 @@ export async function contactUsAprv(formData) {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
+        position:"top-end",
         title: "Error",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -470,8 +492,8 @@ export async function LogoutAprv() {
       console.log(data.message);
       Swal.fire({
         toast: true,
-        icon: "success",
-        position:"bottom",
+        icon: "Logout Successfully",
+        position:"top-end",
         title: "Logout Successfully",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -481,7 +503,7 @@ export async function LogoutAprv() {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
+        position:"top-end",
         title: "Error",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -553,7 +575,7 @@ export async function approvedTemplete(documentIds) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "Templete Approved",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -564,7 +586,7 @@ export async function approvedTemplete(documentIds) {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
+        position:"top-end",
         title: "Error",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -592,7 +614,7 @@ export async function rejectedTemplete(documentIds) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "Templete Rejected",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -603,7 +625,7 @@ export async function rejectedTemplete(documentIds) {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
+        position:"top-end",
         title: "Error",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -689,7 +711,7 @@ export async function AddAnnouncement(formData,creator_Id) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "Announcement Added",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -701,7 +723,7 @@ export async function AddAnnouncement(formData,creator_Id) {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
+        position:"top-end",
         title: "Error",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -777,7 +799,7 @@ export async function AddCommentApprv(formData) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "Comment Added",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -788,7 +810,47 @@ export async function AddCommentApprv(formData) {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
+        position:"top-end",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
+
+    if (!data.error) return { data };
+  } catch (error) {
+    if (error?.response) 
+    // toast.error(error.response.data.message);
+    return { error };
+  }
+}
+export async function AddReplyCommentApprv(formData) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/reply-comment`,
+      formData
+    );
+   
+    console.log(data);
+
+    // return { data };
+    if (!data.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"top-end",
+        title: "Reply Added Succesfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
         title: "Error",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -840,7 +902,7 @@ export async function DeleteCommentAprv(comment_id) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "Comment Deleted",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -854,7 +916,7 @@ export async function DeleteCommentAprv(comment_id) {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
+        position:"top-end",
         title: "Error",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -884,7 +946,7 @@ export async function approvedDocumentRequest(documentIds) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "Template Approved",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -895,7 +957,7 @@ export async function approvedDocumentRequest(documentIds) {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
+        position:"top-end",
         title: "Error",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -924,7 +986,7 @@ export async function rejectedDocumentRequest(documentIds) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "Template Rejected",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -935,7 +997,7 @@ export async function rejectedDocumentRequest(documentIds) {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
+        position:"top-end",
         title: "Error",
         showConfirmButton: false,
         timerProgressBar: true,

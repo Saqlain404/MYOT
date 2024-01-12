@@ -132,7 +132,7 @@ const ProfileDept = () => {
       </div>
     </div>
    </div>
-   <div className="bg-white rounded mb-4 p-4 ">
+   {/* <div className="bg-white rounded mb-4 p-4 ">
     <p className=" d-flex justify-content-start profile-card-title">Doccument</p>
     <div className=" d-flex ">
     <img src="/images/dashboard/pdf-icon.svg" alt="" />
@@ -140,7 +140,7 @@ const ProfileDept = () => {
         <img src={profileDetail?.document_Img} alt="" />
     </div>
     
-   </div>
+   </div> */}
    
   </div>
 </div>

@@ -86,7 +86,7 @@ export async function ContactUsEmployee(formData) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "Create Contact Successfully",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -96,7 +96,7 @@ export async function ContactUsEmployee(formData) {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
+        position:"top-end",
         title: "Error",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -126,7 +126,7 @@ export async function AddCommentEmply(formData) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "Add Comment Successfully",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -136,7 +136,46 @@ export async function AddCommentEmply(formData) {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
+        position:"top-end",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
+
+    if (!data.error) return { data };
+  } catch (error) {
+    if (error?.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function AddReplyCommentEmply(formData) {
+  try {
+    const { data } = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-comment-reply`,
+      formData
+    );
+   
+    console.log(data);
+
+    // return { data };
+    if (!data.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"top-end",
+        title: "Add Comment Successfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
         title: "Error",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -408,15 +447,32 @@ export async function DeleteCommentEmpl(comment_id) {
       const commentData = response?.data.message;
       console.log(commentData)
       // toast.success(commentData)
-
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"top-end",
+        title: "Comment Deleted",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return {commentData};
     } else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
       toast.error('An error occurred while fetching the template IDs.');
     }
@@ -463,7 +519,7 @@ export async function employeProfileDetail() {
       //   toast: true,
       //   icon: "success",
       //   title: "Updated Profile",
-      //   position:"bottom",
+      //   position:"top-end",
       //   showConfirmButton: false,
       //   timerProgressBar: true,
       //   timer: 3000,
@@ -473,7 +529,7 @@ export async function employeProfileDetail() {
       // Swal.fire({
       //   toast: true,
       //   icon: "error",
-      //   position:"bottom",
+      //   position:"top-end",
       //   title: "Error",
       //   showConfirmButton: false,
       //   timerProgressBar: true,
@@ -529,7 +585,7 @@ export async function updateProfile(formData) {
         toast: true,
         icon: "success",
         title: "Profile Updated",
-        position:"bottom",
+        position:"top-end",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -540,8 +596,8 @@ export async function updateProfile(formData) {
       Swal.fire({
         toast: true,
         icon: "error",
-        position:"bottom",
-        title: "Error",
+        position:"top-end",
+        title: "Error in Update Password",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -550,7 +606,8 @@ export async function updateProfile(formData) {
 
     return { data };
   } catch (error) {
-    if (error.response) toast.error(error.response.data.message);
+    if (error.response) 
+    // toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -567,7 +624,7 @@ export async function AddLogoEmply(formData) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "New Logo Added",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -580,7 +637,7 @@ export async function AddLogoEmply(formData) {
         toast: true,
         icon: "error",
         title: "Error",
-        position:"bottom",
+        position:"top-end",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -607,7 +664,7 @@ export async function AddDocument(formData) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "New Document Added",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -618,7 +675,7 @@ export async function AddDocument(formData) {
         toast: true,
         icon: "error",
         title: "Error",
-        position:"bottom",
+        position:"top-end",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -644,7 +701,7 @@ export async function CreateEmplyTicket(formData) {
       Swal.fire({
         toast: true,
         icon: "success",
-        position:"bottom",
+        position:"top-end",
         title: "Ticket Created Successfully",
         showConfirmButton: false,
         timerProgressBar: true,
@@ -657,7 +714,7 @@ export async function CreateEmplyTicket(formData) {
         toast: true,
         icon: "error",
         title: "Error",
-        position:"bottom",
+        position:"top-end",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -832,11 +889,24 @@ export async function DocumentCount() {
     if (!data?.error) {
       // toast.success(data.message);
       console.log(data.message)
-    } else toast.error(data.message);
+    } else
+    //  toast.error(data.message);
+    {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        title: "Error",
+        position:"top-end",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+    });
+    }
 
     if (!data?.error) return { data };
   } catch (error) {
-    if (error?.response) toast.error(error.response.data.message);
+    if (error?.response) 
+    // toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -867,8 +937,27 @@ export async function LogOutEmply() {
     console.log(data);
     if (!data?.error) {
       // toast.success(data.message);
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position:"top-end",
+        title: "Logout Successfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       console.log(data.message)
-    } else toast?.error(data.message);
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Error",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
 
     if (!data?.error) return { data };
   } catch (error) {

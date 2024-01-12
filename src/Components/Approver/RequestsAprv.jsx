@@ -13,6 +13,7 @@ import {
 } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 import { MDBDataTable } from "mdbreact";
 import moment from "moment";
+import { Checkbox } from "antd";
 
 const RequestsAprv = () => {
   const [templeteDoc, setTempleteDoc] = useState([]);
@@ -118,6 +119,7 @@ const getDocTaskData = async () => {
     if (!data?.error) {
       let values = data;
       console.log(values);
+      values?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
       values?.map((list, index) => {
         const returnData = {};
         returnData.name = list?.templete_Id?.templeteName;
@@ -286,14 +288,14 @@ const getDocTaskData = async () => {
   const columnsWithCheckboxes = tasks.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={tasks.selectedColumns.includes(column.field)}
           onChange={() => handleDocCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked>
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -510,7 +512,7 @@ const getDocTaskData = async () => {
         <MDBDataTable
           bordered
           displayEntries={false}
-          entries={5}
+          entries={10}
           className="text-nowrap"
           hover
           data={{ ...tasks, columns: visibleColumns }}

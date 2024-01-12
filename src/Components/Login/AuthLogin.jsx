@@ -176,10 +176,14 @@ const AuthLogin = () => {
 
               <div className="d-flex justify-content-between mb-4 remember">
                 <div className="">
+<<<<<<< HEAD
                   <Checkbox onChange={() => setRememberCheck(!rememberCheck)}>
                     {" "}
                     Remember Me
                   </Checkbox>
+=======
+                  <Checkbox > Remember Me</Checkbox>
+>>>>>>> bed7e3c4bb9ca06ca7326775673881c6513b8a78
                 </div>
               </div>
 

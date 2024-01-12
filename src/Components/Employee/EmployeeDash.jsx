@@ -13,6 +13,7 @@ import {
 } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
+import { Checkbox } from "antd";
 
 const EmployeeDash = () => {
   const navigate = useNavigate();
@@ -105,6 +106,7 @@ const EmployeeDash = () => {
     if (!data?.error) {
       let values = data[0];
       console.log(values);
+      values?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
       values?.map((list, index) => {
         const returnData = {};
         returnData.name = list?.templete_Id?.templeteName;
@@ -305,14 +307,14 @@ const EmployeeDash = () => {
   const columnsWithCheckboxes = tasks.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={tasks.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked>
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -459,7 +461,7 @@ const EmployeeDash = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {totalDocument !== null && totalDocument}
+                        {totalDocument !== null ? totalDocument : 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         +11.01%
@@ -481,7 +483,7 @@ const EmployeeDash = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {pendingDocument !== null && pendingDocument}
+                        {pendingDocument !== null ? pendingDocument : 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -0.56%
@@ -503,7 +505,7 @@ const EmployeeDash = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {pendingDocument !== null && pendingDocument}
+                        {pendingDocument !== null ? pendingDocument : 0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -1.48%
@@ -545,7 +547,7 @@ const EmployeeDash = () => {
                 <div className="col-md-6 ">
                   <div className="dashboard-card bg-light ">
                     <div className="d-flex  dashboard-card-text">
-                      <p>Documents </p>
+                      <p className="fs-6 fw-normal">Documents </p>
                       {/* <p>Current Week </p> */}
                       {/* <p>Previous Week</p> */}
                     </div>
@@ -652,7 +654,7 @@ const EmployeeDash = () => {
                           </div>
                           <div
                             className="doc-req-bar col-6"
-                            style={{ width: `${doc?.count * 10}%` }}
+                            style={{ width: `${doc?.count}%` }}
                           ></div>
                         </div>
                       ))}
@@ -719,7 +721,7 @@ const EmployeeDash = () => {
                   <MDBDataTable
                     bordered
                     displayEntries={false}
-                    entries={5}
+                    entries={10}
                     className="text-nowrap"
                     hover
                     data={{ ...tasks, columns: visibleColumns }}

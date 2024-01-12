@@ -10,6 +10,7 @@ import {
 } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
+import { Checkbox } from "antd";
 
 const HistoryLogAprv = () => {
   const [documentRequests, setDocumentRequests] = useState([]);
@@ -97,6 +98,7 @@ const HistoryLogAprv = () => {
     const newRows = [];
     if (!data?.error) {
       let values = data;
+      values?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
       console.log(values);
       values?.map((list, index) => {
         const returnData = {};
@@ -264,14 +266,14 @@ const HistoryLogAprv = () => {
   const columnsWithCheckboxes = tasks.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={tasks.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked>
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -474,7 +476,7 @@ const HistoryLogAprv = () => {
                   <MDBDataTable
                     bordered
                     displayEntries={false}
-                    entries={5}
+                    entries={10}
                     className="text-nowrap"
                     hover
                     data={{ ...tasks, columns: visibleColumns }}

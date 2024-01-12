@@ -4,9 +4,12 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { adminSignUp } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 import Swal from "sweetalert2";
+import classNames from "classnames";
+import { Button } from "rsuite";
 
 const AuthSignUp = () => {
   const [passVisible, setPassVisible] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const {
     register,
@@ -19,6 +22,7 @@ const AuthSignUp = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    setLoader(true);
     const response = await adminSignUp(data);
     if (!response.data.error) {
       Swal.fire({
@@ -30,8 +34,15 @@ const AuthSignUp = () => {
         timerProgressBar: true,
         timer: 3000,
       });
+      setLoader(false);
+    } else {
+      setLoader(false);
     }
+    setTimeout(() => {
+      setTimeout(false);
+    }, [6000]);
   };
+
   const togglePassword = () => {
     setPassVisible(!passVisible);
   };
@@ -40,25 +51,27 @@ const AuthSignUp = () => {
     <>
       <div className="container-fluid login-bg">
         <div className="row flex-nowrap">
-          <div className="col-4 login-form signup-form  p-4">
+          <div className="col-5 login-form signup-form  p-4">
             <div className="form-login py-0">
               <img src="/images/Myot-logo.png" className="logo" />
               <h2 className="mb-3 fs-7 fw-bolder myot">Myot</h2>
-              <p className="login-desc pb-0">
+              <p className="login-desc pb-4">
                 Please fill your detail to create new account.
               </p>
             </div>
-            <form className="form-login" onSubmit={handleSubmit(onSubmit)}>
-              <div className="mb-3">
+            <form className="form-login row" onSubmit={handleSubmit(onSubmit)}>
+              <div className="mb-3 col-6">
                 <label for="" className="form-label">
                   Company Name
                 </label>
                 <input
                   type="text"
-                  className="form-control"
+                  className={classNames("form-control", {
+                    "is-invalid": errors.companyName,
+                  })}
                   id="companyName"
                   name="companyName"
-                  placeholder="Company name"
+                  placeholder="Enter Your Company Name"
                   autoComplete="off"
                   {...register("companyName", { required: true })}
                 />
@@ -68,13 +81,15 @@ const AuthSignUp = () => {
                   </small>
                 )}
               </div>
-              <div className="mb-3">
+              <div className="mb-3 col-6">
                 <label for="" className="form-label">
                   Email Address
                 </label>
                 <input
                   type="email"
-                  className="form-control"
+                  className={classNames("form-control", {
+                    "is-invalid": errors.email,
+                  })}
                   id="email"
                   name="email"
                   aria-describedby="emailHelp"
@@ -95,15 +110,64 @@ const AuthSignUp = () => {
                   </small>
                 )}
               </div>
-              <div className="mb-3">
+              <div className="mb-4 col-6 password_field">
+                <label for="" className="form-label">
+                  Password
+                </label>
+                <input
+                  type={passVisible ? "text" : "password"}
+                  className={classNames("form-control", {
+                    "is-invalid": errors.password,
+                  })}
+                  name="password"
+                  placeholder="********"
+                  id="password"
+                  autoComplete="off"
+                  {...register("password", {
+                    required: "* Please Enter Your Password",
+                    pattern: {
+                      value:
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                      message:
+                        "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
+                    },
+                  })}
+                />
+                <div
+                  className="eye_container_signUp"
+                  onClick={() => setPassVisible(!passVisible)}>
+                  {passVisible ? (
+                    <img
+                      className="eye_icon"
+                      src="/images/icons/hide.png"
+                      alt=""
+                    />
+                  ) : (
+                    <img
+                      className="eye_icon"
+                      src="/images/icons/view.png"
+                      alt=""
+                    />
+                  )}
+                </div>
+                {errors.password && (
+                  <small className="errorText ">
+                    {errors.password?.message}
+                  </small>
+                )}
+              </div>
+              <div className="mb-3 col-6">
                 <label className="form-label" htmlFor="">
                   Mobile Number
                 </label>
                 <input
-                  className="form-control"
+                  className={classNames("form-control", {
+                    "is-invalid": errors.mobileNumber,
+                  })}
                   type="number"
                   name="mobileNumber"
                   id="mobileNumber"
+                  placeholder="Enter Your Mobile Number"
                   {...register("mobileNumber", {
                     required: true,
                     maxLength: 9,
@@ -130,16 +194,16 @@ const AuthSignUp = () => {
                   )}
               </div>
 
-              <div className="mb-3">
+              <div className="mb-3 col-12">
                 <label for="" className="form-label">
                   Address
                 </label>
-                <input
+                <textarea
                   type="text"
-                  className="form-control"
+                  className="form-control text-area"
                   id="address"
                   name="address"
-                  placeholder="Company name"
+                  placeholder="Please Enter Your Current Address"
                   autoComplete="off"
                   {...register("address", { required: true })}
                 />
@@ -149,58 +213,28 @@ const AuthSignUp = () => {
                   </small>
                 )}
               </div>
-              <div className="mb-1">
-                <label for="" className="form-label">
-                  Password
-                </label>
-                <input
-                  type={passVisible ? "text" : "password"}
-                  className="form-control"
-                  name="password"
-                  id="password"
-                  autoComplete="off"
-                  {...register("password", {
-                    required: "* Please Enter Your Password",
-                    pattern: {
-                      value:
-                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                      message:
-                        "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
-                    },
-                  })}
-                />
-                {errors.password && (
-                  <small className="errorText mt-1">
-                    {errors.password?.message}
-                  </small>
-                )}
-              </div>
-              <div className=" mb-4" onClick={togglePassword}>
-                <input
-                  type="checkbox"
-                  className="cursor_pointer"
-                  {...register("passwordToggle")}
-                />
-                <span className="cursor_pointer mx-2 remember-me">
-                  Show Password
-                </span>
+
+              <div className="col-12">
+                <Button
+                  loading={loader}
+                  appearance="primary"
+                  className="btn py-8 mb-3  rounded-2"
+                  type="submit">
+                  SIGN UP
+                </Button>
               </div>
 
-              <button className="btn py-8 mb-1  rounded-2" type="submit">
-                Sign Up
-              </button>
-              <label className="form-check-label text-dark remember-me mb-4">
+              <label className="form-check-label text-dark text-center mt-2 remember-me mb-4">
                 Already have an account?{" "}
                 <Link
-                  className=" fw-medium reset-password ms-2"
-                  to="/Admin/Login"
-                >
+                  className=" fw-medium reset-password ms-2 fw-bold"
+                  to="/Admin/Login">
                   Sign In
                 </Link>
               </label>
             </form>
           </div>
-          <div className="col-8 d-flex justify-content-center align-items-center">
+          <div className="col-7 d-flex justify-content-center align-items-center">
             <div>
               <img
                 src="/images/Login.png"

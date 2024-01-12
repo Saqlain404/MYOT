@@ -425,7 +425,7 @@ const Template = () => {
     formData.append("signatory", info?.signatory);
     formData.append("manager", info?.manager);
     formData.append("creator_Id", id);
-    formData.append("admin", info?.creator_Id);
+    // formData.append("admin", info?.creator_Id);
     formData.append("templete", files?.profile_img);
 
     const { data } = AddTemplates(formData);
@@ -516,7 +516,7 @@ const Template = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {templateCount?.totalTempleted}
+                        {templateCount?.totalTempleted || 0}
                       </h3>
                     </div>
                   </div>
@@ -530,7 +530,7 @@ const Template = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {templateCount?.totalAwaiting?.[0]?.count}
+                        {templateCount?.totalAwaiting?.[0]?.count || 0}
                       </h3>
                     </div>
                   </div>
@@ -544,7 +544,7 @@ const Template = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {templateCount?.totalApproved?.[0]?.count}
+                        {templateCount?.totalApproved?.[0]?.count || 0}
                       </h3>
                     </div>
                   </div>
@@ -558,7 +558,7 @@ const Template = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {templateCount?.aciveSignatory?.[0]?.count}
+                        {templateCount?.aciveSignatory?.[0]?.count || 0}
                       </h3>
                     </div>
                   </div>
@@ -833,7 +833,7 @@ const Template = () => {
                 <button type="submit" class="user-modal-btn">
                   Add New
                 </button>
-                <button type="reset" class="user-modal-btn2">
+                <button type="reset" id="reset-modal" class="user-modal-btn2">
                   Cancel
                 </button>
               </div>
