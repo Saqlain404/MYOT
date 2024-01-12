@@ -432,6 +432,9 @@ const RequestHistoryEmpl = () => {
                       </p>
                     )}
                   </div>
+                  <div class="search_icon">
+                  <img width={20} src={require("../../assets/logo/search.png")}></img>
+                  </div>
                 </div>
                 <form className="d-flex me-2" role="search"></form>
               </div>
