@@ -96,7 +96,7 @@ Date : {viewData?.createdAt}</p>
 
 
   <div>
-    <img className="view-detail-page" src={viewData?.templete[0]}/>
+    <img className=" object-fit-cover" src={viewData?.templete[0]}/>
   </div>
 
   

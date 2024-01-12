@@ -94,7 +94,9 @@ const Users = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+  });
 
   useEffect(() => {
     getEmployeeList();

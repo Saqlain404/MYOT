@@ -16,6 +16,8 @@ const Switcher = () => {
     setRole(pathLocation[1]);
   }, [location]);
 
+  console.log(userData);
+
   useEffect(() => {
     getUserRole();
   }, []);
@@ -49,18 +51,19 @@ const Switcher = () => {
                 src={userData?.profile_Pic}
                 alt="Profile"
               />
-            ) : 
-            <img
+            ) : (
+              <img
                 className="w_50_h_50"
-                src='/images/icons/user.jpg'
+                src="/images/icons/user.jpg"
                 alt="Profile"
               />
-            }
+            )}
           </div>
           <div>
             {/* <span className="text-dark">{userData?.name}</span> */}
             <span className="text-dark text-capitalize">
-              {userData?.name?.split(" ")?.slice(0, 2)?.join(" ")}
+              {userData?.name?.split(" ")?.slice(0, 2)?.join(" ") ||
+                userData?.companyName}
             </span>
             <p className="th-text">{role}</p>
           </div>

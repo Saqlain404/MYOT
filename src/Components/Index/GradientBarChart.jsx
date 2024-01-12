@@ -66,10 +66,10 @@ const GradientBarChart = ({ activeUserData }) => {
   return (
     <>
       <div className="charts ps-3">
-        <p className="mb-0">Daily Traffic</p>
-        <p>
+        <p className="mb-0 text-dark">Daily Traffic</p>
+        {/* <p>
           <span>2547</span> Vistors
-        </p>
+        </p> */}
       </div>
       <div style={{ overflow: "auto", zIndex: "-1" }}>
         <ReactApexChart

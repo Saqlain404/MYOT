@@ -105,7 +105,7 @@ const UpdatePassword = () => {
                           }}
                         />
                         <div
-                          className="eye_container mt-1"
+                          className="eye_container eye_container2 mt-1"
                           onClick={() => setPassVisible(!passVisible)}
                         >
                           {passVisible ? (
@@ -144,7 +144,7 @@ const UpdatePassword = () => {
                           onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                         <div
-                          className="eye_container mt-1"
+                          className="eye_container eye_container2 mt-1"
                           onClick={() =>
                             setConfirmPassVisible(!confirmPassVisible)
                           }

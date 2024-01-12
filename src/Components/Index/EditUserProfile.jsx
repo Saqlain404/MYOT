@@ -22,7 +22,9 @@ const EditUserProfile = ({ userId }) => {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+  });
 
   useEffect(() => {
     getViewUserData(userId);

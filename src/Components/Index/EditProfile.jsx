@@ -30,7 +30,9 @@ const EditProfile = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+  });
 
   const getEmployeeList = async () => {
     let { data } = await EmployeeLists();
@@ -320,7 +322,7 @@ const EditProfile = () => {
                           })}
                         />
                         <div
-                          className="eye_container pt-1"
+                          className="eye_container eye_container2 pt-1"
                           onClick={() => setPassVisible(!passVisible)}
                         >
                           {passVisible ? (
@@ -369,7 +371,7 @@ const EditProfile = () => {
                           })}
                         />
                         <div
-                          className="eye_container pt-1"
+                          className="eye_container eye_container2 pt-1"
                           onClick={() => setCPassVisible(!cPassVisible)}
                         >
                           {cPassVisible ? (

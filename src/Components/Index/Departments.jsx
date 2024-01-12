@@ -164,7 +164,7 @@ const Departments = () => {
         toast: true,
         icon: "success",
         position: "top-end",
-        title: "Department Deleted successfully",
+        title: "Deleted successfully",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,

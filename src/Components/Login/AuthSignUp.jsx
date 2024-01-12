@@ -135,17 +135,18 @@ const AuthSignUp = () => {
                 />
                 <div
                   className="eye_container_signUp"
-                  onClick={() => setPassVisible(!passVisible)}>
+                  onClick={() => setPassVisible(!passVisible)}
+                >
                   {passVisible ? (
                     <img
                       className="eye_icon"
-                      src="/images/icons/hide.png"
+                      src="/images/icons/view.png"
                       alt=""
                     />
                   ) : (
                     <img
                       className="eye_icon"
-                      src="/images/icons/view.png"
+                      src="/images/icons/hide.png"
                       alt=""
                     />
                   )}
@@ -219,7 +220,8 @@ const AuthSignUp = () => {
                   loading={loader}
                   appearance="primary"
                   className="btn py-8 mb-3  rounded-2"
-                  type="submit">
+                  type="submit"
+                >
                   SIGN UP
                 </Button>
               </div>
@@ -228,7 +230,8 @@ const AuthSignUp = () => {
                 Already have an account?{" "}
                 <Link
                   className=" fw-medium reset-password ms-2 fw-bold"
-                  to="/Admin/Login">
+                  to="/Admin/Login"
+                >
                   Sign In
                 </Link>
               </label>

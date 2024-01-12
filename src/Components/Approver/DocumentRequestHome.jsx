@@ -159,7 +159,7 @@ const DocumentRequestHome = () => {
                   <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
                 </a>
                 <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-                  <li>
+                  {/* <li>
                     <Link
                       to={`/Approver/Template-view/${list?._id}`}
                       className="text-decoration-none"
@@ -173,7 +173,7 @@ const DocumentRequestHome = () => {
                         View Users Details
                       </a>
                     </Link>{" "}
-                  </li>
+                  </li> */}
                   <li>
                     <a
                       onClick={() => approveDocumentRequest(list?._id)}

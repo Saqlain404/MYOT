@@ -122,6 +122,7 @@ const ProfileSig = () => {
                         <Link
                           to={"/Signatory/Edit-profile"}
                           className="text-decoration-none"
+                          state={profileData}
                         >
                           <button className="profile-edit-btn">Edit</button>
                         </Link>

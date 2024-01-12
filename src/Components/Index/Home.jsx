@@ -134,7 +134,7 @@ const Home = () => {
               : "No versions found"}
           </>
         );
-        returnData.department = list?.manager[0]?.department[0]?.departmentName;
+        returnData.department = list?.manager[0]?.department[0]?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -318,7 +318,7 @@ const Home = () => {
         toast: true,
         icon: "success",
         position: "top-end",
-        title: "New comment added successfully",
+        title: "Comment added",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,

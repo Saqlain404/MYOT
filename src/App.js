@@ -268,7 +268,7 @@ function App() {
         <Route path="Signatory/Help-Support" element={<HelpSupportSig />} />
         <Route path="Signatory/Contact-us" element={<ContactUsSig />} />
         <Route path="Signatory/Chat" element={<ChatboxSig />} />
-        {/* <Route path="Signatory/Settings" element={<SettingsSig />} /> */}
+        <Route path="Signatory/Settings" element={<SettingsSig />} />
 
         <Route path="Signatory/Requests" element={<RequestsSig />} />
         <Route path="Signatory/Announcements" element={<AnnouncementsSig />} />

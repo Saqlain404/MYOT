@@ -276,7 +276,7 @@ const HomeAprv = () => {
                       alt=""
                       className="me-2"
                     />
-                    View Users Details
+                    View Template
                   </a>
                 </Link>{" "}
               </li>

@@ -609,7 +609,7 @@ const EmployeeDash = () => {
                 <div className="col-md-3 ">
                   <div className="dashboard-card2 ">
                     <p className="dashboard-card2-text">Open Tickets</p>
-                    <p className="text-card  mb-3">
+                    <p className="text-card mt-3 mb-3">
                       {ticketCount?.totalComplete} / {ticketCount?.totalTicket}
                     </p>
                     <p className=" mb-1 dashboard-card2-text">

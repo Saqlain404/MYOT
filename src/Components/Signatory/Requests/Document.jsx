@@ -96,7 +96,7 @@ const Document = () => {
         );
         returnData.priority = list?.priority;
         returnData.department =
-          list?.templete_Id?.manager?.department_Id?.departmentName;
+          list?.templete_Id?.manager?.department_Id?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${

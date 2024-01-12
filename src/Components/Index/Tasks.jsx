@@ -9,6 +9,7 @@ import {
   GetTaskData,
   SearchTask,
   TemplateCount,
+  TemplateDelete,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
 import { toast } from "react-toastify";
@@ -131,7 +132,7 @@ const Tasks = () => {
             <span className="ms-2">{moment(list?.createdAt).format("L")}</span>
           </>
         );
-        returnData.department = list?.manager?.department_Id?.departmentName;
+        returnData.department = list?.manager?.department_Id?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -221,7 +222,10 @@ const Tasks = () => {
                 </a>
               </li>
               <li>
-                <a class="dropdown-item text-danger" href="#">
+                <a
+                  class="dropdown-item text-danger cursor_pointer"
+                  onClick={() => handleDelete(list?._id)}
+                >
                   <img src="/images/users/Trash.svg" alt="" className="me-2" />
                   Delete Template
                 </a>
@@ -257,6 +261,23 @@ const Tasks = () => {
       });
       document.getElementById("close").click();
       setComment("");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    let { data } = await TemplateDelete(id);
+    if (!data?.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Template deleted",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      document.getElementById("close").click();
+      getTaskData();
     }
   };
 

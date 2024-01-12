@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import {
   AdminDashboardListing,
   DocumentComment,
+  TemplateDelete,
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -78,7 +79,7 @@ const DashboardListing = () => {
   }, []);
 
   const getList = async () => {
-    let id = await localStorage.getItem('myot_admin_id');
+    let id = await localStorage.getItem("myot_admin_id");
     let { data } = await AdminDashboardListing(id);
 
     console.log(data);
@@ -190,7 +191,10 @@ const DashboardListing = () => {
                 </a>
               </li>
               <li>
-                <a class="dropdown-item text-danger" href="#">
+                <a
+                  class="dropdown-item text-danger cursor_pointer"
+                  onClick={() => handleDelete(list?._id)}
+                >
                   <img src="/images/users/Trash.svg" alt="" className="me-2" />
                   Delete Template
                 </a>
@@ -202,6 +206,23 @@ const DashboardListing = () => {
         newRows.push(returnData);
       });
       setDocuments({ ...documents, rows: newRows });
+    }
+  };
+
+  const handleDelete = async (id) => {
+    let { data } = await TemplateDelete(id);
+    if (!data?.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Template deleted",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      document.getElementById("close").click();
+      getList();
     }
   };
 
@@ -257,7 +278,8 @@ const DashboardListing = () => {
         <Checkbox
           checked={documents.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          defaultChecked>
+          defaultChecked
+        >
           {" "}
           {column.label}
         </Checkbox>
@@ -342,7 +364,8 @@ const DashboardListing = () => {
           <div class="search_icon">
             <img
               width={20}
-              src={require("../../../assets/logo/search.png")}></img>
+              src={require("../../../assets/logo/search.png")}
+            ></img>
           </div>
         </div>
         <form className="d-flex me-2" role="search"></form>

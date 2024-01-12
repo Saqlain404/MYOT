@@ -416,7 +416,7 @@ const Certificate = () => {
               <form className="d-flex me-2" role="search"></form>
             </div>
 
-            <div className="col-12 mdb_table depart_table mt-3 ">
+            <div className="col-12 mdb_table mdb2 depart_table mt-3 ">
               <div className="table-responsive">
                 <MDBDataTable
                   key={listItems}

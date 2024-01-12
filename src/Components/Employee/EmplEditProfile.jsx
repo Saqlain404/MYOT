@@ -241,7 +241,7 @@ const EmplEditProfile = () => {
                       />
                          {error && <p className="errorText">{error}</p>}
                          <div
-                          className="eye_container pt-1"
+                          className="eye_container eye_container2 pt-1"
                           onClick={() => setPassVisible(!passVisible)}
                         >
                           {passVisible ? (
@@ -273,7 +273,7 @@ const EmplEditProfile = () => {
                       />
                       {cError && <p className="d-flex errorText ms-2 justify-content-start">{cError}</p>}
                       <div
-                          className="eye_container pt-1"
+                          className="eye_container eye_container2 pt-1"
                           onClick={() => setCPassVisible(!cPassVisible)}
                         >
                           {cPassVisible ? (

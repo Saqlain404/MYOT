@@ -8,7 +8,9 @@ const AuthResetPass = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+  });
 
   const navigate = useNavigate();
 

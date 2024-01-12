@@ -7,7 +7,9 @@ import { EmplforgotPassword, OTPverifyEmply } from "../../ApiServices/EmployeeHt
 import UpdatePassEmply from "./UpdatePassEmply";
 
 const OTPauthEmply = () => {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit } = useForm({
+      mode: "onChange",
+    });
     const navigate = useNavigate();
 
     const location = useLocation();

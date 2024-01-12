@@ -117,7 +117,7 @@ const HomeSig = () => {
           </>
         );
         returnData.version = list?.templeteVersion[0]?.version;
-        returnData.department = list?.manager?.department_Id?.departmentName;
+        returnData.department = list?.manager?.department_Id?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -232,7 +232,7 @@ const HomeSig = () => {
         toast: true,
         icon: "success",
         position: "top-end",
-        title: "New comment added successfully",
+        title: "New comment added",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -373,7 +373,7 @@ const HomeSig = () => {
                         style={{ fontSize: "14px" }}
                         className="card-text-count mb-0 fw-semibold"
                       >
-                        {department}
+                        {department || "NA"}
                       </p>
                       {/* <span className="card-insights fw-bold m-auto">
                         +9.15%

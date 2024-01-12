@@ -96,16 +96,16 @@ const Document = () => {
       console.log(values);
       values?.map((list, index) => {
         const returnData = {};
-        returnData.document = list?.templete_Id?.templeteName;
+        returnData.document = list?.templete[0]?.templeteName;
         returnData.assigned = (
           <>
             <img
               className="w_20_h_20"
-              src={list?.templete_Id?.manager?.profile_Pic}
+              src={list?.templete[0]?.manager[0]?.profile_Pic}
               alt=""
             />
             <span className="ms-2 text-capitalize">
-              {list?.templete_Id?.manager?.name}
+              {list?.templete[0]?.manager[0]?.name}
             </span>
           </>
         );
@@ -123,7 +123,7 @@ const Document = () => {
         );
         returnData.priority = list?.priority;
         returnData.department =
-          list?.templete_Id?.manager?.department_Id?.departmentName;
+          list?.templete[0]?.manager[0]?.department[0]?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${

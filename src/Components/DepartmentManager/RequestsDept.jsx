@@ -578,7 +578,7 @@ const RequestsDept = () => {
               <form className="d-flex me-2" role="search"></form>
             </div>
 
-            <div className="col-12 mdb_table mt-3 ">
+            <div className="col-12 mdb_table mdb3 mt-3 ">
               <div className="table-responsive">
               <MDBDataTable
                     bordered

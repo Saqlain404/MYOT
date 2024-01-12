@@ -1,23 +1,31 @@
 import React, { useState } from "react";
 import RightSidebar from "../RightSidebar";
 import Sidebar from "../Sidebar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SidebarSig from "./SidebarSig";
 import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import { toast } from "react-toastify";
 import { SignatoryUpdateProfile } from "../../ApiServices/SignatoryHttpServices/signatoryHttpServices";
+import { updateProfilePic, updateUserName } from "../app/slice/userSlice";
+import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 const EditProfileSig = () => {
   const [files, setFiles] = useState([]);
   const [profileImgUrl, setProfileImgUrl] = useState();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const { state } = location;
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+  });
 
   const onFileSelection = (e, key) => {
     // console.log(e.target.files, key);
@@ -32,15 +40,14 @@ const EditProfileSig = () => {
     console.log(files?.profile_img);
     let emp_id = localStorage.getItem("myot_admin_id");
     if (data1?.password !== data1?.cpassword) {
-      toast.error("Password does not match", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "warning",
+        position: "top-end",
+        title: "Password not changed",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       return false;
     }
@@ -71,31 +78,31 @@ const EditProfileSig = () => {
     let { data } = await SignatoryUpdateProfile(emp_id, formData);
     console.log(data);
     if (data && data?.error) {
-      toast.error(data?.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       return false;
     }
     if (data && !data?.error) {
-      toast("Profile Updated Successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Profile Updated",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       setFiles([]);
-      // navigate("/Signatory/My-Profile");
+      dispatch(updateProfilePic(data?.results?.signatory?.profile_Pic));
+      dispatch(updateUserName(data?.results?.signatory?.name));
+      navigate("/Signatory/My-Profile");
     }
   };
   return (
@@ -156,9 +163,7 @@ const EditProfileSig = () => {
                       <div>
                         <img
                           src={
-                            profileImgUrl
-                              ? profileImgUrl
-                              : "/images/tasks/modal-profile-photo.svg"
+                            profileImgUrl ? profileImgUrl : state?.profile_Pic
                           }
                           alt=""
                           className="w_100_h_100"
@@ -183,9 +188,13 @@ const EditProfileSig = () => {
                         autoComplete="false"
                         type="text"
                         placeholder="Name"
-                        className={classNames("w-100 profile-edit-input p-2", {
-                          "is-invalid": errors.name,
-                        })}
+                        defaultValue={state?.name}
+                        className={classNames(
+                          "w-100 profile-edit-input p-2 text-capitalize",
+                          {
+                            "is-invalid": errors.name,
+                          }
+                        )}
                         name="name"
                         {...register("name")}
                       />
@@ -204,7 +213,9 @@ const EditProfileSig = () => {
                       />
                     </div>
                     <div className="col-6 mt-4">
-                      <p className="text-start profile-card-title">Confirm Password</p>
+                      <p className="text-start profile-card-title">
+                        Confirm Password
+                      </p>
                       <input
                         autoComplete="false"
                         type="text"
