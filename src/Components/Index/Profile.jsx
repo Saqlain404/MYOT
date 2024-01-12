@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { AdminProfile } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
 import profileImg from "../../assets/logo/high.png";
+import { Button } from "rsuite";
 
 const Profile = () => {
   const [profileData, setProfileData] = useState();
@@ -79,7 +80,15 @@ const Profile = () => {
                     state={profileData}
                     className="text-decoration-none"
                   >
-                    <button className="profile-edit-btn">Edit</button>
+                    <Button
+                      style={{ width: "70px" }}
+                      // loading={loader}
+                      appearance="primary"
+                      className="btn mb-3 me-2 rounded-2"
+                      type="submit"
+                    >
+                      Edit
+                    </Button>
                   </Link>
                 </div>
                 <div className=" d-flex justify-content-start mb-4">
@@ -104,7 +113,9 @@ const Profile = () => {
                   <div className="d-flex justify-content-between">
                     <div>
                       <p className="profile-info">Full Name</p>
-                      <p className="profile-data text-capitalize">{profileData?.name}</p>
+                      <p className="profile-data text-capitalize">
+                        {profileData?.name}
+                      </p>
                     </div>
                     <div>
                       <p className="profile-info">Email</p>

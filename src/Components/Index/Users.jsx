@@ -17,7 +17,7 @@ import ViewUser from "./ViewUser";
 import { MDBDataTable } from "mdbreact";
 import EditUserProfile from "./EditUserProfile";
 import Swal from "sweetalert2";
-import { Checkbox } from "rsuite";
+import { Button, Checkbox } from "rsuite";
 
 const Users = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -28,6 +28,7 @@ const Users = () => {
   const [files, setFiles] = useState([]);
   const [profileImgUrl, setProfileImgUrl] = useState();
   const [userId, setUserId] = useState();
+  const [loader, setLoader] = useState(false);
 
   let id = localStorage.getItem("myot_admin_id");
 
@@ -267,6 +268,7 @@ const Users = () => {
   };
 
   const onSubmit = async (datas) => {
+    setLoader(true);
     let id = localStorage.getItem("myot_admin_id");
     let selectedRoles = [];
     const roles = [
@@ -311,6 +313,7 @@ const Users = () => {
         progress: undefined,
         theme: "light",
       });
+      setLoader(false);
       return false;
     }
     if (!files?.profile_img) {
@@ -324,6 +327,7 @@ const Users = () => {
         progress: undefined,
         theme: "light",
       });
+      setLoader(false);
       return false;
     }
     const formData = new FormData();
@@ -343,6 +347,7 @@ const Users = () => {
     let { data } = await AddEmployee(id, formData);
     console.log(data);
     if (data && !data?.error) {
+      setLoader(false);
       Swal.fire({
         toast: true,
         icon: "success",
@@ -410,7 +415,8 @@ const Users = () => {
         <Checkbox
           checked={users.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          defaultChecked>
+          defaultChecked
+        >
           {" "}
           {column.label}
         </Checkbox>
@@ -922,6 +928,10 @@ const Users = () => {
                               <tr className="ms-0">
                                 <td className="td-text">Approver</td>
                                 <td>
+                                  {/* <Checkbox
+                                    name="employrole_approver"
+                                    {...register("employrole_approver")}
+                                  ></Checkbox> */}
                                   <input
                                     type="checkbox"
                                     name="employrole_approver"
@@ -975,17 +985,35 @@ const Users = () => {
                         </div>
                       </div>
                       <div className="d-flex justify-content-end">
-                        <button type="submit" class="user-modal-btn">
+                        {/* <button type="submit" class="user-modal-btn">
                           Save
-                        </button>
-                        <button
+                        </button> */}
+                        <Button
+                          style={{ width: "100px" }}
+                          loading={loader}
+                          appearance="primary"
+                          className="btn mb-3 me-2 rounded-2"
+                          type="submit"
+                        >
+                          Save
+                        </Button>
+                        <Button
+                          style={{ width: "100px" }}
+                          type="reset"
+                          className="btn mb-3 ms-2rounded-2 bg-light text-dark border-0"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          Cancel
+                        </Button>
+                        {/* <button
                           type="reset"
                           class="user-modal-btn2"
                           data-bs-dismiss="modal"
                           aria-label="Close"
                         >
                           Cancel
-                        </button>
+                        </button> */}
                         <button type="reset" id="formReset" className="d-none">
                           reset
                         </button>

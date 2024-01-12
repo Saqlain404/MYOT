@@ -366,7 +366,7 @@ const HomeSig = () => {
                 <div className="col-md-3 ">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">My Departments</h6>
+                      <h6 className="mb-0 header-card-text">My Department</h6>
                     </div>
                     <div className="d-flex  mt-4">
                       <p

@@ -254,11 +254,11 @@ const Comments = () => {
                                 <div>
                                   <div className="d-flex align-items-center">
                                     <img
-                                      className="w_20_h_20 me-3"
+                                      className="w_20_h_20 me-1"
                                       src={reply?.creator_Id?.profile_Pic}
                                       alt=""
                                     />
-                                    <p className="commenter-name m-auto">
+                                    <p className="commenter-name my-auto">
                                       {reply?.creator_Id?.name}
                                     </p>
                                     {/* <p className="comment-time m-auto">

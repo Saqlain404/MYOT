@@ -8,6 +8,7 @@ import {
 import { EmployeeLogout } from "../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
 import ProfileSwitcher from "./ProfileSwitcher/Switcher";
+import Swal from "sweetalert2";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -28,20 +29,20 @@ const Sidebar = () => {
     let id = await localStorage.getItem("myot_admin_id");
     let { data } = await EmployeeLogout(id);
     console.log(data);
-    toast("Logout Successfully", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
+    Swal.fire({
+      toast: true,
+      icon: "success",
+      position: "top-end",
+      title: "Logout Successfully",
+      showConfirmButton: false,
+      timerProgressBar: true,
+      timer: 3000,
     });
 
     localStorage.removeItem("myot_admin_id");
+    localStorage.removeItem("user_id");
     localStorage.removeItem("token-company");
-    navigate("/Admin/Login");
+    navigate("/Login");
   };
   return (
     <div className="container-fluid  sidebar">

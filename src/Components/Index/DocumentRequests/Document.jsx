@@ -138,7 +138,8 @@ const Document = () => {
                 : list?.status === "Rejected"
                 ? "text-danger"
                 : "text-success"
-            }`}>
+            }`}
+          >
             {list?.status}
           </span>
         );
@@ -149,7 +150,8 @@ const Document = () => {
                 onClick={() => setDocument_Id(list?._id)}
                 type="button"
                 data-bs-toggle="modal"
-                data-bs-target="#exampleModal">
+                data-bs-target="#exampleModal"
+              >
                 <img
                   src="/images/dashboard/Comment.png"
                   className="mx-auto d-block"
@@ -164,7 +166,8 @@ const Document = () => {
               className="cursor_pointer"
               type=""
               data-bs-toggle="dropdown"
-              aria-expanded="false">
+              aria-expanded="false"
+            >
               <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
@@ -191,7 +194,8 @@ const Document = () => {
               <li>
                 <Link
                   class="dropdown-item"
-                  to={`/Admin/Requests/Comments/${list?._id}`}>
+                  to={`/Admin/Requests/Comments/${list?._id}`}
+                >
                   <img
                     src="/images/dashboard/Comment.png"
                     alt=""
@@ -213,7 +217,8 @@ const Document = () => {
               <li>
                 <Link
                   class="dropdown-item text-danger"
-                  onClick={() => handleDelete(list?._id)}>
+                  onClick={() => handleDelete(list?._id)}
+                >
                   <img src="/images/users/Trash.svg" alt="" className="me-2" />
                   Delete Document
                 </Link>
@@ -300,7 +305,8 @@ const Document = () => {
         <Checkbox
           checked={documents.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          defaultChecked>
+          defaultChecked
+        >
           {" "}
           {column.label}
         </Checkbox>
@@ -347,7 +353,6 @@ const Document = () => {
   };
 
   return (
-    
     <div className="position-relative">
       <p className="table-name mb-2">Document Requests</p>
       <div className=" col-12 d-flex align-items-center table-searchbar">
@@ -372,13 +377,15 @@ const Document = () => {
             {showClearButton ? (
               <p
                 className="hide-selected ms-2 m-0 text-nowrap cursor_pointer "
-                onClick={showAllColumns}>
+                onClick={showAllColumns}
+              >
                 Clear Selection
               </p>
             ) : (
               <p
                 className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
-                onClick={hideSelectedColumns}>
+                onClick={hideSelectedColumns}
+              >
                 Hide Selected
               </p>
             )}
@@ -386,7 +393,8 @@ const Document = () => {
           <div class="search_icon">
             <img
               width={20}
-              src={require("../../../assets/logo/search.png")}></img>
+              src={require("../../../assets/logo/search.png")}
+            ></img>
           </div>
         </div>
         <form className="d-flex me-2" role="search"></form>
@@ -412,7 +420,8 @@ const Document = () => {
         id="exampleModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+        aria-hidden="true"
+      >
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
@@ -424,7 +433,8 @@ const Document = () => {
                 class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                id="close"></button>
+                id="close"
+              ></button>
             </div>
             <div class="modal-body">
               <form className="rounded" onSubmit={handleSubmit}>

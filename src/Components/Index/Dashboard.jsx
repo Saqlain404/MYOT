@@ -264,7 +264,7 @@ const Dashboard = () => {
                   <div className="col-md-3 ">
                     <div className="dashboard-card2 ">
                       <p className="dashboard-card2-text">Open Tickets</p>
-                      <p className="text-card  mb-3">
+                      <p className="text-card mt-2 mb-3">
                         {ticketCount?.totalComplete} /{" "}
                         {ticketCount?.totalTicket}
                       </p>
@@ -272,7 +272,7 @@ const Dashboard = () => {
                         Profile Completion
                       </p>
 
-                      <div className="progress-bar">
+                      <div className="progress-bar w-100">
                         <div className="progress-container">
                           <div
                             className="progress"
@@ -284,7 +284,7 @@ const Dashboard = () => {
                         </div>
                       </div>
                       <p className=" mb-1 dashboard-card2-text">Status</p>
-                      <div className="progress-bar">
+                      <div className="progress-bar w-100">
                         <div className="progress-container">
                           <div
                             className="progress"
@@ -337,7 +337,7 @@ const Dashboard = () => {
                             </span>
                             <span className="fw-bold col-6">
                               <progress
-                                className="w-100"
+                                className="w-100 custom-progress"
                                 id="file"
                                 value={count?.count}
                                 max="100"

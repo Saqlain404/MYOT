@@ -38,6 +38,7 @@ const AuthLogin = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
+    console.log(rememberCheck);
     setLoader(true);
     rememberCheck && rememberMe(data);
     const response = await adminLogin(data);
@@ -144,23 +145,24 @@ const AuthLogin = () => {
                       value:
                         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                       message:
-                        "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
+                        "* Minimun 8 characters, One Uppercase, One Lowercase & One Special Character Allowed",
                     },
                   })}
                 />
                 <div
                   className="eye_container"
-                  onClick={() => setPassVisible(!passVisible)}>
+                  onClick={() => setPassVisible(!passVisible)}
+                >
                   {passVisible ? (
                     <img
                       className="eye_icon"
-                      src="/images/icons/hide.png"
+                      src="/images/icons/view.png"
                       alt=""
                     />
                   ) : (
                     <img
                       className="eye_icon"
-                      src="/images/icons/view.png"
+                      src="/images/icons/hide.png"
                       alt=""
                     />
                   )}
@@ -174,7 +176,10 @@ const AuthLogin = () => {
 
               <div className="d-flex justify-content-between mb-4 remember">
                 <div className="">
-                  <Checkbox defaultChecked> Remember Me</Checkbox>
+                  <Checkbox onChange={() => setRememberCheck(!rememberCheck)}>
+                    {" "}
+                    Remember Me
+                  </Checkbox>
                 </div>
               </div>
 
@@ -182,14 +187,16 @@ const AuthLogin = () => {
                 loading={loader}
                 appearance="primary"
                 className="btn py-8 mb-3  rounded-2"
-                type="submit">
+                type="submit"
+              >
                 SIGN IN
               </Button>
 
               <div className="text-center">
                 <Link
                   className="text-decoration-none fw-bold  reset-password  mt-2"
-                  to={"/Forgot-password"}>
+                  to={"/Forgot-password"}
+                >
                   Reset Password?
                 </Link>
               </div>
@@ -198,7 +205,8 @@ const AuthLogin = () => {
                 New to Myot? Create an account
                 <Link
                   className=" fw-medium reset-password ms-2 fw-bold"
-                  to="/Admin/Signup">
+                  to="/Admin/Signup"
+                >
                   Sign Up
                 </Link>
               </div>

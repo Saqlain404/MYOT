@@ -10,6 +10,7 @@ import {
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
 import { toast } from "react-toastify";
+import { Button } from "rsuite";
 
 const Announcements = () => {
   const [documents, setDocuments] = useState([]);
@@ -211,9 +212,24 @@ const Announcements = () => {
                       </div>
                     </div>
                     <div className="d-flex justify-content-end mb-3 me-3">
-                      <button type="submit" class="user-modal-btn">
-                        Send
-                      </button>
+                      <Button
+                        style={{ width: "150px" }}
+                        // loading={loader}
+                        appearance="primary"
+                        className="btn mb-3 me-2 rounded-2"
+                        type="submit"
+                      >
+                        Add New
+                      </Button>
+                      <Button
+                        style={{ width: "100px" }}
+                        type="reset"
+                        className="btn mb-3 mx-2 rounded-2 bg-light text-dark border-0"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        Cancel
+                      </Button>
                       <button type="reset" id="resetForm" className="d-none">
                         reset
                       </button>
@@ -250,7 +266,7 @@ const Announcements = () => {
                                 alt=""
                                 className="me-2"
                               />
-                              <p className="anouncement-text">
+                              <p className="anouncement-text ms-1">
                                 {document?.text}
                               </p>
                             </div>

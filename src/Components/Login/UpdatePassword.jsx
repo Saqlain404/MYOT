@@ -151,14 +151,15 @@ const UpdatePassword = () => {
                         >
                           {confirmPassVisible ? (
                             <img
-                              className="eye_icon"
-                              src="/images/icons/hide.png"
-                              alt=""
-                            />
+                            className="eye_icon"
+                            src="/images/icons/view.png"
+                            alt=""
+                          />
                           ) : (
+                            
                             <img
                               className="eye_icon"
-                              src="/images/icons/view.png"
+                              src="/images/icons/hide.png"
                               alt=""
                             />
                           )}

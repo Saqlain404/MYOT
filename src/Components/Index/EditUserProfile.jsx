@@ -8,12 +8,14 @@ import {
 import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import Swal from "sweetalert2";
+import { Button } from "rsuite";
 
 const EditUserProfile = ({ userId }) => {
   const [userDetails, setUserDetails] = useState();
   const [profileImgUrl, setProfileImgUrl] = useState();
   const [departmentOptions, setDepartmentOptions] = useState([]);
   const [files, setFiles] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   const {
     register,
@@ -84,6 +86,7 @@ const EditUserProfile = ({ userId }) => {
   };
 
   const onSubmit = async (datas) => {
+    setLoader(true);
     let selectedRoles = [];
     const roles = [
       "employrole_admin",
@@ -125,6 +128,7 @@ const EditUserProfile = ({ userId }) => {
         timerProgressBar: true,
         timer: 3000,
       });
+      setLoader(false)
       return false;
     }
     console.log(selectedRoles);
@@ -153,6 +157,7 @@ const EditUserProfile = ({ userId }) => {
           timerProgressBar: true,
           timer: 3000,
         });
+        setLoader(false);
         document.getElementById("modalClose").click();
         document.getElementById("formReset").click();
         getViewUserData();
@@ -182,7 +187,7 @@ const EditUserProfile = ({ userId }) => {
 
   return (
     <>
-      <div class="modal-dialog modal-dialog-users">
+      <div class="modal-dialog modal-dialog-users mb-5" style={{height:"0px"}}>
         <div class="modal-content border-0">
           <div class="d-flex modal-header border-bottom">
             <p class="mb-0" id="exampleModalLabel">
@@ -515,12 +520,24 @@ const EditUserProfile = ({ userId }) => {
                 </div>
               </div>
               <div className="d-flex justify-content-end">
-                <button type="submit" class="user-modal-btn">
+                <Button
+                  style={{ width: "100px" }}
+                  loading={loader}
+                  appearance="primary"
+                  className="btn mb-3 me-2 rounded-2"
+                  type="submit"
+                >
                   Save
-                </button>
-                <button type="button" class="user-modal-btn2">
+                </Button>
+                <Button
+                  style={{ width: "100px" }}
+                  type="reset"
+                  className="btn mb-3 ms-2rounded-2 bg-light text-dark border-0"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
                   Cancel
-                </button>
+                </Button>
                 <button type="reset" id="formReset" className="d-none">
                   reset
                 </button>

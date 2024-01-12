@@ -1681,7 +1681,7 @@ td {
 }
 
 .profile-data {
-  margin-top: -12px;
+  /* margin-top: -12px; */
   text-align: start;
   color: #000;
   font-family: Nunito;
@@ -1773,8 +1773,8 @@ td {
   opacity: 0.8;
 }
 
-.profile-data {
-  margin-top: -12px;
+/* .profile-data {
+  margin-top: 0px;
   text-align: start;
   color: #000;
   font-family: Nunito;
@@ -1783,7 +1783,7 @@ td {
   font-weight: 500;
   line-height: normal;
   letter-spacing: -0.06px;
-}
+} */
 
 .profile-salary-slip {
   color: #3e51ff;

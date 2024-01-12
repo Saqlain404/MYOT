@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { updateProfilePic, updateUserName } from "../app/slice/userSlice";
+import { Button } from "rsuite";
 
 const EditProfile = () => {
   const [files, setFiles] = useState([]);
@@ -471,9 +472,15 @@ const EditProfile = () => {
                   </div>
                 </div>
                 <div className="text-end">
-                  <button type="submit" className="profile-edit-submit m-0">
-                    Update Profile
-                  </button>
+                <Button
+                  style={{ width: "150px" }}
+                  // loading={loader}
+                  appearance="primary"
+                  className="btn mb-3 text-nowrap me-2 rounded-2"
+                  type="submit"
+                >
+                  Update Profile
+                </Button>
                 </div>
               </form>
             </div>

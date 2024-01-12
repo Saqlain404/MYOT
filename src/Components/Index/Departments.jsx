@@ -15,11 +15,13 @@ import { useEffect } from "react";
 import { MDBDataTable } from "mdbreact";
 import moment from "moment";
 import Swal from "sweetalert2";
+import { Button } from "rsuite";
 
 const Departments = () => {
   const [listItems, setListItems] = useState([]);
   const [search, setSearch] = useState("");
   const [viewDepartmentDetails, setViewDepartmentDetails] = useState();
+  const [loader, setLoader] = useState(false);
 
   const [departmentInfo, setDepartmentInfo] = useState({
     departmentname: "",
@@ -61,7 +63,6 @@ const Departments = () => {
   const userId = localStorage.getItem("user_id");
 
   const DepartmentLists = async (key) => {
-
     const { data } = await DepartmentList(userId, { search: key });
     const newRows = [];
     if (!data?.error) {
@@ -71,7 +72,16 @@ const Departments = () => {
       values?.map((data) => {
         let returnData = {};
         returnData.name = data?.departmentName;
-        returnData.description = (<><span style={{maxWidth:"250px"}} className="d-inline-block text-truncate">{data?.description}</span></>);
+        returnData.description = (
+          <>
+            <span
+              style={{ maxWidth: "250px" }}
+              className="d-inline-block text-truncate"
+            >
+              {data?.description}
+            </span>
+          </>
+        );
         returnData.actions = (
           <>
             <div class="">
@@ -174,6 +184,7 @@ const Departments = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoader(true);
     let creator_Id = localStorage.getItem("myot_admin_id");
     try {
       let { data } = await AddDepartment({
@@ -191,6 +202,7 @@ const Departments = () => {
           timerProgressBar: true,
           timer: 3000,
         });
+        setLoader(false);
         setDepartmentInfo({
           departmentname: "",
           description: "",
@@ -344,20 +356,24 @@ const Departments = () => {
                       </div>
                     </div>
                     <div className="d-flex justify-content-end mb-3">
-                      <button type="submit" class="user-modal-btn">
+                      <Button
+                        style={{ width: "150px" }}
+                        loading={loader}
+                        appearance="primary"
+                        className="btn mb-3 me-2 rounded-2"
+                        type="submit"
+                      >
                         Add New
-                      </button>
-                      <button
+                      </Button>
+                      <Button
+                        style={{ width: "100px" }}
                         type="reset"
-                        class="user-modal-btn2"
+                        className="btn mb-3 mx-2 rounded-2 bg-light text-dark border-0"
                         data-bs-dismiss="modal"
                         aria-label="Close"
-                        onClick={() =>
-                          document.getElementById("formReset").click()
-                        }
                       >
                         Cancel
-                      </button>
+                      </Button>
                       <button
                         type="reset"
                         class="d-none"
@@ -416,7 +432,7 @@ const Departments = () => {
                       </div>
                       <div className="col-12 mb-3 ">
                         <textarea
-                        style={{minHeight:'120px'}}
+                          style={{ minHeight: "120px" }}
                           type="text"
                           placeholder="Description"
                           className="col-12 modal-input td-text p-2"
