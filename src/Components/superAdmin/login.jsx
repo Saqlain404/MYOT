@@ -45,9 +45,6 @@ const Login = () => {
       navigate("/main/home");
     }
   };
-  const togglePassword = () => {
-    setPassVisible(!passVisible);
-  };
 
   return (
     <>
@@ -89,7 +86,7 @@ const Login = () => {
                   </small>
                 )}
               </div>
-              <div className="mb-1">
+              <div className="mb-1 position-relative">
                 <label for="" className="form-label">
                   Password
                 </label>
@@ -109,6 +106,24 @@ const Login = () => {
                     },
                   })}
                 />
+                <div
+                  className="eye_container"
+                  onClick={() => setPassVisible(!passVisible)}
+                >
+                  {passVisible ? (
+                    <img
+                      className="eye_icon"
+                      src="/images/icons/view.png"
+                      alt=""
+                    />
+                  ) : (
+                    <img
+                      className="eye_icon"
+                      src="/images/icons/hide.png"
+                      alt=""
+                    />
+                  )}
+                </div>
                 {errors.password && (
                   <small className="errorText ">
                     {errors.password?.message}
@@ -117,16 +132,7 @@ const Login = () => {
               </div>
 
               <div className="d-flex justify-content-between remember">
-                <div className=" mb-1" onClick={togglePassword}>
-                  <input
-                    type="checkbox"
-                    className="cursor_pointer"
-                    {...register("passwordToggle")}
-                  />
-                  <span className="cursor_pointer mx-2 remember-me">
-                    Show Password
-                  </span>
-                </div>
+                <div className=" mb-1"></div>
                 <Link
                   to="/main/forgot-password"
                   className=" fw-medium reset-password mb-1"
@@ -135,7 +141,7 @@ const Login = () => {
                 </Link>
               </div>
 
-              <button className="btn py-8 mb-1  rounded-2" type="submit">
+              <button className="btn py-8 mb-1 mt-3 rounded-2" type="submit">
                 Log In
               </button>
             </form>

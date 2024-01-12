@@ -199,7 +199,7 @@ const AuthLogin = () => {
                   className="text-decoration-none fw-bold  reset-password  mt-2"
                   to={"/Forgot-password"}
                 >
-                  Reset Password?
+                  Forgot Password?
                 </Link>
               </div>
 
