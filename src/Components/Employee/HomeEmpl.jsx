@@ -143,7 +143,7 @@ const HomeEmpl = () => {
             <span className="ms-2">{moment(list?.createdAt).format("L")}</span>
           </>
         );
-        returnData.department = list?.templete_Id?.manager?.department_Id?.departmentName;
+        returnData.department = list?.templete_Id?.manager?.department_Id?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${

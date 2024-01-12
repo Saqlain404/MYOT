@@ -421,7 +421,7 @@ const DocHistoryEmploye = () => {
                 <p className="td-text border-bottom ">Document Access Log</p>
               </Link>
             </div>
-            <div className="position-relative mt-2">
+            <div className="position-relative mt-4">
               <p className="table-name mb-2">Documents</p>
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">

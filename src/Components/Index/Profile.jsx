@@ -83,7 +83,7 @@ const Profile = () => {
                     <Button
                       style={{ width: "70px" }}
                       // loading={loader}
-                      appearance="primary"
+                      appearance="primary" 
                       className="btn mb-3 me-2 rounded-2"
                       type="submit"
                     >

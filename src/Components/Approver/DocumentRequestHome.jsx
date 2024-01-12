@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { approvedDocumentRequest, approvedTemplete, rejectedDocumentRequest, rejectedTemplete, templeteDocList } from '../../ApiServices/aprroverHttpServices/aprproverHttpService';
+import { approvedDocumentRequest, approvedTemplete, rejectedDocumentRequest, rejectedTemplete, requestDocAprv, templeteDocList } from '../../ApiServices/aprroverHttpServices/aprproverHttpService';
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import { Link } from 'react-router-dom';
@@ -26,13 +26,13 @@ const DocumentRequestHome = () => {
             width: 50,
             selected: false,
           },
-          {
-            label: "Version",
-            field: "version",
-            sort: "asc",
-            width: 100,
-            selected: false,
-          },
+          // {
+          //   label: "Version",
+          //   field: "version",
+          //   sort: "asc",
+          //   width: 100,
+          //   selected: false,
+          // },
           {
             label: "Date of Creation",
             field: "date",
@@ -91,9 +91,8 @@ const DocumentRequestHome = () => {
       };
 
     const getDocTaskData = async () => {
-        let data = await templeteDocList();
+        let data = await requestDocAprv(ids);
         console.log(data);
-    
         const newRows = [];
         if (!data?.error) {
           let values = data;
@@ -101,16 +100,16 @@ const DocumentRequestHome = () => {
           values?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
           values?.map((list, index) => {
             const returnData = {};
-            returnData.name = list?.templete_Id?.templeteName;
+            returnData.name = list?.templete[0]?.templeteName;
             returnData.assigned = (
               <>
                 <img
                   className="w_20_h_20"
-                  src={list?.templete_Id?.manager?.profile_Pic}
+                  src={list?.creator_Id?.profile_Pic}
                   alt=""
                 />
                 <span className="ms-2 text-capitalize">
-                  {list?.templete_Id?.manager?.name}
+                  {list?.creator_Id?.name}
                 </span>
               </>
             );
@@ -130,7 +129,7 @@ const DocumentRequestHome = () => {
               </>
             );
             returnData.department =
-              list?.templete_Id?.manager?.department_Id?.departmentName;
+            list?.templete[0]?.manager[0]?.department[0]?.departmentName || "NA";
             returnData.status = (
               <span
                 className={`"td-text status" ${

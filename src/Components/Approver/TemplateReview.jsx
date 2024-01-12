@@ -157,7 +157,7 @@ const TemplateReview = () => {
           <>
               <div className="text-center">
               <a
-                onClick={() => setTemplete_Id(list?._id)}
+                onClick={() => setTemplete_Id(list?.templete?.templete_ID)}
                 type="button"
                 data-bs-toggle="modal"
                 data-bs-target="#commentModal"

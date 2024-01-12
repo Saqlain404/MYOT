@@ -8,6 +8,7 @@ import {
   approvedTemplete,
   rejectedDocumentRequest,
   rejectedTemplete,
+  requestDocAprv,
   searchDocTemplete,
   templeteDocList,
 } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
@@ -112,7 +113,7 @@ const approved = async (document_Id) => {
   };
 
 const getDocTaskData = async () => {
-    let data = await templeteDocList();
+    let data = await requestDocAprv(ids);
     console.log(data);
 
     const newRows = [];
@@ -122,7 +123,7 @@ const getDocTaskData = async () => {
       values?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
       values?.map((list, index) => {
         const returnData = {};
-        returnData.name = list?.templete_Id?.templeteName;
+        returnData.name = list?.templete[0]?.templeteName;
         returnData.requester = (
           <>
             <img
@@ -166,7 +167,7 @@ const getDocTaskData = async () => {
           </>
         );
         returnData.department =
-          list?.templete_Id?.manager?.department_Id?.departmentName;
+          list?.templete[0]?.manager[0]?.department[0]?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${

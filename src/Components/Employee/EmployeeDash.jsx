@@ -644,13 +644,13 @@ const EmployeeDash = () => {
                     className="dashboard-card3 bg-light "
                     style={{ maxHeight: "400px", overflowY: "auto" }}
                   >
-                    <p className="text-card">Document Request</p>
+                    <p className="text-card mb-3">Document Request</p>
                     <div className="table-card3 dashboard-card3-text">
                       {docRequestCount?.map((doc) => (
                         <div className="pb-2 row align-items-center ">
                           <div className="doc-req-text col-6">
                             {doc?._id?.[0]?.[0]?.[0]?.departmentName &&
-                              doc._id[0][0][0].departmentName.split(" ")[0]}
+                              doc._id[0][0][0].departmentName.split(" ")[0] || "NA"}
                           </div>
                           <div
                             className="doc-req-bar col-6"

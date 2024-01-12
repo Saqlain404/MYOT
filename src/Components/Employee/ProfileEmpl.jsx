@@ -7,38 +7,31 @@ import EmplEditProfile from "./EmplEditProfile";
 import moment from "moment";
 
 const ProfileEmpl = () => {
- 
-  const[profileDetail,setProfileDetail] = useState(null);
+  const [profileDetail, setProfileDetail] = useState(null);
 
-  
-
-  useEffect(()=>{
-    const details = async ()=>{
+  useEffect(() => {
+    const details = async () => {
       const detailResults = await employeProfileDetail();
       const data = detailResults?.[0]?.results?.employee;
-      setProfileDetail(data)
-    }
+      setProfileDetail(data);
+    };
     details();
-  },[])
-  console.log(profileDetail)
-
-
+  }, []);
+  console.log(profileDetail);
 
   return (
     <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
-            <SideBarEmpl/>
+            <SideBarEmpl />
           </div>
           <div className="col-7 middle-content bg-body-tertiary p-0 min-vh-100">
             <div className="container-fluid border-bottom sticky-top bg-white mb-4">
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
-                      My Profile / View
-                    </a>
+                    <a className="nav-link ms-2">My Profile / View</a>
                   </li>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">
@@ -57,11 +50,11 @@ const ProfileEmpl = () => {
                       className="ms-4 "
                     />
                     <Link to={"/Employee/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -71,20 +64,22 @@ const ProfileEmpl = () => {
                   </div>
                 </div>
               </nav>
-            
             </div>
 
             <div className="container px-4 text-center min-vh-100 ">
-  <div className="row rounded">
-    
-    <div className=" d-flex justify-content-between">
-      <p className="profile-txt m-2">Profile</p>
-      <Link to={"/Employee/Edit-profile"} className="text-decoration-none">
-      <button className="profile-edit-btn">Edit</button>
-      </Link>
-    </div>
+              <div className="row rounded">
+                <div className=" d-flex justify-content-between">
+                  <p className="profile-txt m-2">Profile</p>
+                  <Link
+                    to={"/Employee/Edit-profile"}
+                    state={profileDetail}
+                    className="text-decoration-none"
+                  >
+                    <button className="profile-edit-btn">Edit</button>
+                  </Link>
+                </div>
 
-   <div className=" d-flex justify-content-start mb-4">
+                <div className=" d-flex justify-content-start mb-4">
                   {/* <img src="/images/dashboard/AvatarProfile.svg" alt="" /> */}
                   <img
                     style={{
@@ -97,28 +92,34 @@ const ProfileEmpl = () => {
                     alt="profile_image"
                   />
                 </div>
-   <div className="bg-white rounded mb-4 p-4 pb-2">
-    <p className=" d-flex justify-content-start profile-card-title">Details</p>
-    <div className="d-flex justify-content-between">
-      <div>
-        <p className="profile-info">Full Name</p>
-        <p className="profile-data">{profileDetail?.name}</p>
-      </div>
-      <div>
-        <p className="profile-info">Email</p>
-        <p className="profile-data">{profileDetail?.email}</p>
-      </div>
-      <div>
-        <p className="profile-info">Phone Number</p>
-        <p className="profile-data">{profileDetail?.mobileNumber}</p>
-      </div>
-      <div>
-        <p className="profile-info">Date of Creation</p>
-        <p className="profile-data">{moment(profileDetail?.CreatedAT).format("L")}</p>
-      </div>
-    </div>
-   </div>
-   {/* <div className="bg-white rounded mb-4 p-4 ">
+                <div className="bg-white rounded mb-4 p-4 pb-2">
+                  <p className=" d-flex justify-content-start profile-card-title mb-1">
+                    Details
+                  </p>
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <p className="profile-info">Full Name</p>
+                      <p className="profile-data text-capitalize">{profileDetail?.name}</p>
+                    </div>
+                    <div>
+                      <p className="profile-info">Email</p>
+                      <p className="profile-data">{profileDetail?.email}</p>
+                    </div>
+                    <div>
+                      <p className="profile-info">Phone Number</p>
+                      <p className="profile-data">
+                        {profileDetail?.mobileNumber}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="profile-info">Date of Creation</p>
+                      <p className="profile-data">
+                        {moment(profileDetail?.CreatedAT).format("L")}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                {/* <div className="bg-white rounded mb-4 p-4 ">
     <p className=" d-flex justify-content-start profile-card-title">Doccument</p>
     <div className=" d-flex ">
         <img src="/images/dashboard/pdf-icon.svg" alt="" />
@@ -129,31 +130,41 @@ const ProfileEmpl = () => {
         <p className="profile-salary-slip m-2">Salaryslip.Pdf</p>
     </div>
    </div> */}
-                   <div className="bg-white rounded mb-4 p-4 pb-2">
-    <p className=" d-flex justify-content-start profile-card-title">Company Information</p>
-    <div className="d-flex justify-content-between">
-      <div>
-        <p className="profile-info">Company Name</p>
-        <p className="profile-data">{profileDetail?.company_Id?.name}</p>
-      </div>
-      <div>
-        <p className="profile-info">Company Email</p>
-        <p className="profile-data">{profileDetail?.company_Id?.email}</p>
-      </div>
-      <div>
-        <p className="profile-info">Phone Number</p>
-        <p className="profile-data">{profileDetail?.company_Id?.phone_number}</p>
-      </div>
-      <div>
-        <p className="profile-info">Address</p>
-        <p className="profile-data">{profileDetail?.company_Id?.address}</p>
-      </div>
-    </div>
-   </div>
-  </div>
-</div>
+                <div className="bg-white rounded mb-4 p-4 pb-2">
+                  <p className=" d-flex justify-content-start profile-card-title mb-1">
+                    Company Information
+                  </p>
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <p className="profile-info">Company Name</p>
+                      <p className="profile-data">
+                        {profileDetail?.company_Id?.name}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="profile-info">Company Email</p>
+                      <p className="profile-data">
+                        {profileDetail?.company_Id?.email}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="profile-info">Phone Number</p>
+                      <p className="profile-data">
+                        {profileDetail?.company_Id?.phone_number}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="profile-info">Address</p>
+                      <p className="profile-data">
+                        {profileDetail?.company_Id?.address}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-<div className="footer bg-white">
+            <div className="footer bg-white">
               <div>© 2023 MYOT</div>
               <div className="d-flex ">
                 <p className="ms-3">About</p>
@@ -161,9 +172,9 @@ const ProfileEmpl = () => {
                 <p className="ms-3">Contact Us</p>
               </div>
             </div>
-        </div>
-        
-        <div className="col">
+          </div>
+
+          <div className="col">
             <RightSidebar />
           </div>
         </div>

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 
 import Sidebar from "../Sidebar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
 import { ToastContainer } from "react-toastify";
 import { updateProfile } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 import Swal from "sweetalert2";
+import { updateProfilePic, updateUserName } from "../app/slice/userSlice";
+import { useDispatch } from "react-redux";
 
 const EditProfileAprv = () => {
   const [profileImgUrl, setProfileImgUrl] = useState();
@@ -17,6 +19,11 @@ const EditProfileAprv = () => {
 
   const ids =
     localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+
+    const dispatch = useDispatch()
+
+    const location = useLocation();
+  const { state } = location;
 
   const [post, setPost] = useState({
     name: "",
@@ -85,6 +92,8 @@ const EditProfileAprv = () => {
         timerProgressBar: true,
         timer: 3000,
       });
+      dispatch(updateProfilePic(response?.data?.results?.approver?.profile_Pic));
+      dispatch(updateUserName(response?.data?.results?.approver?.name));
       console.log(response);
     }
   };
@@ -151,7 +160,7 @@ const EditProfileAprv = () => {
                         src={
                           profileImgUrl
                             ? profileImgUrl
-                            : "/images/tasks/modal-profile-photo.svg"
+                            : state?.profile_Pic
                         }
                         alt=""
                         className="w_100_h_100"
@@ -179,7 +188,8 @@ const EditProfileAprv = () => {
                         placeholder="Full Name"
                         className="col-12 profile-edit-input p-2"
                         name="name"
-                        value={post.name}
+                        // value={post.name}
+                        defaultValue={state?.name}
                         onChange={handleInput}
                         />
                     </div>

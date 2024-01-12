@@ -91,37 +91,37 @@ const DashboardAprv = () => {
   const ids =
     localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
 
-  const handleSearch = async () => {
-    const result = await searchTemplete(searchData, ids);
-    const searchResult = result?.data?.results?.templete;
-    console.log(searchResult);
+  // const handleSearch = async () => {
+  //   const result = await searchTemplete(searchData, ids);
+  //   const searchResult = result?.data?.results?.templete;
+  //   console.log(searchResult);
 
-    if (searchResult && Array.isArray(searchResult)) {
-      const mappedResult = searchResult?.map((document) => ({
-        documentName: document?.templeteName,
-        img: [document?.manager?.[0]?.profile_Pic],
-        version: document?.templeteVersion?.[0]?.version,
-        assignedTo: [document?.manager?.[0]?.name],
-        department: [document?.manager?.[0]?.department?.[0]?.departmentName],
-        action: (
-          <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-        ),
-        dateofSigning: [moment(document?.createdAt).format("L")],
-        comments: (
-          <img
-            src="/images/dashboard/Comment.png"
-            className="mx-auto d-block"
-          />
-        ),
-        status: [document?.status],
-      }));
-      setDocumentRequests(mappedResult);
-    }
-  };
+  //   if (searchResult && Array.isArray(searchResult)) {
+  //     const mappedResult = searchResult?.map((document) => ({
+  //       documentName: document?.templeteName,
+  //       img: [document?.manager?.[0]?.profile_Pic],
+  //       version: document?.templeteVersion?.[0]?.version,
+  //       assignedTo: [document?.manager?.[0]?.name],
+  //       department: [document?.manager?.[0]?.department?.[0]?.departmentName],
+  //       action: (
+  //         <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //       ),
+  //       dateofSigning: [moment(document?.createdAt).format("L")],
+  //       comments: (
+  //         <img
+  //           src="/images/dashboard/Comment.png"
+  //           className="mx-auto d-block"
+  //         />
+  //       ),
+  //       status: [document?.status],
+  //     }));
+  //     setDocumentRequests(mappedResult);
+  //   }
+  // };
 
-  useEffect(() => {
-    getTaskData();
-  }, []);
+  // useEffect(() => {
+  //   getTaskData();
+  // }, []);
 
   const getTaskData = async () => {
     let data = await approverTempleteList(ids);
@@ -161,7 +161,7 @@ const DashboardAprv = () => {
             <span className="ms-2">{moment(list?.createdAt).format("L")}</span>
           </>
         );
-        returnData.department = list?.manager?.department_Id?.departmentName;
+        returnData.department = list?.manager?.department_Id?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -579,12 +579,12 @@ const DashboardAprv = () => {
                     style={{ maxHeight: "320px", overflowY: "auto" }}
                   >
                     <p className="text-card">Document Request</p>
-                    <div className="table-card3 dashboard-card3-text">
+                    <div className="table-card3 dashboard-card3-text mt-3">
                       {docTempleteData?.map((doc) => (
                         <div className="pb-2 row align-items-center">
                           <div className="doc-req-text col-6 me-2">
                             {doc?._id?.[0]?.[0]?.[0]?.departmentName &&
-                              doc._id[0][0][0].departmentName.split(" ")[0]}
+                              doc._id[0][0][0].departmentName.split(" ")[0] || "NA"}
                           </div>
                           <div
                             className="doc-req-bar col-6 "
