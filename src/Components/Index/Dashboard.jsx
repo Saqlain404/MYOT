@@ -23,9 +23,10 @@ const Dashboard = () => {
   }, []);
 
   const getDashboardDataCount = async () => {
+    let id = localStorage.getItem("myot_admin_id")
     try {
-      let { data } = await DashboardCount();
-      if (!data.error) {
+      let { data } = await DashboardCount(id);
+      if (!data?.error) {
         setDataCount(data?.results);
         console.log(data?.results);
       }
@@ -56,59 +57,6 @@ const Dashboard = () => {
     }
   };
 
-  const documents = [
-    {
-      id: 1,
-      activity: "Salary Slip.jpg",
-      login: "18 Aug 22,09:23 AM",
-      login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 2,
-      activity: "Promotion Letter.zip",
-      login: "18 Aug 22,09:23 AM",
-      login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 3,
-      activity: "Create Project Wireframes.xls",
-      login: "18 Aug 22,09:23 AM",
-      login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 4,
-      activity: "Create Project Wireframes.pdf",
-      login: "18 Aug 22,09:23 AM",
-      login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    {
-      id: 5,
-      activity: "Project tech requirements.zip",
-      login: "18 Aug 22,09:23 AM",
-      login2: "18 Aug 22,07:00 PM",
-      status: <img src="/images/dashboard/Download-Button.png" />,
-      action: (
-        <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-      ),
-    },
-    // Add more tasks here
-  ];
 
   return (
     <>
@@ -316,7 +264,7 @@ const Dashboard = () => {
                   <div className="col-md-3 ">
                     <div className="dashboard-card2 ">
                       <p className="dashboard-card2-text">Open Tickets</p>
-                      <p className="text-card  mb-3">
+                      <p className="text-card mt-2 mb-3">
                         {ticketCount?.totalComplete} /{" "}
                         {ticketCount?.totalTicket}
                       </p>
@@ -324,7 +272,7 @@ const Dashboard = () => {
                         Profile Completion
                       </p>
 
-                      <div className="progress-bar">
+                      <div className="progress-bar w-100">
                         <div className="progress-container">
                           <div
                             className="progress"
@@ -336,7 +284,7 @@ const Dashboard = () => {
                         </div>
                       </div>
                       <p className=" mb-1 dashboard-card2-text">Status</p>
-                      <div className="progress-bar">
+                      <div className="progress-bar w-100">
                         <div className="progress-container">
                           <div
                             className="progress"
@@ -389,7 +337,7 @@ const Dashboard = () => {
                             </span>
                             <span className="fw-bold col-6">
                               <progress
-                                className="w-100"
+                                className="w-100 custom-progress"
                                 id="file"
                                 value={count?.count}
                                 max="100"
@@ -461,7 +409,7 @@ const Dashboard = () => {
                 </Link>
                 <Link to={"/Admin/Requests"} className="col ">
                   <img src="/images/dashboard/manage-reports.png" />
-                  <p className="management-text">Manage Reports</p>
+                  <p className="management-text">Manage Requests</p>
                 </Link>
                 <Link to={"/Admin/Settings"} className="col ">
                   <img src="/images/dashboard/manage-settings.png" />

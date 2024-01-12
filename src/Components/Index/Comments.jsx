@@ -11,11 +11,15 @@ import {
 import moment from "moment";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../app/slice/userSlice";
 
 const Comments = () => {
   const [commentList, setCommentList] = useState([]);
   const [reply, setReply] = useState(false);
   const [replyMsg, setReplyMsg] = useState("");
+  const [comment, setComment] = useState("");
+  const userData = useSelector(selectUserData);
 
   const { id } = useParams();
 
@@ -63,6 +67,30 @@ const Comments = () => {
     }
   };
 
+  const addComment = async (e) => {
+    e.preventDefault();
+    let creator_Id = localStorage.getItem("myot_admin_id");
+    let { data } = await AddCommentForTask({
+      comment,
+      templete_Id: id,
+      creator_Id,
+    });
+    console.log(data);
+    if (!data?.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "New comment added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      getCommentLists();
+      setComment("");
+    }
+  };
+
   const handleSubmit = async (e, comment_Id) => {
     e.preventDefault();
     if (replyMsg === "") {
@@ -96,7 +124,8 @@ const Comments = () => {
         theme: "light",
       });
       setReplyMsg("");
-      document.getElementById("reset").click();
+      setReply(false);
+      // document.getElementById("reset").click();
       getCommentLists();
     }
   };
@@ -213,6 +242,39 @@ const Comments = () => {
                       <p className="comment-txt p-2 mb-0">
                         {comments?.comment}
                       </p>
+
+                      {comments?.replyText && (
+                        <div
+                          style={{ borderLeft: "2px solid #f8f9fa" }}
+                          className="text-start ms-5"
+                        >
+                          {comments?.replyText.map((reply) => (
+                            <div className="bg-white p-2 mb-3">
+                              <div className="d-flex align-items-center justify-content-between">
+                                <div>
+                                  <div className="d-flex align-items-center">
+                                    <img
+                                      className="w_20_h_20 me-1"
+                                      src={reply?.creator_Id?.profile_Pic}
+                                      alt=""
+                                    />
+                                    <p className="commenter-name my-auto">
+                                      {reply?.creator_Id?.name}
+                                    </p>
+                                    {/* <p className="comment-time m-auto">
+                                      {moment(reply?.createdAt).calendar()}
+                                    </p> */}
+                                  </div>
+                                  <p className="comment-txt p-2 mb-0">
+                                    {reply?.text}
+                                  </p>
+                                </div>
+                                <div></div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                       {reply[index] && (
                         <div className="bg-white rounded p-2 my-3 task_reply">
                           <form
@@ -220,9 +282,9 @@ const Comments = () => {
                           >
                             <div className="d-flex justify-content-between">
                               <img
-                                src="/images/dashboard/Avatar2.png"
+                                src={userData?.profile_Pic}
                                 alt=""
-                                className="comment-avatar m-auto mt-2"
+                                className="comment-avatar m-auto mt-2 w_20_h_20"
                               />
                               <textarea
                                 type="text"
@@ -246,39 +308,6 @@ const Comments = () => {
                           </form>
                         </div>
                       )}
-
-                      {comments?.replyText && (
-                        <div
-                          style={{ borderLeft: "2px solid #f8f9fa" }}
-                          className="text-start ms-5"
-                        >
-                          {comments?.replyText.map((reply) => (
-                            <div className="bg-white p-2 mb-3">
-                              <div className="d-flex align-items-center justify-content-between">
-                                <div>
-                                  <div className="d-flex align-items-center">
-                                    <img
-                                      className="w_20_h_20 me-3"
-                                      src={reply?.creator_Id?.profile_Pic}
-                                      alt=""
-                                    />
-                                    <p className="commenter-name m-auto">
-                                      {reply?.creator_Id?.name}
-                                    </p>
-                                    {/* <p className="comment-time m-auto">
-                                      {moment(reply?.createdAt).calendar()}
-                                    </p> */}
-                                  </div>
-                                  <p className="comment-txt p-2 mb-0">
-                                    {reply?.text}
-                                  </p>
-                                </div>
-                                <div></div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
                     </div>
                   </>
                 ))
@@ -294,19 +323,21 @@ const Comments = () => {
                 <div className="d-flex  justify-content-between">
                   <div className="d-flex justify-content-between">
                     <img
-                      src="/images/dashboard/Avatar2.png"
+                      src={userData?.profile_Pic}
                       alt=""
-                      className="comment-avatar m-auto mt-2"
+                      className="comment-avatar m-auto mt-2 w_50_h_50"
                     />
                     <textarea
                       name="comment"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
                       placeholder="Add a comment…"
                       id=""
-                      cols="30"
-                      rows="10"
                       className="comment-inbox m-2 p-2"
                     ></textarea>
-                    <button className="reply-btn">Send</button>
+                    <button onClick={addComment} className="reply-btn">
+                      Send
+                    </button>
                   </div>
                 </div>
               </div>

@@ -228,14 +228,14 @@ const DashboardSig = () => {
                 <div className="col-md-6">
                   <div className="dashboard-card2 ">
                     <p className="dashboard-card2-text">Open Tickets</p>
-                    <p className="text-card  mb-3">
+                    <p className="text-card mt-2 mb-3">
                       {ticketCount?.totalComplete} / {ticketCount?.totalTicket}
                     </p>
                     <p className=" mb-1 dashboard-card2-text">
                       Profile Completion
                     </p>
 
-                    <div className="progress-bar">
+                    <div className="progress-bar w-100">
                       <div className="progress-container">
                         <div
                           className="progress"
@@ -245,7 +245,7 @@ const DashboardSig = () => {
                       </div>
                     </div>
                     <p className=" mb-1 dashboard-card2-text">Status</p>
-                    <div className="progress-bar">
+                    <div className="progress-bar w-100">
                       <div className="progress-container">
                         <div
                           className="progress"

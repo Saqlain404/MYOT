@@ -97,7 +97,7 @@ const UpdatePassword = () => {
                           type={passVisible ? "text" :"password"}
                           value={password}
                           placeholder="Password"
-                          className="col-12 password-update-input p-2 rounded w-100"
+                          className="col-12 password-update-input p-2 rounded w-100 text-dark"
                           name="password"
                           onChange={(e) => {
                             setPassword(e.target.value);
@@ -105,19 +105,20 @@ const UpdatePassword = () => {
                           }}
                         />
                         <div
-                          className="eye_container"
+                          className="eye_container mt-1"
                           onClick={() => setPassVisible(!passVisible)}
                         >
                           {passVisible ? (
                             <img
-                              className="eye_icon"
-                              src="/images/icons/hide.png"
-                              alt=""
-                            />
+                            className="eye_icon"
+                            src="/images/icons/view.png"
+                            alt=""
+                          />
                           ) : (
+                            
                             <img
                               className="eye_icon"
-                              src="/images/icons/view.png"
+                              src="/images/icons/hide.png"
                               alt=""
                             />
                           )}
@@ -138,26 +139,27 @@ const UpdatePassword = () => {
                           type={confirmPassVisible? "text" :"password"}
                           value={confirmPassword}
                           placeholder="Confirm Password"
-                          className="col-12 password-update-input p-2 rounded w-100"
+                          className="col-12 password-update-input p-2 rounded w-100 text-dark"
                           name="confirmPassword"
                           onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                         <div
-                          className="eye_container"
+                          className="eye_container mt-1"
                           onClick={() =>
                             setConfirmPassVisible(!confirmPassVisible)
                           }
                         >
                           {confirmPassVisible ? (
                             <img
-                              className="eye_icon"
-                              src="/images/icons/hide.png"
-                              alt=""
-                            />
+                            className="eye_icon"
+                            src="/images/icons/view.png"
+                            alt=""
+                          />
                           ) : (
+                            
                             <img
                               className="eye_icon"
-                              src="/images/icons/view.png"
+                              src="/images/icons/hide.png"
                               alt=""
                             />
                           )}

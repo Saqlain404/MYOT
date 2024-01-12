@@ -4,6 +4,7 @@ import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
 import { DocumentComment } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import Swal from "sweetalert2";
+import { Checkbox } from "rsuite";
 
 const Document = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -162,7 +163,7 @@ const Document = () => {
               <li>
                 <Link
                   class="dropdown-item"
-                    to={`/Signatory/Requests/Comments/${list?._id}`}
+                  to={`/Signatory/Requests/Comments/${list?._id}`}
                 >
                   <img src="/images/dashboard/Comment.png" className="me-2" />
                   Comments
@@ -221,14 +222,15 @@ const Document = () => {
   const columnsWithCheckboxes = requests.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={requests.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked
+        >
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -330,6 +332,9 @@ const Document = () => {
                 Hide Selected
               </p>
             )}
+          </div>
+          <div class="search_icon">
+            <img width={20} src={require("../../../assets/logo/search.png")}></img>
           </div>
         </div>
         <form className="d-flex me-2" role="search"></form>

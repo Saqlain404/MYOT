@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import SidebarSig from "./SidebarSig";
 import {
   SignatoryHomeCount,
+  SignatoryProfileDetails,
   SignatoryRequestsData,
   SignatoryTemplateData,
 } from "../../ApiServices/SignatoryHttpServices/signatoryHttpServices";
@@ -12,12 +13,14 @@ import { MDBDataTable } from "mdbreact";
 import Document from "./Requests/Document";
 import { AddCommentForTask } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import Swal from "sweetalert2";
+import { Checkbox } from "rsuite";
 
 const HomeSig = () => {
   const [count, setCount] = useState();
   const [comment, setComment] = useState("");
   const [showClearButton, setShowClearButton] = useState(false);
   const [templete_Id, setTemplateId] = useState("");
+  const [department, setDepartment] = useState();
 
   const [templates, setTemplates] = useState({
     columns: [
@@ -73,12 +76,22 @@ const HomeSig = () => {
   useEffect(() => {
     getCountData();
     getTemplatesData();
+    getProfileDetails();
   }, []);
 
   const getCountData = async () => {
     let { data } = await SignatoryHomeCount();
     if (!data?.error) {
       setCount(data?.results);
+    }
+  };
+
+  const getProfileDetails = async () => {
+    let emp_id = localStorage.getItem("myot_admin_id");
+    let { data } = await SignatoryProfileDetails(emp_id);
+    console.log(data);
+    if (!data?.error) {
+      setDepartment(data?.results?.singnatory?.department_Id?.departmentName);
     }
   };
 
@@ -277,14 +290,15 @@ const HomeSig = () => {
   const columnsWithCheckboxes = templates.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
-          checked={templates.selectedColumns.includes(column.field)}
+      <div key={column.field} className="">
+        <Checkbox
+          checked={templates?.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked
+        >
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -349,6 +363,29 @@ const HomeSig = () => {
 
             <div className="col-12 mb-4">
               <div className="row statics_part">
+                <div className="col-md-3 ">
+                  <div className="statics_box card-clr-2-4">
+                    <div className="statics_left">
+                      <h6 className="mb-0 header-card-text">My Department</h6>
+                    </div>
+                    <div className="d-flex  mt-4">
+                      <p
+                        style={{ fontSize: "14px" }}
+                        className="card-text-count mb-0 fw-semibold"
+                      >
+                        {department}
+                      </p>
+                      {/* <span className="card-insights fw-bold m-auto">
+                        +9.15%
+                        <img
+                          src="/images/dashboard/ArrowRise.png"
+                          alt=""
+                          className="ps-1"
+                        />
+                      </span> */}
+                    </div>
+                  </div>
+                </div>
                 <div className="col-md-3">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
@@ -371,28 +408,7 @@ const HomeSig = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-3 ">
-                  <div className="statics_box card-clr-2-4">
-                    <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">
-                        Total Departments
-                      </h6>
-                    </div>
-                    <div className="d-flex  mt-4">
-                      <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {count?.countDepartment}
-                      </h3>
-                      {/* <span className="card-insights fw-bold m-auto">
-                        +9.15%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span> */}
-                    </div>
-                  </div>
-                </div>
+
                 <div className="col-md-3 ">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
@@ -479,6 +495,12 @@ const HomeSig = () => {
                         Hide Selected
                       </p>
                     )}
+                  </div>
+                  <div class="search_icon">
+                    <img
+                      width={20}
+                      src={require("../../assets/logo/search.png")}
+                    ></img>
                   </div>
                 </div>
                 <form className="d-flex me-2" role="search">

@@ -59,7 +59,7 @@ const AuthforgotSuccess = () => {
               </p>
             </div>
             <Link to={"/Login"}>
-              <button className="btn  py-8 mb-3 reset-success">
+              <button className="btn text-nowrap py-8 mb-3 reset-success">
                 Go Back Home
               </button>
             </Link>

@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import {
   DocumentComment,
   DocumentDelete,
+  HomeRequestorList,
   RequestorList,
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { Checkbox } from "rsuite";
 
 const Document = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -85,7 +87,8 @@ const Document = () => {
   }, []);
 
   const getRequestorList = async () => {
-    let { data } = await RequestorList();
+    let id = localStorage.getItem("myot_admin_id");
+    let { data } = await HomeRequestorList(id);
 
     const newRows = [];
     if (!data?.error) {
@@ -243,7 +246,7 @@ const Document = () => {
           timerProgressBar: true,
           timer: 3000,
         });
-        getRequestorList()
+        getRequestorList();
       }
     } catch (error) {
       console.log(error);
@@ -298,14 +301,15 @@ const Document = () => {
   const columnsWithCheckboxes = documents.columns.map((column) => ({
     ...column,
     label: (
-      <div key={column.field}>
-        <input
-          type="checkbox"
+      <div key={column.field} className="">
+        <Checkbox
           checked={documents.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          className="me-1 mt-1"
-        />
-        <label>{column.label}</label>
+          defaultChecked
+        >
+          {" "}
+          {column.label}
+        </Checkbox>
       </div>
     ),
   }));
@@ -385,6 +389,12 @@ const Document = () => {
                 Hide Selected
               </p>
             )}
+          </div>
+          <div class="search_icon">
+            <img
+              width={20}
+              src={require("../../../assets/logo/search.png")}
+            ></img>
           </div>
         </div>
         <form className="d-flex me-2" role="search"></form>

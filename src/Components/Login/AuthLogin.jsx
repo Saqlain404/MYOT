@@ -6,13 +6,14 @@ import { adminLogin } from "../../ApiServices/adminHttpServices/adminLoginHttpSe
 import { useDispatch } from "react-redux";
 import { setUserData } from "../app/slice/userSlice";
 import Swal from "sweetalert2";
-
+import classNames from "classnames";
+import { Button, Checkbox } from "rsuite";
 const AuthLogin = () => {
   const [type, setType] = useState("password");
   const [password, setPassword] = useState("");
   const [rememberCheck, setRememberCheck] = useState(false);
   const [passVisible, setPassVisible] = useState(false);
-
+  const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
 
   const {
@@ -37,12 +38,14 @@ const AuthLogin = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
-
+    console.log(rememberCheck);
+    setLoader(true);
     rememberCheck && rememberMe(data);
     const response = await adminLogin(data);
     console.log("login Data", response);
 
     if (response?.data && !response?.data?.error) {
+      setLoader(false);
       Swal.fire({
         toast: true,
         icon: "success",
@@ -63,7 +66,12 @@ const AuthLogin = () => {
       }
       // console.log(navigateToRoles)
       // console.log(`${navigateToRoles}/Home`)
+    } else {
+      setLoader(false);
     }
+    setTimeout(() => {
+      setLoader(false);
+    }, [6000]);
   };
   const togglePassword = () => {
     setPassVisible(!passVisible);
@@ -78,10 +86,10 @@ const AuthLogin = () => {
       <div className="container-fluid login-bg">
         <div className="row flex-nowrap">
           <div className="col-4 login-form p-4">
-            <div className="form-login mt-4">
+            <div className="form-login mt-3">
               <img src="/images/Myot-logo.png" className="logo" />
               <h2 className="mb-3 fs-7 fw-bolder myot">Myot</h2>
-              <p className="login-desc">
+              <p className="login-desc m-0 p-0">
                 Please fill your detail to access your account.
               </p>
             </div>
@@ -92,7 +100,9 @@ const AuthLogin = () => {
                 </label>
                 <input
                   type="email"
-                  className="form-control"
+                  className={classNames("form-control", {
+                    "is-invalid": errors.email,
+                  })}
                   id="email"
                   name="email"
                   aria-describedby="emailHelp"
@@ -115,14 +125,17 @@ const AuthLogin = () => {
                   </small>
                 )}
               </div>
-              <div className="mb-2 position-relative">
+              <div className="mb-3 position-relative">
                 <label for="" className="form-label">
                   Password
                 </label>
                 <input
                   type={passVisible ? "text" : "password"}
-                  className="form-control"
+                  className={classNames("form-control", {
+                    "is-invalid": errors.password,
+                  })}
                   name="password"
+                  placeholder="********"
                   id="password"
                   autoComplete="off"
                   defaultValue={loginCreds?.password}
@@ -132,7 +145,7 @@ const AuthLogin = () => {
                       value:
                         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                       message:
-                        "* Minimun 8 characters, One Uppercase, One Lowercase & A Special Character Allowed",
+                        "* Minimun 8 characters, One Uppercase, One Lowercase & One Special Character Allowed",
                     },
                   })}
                 />
@@ -143,13 +156,13 @@ const AuthLogin = () => {
                   {passVisible ? (
                     <img
                       className="eye_icon"
-                      src="/images/icons/hide.png"
+                      src="/images/icons/view.png"
                       alt=""
                     />
                   ) : (
                     <img
                       className="eye_icon"
-                      src="/images/icons/view.png"
+                      src="/images/icons/hide.png"
                       alt=""
                     />
                   )}
@@ -160,59 +173,46 @@ const AuthLogin = () => {
                   </small>
                 )}
               </div>
-              {/* <div className="text-center mb-2" onClick={togglePassword}>
-                <input
-                  type="checkbox"
-                  className="cursor_pointer"
-                  {...register("passwordToggle")}
-                />
-                <span className="cursor_pointer mx-2 remember-me">
-                  Show Password
-                </span>
-              </div> */}
+
               <div className="d-flex justify-content-between mb-4 remember">
-                <div className="form-check">
-                  <input
-                    className="form-check-input primary"
-                    type="checkbox"
-                    defaultValue=""
-                    id="flexCheckChecked"
-                    defaultChecked=""
-                    value={rememberCheck}
-                    onChange={(e) => setRememberCheck(!rememberCheck)}
-                  />
-                  <label
-                    className="form-check-label text-dark remember-me"
-                    htmlFor="flexCheckChecked"
-                  >
-                    Remember me
-                  </label>
+                <div className="">
+                  <Checkbox onChange={() => setRememberCheck(!rememberCheck)}>
+                    {" "}
+                    Remember Me
+                  </Checkbox>
                 </div>
-                <Link to={"/Forgot-password"}>
-                  <a
-                    className=" fw-medium reset-password"
-                    href="authentication-forgot-password.html"
-                  >
-                    Reset Password?
-                  </a>
+              </div>
+
+              <Button
+                loading={loader}
+                appearance="primary"
+                className="btn py-8 mb-3  rounded-2"
+                type="submit"
+              >
+                SIGN IN
+              </Button>
+
+              <div className="text-center">
+                <Link
+                  className="text-decoration-none fw-bold  reset-password  mt-2"
+                  to={"/Forgot-password"}
+                >
+                  Reset Password?
                 </Link>
               </div>
 
-              <button className="btn py-8 mb-1  rounded-2" type="submit">
-                Log In
-              </button>
-              <label className="form-check-label text-dark remember-me mb-4">
+              <div className="form-check-label text-dark remember-me mb-4 text-center mt-2">
                 New to Myot? Create an account
                 <Link
-                  className=" fw-medium reset-password ms-2"
+                  className=" fw-medium reset-password ms-2 fw-bold"
                   to="/Admin/Signup"
                 >
                   Sign Up
                 </Link>
-              </label>
+              </div>
             </form>
           </div>
-          <div className="col-8 m-auto ">
+          <div className="col-8 m-auto d-flex justify-content-center align-items-center">
             <img
               src="/images/Login.png"
               alt=""

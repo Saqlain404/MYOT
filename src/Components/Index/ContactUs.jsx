@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import { EmployeeContactUs } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
+import { Button } from "rsuite";
 
 const ContactUs = () => {
   const {
@@ -138,7 +139,7 @@ const ContactUs = () => {
                           })}
                         />
                         {errors.name && (
-                          <div className="invalid-feedback">
+                          <div className="invalid-feedback text-start">
                             {errors.name.message}
                           </div>
                         )}
@@ -166,7 +167,7 @@ const ContactUs = () => {
                           })}
                         />
                         {errors.email && (
-                          <div className="invalid-feedback">
+                          <div className="invalid-feedback text-start">
                             {errors.email.message}
                           </div>
                         )}
@@ -189,7 +190,7 @@ const ContactUs = () => {
                           })}
                         />
                         {errors.phoneNumber && (
-                          <div className="invalid-feedback">
+                          <div className="invalid-feedback text-start">
                             {errors.phoneNumber.message}
                           </div>
                         )}
@@ -219,15 +220,20 @@ const ContactUs = () => {
                           style={{ minHeight: "100px" }}
                         ></textarea>
                         {errors.message && (
-                          <div className="invalid-feedback">
+                          <div className="invalid-feedback text-start">
                             {errors.message.message}
                           </div>
                         )}
                       </div>
 
-                      <button type="submit" className="contact-form-btn w-100">
+                      <Button
+                        // loading={loader}
+                        appearance="primary"
+                        className="btn mb-3 text-nowrap me-2 rounded-2"
+                        type="submit"
+                      >
                         Submit
-                      </button>
+                      </Button>
                       <button type="reset" id="resetForm" className="d-none">
                         reset
                       </button>

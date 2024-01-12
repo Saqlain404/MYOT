@@ -4,6 +4,8 @@ import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import { AdminProfile } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
+import profileImg from "../../assets/logo/high.png";
+import { Button } from "rsuite";
 
 const Profile = () => {
   const [profileData, setProfileData] = useState();
@@ -75,9 +77,18 @@ const Profile = () => {
                   <p className="profile-txt m-2">Profile</p>
                   <Link
                     to={"/Admin/Edit-profile"}
+                    state={profileData}
                     className="text-decoration-none"
                   >
-                    <button className="profile-edit-btn">Edit</button>
+                    <Button
+                      style={{ width: "70px" }}
+                      // loading={loader}
+                      appearance="primary"
+                      className="btn mb-3 me-2 rounded-2"
+                      type="submit"
+                    >
+                      Edit
+                    </Button>
                   </Link>
                 </div>
                 <div className=" d-flex justify-content-start mb-4">
@@ -89,8 +100,10 @@ const Profile = () => {
                       borderRadius: "50%",
                       objectFit: "cover",
                     }}
-                    src={profileData?.profile_Pic}
-                    alt="profile_image"
+                    src={
+                      (profileData?.profile_Pic && profileData.profile_Pic) ||
+                      profileImg
+                    }
                   />
                 </div>
                 <div className="bg-white rounded mb-4 p-4 pb-2">
@@ -100,7 +113,9 @@ const Profile = () => {
                   <div className="d-flex justify-content-between">
                     <div>
                       <p className="profile-info">Full Name</p>
-                      <p className="profile-data">{profileData?.name}</p>
+                      <p className="profile-data text-capitalize">
+                        {profileData?.name}
+                      </p>
                     </div>
                     <div>
                       <p className="profile-info">Email</p>
@@ -140,21 +155,27 @@ const Profile = () => {
                   <div className="d-flex justify-content-between">
                     <div>
                       <p className="profile-info">Company Name</p>
-                      <p className="profile-data">{profileData?.companyName}</p>
+                      <p className="profile-data text-capitalize">
+                        {profileData?.company_Id?.name}
+                      </p>
                     </div>
                     <div>
                       <p className="profile-info">Company Email</p>
-                      <p className="profile-data">{profileData?.email}</p>
+                      <p className="profile-data">
+                        {profileData?.company_Id?.email}
+                      </p>
                     </div>
                     <div>
                       <p className="profile-info">Phone Number</p>
                       <p className="profile-data">
-                        +97 {profileData?.mobileNumber}
+                        +97 {profileData?.company_Id?.phone_number}
                       </p>
                     </div>
                     <div>
                       <p className="profile-info">Address</p>
-                      <p className="profile-data">{profileData?.address}</p>
+                      <p className="profile-data text-capitalize">
+                        {profileData?.company_Id?.address}
+                      </p>
                     </div>
                   </div>
                 </div>
