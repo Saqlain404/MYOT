@@ -131,6 +131,7 @@ import MainUpdatePassword from "./Components/superAdmin/updatePassword";
 import MainForgotSuccess from "./Components/superAdmin/forgotSucess";
 import MainHome from "./Components/superAdmin/home";
 import SigDocComments from "./Components/Signatory/Comments/SigDocComments";
+import SettingsDept from "./Components/DepartmentManager/SettingsDept";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -206,6 +207,7 @@ function App() {
         <Route path="Department/My-profile" element={<ProfileDept />} />
         <Route path="Department/Edit-profile" element={<EditProfileDept />} />
         <Route path="Department/Help" element={<HelpDept />} />
+        <Route path="Department/Settings" element={<SettingsDept />} />
         <Route path="Department/Help-Support" element={<HelpSupportDept />} />
         <Route path="Department/Contact-us" element={<ContactUsDept />} />
 
