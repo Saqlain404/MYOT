@@ -517,7 +517,7 @@ const HomeAprv = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {docCount?.totalTempleted}
+                        {docCount?.totalTempleted || 0}
                       </h3>
                     </div>
                   </div>
