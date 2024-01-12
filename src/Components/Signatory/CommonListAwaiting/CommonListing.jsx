@@ -89,7 +89,7 @@ const CommonListing = () => {
           </>
         );
         returnData.date = moment(list?.createdAt).format("L");
-        returnData.department = list?.manager[0]?.department[0]?.departmentName;
+        returnData.department = list?.manager[0]?.department[0]?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -101,6 +101,8 @@ const CommonListing = () => {
                 ? "text-primary"
                 : list?.status === "Rejected"
                 ? "text-danger"
+                : list?.status === "Completed"
+                ? "text-success"
                 : "text-success"
             }`}
           >

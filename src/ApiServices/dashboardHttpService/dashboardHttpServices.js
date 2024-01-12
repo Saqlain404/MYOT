@@ -438,6 +438,20 @@ export async function DocumentDelete(id) {
   }
 }
 
+export async function DocumentReply(formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-comment-reply`,
+      formData
+    );
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 export async function RequestCommentDelete(id) {
   try {
     const { data } = await adminHttpService.post(

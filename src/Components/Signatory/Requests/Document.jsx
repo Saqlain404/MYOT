@@ -107,7 +107,9 @@ const Document = () => {
                 : list?.status === "In Progress"
                 ? "text-primary"
                 : list?.status === "Rejected"
-                ? "text-primary"
+                ? "text-danger"
+                : list?.status === "Completed"
+                ? "text-success"
                 : "text-success"
             }`}
           >

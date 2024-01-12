@@ -35,12 +35,12 @@ const Siging = ({ admin_id }) => {
         sort: "asc",
         width: 100,
       },
-      {
-        label: "IP Address",
-        field: "ip",
-        sort: "asc",
-        width: 100,
-      },
+      // {
+      //   label: "IP Address",
+      //   field: "ip",
+      //   sort: "asc",
+      //   width: 100,
+      // },
       {
         label: "Version",
         field: "version",
@@ -114,7 +114,7 @@ const Siging = ({ admin_id }) => {
               />
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-              <li>
+              {/* <li>
                 <a class="dropdown-item border-bottom" href="#">
                   <img
                     src="/images/users/AddressBook.svg"
@@ -123,8 +123,8 @@ const Siging = ({ admin_id }) => {
                   />
                   View Users Details
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a class="dropdown-item border-bottom" href="#">
                   <img
                     src="/images/users/PencilLine.svg"
@@ -133,7 +133,7 @@ const Siging = ({ admin_id }) => {
                   />
                   Edit User Details
                 </a>
-              </li>
+              </li> */}
               <li>
                 <Link
                   class="dropdown-item"

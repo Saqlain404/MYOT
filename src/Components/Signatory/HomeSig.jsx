@@ -129,6 +129,8 @@ const HomeSig = () => {
                 ? "text-primary"
                 : list?.status === "Rejected"
                 ? "text-danger"
+                : list?.status === "Completed"
+                ? "text-success"
                 : "text-success"
             }`}
           >
