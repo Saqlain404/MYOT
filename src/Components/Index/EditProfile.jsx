@@ -48,7 +48,7 @@ const EditProfile = () => {
 
   const onSubmit = async (data1) => {
     console.log(files?.profile_img);
-    let emp_id = localStorage.getItem("myot_admin_id");
+    // let emp_id = localStorage.getItem("myot_admin_id");
     if (data1?.password !== data1?.cpassword) {
       toast.error("Password does not match", {
         position: "top-right",
@@ -88,7 +88,7 @@ const EditProfile = () => {
     formData.append("address", data1?.companyAddress);
     formData.append("companyName", data1?.companyName);
 
-    let { data } = await UpdateAdminProfile(emp_id, formData);
+    let { data } = await UpdateAdminProfile( formData);
     console.log(data);
     if (data && data?.error) {
       Swal.fire({
@@ -113,9 +113,9 @@ const EditProfile = () => {
         timer: 3000,
       });
       setFiles([]);
-      dispatch(updateProfilePic(data?.results?.admin?.profile_Pic));
-      dispatch(updateUserName(data?.results?.admin?.name));
-      navigate("/Admin/My-profile");
+      // dispatch(updateProfilePic(data?.results?.?.profile_Pic));
+      // dispatch(updateUserName(data?.results?.?.name));
+      navigate("/Department/My-profile");
       getEmployeeList();
     }
   };

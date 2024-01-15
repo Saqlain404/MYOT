@@ -104,8 +104,8 @@ const EditProfileDept = () => {
         timer: 3000,
       });
       setFiles([]);
-      dispatch(updateProfilePic(data?.results?.admin?.profile_Pic));
-      dispatch(updateUserName(data?.results?.admin?.name));
+      dispatch(updateProfilePic(data?.results?.department?.profile_Pic));
+      dispatch(updateUserName(data?.results?.department?.name));
       navigate("/Admin/My-profile");
       // getEmployeeList();
     }
@@ -250,7 +250,7 @@ const EditProfileDept = () => {
                       </div> */}
                     </div>
                     <div className="col-12 d-flex justify-content-between mb-2">
-                      {/* <div className="col-12 m-2">
+                      <div className="col-12 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Name
                         </p>
@@ -272,7 +272,7 @@ const EditProfileDept = () => {
                             {errors.name.message}
                           </div>
                         )}
-                      </div> */}
+                      </div>
                       {/* <div className="col-6 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Date of Birth

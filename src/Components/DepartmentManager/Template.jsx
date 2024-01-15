@@ -300,41 +300,36 @@ const Template = () => {
       let values = data?.results?.templete;
       values?.map((list, index) => {
         let returnData = {};
-        returnData.name = list?.templeteName || "NA";
-        returnData.assignTo =
-          (
-            <>
-              <img
-                className="w_20_h_20"
-                src={list?.signatory?.profile_Pic}
-                alt=""
-              />
-              <span className="ms-2 text-capitalize">
-                {list?.signatory?.name}
-              </span>
-            </>
-          ) || "NA";
-        returnData.version = list?.templeteVersion[0]?.version;
-        returnData.date = moment(list?.createdAt).format("L");
-        returnData.status = (
+        returnData.name = list?.templeteName;
+        returnData.assignTo = 
+        (
           <>
-            <span
-              className={`"td-text status" ${
-                list?.status === "Pending"
-                  ? "text-info"
-                  : list?.status === "Approved"
-                  ? "text-warning"
-                  : list?.status === "In Progress"
-                  ? "text-primary"
-                  : "text-success"
-              }`}
-            >
-              {list?.status}
-            </span>
+            <img
+              className="w_20_h_20"
+              src={list?.signatory?.profile_Pic}
+              alt=""
+            />
+            <span className="ms-2 text-capitalize">{list?.signatory?.name}</span>
           </>
         );
-        returnData.department =
-          list?.manager?.department_Id?.departmentName || "NA";
+        returnData.version = list?.templeteVersion[0]?.version;
+        returnData.date = moment(list?.createdAt).format("L");
+        returnData.status = ( 
+        <span
+        className={`"td-text status" ${
+          list?.status === "Pending"
+            ? "text-info"
+            : list?.status === "Approved"
+            ? "text-warning"
+            : list?.status === "In Progress"
+            ? "text-primary"
+            : "text-success"
+        }`}
+      >
+        {list?.status}
+      </span>)
+        
+        returnData.department = list?.manager?.department_Id?.departmentName;
         returnData.actions = (
           <div class="text-center">
             <a
@@ -644,6 +639,9 @@ const Template = () => {
                     </p>
                   )}
                 </div>
+                <div class="search_icon">
+                  <img width={20} src={require("../../assets/logo/search.png")}></img>
+                  </div>
               </div>
               <form className="d-flex me-2" role="search"></form>
             </div>
