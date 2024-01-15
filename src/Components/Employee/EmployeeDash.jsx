@@ -238,7 +238,7 @@ const EmployeeDash = () => {
                     alt=""
                     className="me-2"
                   />
-                  View Details
+                  View Document
                 </Link>
               </li>
               <li>
@@ -410,7 +410,7 @@ const EmployeeDash = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" >
+                    <a className="nav-link  fw-bold ms-2" >
                       Dashboard
                     </a>
                   </li>
@@ -569,7 +569,7 @@ const EmployeeDash = () => {
                             />{" "}
                             Active
                           </td>
-                          <td>{docCount?.completePresent}%</td>
+                          <td>{(docCount?.completePresent)?.toFixed(2)}%</td>
                         </tr>
                         <tr>
                           <td>
@@ -579,7 +579,7 @@ const EmployeeDash = () => {
                             />
                             Under Review
                           </td>
-                          <td>{docCount?.pendingPresent}%</td>
+                          <td>{(docCount?.pendingPresent)?.toFixed(2)}%</td>
                         </tr>
                         <tr>
                           <td>
@@ -589,7 +589,7 @@ const EmployeeDash = () => {
                             />
                             Approved
                           </td>
-                          <td>{docCount?.approvedPresent}%</td>
+                          <td>{(docCount?.approvedPresent)?.toFixed(2)}%</td>
                         </tr>
                         <tr>
                           <td>
@@ -599,7 +599,7 @@ const EmployeeDash = () => {
                             />
                             Rejected
                           </td>
-                          <td>{docCount?.rejectedPresent}%</td>
+                          <td>{(docCount?.rejectedPresent)?.toFixed(2)}%</td>
                         </tr>
                       </table>
                     </div>
@@ -634,7 +634,7 @@ const EmployeeDash = () => {
                             width: `${ticketCount?.InprogressPresent}%`,
                           }}
                         ></div>
-                        <span className="progress-label">{`In Progress / ${ticketCount?.InprogressPresent}%`}</span>
+                        <span className="progress-label">{`In Progress / ${(ticketCount?.InprogressPresent)?.toFixed(2)}%`}</span>
                       </div>
                     </div>
                   </div>

@@ -114,7 +114,7 @@ const EmplHelpSupport = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
+                    <a className="nav-link fw-bold ms-2">
                       Template / Template Version 1.0 / View
                     </a>
                   </li>
@@ -481,7 +481,7 @@ const EmplHelpSupport = () => {
                                 alt=""
                                 className="m-2 img_profile"
                               />
-                              <p className="th-text m-auto">
+                              <p className="th-text m-auto text-capitalize">
                                 {ticket.creator_Id.name}
                               </p>
                             </div>

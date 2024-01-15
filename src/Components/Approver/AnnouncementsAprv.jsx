@@ -9,8 +9,6 @@ import {
 import moment from "moment";
 
 const AnnouncementsAprv = () => {
- 
-
   // Add Annocunment
   const ids =
     localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
@@ -74,7 +72,7 @@ const AnnouncementsAprv = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link th-text ms-2">
+                    <a className="nav-link fw-bold  ms-2">
                       Announcements / Report Management
                     </a>
                   </li>
@@ -221,45 +219,47 @@ const AnnouncementsAprv = () => {
             {/* <!-- Modal End--> */}
 
             <div className="container bg-body-tertiary rounded mb-3">
-            {listData   ?
-    (listData?.[0]?.map((item) => (
-      <div className="row" key={item.id}>
-        <p className="templates-leave mt-3 ms-2 mb-0 ">
-          Templates {">"} {item?.categoryName}
-        </p>
-        <div className="col-12">
-          <div className="col rounded bg-white m-3 p-2">
-            <div className="ps-2 pe-3">
-              <div className="d-flex justify-content-between">
-                <div className="d-flex">
-                  <img
-                    src="/images/dashboard/user (2) 1.svg"
-                    alt=""
-                    className="me-2"
-                  />
-                  <p className="anouncement-text"> {item?.text
-                          ?item?.text.charAt(0).toUpperCase() +
-                          item?.text.slice(1).toLowerCase()
-                          : ""}</p>
-                </div>
-                <p className="announcement-time">
-                  {moment(item?.createdAt).calendar()}
-                </p>
-              </div>
-              <div className="d-flex ms-4 mt-2">
-                <img
-                  src="/images/dashboard/bookmark 1.svg"
-                  alt=""
-                  className="m-1 "
-                />
-                <p className="new-feedback">New feedback added</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    ))) : "Data Not Found"
-  }
+              {listData
+                ? listData?.[0]?.map((item) => (
+                    <div className="row" key={item.id}>
+                      <p className="templates-leave mt-3 ms-2 mb-0 ">
+                        Templates {">"} {item?.categoryName}
+                      </p>
+                      <div className="col-12">
+                        <div className="col rounded bg-white m-3 p-2">
+                          <div className="ps-2 pe-3">
+                            <div className="d-flex justify-content-between">
+                              <div className="d-flex">
+                                <img
+                                  src="/images/dashboard/user (2) 1.svg"
+                                  alt=""
+                                  className="me-2"
+                                />
+                                <p className="anouncement-text">
+                                  {item?.text
+                                    ? item?.text.charAt(0).toUpperCase() +
+                                      item?.text.slice(1).toLowerCase()
+                                    : ""}
+                                </p>
+                              </div>
+                              <p className="announcement-time">
+                                {moment(item?.createdAt).calendar()}
+                              </p>
+                            </div>
+                            <div className="d-flex ms-4 mt-2">
+                              <img
+                                src="/images/dashboard/bookmark 1.svg"
+                                alt=""
+                                className="m-1 "
+                              />
+                              <p className="new-feedback">New feedback added</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                : "Data Not Found"}
             </div>
 
             {/* <div className="container bg-body-tertiary rounded mb-4">

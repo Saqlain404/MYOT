@@ -199,7 +199,7 @@ const HomeEmpl = () => {
                                     alt=""
                                     className="me-2"
                                   />
-                                  View Details
+                                  View Document
                                 </Link>
                               </li>
                               <li>
@@ -286,7 +286,7 @@ const HomeEmpl = () => {
       const [templateList] = await fetchTemplateData();
       if (templateList) {
         setTemplateIdList(templateList);
-        // console.log(templateList);
+        console.log(templateList);
       }
     };
 
@@ -506,7 +506,7 @@ const HomeEmpl = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
+                    <a className="nav-link fw-bold ms-2">
                       Home
                     </a>
                   </li>
@@ -626,7 +626,7 @@ const HomeEmpl = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="department-name mb-0 fw-semibold fs-7">
-                        {profileDetail?.department ?( profileDetail?.department_Id?.departmentName): " Not Available"}
+                        {profileDetail?.department_Id ?( profileDetail?.department_Id?.departmentName): " Not Available"}
                       </h3>
                     </div>
                   </div>

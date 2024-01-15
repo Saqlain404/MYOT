@@ -113,7 +113,7 @@ const approved = async (document_Id) => {
   };
 
 const getDocTaskData = async () => {
-    let data = await requestDocAprv(ids);
+    let data = await templeteDocList(ids);
     console.log(data);
 
     const newRows = [];
@@ -215,7 +215,7 @@ const getDocTaskData = async () => {
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
               <li>
                 <Link
-                  to={`/Approver/Template-view/${list?._id}`}
+                  to={`/Approver/Template-view/${list?.templete[0]?._id}`}
                   className="text-decoration-none"
                 >
                   <a class="dropdown-item border-bottom" href="/">
@@ -224,7 +224,7 @@ const getDocTaskData = async () => {
                       alt=""
                       className="me-2"
                     />
-                    View Users Details
+                    View Document
                   </a>
                 </Link>{" "}
               </li>
@@ -325,41 +325,41 @@ const getDocTaskData = async () => {
 
 
 
-  const handleDocSearch = async () => {
-    const result = await searchDocTemplete(searchDocData);
-    const searchDocResult = result?.data?.results?.searchDocument;
-    console.log(result);
+  // const handleDocSearch = async () => {
+  //   const result = await searchDocTemplete(searchDocData);
+  //   const searchDocResult = result?.data?.results?.searchDocument;
+  //   console.log(result);
 
-    if (searchDocResult && Array.isArray(searchDocResult)) {
-      const mappedDocResult = searchDocResult?.map((document) => ({
-        documentName: document?.templete?.templeteName,
-        img: [document?.templete?.manager?.[0]?.profile_Pic],
-        requestor: [document?.creator_Id?.[0]?.name],
-        requestor_img: [document?.creator_Id?.[0]?.profile_Pic],
-        version: document?.templete?.templeteVersion?.[0]?.version,
-        assignedTo: [document?.templete?.manager?.[0]?.name],
-        department: [
-          document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
-        ],
-        action: (
-          <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-        ),
-        dateofSigning: [document?.createdAt],
-        comments: (
-          <img
-            src="/images/dashboard/Comment.png"
-            className="mx-auto d-block"
-          />
-        ),
-        status: [document?.status],
-      }));
-      setTempleteDoc(mappedDocResult);
-    }
-  };
+  //   if (searchDocResult && Array.isArray(searchDocResult)) {
+  //     const mappedDocResult = searchDocResult?.map((document) => ({
+  //       documentName: document?.templete?.templeteName,
+  //       img: [document?.templete?.manager?.[0]?.profile_Pic],
+  //       requestor: [document?.creator_Id?.[0]?.name],
+  //       requestor_img: [document?.creator_Id?.[0]?.profile_Pic],
+  //       version: document?.templete?.templeteVersion?.[0]?.version,
+  //       assignedTo: [document?.templete?.manager?.[0]?.name],
+  //       department: [
+  //         document?.templete?.manager?.[0]?.department?.[0]?.departmentName,
+  //       ],
+  //       action: (
+  //         <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //       ),
+  //       dateofSigning: [document?.createdAt],
+  //       comments: (
+  //         <img
+  //           src="/images/dashboard/Comment.png"
+  //           className="mx-auto d-block"
+  //         />
+  //       ),
+  //       status: [document?.status],
+  //     }));
+  //     setTempleteDoc(mappedDocResult);
+  //   }
+  // };
 
-  useEffect(() => {
-    handleDocSearch();
-  }, [searchDocData]);
+  // useEffect(() => {
+  //   handleDocSearch();
+  // }, [searchDocData]);
 
   const toggleSortOrder = () => {
     const currentSortType = tasks.sortType === "asc" ? "desc" : "asc";
@@ -415,7 +415,7 @@ const getDocTaskData = async () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
+                    <a className="nav-link fw-bold ms-2">
                       Requests
                     </a>
                   </li>

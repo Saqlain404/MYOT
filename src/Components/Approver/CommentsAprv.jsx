@@ -35,10 +35,11 @@ const CommentsAprv = () => {
   };
 
    const handleDelete = async(comment_id) => {
-    const deleteComment = DeleteCommentAprv(comment_id)
-    setTimeout(()=>{
+    const deleteComment = await DeleteCommentAprv(comment_id)
+    if(deleteComment.commentData){
       getCommentLists()
-    },200)
+    }
+    console.log(deleteComment)
    }
   
    let creator_Id =
@@ -94,7 +95,7 @@ const CommentsAprv = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
+                    <a className="nav-link fw-bold ms-2">
                       Tasks / Comments
                     </a>
                   </li> 
@@ -132,8 +133,8 @@ const CommentsAprv = () => {
             </div>
 
             <div className="container px-4 text-center min-vh-100 ">
-              <p className="templates-leave mt-3  d-flex ">Comments</p>
-              {commentList &&
+              {/* <p className="templates-leave mt-3  d-flex ">Comments</p> */}
+              {commentList && commentList?.length > 0 ? (
                 commentList?.map((comments, index) => (
                   <>
                     <div className="bg-white rounded p-2 mb-3">
@@ -144,7 +145,7 @@ const CommentsAprv = () => {
                             alt=""
                             className="m-2 w_20_h_20"
                           />
-                          <p className="commenter-name ">
+                          <p className="commenter-name text-capitalize ">
                             {comments?.creator_Id?.name}
                           </p>
                           <p className="comment-time m-auto">
@@ -191,7 +192,7 @@ const CommentsAprv = () => {
                           </div>
                         </div>
                       </div>
-                      <p className="comment-txt p-2 mb-0">
+                      <p className="comment-txt p-2 mb-0" style={{wordBreak:"break-word"}}>
                         {comments?.comment}
                       </p>
                       {comments?.replyText && (
@@ -209,14 +210,14 @@ const CommentsAprv = () => {
                                       src={reply?.creator_Id?.profile_Pic}
                                       alt=""
                                     />
-                                    <p className="commenter-name ">
+                                    <p className="commenter-name text-capitalize ">
                                       {reply?.creator_Id?.name}
                                     </p>
                                     {/* <p className="comment-time m-auto">
                                       {moment(reply?.createdAt).calendar()}
                                     </p> */}
                                   </div>
-                                  <p className="comment-txt p-2 mb-0">
+                                  <p className="comment-txt p-2 mb-0" style={{wordBreak:"break-word"}}>
                                     {reply?.text}
                                   </p>
                                 </div>
@@ -259,7 +260,15 @@ const CommentsAprv = () => {
                       )}
                     </div>
                   </>
-                ))}
+                ))
+                ) : (
+                  <>
+                    <h3 className="bg-white rounded p-2 py-4 mb-3">
+                      No Comments Found
+                    </h3>
+                  </>
+                )
+                }
 
               <div className="bg-white rounded p-2 mb-3">
                 <div className="d-flex  align-items-center  justify-content-between">
