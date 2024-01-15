@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import RightSidebar from "../RightSidebar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
 import { useDispatch } from "react-redux";
 import { Swal } from "sweetalert2/dist/sweetalert2";
@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import { ProfileDeptUpdate } from "../../ApiServices/departmentHttpService/departmentHttpService";
 import { updateProfilePic, updateUserName } from "../app/slice/userSlice";
+import { Button } from "rsuite";
 
 const EditProfileDept = () => {
 
@@ -19,12 +20,16 @@ const EditProfileDept = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const location = useLocation();
+  const { state } = location;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-
+  } = useForm({
+    mode: "onChange",
+  });
   // const getEmployeeList = async () => {
   //   let { data } = await EmployeeLists();
   // };
@@ -470,9 +475,15 @@ const EditProfileDept = () => {
                   </div>
                 </div>
                 <div className="text-end">
-                  <button type="submit" className="profile-edit-submit m-0">
-                    Update Profile
-                  </button>
+                <Button
+                  style={{ width: "150px" }}
+                  // loading={loader}
+                  appearance="primary"
+                  className="btn mb-3 text-nowrap me-2 rounded-2"
+                  type="submit"
+                >
+                  Update Profile
+                </Button>
                 </div>
               </form>
    </div>

@@ -450,3 +450,29 @@ export async function UpdateLogo(formData) {
     return { error };
   }
 }
+
+export async function AnnouncementList() {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/approver/request-list/659ceac1fd98e93af4f0373d`,
+      // formData
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function AnnouncementSearch() {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/approver/search-Document/659ceac1fd98e93af4f0373d`,
+      // formData
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
