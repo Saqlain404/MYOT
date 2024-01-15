@@ -223,7 +223,7 @@ const AnnouncementsAprv = () => {
                 ? listData?.[0]?.map((item) => (
                     <div className="row" key={item.id}>
                       <p className="templates-leave mt-3 ms-2 mb-0 ">
-                        Templates {">"} {item?.categoryName}
+                        Announcement {">"} {item?.categoryName}
                       </p>
                       <div className="col-12">
                         <div className="col rounded bg-white m-3 p-2">
@@ -231,9 +231,14 @@ const AnnouncementsAprv = () => {
                             <div className="d-flex justify-content-between">
                               <div className="d-flex">
                                 <img
-                                  src="/images/dashboard/user (2) 1.svg"
+                                  src={item?.document ? item?.document : "/images/dashboard/user (2) 1.svg"}
+                                  style={{
+                                    width: "20px",
+                                    height: "20px",
+                                    borderRadius: "50%",
+                                  }}
                                   alt=""
-                                  className="me-2"
+                                  className="me-2" 
                                 />
                                 <p className="anouncement-text">
                                   {item?.text

@@ -9,12 +9,16 @@ import {
   CommentViewEmply,
   DeleteCommentEmpl,
 } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../app/slice/userSlice";
 
 const CommentsEmply = () => {
   const [commentList, setCommentList] = useState([]);
   const [reply, setReply] = useState(false);
   const [comment, setComment] = useState("");
   const [replyMsg, setReplyMsg] = useState("");
+
+  const userData = useSelector(selectUserData)
 
   const { id } = useParams();
   console.log(id);
@@ -227,10 +231,10 @@ const CommentsEmply = () => {
                         <div className="bg-white rounded p-2 my-3 task_reply">
                           <form onSubmit={(e) => handleReply(e, comments?._id)}>
                             <div className="d-flex  align-items-center justify-content-between">
-                              <img
-                                src="/images/dashboard/Avatar2.png"
+                            <img
+                                src={userData?.profile_Pic}
                                 alt=""
-                                className="comment-avatar m-auto mt-2"
+                                className="comment-avatar m-auto mt-2 w_20_h_20"
                               />
                               <textarea
                                 type="text"
@@ -272,11 +276,11 @@ const CommentsEmply = () => {
                     onSubmit={(e) => handleSubmitComment(e)}
                     className="d-flex  justify-content-between"
                   >
-                    <img
-                      src="/images/dashboard/Avatar2.png"
-                      alt=""
-                      className="comment-avatar m-auto mt-2"
-                    />
+                   <img
+                                src={userData?.profile_Pic}
+                                alt=""
+                                className="comment-avatar m-auto mt-2 w_20_h_20"
+                              />
                     <textarea
                       name="comment"
                       placeholder="Add a comment…"

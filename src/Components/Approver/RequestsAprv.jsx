@@ -15,6 +15,7 @@ import {
 import { MDBDataTable } from "mdbreact";
 import moment from "moment";
 import { Checkbox } from "antd";
+import Swal from "sweetalert2";
 
 const RequestsAprv = () => {
   const [templeteDoc, setTempleteDoc] = useState([]);
@@ -384,13 +385,24 @@ const getDocTaskData = async () => {
     e.preventDefault();
     let creator_Id =
       localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+      let trimmedComment = comment.trim()
     let data = await AddCommentApprv({
-      comment,
+      comment: trimmedComment,
       templete_Id,
       creator_Id,
     });
     if (!data?.error) {
       setComment("");
+    }else if(trimmedComment===""){
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Please enter a comment",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
     }
   };
 
