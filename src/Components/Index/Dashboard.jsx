@@ -23,7 +23,7 @@ const Dashboard = () => {
   }, []);
 
   const getDashboardDataCount = async () => {
-    let id = localStorage.getItem("myot_admin_id")
+    let id = localStorage.getItem("myot_admin_id");
     try {
       let { data } = await DashboardCount(id);
       if (!data?.error) {
@@ -57,7 +57,6 @@ const Dashboard = () => {
     }
   };
 
-
   return (
     <>
       <div className="container-fluid">
@@ -70,7 +69,7 @@ const Dashboard = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">Dashboard</a>
+                  <a className="nav-link fw-bold">Dashboard</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center justify-content-end ">
@@ -136,7 +135,9 @@ const Dashboard = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {dataCount?.totalTempleted && dataCount?.totalTempleted}
+                        {(dataCount?.totalTempleted &&
+                          dataCount?.totalTempleted[0]?.count) ||
+                          0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -0.56%
@@ -158,7 +159,9 @@ const Dashboard = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {dataCount?.totalDocument}
+                        {(dataCount?.totalDocument &&
+                          dataCount?.totalDocument[0]?.count) ||
+                          0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -1.48%
@@ -421,7 +424,7 @@ const Dashboard = () => {
                 </Link>
               </div>
             </div>
-            
+
             <DashboardListing />
           </div>
           <div className="col">

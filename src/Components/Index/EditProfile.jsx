@@ -131,9 +131,7 @@ const EditProfile = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
-                      My Profile / Edit
-                    </a>
+                  <a className="nav-link fw-bold">My Profile / Edit </a>
                   </li>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">

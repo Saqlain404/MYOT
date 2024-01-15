@@ -83,9 +83,7 @@ const Announcements = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link th-text ms-2" href="app-email.html">
-                      Announcements / Report Management
-                    </a>
+                  <a className="nav-link fw-bold">Announcements</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
@@ -131,11 +129,11 @@ const Announcements = () => {
                   <img src="/images/tasks/Add.svg" alt="" className="pb-3" />
                   <p className="pt-1 text-nowrap">Add Announcement</p>
                 </div>
-                <img
+                {/* <img
                   src="/images/sidebar/ThreeDots.svg"
                   alt=""
                   className="pb-3 ms-2 text-secondary"
-                />
+                /> */}
               </div>
             </div>
             {/* <!-- Modal --> */}

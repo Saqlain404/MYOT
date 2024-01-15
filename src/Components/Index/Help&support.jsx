@@ -93,8 +93,9 @@ const HelpSupport = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
-                      Template / Template Version 1.0 / View
+                    <a className="nav-link fw-bold">
+                      {" "}
+                      Help / Help & Support
                     </a>
                   </li>
                 </ul>
@@ -339,7 +340,7 @@ const HelpSupport = () => {
                       </a>
                     </li>
                     <li className="nav-item" role="presentation">
-                       <a
+                      <a
                         className="nav-link"
                         id="ex1-tab-3"
                         data-bs-toggle="tab"
@@ -375,66 +376,70 @@ const HelpSupport = () => {
                       aria-labelledby="ex1-tab-1"
                     >
                       <div className="col-12">
-                        {ticketList && ticketList?.length > 0
-                          ? ticketList?.map((ticket) => (
-                              <div className="rounded border bg-white mb-3 p-2">
-                                <div>
-                                  <div className="d-flex justify-content-between align-items-center">
-                                    <div className="d-flex align-items-center">
-                                      <img
-                                        src="/images/dashboard/orange-ticket-ball.svg"
-                                        alt=""
-                                        className="me-2"
-                                      />
-                                      <p className="ticket-number m-1">
-                                        {ticket?.ticketType}
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p className="ticket-post-time text-end">
-                                        {moment(ticket.createdAt).calendar()}
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <div className="text-start mt-3">
-                                    <p>{ticket?.ticketIssue}</p>
-                                    <p>
-                                      Lorem, ipsum dolor sit amet consectetur
-                                      adipisicing elit. Voluptas veritatis,
-                                      ratione officiis voluptate nostrum ipsum
-                                      eos iste mollitia aliquid accusamus?
-                                    </p>
-                                  </div>
-                                  <hr />
-                                </div>
-
-                                <div className="d-flex justify-content-between">
-                                  <div className="d-flex">
+                        {ticketList && ticketList?.length > 0 ? (
+                          ticketList?.map((ticket) => (
+                            <div className="rounded border bg-white mb-3 p-2">
+                              <div>
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <div className="d-flex align-items-center">
                                     <img
-                                      style={{
-                                        width: "30px",
-                                        height: "30px",
-                                        borderRadius: "50%",
-                                      }}
-                                      src={
-                                        ticket?.creator_Id?.profile_Pic
-                                          ? ticket?.creator_Id?.profile_Pic
-                                          : "/images/dashboard/Avatar.png"
-                                      }
+                                      src="/images/dashboard/orange-ticket-ball.svg"
                                       alt=""
-                                      className="m-2 object-fit-cover"
+                                      className="me-2"
                                     />
-                                    <p className="th-text m-auto text-capitalize">
-                                      {ticket?.creator_Id?.name}
+                                    <p className="ticket-number m-1">
+                                      {ticket?.ticketType}
                                     </p>
                                   </div>
-                                  <a className="ticket-link mt-3 me-1">
-                                    Open Ticket
-                                  </a>
+                                  <div>
+                                    <p className="ticket-post-time text-end">
+                                      {moment(ticket.createdAt).calendar()}
+                                    </p>
+                                  </div>
                                 </div>
+                                <div className="text-start mt-3">
+                                  <p>{ticket?.ticketIssue}</p>
+                                  <p>
+                                    Lorem, ipsum dolor sit amet consectetur
+                                    adipisicing elit. Voluptas veritatis,
+                                    ratione officiis voluptate nostrum ipsum eos
+                                    iste mollitia aliquid accusamus?
+                                  </p>
+                                </div>
+                                <hr />
                               </div>
-                            ))
-                          : "Sorry no ticket available"}
+
+                              <div className="d-flex justify-content-between">
+                                <div className="d-flex">
+                                  <img
+                                    style={{
+                                      width: "30px",
+                                      height: "30px",
+                                      borderRadius: "50%",
+                                    }}
+                                    src={
+                                      ticket?.creator_Id?.profile_Pic
+                                        ? ticket?.creator_Id?.profile_Pic
+                                        : "/images/dashboard/Avatar.png"
+                                    }
+                                    alt=""
+                                    className="m-2 object-fit-cover"
+                                  />
+                                  <p className="th-text m-auto text-capitalize">
+                                    {ticket?.creator_Id?.name}
+                                  </p>
+                                </div>
+                                <a className="ticket-link mt-3 me-1">
+                                  Open Ticket
+                                </a>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <h3 className="my-5 text-black-50 th-text">
+                            Yay! No Tickets
+                          </h3>
+                        )}
                       </div>
                     </div>
                     <div
@@ -444,66 +449,70 @@ const HelpSupport = () => {
                       aria-labelledby="ex1-tab-2"
                     >
                       <div className="col-12">
-                        {ticketList && ticketList?.length > 0
-                          ? ticketList?.map((ticket) => (
-                              <div className="rounded border bg-white mb-3 p-2">
-                                <div>
-                                  <div className="d-flex justify-content-between align-items-center">
-                                    <div className="d-flex align-items-center">
-                                      <img
-                                        src="/images/dashboard/orange-ticket-ball.svg"
-                                        alt=""
-                                        className="me-2"
-                                      />
-                                      <p className="ticket-number m-1">
-                                        {ticket?.ticketType}
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p className="ticket-post-time text-end">
-                                        {moment(ticket.createdAt).calendar()}
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <div className="text-start mt-3">
-                                    <p>{ticket?.ticketIssue}</p>
-                                    <p>
-                                      Lorem, ipsum dolor sit amet consectetur
-                                      adipisicing elit. Voluptas veritatis,
-                                      ratione officiis voluptate nostrum ipsum
-                                      eos iste mollitia aliquid accusamus?
-                                    </p>
-                                  </div>
-                                  <hr />
-                                </div>
-
-                                <div className="d-flex justify-content-between">
-                                  <div className="d-flex">
+                        {ticketList && ticketList?.length > 0 ? (
+                          ticketList?.map((ticket) => (
+                            <div className="rounded border bg-white mb-3 p-2">
+                              <div>
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <div className="d-flex align-items-center">
                                     <img
-                                      style={{
-                                        width: "30px",
-                                        height: "30px",
-                                        borderRadius: "50%",
-                                      }}
-                                      src={
-                                        ticket?.creator_Id?.profile_Pic
-                                          ? ticket?.creator_Id?.profile_Pic
-                                          : "/images/dashboard/Avatar.png"
-                                      }
+                                      src="/images/dashboard/orange-ticket-ball.svg"
                                       alt=""
-                                      className="m-2 object-fit-cover"
+                                      className="me-2"
                                     />
-                                    <p className="th-text m-auto text-capitalize">
-                                      {ticket?.creator_Id?.name}
+                                    <p className="ticket-number m-1">
+                                      {ticket?.ticketType}
                                     </p>
                                   </div>
-                                  <a className="ticket-link mt-3 me-1">
-                                    Open Ticket
-                                  </a>
+                                  <div>
+                                    <p className="ticket-post-time text-end">
+                                      {moment(ticket.createdAt).calendar()}
+                                    </p>
+                                  </div>
                                 </div>
+                                <div className="text-start mt-3">
+                                  <p>{ticket?.ticketIssue}</p>
+                                  <p>
+                                    Lorem, ipsum dolor sit amet consectetur
+                                    adipisicing elit. Voluptas veritatis,
+                                    ratione officiis voluptate nostrum ipsum eos
+                                    iste mollitia aliquid accusamus?
+                                  </p>
+                                </div>
+                                <hr />
                               </div>
-                            ))
-                          : "Sorry no ticket available"}
+
+                              <div className="d-flex justify-content-between">
+                                <div className="d-flex">
+                                  <img
+                                    style={{
+                                      width: "30px",
+                                      height: "30px",
+                                      borderRadius: "50%",
+                                    }}
+                                    src={
+                                      ticket?.creator_Id?.profile_Pic
+                                        ? ticket?.creator_Id?.profile_Pic
+                                        : "/images/dashboard/Avatar.png"
+                                    }
+                                    alt=""
+                                    className="m-2 object-fit-cover"
+                                  />
+                                  <p className="th-text m-auto text-capitalize">
+                                    {ticket?.creator_Id?.name}
+                                  </p>
+                                </div>
+                                <a className="ticket-link mt-3 me-1">
+                                  Open Ticket
+                                </a>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <h3 className="my-5 text-black-50 th-text">
+                            Yay! No Tickets
+                          </h3>
+                        )}
                       </div>
                     </div>
                     <div
@@ -513,66 +522,70 @@ const HelpSupport = () => {
                       aria-labelledby="ex1-tab-3"
                     >
                       <div className="col-12">
-                        {ticketList && ticketList?.length > 0
-                          ? ticketList?.map((ticket) => (
-                              <div className="rounded border bg-white mb-3 p-2">
-                                <div>
-                                  <div className="d-flex justify-content-between align-items-center">
-                                    <div className="d-flex align-items-center">
-                                      <img
-                                        src="/images/dashboard/orange-ticket-ball.svg"
-                                        alt=""
-                                        className="me-2"
-                                      />
-                                      <p className="ticket-number m-1">
-                                        {ticket?.ticketType}
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p className="ticket-post-time text-end">
-                                        {moment(ticket.createdAt).calendar()}
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <div className="text-start mt-3">
-                                    <p>{ticket?.ticketIssue}</p>
-                                    <p>
-                                      Lorem, ipsum dolor sit amet consectetur
-                                      adipisicing elit. Voluptas veritatis,
-                                      ratione officiis voluptate nostrum ipsum
-                                      eos iste mollitia aliquid accusamus?
-                                    </p>
-                                  </div>
-                                  <hr />
-                                </div>
-
-                                <div className="d-flex justify-content-between">
-                                  <div className="d-flex">
+                        {ticketList && ticketList?.length > 0 ? (
+                          ticketList?.map((ticket) => (
+                            <div className="rounded border bg-white mb-3 p-2">
+                              <div>
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <div className="d-flex align-items-center">
                                     <img
-                                      style={{
-                                        width: "30px",
-                                        height: "30px",
-                                        borderRadius: "50%",
-                                      }}
-                                      src={
-                                        ticket?.creator_Id?.profile_Pic
-                                          ? ticket?.creator_Id?.profile_Pic
-                                          : "/images/dashboard/Avatar.png"
-                                      }
+                                      src="/images/dashboard/orange-ticket-ball.svg"
                                       alt=""
-                                      className="m-2 object-fit-cover"
+                                      className="me-2"
                                     />
-                                    <p className="th-text m-auto text-capitalize">
-                                      {ticket?.creator_Id?.name}
+                                    <p className="ticket-number m-1">
+                                      {ticket?.ticketType}
                                     </p>
                                   </div>
-                                  <a className="ticket-link mt-3 me-1">
-                                    Open Ticket
-                                  </a>
+                                  <div>
+                                    <p className="ticket-post-time text-end">
+                                      {moment(ticket.createdAt).calendar()}
+                                    </p>
+                                  </div>
                                 </div>
+                                <div className="text-start mt-3">
+                                  <p>{ticket?.ticketIssue}</p>
+                                  <p>
+                                    Lorem, ipsum dolor sit amet consectetur
+                                    adipisicing elit. Voluptas veritatis,
+                                    ratione officiis voluptate nostrum ipsum eos
+                                    iste mollitia aliquid accusamus?
+                                  </p>
+                                </div>
+                                <hr />
                               </div>
-                            ))
-                          : "Sorry no ticket available"}
+
+                              <div className="d-flex justify-content-between">
+                                <div className="d-flex">
+                                  <img
+                                    style={{
+                                      width: "30px",
+                                      height: "30px",
+                                      borderRadius: "50%",
+                                    }}
+                                    src={
+                                      ticket?.creator_Id?.profile_Pic
+                                        ? ticket?.creator_Id?.profile_Pic
+                                        : "/images/dashboard/Avatar.png"
+                                    }
+                                    alt=""
+                                    className="m-2 object-fit-cover"
+                                  />
+                                  <p className="th-text m-auto text-capitalize">
+                                    {ticket?.creator_Id?.name}
+                                  </p>
+                                </div>
+                                <a className="ticket-link mt-3 me-1">
+                                  Open Ticket
+                                </a>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <h3 className="my-5 text-black-50 th-text">
+                            Yay! No Tickets
+                          </h3>
+                        )}
                       </div>
                     </div>
                     <div
@@ -582,66 +595,70 @@ const HelpSupport = () => {
                       aria-labelledby="ex1-tab-4"
                     >
                       <div className="col-12">
-                        {ticketList && ticketList?.length > 0
-                          ? ticketList?.map((ticket) => (
-                              <div className="rounded border bg-white mb-3 p-2">
-                                <div>
-                                  <div className="d-flex justify-content-between align-items-center">
-                                    <div className="d-flex align-items-center">
-                                      <img
-                                        src="/images/dashboard/orange-ticket-ball.svg"
-                                        alt=""
-                                        className="me-2"
-                                      />
-                                      <p className="ticket-number m-1">
-                                        {ticket?.ticketType}
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p className="ticket-post-time text-end">
-                                        {moment(ticket.createdAt).calendar()}
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <div className="text-start mt-3">
-                                    <p>{ticket?.ticketIssue}</p>
-                                    <p>
-                                      Lorem, ipsum dolor sit amet consectetur
-                                      adipisicing elit. Voluptas veritatis,
-                                      ratione officiis voluptate nostrum ipsum
-                                      eos iste mollitia aliquid accusamus?
-                                    </p>
-                                  </div>
-                                  <hr />
-                                </div>
-
-                                <div className="d-flex justify-content-between">
-                                  <div className="d-flex">
+                        {ticketList && ticketList?.length > 0 ? (
+                          ticketList?.map((ticket) => (
+                            <div className="rounded border bg-white mb-3 p-2">
+                              <div>
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <div className="d-flex align-items-center">
                                     <img
-                                      style={{
-                                        width: "30px",
-                                        height: "30px",
-                                        borderRadius: "50%",
-                                      }}
-                                      src={
-                                        ticket?.creator_Id?.profile_Pic
-                                          ? ticket?.creator_Id?.profile_Pic
-                                          : "/images/dashboard/Avatar.png"
-                                      }
+                                      src="/images/dashboard/orange-ticket-ball.svg"
                                       alt=""
-                                      className="m-2 object-fit-cover"
+                                      className="me-2"
                                     />
-                                    <p className="th-text m-auto text-capitalize">
-                                      {ticket?.creator_Id?.name}
+                                    <p className="ticket-number m-1">
+                                      {ticket?.ticketType}
                                     </p>
                                   </div>
-                                  <a className="ticket-link mt-3 me-1">
-                                    Open Ticket
-                                  </a>
+                                  <div>
+                                    <p className="ticket-post-time text-end">
+                                      {moment(ticket.createdAt).calendar()}
+                                    </p>
+                                  </div>
                                 </div>
+                                <div className="text-start mt-3">
+                                  <p>{ticket?.ticketIssue}</p>
+                                  <p>
+                                    Lorem, ipsum dolor sit amet consectetur
+                                    adipisicing elit. Voluptas veritatis,
+                                    ratione officiis voluptate nostrum ipsum eos
+                                    iste mollitia aliquid accusamus?
+                                  </p>
+                                </div>
+                                <hr />
                               </div>
-                            ))
-                          : "Sorry no ticket available"}
+
+                              <div className="d-flex justify-content-between">
+                                <div className="d-flex">
+                                  <img
+                                    style={{
+                                      width: "30px",
+                                      height: "30px",
+                                      borderRadius: "50%",
+                                    }}
+                                    src={
+                                      ticket?.creator_Id?.profile_Pic
+                                        ? ticket?.creator_Id?.profile_Pic
+                                        : "/images/dashboard/Avatar.png"
+                                    }
+                                    alt=""
+                                    className="m-2 object-fit-cover"
+                                  />
+                                  <p className="th-text m-auto text-capitalize">
+                                    {ticket?.creator_Id?.name}
+                                  </p>
+                                </div>
+                                <a className="ticket-link mt-3 me-1">
+                                  Open Ticket
+                                </a>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <h3 className="my-5 text-black-50 th-text">
+                            Yay! No Tickets
+                          </h3>
+                        )}
                       </div>
                     </div>
                   </div>

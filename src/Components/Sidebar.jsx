@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   employeeLogout,
   removeEmployeeTokens,
@@ -9,17 +9,28 @@ import { EmployeeLogout } from "../ApiServices/dashboardHttpService/dashboardHtt
 import { toast } from "react-toastify";
 import ProfileSwitcher from "./ProfileSwitcher/Switcher";
 import Swal from "sweetalert2";
+import { selectUserData } from "./app/slice/userSlice";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userData = useSelector(selectUserData);
 
   const location = useLocation();
+
+  // useEffect(() => {
+  //   let roles = userData?.employRole;
+  //   if (!roles.includes("Admin")) {
+  //     alert("You have not assigned a role");
+  //     navigate("/Admin/Login");
+  //     return false;
+  //   }
+  // }, []);
 
   useEffect(() => {
     let id = localStorage.getItem("token-company");
     if (!id) {
-      navigate("/Admin/Login");
+      navigate("/Login");
     }
   }, []);
 
@@ -313,7 +324,7 @@ const Sidebar = () => {
                 </a>
               </Link>
             </li>
-            <li
+            {/* <li
               className={` "nav-item text-dark" ${
                 location.pathname === "/Admin/Tasks" ? "nav_active" : ""
               }`}
@@ -329,7 +340,7 @@ const Sidebar = () => {
 
                 <span className="ms-3 align-middle sidebar-btn">Files</span>
               </a>
-            </li>
+            </li> */}
             <li
               className={` "nav-item text-dark" ${
                 location.pathname === "/Admin/Analytics" ? "nav_active" : ""

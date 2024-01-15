@@ -9,6 +9,7 @@ import {
   DepartmentDetails,
   DepartmentList,
   DepartmentSearch,
+  EditDepartment,
   ViewDepartment,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { useEffect } from "react";
@@ -22,6 +23,7 @@ const Departments = () => {
   const [search, setSearch] = useState("");
   const [viewDepartmentDetails, setViewDepartmentDetails] = useState();
   const [loader, setLoader] = useState(false);
+  const [deptId, setDeptId] = useState(null);
 
   const [departmentInfo, setDepartmentInfo] = useState({
     departmentname: "",
@@ -112,6 +114,26 @@ const Departments = () => {
                     View Department
                   </a>
                 </li>
+                <li
+                  onClick={() => {
+                    setDeptId(data?._id);
+                    departmentDetails(data?._id);
+                  }}
+                >
+                  <a
+                    class="dropdown-item"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal2"
+                  >
+                    <img
+                      src="/images/users/PencilLine.svg"
+                      alt=""
+                      className="me-2"
+                    />
+                    Edit Department
+                  </a>
+                </li>
                 <li>
                   <a class="dropdown-item border-bottom" href="#">
                     <img
@@ -182,10 +204,58 @@ const Departments = () => {
     setDepartmentInfo({ ...departmentInfo, [name]: value });
   };
 
+  const handleEdit = async (e) => {
+    e.preventDefault();
+    setLoader(true);
+    console.log(departmentInfo, deptId);
+    try {
+      let formData = {
+        departmentName: departmentInfo.departmentname,
+        description: departmentInfo.description,
+      };
+      let { data } = await EditDepartment(deptId, formData);
+      if (data && !data?.error) {
+        console.log(data);
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "Department Updated",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        setDepartmentInfo({
+          departmentname: "",
+          description: "",
+        });
+        document.getElementById("editmodalclose").click();
+        DepartmentLists();
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoader(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoader(true);
     let creator_Id = localStorage.getItem("myot_admin_id");
+    if (!departmentInfo?.departmentname || !departmentInfo?.description) {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: "Fill all fields",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      setLoader(false);
+      return false;
+    }
     try {
       let { data } = await AddDepartment({
         departmentName: departmentInfo?.departmentname,
@@ -212,6 +282,8 @@ const Departments = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -248,9 +320,7 @@ const Departments = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
-                      Departments
-                    </a>
+                  <a className="nav-link fw-bold">Departments</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
@@ -460,6 +530,95 @@ const Departments = () => {
               </div>
             </div>
             {/* <!-- Modal End--> */}
+
+            {/* Edit Modal */}
+
+            <div
+              class="modal fade"
+              id="exampleModal2"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered modal-dialog-department">
+                <div class="modal-content border-0">
+                  <div class="d-flex modal-header border-bottom">
+                    <p class="" id="exampleModalLabel">
+                      Edit Departments
+                    </p>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      id="editmodalclose"
+                    ></button>
+                  </div>
+
+                  <form onSubmit={handleEdit}>
+                    <div className="row p-3">
+                      <div className="text-end">
+                        <p>
+                          {" "}
+                          <span>Created At </span>
+                          {moment(viewDepartmentDetails?.createdAt).format("L")}
+                        </p>
+                      </div>
+                      <div className="col-12 mb-3 ">
+                        <input
+                          type="text"
+                          placeholder="Department Name *"
+                          className="col-12 modal-input td-text  p-2"
+                          name="departmentname"
+                          defaultValue={viewDepartmentDetails?.departmentName}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="col-12 mb-3 ">
+                        <textarea
+                          style={{ minHeight: "120px" }}
+                          type="text"
+                          placeholder="Description"
+                          className="col-12 modal-input td-text p-2"
+                          name="description"
+                          defaultValue={viewDepartmentDetails?.description}
+                          onChange={handleChange}
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div className="d-flex justify-content-end mb-3">
+                      <Button
+                        style={{ width: "150px" }}
+                        loading={loader}
+                        appearance="primary"
+                        className="btn mb-3 me-2 rounded-2"
+                        type="submit"
+                      >
+                        Update
+                      </Button>
+                      <Button
+                        style={{ width: "100px" }}
+                        type="reset"
+                        className="btn mb-3 mx-2 rounded-2 bg-light text-dark border-0"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        Cancel
+                      </Button>
+                      <button
+                        type="reset"
+                        class="d-none"
+                        data-bs-dismiss="modal"
+                        id="formReset"
+                      >
+                        reset
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {/* Edit Modal End */}
 
             <div className="position-relative">
               <p className="table-name mb-2">Departments</p>

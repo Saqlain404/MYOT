@@ -16,7 +16,7 @@ const Switcher = () => {
     setRole(pathLocation[1]);
   }, [location]);
 
-  console.log(userData);
+  // console.log(userData);
 
   useEffect(() => {
     getUserRole();

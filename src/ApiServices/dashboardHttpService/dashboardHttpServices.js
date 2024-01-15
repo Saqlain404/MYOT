@@ -11,9 +11,44 @@ export async function AddDepartment(formData) {
     );
     console.log(data);
     if (!data.error) {
-    } else toast.error(data.message);
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
 
     return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+export async function EditDepartment(id, formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/department-edit/${id}`,
+      formData
+    );
+    console.log(data);
+    if (!data?.error) {
+      return { data };
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
   } catch (error) {
     if (error.response) toast.error(error.response.data.message);
     return { error };
@@ -425,6 +460,20 @@ export async function DocumentComment(formData) {
   }
 }
 
+export async function DocumentCommentReply(formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-comment-reply`,
+      formData
+    );
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 export async function DocumentDelete(id) {
   try {
     const { data } = await adminHttpService.get(
@@ -767,10 +816,10 @@ export async function EmployeeLogout(id) {
 
 // ANALYTICS
 
-export async function AnalyticsData() {
+export async function AnalyticsData(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/total-active-user`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/total-active-user/${id}`
     );
     return { data };
   } catch (error) {

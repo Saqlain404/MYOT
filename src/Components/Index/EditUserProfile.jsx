@@ -90,12 +90,12 @@ const EditUserProfile = ({ userId }) => {
   const onSubmit = async (datas) => {
     setLoader(true);
     let selectedRoles = [];
+    selectedRoles.push("Employee");
     const roles = [
       "employrole_admin",
       "employrole_approver",
       "employrole_department",
       "employrole_signatory",
-      "employrole_employee",
     ];
     roles.forEach((role) => {
       if (datas[role]) {
@@ -112,27 +112,12 @@ const EditUserProfile = ({ userId }) => {
           case "employrole_signatory":
             selectedRoles.push("Signatory");
             break;
-          case "employrole_employee":
-            selectedRoles.push("Employee");
-            break;
           default:
             break;
         }
       }
     });
-    if (selectedRoles.length === 0) {
-      Swal.fire({
-        toast: true,
-        icon: "error",
-        position: "top-end",
-        title: "Please select roles",
-        showConfirmButton: false,
-        timerProgressBar: true,
-        timer: 3000,
-      });
-      setLoader(false)
-      return false;
-    }
+
     console.log(selectedRoles);
     const formData = new FormData();
     formData.append("name", datas?.name);
@@ -189,7 +174,10 @@ const EditUserProfile = ({ userId }) => {
 
   return (
     <>
-      <div class="modal-dialog modal-dialog-users mb-5" style={{height:"0px"}}>
+      <div
+        class="modal-dialog modal-dialog-users mb-5"
+        style={{ height: "0px" }}
+      >
         <div class="modal-content border-0">
           <div class="d-flex modal-header border-bottom">
             <p class="mb-0" id="exampleModalLabel">
@@ -498,22 +486,6 @@ const EditUserProfile = ({ userId }) => {
                             onChange={() =>
                               handleCheckboxChange("Department Manager")
                             }
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Employee</td>
-                        <td>
-                          <input
-                            type="checkbox"
-                            name="employrole_employee"
-                            {...register("employrole_employee", {
-                              disabled: false,
-                            })}
-                            checked={userDetails?.employRole.includes(
-                              "Employee"
-                            )}
-                            onChange={() => handleCheckboxChange("Employee")}
                           />
                         </td>
                       </tr>

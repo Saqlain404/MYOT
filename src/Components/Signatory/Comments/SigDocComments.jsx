@@ -3,19 +3,24 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
 import RightSidebar from "../../RightSidebar";
+import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../../app/slice/userSlice";
 import {
-  DocumentComment,
   DocumentCommentLists,
+  DocumentCommentReply,
+  RequestCommentDelete,
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import SidebarSig from "../SidebarSig";
-import Swal from "sweetalert2";
 
 const SigDocComments = () => {
   const [commentList, setCommentList] = useState([]);
   const [reply, setReply] = useState(false);
   const [newReply, setNewReply] = useState("");
-  const [replyText, setReplyText] = useState({});
+  const [comment, setComment] = useState("");
+  const [replyMsg, setReplyMsg] = useState("");
   const [localId, setLocalId] = useState();
+  const userData = useSelector(selectUserData);
 
   const { id } = useParams();
 
@@ -37,6 +42,26 @@ const SigDocComments = () => {
     }
   };
 
+  const handleDeleteComment = async (e, id) => {
+    e.preventDefault();
+    try {
+      let { data } = await RequestCommentDelete(id);
+      if (!data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "Comment deleted successfully",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        getCommentLists();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const toggleReply = (index) => {
     setReply((prevState) => ({
       ...prevState,
@@ -52,9 +77,9 @@ const SigDocComments = () => {
   //     }));
   //   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, id) => {
     e.preventDefault();
-    if (newReply === "") {
+    if (replyMsg === "") {
       Swal.fire({
         toast: true,
         icon: "success",
@@ -68,11 +93,11 @@ const SigDocComments = () => {
     }
     let formData = {
       creator_Id: localId,
-      document_Id: id,
-      comment: newReply,
+      comment_Id: id,
+      text: replyMsg,
     };
     console.log(formData);
-    let { data } = await DocumentComment(formData);
+    let { data } = await DocumentCommentReply(formData);
     console.log(data);
     if (!data?.error) {
       Swal.fire({
@@ -86,9 +111,34 @@ const SigDocComments = () => {
       });
       document.getElementById("reset").click();
       setNewReply("");
+      setReply(false);
       getCommentLists();
     }
   };
+
+  // const addComment = async (e) => {
+  //   e.preventDefault();
+  //   let creator_Id = localStorage.getItem("myot_admin_id");
+  //   let { data } = await AddCommentForTask({
+  //     comment,
+  //     templete_Id: id,
+  //     creator_Id,
+  //   });
+  //   console.log(data);
+  //   if (!data?.error) {
+  //     Swal.fire({
+  //       toast: true,
+  //       icon: "success",
+  //       position: "top-end",
+  //       title: "New comment added",
+  //       showConfirmButton: false,
+  //       timerProgressBar: true,
+  //       timer: 3000,
+  //     });
+  //     getCommentLists();
+  //     setComment("");
+  //   }
+  // };
 
   return (
     <>
@@ -141,7 +191,7 @@ const SigDocComments = () => {
 
             <div className="container px-4 text-center min-vh-100 ">
               <p className="templates-leave mt-3  d-flex ">Comments</p>
-              {commentList &&
+              {commentList && commentList?.length > 0 ? (
                 commentList?.map((comments, index) => (
                   <>
                     <div className="bg-white rounded p-2 mb-3">
@@ -161,61 +211,106 @@ const SigDocComments = () => {
                           </p>
                           <p className="comment-time m-auto">
                             {moment(comments?.createdAt).calendar()}
-                            {/* {moment(comments?.createdAt).format(
-                              "MMM Do YY, h:mm a"
-                            )} */}
                           </p>
                         </div>
-                        <div
-                          className="cursor_pointer"
-                          // onClick={() => setReply(!reply)}
-                          onClick={() => toggleReply(index)}
-                        >
-                          {reply[index] ? (
-                            <Link className="ticket-link mt-3 me-1 text-decoration-none">
-                              Cancel
-                            </Link>
-                          ) : (
-                            <>
-                              <img
-                                src="/images/dashboard/reply-arrow.svg"
-                                className="m-2"
-                              />
-                              <Link className="ticket-link mt-3 me-1 text-decoration-none">
-                                Reply
+                        <div className="d-flex align-items-center justify-content-end">
+                          <div
+                            className="cursor_pointer d-flex align-items-center"
+                            onClick={() => toggleReply(index)}
+                          >
+                            {reply[index] ? (
+                              <Link className="ticket-link me-1 text-decoration-none">
+                                Cancel
                               </Link>
-                            </>
-                          )}
+                            ) : (
+                              <>
+                                <img
+                                  src="/images/dashboard/reply-arrow.svg"
+                                  className="me-1"
+                                />
+                                <Link className="ticket-link me-1 text-decoration-none">
+                                  Reply
+                                </Link>
+                              </>
+                            )}
+                          </div>
+                          <div
+                            onClick={(e) =>
+                              handleDeleteComment(e, comments?._id)
+                            }
+                            className="ms-2"
+                          >
+                            <img
+                              src="/images/icons/delete_icon.png"
+                              className="me-1"
+                            />
+                            <Link className="ticket-link me-1 text-decoration-none text-danger">
+                              Delete
+                            </Link>
+                          </div>
                         </div>
                       </div>
                       <p className="comment-txt p-2 mb-0">
                         {comments?.comment}
                       </p>
+
+                      {comments?.replyText && (
+                        <div
+                          style={{ borderLeft: "2px solid #f8f9fa" }}
+                          className="text-start ms-5"
+                        >
+                          {comments?.replyText.map((reply) => (
+                            <div className="bg-white p-2 mb-3">
+                              <div className="d-flex align-items-center justify-content-between">
+                                <div>
+                                  <div className="d-flex align-items-center">
+                                    <img
+                                      className="w_20_h_20 me-1"
+                                      src={reply?.creator_Id?.profile_Pic}
+                                      alt=""
+                                    />
+                                    <p className="commenter-name my-auto">
+                                      {reply?.creator_Id?.name}
+                                    </p>
+                                    {/* <p className="comment-time m-auto">
+                                      {moment(reply?.createdAt).calendar()}
+                                    </p> */}
+                                  </div>
+                                  <p className="comment-txt p-2 mb-0">
+                                    {reply?.text}
+                                  </p>
+                                </div>
+                                <div></div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                       {reply[index] && (
                         <div className="bg-white rounded p-2 my-3 task_reply">
-                          <form onSubmit={handleSubmit}>
+                          <form
+                            onSubmit={(e) => handleSubmit(e, comments?._id)}
+                          >
                             <div className="d-flex justify-content-between">
                               <img
-                                src="/images/dashboard/Avatar2.png"
+                                src={userData?.profile_Pic}
                                 alt=""
-                                className="comment-avatar m-auto mt-2"
+                                className="comment-avatar m-auto mt-2 w_20_h_20"
                               />
                               <textarea
                                 type="text"
                                 className="p-2 w-100 mx-2 comment-txt"
                                 name="reply"
                                 placeholder="Reply..."
-                                //   value={replyText[index] || ""}
-                                //   onChange={(e) => handleReplyChange(e, index)}
                                 defaultValue=""
-                                onChange={(e) => setNewReply(e.target.value)}
+                                onChange={(e) => setReplyMsg(e.target.value)}
                               />
                               <button type="submit" className="reply-btn">
                                 Reply
                               </button>
                               <button
-                                id="reset"
                                 type="reset"
+                                id="reset"
                                 className="d-none"
                               >
                                 reset
@@ -226,25 +321,34 @@ const SigDocComments = () => {
                       )}
                     </div>
                   </>
-                ))}
+                ))
+              ) : (
+                <>
+                  <h3 className="bg-white rounded p-2 py-4 mb-3">
+                    No Comments Found
+                  </h3>
+                </>
+              )}
 
               <div className="bg-white rounded p-2 mb-3">
                 <div className="d-flex  justify-content-between">
                   <div className="d-flex justify-content-between">
                     <img
-                      src="/images/dashboard/Avatar2.png"
+                      src={userData?.profile_Pic}
                       alt=""
-                      className="comment-avatar m-auto mt-2"
+                      className="comment-avatar m-auto mt-2 w_50_h_50"
                     />
                     <textarea
                       name="comment"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
                       placeholder="Add a comment…"
                       id=""
-                      cols="30"
-                      rows="10"
                       className="comment-inbox m-2 p-2"
                     ></textarea>
-                    <button className="reply-btn">Send</button>
+                    {/* <button onClick={addComment} className="reply-btn">
+                      Send
+                    </button> */}
                   </div>
                 </div>
               </div>

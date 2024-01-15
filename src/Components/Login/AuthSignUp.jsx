@@ -5,11 +5,27 @@ import { useNavigate } from "react-router-dom";
 import { adminSignUp } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 import Swal from "sweetalert2";
 import classNames from "classnames";
-import { Button } from "rsuite";
+import { Button, SelectPicker } from "rsuite";
 
 const AuthSignUp = () => {
   const [passVisible, setPassVisible] = useState(false);
   const [loader, setLoader] = useState(false);
+  const [value, setValue] = useState(null);
+  const data = [
+    "0-10",
+    "10-50",
+    "50-80",
+    "80-100",
+    "100-150",
+    "150-200",
+    "200-250",
+    "250-300",
+  ].map((item) => ({ label: item, value: item }));
+  const companyTypeOptions = [
+    "IT Services",
+    "Hr Related",
+    "Tech Solutions",
+  ].map((item) => ({ label: item, value: item }));
 
   const {
     register,
@@ -51,8 +67,8 @@ const AuthSignUp = () => {
     <>
       <div className="container-fluid login-bg">
         <div className="row flex-nowrap">
-          <div className="col-5 login-form signup-form  p-4">
-            <div className="form-login py-0">
+          <div className="col-5 login-form signup-form  p-4 overflow-scroll">
+            <div className="form-login py-0 position-sticky top-0 bg-white">
               <img src="/images/Myot-logo.png" className="logo" />
               <h2 className="mb-3 fs-7 fw-bolder myot">Myot</h2>
               <p className="login-desc pb-4">
@@ -192,6 +208,50 @@ const AuthSignUp = () => {
                     <p className="errorText mt-1">
                       Please enter 9 digit number
                     </p>
+                  )}
+              </div>
+              <div className="mb-3 col-6">
+                <label className="form-label" htmlFor="">
+                  Company Type
+                </label>
+                <select
+                  name="companyType"
+                  className="form-control"
+                  {...register("companyType", { required: true })}
+                >
+                  <option value="">Select Company Type</option>
+                  {companyTypeOptions &&
+                    companyTypeOptions?.map((item) => (
+                      <option className="py-2 px-1" value={item?.value}>
+                        {item?.label}
+                      </option>
+                    ))}
+                </select>
+                {errors.companyType &&
+                  errors.companyType.type === "required" && (
+                    <p className="errorText mt-1">Company type is required</p>
+                  )}
+              </div>
+              <div className="mb-3 col-6">
+                <label className="form-label" htmlFor="">
+                  Member Size
+                </label>
+                <select
+                  name="companySize"
+                  className="form-control"
+                  {...register("companySize", { required: true })}
+                >
+                  <option className="py-2 px-1" value=''>Select Company Size</option>
+                  {data &&
+                    data?.map((item) => (
+                      <option className="py-2 px-1" value={item?.value}>
+                        {item?.label}
+                      </option>
+                    ))}
+                </select>
+                {errors.companySize &&
+                  errors.companySize.type === "required" && (
+                    <p className="errorText mt-1">Company size is required</p>
                   )}
               </div>
 
