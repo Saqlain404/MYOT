@@ -126,7 +126,7 @@ const Users = () => {
         const returnData = {};
         returnData.id = list?.employId;
         returnData.name = list?.name;
-        returnData.department = list?.department_Id?.departmentName;
+        returnData.department = list?.department_Id[0]?.departmentName || "NA";
         returnData.role = (
           <>
             {list?.employRole?.map((role, index) => (
@@ -590,7 +590,9 @@ const Users = () => {
                   </div>
                   <div class="modal-body">
                     <form action="" onSubmit={handleSubmit(onSubmit)}>
-                      <label className="my-3" htmlFor="img">Upload Profile Picture</label>
+                      <label className="my-3" htmlFor="img">
+                        Upload Profile Picture
+                      </label>
                       <div className=" d-flex justify-content-start mb-4">
                         <div className="position-relative">
                           <img
@@ -627,7 +629,7 @@ const Users = () => {
                             placeholder="Full Name*"
                             name="name"
                             className={classNames(
-                              "col-12 modal-input td-text  p-2",
+                              "form-control col-12 modal-input td-text  p-2",
                               {
                                 "is-invalid": errors.name,
                               }
@@ -653,7 +655,7 @@ const Users = () => {
                             placeholder="Email ID "
                             name="email"
                             className={classNames(
-                              "col-12 modal-input td-text w-100 p-2",
+                              "form-control col-12 modal-input td-text  p-2",
                               {
                                 "is-invalid": errors.email,
                               }
@@ -679,7 +681,7 @@ const Users = () => {
                             placeholder="Mobile No"
                             name="mobilenumber"
                             className={classNames(
-                              "col-4 modal-input td-text w-100 p-2",
+                              "form-control col-12 modal-input td-text  p-2",
                               {
                                 "is-invalid": errors.mobilenumber,
                               }
@@ -712,7 +714,7 @@ const Users = () => {
                                 placeholder="Employee Tittle"
                                 name="employTitle"
                                 className={classNames(
-                                  "col-12 modal-input td-text  p-2",
+                                  "form-control col-12 modal-input td-text  p-2",
                                   {
                                     "is-invalid": errors.employTitle,
                                   }
@@ -739,7 +741,7 @@ const Users = () => {
                                 placeholder="Salary"
                                 name="salary"
                                 className={classNames(
-                                  "col-12 modal-input td-text w-100 p-2",
+                                  "form-control col-12 modal-input td-text  p-2",
                                   {
                                     "is-invalid": errors.salary,
                                   }
@@ -761,13 +763,13 @@ const Users = () => {
                                 // className="col-4 modal-input td-text w-100 p-2"
                                 name="employid"
                                 className={classNames(
-                                  "col-12 modal-input td-text w-100 p-2",
+                                  "form-control col-12 modal-input td-text  p-2",
                                   {
                                     "is-invalid": errors.employid,
                                   }
                                 )}
                                 {...register("employid", {
-                                  // required:"Please enter employee id"
+                                  required:"Please enter employee id"
                                 })}
                               />
                               {errors.employid && (
@@ -780,7 +782,7 @@ const Users = () => {
                               <select
                                 name="department_id"
                                 className={classNames(
-                                  "col-12 modal-input td-text w-100 p-2",
+                                  "form-control col-12 modal-input td-text  p-2",
                                   {
                                     "is-invalid": errors.department_id,
                                   }
@@ -808,8 +810,8 @@ const Users = () => {
                             </div>
                             <div className="col-4 mt-3">
                               <select
-                                className={classNames(
-                                  "col-12 modal-input td-text w-100 p-2",
+                                 className={classNames(
+                                  "form-control col-12 modal-input td-text  p-2",
                                   {
                                     "is-invalid": errors.gender,
                                   }
@@ -836,7 +838,7 @@ const Users = () => {
                                 // className="col-4 modal-input td-text w-100 p-2"
                                 name="password"
                                 className={classNames(
-                                  "col-12 modal-input td-text w-100 p-2",
+                                  "form-control col-12 modal-input td-text  p-2",
                                   {
                                     "is-invalid": errors.password,
                                   }

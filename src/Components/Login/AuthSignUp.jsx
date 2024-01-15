@@ -93,7 +93,7 @@ const AuthSignUp = () => {
                 />
                 {errors.companyName && (
                   <small className="errorText mt-1 ">
-                    This field is required
+                    Company name is required
                   </small>
                 )}
               </div>
@@ -112,7 +112,7 @@ const AuthSignUp = () => {
                   placeholder="example@gmail.com"
                   autoComplete="off"
                   {...register("email", {
-                    required: "This field is required",
+                    required: "Email is required",
                     pattern: {
                       value:
                         /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -140,7 +140,7 @@ const AuthSignUp = () => {
                   id="password"
                   autoComplete="off"
                   {...register("password", {
-                    required: "* Please Enter Your Password",
+                    required: "* Passowrd is required",
                     pattern: {
                       value:
                         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
@@ -194,7 +194,7 @@ const AuthSignUp = () => {
 
                 {errors.mobileNumber &&
                   errors.mobileNumber.type === "required" && (
-                    <p className="errorText mt-1">This field is required</p>
+                    <p className="errorText mt-1">Phone number is required</p>
                   )}
 
                 {errors.mobileNumber &&
@@ -216,7 +216,9 @@ const AuthSignUp = () => {
                 </label>
                 <select
                   name="companyType"
-                  className="form-control"
+                  className={classNames("form-control", {
+                    "is-invalid": errors.companyType,
+                  })}
                   {...register("companyType", { required: true })}
                 >
                   <option value="">Select Company Type</option>
@@ -238,10 +240,14 @@ const AuthSignUp = () => {
                 </label>
                 <select
                   name="companySize"
-                  className="form-control"
+                  className={classNames("form-control", {
+                    "is-invalid": errors.companySize,
+                  })}
                   {...register("companySize", { required: true })}
                 >
-                  <option className="py-2 px-1" value=''>Select Company Size</option>
+                  <option className="py-2 px-1" value="">
+                    Select Company Size
+                  </option>
                   {data &&
                     data?.map((item) => (
                       <option className="py-2 px-1" value={item?.value}>
@@ -261,7 +267,9 @@ const AuthSignUp = () => {
                 </label>
                 <textarea
                   type="text"
-                  className="form-control text-area"
+                  className={classNames("form-control text-area", {
+                    "is-invalid": errors.address,
+                  })}
                   id="address"
                   name="address"
                   placeholder="Please Enter Your Current Address"
@@ -270,7 +278,7 @@ const AuthSignUp = () => {
                 />
                 {errors.address && (
                   <small className="errorText mt-1">
-                    This field is required
+                    Address is required
                   </small>
                 )}
               </div>

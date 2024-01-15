@@ -12,7 +12,7 @@ const ContactUs = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: "onChange" });
 
   const onSubmit = async (datas) => {
     console.log(datas);
@@ -122,7 +122,7 @@ const ContactUs = () => {
                           type="text"
                           placeholder="Name"
                           className={classNames(
-                            "col-12 profile-edit-input p-2",
+                            "form-control col-12 profile-edit-input p-2",
                             {
                               "is-invalid": errors.name,
                             }
@@ -150,7 +150,7 @@ const ContactUs = () => {
                           type="email"
                           placeholder="Email"
                           className={classNames(
-                            "col-12 profile-edit-input p-2",
+                            "form-control col-12 profile-edit-input p-2",
                             {
                               "is-invalid": errors.email,
                             }
@@ -178,7 +178,7 @@ const ContactUs = () => {
                           type="number"
                           placeholder="Phone Number"
                           className={classNames(
-                            "col-12 profile-edit-input p-2",
+                            "form-control col-12 profile-edit-input p-2",
                             {
                               "is-invalid": errors.phoneNumber,
                             }
@@ -210,12 +210,11 @@ const ContactUs = () => {
                           id="message"
                           placeholder="Type your message..."
                           className={classNames(
-                            "col-12 profile-edit-input p-2",
+                            "form-control col-12 profile-edit-input p-2 text-area",
                             {
                               "is-invalid": errors.message,
                             }
                           )}
-                          style={{ minHeight: "100px" }}
                         ></textarea>
                         {errors.message && (
                           <div className="invalid-feedback text-start">

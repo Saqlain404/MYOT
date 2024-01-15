@@ -18,18 +18,24 @@ const Sidebar = () => {
 
   const location = useLocation();
 
-  // useEffect(() => {
-  //   let roles = userData?.employRole;
-  //   if (!roles.includes("Admin")) {
-  //     alert("You have not assigned a role");
-  //     navigate("/Admin/Login");
-  //     return false;
-  //   }
-  // }, []);
-
   useEffect(() => {
     let id = localStorage.getItem("token-company");
     if (!id) {
+      navigate("/Login");
+    }
+
+    let roles = userData?.employRole;
+
+    if (!roles?.includes("Admin")) {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: "You may not have permission to access",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 7000,
+      });
       navigate("/Login");
     }
   }, []);

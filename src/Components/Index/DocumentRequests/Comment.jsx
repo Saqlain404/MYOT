@@ -63,6 +63,7 @@ const DocComments = () => {
       console.log(error);
     }
   };
+
   const toggleReply = (index) => {
     setReply((prevState) => ({
       ...prevState,
@@ -79,11 +80,11 @@ const DocComments = () => {
   //   };
 
   const handleSubmit = async (e, id) => {
-    e.preventDefault()
+    e.preventDefault();
     if (replyMsg === "") {
       Swal.fire({
         toast: true,
-        icon: "success",
+        icon: "error",
         position: "top-end",
         title: "Please enter a reply",
         showConfirmButton: false,
@@ -112,7 +113,7 @@ const DocComments = () => {
       });
       document.getElementById("reset").click();
       setNewReply("");
-      setReply(false)
+      setReply(false);
       getCommentLists();
     }
   };
@@ -129,7 +130,7 @@ const DocComments = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                  <a className="nav-link fw-bold"> Requests / Comments</a>
+                    <a className="nav-link fw-bold"> Requests / Comments</a>
                   </li>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">
@@ -181,7 +182,7 @@ const DocComments = () => {
                             alt=""
                             className="m-2 w_20_h_20"
                           />
-                          <p className="commenter-name m-auto">
+                          <p className="commenter-name m-auto text-capitalize">
                             {comments?.creator_Id?.name}
                           </p>
                           <p className="comment-time m-auto">
@@ -244,7 +245,7 @@ const DocComments = () => {
                                       src={reply?.creator_Id?.profile_Pic}
                                       alt=""
                                     />
-                                    <p className="commenter-name my-auto">
+                                    <p className="commenter-name my-auto text-capitalize">
                                       {reply?.creator_Id?.name}
                                     </p>
                                     {/* <p className="comment-time m-auto">

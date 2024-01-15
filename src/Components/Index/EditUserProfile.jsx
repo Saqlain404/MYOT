@@ -228,9 +228,12 @@ const EditUserProfile = ({ userId }) => {
                     placeholder="Full Name*"
                     name="name"
                     // defaultValue={userDetails?.name}
-                    className={classNames("col-12 modal-input td-text  p-2", {
-                      "is-invalid": errors.name,
-                    })}
+                    className={classNames(
+                      "form-control col-12 modal-input td-text  p-2",
+                      {
+                        "is-invalid": errors.name,
+                      }
+                    )}
                     {...register("name", {
                       required: "* Name is required",
                       pattern: {
@@ -252,7 +255,7 @@ const EditUserProfile = ({ userId }) => {
                     placeholder="Email ID "
                     name="email"
                     className={classNames(
-                      "col-12 modal-input td-text w-100 p-2",
+                      "form-control col-12 modal-input td-text  p-2",
                       {
                         "is-invalid": errors.email,
                       }
@@ -277,7 +280,7 @@ const EditUserProfile = ({ userId }) => {
                     placeholder="Mobile No"
                     name="mobileNumber"
                     className={classNames(
-                      "col-4 modal-input td-text w-100 p-2",
+                      "form-control col-12 modal-input td-text  p-2",
                       {
                         "is-invalid": errors.mobileNumber,
                       }
@@ -301,7 +304,7 @@ const EditUserProfile = ({ userId }) => {
                         name="employTitle"
                         defaultValue={userDetails?.employTitle}
                         className={classNames(
-                          "col-12 modal-input td-text  p-2",
+                          "form-control col-12 modal-input td-text  p-2",
                           {
                             "is-invalid": errors.employTitle,
                           }
@@ -327,12 +330,12 @@ const EditUserProfile = ({ userId }) => {
                         placeholder="Salary"
                         name="salary"
                         className={classNames(
-                          "col-12 modal-input td-text w-100 p-2",
+                          "form-control col-12 modal-input td-text  p-2",
                           {
                             "is-invalid": errors.salary,
                           }
                         )}
-                        {...register("salary")}
+                        {...register("salary", {required:"Please enter salary"})}
                       />
                       {errors.salary && (
                         <div className="invalid-feedback">
@@ -347,7 +350,7 @@ const EditUserProfile = ({ userId }) => {
                         // className="col-4 modal-input td-text w-100 p-2"
                         name="employId"
                         className={classNames(
-                          "col-12 modal-input td-text w-100 p-2",
+                          "form-control col-12 modal-input td-text  p-2",
                           {
                             "is-invalid": errors.employId,
                           }
@@ -366,7 +369,7 @@ const EditUserProfile = ({ userId }) => {
                       <select
                         name="department_id"
                         className={classNames(
-                          "col-12 modal-input td-text w-100 p-2",
+                          "form-control col-12 modal-input td-text  p-2",
                           {
                             "is-invalid": errors.department_id,
                           }
@@ -391,7 +394,7 @@ const EditUserProfile = ({ userId }) => {
                     <div className="col-md-6 mt-3">
                       <select
                         className={classNames(
-                          "col-12 modal-input td-text w-100 p-2",
+                          "form-control col-12 modal-input td-text  p-2",
                           {
                             "is-invalid": errors.gender,
                           }
