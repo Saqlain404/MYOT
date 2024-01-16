@@ -109,9 +109,9 @@ const SettingsAprv = () => {
                   </div>
                   <div>
                     {/* <p className="settings-txt">Select Logo</p> */}
-                    <div className="d-flex mt-2">
+                    <div className="d-flex mt-2 flex-wrap">
                     {logoImage?.map((logo)=>(
-                        <img className="settingLogo" alt="logo" src={logo?.logo}/>
+                        <img className="settingLogo mb-3 me-2 mt-1" alt="logo" src={logo?.logo}/>
                       ))}
                     </div>
                     <p className="settings-txt mt-3 mb-2">Upload Logo</p>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 import { ContactUsEmployee } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
-import { ToastContainer } from "react-toastify";
+import { Button } from "rsuite";
 
 const ContactUsEmpl = () => {
   const [contactData, setContactData] = useState({
@@ -41,7 +41,7 @@ const ContactUsEmpl = () => {
     <>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-2 sidebar">
+          <div className="col-2 sidebar"> 
             <SideBarEmpl />
           </div>
           <div className="col middle-content bg-body-tertiary p-0 min-vh-100">
@@ -50,7 +50,7 @@ const ContactUsEmpl = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link fw-bold ms-2">
-                      Template / Template Version 1.0 / View
+                      Help / Contact Us
                     </a>
                   </li>
                 </ul>
@@ -105,7 +105,7 @@ const ContactUsEmpl = () => {
                     <p className="td-text border-bottom">Contact Us</p>
                   </Link>
                 </div>
-                <div className="col-12 d-flex">
+                <div className="col-12 d-flex mt-3">
                   <div className="col-6">
                     <p className="help-support-heading">Get in Touch</p>
                     <p className="help-support-text">
@@ -169,10 +169,20 @@ const ContactUsEmpl = () => {
                           className="col-12 profile-edit-input p-2"
                         ></textarea>
                       </div>
-                      <button className="contact-form-btn" type="submit">
+                      <Button
+                        appearance="primary"
+                        className="contact-form-btn btn mb-3 me-2 rounded-2"
+                        type="submit"
+                        disabled={
+                          !contactData?.message ||
+                          !contactData?.mobileNumber ||
+                          !contactData?.email ||
+                          !contactData?.name
+                        }
+                      >
                         Submit
-                      </button>
-                      <ToastContainer />
+                      </Button>
+                      {/* <ToastContainer /> */}
                     </form>
                   </div>
                   <div className="col-6">

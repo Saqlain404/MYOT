@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import SideBarEmpl from "./SideBarEmpl";
 import { AddLogoEmply, GetLogoEmply } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 import { get } from "react-hook-form";
+import { Button } from "rsuite";
 
 const EmplySetting = () => {
   const[logoImage,setLogoImage] = useState()
@@ -26,6 +27,7 @@ const EmplySetting = () => {
     formData.append("creator_Id",creator_Id)
     
     const response = await AddLogoEmply(formData);
+    setLogoData(null)
     getLogo()
     if (!response.data?.error) {
       console.log(response);
@@ -102,9 +104,9 @@ const EmplySetting = () => {
                   </div>
                   <div>
                     {/* <p className="settings-txt">Select Logo</p> */}
-                    <div className="d-flex mt-1">
+                    <div className="d-flex mt-1 flex-wrap">
                     {logoImage?.map((logo)=>(
-                        <img className="settingLogo" alt="logo" src={logo?.logo}/>
+                        <img className="settingLogo mb-3 mt-1 me-2 " alt="logo" src={logo?.logo}/>
                       ))}
                     </div>
                     <p className="settings-txt mt-3 mb-2">Upload Logo</p>
@@ -139,9 +141,11 @@ const EmplySetting = () => {
                       className="color-palete"
                     /> */}
                     <div className="d-flex justify-content-end">
-                      <button type="submit" className="notify-admin-btn mt-4 m-2">
+                    <Button appearance="primary" type="submit" className="  notify-admin-btn btn mt-4 m-2" disabled={
+                        !logoData?.logo
+                      }>
                         Save
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </div>
