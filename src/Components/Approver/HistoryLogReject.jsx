@@ -10,6 +10,7 @@ import {
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import { Checkbox } from "antd";
+import Swal from "sweetalert2";
 
 const HistoryLogReject = () => {
   const [documentRequests, setDocumentRequests] = useState([]);
@@ -185,7 +186,7 @@ const HistoryLogReject = () => {
                       alt=""
                       className="me-2"
                     />
-                    View Users Details
+                    View Template
                   </a>
                 </Link>
               </li>
@@ -291,13 +292,24 @@ const HistoryLogReject = () => {
     e.preventDefault();
     let creator_Id =
       localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+      let trimmedComment = comment.trim()
     let data = await AddCommentApprv({
-      comment,
+      comment: trimmedComment,
       templete_Id,
       creator_Id,
     });
     if (!data?.error) {
       setComment("");
+    }else if(trimmedComment===""){
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Please enter a comment",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
     }
   };
 
@@ -354,37 +366,37 @@ const HistoryLogReject = () => {
   //   fetchData();
   // }, [searchData]);
 
-  const handleSearch = async () => {
-    const result = await RejectedTempeleteSearch(searchData, ids);
-    const searchResult = result?.data?.results?.templete;
-    console.log(searchResult);
+  // const handleSearch = async () => {
+  //   const result = await RejectedTempeleteSearch(searchData, ids);
+  //   const searchResult = result?.data?.results?.templete;
+  //   console.log(searchResult);
 
-    if (searchResult && Array.isArray(searchResult)) {
-      const mappedResult = searchResult?.map((document) => ({
-        documentName: document?.templeteName,
-        img: [document?.manager?.[0]?.profile_Pic],
-        version: document?.templeteVersion?.[0]?.version,
-        assignedTo: [document?.manager?.[0]?.name],
-        department: [document?.manager?.[0]?.department?.[0]?.departmentName],
-        action: (
-          <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
-        ),
-        dateofSigning: [moment(document?.createdAt).format("L")],
-        comments: (
-          <img
-            src="/images/dashboard/Comment.png"
-            className="mx-auto d-block"
-          />
-        ),
-        status: [document?.status],
-      }));
-      setDocumentRequests(mappedResult);
-    }
-  };
+  //   if (searchResult && Array.isArray(searchResult)) {
+  //     const mappedResult = searchResult?.map((document) => ({
+  //       documentName: document?.templeteName,
+  //       img: [document?.manager?.[0]?.profile_Pic],
+  //       version: document?.templeteVersion?.[0]?.version,
+  //       assignedTo: [document?.manager?.[0]?.name],
+  //       department: [document?.manager?.[0]?.department?.[0]?.departmentName],
+  //       action: (
+  //         <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" />
+  //       ),
+  //       dateofSigning: [moment(document?.createdAt).format("L")],
+  //       comments: (
+  //         <img
+  //           src="/images/dashboard/Comment.png"
+  //           className="mx-auto d-block"
+  //         />
+  //       ),
+  //       status: [document?.status],
+  //     }));
+  //     setDocumentRequests(mappedResult);
+  //   }
+  // };
 
-  useEffect(() => {
-    handleSearch();
-  }, [searchData]);
+  // useEffect(() => {
+  //   handleSearch();
+  // }, [searchData]);
 
   return (
     <>
@@ -398,7 +410,7 @@ const HistoryLogReject = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
+                    <a className="nav-link fw-bold ms-2">
                       History Log / Rejected
                     </a>
                   </li>
@@ -515,7 +527,7 @@ const HistoryLogReject = () => {
                     className="text-nowrap"
                     hover
                     data={{ ...tasks, columns: visibleColumns }}
-                    paging={tasks?.rows?.length > 5 ? true:false}
+                    // paging={tasks?.rows?.length > 5 ? true:false}
                     // data={tasks}
                     noBottomColumns
                     paginationLabel={"«»"}

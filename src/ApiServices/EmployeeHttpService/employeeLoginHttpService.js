@@ -20,13 +20,32 @@ export async function employeeLogin(formData) {
       await localStorage.removeItem("token-company");
       await localStorage.setItem("token-company", headers["x-auth-token-company"]);
       await localStorage.setItem("user_id", data?.results?.employee._id);
-      toast.success("Success");
-    } else toast.error(data.message);
+      // toast.success("Success");
+      Swal.fire({
+        toast: true,
+        icon: "Success",
+        position:"top-end",
+        title: "Login Successfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    } else
+    Swal.fire({
+      toast: true,
+      icon: "error",
+      position:"top-end",
+      title: data?.message,
+      showConfirmButton: false,
+      timerProgressBar: true,
+      timer: 3000,
+    });
 
     console.log("error" + data.message);
     return { data };
   } catch (error) {
-    if (error?.response) toast.error(error?.response.data.message);
+    if (error?.response)
+    //  toast.error(error?.response.data.message);
     return { error };
   }
 }
@@ -97,7 +116,7 @@ export async function ContactUsEmployee(formData) {
         toast: true,
         icon: "error",
         position:"top-end",
-        title: "Error",
+        title: data?.message,
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -106,7 +125,8 @@ export async function ContactUsEmployee(formData) {
 
     if (!data.error) return { data };
   } catch (error) {
-    if (error?.response) toast.error(error.response.data.message);
+    if (error?.response) 
+    // toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -137,7 +157,7 @@ export async function AddCommentEmply(formData) {
         toast: true,
         icon: "error",
         position:"top-end",
-        title: "Error",
+        title: data?.message,
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -146,7 +166,8 @@ export async function AddCommentEmply(formData) {
 
     if (!data.error) return { data };
   } catch (error) {
-    if (error?.response) toast.error(error.response.data.message);
+    if (error?.response)
+    //  toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -176,7 +197,7 @@ export async function AddReplyCommentEmply(formData) {
         toast: true,
         icon: "error",
         position:"top-end",
-        title: "Error",
+        title: data?.message,
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -185,7 +206,8 @@ export async function AddReplyCommentEmply(formData) {
 
     if (!data.error) return { data };
   } catch (error) {
-    if (error?.response) toast.error(error.response.data.message);
+    if (error?.response)
+    //  toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -193,7 +215,7 @@ export async function AddReplyCommentEmply(formData) {
 export async function fetchTemplateData() {
   try {
     const response = await employeeHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/templete-list`
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/templete-list/${id}`
     );
 
     if (!response.data?.error) {
@@ -202,14 +224,23 @@ export async function fetchTemplateData() {
 
       return [templateList];
     } else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -227,14 +258,23 @@ export async function EmployeeDashList(ids) {
 
       return [templateList];
     } else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -252,14 +292,23 @@ export async function documentViewDetails(id) {
 
       return [templateList];
     } else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -278,14 +327,23 @@ export async function TicketListEmply() {
 
       return [ticketList];
     } else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -302,14 +360,23 @@ export async function OnGoingListEmply() {
 
       return [ticketList];
     } else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -326,14 +393,23 @@ export async function NewTicketEmply() {
 
       return [ticketList];
     } else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -350,14 +426,23 @@ export async function ResolveListEmpl(ids) {
 
       return [ticketList];
     } else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -376,14 +461,23 @@ export async function PresentDocumentDash(ids) {
 
       return [docPresent];
     } else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -400,14 +494,23 @@ export async function DocRequestCount() {
 
       return [docData];
     } else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -424,14 +527,23 @@ export async function CommentViewEmply(id) {
 
       return {commentData};
     } else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -463,7 +575,7 @@ export async function DeleteCommentEmpl(comment_id) {
         toast: true,
         icon: "error",
         position:"top-end",
-        title: "Error",
+        title: response?.data?.message,
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -474,7 +586,7 @@ export async function DeleteCommentEmpl(comment_id) {
     if (error.response) {
       // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -492,14 +604,23 @@ export async function totalTicketCount(ids) {
 
       return [docPresent];
     } else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -526,22 +647,22 @@ export async function employeProfileDetail() {
       // });
       return [templateList];
     } else {
-      // Swal.fire({
-      //   toast: true,
-      //   icon: "error",
-      //   position:"top-end",
-      //   title: "Error",
-      //   showConfirmButton: false,
-      //   timerProgressBar: true,
-      //   timer: 3000,
-      // });
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -559,14 +680,23 @@ export async function GetLogoEmply() {
 
       return [logo];
     } else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -597,7 +727,7 @@ export async function updateProfile(formData) {
         toast: true,
         icon: "error",
         position:"top-end",
-        title: "Error in Update Password",
+        title: data?.message,
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -636,17 +766,18 @@ export async function AddLogoEmply(formData) {
       Swal.fire({
         toast: true,
         icon: "error",
-        title: "Error",
         position:"top-end",
+        title: data?.message,
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
-    });
+      });
     }
 
     return { data };
   } catch (error) {
-    if (error.response) toast.error(error.response.data.message);
+    if (error.response)
+    //  toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -674,17 +805,18 @@ export async function AddDocument(formData) {
       Swal.fire({
         toast: true,
         icon: "error",
-        title: "Error",
         position:"top-end",
+        title: data?.message,
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
-    });
+      });
   }
 
     return { data };
   } catch (error) {
-    if (error.response) toast.error(error.response.data.message);
+    if (error.response) 
+    // toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -713,16 +845,17 @@ export async function CreateEmplyTicket(formData) {
       Swal.fire({
         toast: true,
         icon: "error",
-        title: "Error",
         position:"top-end",
+        title: data?.message,
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
-    });
+      });
     }
     return { data };
   } catch (error) {
-    if (error.response) toast.error(error.response.data.message);
+    if (error.response) 
+    // toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -745,14 +878,23 @@ if (!response.data?.error) {
 
   return documentList;
 }else {
-      toast.error(response.data.message);
+      // toast.error(response.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response.data.message);
+      // toast.error(error.response.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -773,14 +915,23 @@ export async function EmpyHistoryLogList(ids) {
 
       return [templateList];
     } else {
-      toast.error(response?.data.message);
+      // toast.error(response?.data.message);
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: response?.data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
       return null;
     }
   } catch (error) {
     if (error.response) {
-      toast.error(error.response?.data.message);
+      // toast.error(error.response?.data.message);
     } else {
-      toast.error('An error occurred while fetching the template IDs.');
+      // toast.error('An error occurred while fetching the template IDs.');
     }
     return null;
   }
@@ -813,7 +964,8 @@ export async function searchDoc(searchKey) {
 
     if (!data?.error) return { data };
   } catch (error) {
-    if (error?.response) toast.error(error.response.data.message);
+    if (error?.response) 
+    // toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -843,7 +995,8 @@ export async function searchDash(searchKey) {
 
     if (!data?.error) return { data };
   } catch (error) {
-    if (error?.response) toast.error(error.response.data.message);
+    if (error?.response) 
+    // toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -874,7 +1027,8 @@ export async function searchHistoryLog(searchKey) {
 
     if (!data?.error) return { data };
   } catch (error) {
-    if (error?.response) toast.error(error.response.data.message);
+    if (error?.response)
+    //  toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -895,12 +1049,12 @@ export async function DocumentCount() {
       Swal.fire({
         toast: true,
         icon: "error",
-        title: "Error",
         position:"top-end",
+        title: data?.message,
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
-    });
+      });
     }
 
     if (!data?.error) return { data };
@@ -920,11 +1074,22 @@ export async function DasboardCount() {
     if (!data?.error) {
       // toast.success(data.message);
       console.log(data.message)
-    } else toast?.error(data.message);
+    } else 
+    // toast?.error(data.message);
+    Swal.fire({
+      toast: true,
+      icon: "error",
+      position:"top-end",
+      title: data?.message,
+      showConfirmButton: false,
+      timerProgressBar: true,
+      timer: 3000,
+    });
 
     if (!data?.error) return { data };
   } catch (error) {
-    if (error?.response) toast.error(error.response.data.message);
+    if (error?.response)
+    //  toast.error(error.response.data.message);
     return { error };
   }
 }
@@ -952,7 +1117,7 @@ export async function LogOutEmply() {
         toast: true,
         icon: "error",
         position:"top-end",
-        title: "Error",
+        title: data?.message,
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -961,7 +1126,8 @@ export async function LogOutEmply() {
 
     if (!data?.error) return { data };
   } catch (error) {
-    if (error?.response) toast.error(error.response.data.message);
+    if (error?.response)
+    //  toast.error(error.response.data.message);
     return { error };
   }
 }

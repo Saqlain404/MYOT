@@ -28,9 +28,13 @@ const HomeAprv = () => {
   const [templateNames, setTemplateNames] = useState(null);
   const [docCount, setDocCount] = useState(null);
   const [updatedStatus, setUpdatedStatus] = useState();
+  const[profileDetail,setProfileDetail] = useState(null);
 
   const [showClearButton, setShowClearButton] = useState(false);
 
+  useEffect(()=>{
+    getTaskData()
+  },[])
   const [tasks, setTasks] = useState({
     columns: [
       {
@@ -100,6 +104,7 @@ const HomeAprv = () => {
 
   const ids =
     localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+    console.log(ids)
 
   // const handleSearch = async () => {
   //   const result = await searchTemplete(searchData, ids);
@@ -135,8 +140,8 @@ const HomeAprv = () => {
   // }, [searchData]);
 
   const getTaskData = async () => {
+    console.log(ids);
     let data = await approverTempleteList(ids);
-    console.log(data);
 
     const newRows = [];
     if (!data?.error) {
@@ -267,7 +272,7 @@ const HomeAprv = () => {
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
               <li>
                 <Link
-                  to={`/Approver/Template-view/${list?._id}`}
+                  to={`/Approver/Template-view/${list?._id || "Template Not Found"}`}
                   className="text-decoration-none"
                 >
                   <a class="dropdown-item border-bottom" href="/">
@@ -367,6 +372,7 @@ const HomeAprv = () => {
       const documentCountResult = await homeCount();
       if (!documentCountResult?.error && documentCountResult) {
         const counted = documentCountResult;
+        console.log(counted)
         setDocCount(counted);
       }
     };
@@ -404,16 +410,17 @@ const HomeAprv = () => {
  
 
 
-  const[profileDetail,setProfileDetail] = useState(null);
+
   useEffect(()=>{
     const details = async ()=>{
       const detailResults = await profileDetails(ids);
       const data = detailResults?.[0]?.approver;
       setProfileDetail(data)
+      console.log(data)
     }
     details();
   },[])
-  console.log(profileDetail)
+  // console.log(profileDetail)
 
 
 
@@ -477,7 +484,7 @@ const HomeAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="department-name mb-0 fw-semibold fs-7">
-                        {profileDetail?.department ?( profileDetail?.department_Id?.departmentName): " Not Available"}
+                        {profileDetail?.department_Id ?( profileDetail?.department_Id?.departmentName): " Admin"}
                       </h3>
                     </div>
                   </div>
@@ -517,7 +524,7 @@ const HomeAprv = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {docCount?.totalTempleted || 0}
+                        {docCount?.totalTempleted[0]?.count || 0}
                       </h3>
                     </div>
                   </div>

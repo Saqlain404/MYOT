@@ -56,8 +56,8 @@ const ContactUsAprv = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
-                      Template / Template Version 1.0 / View
+                    <a className="nav-link fw-bold ms-2">
+                      Help / Contact Us
                     </a>
                   </li>
                 </ul>
@@ -112,7 +112,7 @@ const ContactUsAprv = () => {
                     <p className="td-text border-bottom">Contact Us</p>
                   </Link>
                 </div>
-                <div className="col-12 d-flex mb-4 pb-4">
+                <div className="col-12 d-flex mb-4 pb-4 mt-4">
                   <div className="col-6">
                     <p className="help-support-heading">Get in Touch</p>
                     <p className="help-support-text">

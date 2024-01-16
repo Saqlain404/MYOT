@@ -88,6 +88,10 @@ const DashboardAprv = () => {
     selectedColumns: [],
   });
 
+  useEffect(()=>{
+    getTaskData()
+  },[])
+
   const ids =
     localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
 
@@ -374,6 +378,7 @@ const DashboardAprv = () => {
   };
   const count = async () => {
     const data = await dashCount();
+    console.log(data)
     setCountData(data);
   };
 
@@ -436,7 +441,7 @@ const DashboardAprv = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
+                    <a className="nav-link fw-bold ms-2">
                       Dashboard
                     </a>
                   </li>
@@ -482,7 +487,7 @@ const DashboardAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {countData?.totalUser[0]?.count || 0}
+                        {countData?.totalUser[0]?.count || 0 }
                       </h3>
                     </div>
                   </div>
@@ -494,7 +499,7 @@ const DashboardAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {countData?.totalTemplete || 0}
+                        {countData?.totalTemplete[0]?.count || 0}
                       </h3>
                     </div>
                   </div>
@@ -508,7 +513,7 @@ const DashboardAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {countData?.totalDocument || 0}
+                        {countData?.totalDocument[0]?.count || 0}
                       </h3>
                     </div>
                   </div>
@@ -580,8 +585,8 @@ const DashboardAprv = () => {
                   >
                     <p className="text-card">Document Request</p>
                     <div className="table-card3 dashboard-card3-text mt-3">
-                      {docTempleteData?.map((doc) => (
-                        <div className="pb-2 row align-items-center">
+                      {docTempleteData?.map((doc,index) => (
+                        <div className="pb-2 row align-items-center" key={index}>
                           <div className="doc-req-text col-6 me-2">
                             {doc?._id?.[0]?.[0]?.[0]?.departmentName &&
                               doc._id[0][0][0].departmentName.split(" ")[0] || "NA"}

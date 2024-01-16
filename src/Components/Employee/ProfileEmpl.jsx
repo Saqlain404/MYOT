@@ -31,7 +31,7 @@ const ProfileEmpl = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">My Profile / View</a>
+                    <a className="nav-link fw-bold ms-2">My Profile / View</a>
                   </li>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">
@@ -82,13 +82,8 @@ const ProfileEmpl = () => {
                 <div className=" d-flex justify-content-start mb-4">
                   {/* <img src="/images/dashboard/AvatarProfile.svg" alt="" /> */}
                   <img
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                    }}
-                    src={profileDetail?.profile_Pic}
+                  className="w_100_h_100"
+                    src={profileDetail?.profile_Pic ? profileDetail?.profile_Pic : "/images/icons/EmilyWhite.png"}
                     alt="profile_image"
                   />
                 </div>
