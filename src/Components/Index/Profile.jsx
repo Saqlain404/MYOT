@@ -4,7 +4,6 @@ import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import { AdminProfile } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
-import profileImg from "../../assets/logo/high.png";
 import { Button } from "rsuite";
 
 const Profile = () => {
@@ -90,17 +89,10 @@ const Profile = () => {
                   </Link>
                 </div>
                 <div className=" d-flex justify-content-start mb-4">
-                  {/* <img src="/images/dashboard/AvatarProfile.svg" alt="" /> */}
-                  <img
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                    }}
+                  <img className="w_100_h_100"
                     src={
                       (profileData?.profile_Pic && profileData.profile_Pic) ||
-                      profileImg
+                      "/images/icons/user.jpg"
                     }
                   />
                 </div>
@@ -112,7 +104,7 @@ const Profile = () => {
                     <div>
                       <p className="profile-info">Full Name</p>
                       <p className="profile-data text-capitalize">
-                        {profileData?.name}
+                        {profileData?.name || profileData?.companyName}
                       </p>
                     </div>
                     <div>

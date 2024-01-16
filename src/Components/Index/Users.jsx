@@ -93,7 +93,8 @@ const Users = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
   });
@@ -143,7 +144,7 @@ const Users = () => {
             <img src="/images/dashboard/CalendarBlank.png" className="w-auto" />{" "}
             <span className="ms-2">
               {(list?.logIn &&
-                moment(list?.logIn).format("MMM Do YY, h:mm a")) ||
+                moment(list?.logIn).format("MMM Do YY, h:mm A")) ||
                 "NA"}
             </span>
           </>
@@ -279,7 +280,6 @@ const Users = () => {
       "employrole_approver",
       "employrole_department",
       "employrole_signatory",
-      "employrole_employee",
     ];
     roles.forEach((role) => {
       if (datas[role]) {
@@ -332,6 +332,7 @@ const Users = () => {
 
     let { data } = await AddEmployee(id, formData);
     console.log(data);
+    setFiles([]);
     if (data && !data?.error) {
       setLoader(false);
       Swal.fire({
@@ -344,9 +345,9 @@ const Users = () => {
         timer: 3000,
       });
       setLoader(false);
-      // document.getElementById("formReset").click();
-      document.getElementById("closeFormModal").click();
       setFiles([]);
+      setProfileImgUrl(null)
+      document.getElementById("closeFormModal").click();
       getEmployeeList();
     }
   };
@@ -583,9 +584,11 @@ const Users = () => {
                       id="closeFormModal"
                       aria-label="Closebtn"
                       type="reset"
-                      onClick={() =>
-                        document.getElementById("formReset").click()
-                      }
+                      onClick={() => {
+                        document.getElementById("formReset").click();
+                        setProfileImgUrl(null)
+                        setFiles([]);
+                      }}
                     ></button>
                   </div>
                   <div class="modal-body">
@@ -769,7 +772,7 @@ const Users = () => {
                                   }
                                 )}
                                 {...register("employid", {
-                                  required:"Please enter employee id"
+                                  required: "Please enter employee id",
                                 })}
                               />
                               {errors.employid && (
@@ -810,7 +813,7 @@ const Users = () => {
                             </div>
                             <div className="col-4 mt-3">
                               <select
-                                 className={classNames(
+                                className={classNames(
                                   "form-control col-12 modal-input td-text  p-2",
                                   {
                                     "is-invalid": errors.gender,
@@ -991,6 +994,7 @@ const Users = () => {
                           appearance="primary"
                           className="btn mb-3 me-2 rounded-2"
                           type="submit"
+                          disabled={!isValid}
                         >
                           Save
                         </Button>

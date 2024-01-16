@@ -65,7 +65,9 @@ const Switcher = () => {
               {userData?.name?.split(" ")?.slice(0, 2)?.join(" ") ||
                 userData?.companyName}
             </span>
-            <p className="th-text">{role}</p>
+            <p className="th-text">
+              {role && role === "Department" ? "Department Manager" : role}
+            </p>
           </div>
           <div>
             <img src="/images/sidebar/ArrowLineDown2.svg" alt="hh" />

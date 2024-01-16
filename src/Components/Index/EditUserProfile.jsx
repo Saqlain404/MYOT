@@ -56,8 +56,6 @@ const EditUserProfile = ({ userId }) => {
           defaultValue.email = values?.email;
           defaultValue.mobileNumber = values?.mobileNumber;
           defaultValue.salary = values?.salary;
-
-          //   reset({ ...defaultValue });
         }
       }
     } catch (error) {
@@ -147,7 +145,7 @@ const EditUserProfile = ({ userId }) => {
         setLoader(false);
         document.getElementById("modalClose").click();
         document.getElementById("formReset").click();
-        getViewUserData();
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);

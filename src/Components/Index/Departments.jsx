@@ -320,7 +320,7 @@ const Departments = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                  <a className="nav-link fw-bold">Departments</a>
+                    <a className="nav-link fw-bold">Departments</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
@@ -432,6 +432,10 @@ const Departments = () => {
                         appearance="primary"
                         className="btn mb-3 me-2 rounded-2"
                         type="submit"
+                        disabled={
+                          !departmentInfo?.departmentname ||
+                          !departmentInfo?.description
+                        }
                       >
                         Add New
                       </Button>
@@ -593,6 +597,10 @@ const Departments = () => {
                         appearance="primary"
                         className="btn mb-3 me-2 rounded-2"
                         type="submit"
+                        disabled={
+                          !departmentInfo?.departmentname &&
+                          !departmentInfo?.description
+                        }
                       >
                         Update
                       </Button>

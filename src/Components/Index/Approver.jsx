@@ -78,8 +78,7 @@ const Approver = () => {
         returnData.name = list?.name;
         returnData.department = list?.department_Id[0]?.departmentName;
         returnData.empId = list?.employId;
-        returnData.login =
-          (list?.login && moment(list?.login).format("L")) || "NA";
+        returnData.login = list?.logIn && moment(list?.logIn).format("MMM Do YY, h:mm A") || "NA";
         returnData.actions = (
           <div class="text-center">
             <a

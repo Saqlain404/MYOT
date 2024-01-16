@@ -163,7 +163,9 @@ const EditProfileSig = () => {
                       <div>
                         <img
                           src={
-                            profileImgUrl ? profileImgUrl : state?.profile_Pic
+                            profileImgUrl
+                              ? profileImgUrl
+                              : state?.profile_Pic || "/images/icons/user.jpg"
                           }
                           alt=""
                           className="w_100_h_100"

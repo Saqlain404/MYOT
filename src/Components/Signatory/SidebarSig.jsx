@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { EmployeeLogout } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
 import Switcher from "../ProfileSwitcher/Switcher";
+import Swal from "sweetalert2";
 
 const SidebarSig = () => {
   const location = useLocation();
@@ -14,20 +15,16 @@ const SidebarSig = () => {
     const { data } = await EmployeeLogout(id);
     console.log(data);
     if (data && !data?.error) {
-      localStorage.clear();
       localStorage.removeItem("myot_admin_id");
-
-      toast("Please Select Profile Image", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Logout Successful",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
-
       navigate("/Admin/Login");
     }
   };

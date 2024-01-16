@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -6,17 +6,18 @@ import classNames from "classnames";
 import { EmployeeContactUs } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
 import { Button } from "rsuite";
+import Swal from "sweetalert2";
 
 const ContactUs = () => {
+  const [loader, setLoader] = useState(false);
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({ mode: "onChange" });
 
   const onSubmit = async (datas) => {
-    console.log(datas);
-
+    setLoader(true);
     let formData = {
       name: datas?.name,
       email: datas?.email,
@@ -25,17 +26,16 @@ const ContactUs = () => {
     };
 
     let { data } = await EmployeeContactUs(formData);
-    console.log(data);
     if (!data?.error) {
-      toast("Your query is submitted, we will respond you soon", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      setLoader(false);
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Your query is submitted, we will respond you soon",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       document.getElementById("resetForm").click();
     }
@@ -109,7 +109,7 @@ const ContactUs = () => {
                 </div>
                 <div className="col-12 d-flex mb-4 pb-4">
                   <div className="col-6">
-                    <p className="help-support-heading">Get in Touch</p>
+                    <p className="help-support-heading mt-2">Get in Touch</p>
                     <p className="help-support-text">
                       Have any questions? We’d love to hear from you.
                     </p>
@@ -224,10 +224,11 @@ const ContactUs = () => {
                       </div>
 
                       <Button
-                        // loading={loader}
+                        loading={loader}
                         appearance="primary"
                         className="btn mb-3 text-nowrap me-2 rounded-2"
                         type="submit"
+                        disabled={!isValid}
                       >
                         Submit
                       </Button>

@@ -8,7 +8,6 @@ import {
   EmployeeLists,
   UpdateAdminProfile,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { updateProfilePic, updateUserName } from "../app/slice/userSlice";
@@ -50,31 +49,17 @@ const EditProfile = () => {
     console.log(files?.profile_img);
     let emp_id = localStorage.getItem("myot_admin_id");
     if (data1?.password !== data1?.cpassword) {
-      toast.error("Password does not match", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: "Password is mismatch",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       return false;
     }
-    // if (!files?.profile_img) {
-    //   toast.error("Please Select Profile Image", {
-    //     position: "top-right",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //   });
-    //   return false
-    // }
     const formData = new FormData();
     if (data1?.name) {
       formData.append("name", data1?.name);
@@ -131,7 +116,7 @@ const EditProfile = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                  <a className="nav-link fw-bold">My Profile / Edit </a>
+                    <a className="nav-link fw-bold">My Profile / Edit </a>
                   </li>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">
@@ -177,7 +162,11 @@ const EditProfile = () => {
                   <div className=" d-flex justify-content-start mb-4">
                     <div className="position-relative">
                       <img
-                        src={profileImgUrl ? profileImgUrl : state?.profile_Pic}
+                        src={
+                          profileImgUrl
+                            ? profileImgUrl
+                            : state?.profile_Pic || "/images/icons/user.jpg"
+                        }
                         alt=""
                         className="w_100_h_100"
                       />
@@ -258,7 +247,7 @@ const EditProfile = () => {
                         <input
                           autoComplete="false"
                           type="text"
-                          defaultValue={state?.name}
+                          defaultValue={state?.name || state?.companyName}
                           placeholder="name"
                           className={classNames(
                             "col-12 profile-edit-input p-2 text-capitalize",
@@ -472,15 +461,15 @@ const EditProfile = () => {
                   </div>
                 </div>
                 <div className="text-end">
-                <Button
-                  style={{ width: "150px" }}
-                  // loading={loader}
-                  appearance="primary"
-                  className="btn mb-3 text-nowrap me-2 rounded-2"
-                  type="submit"
-                >
-                  Update Profile
-                </Button>
+                  <Button
+                    style={{ width: "150px" }}
+                    // loading={loader}
+                    appearance="primary"
+                    className="btn mb-3 text-nowrap me-2 rounded-2"
+                    type="submit"
+                  >
+                    Update Profile
+                  </Button>
                 </div>
               </form>
             </div>

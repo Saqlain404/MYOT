@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { UpdateNewPassword } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 import Swal from "sweetalert2";
+import { Button } from "rsuite";
 
 const UpdatePassword = () => {
   const [password, setPassword] = useState("");
@@ -10,6 +11,7 @@ const UpdatePassword = () => {
   const [passVal, setPassVal] = useState(false);
   const [passVisible, setPassVisible] = useState(false);
   const [confirmPassVisible, setConfirmPassVisible] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const navigate = useNavigate();
 
@@ -23,9 +25,11 @@ const UpdatePassword = () => {
   };
 
   const handleUpdatePass = async (e) => {
+    setLoader(true);
     e.preventDefault();
     if (!validatePassword(password)) {
       setPassVal(true);
+      setLoader(false);
       return false;
     }
     if (password !== confirmPassword) {
@@ -38,6 +42,7 @@ const UpdatePassword = () => {
         timerProgressBar: true,
         timer: 3000,
       });
+      setLoader(false);
       return false;
     }
     try {
@@ -48,12 +53,15 @@ const UpdatePassword = () => {
       });
       console.log(data);
       if (data && !data?.error) {
+        setLoader(false);
         setConfirmPassword("");
         setPassword("");
         navigate("/Forgot-success");
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -94,7 +102,7 @@ const UpdatePassword = () => {
                           Password
                         </p>
                         <input
-                          type={passVisible ? "text" :"password"}
+                          type={passVisible ? "text" : "password"}
                           value={password}
                           placeholder="Password"
                           className="col-12 password-update-input p-2 rounded w-100 text-dark"
@@ -110,12 +118,11 @@ const UpdatePassword = () => {
                         >
                           {passVisible ? (
                             <img
-                            className="eye_icon"
-                            src="/images/icons/view.png"
-                            alt=""
-                          />
+                              className="eye_icon"
+                              src="/images/icons/view.png"
+                              alt=""
+                            />
                           ) : (
-                            
                             <img
                               className="eye_icon"
                               src="/images/icons/hide.png"
@@ -136,7 +143,7 @@ const UpdatePassword = () => {
                           Confirm Password
                         </p>
                         <input
-                          type={confirmPassVisible? "text" :"password"}
+                          type={confirmPassVisible ? "text" : "password"}
                           value={confirmPassword}
                           placeholder="Confirm Password"
                           className="col-12 password-update-input p-2 rounded w-100 text-dark"
@@ -151,12 +158,11 @@ const UpdatePassword = () => {
                         >
                           {confirmPassVisible ? (
                             <img
-                            className="eye_icon"
-                            src="/images/icons/view.png"
-                            alt=""
-                          />
+                              className="eye_icon"
+                              src="/images/icons/view.png"
+                              alt=""
+                            />
                           ) : (
-                            
                             <img
                               className="eye_icon"
                               src="/images/icons/hide.png"
@@ -167,12 +173,18 @@ const UpdatePassword = () => {
                       </div>
 
                       <div className="mt-4 d-flex justify-content-center">
-                        <button
-                          className="btn py-8 mb-3 form-reset"
+                        <Button
+                          loading={loader}
+                          appearance="primary"
+                          className="btn py-8 my-3 form-reset"
                           type="submit"
+                          disabled={
+                            !validatePassword(password) ||
+                            password !== confirmPassword
+                          }
                         >
                           Submit
-                        </button>
+                        </Button>
                       </div>
                       {/* <div className="d-flex justify-content-center">
                         <p className="not-recive-otp me-1">

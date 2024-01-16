@@ -379,10 +379,10 @@ const Home = () => {
               <div className="row statics_part">
                 <div className="col-lg-3 col-md-6 mb-md-2">
                   <div className="statics_box card-clr-1-3">
-                    <div className="statics_left text-center">
+                    <div className="statics_left">
                       <h6 className="mb-0 header-card-text">Total Employees</h6>
                     </div>
-                    <div className="text-center mt-4">
+                    <div className=" mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         {(adminCount?.totalEmployee &&
                           adminCount?.totalEmployee[0]?.count) ||
@@ -393,12 +393,12 @@ const Home = () => {
                 </div>
                 <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="statics_box card-clr-2-4">
-                    <div className="statics_left text-center">
+                    <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
                         Total Departments
                       </h6>
                     </div>
-                    <div className="text-center mt-4">
+                    <div className=" mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         {(adminCount?.countDepartment &&
                           adminCount?.countDepartment[0]?.count) ||
@@ -409,12 +409,12 @@ const Home = () => {
                 </div>
                 <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="statics_box card-clr-1-3">
-                    <div className="statics_left text-center">
+                    <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
                         Total Active Users
                       </h6>
                     </div>
-                    <div className="text-center mt-4">
+                    <div className=" mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         {(adminCount?.totalActiveUser &&
                           adminCount?.totalActiveUser[0]?.count) ||
@@ -425,10 +425,10 @@ const Home = () => {
                 </div>
                 <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="statics_box card-clr-2-4">
-                    <div className="statics_left text-center">
+                    <div className="statics_left">
                       <h6 className="mb-0 header-card-text">Total Templates</h6>
                     </div>
-                    <div className="text-center mt-4">
+                    <div className=" mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7 ">
                         {(adminCount?.totalTempleted &&
                           adminCount?.totalTempleted[0]?.count) ||

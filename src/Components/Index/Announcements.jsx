@@ -17,6 +17,7 @@ const Announcements = () => {
   const [announcementType, setAnnouncementType] = useState("");
   const [description, setDescription] = useState("");
   const [files, setFiles] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     getAnnouncements();
@@ -36,6 +37,7 @@ const Announcements = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoader(true);
     e.preventDefault();
     let id = localStorage.getItem("myot_admin_id");
     let formData = new FormData();
@@ -68,6 +70,8 @@ const Announcements = () => {
     } catch (error) {
       console.log(error);
       toast.error(error.message);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -83,7 +87,7 @@ const Announcements = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                  <a className="nav-link fw-bold">Announcements</a>
+                    <a className="nav-link fw-bold">Announcements</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
@@ -200,22 +204,22 @@ const Announcements = () => {
                         <textarea
                           type="text"
                           placeholder=""
-                          className="col-12 modal-input td-text p-2"
+                          className="col-12 modal-input td-text p-2 text-area"
                           name="description"
                           id="description"
                           value={description}
                           onChange={(e) => setDescription(e.target.value)}
-                          style={{ minHeight: "150px" }}
                         ></textarea>
                       </div>
                     </div>
                     <div className="d-flex justify-content-end mb-3 me-3">
                       <Button
                         style={{ width: "150px" }}
-                        // loading={loader}
+                        loading={loader}
                         appearance="primary"
                         className="btn mb-3 me-2 rounded-2"
                         type="submit"
+                        disabled={!announcementType || !description}
                       >
                         Add New
                       </Button>

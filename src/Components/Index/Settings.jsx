@@ -7,11 +7,13 @@ import {
   UpdateLogo,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const Settings = () => {
   const [logosList, setLogosList] = useState([]);
   const [files, setFiles] = useState([]);
   const [cId, setCId] = useState();
+  const [profileImgUrl, setProfileImgUrl] = useState();
 
   useEffect(() => {
     getLogos();
@@ -29,6 +31,9 @@ const Settings = () => {
 
   const handleFileSelection = async (e, key) => {
     setFiles({ ...files, [key]: e.target.files[0] });
+    const selectedFile = e.target.files[0];
+    const imageUrl = URL.createObjectURL(selectedFile);
+    setProfileImgUrl(imageUrl);
   };
 
   const handleSubmit = async () => {
@@ -51,18 +56,18 @@ const Settings = () => {
     let { data } = await UpdateLogo(formData);
     console.log(data);
     if (!data?.error) {
-      toast(data?.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Logo Added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       document.getElementById("reset").click();
       setFiles([]);
+      setProfileImgUrl(null);
       getLogos();
     }
   };
@@ -78,7 +83,7 @@ const Settings = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                  <a className="nav-link fw-bold">Settings</a>
+                    <a className="nav-link fw-bold">Settings</a>
                   </li>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">
@@ -148,7 +153,16 @@ const Settings = () => {
                             className="d-none"
                             onChange={(e) => handleFileSelection(e, "logo")}
                           />
-                          <div className="dashed_border w-100 py-5">
+                          <div className="dashed_border w-100 py-5 position-relative">
+                            {profileImgUrl && (
+                              <div className="position-absolute top-0 end-0">
+                                <p>Selected Image</p>
+                                <img
+                                  className="w_100_h_100"
+                                  src={profileImgUrl}
+                                />
+                              </div>
+                            )}
                             <div>
                               <img
                                 src={require("../../assets/logo/img.png")}
@@ -158,9 +172,25 @@ const Settings = () => {
                             <p className="py-3">
                               Drag and drop logo here, or click add image
                             </p>
-                            <button onClick={handleSubmit} className="blue_btn">
-                              Add Image
-                            </button>
+                            {files?.logo && files?.logo ? (
+                              <>
+                                <button
+                                  onClick={handleSubmit}
+                                  className="blue_btn"
+                                >
+                                  Add Image
+                                </button>
+                              </>
+                            ) : (
+                              <>
+                                <label
+                                  htmlFor="logo"
+                                  className="text-center cursor_pointer blue_btn"
+                                >
+                                  Select Image
+                                </label>
+                              </>
+                            )}
                             <button id="reset" type="reset" className="d-none">
                               reset
                             </button>

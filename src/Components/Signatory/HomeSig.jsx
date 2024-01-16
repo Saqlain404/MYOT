@@ -376,7 +376,7 @@ const HomeSig = () => {
                         style={{ fontSize: "14px" }}
                         className="card-text-count mb-0 fw-semibold"
                       >
-                        {department && department || "NA"}
+                        {department && department || "Admin"}
                       </p>
                     </div>
                   </div>
@@ -419,7 +419,7 @@ const HomeSig = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {count?.totalTempleted && count?.totalTempleted[0]?.count}
+                        {count?.totalTempleted && count?.totalTempleted[0]?.count || 0}
                       </h3>
                     </div>
                   </div>

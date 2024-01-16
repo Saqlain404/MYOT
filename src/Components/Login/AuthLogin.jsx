@@ -19,7 +19,7 @@ const AuthLogin = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
   });
@@ -190,6 +190,7 @@ const AuthLogin = () => {
                 appearance="primary"
                 className="btn py-8 mb-3  rounded-2"
                 type="submit"
+                disabled={!isValid}
               >
                 SIGN IN
               </Button>

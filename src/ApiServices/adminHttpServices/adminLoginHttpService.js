@@ -1,6 +1,7 @@
 import adminHttpService from "../adminHttpService";
 import { toast } from "react-toastify";
 import mainAdminHttpService from "../mainAdminHttpService";
+import Swal from "sweetalert2";
 
 export async function adminLogin(formData) {
   try {
@@ -217,11 +218,29 @@ export async function adminSignUp(formData) {
 
     if (!data?.error) {
       return { data };
-    } else toast.error(data.message);
+    } else
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
 
     return { data };
   } catch (error) {
-    if (error.response) toast.error(error.response.data.message);
+    if (error.response)
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: error.response.data.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
     return { error };
   }
 }

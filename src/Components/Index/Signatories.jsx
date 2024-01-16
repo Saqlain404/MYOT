@@ -65,19 +65,20 @@ const Signatories = () => {
   }, []);
 
   const getSignatoriesData = async () => {
-    let id = await localStorage.getItem("myot_admin_id")
+    let id = await localStorage.getItem("myot_admin_id");
     let { data } = await SignatoryList(id);
+    // console.log(data);
     const newRows = [];
     if (!data?.error) {
       let values = data?.results?.signatory;
-      console.log(values);
       values?.map((list, index) => {
         let returnData = {};
         returnData.name = list?.name;
         returnData.department = list?.department_Id[0]?.departmentName;
         returnData.empId = list?.employId;
         returnData.login =
-          (list?.login && moment(list?.login).format("L")) || "NA";
+          (list?.logIn && moment(list?.logIn).format("MMM Do YY, h:mm A")) ||
+          "NA";
         returnData.actions = (
           <div class="text-center">
             <a
@@ -161,7 +162,8 @@ const Signatories = () => {
         <Checkbox
           checked={signatories.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          defaultChecked>
+          defaultChecked
+        >
           {" "}
           {column.label}
         </Checkbox>
@@ -211,7 +213,7 @@ const Signatories = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                  <a className="nav-link fw-bold">Signatories</a>
+                    <a className="nav-link fw-bold">Signatories</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">

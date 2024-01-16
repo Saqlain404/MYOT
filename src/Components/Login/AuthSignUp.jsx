@@ -11,15 +11,22 @@ const AuthSignUp = () => {
   const [passVisible, setPassVisible] = useState(false);
   const [loader, setLoader] = useState(false);
   const [value, setValue] = useState(null);
+  // const data = [
+  //   "0-10",
+  //   "10-50",
+  //   "50-80",
+  //   "80-100",
+  //   "100-150",
+  //   "150-200",
+  //   "200-250",
+  //   "250-300",
+  // ].map((item) => ({ label: item, value: item }));
   const data = [
-    "0-10",
-    "10-50",
-    "50-80",
-    "80-100",
-    "100-150",
-    "150-200",
-    "200-250",
-    "250-300",
+    "10",
+    "50",
+    "80",
+    "100",
+    "150",
   ].map((item) => ({ label: item, value: item }));
   const companyTypeOptions = [
     "IT Services",
@@ -38,25 +45,34 @@ const AuthSignUp = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    console.log(data);
     setLoader(true);
-    const response = await adminSignUp(data);
-    if (!response.data.error) {
-      Swal.fire({
-        toast: true,
-        icon: "warning",
-        position: "top-end",
-        title: response.data.message,
-        showConfirmButton: false,
-        timerProgressBar: true,
-        timer: 3000,
-      });
-      setLoader(false);
-    } else {
+    try {
+      const response = await adminSignUp(data);
+      if (!response?.data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "warning",
+          position: "top-end",
+          title: response.data.message,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        setLoader(false);
+        document.getElementById("resetForm").click()
+      } else {
+        setLoader(false);
+      }
+      setTimeout(() => {
+        setTimeout(false);
+      }, [6000]);
+    } catch (error) {
+      console.log(error)
+    }
+    finally{
       setLoader(false);
     }
-    setTimeout(() => {
-      setTimeout(false);
-    }, [6000]);
   };
 
   const togglePassword = () => {
@@ -277,9 +293,7 @@ const AuthSignUp = () => {
                   {...register("address", { required: true })}
                 />
                 {errors.address && (
-                  <small className="errorText mt-1">
-                    Address is required
-                  </small>
+                  <small className="errorText mt-1">Address is required</small>
                 )}
               </div>
 
@@ -292,6 +306,7 @@ const AuthSignUp = () => {
                 >
                   SIGN UP
                 </Button>
+                <button id="resetForm" type="reset" className="d-none">reset</button>
               </div>
 
               <label className="form-check-label text-dark text-center mt-2 remember-me mb-4">
