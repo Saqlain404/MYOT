@@ -189,7 +189,7 @@ const DashboardDept = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {departmentCount?.totalTemplete || 0}
+                        {departmentCount?.totalTemplete?.[0]?.count || 0}
                       </h3>
 
                     </div>
@@ -204,7 +204,7 @@ const DashboardDept = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {departmentCount?.totalDocument || 0}
+                        {departmentCount?.totalDocument?.[0]?.count || 0}
                       </h3>
 
                     </div>

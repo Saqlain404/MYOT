@@ -1,9 +1,70 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
+import { AnnouncementList } from "../../ApiServices/departmentHttpService/departmentHttpService";
+import { toast } from "react-toastify";
+import moment from "moment";
 
 const AnnouncementsDept = () => {
+
+  const [documents, setDocuments] = useState([]);
+  const [announcementType, setAnnouncementType] = useState("");
+  const [description, setDescription] = useState("");
+  const [files, setFiles] = useState([]);
+
+  const getAnnouncements = async () => {
+    let id = localStorage.getItem("myot_admin_id");
+    let { data } = await AnnouncementList();
+    console.log(data);
+    if (!data?.error) {
+      setDocuments(data?.results?.documentList);
+    }
+  };
+
+  const handleImgChange = (e, key) => {
+    setFiles({ ...files, [key]: e.target.files[0] });
+  };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   let id = localStorage.getItem("myot_admin_id");
+  //   let formData = new FormData();
+  //   formData.append("categoryName", announcementType);
+  //   formData.append("document", files?.doc_img);
+  //   formData.append("text", description);
+  //   formData.append("creator_Id", id);
+
+  //   try {
+  //     let { data } = await CreateAnnouncement(formData);
+  //     console.log(data);
+  //     if (data && !data?.error) {
+  //       toast("New Announcement Created", {
+  //         position: "top-right",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+  //       setAnnouncementType("");
+  //       setDescription("");
+  //       setFiles([]);
+  //       document.getElementById("resetForm").click();
+  //       document.getElementById("modalClose").click();
+  //       getAnnouncements();
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error(error.message);
+  //   }
+  // };
+
+  useEffect(() => {
+    getAnnouncements();
+  }, []);
   
 
   return (
@@ -168,115 +229,81 @@ const AnnouncementsDept = () => {
             </div>
             {/* <!-- Modal End--> */}
 
-            <div className="container bg-body-tertiary rounded mb-3">
-              <div className="row">
-                <p className="templates-leave mt-3 ms-2 mb-0 ">
-                  Templates {">"} leave
-                </p>
-                <div className="col-12">
-                <div className="col rounded bg-white d-flex m-3 p-2">
-                  <div className="ps-2 pe-3">
-                    <div className="d-flex">
-                      <img
-                        src="/images/dashboard/user (2) 1.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      <p className="anouncement-text">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
+            <div className="container rounded mb-3">
+              {documents &&
+                documents?.map((document) => (
+                  <>
+                    <div className="row my-4 bg-body-tertiary">
+                      <p className="templates-leave mt-3 ms-2 mb-0 ">
+                        {`Announcement > ${document?.categoryName}`}
                       </p>
+                      <div className="col-12">
+                        <div className="col rounded bg-white d-flex m-3 p-2 algin-items-center justify-content-between">
+                          <div className="ps-2 pe-3">
+                            <div className="d-flex">
+                              <img
+                                style={{
+                                  width: "20px",
+                                  height: "20px",
+                                  borderRadius: "50%",
+                                }}
+                                src={
+                                  document?.document
+                                    ? document?.document
+                                    : "/images/dashboard/user (2) 1.svg"
+                                }
+                                alt=""
+                                className="me-2"
+                              />
+                              <p className="anouncement-text ms-1">
+                                {document?.text}
+                              </p>
+                            </div>
+                            <div className="d-flex ms-4 mt-1">
+                              <img
+                                src="/images/dashboard/bookmark 1.svg"
+                                alt=""
+                                className="m-1 "
+                              />
+                              <p className="new-feedback">New feedback added</p>
+                            </div>
+                          </div>
+                          <p className="announcement-time">
+                            {moment(document?.createdAt).calendar()}
+                          </p>
+                        </div>
+                        {/* <div className="col rounded bg-white d-flex m-3 p-2">
+                        <div className="ps-2 pe-3">
+                          <div className="d-flex">
+                            <img
+                              src="/images/dashboard/user (2) 1.svg"
+                              alt=""
+                              className="me-2"
+                            />
+                            <p className="anouncement-text">
+                              Lorem Ipsum is simply dummy text of the printing
+                              and typesetting industry.
+                            </p>
+                          </div>
+                          <div className="d-flex ms-4 mt-1">
+                            <img
+                              src="/images/dashboard/bookmark 1.svg"
+                              alt=""
+                              className="m-1 "
+                            />
+                            <p className="new-feedback">New feedback added</p>
+                          </div>
+                        </div>
+                        <p className="announcement-time">
+                          Yesterday at 4:17 Pm
+                        </p>
+                      </div> */}
+                      </div>
                     </div>
-                    <div className="d-flex ms-4 mt-1">
-                      <img src="/images/dashboard/bookmark 1.svg" alt="" className="m-1 "/>
-                      <p className="new-feedback">
-                      New feedback added
-                      </p>
-                    </div>
-                  </div>
-                  <p className="announcement-time">Yesterday at 4:17 Pm</p>
-                </div>
-                <div className="col rounded bg-white d-flex m-3 p-2">
-                  <div className="ps-2 pe-3">
-                    <div className="d-flex">
-                      <img
-                        src="/images/dashboard/user (2) 1.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      <p className="anouncement-text">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
-                      </p>
-                    </div>
-                    <div className="d-flex ms-4 mt-1">
-                      <img src="/images/dashboard/bookmark 1.svg" alt="" className="m-1 "/>
-                      <p className="new-feedback">
-                      New feedback added
-                      </p>
-                    </div>
-                  </div>
-                  <p className="announcement-time">Yesterday at 4:17 Pm</p>
-                </div>
-                </div>
-                
-              </div>
+                  </>
+                ))}
             </div>
 
-            <div className="container bg-body-tertiary rounded mb-4">
-              <div className="row">
-                <p className="templates-leave mt-3 ms-2 mb-0 ">
-                  Templates {">"} leave
-                </p>
-                <div className="col-12">
-                <div className="col rounded bg-white d-flex m-3 p-2">
-                  <div className="ps-2 pe-3">
-                    <div className="d-flex">
-                      <img
-                        src="/images/dashboard/user (2) 1.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      <p className="anouncement-text">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
-                      </p>
-                    </div>
-                    <div className="d-flex ms-4 mt-1">
-                      <img src="/images/dashboard/bookmark 1.svg" alt="" className="m-1 "/>
-                      <p className="new-feedback">
-                      New feedback added
-                      </p>
-                    </div>
-                  </div>
-                  <p className="announcement-time">Yesterday at 4:17 Pm</p>
-                </div>
-                <div className="col rounded bg-white d-flex m-3 p-2">
-                  <div className="ps-2 pe-3">
-                    <div className="d-flex">
-                      <img
-                        src="/images/dashboard/user (2) 1.svg"
-                        alt=""
-                        className="me-2"
-                      />
-                      <p className="anouncement-text">
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
-                      </p>
-                    </div>
-                    <div className="d-flex ms-4 mt-1">
-                      <img src="/images/dashboard/bookmark 1.svg" alt="" className="m-1 "/>
-                      <p className="new-feedback">
-                      New feedback added
-                      </p>
-                    </div>
-                  </div>
-                  <p className="announcement-time">Yesterday at 4:17 Pm</p>
-                </div>
-                </div>
-                
-              </div>
-            </div>
 
             <div className="footer">
               <div>© 2023 MYOT</div>

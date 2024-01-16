@@ -3,7 +3,9 @@ import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
 import { ProfileDetails } from "../../ApiServices/departmentHttpService/departmentHttpService";
+import profileImg from "../../assets/logo/high.png";
 import { useEffect } from "react";
+import { Button } from "rsuite";
 
 const ProfileDept = () => {
  
@@ -77,9 +79,21 @@ const ProfileDept = () => {
     
     <div className=" d-flex justify-content-between">
       <p className="profile-txt m-2">Profile</p>
-      <Link to={"/Department/Edit-profile"} className="text-decoration-none">
-      <button className="profile-edit-btn">Edit</button>
-      </Link>
+      <Link
+                    to={"/Department/Edit-profile"}
+                    state={profileDetail}
+                    className="text-decoration-none"
+                  >
+                    <Button
+                      style={{ width: "70px" }}
+                      // loading={loader}
+                      appearance="primary" 
+                      className="btn mb-3 me-2 rounded-2"
+                      type="submit"
+                    >
+                      Edit
+                    </Button>
+                  </Link>
     </div>
    <div className=" d-flex justify-content-start mb-4">
    <img
@@ -89,44 +103,47 @@ const ProfileDept = () => {
                       borderRadius: "50%",
                       objectFit: "cover",
                     }}
-                    src={profileDetail?.profile_Pic}
-                    alt="profile_image"
+                    src={
+                      (profileDetail?.profile_Pic && profileDetail.profile_Pic) ||
+                      profileImg
+                    }
+                    alt=""
                   />
    </div>
    <div className="bg-white rounded mb-4 p-4 pb-2">
-    <p className=" d-flex justify-content-start profile-card-title">Details</p>
-    <div className="d-flex justify-content-between">
-      <div>
+    <p className=" d-flex justify-content-start profile-card-title mb-2">Details</p>
+    <div className="col-12 d-flex justify-content-between mb-3">
+      <div className="col-3">
         <p className="profile-info">Full Name</p>
         <p className="profile-data">{profileDetail?.name}</p>
       </div>
-      <div>
+      <div className="col-3">
         <p className="profile-info">Email</p>
         <p className="profile-data">{profileDetail?.email}</p>
       </div>
-      <div>
+      <div className="col-3">
         <p className="profile-info">Phone Number</p>
         <p className="profile-data">{profileDetail?.mobileNumber}</p>
       </div>
-      <div>
+      <div className="col-3">
         <p className="profile-info">Department</p>
         <p className="profile-data">{profileDetail?.employRole}</p>
       </div>
     </div>
-    <div className="d-flex justify-content-between me-4">
-      <div>
+    <div className="col-12 d-flex justify-content-between mb-2">
+      <div className="col-3">
         <p className="profile-info me-4">Employee Tittle</p>
         <p className="profile-data">{profileDetail?.employTitle}</p>
       </div>
-      <div>
+      <div className="col-3">
         <p className="profile-info me-4">Employee Id</p>
         <p className="profile-data">{profileDetail?.employId}</p>
       </div>
-      <div>
+      <div className="col-3">
         <p className="profile-info  me-4">Gender</p>
         <p className="profile-data">{profileDetail?.gender}</p>
       </div>
-      <div>
+      <div className="col-3">
         <p className="profile-info me-4">Salary</p>
         <p className="profile-data">{profileDetail?.salary}</p>
       </div>

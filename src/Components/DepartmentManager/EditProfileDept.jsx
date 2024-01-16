@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import RightSidebar from "../RightSidebar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
 import { useDispatch } from "react-redux";
 import { Swal } from "sweetalert2/dist/sweetalert2";
@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import { ProfileDeptUpdate } from "../../ApiServices/departmentHttpService/departmentHttpService";
 import { updateProfilePic, updateUserName } from "../app/slice/userSlice";
+import { Button } from "rsuite";
 
 const EditProfileDept = () => {
 
@@ -19,12 +20,16 @@ const EditProfileDept = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const location = useLocation();
+  const { state } = location;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-
+  } = useForm({
+    mode: "onChange",
+  });
   // const getEmployeeList = async () => {
   //   let { data } = await EmployeeLists();
   // };
@@ -104,8 +109,8 @@ const EditProfileDept = () => {
         timer: 3000,
       });
       setFiles([]);
-      dispatch(updateProfilePic(data?.results?.admin?.profile_Pic));
-      dispatch(updateUserName(data?.results?.admin?.name));
+      dispatch(updateProfilePic(data?.results?.department?.profile_Pic));
+      dispatch(updateUserName(data?.results?.department?.name));
       navigate("/Admin/My-profile");
       // getEmployeeList();
     }
@@ -171,11 +176,11 @@ const EditProfileDept = () => {
                   </div>
                   <div className=" d-flex justify-content-start mb-4">
                     <div className="position-relative">
-                      <img
+                    <img
                         src={
                           profileImgUrl
                             ? profileImgUrl
-                            : "/images/tasks/modal-profile-photo.svg"
+                            : state?.profile_Pic || "/images/icons/user.jpg"
                         }
                         alt=""
                         className="w_100_h_100"
@@ -250,16 +255,17 @@ const EditProfileDept = () => {
                       </div> */}
                     </div>
                     <div className="col-12 d-flex justify-content-between mb-2">
-                      {/* <div className="col-12 m-2">
+                    <div className="col-12 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Name
                         </p>
                         <input
                           autoComplete="false"
                           type="text"
+                          defaultValue={state?.name}
                           placeholder="name"
                           className={classNames(
-                            "col-12 profile-edit-input p-2",
+                            "col-12 profile-edit-input p-2 text-capitalize",
                             {
                               "is-invalid": errors.name,
                             }
@@ -272,7 +278,7 @@ const EditProfileDept = () => {
                             {errors.name.message}
                           </div>
                         )}
-                      </div> */}
+                      </div>
                       {/* <div className="col-6 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Date of Birth
@@ -470,9 +476,15 @@ const EditProfileDept = () => {
                   </div>
                 </div>
                 <div className="text-end">
-                  <button type="submit" className="profile-edit-submit m-0">
-                    Update Profile
-                  </button>
+                <Button
+                  style={{ width: "150px" }}
+                  // loading={loader}
+                  appearance="primary"
+                  className="btn mb-3 text-nowrap me-2 rounded-2"
+                  type="submit"
+                >
+                  Update Profile
+                </Button>
                 </div>
               </form>
    </div>
