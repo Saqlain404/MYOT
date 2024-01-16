@@ -11,6 +11,7 @@ import {
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import { Checkbox } from "antd";
+import Swal from "sweetalert2";
 
 const HistoryLogAprv = () => {
   const [documentRequests, setDocumentRequests] = useState([]);
@@ -186,7 +187,7 @@ const HistoryLogAprv = () => {
                       alt=""
                       className="me-2"
                     />
-                    View Users Details
+                    View Template
                   </a>
                 </Link>
               </li>
@@ -292,13 +293,24 @@ const HistoryLogAprv = () => {
     e.preventDefault();
     let creator_Id =
       localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+      let trimmedComment = comment.trim()
     let data = await AddCommentApprv({
-      comment,
+      comment : trimmedComment,
       templete_Id,
       creator_Id,
     });
     if (!data?.error) {
       setComment("");
+    }else if(trimmedComment===""){
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Please enter a comment",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
     }
   };
 
@@ -366,7 +378,7 @@ const HistoryLogAprv = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
+                    <a className="nav-link fw-bold ms-2">
                       History Log / Approved
                     </a>
                   </li>
@@ -483,7 +495,7 @@ const HistoryLogAprv = () => {
                     className="text-nowrap"
                     hover
                     data={{ ...tasks, columns: visibleColumns }}
-                    paging={tasks?.rows?.length > 5 ? true:false}
+                    // paging={tasks?.rows?.length > 5 ? true:false}
                     // data={tasks}
                     noBottomColumns
                     paginationLabel={"«»"}

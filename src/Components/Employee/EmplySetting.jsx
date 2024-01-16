@@ -53,7 +53,7 @@ const EmplySetting = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
+                    <a className="nav-link fw-bold ms-2">
                       Settings
                     </a>
                   </li>
@@ -114,7 +114,7 @@ const EmplySetting = () => {
                         Drag and drop logo here, or click add image
                       </p>
                      
-                        <label htmlFor="logo" className="add-img-btn mt-4">
+                        <label htmlFor="logo" role="button" className="add-img-btn mt-4">
                           Add Image
                         </label>
                         <input

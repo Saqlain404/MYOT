@@ -10,12 +10,17 @@ import {
 } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 import SidebarAprv from "./SidebarAprv";
 import { ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../app/slice/userSlice";
+import Swal from "sweetalert2";
 
 const CommentsAprv = () => {
   const [commentList, setCommentList] = useState([]);
   const [reply, setReply] = useState(false);
   const [comment, setComment] = useState("");
   const [replyMsg, setReplyMsg] = useState("");
+
+  const userData = useSelector(selectUserData);
 
   const { id } = useParams();
   console.log(id);
@@ -34,16 +39,17 @@ const CommentsAprv = () => {
     }
   };
 
-   const handleDelete = async(comment_id) => {
-    const deleteComment = DeleteCommentAprv(comment_id)
-    setTimeout(()=>{
-      getCommentLists()
-    },200)
-   }
-  
-   let creator_Id =
-   localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
-   const toggleReply = (comment_Id) => {
+  const handleDelete = async (comment_id) => {
+    const deleteComment = await DeleteCommentAprv(comment_id);
+    if (deleteComment.commentData) {
+      getCommentLists();
+    }
+    console.log(deleteComment);
+  };
+
+  let creator_Id =
+    localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+  const toggleReply = (comment_Id) => {
     setReply((prevState) => {
       const newState = { ...prevState };
       Object.keys(newState).forEach((key) => {
@@ -56,31 +62,54 @@ const CommentsAprv = () => {
 
   const handleSubmitComment = async (e) => {
     e.preventDefault();
+    let trimmedComment = comment.trim()
     let creator_Id =
       localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
     let data = await AddCommentApprv({
-      comment,
+      comment : trimmedComment,
       templete_Id: id,
       creator_Id,
     });
     if (!data?.error) {
       setComment("");
       getCommentLists();
+    }else if(trimmedComment===""){
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Please enter a comment",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
     }
   };
 
   const handleReply = async (e, comment_Id) => {
     e.preventDefault();
+    const trimmedReply = replyMsg.trim()
     let replyData = await AddReplyCommentApprv({
-      text: replyMsg,
+      text: trimmedReply,
       comment_Id,
       creator_Id,
     });
-    console.log(replyData);
-    setReplyMsg("");
+    if(!replyData.error){
+      setReplyMsg("");
+      getCommentLists();
+    } else if(trimmedReply===""){
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Please Enter Reply",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
     document.getElementById("reset").click();
-    getCommentLists();
-    toggleReply(comment_Id)
+    toggleReply(comment_Id);
   };
   return (
     <>
@@ -94,10 +123,8 @@ const CommentsAprv = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
-                      Tasks / Comments
-                    </a>
-                  </li> 
+                    <a className="nav-link fw-bold ms-2">Tasks / Comments</a>
+                  </li>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">
                   {/* <form className="" role="search">
@@ -132,8 +159,8 @@ const CommentsAprv = () => {
             </div>
 
             <div className="container px-4 text-center min-vh-100 ">
-              <p className="templates-leave mt-3  d-flex ">Comments</p>
-              {commentList &&
+              {/* <p className="templates-leave mt-3  d-flex ">Comments</p> */}
+              {commentList && commentList?.length > 0 ? (
                 commentList?.map((comments, index) => (
                   <>
                     <div className="bg-white rounded p-2 mb-3">
@@ -144,7 +171,7 @@ const CommentsAprv = () => {
                             alt=""
                             className="m-2 w_20_h_20"
                           />
-                          <p className="commenter-name ">
+                          <p className="commenter-name text-capitalize ">
                             {comments?.creator_Id?.name}
                           </p>
                           <p className="comment-time m-auto">
@@ -165,15 +192,15 @@ const CommentsAprv = () => {
                               </Link>
                             ) : (
                               <>
-                               <div className="align-items-center me-2">
-                               <img
-                                  src="/images/dashboard/reply-arrow.svg"
-                                  className="me-1"
-                                />
-                                <Link className="ticket-link mt-3 text-decoration-none">
-                                  Reply
-                                </Link>
-                               </div>
+                                <div className="align-items-center me-2">
+                                  <img
+                                    src="/images/dashboard/reply-arrow.svg"
+                                    className="me-1"
+                                  />
+                                  <Link className="ticket-link mt-3 text-decoration-none">
+                                    Reply
+                                  </Link>
+                                </div>
                               </>
                             )}
                           </div>
@@ -191,7 +218,10 @@ const CommentsAprv = () => {
                           </div>
                         </div>
                       </div>
-                      <p className="comment-txt p-2 mb-0">
+                      <p
+                        className="comment-txt p-2 mb-0"
+                        style={{ wordBreak: "break-word" }}
+                      >
                         {comments?.comment}
                       </p>
                       {comments?.replyText && (
@@ -209,14 +239,17 @@ const CommentsAprv = () => {
                                       src={reply?.creator_Id?.profile_Pic}
                                       alt=""
                                     />
-                                    <p className="commenter-name ">
+                                    <p className="commenter-name text-capitalize ">
                                       {reply?.creator_Id?.name}
                                     </p>
                                     {/* <p className="comment-time m-auto">
                                       {moment(reply?.createdAt).calendar()}
                                     </p> */}
                                   </div>
-                                  <p className="comment-txt p-2 mb-0">
+                                  <p
+                                    className="comment-txt p-2 mb-0"
+                                    style={{ wordBreak: "break-word" }}
+                                  >
                                     {reply?.text}
                                   </p>
                                 </div>
@@ -231,9 +264,9 @@ const CommentsAprv = () => {
                           <form onSubmit={(e) => handleReply(e, comments?._id)}>
                             <div className="d-flex align-items-center justify-content-between">
                               <img
-                                src="/images/dashboard/Avatar2.png"
+                                src={userData?.profile_Pic}
                                 alt=""
-                                className="comment-avatar m-auto mt-2"
+                                className="comment-avatar m-auto mt-2 w_20_h_20"
                               />
                               <textarea
                                 type="text"
@@ -259,7 +292,14 @@ const CommentsAprv = () => {
                       )}
                     </div>
                   </>
-                ))}
+                ))
+              ) : (
+                <>
+                  <h3 className="bg-white rounded p-2 py-4 mb-3">
+                    No Comments Found
+                  </h3>
+                </>
+              )}
 
               <div className="bg-white rounded p-2 mb-3">
                 <div className="d-flex  align-items-center  justify-content-between">
@@ -268,9 +308,9 @@ const CommentsAprv = () => {
                     className="d-flex  justify-content-between"
                   >
                     <img
-                      src="/images/dashboard/Avatar2.png"
+                      src={userData?.profile_Pic}
                       alt=""
-                      className="comment-avatar m-auto mt-2"
+                      className="comment-avatar m-auto mt-2 w_20_h_20"
                     />
                     <textarea
                       name="comment"

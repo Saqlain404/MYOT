@@ -9,6 +9,7 @@ import { updateProfile } from "../../ApiServices/aprroverHttpServices/aprproverH
 import Swal from "sweetalert2";
 import { updateProfilePic, updateUserName } from "../app/slice/userSlice";
 import { useDispatch } from "react-redux";
+import { Button } from "rsuite";
 
 const EditProfileAprv = () => {
   const [profileImgUrl, setProfileImgUrl] = useState();
@@ -110,7 +111,7 @@ const EditProfileAprv = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
+                    <a className="nav-link fw-bold ms-2">
                       My Profile / Edit
                     </a>
                   </li>
@@ -309,9 +310,9 @@ const EditProfileAprv = () => {
                   </div>
 
                   <div className="text-end  ms-4 mt-1 ">
-                    <button className="profile-edit-submit m-0" type="submit">
+                    <Button appearance="primary" className="profile-edit-submit btn  rounded-2 m-0" type="submit">
                       Update Profile
-                    </button>
+                    </Button>
                   </div>
                 </form>
               </div>

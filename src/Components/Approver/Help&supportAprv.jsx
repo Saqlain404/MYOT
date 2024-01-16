@@ -120,8 +120,8 @@ const HelpSupportAprv = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
-                      Template / Template Version 1.0 / View
+                    <a className="nav-link fw-bold ms-2">
+                      Help / Help & Support
                     </a>
                   </li>
                 </ul>
@@ -237,8 +237,8 @@ const HelpSupportAprv = () => {
                         </li> */}
                       {/* </ul> */}
                     {/* </div> */}
-                    <div class="dropdown">
-                      <a
+                    {/* <div class="dropdown"> */}
+                      {/* <a
                         type=""
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
@@ -250,16 +250,16 @@ const HelpSupportAprv = () => {
                             alt=""
                           />
                         </button>
-                      </a>
-                      <ul class="dropdown-menu border-0 shadow mt-3  rounded">
-                        <li>
+                      </a> */}
+                      {/* <ul class="dropdown-menu border-0 shadow mt-3  rounded"> */}
+                        {/* <li> */}
                           {/* <div
                             className="d-flex whitespace-nowrap"
                             type="button"
                             data-bs-toggle="modal"
                             data-bs-target="#exampleModal"
                           > */}
-                          <a
+                          {/* <a
                             class={`dropdown-item border-bottom ${
                               selectedDropdown === "New" ? "active" : ""
                             }`}
@@ -272,10 +272,10 @@ const HelpSupportAprv = () => {
                               className="help-support-dd-img"
                             />
                             New Tickets
-                          </a>
+                          </a> */}
                           {/* </div> */}
-                        </li>
-                        <li>
+                        {/* </li> */}
+                        {/* <li>
                           <a
                             class={`dropdown-item border-bottom ${
                               selectedDropdown === "Ongoing" ? "active" : ""
@@ -291,8 +291,8 @@ const HelpSupportAprv = () => {
                             />
                             On-Going Tickets
                           </a>
-                        </li>
-                        <li>
+                        </li> */}
+                        {/* <li>
                           <a
                             class={`dropdown-item ${
                               selectedDropdown === "Resolved" ? "active" : ""
@@ -307,9 +307,9 @@ const HelpSupportAprv = () => {
                             />
                             Resolved Tickets
                           </a>
-                        </li>
-                      </ul>
-                    </div>
+                        </li> */}
+                      {/* </ul> */}
+                    {/* </div> */}
                     {/* <!-- Modal --> */}
                     <div
                       class="modal fade"
@@ -335,7 +335,7 @@ const HelpSupportAprv = () => {
                           <form action="" onSubmit={onSubmit}>
                             <div className="row p-3">
                               <div className="col-12 mb-3 d-flex">
-                                <div className="col-6 pe-3">
+                                {/* <div className="col-6 pe-3">
                                   <input
                                     type="text"
                                     placeholder="Email *"
@@ -344,8 +344,8 @@ const HelpSupportAprv = () => {
                                     value={contactData.email}
                                     onChange={handleInput}
                                   />
-                                </div>
-                                <div className="col-6 ps-3">
+                                </div> */}
+                                <div className="col-12 ps-3">
                                   <input
                                     type=""
                                     placeholder="Request Ticket Type *"
@@ -356,14 +356,14 @@ const HelpSupportAprv = () => {
                                   />
                                 </div>
                               </div>
-                              <p className="d-flex" id="exampleModalLabel">
-                                Enter text here
+                              <p className="d-flex ms-2" id="exampleModalLabel">
+                                Description
                               </p>
-                              <div className="col-12 mb-3 ">
+                              <div className="col-12 ms-2 mb-3 ">
                                 <textarea
                                   type="text"
                                   placeholder="Type ticket issue here..."
-                                  className="col-12 modal-input td-text p-2"
+                                  className="col-12 text-area modal-input td-text p-2"
                                   name="ticketIssue"
                                   value={contactData.ticketIssue}
                                   onChange={handleInput}
@@ -380,7 +380,7 @@ const HelpSupportAprv = () => {
                                 class="user-modal-btn2"
                                 data-bs-dismiss="modal"
                               >
-                                Cancle
+                                Cancel
                               </button>
                             </div>
                           </form>
@@ -482,14 +482,14 @@ const HelpSupportAprv = () => {
                   </ul>
                 </div>
                 <div className="col-12">
-                  {!ticketList && ticketList?.length
-                    ? "No Ticket Available"
-                    : ticketList?.[0]?.map((ticket) => (
+                  {ticketList?.[0] && ticketList?.[0]?.length > 0
+                    ? 
+                    ticketList?.[0]?.map((ticket) => (
                         <div
                           className="col rounded border bg-white mb-3 p-2"
                           key={ticket._id}
                         >
-                          <div className="d-flex border-bottom">
+                          <div className="d-flex border-bottom d-flex justify-content-between">
                             <div className="ps-2 pe-4">
                               <div className="d-flex mb-3">
                                 {ticket?.status === "In Progress" ? (
@@ -516,16 +516,16 @@ const HelpSupportAprv = () => {
                                 </p>
                               </div>
                               <div className=" mt-1">
-                                <p className="ticket-question mb-1">
+                                <p className="ticket-question td-text mb-3 ms-5">
                                   {ticket.ticketIssue}
                                 </p>
-                                <p className="td-text mt-0">
+                                {/* <p className="td-text mt-0">
                                   Impressive! Though it seems the drag feature
                                   could be improved. But overall it looks
                                   incredible. You’ve nailed the design and the
                                   responsiveness at various breakpoints works
                                   really well.
-                                </p>
+                                </p> */}
                               </div>
                             </div>
                             <p className="ticket-post-time mt-2">
@@ -540,7 +540,7 @@ const HelpSupportAprv = () => {
                                 alt=""
                                 className="m-2 img_profile"
                               />
-                              <p className="th-text m-auto">
+                              <p className="th-text m-auto text-capitalize">
                                 {ticket.creator_Id.name}
                               </p>
                             </div>
@@ -549,7 +549,7 @@ const HelpSupportAprv = () => {
                             </a>
                           </div>
                         </div>
-                      ))}
+                      )) : <p className="fs-5">Yay!, no tickets</p>}
                 </div>
               </div>
             </div>

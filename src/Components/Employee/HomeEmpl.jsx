@@ -77,7 +77,7 @@ const HomeEmpl = () => {
         width: 100,
         selected: false,
       },
-     
+
       {
         label: "Comments",
         field: "comments",
@@ -125,15 +125,15 @@ const HomeEmpl = () => {
               src={list?.templete_Id?.manager?.profile_Pic}
               alt=""
             />
-            <span className="ms-2 text-capitalize">{list?.templete_Id?.manager?.name}</span>
+            <span className="ms-2 text-capitalize">
+              {list?.templete_Id?.manager?.name}
+            </span>
           </>
         );
         returnData.version = (
           <>
-            {list?.templete_Id?.templeteVersion 
-              ? ` ${
-                  list?.templete_Id?.templeteVersion[0]?.version
-                }`
+            {list?.templete_Id?.templeteVersion
+              ? ` ${list?.templete_Id?.templeteVersion[0]?.version}`
               : "No versions found"}
           </>
         );
@@ -143,7 +143,8 @@ const HomeEmpl = () => {
             <span className="ms-2">{moment(list?.createdAt).format("L")}</span>
           </>
         );
-        returnData.department = list?.templete_Id?.manager?.department_Id?.departmentName || "NA";
+        returnData.department =
+          list?.templete_Id?.manager?.department_Id?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -163,7 +164,7 @@ const HomeEmpl = () => {
         );
         returnData.comments = (
           <>
-           <div className="text-center">
+            <div className="text-center">
               <a
                 onClick={() => setDocument_Id(list?._id)}
                 type="button"
@@ -189,40 +190,43 @@ const HomeEmpl = () => {
               <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-            <li>
-                                <Link
-                                  class="dropdown-item border-bottom"
-                                  to={`/Employee/view-details/${list?._id}`}
-                                >
-                                  <img
-                                    src="/images/users/AddressBook.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  View Details
-                                </Link>
-                              </li>
-                              <li>
-                                <Link class="dropdown-item" to={`/Employee/Comment/${list?._id}`}>
-                                  <img
-                                    src="/images/dashboard/Comment.png"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Comments
-                                </Link>
-                              </li>
-                              <li>
-                                <a class="dropdown-item border-bottom" href="#">
-                                  <img
-                                    src="/images/DownloadSimple.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                  Download
-                                </a>
-                              </li>
-                              {/* <li>
+              <li>
+                <Link
+                  class="dropdown-item border-bottom"
+                  to={`/Employee/view-details/${list?._id}`}
+                >
+                  <img
+                    src="/images/users/AddressBook.svg"
+                    alt=""
+                    className="me-2"
+                  />
+                  View Document
+                </Link>
+              </li>
+              <li>
+                <Link
+                  class="dropdown-item"
+                  to={`/Employee/Comment/${list?._id}`}
+                >
+                  <img
+                    src="/images/dashboard/Comment.png"
+                    alt=""
+                    className="me-2"
+                  />
+                  Comments
+                </Link>
+              </li>
+              <li>
+                <a class="dropdown-item border-bottom" href="#">
+                  <img
+                    src="/images/DownloadSimple.svg"
+                    alt=""
+                    className="me-2"
+                  />
+                  Download
+                </a>
+              </li>
+              {/* <li>
                                 <a class="dropdown-item text-danger" href="#">
                                   <img
                                     src="/images/users/Trash.svg"
@@ -273,7 +277,8 @@ const HomeEmpl = () => {
         <Checkbox
           checked={tasks.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          defaultChecked>
+          defaultChecked
+        >
           {" "}
           {column.label}
         </Checkbox>
@@ -286,13 +291,12 @@ const HomeEmpl = () => {
       const [templateList] = await fetchTemplateData();
       if (templateList) {
         setTemplateIdList(templateList);
-        // console.log(templateList);
+        console.log(templateList);
       }
     };
 
     fetchTemplateIdsData();
   }, []);
- 
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
@@ -317,7 +321,7 @@ const HomeEmpl = () => {
       documentName: "",
       templateId: "",
     });
-    getTaskData()
+    getTaskData();
   };
 
   const visibleColumns = columnsWithCheckboxes.filter(
@@ -348,7 +352,6 @@ const HomeEmpl = () => {
     });
   };
 
-  
   useEffect(() => {
     const count = async () => {
       const documentCountResult = await DocumentCount();
@@ -361,7 +364,7 @@ const HomeEmpl = () => {
         setReceivedCount(receivedDocCount);
       }
     };
-    count(); 
+    count();
   }, []);
 
   const [isCommentVisible, setIsCommentVisible] = useState(false);
@@ -410,23 +413,19 @@ const HomeEmpl = () => {
     const value = e.target.value;
 
     setDocumentInfo({ ...documentInfo, [name]: value });
-    
   };
 
-  const[profileDetail,setProfileDetail] = useState(null);
+  const [profileDetail, setProfileDetail] = useState(null);
 
-  
-
-  useEffect(()=>{
-    const details = async ()=>{
+  useEffect(() => {
+    const details = async () => {
       const detailResults = await employeProfileDetail();
       const data = detailResults?.[0]?.results?.employee;
-      setProfileDetail(data)
-    }
+      setProfileDetail(data);
+    };
     details();
-  },[])
-  console.log(profileDetail)
-  
+  }, []);
+  console.log(profileDetail);
 
   // const [templateIdList, setTemplateIdList] = useState([]);
 
@@ -440,9 +439,6 @@ const HomeEmpl = () => {
 
   //   fetchTemplateIdsData();
   // }, []);
-  
-
-  
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -479,17 +475,16 @@ const HomeEmpl = () => {
   //   fetchData();
   // }, [searchData, shouldRender]);
 
-  
-
   const handleSubmitComment = async (e) => {
     e.preventDefault();
-    let creator_Id =  localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+    let creator_Id =
+      localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
     let data = await AddCommentEmply({
       comment,
       document_Id,
-      creator_Id, 
+      creator_Id,
     });
-    if (!data?.error) { 
+    if (!data?.error) {
       setComment("");
     }
   };
@@ -506,9 +501,7 @@ const HomeEmpl = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
-                      Home
-                    </a>
+                    <a className="nav-link fw-bold ms-2">Home</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
@@ -548,8 +541,8 @@ const HomeEmpl = () => {
               </nav>
             </div>
 
-                        {/* <!-- Modal --> */}
-                        <div
+            {/* <!-- Modal --> */}
+            <div
               class="modal fade"
               id="exampleModal"
               tabindex="-1"
@@ -598,7 +591,7 @@ const HomeEmpl = () => {
                       data-bs-dismiss="modal"
                       onClick={() => handleSubmit()}
                     >
-                      Request 
+                      Request
                     </button>
                     <button
                       type="button"
@@ -614,19 +607,18 @@ const HomeEmpl = () => {
             </div>
             {/* <!-- Modal End--> */}
 
-           
             <div className="col-12 mb-4">
               <div className="row statics_part">
-              <div className="col-md-4 ">
+                <div className="col-md-4 ">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">
-                        My Department
-                      </h6>
+                      <h6 className="mb-0 header-card-text">My Department</h6>
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="department-name mb-0 fw-semibold fs-7">
-                        {profileDetail?.department ?( profileDetail?.department_Id?.departmentName): " Not Available"}
+                        {profileDetail?.department_Id
+                          ? profileDetail?.department_Id?.departmentName
+                          : "NA"}
                       </h3>
                     </div>
                   </div>
@@ -661,13 +653,13 @@ const HomeEmpl = () => {
                 </div>
               </div>
             </div>
-           
+
             <div className="position-relative">
               <p className="table-name mb-2">Documents</p>
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">
                   <div className="col-md-3 table-searchbar-imgs">
-                  <img
+                    <img
                       src="/images/dashboard/Plus-icon.png"
                       className="p-2 table-searchbar-img"
                       type="button"
@@ -712,7 +704,10 @@ const HomeEmpl = () => {
                     )}
                   </div>
                   <div class="search_icon">
-                  <img width={20} src={require("../../assets/logo/search.png")}></img>
+                    <img
+                      width={20}
+                      src={require("../../assets/logo/search.png")}
+                    ></img>
                   </div>
                 </div>
                 <form className="d-flex me-2" role="search"></form>
@@ -748,8 +743,8 @@ const HomeEmpl = () => {
           <div className="col">
             <RightSidebar />
           </div>
-            {/* Comment Modal */}
-            <div
+          {/* Comment Modal */}
+          <div
             class="modal fade"
             id="commentModal"
             tabindex="-1"

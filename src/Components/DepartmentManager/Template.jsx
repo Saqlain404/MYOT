@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import Swal from "sweetalert2";
+import { Button } from "rsuite";
 
 const Template = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -300,41 +301,36 @@ const Template = () => {
       let values = data?.results?.templete;
       values?.map((list, index) => {
         let returnData = {};
-        returnData.name = list?.templeteName || "NA";
-        returnData.assignTo =
-          (
-            <>
-              <img
-                className="w_20_h_20"
-                src={list?.signatory?.profile_Pic}
-                alt=""
-              />
-              <span className="ms-2 text-capitalize">
-                {list?.signatory?.name}
-              </span>
-            </>
-          ) || "NA";
-        returnData.version = list?.templeteVersion[0]?.version;
-        returnData.date = moment(list?.createdAt).format("L");
-        returnData.status = (
+        returnData.name = list?.templeteName;
+        returnData.assignTo = 
+        (
           <>
-            <span
-              className={`"td-text status" ${
-                list?.status === "Pending"
-                  ? "text-info"
-                  : list?.status === "Approved"
-                  ? "text-warning"
-                  : list?.status === "In Progress"
-                  ? "text-primary"
-                  : "text-success"
-              }`}
-            >
-              {list?.status}
-            </span>
+            <img
+              className="w_20_h_20"
+              src={list?.signatory?.profile_Pic}
+              alt=""
+            />
+            <span className="ms-2 text-capitalize">{list?.signatory?.name}</span>
           </>
         );
-        returnData.department =
-          list?.manager?.department_Id?.departmentName || "NA";
+        returnData.version = list?.templeteVersion[0]?.version;
+        returnData.date = moment(list?.createdAt).format("L");
+        returnData.status = ( 
+        <span
+        className={`"td-text status" ${
+          list?.status === "Pending"
+            ? "text-info"
+            : list?.status === "Approved"
+            ? "text-warning"
+            : list?.status === "In Progress"
+            ? "text-primary"
+            : "text-success"
+        }`}
+      >
+        {list?.status}
+      </span>)
+        
+        returnData.department = list?.manager?.department_Id?.departmentName;
         returnData.actions = (
           <div class="text-center">
             <a
@@ -550,7 +546,7 @@ const Template = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {templateCount?.totalTempleted || 0}
+                        {templateCount?.totalTempleted?.[0]?.count || 0}
                       </h3>
                     </div>
                   </div>
@@ -644,6 +640,9 @@ const Template = () => {
                     </p>
                   )}
                 </div>
+                <div class="search_icon">
+                  <img width={20} src={require("../../assets/logo/search.png")}></img>
+                  </div>
               </div>
               <form className="d-flex me-2" role="search"></form>
             </div>
@@ -875,12 +874,24 @@ const Template = () => {
                 </div>
               </div>
               <div className="d-flex justify-content-end mb-3">
-                <button type="submit" class="user-modal-btn">
-                  Add New
-                </button>
-                <button type="reset" id="reset-modal" class="user-modal-btn2">
-                  Cancel
-                </button>
+              <Button
+                        style={{ width: "150px" }}
+                        // loading={loader}
+                        appearance="primary"
+                        className="btn mb-3 me-2 rounded-2"
+                        type="submit"
+                      >
+                        Add New
+                      </Button>
+                      <Button
+                        style={{ width: "100px" }}
+                        type="reset"
+                        className="btn mb-3 mx-2 rounded-2 bg-light text-dark border-0"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        Cancel
+                      </Button>
               </div>
             </form>
           </div>

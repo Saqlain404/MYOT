@@ -437,7 +437,7 @@ const HomeDept = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {homeCount?.totalTemplete || 0}
+                        {homeCount?.totalTemplete?.[0]?.count || 0}
                       </h3>
                     </div>
                   </div>
@@ -446,58 +446,55 @@ const HomeDept = () => {
             </div>
             <div className="position-relative">
             <p className="table-name mb-2">Templates</p>
+           
+            
             <div className=" col-12 d-flex align-items-center table-searchbar">
-              <div className="row d-flex  col ">
-                <div className="col-md-3 table-searchbar-imgs">
-                  {/* <img
-                    src="/images/dashboard/Plus-icon.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
-                  /> */}
-                  {/* <img
-                    src="/images/dashboard/FunnelSimple.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
-                  /> */}
-                  <img
-                  onClick={toggleSortOrder}
-                    src="/images/dashboard/ArrowsDownUp.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
-                    
-                  />
-                  <img
+        <div className="d-flex ">
+          <div className="col-md-3 table-searchbar-imgs me-4">
+            {/* <img
+              src="/images/dashboard/Plus-icon.png"
+              alt=""
+              className="p-2 table-searchbar-img"
+            /> */}
+            <img
+              src="/images/dashboard/ArrowsDownUp.png"
+              onClick={toggleSortOrder}
+              className="p-2 table-searchbar-img  cursor_pointer"
+            />
+            <img
                     src="/images/dashboard/DotsThreeOutlineVertical2.png"
                     alt=""
-                    className="p-2 table-searchbar-img border-end"
+                    className="p-2 table-searchbar-img border-end "
                   />
-                </div>
-                <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
-                <p className="m-0 text-nowrap">
+          </div>
+          <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
+          <p className="m-0 text-nowrap">
                       {templates?.selectedColumns &&
                         templates?.selectedColumns.length}
                       <span> Selected</span>
                     </p>
-                    {showClearButton ? (
-                      <p
-                        className="hide-selected m-0 text-nowrap cursor_pointer "
-                        onClick={showAllColumns}
-                      >
-                        Clear Selection
-                      </p>
-                    ) : (
-                      <p
-                        className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
-                        onClick={hideSelectedColumns}
-                      >
-                        Hide Selected
-                      </p>
-                    )}
-                </div>
-              </div>
-              <form className="d-flex me-2" role="search"></form>
-            </div>
-
+            {showClearButton ? (
+              <p
+                className="hide-selected ms-2 m-0 text-nowrap cursor_pointer "
+                onClick={showAllColumns}
+              >
+                Clear Selection
+              </p>
+            ) : (
+              <p
+                className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
+                onClick={hideSelectedColumns}
+              >
+                Hide Selected
+              </p>
+            )}
+          </div>
+          <div class="search_icon">
+                  <img width={20} src={require("../../assets/logo/search.png")}></img>
+                  </div>
+        </div>
+        <form className="d-flex me-2" role="search"></form>
+      </div>
             <div className="col-12 mdb_table mt-3 ">
               <div className="table-responsive">
               <MDBDataTable
@@ -537,3 +534,9 @@ const HomeDept = () => {
 };
 
 export default HomeDept;
+
+
+// disabled={
+//   !departmentInfo?.departmentname ||
+//   !departmentInfo?.description
+// }

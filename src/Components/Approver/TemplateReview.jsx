@@ -12,6 +12,7 @@ import {
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import { Checkbox } from "antd";
+import Swal from "sweetalert2";
 
 const TemplateReview = () => {
   const [searchData, setSearchData] = useState("");
@@ -157,7 +158,7 @@ const TemplateReview = () => {
           <>
               <div className="text-center">
               <a
-                onClick={() => setTemplete_Id(list?.templete?.templete_ID)}
+                onClick={() => setTemplete_Id(list?._id)}
                 type="button"
                 data-bs-toggle="modal"
                 data-bs-target="#commentModal"
@@ -183,7 +184,7 @@ const TemplateReview = () => {
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
               <li>
                 <Link
-                   to={`/Approver/Template-view/${list?._id}`}
+                   to={`/Approver/Template-view/${list?._id || "Template not Found"}`}
                   className="text-decoration-none"
                 >
                   <a class="dropdown-item border-bottom" href="/">
@@ -192,7 +193,7 @@ const TemplateReview = () => {
                       alt=""
                       className="me-2"
                     />
-                    View Users Details
+                    View Template
                   </a>
                 </Link>{" "}
               </li>
@@ -324,13 +325,24 @@ const TemplateReview = () => {
     e.preventDefault();
     let creator_Id =
       localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+      let trimmedComment = comment.trim()
     let data = await AddCommentApprv({
-      comment,
+      comment: trimmedComment,
       templete_Id,
       creator_Id,
     });
     if (!data?.error) {
       setComment("");
+    }else if(trimmedComment===""){
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Please enter a comment",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
     }
   };
 
@@ -346,7 +358,7 @@ const TemplateReview = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">
+                    <a className="nav-link fw-bold ms-2">
                       Template Review
                     </a>
                   </li>

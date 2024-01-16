@@ -9,12 +9,16 @@ import {
   CommentViewEmply,
   DeleteCommentEmpl,
 } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../app/slice/userSlice";
 
 const CommentsEmply = () => {
   const [commentList, setCommentList] = useState([]);
   const [reply, setReply] = useState(false);
   const [comment, setComment] = useState("");
   const [replyMsg, setReplyMsg] = useState("");
+
+  const userData = useSelector(selectUserData)
 
   const { id } = useParams();
   console.log(id);
@@ -34,7 +38,7 @@ const CommentsEmply = () => {
   };
 
   const handleDelete = async (comment_id) => {
-    const deleteComment = DeleteCommentEmpl(comment_id);
+    const deleteComment = await DeleteCommentEmpl(comment_id);
     setTimeout(() => {
       getCommentLists();
     }, 200);
@@ -91,20 +95,20 @@ const CommentsEmply = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
+                    <a className="nav-link fw-bold ms-2">
                       Tasks / Comments
                     </a>
                   </li>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">
-                  <form className="" role="search">
+                  {/* <form className="" role="search">
                     <input
                       className="form-control search-bar"
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
                     />
-                  </form>
+                  </form> */}
                   <div className="">
                     <img
                       src="/images/dashboard/announcement.png"
@@ -129,8 +133,8 @@ const CommentsEmply = () => {
             </div>
 
             <div className="container px-4 text-center min-vh-100 ">
-              <p className="templates-leave mt-3  d-flex ">Comments</p>
-              {commentList &&
+              {/* <p className="templates-leave mt-3  d-flex ">Comments</p> */}
+              {commentList && commentList?.length > 0 ? (
                 commentList?.map((comments, index) => (
                   <>
                     <div className="bg-white rounded p-2 mb-3">
@@ -141,7 +145,7 @@ const CommentsEmply = () => {
                             alt=""
                             className="m-2 w_20_h_20"
                           />
-                          <p className="commenter-name">
+                          <p className="commenter-name text-capitalize ">
                             {comments?.creator_Id?.name}
                           </p>
                           <p className="comment-time m-auto">
@@ -188,7 +192,7 @@ const CommentsEmply = () => {
                           </div>
                         </div>
                       </div>
-                      <p className="comment-txt p-2 mb-0">
+                      <p className="comment-txt p-2 mb-0"  style={{wordBreak:"break-word"}}>
                         {comments?.comment}
                       </p>
                       {comments?.replyText && (
@@ -206,14 +210,14 @@ const CommentsEmply = () => {
                                       src={reply?.creator_Id?.profile_Pic}
                                       alt=""
                                     />
-                                    <p className="commenter-name ">
+                                    <p className="commenter-name text-capitalize ">
                                       {reply?.creator_Id?.name}
                                     </p>
                                     {/* <p className="comment-time m-auto">
                                       {moment(reply?.createdAt).calendar()}
                                     </p> */}
                                   </div>
-                                  <p className="comment-txt p-2 mb-0">
+                                  <p className="comment-txt p-2 mb-0"  style={{wordBreak:"break-word"}}>
                                     {reply?.text}
                                   </p>
                                 </div>
@@ -227,10 +231,10 @@ const CommentsEmply = () => {
                         <div className="bg-white rounded p-2 my-3 task_reply">
                           <form onSubmit={(e) => handleReply(e, comments?._id)}>
                             <div className="d-flex  align-items-center justify-content-between">
-                              <img
-                                src="/images/dashboard/Avatar2.png"
+                            <img
+                                src={userData?.profile_Pic}
                                 alt=""
-                                className="comment-avatar m-auto mt-2"
+                                className="comment-avatar m-auto mt-2 w_20_h_20"
                               />
                               <textarea
                                 type="text"
@@ -256,7 +260,15 @@ const CommentsEmply = () => {
                       )}
                     </div>
                   </>
-                ))}
+                ))
+                ): (
+                  <>
+                    <h3 className="bg-white rounded p-2 py-4 mb-3">
+                      No Comments Found
+                    </h3>
+                  </>
+                )
+              }
 
               <div className="bg-white rounded p-2 mb-3">
                 <div className="d-flex  align-items-center  justify-content-between">
@@ -264,11 +276,11 @@ const CommentsEmply = () => {
                     onSubmit={(e) => handleSubmitComment(e)}
                     className="d-flex  justify-content-between"
                   >
-                    <img
-                      src="/images/dashboard/Avatar2.png"
-                      alt=""
-                      className="comment-avatar m-auto mt-2"
-                    />
+                   <img
+                                src={userData?.profile_Pic}
+                                alt=""
+                                className="comment-avatar m-auto mt-2 w_20_h_20"
+                              />
                     <textarea
                       name="comment"
                       placeholder="Add a comment…"
