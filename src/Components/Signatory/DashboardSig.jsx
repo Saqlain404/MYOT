@@ -34,7 +34,7 @@ const DashboardSig = () => {
   };
 
   const getTotalCount = async () => {
-    let id = localStorage.getItem("myot_admin_id")
+    let id = localStorage.getItem("myot_admin_id");
     try {
       let { data } = await SignatoryDashboardCount(id);
       if (!data?.error) {
@@ -128,7 +128,9 @@ const DashboardSig = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {count?.totalTemplete && count?.totalTemplete[0]?.count || 0}
+                        {(count?.totalTemplete &&
+                          count?.totalTemplete[0]?.count) ||
+                          0}
                       </h3>
                     </div>
                   </div>
@@ -142,7 +144,9 @@ const DashboardSig = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {count?.totalDocument && count?.totalDocument[0]?.count || 0}
+                        {(count?.totalDocument &&
+                          count?.totalDocument[0]?.count) ||
+                          0}
                       </h3>
                     </div>
                   </div>
@@ -154,8 +158,9 @@ const DashboardSig = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {count?.totalActiveUser &&
-                          count?.totalActiveUser[0]?.count || 0}
+                        {(count?.totalActiveUser &&
+                          count?.totalActiveUser[0]?.count) ||
+                          0}
                       </h3>
                     </div>
                   </div>
@@ -168,7 +173,7 @@ const DashboardSig = () => {
                   <div className="dashboard-card3 bg-light table-card3 dashboard-card3-text">
                     <p className="text-card">Document Request</p>
 
-                    {totalDocument &&
+                    {totalDocument && totalDocument.length > 0 ?
                       totalDocument.map((count) => (
                         <>
                           <div className="row">
@@ -191,43 +196,49 @@ const DashboardSig = () => {
                             {/* </div> */}
                           </div>
                         </>
-                      ))}
+                      )) : 
+                      <p className="th-text text-start mt-3">No Requests</p>}
                   </div>
                 </div>
 
-                <div className="col-md-6">
-                  <div className="dashboard-card2 ">
-                    <p className="dashboard-card2-text">Open Tickets</p>
-                    <p className="text-card mt-2 mb-3">
-                      {ticketCount?.totalComplete} / {ticketCount?.totalTicket}
-                    </p>
-                    <p className=" mb-1 dashboard-card2-text">
-                      Profile Completion
-                    </p>
+                {ticketCount && (
+                  <div className="col-md-6">
+                    <div className="dashboard-card2 ">
+                      <p className="dashboard-card2-text">Open Tickets</p>
+                      <p className="text-card mt-2 mb-3">
+                        {ticketCount?.totalComplete} /{" "}
+                        {ticketCount?.totalTicket}
+                      </p>
+                      <p className=" mb-1 dashboard-card2-text">
+                        Profile Completion
+                      </p>
 
-                    <div className="progress-bar w-100">
-                      <div className="progress-container">
-                        <div
-                          className="progress"
-                          style={{ width: `${ticketCount?.completepresent}%` }}
-                        ></div>
-                        <span className="progress-label">{`${ticketCount?.completepresent}%`}</span>
+                      <div className="progress-bar w-100">
+                        <div className="progress-container">
+                          <div
+                            className="progress"
+                            style={{
+                              width: `${ticketCount?.completepresent}%`,
+                            }}
+                          ></div>
+                          <span className="progress-label">{`${ticketCount?.completepresent}%`}</span>
+                        </div>
                       </div>
-                    </div>
-                    <p className=" mb-1 dashboard-card2-text">Status</p>
-                    <div className="progress-bar w-100">
-                      <div className="progress-container">
-                        <div
-                          className="progress"
-                          style={{
-                            width: `${ticketCount?.InprogressPresent}%`,
-                          }}
-                        ></div>
-                        <span className="progress-label">{`In Progress / ${ticketCount?.InprogressPresent}%`}</span>
+                      <p className=" mb-1 dashboard-card2-text">Status</p>
+                      <div className="progress-bar w-100">
+                        <div className="progress-container">
+                          <div
+                            className="progress"
+                            style={{
+                              width: `${ticketCount?.InprogressPresent}%`,
+                            }}
+                          ></div>
+                          <span className="progress-label">{`In Progress / ${ticketCount?.InprogressPresent}%`}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
 
                 {/* <div className="col-md-6 mb-md-2 ">
                   <div className="dashboard-card2 bg-danger-subtle">

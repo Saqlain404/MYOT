@@ -7,13 +7,15 @@ import {
   CreateAnnouncement,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
-import { toast } from "react-toastify";
+import { Button } from "rsuite";
+import Swal from "sweetalert2";
 
 const AnnouncementsSig = () => {
   const [documents, setDocuments] = useState([]);
   const [announcementType, setAnnouncementType] = useState("");
   const [description, setDescription] = useState("");
   const [files, setFiles] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     getAnnouncements();
@@ -34,6 +36,7 @@ const AnnouncementsSig = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoader(true);
     let id = localStorage.getItem("myot_admin_id");
     let formData = new FormData();
     formData.append("categoryName", announcementType);
@@ -43,17 +46,15 @@ const AnnouncementsSig = () => {
 
     try {
       let { data } = await CreateAnnouncement(formData);
-      console.log(data);
       if (data && !data?.error) {
-        toast("New Announcement Created", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "Announcement created",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
         });
         setAnnouncementType("");
         setDescription("");
@@ -64,7 +65,8 @@ const AnnouncementsSig = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -198,20 +200,35 @@ const AnnouncementsSig = () => {
                         </label>
                         <textarea
                           type="text"
-                          placeholder=""
-                          className="col-12 modal-input td-text p-2"
+                          placeholder="Enter Description..."
+                          className="col-12 modal-input td-text p-2 text-area"
                           name="description"
                           id="description"
                           value={description}
                           onChange={(e) => setDescription(e.target.value)}
-                          style={{ minHeight: "150px" }}
                         ></textarea>
                       </div>
                     </div>
                     <div className="d-flex justify-content-end mb-3 me-3">
-                      <button type="submit" class="user-modal-btn">
+                      <Button
+                        style={{ width: "150px" }}
+                        loading={loader}
+                        appearance="primary"
+                        className="btn mb-3 me-2 rounded-2"
+                        type="submit"
+                        disabled={!announcementType || !description}
+                      >
                         Send
-                      </button>
+                      </Button>
+                      <Button
+                        style={{ width: "150px" }}
+                        type="button"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        className="btn mb-3 me-2 rounded-2"
+                      >
+                        Cancel
+                      </Button>
                       <button type="reset" id="resetForm" className="d-none">
                         reset
                       </button>

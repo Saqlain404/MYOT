@@ -145,7 +145,7 @@ const ProfileSig = () => {
                         <div className="d-flex justify-content-between">
                           <div>
                             <p className="profile-info">Full Name</p>
-                            <p className="profile-data">{profileData?.name}</p>
+                            <p className="profile-data text-capitalize">{profileData?.name}</p>
                           </div>
                           <div>
                             <p className="profile-info">Email</p>
@@ -189,7 +189,7 @@ const ProfileSig = () => {
                         <div className="d-flex justify-content-between">
                           <div>
                             <p className="profile-info">Company Name</p>
-                            <p className="profile-data">
+                            <p className="profile-data text-capitalize">
                               {profileData?.companyName}
                             </p>
                           </div>
@@ -205,7 +205,7 @@ const ProfileSig = () => {
                           </div>
                           <div>
                             <p className="profile-info">Address</p>
-                            <p className="profile-data">
+                            <p className="profile-data text-capitalize">
                               {profileData?.address}
                             </p>
                           </div>
