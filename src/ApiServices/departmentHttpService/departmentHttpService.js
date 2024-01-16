@@ -74,10 +74,10 @@ export async function DocumentCount() {
   }
 }
 
-export async function ProfileDetails() {
+export async function ProfileDetails(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/department/profile-details/656995d2c152b587fb27a180`
+      `${process.env.REACT_APP_APIENDPOINT}/api/department/profile-details/${id}`
     );
     // console.log(data);
 

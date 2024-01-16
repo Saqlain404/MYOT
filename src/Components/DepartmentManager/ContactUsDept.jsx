@@ -94,21 +94,24 @@ const ContactUsDept = () => {
 
             <div className="container px-4 text-center min-vh-100">
               <div className="row bg-white rounded  p-4 m-4">
-                <div className="col-12 d-flex">
-                  <Link to={"/Department/Help"} className="text-decoration-none">
-                    <p className="th-text me-3">Template Guidelines</p>
-                  </Link>
+                <div className="d-flex mt-2">
                   <Link
-                    to={"/Department/Help/Help-Support"}
+                    to={"/Department/Help"}
                     className="text-decoration-none"
                   >
-                    <p className="th-text me-3">Help & Support</p>
+                    <p className="th-text  me-3">Template Guidelines</p>
                   </Link>
                   <Link
-                    to={"/Department/Help/Contact-us"}
+                    to={"/Department/Help-Support"}
                     className="text-decoration-none"
                   >
-                    <p className="td-text border-bottom">Contact Us</p>
+                    <p className="th-text border-bottom me-3">Help & Support</p>
+                  </Link>
+                  <Link
+                    to={"/Department/Contact-us"}
+                    className="text-decoration-none"
+                  >
+                    <p className="td-text">Contact Us</p>
                   </Link>
                 </div>
                 <div className="col-12 d-flex mb-4 pb-4">

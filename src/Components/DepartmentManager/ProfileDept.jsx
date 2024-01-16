@@ -12,7 +12,8 @@ const ProfileDept = () => {
   const[profileDetail, setProfileDetail] = useState();
 
   const getProfileDetails = async () => {
-    let { data } = await ProfileDetails();
+    let id = localStorage.getItem("myot_admin_id")
+    let { data } = await ProfileDetails(id);
     if (!data?.error) {
       setProfileDetail(data?.results?.department);
     }

@@ -182,7 +182,7 @@ const EmplEditProfile = () => {
                     <input
                       type="text"
                       placeholder="Full Name"
-                      className="col-12 profile-edit-input p-2"
+                      className="col-12 profile-edit-input p-2 text-capitalize"
                       name="name"
                       defaultValue={state?.name}
                       // value={post.name}
