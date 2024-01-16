@@ -61,7 +61,11 @@ const SidebarDepartment = () => {
         <div className="col-auto col-mg-3 min-vh-100  mb-4">
           <p className="th-text">MAIN MENU</p>
           <ul className="nav nav-pills flex-column logout-margin">
-            <li className="nav-item text-dark">
+            <li
+              className={`"nav-item text-dark" ${
+                location.pathname === "/Department/Home" ? "nav_active" : ""
+              } `}
+            >
               <Link to={"/Department/Home"} className="text-decoration-none">
                 <a
                   href="/"
@@ -380,11 +384,7 @@ const SidebarDepartment = () => {
                 </a>
               </Link>
             </li>
-            <li
-              className={`"nav-item text-dark" ${
-                location.pathname === "/Department/Home" ? "nav_active" : ""
-              } `}
-            >
+            <li className="nav-item text-dark">
               <a
                 href="/"
                 className="nav-link text-dark fs-5 align-middle "
