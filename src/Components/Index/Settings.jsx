@@ -178,7 +178,7 @@ const Settings = () => {
                                   onClick={handleSubmit}
                                   className="blue_btn"
                                 >
-                                  Add Image
+                                  Upload Image
                                 </button>
                               </>
                             ) : (
