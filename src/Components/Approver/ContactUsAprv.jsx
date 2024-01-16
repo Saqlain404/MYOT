@@ -1,4 +1,3 @@
-
 // import React from "react";
 
 import React, { useState } from "react";
@@ -8,14 +7,14 @@ import { Link } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
 import { ToastContainer } from "react-toastify";
 import { contactUsAprv } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
+import { Button } from "rsuite";
 
 const ContactUsAprv = () => {
-
   const [contactData, setContactData] = useState({
     name: "",
     email: "",
     mobileNumber: "",
-    message: "", 
+    message: "",
   });
 
   const handleInput = (event) => {
@@ -25,27 +24,26 @@ const ContactUsAprv = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     const data = {
-      name:  contactData.name,
-      email:  contactData.email,
-      mobileNumber:  contactData.mobileNumber,
-      message:  contactData.message,
+      name: contactData.name,
+      email: contactData.email,
+      mobileNumber: contactData.mobileNumber,
+      message: contactData.message,
     };
     // setContactData("")
 
     setContactData({
-      name: '',
-      email: '',
-      mobileNumber: '',
-      message: '',
+      name: "",
+      email: "",
+      mobileNumber: "",
+      message: "",
     });
 
     const response = await contactUsAprv(data);
 
     console.log(response);
-    
-  }
+  };
   return (
-    <> 
+    <>
       <div className="container-fluid">
         <div className="row">
           <div className="col-2 sidebar">
@@ -56,9 +54,7 @@ const ContactUsAprv = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link fw-bold ms-2">
-                      Help / Contact Us
-                    </a>
+                    <a className="nav-link fw-bold ms-2">Help / Contact Us</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
@@ -115,7 +111,7 @@ const ContactUsAprv = () => {
                 <div className="col-12 d-flex mb-4 pb-4 mt-4">
                   <div className="col-6">
                     <p className="help-support-heading">Get in Touch</p>
-                    <p className="help-support-text">
+                    <p className="help-support-text mb-3">
                       Have any questions? We’d love to hear from you.
                     </p>
                     <form onSubmit={onSubmit}>
@@ -176,10 +172,20 @@ const ContactUsAprv = () => {
                           className="col-12 profile-edit-input p-2"
                         ></textarea>
                       </div>
-                      <button className="contact-form-btn" type="submit">
+                      <Button
+                        appearance="primary"
+                        className="contact-form-btn btn mb-3 me-2 rounded-2"
+                        type="submit"
+                        disabled={
+                          !contactData?.message ||
+                          !contactData?.mobileNumber ||
+                          !contactData?.email ||
+                          !contactData?.name
+                        }
+                      >
                         Submit
-                      </button>
-                      <ToastContainer/>
+                      </Button>
+                      {/* <ToastContainer /> */}
                     </form>
                   </div>
                   <div className="col-6">

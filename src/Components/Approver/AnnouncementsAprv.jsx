@@ -54,9 +54,9 @@ const AnnouncementsAprv = () => {
   const responseList = async () => {
     const announcementData = await AnnouncementList(ids);
     setListData(announcementData);
+    announcementData?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
     console.log(announcementData);
-  };
-
+  }
   useEffect(() => {
     responseList();
   }, []);
@@ -202,6 +202,7 @@ const AnnouncementsAprv = () => {
                         // aria-label="Close"
                         // data-bs-dismiss="modal"
                         appearance="primary"
+                        data-bs-dismiss="modal"
                         className="btn mb-3 me-2  rounded-2"
                         disabled={
                           !post?.categoryName ||

@@ -5,6 +5,7 @@ import SideBarEmpl from "./SideBarEmpl";
 import { employeProfileDetail } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 import EmplEditProfile from "./EmplEditProfile";
 import moment from "moment";
+import { Button } from "rsuite";
 
 const ProfileEmpl = () => {
   const [profileDetail, setProfileDetail] = useState(null);
@@ -75,7 +76,8 @@ const ProfileEmpl = () => {
                     state={profileDetail}
                     className="text-decoration-none"
                   >
-                    <button className="profile-edit-btn">Edit</button>
+                     <Button className="btn me-2  rounded-2"  appearance="primary"
+                        >Edit</Button>
                   </Link>
                 </div>
 

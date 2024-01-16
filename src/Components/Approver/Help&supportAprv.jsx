@@ -13,6 +13,7 @@ import {
   NewTicketEmply,
   ResolveListEmpl,
 } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
+import { Button } from "rsuite";
 
 const HelpSupportAprv = () => {
   const [ticketList, setTicketList] = useState();
@@ -52,11 +53,12 @@ const HelpSupportAprv = () => {
       ticketType: "",
       ticketIssue: "",
     });
-    AllData()
+    AllData();
   };
 
   const OnGoingList = async () => {
     let data = await OnGoingAprv(ids);
+    data?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
     console.log(data);
     if (!data?.error) {
       setTicketList(data);
@@ -64,6 +66,7 @@ const HelpSupportAprv = () => {
   };
   const resolveList = async () => {
     let data = await ResolveListEmpl(ids);
+    data?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
     console.log(data);
     if (!data?.error) {
       setTicketList(data);
@@ -71,6 +74,7 @@ const HelpSupportAprv = () => {
   };
   const NewTickets = async () => {
     let data = await NewTicketEmply(ids);
+    data?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
     if (!data?.error) {
       setTicketList(data);
     }
@@ -98,8 +102,8 @@ const HelpSupportAprv = () => {
     let emp_id = localStorage.getItem("user_id");
     setId(emp_id);
     const getData = await TicketListAprv(ids);
+    getData[0]?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
     setTicketList(getData);
-    console.log(ticketList);
   };
   useEffect(() => {
     AllData();
@@ -198,8 +202,8 @@ const HelpSupportAprv = () => {
                           />
                         </button>
                       </a> */}
-                      {/* <ul class="dropdown-menu border-0 shadow mt-3  rounded"> */}
-                        {/* <li>
+                    {/* <ul class="dropdown-menu border-0 shadow mt-3  rounded"> */}
+                    {/* <li>
                           <div
                             className="d-flex whitespace-nowrap"
                             type="button"
@@ -216,7 +220,7 @@ const HelpSupportAprv = () => {
                             </a>
                           </div>
                         </li> */}
-                        {/* <li>
+                    {/* <li>
                           <a class="dropdown-item border-bottom" href="/">
                             <img
                               src="/images/dashboard/orange-ticket-ball.svg"
@@ -226,7 +230,7 @@ const HelpSupportAprv = () => {
                             On-Going Tickets
                           </a>
                         </li> */}
-                        {/* <li>
+                    {/* <li>
                           <a class="dropdown-item" href="/">
                             <img
                               src="/images/dashboard/green-ticket-ball.svg"
@@ -235,10 +239,10 @@ const HelpSupportAprv = () => {
                             />
                           </a>
                         </li> */}
-                      {/* </ul> */}
+                    {/* </ul> */}
                     {/* </div> */}
                     {/* <div class="dropdown"> */}
-                      {/* <a
+                    {/* <a
                         type=""
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
@@ -251,15 +255,15 @@ const HelpSupportAprv = () => {
                           />
                         </button>
                       </a> */}
-                      {/* <ul class="dropdown-menu border-0 shadow mt-3  rounded"> */}
-                        {/* <li> */}
-                          {/* <div
+                    {/* <ul class="dropdown-menu border-0 shadow mt-3  rounded"> */}
+                    {/* <li> */}
+                    {/* <div
                             className="d-flex whitespace-nowrap"
                             type="button"
                             data-bs-toggle="modal"
                             data-bs-target="#exampleModal"
                           > */}
-                          {/* <a
+                    {/* <a
                             class={`dropdown-item border-bottom ${
                               selectedDropdown === "New" ? "active" : ""
                             }`}
@@ -273,9 +277,9 @@ const HelpSupportAprv = () => {
                             />
                             New Tickets
                           </a> */}
-                          {/* </div> */}
-                        {/* </li> */}
-                        {/* <li>
+                    {/* </div> */}
+                    {/* </li> */}
+                    {/* <li>
                           <a
                             class={`dropdown-item border-bottom ${
                               selectedDropdown === "Ongoing" ? "active" : ""
@@ -292,7 +296,7 @@ const HelpSupportAprv = () => {
                             On-Going Tickets
                           </a>
                         </li> */}
-                        {/* <li>
+                    {/* <li>
                           <a
                             class={`dropdown-item ${
                               selectedDropdown === "Resolved" ? "active" : ""
@@ -308,7 +312,7 @@ const HelpSupportAprv = () => {
                             Resolved Tickets
                           </a>
                         </li> */}
-                      {/* </ul> */}
+                    {/* </ul> */}
                     {/* </div> */}
                     {/* <!-- Modal --> */}
                     <div
@@ -369,19 +373,34 @@ const HelpSupportAprv = () => {
                                   onChange={handleInput}
                                 ></textarea>
                               </div>
-                            </div>
-                            <ToastContainer />
+                            </div> 
+                            {/* <ToastContainer /> */}
                             <div className="d-flex justify-content-end mb-3">
-                              <button type="submit" class="user-modal-btn" data-bs-dismiss="modal">
-                                Send
-                              </button>
-                              <button
-                                type="button"
-                                class="user-modal-btn2"
+                              <Button
+                                style={{ width: "100px" }}
+                                appearance="primary"
+                                type="submit"
+                                // class="user-modal-btn"
+                                className="btn mb-3 me-2 rounded-2"
                                 data-bs-dismiss="modal"
+                                disabled={
+                                  !contactData?.ticketIssue ||
+                                  !contactData?.ticketType
+                                }
+                              >
+                                Send
+                              </Button>
+                              <Button
+                                style={{ width: "100px" }}
+                                type="button"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                                // class="user-modal-btn2"
+                                // appearance="primary"
+                                className="btn mb-3 me-2 rounded-2"
                               >
                                 Cancel
-                              </button>
+                              </Button>
                             </div>
                           </form>
                         </div>
@@ -404,8 +423,8 @@ const HelpSupportAprv = () => {
                   </div>
                 </div>
 
-                <p className="help-support-heading">Get in Touch</p>
-                <p className="help-support-text">
+                <p className="help-support-heading mt-3">Get in Touch</p>
+                <p className="help-support-text mb-3">
                   Please get in touch and we will be happy to help you. Create
                   New tickets
                 </p>
@@ -482,74 +501,76 @@ const HelpSupportAprv = () => {
                   </ul>
                 </div>
                 <div className="col-12">
-                  {ticketList?.[0] && ticketList?.[0]?.length > 0
-                    ? 
+                  {ticketList?.[0] && ticketList?.[0]?.length > 0 ? (
                     ticketList?.[0]?.map((ticket) => (
-                        <div
-                          className="col rounded border bg-white mb-3 p-2"
-                          key={ticket._id}
-                        >
-                          <div className="d-flex border-bottom d-flex justify-content-between">
-                            <div className="ps-2 pe-4">
-                              <div className="d-flex mb-3">
-                                {ticket?.status === "In Progress" ? (
-                                  <img
-                                    src="/images/dashboard/orange-ticket-ball.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                ) : ticket?.status === "Pending" ? (
-                                  <img
-                                    src="/images/dashboard/blue-ticket-ball.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                ) : ticket.status === "Completed" ? (
-                                  <img
-                                    src="/images/dashboard/green-ticket-ball.svg"
-                                    alt=""
-                                    className="me-2"
-                                  />
-                                ) : null}
-                                <p className="ticket-number m-1">
-                                  {ticket.ticketType}
-                                </p>
-                              </div>
-                              <div className=" mt-1">
-                                <p className="ticket-question td-text mb-3 ms-5">
-                                  {ticket.ticketIssue}
-                                </p>
-                                {/* <p className="td-text mt-0">
+                      <div
+                        className="col rounded border bg-white mb-3 p-2"
+                        key={ticket._id}
+                      >
+                        <div className="d-flex border-bottom d-flex justify-content-between">
+                          <div className="ps-2 pe-4">
+                            <div className="d-flex mb-3">
+                              {ticket?.status === "In Progress" ? (
+                                <img
+                                  src="/images/dashboard/orange-ticket-ball.svg"
+                                  alt=""
+                                  className="me-2"
+                                />
+                              ) : ticket?.status === "Pending" ? (
+                                <img
+                                  src="/images/dashboard/blue-ticket-ball.svg"
+                                  alt=""
+                                  className="me-2"
+                                />
+                              ) : ticket.status === "Completed" ? (
+                                <img
+                                  src="/images/dashboard/green-ticket-ball.svg"
+                                  alt=""
+                                  className="me-2"
+                                />
+                              ) : null}
+                              <p className="ticket-number m-1">
+                                {ticket.ticketType}
+                              </p>
+                            </div>
+                            <div className=" mt-1">
+                              <p className="ticket-question td-text mb-3 ms-5">
+                                {ticket.ticketIssue}
+                              </p>
+                              {/* <p className="td-text mt-0">
                                   Impressive! Though it seems the drag feature
                                   could be improved. But overall it looks
                                   incredible. You’ve nailed the design and the
                                   responsiveness at various breakpoints works
                                   really well.
                                 </p> */}
-                              </div>
                             </div>
-                            <p className="ticket-post-time mt-2">
-                              Posted At <br />
-                              {moment(ticket.createdAt).calendar()}
+                          </div>
+                          <p className="ticket-post-time mt-2">
+                            Posted At <br />
+                            {moment(ticket.createdAt).calendar()}
+                          </p>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                          <div className="d-flex">
+                            <img
+                              src={ticket.creator_Id.profile_Pic}
+                              alt=""
+                              className="m-2 img_profile"
+                            />
+                            <p className="th-text m-auto text-capitalize">
+                              {ticket.creator_Id.name}
                             </p>
                           </div>
-                          <div className="d-flex justify-content-between">
-                            <div className="d-flex">
-                              <img
-                                src={ticket.creator_Id.profile_Pic}
-                                alt=""
-                                className="m-2 img_profile"
-                              />
-                              <p className="th-text m-auto text-capitalize">
-                                {ticket.creator_Id.name}
-                              </p>
-                            </div>
-                            <a href="/" className="ticket-link mt-3 me-1">
-                              Open Ticket
-                            </a>
-                          </div>
+                          <a href="/" className="ticket-link mt-3 me-1">
+                            Open Ticket
+                          </a>
                         </div>
-                      )) : <p className="fs-5">Yay!, no tickets</p>}
+                      </div>
+                    ))
+                  ) : (
+                    <p className="fs-5">Yay!, no tickets</p>
+                  )}
                 </div>
               </div>
             </div>

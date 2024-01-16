@@ -86,7 +86,7 @@ const ProfileAprv = () => {
                   {/* <img src="/images/dashboard/AvatarProfile.svg" alt="" /> */}
                   <img
                     className="w_100_h_100  "
-                    src={profileDetail?.profile_Pic ? profileDetail?.profile_Pic : "/images/icons/EmilyWhite.png"}
+                    src={profileDetail?.profile_Pic ? profileDetail?.profile_Pic : "/images/icons/AliceJohnson.png"}
                     alt="profile_image"
                   />
                 </div>

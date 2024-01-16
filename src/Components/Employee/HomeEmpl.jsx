@@ -17,6 +17,7 @@ import { ToastContainer, toast } from "react-toastify";
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import { Checkbox } from "antd";
+import { Button } from "rsuite";
 
 const HomeEmpl = () => {
   const navigate = useNavigate();
@@ -108,6 +109,7 @@ const HomeEmpl = () => {
 
   const getTaskData = async () => {
     let data = await employeDocumentList(ids);
+    data?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
     console.log(data);
 
     const newRows = [];
@@ -585,22 +587,25 @@ const HomeEmpl = () => {
                     </div>
                   </form>
                   <div className="d-flex justify-content-end mb-3">
-                    <button
+                    <Button
+                    style={{width:"100px"}}
+                    appearance="primary"
                       type="submit"
-                      className="user-modal-btn"
+                      className="btn mb-1 mt-2 me-2 rounded-2"
                       data-bs-dismiss="modal"
                       onClick={() => handleSubmit()}
                     >
-                      Request
-                    </button>
-                    <button
+                      Request 
+                    </Button>
+                    <Button
                       type="button"
+                      style={{width:"100px"}}
                       data-bs-dismiss="modal"
                       aria-label="Close"
-                      className="user-modal-btn2"
+                      className="btn mb-1 mt-2 me-2 rounded-2"
                     >
                       Cancel
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -616,9 +621,7 @@ const HomeEmpl = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="department-name mb-0 fw-semibold fs-7">
-                        {profileDetail?.department_Id
-                          ? profileDetail?.department_Id?.departmentName
-                          : "NA"}
+                        {profileDetail?.department_Id ?( profileDetail?.department_Id?.departmentName): "NA"}
                       </h3>
                     </div>
                   </div>

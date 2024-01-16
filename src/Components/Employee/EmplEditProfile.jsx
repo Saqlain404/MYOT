@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { updateProfilePic, updateUserName } from "../app/slice/userSlice";
+import { Button } from "rsuite";
 
 const EmplEditProfile = () => {
   const [type, setType] = useState("password");
@@ -303,9 +304,9 @@ const EmplEditProfile = () => {
                     </div>
                   </div>
                   <div className=" text-end ms-4 mt-1 ">
-                    <button className="profile-edit-submit m-0" type="submit">
+                  <Button appearance="primary" className="profile-edit-submit btn  rounded-2 m-0" type="submit">
                       Update Profile
-                    </button>
+                    </Button>
                   </div>
                 </form>
               </div>

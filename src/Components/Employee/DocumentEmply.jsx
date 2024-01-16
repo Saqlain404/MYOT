@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import { Checkbox } from "antd";
+import { Button } from "rsuite";
 
 // import "../../dist/css/style.min.css"
 
@@ -488,22 +489,27 @@ const DocumentEmply = () => {
                     </div>
                   </form>
                   <div className="d-flex justify-content-end mb-3">
-                    <button
+                    <Button
+                    style={{width:"100px"}}
+                    appearance="primary" 
                       type="submit"
-                      className="user-modal-btn"
+                      // className="user-modal-btn"
+                      className="btn mb-1 mt-2 me-2 rounded-2"
                       data-bs-dismiss="modal"
                       onClick={() => handleSubmit()}
                     >
                       Request
-                    </button>
-                    <button
+                    </Button>
+                    <Button
+                      style={{width:"100px"}}
                       type="button"
                       data-bs-dismiss="modal"
                       aria-label="Close"
-                      className="user-modal-btn2"
+                      // className="user-modal-btn2"
+                      className="btn mb-1 mt-2 me-2 rounded-2"
                     >
                       Cancel
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>

@@ -10,6 +10,7 @@ import {
 } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 import { ToastContainer } from "react-toastify";
 import moment from "moment";
+import { Button } from "rsuite";
 
 const EmplHelpSupport = () => {
   const [ticketList, setTicketList] = useState();
@@ -46,10 +47,12 @@ const EmplHelpSupport = () => {
       ticketType: "",
       ticketIssue: "",
     });
+    AllData()
   };
 
   const OnGoingList = async () => {
     let data = await OnGoingListEmply(ids);
+    data?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
     console.log(data);
     if (!data?.error) {
       setTicketList(data);
@@ -57,6 +60,7 @@ const EmplHelpSupport = () => {
   };
   const resolveList = async () => {
     let data = await ResolveListEmpl(ids);
+    data?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
     console.log(data);
     if (!data?.error) {
       setTicketList(data);
@@ -64,6 +68,7 @@ const EmplHelpSupport = () => {
   };
   const NewTickets = async () => {
     let data = await NewTicketEmply(ids);
+    data?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
     console.log(data);
     if (!data?.error) {
       setTicketList(data);
@@ -92,8 +97,9 @@ const EmplHelpSupport = () => {
     let emp_id =  localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
     setId(emp_id);
     const getData = await TicketListEmply(emp_id);
+    getData[0]?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
     setTicketList(getData);
-    console.log(ticketList)
+    console.log(getData[0])
   };
   useEffect(() => {
     AllData();
@@ -115,7 +121,7 @@ const EmplHelpSupport = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link fw-bold ms-2">
-                      Template / Template Version 1.0 / View
+                      Help / Help & Support
                     </a>
                   </li>
                 </ul>
@@ -316,16 +322,31 @@ const EmplHelpSupport = () => {
                             </div>
                             <ToastContainer />
                             <div className="d-flex justify-content-end mb-3">
-                              <button type="submit" class="user-modal-btn"  data-bs-dismiss="modal">
-                                Send
-                              </button>
-                              <button
-                                type="button"
-                                class="user-modal-btn2"
+                            <Button
+                                style={{ width: "100px" }}
+                                appearance="primary"
+                                type="submit"
+                                // class="user-modal-btn"
+                                className="btn mb-3 me-2 rounded-2"
                                 data-bs-dismiss="modal"
+                                disabled={
+                                  !contactData?.ticketIssue ||
+                                  !contactData?.ticketType
+                                }
+                              >
+                                Send
+                              </Button>
+                              <Button
+                                style={{ width: "100px" }}
+                                type="button"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                                // class="user-modal-btn2"
+                                // appearance="primary"
+                                className="btn mb-3 me-2 rounded-2"
                               >
                                 Cancel
-                              </button>
+                              </Button>
                             </div>
                           </form>
                         </div>
@@ -348,8 +369,8 @@ const EmplHelpSupport = () => {
                   </div>
                 </div>
 
-                <p className="help-support-heading">Get in Touch</p>
-                <p className="help-support-text">
+                <p className="help-support-heading mt-3">Get in Touch</p>
+                <p className="help-support-text mb-2">
                   Please get in touch and we will be happy to help you. Create
                   New tickets
                 </p>
