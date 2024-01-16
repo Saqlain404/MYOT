@@ -130,7 +130,11 @@ const ProfileSig = () => {
                       <div className=" d-flex justify-content-start mb-4">
                         <img
                           className="w_100_h_100"
-                          src={profileData?.profile_Pic}
+                          src={
+                            profileData?.profile_Pic
+                              ? profileData?.profile_Pic
+                              : "/images/icons/user.jpg"
+                          }
                           alt=""
                         />
                       </div>

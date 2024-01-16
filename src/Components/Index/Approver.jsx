@@ -78,8 +78,7 @@ const Approver = () => {
         returnData.name = list?.name;
         returnData.department = list?.department_Id[0]?.departmentName;
         returnData.empId = list?.employId;
-        returnData.login =
-          (list?.login && moment(list?.login).format("L")) || "NA";
+        returnData.login = list?.logIn && moment(list?.logIn).format("MMM Do YY, h:mm A") || "NA";
         returnData.actions = (
           <div class="text-center">
             <a
@@ -214,9 +213,7 @@ const Approver = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
-                      Approvers
-                    </a>
+                  <a className="nav-link fw-bold">Approver</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">

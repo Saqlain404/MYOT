@@ -34,10 +34,12 @@ const DashboardSig = () => {
   };
 
   const getTotalCount = async () => {
+    let id = localStorage.getItem("myot_admin_id")
     try {
-      let { data } = await SignatoryDashboardCount();
+      let { data } = await SignatoryDashboardCount(id);
       if (!data?.error) {
         setCount(data?.results);
+        console.log(data?.results);
       }
     } catch (error) {
       console.log(error);
@@ -116,14 +118,6 @@ const DashboardSig = () => {
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
                         {(count?.totalUser && count?.totalUser[0]?.count) || 0}
                       </h3>
-                      {/* <span className="card-insights fw-bold m-auto">
-                        +11.01%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -134,16 +128,8 @@ const DashboardSig = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {count?.totalTemplete || 0}
+                        {count?.totalTemplete && count?.totalTemplete[0]?.count || 0}
                       </h3>
-                      {/* <span className="card-insights fw-bold m-auto">
-                        -0.56%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -156,16 +142,8 @@ const DashboardSig = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {count?.totalDocument || 0}
+                        {count?.totalDocument && count?.totalDocument[0]?.count || 0}
                       </h3>
-                      {/* <span className="card-insights fw-bold m-auto">
-                        -1.48%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -179,14 +157,6 @@ const DashboardSig = () => {
                         {count?.totalActiveUser &&
                           count?.totalActiveUser[0]?.count || 0}
                       </h3>
-                      {/* <span className="card-insights fw-bold m-auto">
-                        +9.15%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span> */}
                     </div>
                   </div>
                 </div>

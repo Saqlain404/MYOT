@@ -5,6 +5,7 @@ import Sidebar from "../Sidebar";
 import { Card } from "antd";
 import { Link } from "react-router-dom";
 import {
+  AdminDashboardGraph,
   AdminTicketCount,
   DashboardCount,
   DashboardTotalDocument,
@@ -20,10 +21,16 @@ const Dashboard = () => {
     getDashboardDataCount();
     getDashboardTotalDocument();
     getTicketCount();
+    getDashboardGraph();
   }, []);
 
+  const getDashboardGraph = async () => {
+    let { data } = await AdminDashboardGraph();
+    console.log(data);
+  };
+
   const getDashboardDataCount = async () => {
-    let id = localStorage.getItem("myot_admin_id")
+    let id = localStorage.getItem("myot_admin_id");
     try {
       let { data } = await DashboardCount(id);
       if (!data?.error) {
@@ -57,7 +64,6 @@ const Dashboard = () => {
     }
   };
 
-
   return (
     <>
       <div className="container-fluid">
@@ -70,7 +76,7 @@ const Dashboard = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">Dashboard</a>
+                    <a className="nav-link fw-bold">Dashboard</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center justify-content-end ">
@@ -136,7 +142,9 @@ const Dashboard = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {dataCount?.totalTempleted && dataCount?.totalTempleted || 0}
+                        {(dataCount?.totalTempleted &&
+                          dataCount?.totalTempleted[0]?.count) ||
+                          0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -0.56%
@@ -158,7 +166,9 @@ const Dashboard = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {dataCount?.totalDocument || 0}
+                        {(dataCount?.totalDocument &&
+                          dataCount?.totalDocument[0]?.count) ||
+                          0}
                       </h3>
                       {/* <span className="card-insights fw-bold m-auto">
                         -1.48%
@@ -323,7 +333,7 @@ const Dashboard = () => {
                   <div className="dashboard-card3 bg-light table-card3 dashboard-card3-text">
                     <p className="text-card">Document Request</p>
 
-                    {totalDocument &&
+                    {totalDocument && totalDocument?.length > 0 ? (
                       totalDocument?.map((count, i) => (
                         <>
                           <div key={i} className="row">
@@ -346,52 +356,10 @@ const Dashboard = () => {
                             {/* </div> */}
                           </div>
                         </>
-                      ))}
-                    {/* <tr>
-                        <td>Finance</td>
-                        <td>
-                          <img
-                            src="/images/dashboard/Finance.png"
-                            className="dashboard-card-img"
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>R&D</td>
-                        <td>
-                          <img
-                            src="/images/dashboard/R&D.png"
-                            className="dashboard-card-img"
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Transport</td>
-                        <td>
-                          <img
-                            src="/images/dashboard/Transport.png"
-                            className="dashboard-card-img"
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>IT</td>
-                        <td>
-                          <img
-                            src="/images/dashboard/IT.png"
-                            className="dashboard-card-img"
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Sales</td>
-                        <td>
-                          <img
-                            src="/images/dashboard/sales.png"
-                            className="dashboard-card-img"
-                          />
-                        </td>
-                      </tr> */}
+                      ))
+                    ) : (
+                      <p className="th-text text-center mt-3">No Requests</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -421,7 +389,7 @@ const Dashboard = () => {
                 </Link>
               </div>
             </div>
-            
+
             <DashboardListing />
           </div>
           <div className="col">

@@ -35,10 +35,10 @@ export async function SignatoryUpdateProfile(id, formData) {
   }
 }
 
-export async function SignatoryHomeCount() {
+export async function SignatoryHomeCount(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/signatory/home-templete-count`
+      `${process.env.REACT_APP_APIENDPOINT}/api/signatory/home-templete-count/${id}`
     );
 
     if (!data?.error) return { data };
@@ -65,10 +65,10 @@ export async function SignatoryTemplateData(id) {
   }
 }
 
-export async function SignatoryRequestsData() {
+export async function SignatoryRequestsData(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/signatory/requests-list`
+      `${process.env.REACT_APP_APIENDPOINT}/api/signatory/requests-list/${id}`
     );
 
     if (!data?.error) return { data };
@@ -80,10 +80,10 @@ export async function SignatoryRequestsData() {
   }
 }
 
-export async function SignatoryDashboardCount() {
+export async function SignatoryDashboardCount(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/signatory/count-templete`
+      `${process.env.REACT_APP_APIENDPOINT}/api/signatory/count-templete/${id}`
     );
 
     if (!data?.error) return { data };

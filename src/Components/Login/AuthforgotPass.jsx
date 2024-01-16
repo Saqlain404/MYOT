@@ -7,12 +7,14 @@ import {
 } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 import OtpInput from "react-otp-input";
 import { toast } from "react-toastify";
+import { Button } from "rsuite";
 
 const AuthforgotPass = () => {
   const [formToShow, setFormToShow] = useState("EmailForm");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [counter, setCounter] = useState(0);
+  const [loader, setLoader] = useState(false);
 
   const navigate = useNavigate();
 
@@ -22,20 +24,25 @@ const AuthforgotPass = () => {
 
   const onSubmitEmail = async (e) => {
     e.preventDefault();
+    setLoader(true);
     try {
       let { data } = await forgotPassword({ email });
       console.log(data);
       if (data && !data?.error) {
+        setLoader(false);
         toast.success("OTP sent successfully");
         setFormToShow("OTPform");
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoader(false);
     }
   };
 
   const handleOTPsubmit = async (e) => {
     e.preventDefault();
+    setLoader(true);
     // console.log(email, otp);
     if (otp.length < 4) {
       toast.error("OTP must be 4 digits", {
@@ -48,16 +55,20 @@ const AuthforgotPass = () => {
         progress: undefined,
         theme: "light",
       });
+      setLoader(false);
       return false;
     }
     try {
       let { data } = await verifyOTP({ email, otp });
       if (data && !data?.error) {
+        setLoader(false);
         // toast.success("OTP verified successfully");
         navigate("/Update-password", { state: { email } });
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -119,13 +130,16 @@ const AuthforgotPass = () => {
                               onChange={(e) => setEmail(e.target.value)}
                             />
                           </div>
-                          <button
+                          <Button
+                            loading={loader}
+                            appearance="primary"
                             className="btn py-8 mb-3 form-reset"
                             type="submit"
                             onClick={(e) => onSubmitEmail(e)}
+                            disabled={!email}
                           >
                             Submit
-                          </button>
+                          </Button>
                         </form>
                       </>
                     ) : (
@@ -157,12 +171,15 @@ const AuthforgotPass = () => {
                               renderInput={(props) => <input {...props} />}
                             />
                           </div>
-                          <button
+                          <Button
+                            loading={loader}
+                            appearance="primary"
                             className="btn py-8 my-3 form-reset"
                             type="submit"
+                            disabled={otp.length !== 4}
                           >
-                            Verify OTP
-                          </button>
+                             Verify OTP
+                          </Button>
                         </form>
                         {/* <div className="form-group col-12 text-center">
                           {counter ? (

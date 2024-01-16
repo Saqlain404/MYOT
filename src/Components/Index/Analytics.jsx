@@ -15,7 +15,8 @@ const Analytics = () => {
   }, []);
 
   const getAnalyticsData = async () => {
-    let { data } = await AnalyticsData();
+    let id = localStorage.getItem('myot_admin_id');
+    let { data } = await AnalyticsData(id);
     console.log(data);
     if (!data?.error) {
       setAnalyticsData(data?.results);
@@ -79,9 +80,7 @@ const Analytics = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link th-text ms-2" href="app-email.html">
-                      Analytics / Report Management
-                    </a>
+                  <a className="nav-link fw-bold">Analytics / Report Management</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">

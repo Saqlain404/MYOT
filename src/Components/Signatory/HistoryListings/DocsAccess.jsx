@@ -67,7 +67,8 @@ const DocsAccess = ({ admin_id }) => {
   }, [admin_id]);
 
   const getDocsAccessLog = async () => {
-    let { data } = await SignatoryDocsAccessLog("6564816c42ca2ce84e2ed3f2");
+    let id = localStorage.getItem("myot_admin_id")
+    let { data } = await SignatoryDocsAccessLog(id);
     const newRows = [];
     if (!data?.error) {
       let values = data?.results?.completTemplete;

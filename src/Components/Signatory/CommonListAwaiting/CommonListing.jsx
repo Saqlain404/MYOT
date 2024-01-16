@@ -141,7 +141,7 @@ const CommonListing = () => {
               <li>
                 <Link
                   class="dropdown-item"
-                  to={`/Signatory/Awaiting-sig/Comments/${list?._id}`}
+                  to={`/Signatory/Home/Comments/${list?._id}`}
                 >
                   <img src="/images/dashboard/Comment.png" className="me-2" />
                   Comments

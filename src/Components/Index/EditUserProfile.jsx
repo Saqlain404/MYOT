@@ -56,8 +56,6 @@ const EditUserProfile = ({ userId }) => {
           defaultValue.email = values?.email;
           defaultValue.mobileNumber = values?.mobileNumber;
           defaultValue.salary = values?.salary;
-
-          //   reset({ ...defaultValue });
         }
       }
     } catch (error) {
@@ -90,12 +88,12 @@ const EditUserProfile = ({ userId }) => {
   const onSubmit = async (datas) => {
     setLoader(true);
     let selectedRoles = [];
+    selectedRoles.push("Employee");
     const roles = [
       "employrole_admin",
       "employrole_approver",
       "employrole_department",
       "employrole_signatory",
-      "employrole_employee",
     ];
     roles.forEach((role) => {
       if (datas[role]) {
@@ -112,27 +110,12 @@ const EditUserProfile = ({ userId }) => {
           case "employrole_signatory":
             selectedRoles.push("Signatory");
             break;
-          case "employrole_employee":
-            selectedRoles.push("Employee");
-            break;
           default:
             break;
         }
       }
     });
-    if (selectedRoles.length === 0) {
-      Swal.fire({
-        toast: true,
-        icon: "error",
-        position: "top-end",
-        title: "Please select roles",
-        showConfirmButton: false,
-        timerProgressBar: true,
-        timer: 3000,
-      });
-      setLoader(false)
-      return false;
-    }
+
     console.log(selectedRoles);
     const formData = new FormData();
     formData.append("name", datas?.name);
@@ -162,7 +145,7 @@ const EditUserProfile = ({ userId }) => {
         setLoader(false);
         document.getElementById("modalClose").click();
         document.getElementById("formReset").click();
-        getViewUserData();
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);
@@ -189,7 +172,10 @@ const EditUserProfile = ({ userId }) => {
 
   return (
     <>
-      <div class="modal-dialog modal-dialog-users mb-5" style={{height:"0px"}}>
+      <div
+        class="modal-dialog modal-dialog-users mb-5"
+        style={{ height: "0px" }}
+      >
         <div class="modal-content border-0">
           <div class="d-flex modal-header border-bottom">
             <p class="mb-0" id="exampleModalLabel">
@@ -240,9 +226,12 @@ const EditUserProfile = ({ userId }) => {
                     placeholder="Full Name*"
                     name="name"
                     // defaultValue={userDetails?.name}
-                    className={classNames("col-12 modal-input td-text  p-2", {
-                      "is-invalid": errors.name,
-                    })}
+                    className={classNames(
+                      "form-control col-12 modal-input td-text  p-2",
+                      {
+                        "is-invalid": errors.name,
+                      }
+                    )}
                     {...register("name", {
                       required: "* Name is required",
                       pattern: {
@@ -264,7 +253,7 @@ const EditUserProfile = ({ userId }) => {
                     placeholder="Email ID "
                     name="email"
                     className={classNames(
-                      "col-12 modal-input td-text w-100 p-2",
+                      "form-control col-12 modal-input td-text  p-2",
                       {
                         "is-invalid": errors.email,
                       }
@@ -289,7 +278,7 @@ const EditUserProfile = ({ userId }) => {
                     placeholder="Mobile No"
                     name="mobileNumber"
                     className={classNames(
-                      "col-4 modal-input td-text w-100 p-2",
+                      "form-control col-12 modal-input td-text  p-2",
                       {
                         "is-invalid": errors.mobileNumber,
                       }
@@ -313,7 +302,7 @@ const EditUserProfile = ({ userId }) => {
                         name="employTitle"
                         defaultValue={userDetails?.employTitle}
                         className={classNames(
-                          "col-12 modal-input td-text  p-2",
+                          "form-control col-12 modal-input td-text  p-2",
                           {
                             "is-invalid": errors.employTitle,
                           }
@@ -339,12 +328,12 @@ const EditUserProfile = ({ userId }) => {
                         placeholder="Salary"
                         name="salary"
                         className={classNames(
-                          "col-12 modal-input td-text w-100 p-2",
+                          "form-control col-12 modal-input td-text  p-2",
                           {
                             "is-invalid": errors.salary,
                           }
                         )}
-                        {...register("salary")}
+                        {...register("salary", {required:"Please enter salary"})}
                       />
                       {errors.salary && (
                         <div className="invalid-feedback">
@@ -359,7 +348,7 @@ const EditUserProfile = ({ userId }) => {
                         // className="col-4 modal-input td-text w-100 p-2"
                         name="employId"
                         className={classNames(
-                          "col-12 modal-input td-text w-100 p-2",
+                          "form-control col-12 modal-input td-text  p-2",
                           {
                             "is-invalid": errors.employId,
                           }
@@ -378,7 +367,7 @@ const EditUserProfile = ({ userId }) => {
                       <select
                         name="department_id"
                         className={classNames(
-                          "col-12 modal-input td-text w-100 p-2",
+                          "form-control col-12 modal-input td-text  p-2",
                           {
                             "is-invalid": errors.department_id,
                           }
@@ -403,7 +392,7 @@ const EditUserProfile = ({ userId }) => {
                     <div className="col-md-6 mt-3">
                       <select
                         className={classNames(
-                          "col-12 modal-input td-text w-100 p-2",
+                          "form-control col-12 modal-input td-text  p-2",
                           {
                             "is-invalid": errors.gender,
                           }
@@ -498,22 +487,6 @@ const EditUserProfile = ({ userId }) => {
                             onChange={() =>
                               handleCheckboxChange("Department Manager")
                             }
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Employee</td>
-                        <td>
-                          <input
-                            type="checkbox"
-                            name="employrole_employee"
-                            {...register("employrole_employee", {
-                              disabled: false,
-                            })}
-                            checked={userDetails?.employRole.includes(
-                              "Employee"
-                            )}
-                            onChange={() => handleCheckboxChange("Employee")}
                           />
                         </td>
                       </tr>

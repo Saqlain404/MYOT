@@ -451,8 +451,8 @@ const HelpSupportSig = () => {
                           </>
                         ))
                       ) : (
-                        <h3 className="my-5 text-black-50">
-                          Sorry No Tickets Found
+                        <h3 className="my-5 text-black-50 th-text">
+                          Yay! No Tickets
                         </h3>
                       )}
                     </div>
@@ -523,8 +523,8 @@ const HelpSupportSig = () => {
                           </>
                         ))
                       ) : (
-                        <h3 className="my-5 text-black-50">
-                          Sorry No Tickets Found
+                        <h3 className="my-5 text-black-50 th-text">
+                          Yay! No Tickets
                         </h3>
                       )}
                     </div>
@@ -595,8 +595,8 @@ const HelpSupportSig = () => {
                           </>
                         ))
                       ) : (
-                        <h3 className="my-5 text-black-50">
-                          Sorry No Tickets Found
+                        <h3 className="my-5 text-black-50 th-text">
+                          Yay! No Tickets
                         </h3>
                       )}
                     </div>
@@ -667,8 +667,8 @@ const HelpSupportSig = () => {
                           </>
                         ))
                       ) : (
-                        <h3 className="my-5 text-black-50">
-                          Sorry No Tickets Found
+                        <h3 className="my-5 text-black-50 th-text">
+                          Yay! No Tickets
                         </h3>
                       )}
                     </div>

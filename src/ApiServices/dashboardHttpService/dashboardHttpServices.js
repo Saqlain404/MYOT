@@ -11,9 +11,44 @@ export async function AddDepartment(formData) {
     );
     console.log(data);
     if (!data.error) {
-    } else toast.error(data.message);
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
 
     return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+export async function EditDepartment(id, formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/department-edit/${id}`,
+      formData
+    );
+    console.log(data);
+    if (!data?.error) {
+      return { data };
+    } else {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
   } catch (error) {
     if (error.response) toast.error(error.response.data.message);
     return { error };
@@ -297,6 +332,18 @@ export async function AdminTicketCount(id) {
     return { error };
   }
 }
+// Dashboard Graph
+export async function AdminDashboardGraph() {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/total-document-present`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
 
 // Admin Dashboard Listing
 export async function AdminDashboardListing(id) {
@@ -415,6 +462,20 @@ export async function DocumentComment(formData) {
   try {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/add-document-comment`,
+      formData
+    );
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function DocumentCommentReply(formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/document-comment-reply`,
       formData
     );
 
@@ -705,10 +766,10 @@ export async function EmployeeNewTicket(formData) {
   }
 }
 
-export async function EmployeeTicketList(id) {
+export async function EmployeeTicketList() {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/${id}`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/all-ticket-list`
     );
     return { data };
   } catch (error) {
@@ -717,10 +778,10 @@ export async function EmployeeTicketList(id) {
   }
 }
 
-export async function EmployeeOngoingTicketList(id) {
+export async function EmployeeOngoingTicketList() {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/onGoing-ticket/${id}`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/on-going-ticket`
     );
     return { data };
   } catch (error) {
@@ -729,10 +790,10 @@ export async function EmployeeOngoingTicketList(id) {
   }
 }
 
-export async function EmployeeNewTicketList(id) {
+export async function EmployeeNewTicketList() {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/new-ticket/${id}`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/new-tickets`
     );
     return { data };
   } catch (error) {
@@ -741,10 +802,10 @@ export async function EmployeeNewTicketList(id) {
   }
 }
 
-export async function EmployeeResolvedTicketList(id) {
+export async function EmployeeResolvedTicketList() {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/complete-ticket/${id}`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/solve-ticktes`
     );
     return { data };
   } catch (error) {
@@ -767,10 +828,10 @@ export async function EmployeeLogout(id) {
 
 // ANALYTICS
 
-export async function AnalyticsData() {
+export async function AnalyticsData(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/total-active-user`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/total-active-user/${id}`
     );
     return { data };
   } catch (error) {

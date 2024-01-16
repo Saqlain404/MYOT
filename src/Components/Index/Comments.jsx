@@ -69,6 +69,18 @@ const Comments = () => {
 
   const addComment = async (e) => {
     e.preventDefault();
+    if (comment.trim().length === 0) {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: "Please enter comment",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return false;
+    }
     let creator_Id = localStorage.getItem("myot_admin_id");
     let { data } = await AddCommentForTask({
       comment,
@@ -93,10 +105,10 @@ const Comments = () => {
 
   const handleSubmit = async (e, comment_Id) => {
     e.preventDefault();
-    if (replyMsg === "") {
+    if (replyMsg.length === 0) {
       Swal.fire({
         toast: true,
-        icon: "success",
+        icon: "error",
         position: "top-end",
         title: "Please enter reply",
         showConfirmButton: false,
@@ -141,9 +153,7 @@ const Comments = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
-                      Tasks / Comments
-                    </a>
+                    <a className="nav-link fw-bold"> Tasks / Comments</a>
                   </li>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">
@@ -195,7 +205,7 @@ const Comments = () => {
                             alt=""
                             className="m-2 w_20_h_20"
                           />
-                          <p className="commenter-name m-auto">
+                          <p className="commenter-name m-auto text-capitalize">
                             {comments?.creator_Id?.name}
                           </p>
                           <p className="comment-time m-auto">
@@ -258,7 +268,7 @@ const Comments = () => {
                                       src={reply?.creator_Id?.profile_Pic}
                                       alt=""
                                     />
-                                    <p className="commenter-name my-auto">
+                                    <p className="commenter-name my-auto text-capitalize">
                                       {reply?.creator_Id?.name}
                                     </p>
                                     {/* <p className="comment-time m-auto">
@@ -270,7 +280,7 @@ const Comments = () => {
                                   </p>
                                 </div>
                                 <div></div>
-                              </div> 
+                              </div>
                             </div>
                           ))}
                         </div>

@@ -93,7 +93,8 @@ const Users = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
   });
@@ -126,7 +127,7 @@ const Users = () => {
         const returnData = {};
         returnData.id = list?.employId;
         returnData.name = list?.name;
-        returnData.department = list?.department_Id?.departmentName;
+        returnData.department = list?.department_Id[0]?.departmentName || "NA";
         returnData.role = (
           <>
             {list?.employRole?.map((role, index) => (
@@ -143,7 +144,7 @@ const Users = () => {
             <img src="/images/dashboard/CalendarBlank.png" className="w-auto" />{" "}
             <span className="ms-2">
               {(list?.logIn &&
-                moment(list?.logIn).format("MMM Do YY, h:mm a")) ||
+                moment(list?.logIn).format("MMM Do YY, h:mm A")) ||
                 "NA"}
             </span>
           </>
@@ -273,12 +274,12 @@ const Users = () => {
     setLoader(true);
     let id = localStorage.getItem("myot_admin_id");
     let selectedRoles = [];
+    selectedRoles.push("Employee");
     const roles = [
       "employrole_admin",
       "employrole_approver",
       "employrole_department",
       "employrole_signatory",
-      "employrole_employee",
     ];
     roles.forEach((role) => {
       if (datas[role]) {
@@ -295,29 +296,12 @@ const Users = () => {
           case "employrole_signatory":
             selectedRoles.push("Signatory");
             break;
-          case "employrole_employee":
-            selectedRoles.push("Employee");
-            break;
           default:
             break;
         }
       }
     });
 
-    if (selectedRoles.length === 0) {
-      toast.error("Please select role", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      setLoader(false);
-      return false;
-    }
     if (!files?.profile_img) {
       toast.error("Please select profile image", {
         position: "top-right",
@@ -348,6 +332,7 @@ const Users = () => {
 
     let { data } = await AddEmployee(id, formData);
     console.log(data);
+    setFiles([]);
     if (data && !data?.error) {
       setLoader(false);
       Swal.fire({
@@ -359,9 +344,10 @@ const Users = () => {
         timerProgressBar: true,
         timer: 3000,
       });
-      // document.getElementById("formReset").click();
-      document.getElementById("closeFormModal").click();
+      setLoader(false);
       setFiles([]);
+      setProfileImgUrl(null)
+      document.getElementById("closeFormModal").click();
       getEmployeeList();
     }
   };
@@ -447,7 +433,7 @@ const Users = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <Link className="nav-link ms-2">Users</Link>
+                    <a className="nav-link fw-bold"> Users</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
@@ -598,14 +584,18 @@ const Users = () => {
                       id="closeFormModal"
                       aria-label="Closebtn"
                       type="reset"
-                      onClick={() =>
-                        document.getElementById("formReset").click()
-                      }
+                      onClick={() => {
+                        document.getElementById("formReset").click();
+                        setProfileImgUrl(null)
+                        setFiles([]);
+                      }}
                     ></button>
                   </div>
                   <div class="modal-body">
                     <form action="" onSubmit={handleSubmit(onSubmit)}>
-                      <label htmlFor="img">Upload Profile Picture</label>
+                      <label className="my-3" htmlFor="img">
+                        Upload Profile Picture
+                      </label>
                       <div className=" d-flex justify-content-start mb-4">
                         <div className="position-relative">
                           <img
@@ -636,13 +626,13 @@ const Users = () => {
                       </div>
 
                       <div className="row p-3">
-                        <div className="col-12 mb-3">
+                        <div className="col-4 mb-3">
                           <input
                             type="text"
                             placeholder="Full Name*"
                             name="name"
                             className={classNames(
-                              "col-12 modal-input td-text  p-2",
+                              "form-control col-12 modal-input td-text  p-2",
                               {
                                 "is-invalid": errors.name,
                               }
@@ -662,15 +652,72 @@ const Users = () => {
                             </div>
                           )}
                         </div>
+                        <div className="col-4">
+                          <input
+                            type="email"
+                            placeholder="Email ID "
+                            name="email"
+                            className={classNames(
+                              "form-control col-12 modal-input td-text  p-2",
+                              {
+                                "is-invalid": errors.email,
+                              }
+                            )}
+                            {...register("email", {
+                              required: "* Please enter a email",
+                              pattern: {
+                                value:
+                                  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                message: "Invalid email address",
+                              },
+                            })}
+                          />
+                          {errors.email && (
+                            <div className="invalid-feedback">
+                              {errors.email.message}
+                            </div>
+                          )}
+                        </div>
+                        <div className="col-4">
+                          <input
+                            type="number"
+                            placeholder="Mobile No"
+                            name="mobilenumber"
+                            className={classNames(
+                              "form-control col-12 modal-input td-text  p-2",
+                              {
+                                "is-invalid": errors.mobilenumber,
+                              }
+                            )}
+                            {...register("mobilenumber", {
+                              required: "* Please enter mobile number",
+                              minLength: {
+                                value: 9,
+                                message:
+                                  "Mobile number must be exactly 9 digits",
+                              },
+                              maxLength: {
+                                value: 9,
+                                message:
+                                  "Mobile number must be exactly 9 digits",
+                              },
+                            })}
+                          />
+                          {errors.mobilenumber && (
+                            <div className="invalid-feedback">
+                              {errors.mobilenumber.message}
+                            </div>
+                          )}
+                        </div>
                         <div className="col-12 mb-3">
                           <div className="row">
-                            <div className="col-6">
+                            <div className="col-4">
                               <input
                                 type="text"
                                 placeholder="Employee Tittle"
                                 name="employTitle"
                                 className={classNames(
-                                  "col-12 modal-input td-text  p-2",
+                                  "form-control col-12 modal-input td-text  p-2",
                                   {
                                     "is-invalid": errors.employTitle,
                                   }
@@ -690,11 +737,55 @@ const Users = () => {
                                 </div>
                               )}
                             </div>
-                            <div className="col-6">
+
+                            <div className="col-4">
+                              <input
+                                type="number"
+                                placeholder="Salary"
+                                name="salary"
+                                className={classNames(
+                                  "form-control col-12 modal-input td-text  p-2",
+                                  {
+                                    "is-invalid": errors.salary,
+                                  }
+                                )}
+                                {...register("salary", {
+                                  required: "* Please enter salary",
+                                })}
+                              />
+                              {errors.salary && (
+                                <div className="invalid-feedback">
+                                  {errors.salary.message}
+                                </div>
+                              )}
+                            </div>
+                            <div className="col-4">
+                              <input
+                                type="text"
+                                placeholder="Employee Id"
+                                // className="col-4 modal-input td-text w-100 p-2"
+                                name="employid"
+                                className={classNames(
+                                  "form-control col-12 modal-input td-text  p-2",
+                                  {
+                                    "is-invalid": errors.employid,
+                                  }
+                                )}
+                                {...register("employid", {
+                                  required: "Please enter employee id",
+                                })}
+                              />
+                              {errors.employid && (
+                                <div className="invalid-feedback">
+                                  {errors.employid.message}
+                                </div>
+                              )}
+                            </div>
+                            <div className="col-4 mt-3">
                               <select
                                 name="department_id"
                                 className={classNames(
-                                  "col-12 modal-input td-text w-100 p-2",
+                                  "form-control col-12 modal-input td-text  p-2",
                                   {
                                     "is-invalid": errors.department_id,
                                   }
@@ -720,84 +811,10 @@ const Users = () => {
                                 </div>
                               )}
                             </div>
-                          </div>
-                        </div>
-                        <div className="col-12 mb-3 ">
-                          <div className="row">
-                            <div className="col-4">
-                              <input
-                                type="email"
-                                placeholder="Email ID "
-                                name="email"
-                                className={classNames(
-                                  "col-12 modal-input td-text w-100 p-2",
-                                  {
-                                    "is-invalid": errors.email,
-                                  }
-                                )}
-                                {...register("email", {
-                                  required: "* Please enter a email",
-                                  pattern: {
-                                    value:
-                                      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                    message: "Invalid email address",
-                                  },
-                                })}
-                              />
-                              {errors.email && (
-                                <div className="invalid-feedback">
-                                  {errors.email.message}
-                                </div>
-                              )}
-                            </div>
-                            <div className="col-4">
-                              <input
-                                type="number"
-                                placeholder="Mobile No"
-                                name="mobilenumber"
-                                className={classNames(
-                                  "col-4 modal-input td-text w-100 p-2",
-                                  {
-                                    "is-invalid": errors.mobilenumber,
-                                  }
-                                )}
-                                {...register("mobilenumber", {
-                                  required: "* Please enter mobile number",
-                                })}
-                              />
-                              {errors.mobilenumber && (
-                                <div className="invalid-feedback">
-                                  {errors.mobilenumber.message}
-                                </div>
-                              )}
-                            </div>
-                            <div className="col-4">
-                              <input
-                                type="number"
-                                placeholder="Salary"
-                                name="salary"
-                                className={classNames(
-                                  "col-12 modal-input td-text w-100 p-2",
-                                  {
-                                    "is-invalid": errors.salary,
-                                  }
-                                )}
-                                {...register("salary")}
-                              />
-                              {errors.salary && (
-                                <div className="invalid-feedback">
-                                  {errors.salary.message}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-12 mb-3 ">
-                          <div className="row">
-                            <div className="col-4">
+                            <div className="col-4 mt-3">
                               <select
                                 className={classNames(
-                                  "col-12 modal-input td-text w-100 p-2",
+                                  "form-control col-12 modal-input td-text  p-2",
                                   {
                                     "is-invalid": errors.gender,
                                   }
@@ -817,37 +834,14 @@ const Users = () => {
                                 </div>
                               )}
                             </div>
-
-                            <div className="col-4">
-                              <input
-                                type="text"
-                                placeholder="Employee Id"
-                                // className="col-4 modal-input td-text w-100 p-2"
-                                name="employid"
-                                className={classNames(
-                                  "col-12 modal-input td-text w-100 p-2",
-                                  {
-                                    "is-invalid": errors.employid,
-                                  }
-                                )}
-                                {...register("employid", {
-                                  // required:"Please enter employee id"
-                                })}
-                              />
-                              {errors.employid && (
-                                <div className="invalid-feedback">
-                                  {errors.employid.message}
-                                </div>
-                              )}
-                            </div>
-                            <div className="col-4 position-relative">
+                            <div className="col-4 position-relative mt-3">
                               <input
                                 type={passVisible ? "text" : "password"}
                                 placeholder="Password *"
                                 // className="col-4 modal-input td-text w-100 p-2"
                                 name="password"
                                 className={classNames(
-                                  "col-12 modal-input td-text w-100 p-2",
+                                  "form-control col-12 modal-input td-text  p-2",
                                   {
                                     "is-invalid": errors.password,
                                   }
@@ -889,6 +883,7 @@ const Users = () => {
                             </div>
                           </div>
                         </div>
+
                         <p>Document Upload</p>
                         <div className="col-12 mb-3">
                           <input
@@ -978,6 +973,9 @@ const Users = () => {
                                     type="checkbox"
                                     name="employrole_admin"
                                     {...register("employrole_employee")}
+                                    selected
+                                    checked
+                                    disabled
                                   />
                                 </td>
                               </tr>
@@ -996,6 +994,7 @@ const Users = () => {
                           appearance="primary"
                           className="btn mb-3 me-2 rounded-2"
                           type="submit"
+                          disabled={!isValid}
                         >
                           Save
                         </Button>

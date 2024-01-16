@@ -74,7 +74,8 @@ const Document = () => {
   }, []);
 
   const getRequestsData = async () => {
-    let { data } = await SignatoryRequestsData();
+    let id = localStorage.getItem("myot_admin_id");
+    let { data } = await SignatoryRequestsData(id);
     const newRows = [];
     if (!data?.error) {
       let values = data?.results?.list;

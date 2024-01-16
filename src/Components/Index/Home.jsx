@@ -94,15 +94,16 @@ const Home = () => {
   }, []);
 
   const getAdminCount = async () => {
-    let id = localStorage.getItem('myot_admin_id')
+    let id = localStorage.getItem("myot_admin_id");
     let { data } = await AdminDashboardCount(id);
     if (!data?.error) {
       setAdminCount(data?.results);
+      console.log(data?.results);
     }
   };
 
   const getApprovedTemplates = async () => {
-    let id = localStorage.getItem('myot_admin_id')
+    let id = localStorage.getItem("myot_admin_id");
     let { data } = await GetApprovedTemplates(id);
     console.log(data);
     const newRows = [];
@@ -134,7 +135,8 @@ const Home = () => {
               : "No versions found"}
           </>
         );
-        returnData.department = list?.manager[0]?.department[0]?.departmentName || "NA";
+        returnData.department =
+          list?.manager[0]?.department[0]?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -145,7 +147,8 @@ const Home = () => {
                 : list?.status === "In Progress"
                 ? "text-primary"
                 : "text-success"
-            }`}>
+            }`}
+          >
             {list?.status}
           </span>
         );
@@ -156,7 +159,8 @@ const Home = () => {
                 onClick={() => setTemplete_Id(list?._id)}
                 type="button"
                 data-bs-toggle="modal"
-                data-bs-target="#exampleModal1">
+                data-bs-target="#exampleModal1"
+              >
                 <img
                   src="/images/dashboard/Comment.png"
                   className="mx-auto d-block"
@@ -171,14 +175,16 @@ const Home = () => {
               className="cursor_pointer"
               type=""
               data-bs-toggle="dropdown"
-              aria-expanded="false">
+              aria-expanded="false"
+            >
               <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
               <li>
                 <Link
                   class="dropdown-item"
-                  to={`/Admin/Tasks/Comments/${list?._id}`}>
+                  to={`/Admin/Tasks/Comments/${list?._id}`}
+                >
                   <img
                     src="/images/dashboard/Comment.png"
                     alt=""
@@ -199,7 +205,8 @@ const Home = () => {
               </li>
               <li
                 className="cursor_pointer"
-                onClick={() => deleteTemplate(list?._id)}>
+                onClick={() => deleteTemplate(list?._id)}
+              >
                 <a class="dropdown-item text-danger">
                   <img src="/images/users/Trash.svg" alt="" className="me-2" />
                   Delete Template
@@ -286,7 +293,8 @@ const Home = () => {
           checked={templates.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
           className="me-1 mt-1"
-          defaultChecked>
+          defaultChecked
+        >
           {" "}
           {column.label}
         </Checkbox>
@@ -340,11 +348,10 @@ const Home = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link  fw-bold  ">Home</a>
+                    <a className="nav-link fw-bold">Home</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
-                
                   <div className="">
                     <img
                       src="/images/dashboard/announcement.png"
@@ -372,85 +379,61 @@ const Home = () => {
               <div className="row statics_part">
                 <div className="col-lg-3 col-md-6 mb-md-2">
                   <div className="statics_box card-clr-1-3">
-                    <div className="statics_left text-center">
+                    <div className="statics_left">
                       <h6 className="mb-0 header-card-text">Total Employees</h6>
                     </div>
-                    <div className="text-center mt-4">
+                    <div className=" mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {adminCount?.totalEmployee[0]?.count || 0}
+                        {(adminCount?.totalEmployee &&
+                          adminCount?.totalEmployee[0]?.count) ||
+                          0}
                       </h3>
-                      {/* <span className="card-insights fw-bold m-auto">
-                        +11.01%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span> */}
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="statics_box card-clr-2-4">
-                    <div className="statics_left text-center">
+                    <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
                         Total Departments
                       </h6>
                     </div>
-                    <div className="text-center mt-4">
+                    <div className=" mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {adminCount?.countDepartment || 0}
+                        {(adminCount?.countDepartment &&
+                          adminCount?.countDepartment[0]?.count) ||
+                          0}
                       </h3>
-                      {/* <span className="card-insights fw-bold m-auto">
-                        +9.15%
-                        <img
-                          src="/images/dashboard/ArrowRise.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span> */}
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="statics_box card-clr-1-3">
-                    <div className="statics_left text-center">
+                    <div className="statics_left">
                       <h6 className="mb-0 header-card-text">
                         Total Active Users
                       </h6>
                     </div>
-                    <div className="text-center mt-4">
+                    <div className=" mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {adminCount?.totalActiveUser[0]?.count || 0}
+                        {(adminCount?.totalActiveUser &&
+                          adminCount?.totalActiveUser[0]?.count) ||
+                          0}
                       </h3>
-                      {/* <span className="card-insights fw-bold m-auto">
-                        -0.65%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span> */}
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-3 col-md-6 mb-md-2 ">
                   <div className="statics_box card-clr-2-4">
-                    <div className="statics_left text-center">
+                    <div className="statics_left">
                       <h6 className="mb-0 header-card-text">Total Templates</h6>
                     </div>
-                    <div className="text-center mt-4">
+                    <div className=" mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7 ">
-                        {adminCount?.totalTempleted || 0}
+                        {(adminCount?.totalTempleted &&
+                          adminCount?.totalTempleted[0]?.count) ||
+                          0}
                       </h3>
-                      {/* <span className="card-insights fw-bold m-auto">
-                        -1.48%
-                        <img
-                          src="/images/dashboard/ArrowFall.png"
-                          alt=""
-                          className="ps-1"
-                        />
-                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -482,19 +465,24 @@ const Home = () => {
                     {showClearButton ? (
                       <p
                         className="hide-selected m-0 text-nowrap cursor_pointer "
-                        onClick={showAllColumns}>
+                        onClick={showAllColumns}
+                      >
                         Clear Selection
                       </p>
                     ) : (
                       <p
                         className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
-                        onClick={hideSelectedColumns}>
+                        onClick={hideSelectedColumns}
+                      >
                         Hide Selected
                       </p>
                     )}
                   </div>
                   <div class="search_icon">
-                  <img width={20} src={require("../../assets/logo/search.png")}></img>
+                    <img
+                      width={20}
+                      src={require("../../assets/logo/search.png")}
+                    ></img>
                   </div>
                 </div>
                 <form className="d-flex me-2" role="search"></form>
@@ -538,7 +526,8 @@ const Home = () => {
             id="exampleModal1"
             tabindex="-1"
             aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+            aria-hidden="true"
+          >
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
@@ -550,7 +539,8 @@ const Home = () => {
                     class="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
-                    id="closeForm"></button>
+                    id="closeForm"
+                  ></button>
                 </div>
                 <div class="modal-body">
                   <form className="rounded" onSubmit={handleSubmit}>
@@ -598,7 +588,8 @@ const Home = () => {
                       <div>
                         <button
                           type="submit"
-                          className="comment-btn btn-primary">
+                          className="comment-btn btn-primary"
+                        >
                           Comment
                         </button>
                       </div>
