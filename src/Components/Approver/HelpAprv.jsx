@@ -16,7 +16,7 @@ const HelpAprv = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link fw-bold ms-2">
-                      Template / Template Version 1.0 / View
+                      Help / Template Guidelines
                     </a>
                   </li>
                 </ul>

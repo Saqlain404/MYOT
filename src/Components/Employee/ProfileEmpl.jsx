@@ -82,13 +82,8 @@ const ProfileEmpl = () => {
                 <div className=" d-flex justify-content-start mb-4">
                   {/* <img src="/images/dashboard/AvatarProfile.svg" alt="" /> */}
                   <img
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                    }}
-                    src={profileDetail?.profile_Pic}
+                  className="w_100_h_100"
+                    src={profileDetail?.profile_Pic ? profileDetail?.profile_Pic : "/images/icons/EmilyWhite.png"}
                     alt="profile_image"
                   />
                 </div>

@@ -7,20 +7,21 @@ import {
   AnnouncementList,
 } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 import moment from "moment";
+import { Button } from "rsuite";
 
 const AnnouncementsAprv = () => {
   // Add Annocunment
+  const [listData, setListData] = useState();
   const ids =
     localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
-  const [listData, setListData] = useState();
 
   const [post, setPost] = useState({
     categoryName: "",
     text: "",
     document: null,
-    creator_Id: ids,
+    // creator_Id: ids,
   });
-
+  
   const onFileSelection = (event) => {
     setPost({ ...post, document: event.target.files[0] });
   };
@@ -35,7 +36,7 @@ const AnnouncementsAprv = () => {
     formData.append("categoryName", post.categoryName);
     formData.append("text", post.text);
     formData.append("document", post.document);
-    formData.append("creator_Id", post.creator_Id);
+    formData.append("creator_Id", ids);
 
     const response = await AddAnnouncement(formData);
     if (response) {
@@ -152,7 +153,7 @@ const AnnouncementsAprv = () => {
                   <form action="" onSubmit={onSubmit}>
                     <div className="row p-3">
                       <div className="col-12 mb-3 d-flex">
-                        <div className="col-6 pe-3">
+                        <div className="col-12 pe-3">
                           <input
                             type="text"
                             placeholder="Announcement Category"
@@ -194,23 +195,33 @@ const AnnouncementsAprv = () => {
                       </div>
                     </div>
                     <div className="d-flex justify-content-end mb-3">
-                      <button
+                      <Button
+                      style={{width:"100px"}}
                         type="submit"
-                        class="user-modal-btn"
-                        aria-label="Close"
-                        data-bs-dismiss="modal"
+                        // class="user-modal-btn"
+                        // aria-label="Close"
+                        // data-bs-dismiss="modal"
+                        appearance="primary"
+                        className="btn mb-3 me-2  rounded-2"
+                        disabled={
+                          !post?.categoryName ||
+                          !post?.text
+                        }
                         // onClick={AddDepartment}
                       >
                         Send
-                      </button>
-                      <button
+                      </Button>
+                      <Button
+                       style={{width:"100px"}}
                         type="button"
                         data-bs-dismiss="modal"
                         aria-label="Close"
-                        class="user-modal-btn2"
+                        // class="user-modal-btn2"
+                        // appearance="primary"
+                         className="btn mb-3 me-2 rounded-2"
                       >
                         Cancel
-                      </button>
+                      </Button>
                     </div>
                   </form>
                 </div>
@@ -219,7 +230,7 @@ const AnnouncementsAprv = () => {
             {/* <!-- Modal End--> */}
 
             <div className="container bg-body-tertiary rounded mb-3">
-              {listData
+              {listData?.[0] && listData?.[0].length > 0
                 ? listData?.[0]?.map((item) => (
                     <div className="row" key={item.id}>
                       <p className="templates-leave mt-3 ms-2 mb-0 ">
@@ -264,7 +275,7 @@ const AnnouncementsAprv = () => {
                       </div>
                     </div>
                   ))
-                : "Data Not Found"}
+                : <p className="d-flex justify-content-center fs-6 p-2">Yay! No Announcement</p>}
             </div>
 
             {/* <div className="container bg-body-tertiary rounded mb-4">

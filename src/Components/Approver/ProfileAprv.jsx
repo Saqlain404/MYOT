@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import SidebarAprv from "./SidebarAprv";
 import { profileDetails } from "../../ApiServices/aprroverHttpServices/aprproverHttpService";
 import moment from "moment";
+import { Button } from "rsuite";
 
 const ProfileAprv = () => {
   const [profileDetail, setProfileDetail] = useState(null);
@@ -76,20 +77,16 @@ const ProfileAprv = () => {
                     state={profileDetail}
                     className="text-decoration-none"
                   >
-                    <button className="profile-edit-btn">Edit</button>
+                    <Button className="btn me-2  rounded-2"  appearance="primary"
+                        >Edit</Button>
                   </Link>
                 </div>
 
                 <div className=" d-flex justify-content-start mb-4">
                   {/* <img src="/images/dashboard/AvatarProfile.svg" alt="" /> */}
                   <img
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                    }}
-                    src={profileDetail?.profile_Pic}
+                    className="w_100_h_100  "
+                    src={profileDetail?.profile_Pic ? profileDetail?.profile_Pic : "/images/icons/EmilyWhite.png"}
                     alt="profile_image"
                   />
                 </div>
@@ -100,11 +97,8 @@ const ProfileAprv = () => {
                   <div className="d-flex justify-content-between">
                     <div>
                       <p className="profile-info">Full Name</p>
-                      <p className="profile-data">
-                        {profileDetail?.name
-                          ? profileDetail.name.charAt(0).toUpperCase() +
-                            profileDetail.name.slice(1).toLowerCase()
-                          : ""}
+                      <p className="profile-data text-capitalize">
+                        {profileDetail?.name}
                       </p>
                     </div>
                     <div>
@@ -140,8 +134,8 @@ const ProfileAprv = () => {
     <p className=" d-flex justify-content-start profile-card-title mb-1">Company Information</p>
     <div className="d-flex justify-content-between">
       <div>
-        <p className="profile-info">Company Name</p>
-        <p className="profile-data">{profileDetail?.company_Id?.name}</p>
+        <p className="profile-info ">Company Name</p>
+        <p className="profile-data text-capitalize">{profileDetail?.company_Id?.name}</p>
       </div>
       <div>
         <p className="profile-info">Company Email</p>
