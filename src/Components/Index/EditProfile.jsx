@@ -177,7 +177,7 @@ const EditProfile = () => {
                         id="profile_img"
                         name="profile_img"
                         type="file"
-                        accept="image/*"
+                        accept=".jpeg, .jpg, .png"
                         defaultValue=""
                         onChange={(e) => onFileSelection(e, "profile_img")}
                       />
@@ -185,59 +185,6 @@ const EditProfile = () => {
                   </div>
                   <div className="row">
                     <div className="col-12 d-flex justify-content-between mb-2">
-                      {/* <div className="col-6 m-2">
-                        <p className=" d-flex justify-content-start profile-card-title">
-                          Full Name
-                        </p>
-                        <input
-                          autoComplete="false"
-                          type="text"
-                          placeholder="Full Name"
-                          className={classNames(
-                            "col-12 profile-edit-input p-2",
-                            {
-                              "is-invalid": errors.name,
-                            }
-                          )}
-                          name="name"
-                          {...register("name", {
-                            pattern: {
-                              value: /^(?!\s)[^\d]*(?:\s[^\d]+)*$/,
-                              message:
-                                "Spaces at the start & numbers are not allowed",
-                            },
-                          })}
-                        />
-                        {errors.name && (
-                          <div className="invalid-feedback">
-                            {errors.name.message}
-                          </div>
-                        )}
-                      </div> */}
-                      {/* <div className="col-6 m-2">
-                        <p className=" d-flex justify-content-start profile-card-title">
-                          Email
-                        </p>
-                        <input
-                          autoComplete="off"
-                          type="email"
-                          placeholder="Email"
-                          className={`col-12 profile-edit-input p-2 ${
-                            errors.email ? "is-invalid" : ""
-                          }`}
-                          {...register("email", {
-                            pattern: {
-                              value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                              message: "Please enter a valid email address",
-                            },
-                          })}
-                        />
-                        {errors.email && (
-                          <div className="invalid-feedback">
-                            {errors.email.message}
-                          </div>
-                        )}
-                      </div> */}
                     </div>
                     <div className="col-12 d-flex justify-content-between mb-2">
                       <div className="col-12 m-2">
