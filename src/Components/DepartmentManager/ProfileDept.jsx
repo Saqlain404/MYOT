@@ -3,6 +3,7 @@ import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
 import { ProfileDetails } from "../../ApiServices/departmentHttpService/departmentHttpService";
+import profileImg from "../../assets/logo/high.png";
 import { useEffect } from "react";
 import { Button } from "rsuite";
 
@@ -102,8 +103,11 @@ const ProfileDept = () => {
                       borderRadius: "50%",
                       objectFit: "cover",
                     }}
-                    src={profileDetail?.profile_Pic}
-                    alt="profile_image"
+                    src={
+                      (profileDetail?.profile_Pic && profileDetail.profile_Pic) ||
+                      profileImg
+                    }
+                    alt=""
                   />
    </div>
    <div className="bg-white rounded mb-4 p-4 pb-2">

@@ -437,7 +437,7 @@ const HomeDept = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {homeCount?.totalTemplete || 0}
+                        {homeCount?.totalTemplete?.[0]?.count || 0}
                       </h3>
                     </div>
                   </div>
@@ -534,3 +534,9 @@ const HomeDept = () => {
 };
 
 export default HomeDept;
+
+
+// disabled={
+//   !departmentInfo?.departmentname ||
+//   !departmentInfo?.description
+// }

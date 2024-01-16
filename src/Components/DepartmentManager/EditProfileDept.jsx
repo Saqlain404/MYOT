@@ -176,11 +176,11 @@ const EditProfileDept = () => {
                   </div>
                   <div className=" d-flex justify-content-start mb-4">
                     <div className="position-relative">
-                      <img
+                    <img
                         src={
                           profileImgUrl
                             ? profileImgUrl
-                            : "/images/tasks/modal-profile-photo.svg"
+                            : state?.profile_Pic || "/images/icons/user.jpg"
                         }
                         alt=""
                         className="w_100_h_100"
@@ -255,16 +255,17 @@ const EditProfileDept = () => {
                       </div> */}
                     </div>
                     <div className="col-12 d-flex justify-content-between mb-2">
-                      <div className="col-12 m-2">
+                    <div className="col-12 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
                           Name
                         </p>
                         <input
                           autoComplete="false"
                           type="text"
+                          defaultValue={state?.name}
                           placeholder="name"
                           className={classNames(
-                            "col-12 profile-edit-input p-2",
+                            "col-12 profile-edit-input p-2 text-capitalize",
                             {
                               "is-invalid": errors.name,
                             }

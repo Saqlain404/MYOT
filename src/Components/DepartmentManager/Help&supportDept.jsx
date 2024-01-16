@@ -2,6 +2,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Button } from "rsuite";
 import { NewTicket, NewTicketList, OngoingTicketList, TicketList } from "../../ApiServices/departmentHttpService/departmentHttpService";
 import SidebarDepartment from "./SidebarDepartment";
 
@@ -273,12 +274,24 @@ const HelpSupportDept = () => {
                               </div>
                             </div>
                             <div className="d-flex justify-content-end mb-3">
-                              <button type="submit" class="user-modal-btn">
-                                Send
-                              </button>
-                              <button type="button" class="user-modal-btn2">
-                                Cancel
-                              </button>
+                            <Button
+                        style={{ width: "150px" }}
+                        // loading={loader}
+                        appearance="primary"
+                        className="btn mb-3 me-2 rounded-2"
+                        type="submit"
+                      >
+                        Add New
+                      </Button>
+                      <Button
+                        style={{ width: "100px" }}
+                        type="reset"
+                        className="btn mb-3 mx-2 rounded-2 bg-light text-dark border-0"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        Cancel
+                      </Button>
                               <button type="reset" id="reset" class="d-none">
                                 reset
                               </button>

@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import Swal from "sweetalert2";
+import { Button } from "rsuite";
 
 const Template = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -545,7 +546,7 @@ const Template = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {templateCount?.totalTempleted || 0}
+                        {templateCount?.totalTempleted?.[0]?.count || 0}
                       </h3>
                     </div>
                   </div>
@@ -873,12 +874,24 @@ const Template = () => {
                 </div>
               </div>
               <div className="d-flex justify-content-end mb-3">
-                <button type="submit" class="user-modal-btn">
-                  Add New
-                </button>
-                <button type="reset" id="reset-modal" class="user-modal-btn2">
-                  Cancel
-                </button>
+              <Button
+                        style={{ width: "150px" }}
+                        // loading={loader}
+                        appearance="primary"
+                        className="btn mb-3 me-2 rounded-2"
+                        type="submit"
+                      >
+                        Add New
+                      </Button>
+                      <Button
+                        style={{ width: "100px" }}
+                        type="reset"
+                        className="btn mb-3 mx-2 rounded-2 bg-light text-dark border-0"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        Cancel
+                      </Button>
               </div>
             </form>
           </div>

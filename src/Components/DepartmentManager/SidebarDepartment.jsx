@@ -278,7 +278,7 @@ const SidebarDepartment = () => {
                 <span className="ms-3 align-middle sidebar-btn">Files</span>
               </a> */}
             </li>
-            <li
+            {/* <li
               className={`"nav-item text-dark" ${
                 location.pathname === "/Department/Analytics"
                   ? "nav_active"
@@ -305,7 +305,7 @@ const SidebarDepartment = () => {
                   </span>
                 </a>
               </Link>
-            </li>
+            </li> */}
 
             <p className="th-text mt-3">OTHERS</p>
 

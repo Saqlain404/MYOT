@@ -476,3 +476,19 @@ export async function AnnouncementSearch() {
     return { error };
   }
 }
+
+export async function ContactUs() {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/contact-us`,
+      // formData
+    );
+    if (data?.error) {
+      toast.error(data?.message);
+    }
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
