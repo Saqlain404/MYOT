@@ -9,8 +9,8 @@ import {
   CreateAnnouncement,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
-import { toast } from "react-toastify";
 import { Button } from "rsuite";
+import Swal from "sweetalert2";
 
 const Announcements = () => {
   const [documents, setDocuments] = useState([]);
@@ -50,15 +50,14 @@ const Announcements = () => {
       let { data } = await CreateAnnouncement(formData);
       console.log(data);
       if (data && !data?.error) {
-        toast("New Announcement Created", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "Announcement created",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
         });
         setAnnouncementType("");
         setDescription("");
@@ -69,7 +68,6 @@ const Announcements = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
     } finally {
       setLoader(false);
     }

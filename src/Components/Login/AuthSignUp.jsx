@@ -11,23 +11,17 @@ const AuthSignUp = () => {
   const [passVisible, setPassVisible] = useState(false);
   const [loader, setLoader] = useState(false);
   const [value, setValue] = useState(null);
-  // const data = [
-  //   "0-10",
-  //   "10-50",
-  //   "50-80",
-  //   "80-100",
-  //   "100-150",
-  //   "150-200",
-  //   "200-250",
-  //   "250-300",
-  // ].map((item) => ({ label: item, value: item }));
   const data = [
-    "10",
-    "50",
-    "80",
-    "100",
-    "150",
+    "0-10",
+    "10-50",
+    "50-80",
+    "80-100",
+    "100-150",
+    "150-200",
+    "200-250",
+    "250-300",
   ].map((item) => ({ label: item, value: item }));
+
   const companyTypeOptions = [
     "IT Services",
     "Hr Related",

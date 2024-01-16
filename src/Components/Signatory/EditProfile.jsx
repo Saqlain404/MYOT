@@ -10,10 +10,12 @@ import { SignatoryUpdateProfile } from "../../ApiServices/SignatoryHttpServices/
 import { updateProfilePic, updateUserName } from "../app/slice/userSlice";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
+import { Button } from "rsuite";
 
 const EditProfileSig = () => {
   const [files, setFiles] = useState([]);
   const [profileImgUrl, setProfileImgUrl] = useState();
+  const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -37,33 +39,20 @@ const EditProfileSig = () => {
 
   const onSubmit = async (data1) => {
     // e.preventDefault();
-    console.log(files?.profile_img);
+    setLoader(true);
     let emp_id = localStorage.getItem("myot_admin_id");
     if (data1?.password !== data1?.cpassword) {
       Swal.fire({
         toast: true,
         icon: "warning",
         position: "top-end",
-        title: "Password not changed",
+        title: "Password mismatch",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
       });
       return false;
     }
-    // if (!files?.profile_img) {
-    //   toast.error("Please provide profile image", {
-    //     position: "top-right",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //   });
-    //   return false;
-    // }
     const formData = new FormData();
     formData.append("name", data1?.name);
     formData.append("email", data1?.email);
@@ -76,7 +65,6 @@ const EditProfileSig = () => {
     // formData.append("companyName", data1?.companyName);
 
     let { data } = await SignatoryUpdateProfile(emp_id, formData);
-    console.log(data);
     if (data && data?.error) {
       Swal.fire({
         toast: true,
@@ -87,6 +75,7 @@ const EditProfileSig = () => {
         timerProgressBar: true,
         timer: 3000,
       });
+      setLoader(false);
       return false;
     }
     if (data && !data?.error) {
@@ -99,6 +88,7 @@ const EditProfileSig = () => {
         timerProgressBar: true,
         timer: 3000,
       });
+      setLoader(false);
       setFiles([]);
       dispatch(updateProfilePic(data?.results?.signatory?.profile_Pic));
       dispatch(updateUserName(data?.results?.signatory?.name));
@@ -233,9 +223,15 @@ const EditProfileSig = () => {
                 </div>
 
                 <div className="text-end mt-4">
-                  <button type="submit" className="profile-edit-submit m-0">
+                  <Button
+                    type="submit"
+                    style={{ width: "150px" }}
+                    loading={loader}
+                    appearance="primary"
+                    className="btn mb-3 me-2 rounded-2"
+                  >
                     Update Profile
-                  </button>
+                  </Button>
                   <button type="reset" id="reset" className="d-none">
                     reset
                   </button>

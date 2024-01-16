@@ -61,13 +61,13 @@ const AuthLogin = () => {
       let navigateToRoles = await response?.data?.results?.employee
         ?.employRole[0];
 
-      if (navigateToRoles === "Department Manager") {
+      if (navigateToRoles.includes("Admin")) {
+        navigate("/Admin/Home");
+      } else if (navigateToRoles === "Department Manager") {
         navigate(`/Department/Home`);
       } else {
         navigate(`/${navigateToRoles}/Home`);
       }
-      // console.log(navigateToRoles)
-      // console.log(`${navigateToRoles}/Home`)
     } else {
       setLoader(false);
     }
