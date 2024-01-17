@@ -10,16 +10,22 @@ import {
 import { toast } from "react-toastify";
 import moment from "moment";
 import {
+  EmployeeNewTicket,
   EmployeeNewTicketList,
   EmployeeResolvedTicketList,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import { Button } from "rsuite";
+import Swal from "sweetalert2";
 
 const HelpSupportSig = () => {
   const [email, setEmail] = useState("");
-  const [ticketType, setTicketType] = useState("");
-  const [ticketIssue, setTicketIssue] = useState("");
+  const [requestType, setRequestType] = useState("");
+  const [message, setMessage] = useState("");
   const [adminId, setAdminId] = useState();
   const [ticketList, setTicketList] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const [files, setFiles] = useState([]);
+  const [selectedTicketIndex, setSelectedTicketIndex] = useState(null);
   // const [ongoingTicketList, setOngoingTicketList] = useState([]);
   // const [newTicketList, setNewTicketList] = useState([]);
   // const [resolvedTicketList, setResolvedTicketList] = useState([]);
@@ -34,7 +40,7 @@ const HelpSupportSig = () => {
     if (admId) {
       let { data } = await SignatoryAllTicketList(admId);
       let values = data?.results?.ticketList;
-      values.sort((a, b) => new moment(b.createdAt) - new moment(a.createdAt));
+      values?.sort((a, b) => new moment(b.createdAt) - new moment(a.createdAt));
       // console.log(values)
       setTicketList(values);
     }
@@ -44,7 +50,7 @@ const HelpSupportSig = () => {
     if (adminId) {
       let { data } = await SignatoryOngoingTicketList(adminId);
       let values = data?.results?.onGoingTicket;
-      values.sort((a, b) => new moment(b.createdAt) - new moment(a.createdAt));
+      values?.sort((a, b) => new moment(b.createdAt) - new moment(a.createdAt));
       setTicketList(values);
     }
   };
@@ -54,7 +60,7 @@ const HelpSupportSig = () => {
       let { data } = await EmployeeNewTicketList(adminId);
       console.log(data);
       let values = data?.results?.ticket;
-      values.sort((a, b) => new moment(b.createdAt) - new moment(a.createdAt));
+      values?.sort((a, b) => new moment(b.createdAt) - new moment(a.createdAt));
       setTicketList(values);
     }
   };
@@ -63,33 +69,48 @@ const HelpSupportSig = () => {
     let { data } = await EmployeeResolvedTicketList(adminId);
     if (!data?.error) {
       let values = data?.results?.ticket;
-      values.sort((a, b) => new moment(b.createdAt) - new moment(a.createdAt));
+      values?.sort((a, b) => new moment(b.createdAt) - new moment(a.createdAt));
       setTicketList(values);
     }
   };
-  const handleSubmit = async (e) => {
+
+  const handleFileSelection = async (e, key) => {
+    setFiles({ ...files, [key]: e.target.files[0] });
+  };
+
+  const handleAttachmentClick = (index) => {
+    setSelectedTicketIndex(index);
+  };
+
+  const handleCreateRequest = async (e) => {
     e.preventDefault();
-    // console.log(email, ticketIssue, ticketType);
-    let { data } = await SignatoryCreateHelpNSupportTicket({
-      email,
-      ticketIssue,
-      ticketType,
-      creator_Id: adminId,
-    });
+    setLoader(true);
+    let id = localStorage.getItem("myot_admin_id");
+    let formData = new FormData();
+    // formData.append("email", email);
+    formData.append("ticketType", requestType);
+    formData.append("ticketIssue", message);
+    formData.append("creator_Id", id);
+    formData.append("document", files?.attachment);
+
+    let { data } = await EmployeeNewTicket(formData);
     if (!data?.error) {
-      toast("Ticket Created Successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: data?.message,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
+      setLoader(false);
+      setRequestType("");
+      setFiles([]);
+      setMessage("");
+      document.getElementById("resetForm").click();
+      document.getElementById("closeTicketModal").click();
       getAllTickets();
-      document.getElementById("reset").click();
-      document.getElementById("close").click();
     }
   };
   return (
@@ -104,9 +125,7 @@ const HelpSupportSig = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
-                      Help / Help & Support
-                    </a>
+                    <a className="nav-link fw-bold"> Help / Help & Support</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
@@ -224,17 +243,15 @@ const HelpSupportSig = () => {
                     {/* <!-- create New ticket Modal --> */}
                     <div
                       class="modal fade"
-                      id="staticBackdrop"
-                      data-bs-backdrop="static"
-                      data-bs-keyboard="false"
+                      id="exampleModal"
                       tabindex="-1"
-                      aria-labelledby="staticBackdropLabel"
+                      aria-labelledby="exampleModalLabel"
                       aria-hidden="true"
                     >
-                      <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-dialog modal-dialog-centered modal-dialog-department">
                         <div class="modal-content border-0">
                           <div class="d-flex modal-header border-bottom">
-                            <p class="p-0 m-0" id="exampleModalLabel">
+                            <p class="mb-0" id="exampleModalLabel">
                               Create New Ticket
                             </p>
                             <button
@@ -242,63 +259,100 @@ const HelpSupportSig = () => {
                               class="btn-close"
                               data-bs-dismiss="modal"
                               aria-label="Close"
-                              id="close"
+                              id="closeTicketModal"
                             ></button>
                           </div>
-                          <div class="modal-body">
-                            <form onSubmit={handleSubmit}>
-                              <div className="row p-3">
-                                <div className="col-12 mb-3 d-flex">
-                                  <div className="col-6 pe-3">
-                                    <input
-                                      type="email"
-                                      placeholder="Email *"
-                                      className="col-12 modal-input td-text  p-2"
-                                      name="email"
-                                      value={email}
-                                      onChange={(e) => setEmail(e.target.value)}
-                                    />
-                                  </div>
-                                  <div className="col-6 ps-3">
-                                    <input
-                                      type="text"
-                                      placeholder="Request Ticket Type *"
-                                      className="col-12 modal-input td-text  p-2"
-                                      name="ticket type"
-                                      value={ticketType}
-                                      onChange={(e) =>
-                                        setTicketType(e.target.value)
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                                <p className="d-flex" id="exampleModalLabel">
-                                  Enter text here
-                                </p>
-                                <div className="col-12 mb-3 ">
-                                  <textarea
+                          <form action="" onSubmit={handleCreateRequest}>
+                            <div className="row p-3">
+                              <div className="col-12 mb-3 d-flex">
+                                {/* <div className="col-6 pe-3">
+                                  <input
+                                    type="email"
+                                    placeholder="Email *"
+                                    className="col-12 modal-input td-text  p-2"
+                                    name="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                  />
+                                </div> */}
+                                <div className="col-12">
+                                  <p
+                                    className="pb-2 text-start"
+                                    id="exampleModalLabel"
+                                  >
+                                    Title
+                                  </p>
+                                  <input
                                     type="text"
-                                    placeholder="Type ticket issue here..."
-                                    className="col-12 modal-input td-text p-2 textarea_h_100px"
-                                    name="issue"
-                                    value={ticketIssue}
+                                    placeholder="Title *"
+                                    className="col-12 modal-input td-text w-100 p-2"
+                                    name="request type"
+                                    value={requestType}
                                     onChange={(e) =>
-                                      setTicketIssue(e.target.value)
+                                      setRequestType(e.target.value)
                                     }
-                                  ></textarea>
-                                  {/* <input type="text" placeholder="Phone Number" className="col-6 modal-input th-text p-2"/> */}
+                                  />
                                 </div>
                               </div>
-                              <div className="d-flex justify-content-end mb-3">
-                                <button type="submit" class="user-modal-btn">
-                                  Send
-                                </button>
-                                <button id="reset" type="reset" class="d-none">
-                                  reset
-                                </button>
+                              <p
+                                className="pb-2 text-start"
+                                id="exampleModalLabel"
+                              >
+                                Description
+                              </p>
+                              <div className="col-12 mb-3">
+                                <textarea
+                                  style={{ minHeight: "100px" }}
+                                  type="text"
+                                  placeholder="Type ticket issue here..."
+                                  className="col-12 modal-input td-text p-2"
+                                  name="message"
+                                  value={message}
+                                  onChange={(e) => setMessage(e.target.value)}
+                                ></textarea>
                               </div>
-                            </form>
-                          </div>
+                              <div className="col-12 mb-3">
+                                <input
+                                  type="file"
+                                  className="col-12 modal-input td-text p-2"
+                                  name="attachment"
+                                  accept=".pdf, .png, .jpg, .jpeg"
+                                  defaultValue=""
+                                  onChange={(e) =>
+                                    handleFileSelection(e, "attachment")
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="d-flex justify-content-end mb-3">
+                              <Button
+                                style={{ width: "100px" }}
+                                loading={loader}
+                                appearance="primary"
+                                className="btn mb-3 me-2 rounded-2"
+                                type="submit"
+                                disabled={!requestType || !message}
+                              >
+                                Send
+                              </Button>
+                              <Button
+                                style={{ width: "100px" }}
+                                className="btn mb-3 me-2 rounded-2"
+                                type="reset"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                Cancel
+                              </Button>
+                              <button
+                                type="reset"
+                                id="resetForm"
+                                class="d-none"
+                              >
+                                reset
+                              </button>
+                            </div>
+                          </form>
                         </div>
                       </div>
                     </div>
@@ -309,14 +363,13 @@ const HelpSupportSig = () => {
                         <img src="/images/dashboard/DownArrowBtn.svg" alt="" />
                       </button>
                     </Link>
-                    <button
-                      type="button"
-                      class="help-support-btn"
+                    <Link
+                      className="text-decoration-none"
                       data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop"
+                      data-bs-target="#exampleModal"
                     >
-                      New Ticket
-                    </button>
+                      <button className="help-support-btn">New Ticket</button>
+                    </Link>
                   </div>
                 </div>
 
@@ -393,13 +446,13 @@ const HelpSupportSig = () => {
                   >
                     <div className="col-12">
                       {ticketList && ticketList.length > 0 ? (
-                        ticketList?.map((ticket) => (
+                        ticketList?.map((ticket, index) => (
                           <>
                             <div
                               key={ticket?._id}
                               className="col rounded border bg-white my-2 p-2"
                             >
-                              <div className="d-flex border-bottom">
+                              <div className="d-flex justify-content-between border-bottom">
                                 <div className="ps-2 pe-4">
                                   <div className="d-flex mb-3">
                                     <img
@@ -415,16 +468,9 @@ const HelpSupportSig = () => {
                                     <p className="ticket-question mb-1">
                                       {ticket?.ticketIssue}
                                     </p>
-                                    <p className="td-text mt-0">
-                                      Impressive! Though it seems the drag
-                                      feature could be improved. But overall it
-                                      looks incredible. You’ve nailed the design
-                                      and the responsiveness at various
-                                      breakpoints works really well.
-                                    </p>
                                   </div>
                                 </div>
-                                <p className="ticket-post-time mt-2">
+                                <p className="ticket-post-time mt-2 text-end">
                                   Posted {moment(ticket?.createdAt).calendar()}
                                 </p>
                               </div>
@@ -443,9 +489,24 @@ const HelpSupportSig = () => {
                                     {ticket?.creator_Id?.name}
                                   </p>
                                 </div>
-                                <a className="ticket-link mt-3 me-1">
-                                  Open Ticket
-                                </a>
+                                <div className="d-flex align-items-center">
+                                  {ticket?.document && (
+                                    <a
+                                      type="button"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#staticBackdrop"
+                                      className="ticket-link mt-3 mx-2 cursor_pointer"
+                                      onClick={() =>
+                                        handleAttachmentClick(index)
+                                      }
+                                    >
+                                      See Attachement
+                                    </a>
+                                  )}
+                                  <a className="ticket-link mt-3 me-1 cursor_pointer">
+                                    Open Ticket
+                                  </a>
+                                </div>
                               </div>
                             </div>
                           </>
@@ -671,6 +732,41 @@ const HelpSupportSig = () => {
                           Yay! No Tickets
                         </h3>
                       )}
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="modal fade"
+                  id="staticBackdrop"
+                  data-bs-backdrop="static"
+                  data-bs-keyboard="false"
+                  tabindex="-1"
+                  aria-labelledby="staticBackdropLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <div>
+                          {selectedTicketIndex !== null &&
+                          ticketList[selectedTicketIndex]?.document ? (
+                            <img
+                              src={ticketList[selectedTicketIndex]?.document}
+                              alt="Attachment"
+                              style={{ width: "100%", objectFit: "cover" }}
+                            />
+                          ) : null}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

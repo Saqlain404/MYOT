@@ -80,7 +80,7 @@ const HomeSig = () => {
   }, []);
 
   const getCountData = async () => {
-    let id = localStorage.getItem("myot_admin_id")
+    let id = localStorage.getItem("myot_admin_id");
     let { data } = await SignatoryHomeCount(id);
     if (!data?.error) {
       setCount(data?.results);
@@ -118,7 +118,8 @@ const HomeSig = () => {
           </>
         );
         returnData.version = list?.templeteVersion[0]?.version;
-        returnData.department = list?.manager?.department_Id?.departmentName || "NA";
+        returnData.department =
+          list?.manager?.department_Id?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -327,9 +328,7 @@ const HomeSig = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
-                      /Home
-                    </a>
+                    <a className="nav-link fw-bold"> Home</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
@@ -376,7 +375,7 @@ const HomeSig = () => {
                         style={{ fontSize: "14px" }}
                         className="card-text-count mb-0 fw-semibold"
                       >
-                        {department && department || "Admin"}
+                        {(department && department) || "Admin"}
                       </p>
                     </div>
                   </div>
@@ -419,7 +418,9 @@ const HomeSig = () => {
                     </div>
                     <div className="d-flex mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                        {count?.totalTempleted && count?.totalTempleted[0]?.count || 0}
+                        {(count?.totalTempleted &&
+                          count?.totalTempleted[0]?.count) ||
+                          0}
                       </h3>
                     </div>
                   </div>

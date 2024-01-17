@@ -97,7 +97,7 @@ const MainSidebar = () => {
               </a>
             </Link>
           </li>
-          <li
+          {/* <li
             className={`"nav-item text-dark" ${
               location.pathname === "/Admin/Dashboard" ? "nav_active" : ""
             }`}
@@ -134,13 +134,13 @@ const MainSidebar = () => {
                 <span className="ms-3 align-middle sidebar-btn">Settings</span>
               </a>
             </Link>
-          </li>
+          </li> */}
           <li
             className={` "nav-item text-dark" ${
               location.pathname.match(/^\/Admin\/Help/) ? "nav_active" : ""
             }`}
           >
-            <Link to={"/Admin/Help"} className="text-decoration-none">
+            <Link to={"/main/Help-support"} className="text-decoration-none">
               <a
                 className="nav-link text-dark fs-5 align-middle "
                 aria-current="page"

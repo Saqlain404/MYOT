@@ -78,10 +78,8 @@ const SettingsSig = () => {
             <div className="container-fluid border-bottom sticky-top bg-white mb-4">
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
-                  <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
-                      / Settings
-                    </a>
+                <li className="nav-item dropdown-hover d-none d-lg-block">
+                    <a className="nav-link fw-bold"> Settings</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">

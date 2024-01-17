@@ -5,11 +5,13 @@ import {
   SignatoryUpdateSignature,
 } from "../../../ApiServices/SignatoryHttpServices/signatoryHttpServices";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const SignatureManag = () => {
   const [signatureList, setSignatureList] = useState([]);
   const [files, setFiles] = useState([]);
   const [cId, setCId] = useState();
+  const [profileImgUrl, setProfileImgUrl] = useState();
 
   useEffect(() => {
     getSignature();
@@ -27,19 +29,21 @@ const SignatureManag = () => {
 
   const handleFileSelection = async (e, key) => {
     setFiles({ ...files, [key]: e.target.files[0] });
+    const selectedFile = e.target.files[0];
+    const imageUrl = URL.createObjectURL(selectedFile);
+    setProfileImgUrl(imageUrl);
   };
 
   const handleSubmit = async () => {
     if (!files?.logo) {
-      toast.error("Please select an image", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: "Please select an image",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       return false;
     }
@@ -49,19 +53,20 @@ const SignatureManag = () => {
     let { data } = await SignatoryUpdateSignature(formData);
     console.log(data);
     if (!data?.error) {
-      toast(data?.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Signature added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
       });
       document.getElementById("reset").click();
       setFiles([]);
+      setProfileImgUrl('');
       getSignature();
+
     }
   };
   return (
@@ -69,7 +74,7 @@ const SignatureManag = () => {
       <div className="row rounded">
         <div className="bg-white rounded mb-4 p-4 pb-2">
           <div>
-            <p className="settings-txt">Signature Version</p>
+            <p className="settings-txt fw-bold">Signature Version</p>
             <div className="row">
               {signatureList &&
                 signatureList?.map((signature) => (
@@ -84,7 +89,7 @@ const SignatureManag = () => {
             </div>
             <div className="my-4">
               <div>
-                <p className="settings-txt mt-3">Upload Signature</p>
+                <p className="settings-txt my-3">Upload Signature</p>
                 <label htmlFor="logo" className="w-100">
                   <input
                     type="file"
@@ -94,16 +99,38 @@ const SignatureManag = () => {
                     className="d-none"
                     onChange={(e) => handleFileSelection(e, "logo")}
                   />
-                  <div className="dashed_border w-100 py-5">
+                  <div className="dashed_border w-100 py-5 position-relative">
+                    {profileImgUrl && (
+                      <div className="position-absolute top-0 end-0">
+                        <p>Selected Image</p>
+                        <img className="w_100_h_100" src={profileImgUrl} />
+                      </div>
+                    )}
                     <div>
-                      {/* <img src={require("../../assets/logo/img.png")} alt="" /> */}
+                      <img
+                        src={require("../../../assets/logo/img.png")}
+                        alt=""
+                      />
                     </div>
                     <p className="py-3">
                       Drag and drop logo here, or click add image
                     </p>
-                    <button onClick={handleSubmit} className="blue_btn">
-                      Add Image
-                    </button>
+                    {files?.logo && files?.logo ? (
+                      <>
+                        <button onClick={handleSubmit} className="blue_btn">
+                          Upload Image
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <label
+                          htmlFor="logo"
+                          className="text-center cursor_pointer blue_btn"
+                        >
+                          Select Image
+                        </label>
+                      </>
+                    )}
                     <button id="reset" type="reset" className="d-none">
                       reset
                     </button>

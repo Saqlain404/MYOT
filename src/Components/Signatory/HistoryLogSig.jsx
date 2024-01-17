@@ -32,9 +32,7 @@ const HistoryLogSig = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
-                      History Log / {topTitle}
-                    </a>
+                  <a className="nav-link fw-bold"> History / {topTitle}</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
