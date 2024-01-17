@@ -79,30 +79,31 @@ const DashboardDept = () => {
   const [search, setSearch] = useState("");
   const [listItems, setListItems] = useState();
   
+  const id = localStorage.getItem("user_id");
 
   const getDepartmentCount = async () => {
-    let { data } = await DepartmentDashboardCount();
+    let { data } = await DepartmentDashboardCount(id);
     if (!data?.error) {
       setDepartmentCount(data?.results);
     }
   };
 
   const getDocumentCount = async () => {
-    let { data } = await DocumentCount();
+    let { data } = await DocumentCount(id);
     if (!data?.error) {
       setDocumentCount(data?.results);
     }
   };
 
   const getTicketCount = async () => {
-    let { data } = await TicketCount();
+    let { data } = await TicketCount(id);
     if (!data?.error) {
       setTicketCount(data?.results);
     }
   };
 
   const getDashboardLists = async (key) => {
-    const { data } = await DashboardList();
+    const { data } = await DashboardList(id);
     if (!data?.error) {
       setListItems(data?.results?.approvedTemplete);
     }

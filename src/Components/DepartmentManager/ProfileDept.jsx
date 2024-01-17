@@ -6,14 +6,15 @@ import { ProfileDetails } from "../../ApiServices/departmentHttpService/departme
 import profileImg from "../../assets/logo/high.png";
 import { useEffect } from "react";
 import { Button } from "rsuite";
+import moment from "moment";
 
 const ProfileDept = () => {
  
   const[profileDetail, setProfileDetail] = useState();
 
   const getProfileDetails = async () => {
-    let id = localStorage.getItem("myot_admin_id")
-    let { data } = await ProfileDetails(id);
+    let emp_id = localStorage.getItem("myot_admin_id");
+    let { data } = await ProfileDetails(emp_id);
     if (!data?.error) {
       setProfileDetail(data?.results?.department);
     }
@@ -127,29 +128,35 @@ const ProfileDept = () => {
         <p className="profile-data">{profileDetail?.mobileNumber}</p>
       </div>
       <div className="col-3">
-        <p className="profile-info">Department</p>
-        <p className="profile-data">{profileDetail?.employRole}</p>
+        <p className="profile-info">Date of Creation</p>
+        <p className="profile-data">{moment(profileDetail?.createdAt).format("L")}</p>
       </div>
     </div>
-    <div className="col-12 d-flex justify-content-between mb-2">
-      <div className="col-3">
-        <p className="profile-info me-4">Employee Tittle</p>
-        <p className="profile-data">{profileDetail?.employTitle}</p>
+   
+   </div>
+
+   <div className="bg-white rounded mb-4 p-4 pb-2">
+    <p className=" d-flex justify-content-start profile-card-title mb-2">Company Information</p>
+    <div className="d-flex justify-content-between">
+      <div>
+        <p className="profile-info">Company Name</p>
+        <p className="profile-data">{profileDetail?.company_Id?.name}</p>
       </div>
-      <div className="col-3">
-        <p className="profile-info me-4">Employee Id</p>
-        <p className="profile-data">{profileDetail?.employId}</p>
+      <div>
+        <p className="profile-info">Company Email</p>
+        <p className="profile-data">{profileDetail?.company_Id?.email}</p>
       </div>
-      <div className="col-3">
-        <p className="profile-info  me-4">Gender</p>
-        <p className="profile-data">{profileDetail?.gender}</p>
+      <div>
+        <p className="profile-info">Phone Number</p>
+        <p className="profile-data">{profileDetail?.company_Id?.phone_number}</p>
       </div>
-      <div className="col-3">
-        <p className="profile-info me-4">Salary</p>
-        <p className="profile-data">{profileDetail?.salary}</p>
+      <div>
+        <p className="profile-info">Address</p>
+        <p className="profile-data">{profileDetail?.company_Id?.address}</p>
       </div>
     </div>
    </div>
+   
    {/* <div className="bg-white rounded mb-4 p-4 ">
     <p className=" d-flex justify-content-start profile-card-title">Doccument</p>
     <div className=" d-flex ">

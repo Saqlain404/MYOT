@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
 import {
   DepartmentHomeCount,
+  ProfileDetails,
   RequestsList,
   SearchRequests,
   TemplateList,
@@ -25,9 +26,11 @@ const HomeDept = () => {
   const [listItems, setListItems] = useState([]);
   const [templateItems, setTemplateItems] = useState();
   const [search, setSearch] = useState("");
-
+  const[profileDetail,setProfileDetail] = useState(null);
   const [showClearButton, setShowClearButton] = useState(false);
   const [comment, setComment] = useState("");
+
+  const userId = localStorage.getItem("user_id");
 
   const [templates, setTemplates] = useState({
     columns: [
@@ -82,7 +85,7 @@ const HomeDept = () => {
 
 
   const getTemplateData = async () => {
-    let { data } = await TemplateList();
+    let { data } = await TemplateList(userId);
     const newRows = [];
     if (!data?.error) {
       let values = data?.results?.templete;
@@ -294,16 +297,24 @@ const HomeDept = () => {
     }
   };
 
+  const getProfileDetails = async () => {
+    let { data } = await ProfileDetails(userId);
+    if (!data?.error) {
+      setProfileDetail(data?.results?.department);
+    }
+  };
+
  
 
   useEffect(() => {
     // getRequestsLists();
+    getProfileDetails();
     getTemplateData();
     getHomeCount();
   }, []);
 
   const getRequestsLists = async (key) => {
-    const { data } = await RequestsList();
+    const { data } = await RequestsList(userId);
     if (!data?.error) {
       setListItems(data?.results?.list);
     }
@@ -311,7 +322,7 @@ const HomeDept = () => {
   console.log(listItems);
 
   const getTemplateLists = async (key) => {
-    const { data } = await TemplateList();
+    const { data } = await TemplateList(userId);
     if (!data?.error) {
       setTemplateItems(data?.results?.templete);
     }
@@ -399,7 +410,7 @@ const HomeDept = () => {
                     <div className="d-flex  mt-4">
                       <h3 className="card-text-count mb-0 fw-semibold fs-5">
                         {/* {homeCount?.totalDepartment || 0} */}
-                        HR 
+                        {profileDetail ?( profileDetail?.department_Id?.name): " Not Available"}
                       </h3>
                     </div>
                   </div>

@@ -12,6 +12,8 @@ const SettingsDept = () => {
   const [files, setFiles] = useState([]);
   const [cId, setCId] = useState();
 
+  const id = localStorage.getItem("user_id");
+
   useEffect(() => {
     getLogos();
   }, []);
@@ -19,7 +21,7 @@ const SettingsDept = () => {
   const getLogos = async () => {
     // let id = localStorage.getItem("myot_admin_id");
     setCId();
-    let { data } = await Logos();
+    let { data } = await Logos(id);
     console.log(data);
     if (!data?.error) {
       setLogosList(data?.results?.logoList);

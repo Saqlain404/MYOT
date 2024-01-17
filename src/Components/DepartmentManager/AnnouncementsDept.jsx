@@ -12,10 +12,12 @@ const AnnouncementsDept = () => {
   const [announcementType, setAnnouncementType] = useState("");
   const [description, setDescription] = useState("");
   const [files, setFiles] = useState([]);
+  const id = localStorage.getItem("user_id");
 
+  
   const getAnnouncements = async () => {
-    let id = localStorage.getItem("myot_admin_id");
-    let { data } = await AnnouncementList();
+    // let id = localStorage.getItem("myot_admin_id");
+    let { data } = await AnnouncementList(id);
     console.log(data);
     if (!data?.error) {
       setDocuments(data?.results?.documentList);

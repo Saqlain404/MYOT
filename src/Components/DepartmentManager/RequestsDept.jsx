@@ -205,6 +205,8 @@ const RequestsDept = () => {
 
   const [showClearButton, setShowClearButton] = useState(false);
 
+  const userId = localStorage.getItem("user_id");
+
   const [requests, setRequests] = useState({
     columns: [
       {
@@ -254,7 +256,7 @@ const RequestsDept = () => {
   }, []);
 
   const getRequestData = async () => {
-    let { data } = await RequestsList();
+    let { data } = await RequestsList(userId);
     const newRows = [];
     if (!data?.error) {
       let values = data?.results?.list;
@@ -458,7 +460,7 @@ const RequestsDept = () => {
   }, []);
 
   const getRequestsLists = async (key) => {
-    const { data } = await RequestsList();
+    const { data } = await RequestsList(userId);
     if (!data?.error) {
       setListItems(data?.results?.list);
     }

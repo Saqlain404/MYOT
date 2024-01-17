@@ -1,9 +1,45 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+// import { Swal } from "sweetalert2/dist/sweetalert2";
+import { EmployeeLogout } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import Switcher from "../ProfileSwitcher/Switcher";
 
 const SidebarDepartment = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    let id = localStorage.getItem("token-company");
+    if (!id) {
+      navigate("/Admin/Login");
+    }
+  }, []);
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+
+    let id = await localStorage.getItem("myot_admin_id");
+    let { data } = await EmployeeLogout(id);
+    console.log(data);
+    Swal.fire({
+      toast: true,
+      icon: "success",
+      position: "top-end",
+      title: "Logout Successfully",
+      showConfirmButton: false,
+      timerProgressBar: true,
+      timer: 3000,
+    });
+
+    localStorage.removeItem("myot_admin_id");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("token-company");
+    navigate("/Login");
+  };
 
   return (
     <div className="container-fluid  sidebar">
@@ -384,11 +420,11 @@ const SidebarDepartment = () => {
                 </a>
               </Link>
             </li>
-            <li className="nav-item text-dark">
+            <li className="nav-item text-dark" onClick={handleLogout}>
               <a
-                href="/"
-                className="nav-link text-dark fs-5 align-middle "
+                className="nav-link text-dark fs-5 align-middle cursor_pointer"
                 aria-current="page"
+                href="/"
               >
                 <img
                   src="/images/sidebar/logout.png"
@@ -396,7 +432,7 @@ const SidebarDepartment = () => {
                   alt=""
                 />
 
-                <span className="ms-3 align-middle  sidebar-btn ">Logout</span>
+                <span className="ms-3 align-middle sidebar-btn">Logout</span>
               </a>
             </li>
           </ul>

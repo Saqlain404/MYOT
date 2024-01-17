@@ -228,7 +228,7 @@ const Template = () => {
 
   const getApproverList = async () => {
     try {
-      let { data } = await ApproverList();
+      let { data } = await ApproverList(id);
       console.log(data);
       if (!data?.error) {
         let values = data?.results?.approver;
@@ -240,7 +240,7 @@ const Template = () => {
   };
   const getSignatoryList = async () => {
     try {
-      let { data } = await SignatoryList();
+      let { data } = await SignatoryList(id);
       console.log(data);
       if (!data?.error) {
         let values = data?.results?.approver;
@@ -252,7 +252,7 @@ const Template = () => {
   };
   const getAdminList = async () => {
     try {
-      let { data } = await AdminsList();
+      let { data } = await AdminsList(id);
       console.log(data);
       if (!data?.error) {
         let values = data?.results?.admin;
@@ -264,7 +264,7 @@ const Template = () => {
   };
   const getManagersList = async () => {
     try {
-      let { data } = await ManagerList();
+      let { data } = await ManagerList(id);
       console.log(data);
       if (!data?.error) {
         let values = data?.results?.manager;
@@ -295,7 +295,7 @@ const Template = () => {
   );
 
   const getTemplateLists = async (key) => {
-    const { data } = await TemplateList();
+    const { data } = await TemplateList(id);
     const newRows = [];
     if (!data?.error) {
       let values = data?.results?.templete;
@@ -423,7 +423,7 @@ const Template = () => {
   const [templateCount, setTemplateCount] = useState([]);
 
   const getTemplateCount = async () => {
-    let { data } = await DepartmentTemplateCount();
+    let { data } = await DepartmentTemplateCount(id);
     if (!data?.error) {
       setTemplateCount(data?.results);
     }

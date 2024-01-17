@@ -46,10 +46,10 @@ export async function DepartmentHomeCount() {
   }
 }
 
-export async function TicketCount() {
+export async function TicketCount(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/department/total-ticket-count/65607377c34695508b3551dc`
+      `${process.env.REACT_APP_APIENDPOINT}/api/department/total-ticket-count/${id}`
     );
     // console.log(data);
 
@@ -60,10 +60,10 @@ export async function TicketCount() {
   }
 }
 
-export async function DocumentCount() {
+export async function DocumentCount(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/department/total-templete-present/65607377c34695508b3551dc`
+      `${process.env.REACT_APP_APIENDPOINT}/api/department/total-templete-present/${id}`
     );
     // console.log(data);
 
@@ -102,10 +102,10 @@ export async function RequestsList() {
   }
 }
 
-export async function DashboardList() {
+export async function DashboardList(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/department/home-approved-templete/656995d2c152b587fb27a180`
+      `${process.env.REACT_APP_APIENDPOINT}/api/department/home-approved-templete/${id}`
     );
     // console.log(data);
 
@@ -116,7 +116,7 @@ export async function DashboardList() {
   }
 }
 
-export async function TemplateList() {
+export async function TemplateList(id) {
   try {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/department/templete-list/${id}`
@@ -149,10 +149,10 @@ export async function CertificateList() {
   }
 }
 
-export async function CommentsList() {
+export async function CommentsList(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/document-comment-details/657c136a7eec23f6e4664b87`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/document-comment-details/${id}`
     );
     // console.log(data);
 
@@ -295,18 +295,12 @@ export async function AddTemplates(formData) {
     return { error };
   }
 }
-export async function ProfileDeptUpdate(formData) {
+export async function ProfileDeptUpdate(id, formData) {
   try {
     const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/department/update-profile/656995d2c152b587fb27a180`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/department/update-profile/${id}`,
       formData
     );
-    // console.log(data);
-    if (!data.error) {
-      toast.success(data.message);
-      // await localStorage.getItem("x-auth-token-company");
-    } else toast.error(data.message);
-
     return { data };
   } catch (error) {
     if (error.response) toast.error(error.response.data.message);
@@ -314,10 +308,10 @@ export async function ProfileDeptUpdate(formData) {
   }
 }
 
-export async function TicketList(formData) {
+export async function TicketList(id, formData) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/656982002e4c41f286f7dffb`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/${id}`,
       formData
     );
     console.log(data);
@@ -333,10 +327,10 @@ export async function TicketList(formData) {
   }
 }
 
-export async function OngoingTicketList(formData) {
+export async function OngoingTicketList(id, formData) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/656982002e4c41f286f7dffb`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/${id}`,
       formData
     );
     console.log(data);
@@ -352,10 +346,10 @@ export async function OngoingTicketList(formData) {
   }
 }
 
-export async function NewTicketList(formData) {
+export async function NewTicketList(id,formData) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/656982002e4c41f286f7dffb`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/${id}`,
       formData
     );
     console.log(data);
@@ -371,10 +365,10 @@ export async function NewTicketList(formData) {
   }
 }
 
-export async function NewTicket(formData) {
+export async function NewTicket(id, formData) {
   try {
     const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/656982002e4c41f286f7dffb`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/employee/ticket-list/${id}`,
       formData
     );
     console.log(data);
@@ -427,10 +421,10 @@ export async function AssignTemplate(formData) {
   }
 }
 
-export async function Logos() {
+export async function Logos(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/logo-list/657ad3b11ef416eff46503b5`
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/logo-list/${id}`
     );
     return { data };
   } catch (error) {
@@ -451,10 +445,10 @@ export async function UpdateLogo(formData) {
   }
 }
 
-export async function AnnouncementList() {
+export async function AnnouncementList(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/approver/request-list/659ceac1fd98e93af4f0373d`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/approver/request-list/${id}`,
       // formData
     );
     return { data };
@@ -464,10 +458,10 @@ export async function AnnouncementList() {
   }
 }
 
-export async function AnnouncementSearch() {
+export async function AnnouncementSearch(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/approver/search-Document/659ceac1fd98e93af4f0373d`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/approver/search-Document/${id}`,
       // formData
     );
     return { data };
