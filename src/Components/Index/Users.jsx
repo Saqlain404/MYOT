@@ -30,6 +30,8 @@ const Users = () => {
   const [userId, setUserId] = useState();
   const [loader, setLoader] = useState(false);
 
+  const [documents, setDocuments] = useState([{ file: null, name: "" }]);
+
   let id = localStorage.getItem("myot_admin_id");
 
   const [users, setUsers] = useState({
@@ -249,6 +251,27 @@ const Users = () => {
     }
   };
 
+  const onDocsSelection = (e, index) => {
+    const newDocuments = [...documents];
+    newDocuments[index].file = e.target.files[0];
+    setDocuments(newDocuments);
+  };
+
+  const addMoreDocument = () => {
+    setDocuments([...documents, { file: null, name: "" }]);
+  };
+
+  const handleDocumentNameChange = (e, index) => {
+    const newDocuments = [...documents];
+    newDocuments[index].name = e.target.value;
+    setDocuments(newDocuments);
+  };
+
+  const docsSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submitted documents:", documents);
+  };
+
   const handleDeleteUser = async (id) => {
     try {
       let { data } = await EmployeeDelete(id);
@@ -316,6 +339,7 @@ const Users = () => {
       setLoader(false);
       return false;
     }
+    console.log(documents)
     const formData = new FormData();
     formData.append("name", datas?.name);
     formData.append("email", datas?.email);
@@ -327,7 +351,8 @@ const Users = () => {
     formData.append("gender", datas?.gender);
     formData.append("employId", datas?.employid);
     formData.append("employRole", JSON.stringify(selectedRoles));
-    formData.append("document_Img", datas?.document_img[0]);
+    formData.append("document_Img", documents);
+    formData.append("documentName", documents);
     formData.append("profile_Pic", files?.profile_img);
 
     let { data } = await AddEmployee(id, formData);
@@ -346,7 +371,7 @@ const Users = () => {
       });
       setLoader(false);
       setFiles([]);
-      setProfileImgUrl(null)
+      setProfileImgUrl(null);
       document.getElementById("closeFormModal").click();
       getEmployeeList();
     }
@@ -586,7 +611,7 @@ const Users = () => {
                       type="reset"
                       onClick={() => {
                         document.getElementById("formReset").click();
-                        setProfileImgUrl(null)
+                        setProfileImgUrl(null);
                         setFiles([]);
                       }}
                     ></button>
@@ -884,33 +909,6 @@ const Users = () => {
                           </div>
                         </div>
 
-                        <p>Document Upload</p>
-                        <div className="col-12 mb-3">
-                          <input
-                            type="file"
-                            border="dotted"
-                            name="document_img"
-                            onChange={(e) => onFileSelection(e, "document_img")}
-                            className={classNames(
-                              "col-12 modal-input th-text  p-2",
-                              {
-                                "is-invalid": errors.document_img,
-                              }
-                            )}
-                            {...register("document_img", {
-                              pattern: {
-                                value: /\.(jpg|jpeg|png|pdf)$/i,
-                                message:
-                                  "File Format: JPG, JPEG, PNG, or PDF. Size: Up to 500KB",
-                              },
-                            })}
-                          />
-                          {errors.document_img && (
-                            <div className="invalid-feedback">
-                              {errors.document_img.message}
-                            </div>
-                          )}
-                        </div>
                         <div className="table-responsive">
                           <table className="table">
                             <thead>
@@ -982,6 +980,37 @@ const Users = () => {
                             </tbody>
                           </table>
                           {/* <p className="text-danger th-text">Add New Field</p> */}
+                        </div>
+
+                        <div className="col-12 mb-3">
+                          <div className="d-flex align-items-center">
+                            <p>Document Upload</p>
+                          </div>
+                          {documents.map((document, index) => (
+                            <div className="row" key={index}>
+                              <div className="col-6 mb-3">
+                                <input
+                                  type="file"
+                                  name={`document_img_${index}`}
+                                  onChange={(e) => onDocsSelection(e, index)}
+                                  className="col-12 modal-input th-text p-2"
+                                />
+                              </div>
+                              <div className="col-6">
+                                <input
+                                  type="text"
+                                  placeholder="Document name ex. Passport..."
+                                  value={document.name}
+                                  onChange={(e) =>
+                                    handleDocumentNameChange(e, index)
+                                  }
+                                  className="col-12 modal-input th-text p-2"
+                                />
+                              </div>
+                            </div>
+                          ))}
+                          <button onClick={addMoreDocument}>Add More</button>
+                          <button onClick={docsSubmit}>Submit</button>
                         </div>
                       </div>
                       <div className="d-flex justify-content-end">

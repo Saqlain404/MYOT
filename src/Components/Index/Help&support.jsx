@@ -20,6 +20,8 @@ const HelpSupport = () => {
   const [id, setId] = useState();
   const [ticketList, setTicketList] = useState();
   const [loader, setLoader] = useState(false);
+  const [files, setFiles] = useState([]);
+  const [selectedTicketIndex, setSelectedTicketIndex] = useState(null);
 
   useEffect(() => {
     getTicketList();
@@ -57,16 +59,25 @@ const HelpSupport = () => {
     }
   };
 
+  const handleFileSelection = async (e, key) => {
+    setFiles({ ...files, [key]: e.target.files[0] });
+  };
+
+  const handleAttachmentClick = (index) => {
+    setSelectedTicketIndex(index);
+  };
+
   const handleCreateRequest = async (e) => {
     e.preventDefault();
     setLoader(true);
     let id = localStorage.getItem("myot_admin_id");
-    let formData = {
-      email,
-      ticketType: requestType,
-      ticketIssue: message,
-      creator_Id: id,
-    };
+    let formData = new FormData();
+    // formData.append("email", email);
+    formData.append("ticketType", requestType);
+    formData.append("ticketIssue", message);
+    formData.append("creator_Id", id);
+    formData.append("document", files?.attachment);
+
     let { data } = await EmployeeNewTicket(formData);
     if (!data?.error) {
       Swal.fire({
@@ -79,8 +90,11 @@ const HelpSupport = () => {
         timer: 3000,
       });
       setLoader(false);
+      setRequestType("");
+      setFiles([]);
+      setMessage("");
+      document.getElementById("resetForm").click();
       document.getElementById("closeTicketModal").click();
-      document.getElementById("reset").click();
       getTicketList();
     }
   };
@@ -279,6 +293,18 @@ const HelpSupport = () => {
                                   onChange={(e) => setMessage(e.target.value)}
                                 ></textarea>
                               </div>
+                              <div className="col-12 mb-3">
+                                <input
+                                  type="file"
+                                  className="col-12 modal-input td-text p-2"
+                                  name="attachment"
+                                  accept=".pdf, .png, .jpg, .jpeg"
+                                  defaultValue=""
+                                  onChange={(e) =>
+                                    handleFileSelection(e, "attachment")
+                                  }
+                                />
+                              </div>
                             </div>
                             <div className="d-flex justify-content-end mb-3">
                               <Button
@@ -300,7 +326,11 @@ const HelpSupport = () => {
                               >
                                 Cancel
                               </Button>
-                              <button type="reset" id="reset" class="d-none">
+                              <button
+                                type="reset"
+                                id="resetForm"
+                                class="d-none"
+                              >
                                 reset
                               </button>
                             </div>
@@ -398,7 +428,7 @@ const HelpSupport = () => {
                     >
                       <div className="col-12">
                         {ticketList && ticketList?.length > 0 ? (
-                          ticketList?.map((ticket) => (
+                          ticketList?.map((ticket, index) => (
                             <div className="rounded border bg-white mb-3 p-2">
                               <div>
                                 <div className="d-flex justify-content-between align-items-center">
@@ -450,9 +480,24 @@ const HelpSupport = () => {
                                     {ticket?.creator_Id?.name}
                                   </p>
                                 </div>
-                                <a className="ticket-link mt-3 me-1">
-                                  Open Ticket
-                                </a>
+                                <div className="d-flex align-items-center">
+                                  {ticket?.document && (
+                                    <a
+                                      type="button"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#staticBackdrop"
+                                      className="ticket-link mt-3 mx-2 cursor_pointer"
+                                      onClick={() =>
+                                        handleAttachmentClick(index)
+                                      }
+                                    >
+                                      See Attachement
+                                    </a>
+                                  )}
+                                  <a className="ticket-link mt-3 me-1 cursor_pointer">
+                                    Open Ticket
+                                  </a>
+                                </div>
                               </div>
                             </div>
                           ))
@@ -680,6 +725,41 @@ const HelpSupport = () => {
                             Yay! No Tickets
                           </h3>
                         )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="modal fade"
+                    id="staticBackdrop"
+                    data-bs-backdrop="static"
+                    data-bs-keyboard="false"
+                    tabindex="-1"
+                    aria-labelledby="staticBackdropLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body">
+                          <div>
+                            {selectedTicketIndex !== null &&
+                            ticketList[selectedTicketIndex]?.document ? (
+                              <img
+                                src={ticketList[selectedTicketIndex]?.document}
+                                alt="Attachment"
+                                style={{ width: "100%", objectFit: "cover" }}
+                              />
+                            ) : null}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

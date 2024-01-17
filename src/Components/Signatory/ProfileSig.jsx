@@ -34,9 +34,7 @@ const ProfileSig = () => {
             <div className="container-fluid border-bottom sticky-top bg-white mb-4">
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
-                  <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2">My Profile / {topTitle}</a>
-                  </li>
+                  <a className="nav-link fw-bold"> My Profile / {topTitle}</a>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">
                   <form className="" role="search">
@@ -145,7 +143,9 @@ const ProfileSig = () => {
                         <div className="d-flex justify-content-between">
                           <div>
                             <p className="profile-info">Full Name</p>
-                            <p className="profile-data text-capitalize">{profileData?.name}</p>
+                            <p className="profile-data text-capitalize">
+                              {profileData?.name}
+                            </p>
                           </div>
                           <div>
                             <p className="profile-info">Email</p>

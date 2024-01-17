@@ -16,6 +16,8 @@ const EditProfileSig = () => {
   const [files, setFiles] = useState([]);
   const [profileImgUrl, setProfileImgUrl] = useState();
   const [loader, setLoader] = useState(false);
+  const [passVisible, setPassVisible] = useState(false);
+  const [cPassVisible, setCPassVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -51,6 +53,7 @@ const EditProfileSig = () => {
         timerProgressBar: true,
         timer: 3000,
       });
+      setLoader(false);
       return false;
     }
     const formData = new FormData();
@@ -107,9 +110,7 @@ const EditProfileSig = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
-                      My Profile / Edit
-                    </a>
+                    <a className="nav-link fw-bold"> My Profile / Edit</a>
                   </li>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">
@@ -191,33 +192,94 @@ const EditProfileSig = () => {
                         {...register("name")}
                       />
                     </div>
-                    <div className="col-6 mt-4">
+                    <div className="col-6 mt-4 position-relative">
                       <p className="text-start profile-card-title">Password</p>
                       <input
                         autoComplete="false"
-                        type="password"
+                        type={passVisible ? "text" : "password"}
                         placeholder="Password"
-                        className={classNames("w-100 profile-edit-input p-2", {
+                        className={classNames("col-12 profile-edit-input p-2", {
                           "is-invalid": errors.password,
                         })}
                         name="password"
-                        {...register("password")}
+                        {...register("password", {
+                          pattern: {
+                            value:
+                              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                            message:
+                              "* Minimun 8 characters, One Uppercase, One Lowercase & One Special Character Allowed",
+                          },
+                        })}
                       />
+                      <div
+                        className="eye_container eye_container2 pt-1"
+                        onClick={() => setPassVisible(!passVisible)}
+                      >
+                        {passVisible ? (
+                          <img
+                            className="eye_icon"
+                            src="/images/icons/view.png"
+                            alt=""
+                          />
+                        ) : (
+                          <img
+                            className="eye_icon"
+                            src="/images/icons/hide.png"
+                            alt=""
+                          />
+                        )}
+                      </div>
+                      {errors.password && (
+                        <small className="errorText ">
+                          {errors.password?.message}
+                        </small>
+                      )}
                     </div>
-                    <div className="col-6 mt-4">
+                    <div className="col-6 mt-4 position-relative">
                       <p className="text-start profile-card-title">
                         Confirm Password
                       </p>
                       <input
                         autoComplete="false"
-                        type="text"
+                        type={cPassVisible ? "text" : "password"}
                         placeholder="Confirm Password"
-                        className={classNames("w-100 profile-edit-input p-2", {
+                        className={classNames("col-12 profile-edit-input p-2", {
                           "is-invalid": errors.cpassword,
                         })}
                         name="cpassword"
-                        {...register("cpassword")}
+                        {...register("cpassword", {
+                          // required: "* Please Confirm Your Password",
+                          pattern: {
+                            value:
+                              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                            message:
+                              "* Minimun 8 characters, One Uppercase, One Lowercase & One Special Character Allowed",
+                          },
+                        })}
                       />
+                      <div
+                        className="eye_container eye_container2 pt-1"
+                        onClick={() => setCPassVisible(!cPassVisible)}
+                      >
+                        {cPassVisible ? (
+                          <img
+                            className="eye_icon"
+                            src="/images/icons/view.png"
+                            alt=""
+                          />
+                        ) : (
+                          <img
+                            className="eye_icon"
+                            src="/images/icons/hide.png"
+                            alt=""
+                          />
+                        )}
+                      </div>
+                      {errors.cpassword && (
+                        <small className="errorText ">
+                          {errors.cpassword?.message}
+                        </small>
+                      )}
                     </div>
                   </div>
                 </div>
