@@ -94,7 +94,7 @@ const ContactUsDept = () => {
 
             <div className="container px-4 text-center min-vh-100">
               <div className="row bg-white rounded  p-4 m-4">
-                <div className="d-flex mt-2">
+              <div className="d-flex mt-2">
                   <Link
                     to={"/Department/Help"}
                     className="text-decoration-none"
@@ -113,7 +113,13 @@ const ContactUsDept = () => {
                   >
                     <p className="td-text">Contact Us</p>
                   </Link>
-                </div>
+                  <Link
+                    to={"/Department/Contact-us"}
+                    className="text-decoration-none"
+                  >
+                    <p className="th-text">Contact Us</p>
+                  </Link>
+                  </div>
                 <div className="col-12 d-flex mb-4 pb-4">
                   <div className="col-6">
                     <p className="help-support-heading">Get in Touch</p>

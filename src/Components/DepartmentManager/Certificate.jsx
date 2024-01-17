@@ -53,7 +53,7 @@ const Certificate = () => {
 
   const getDocumentList = async () => {
     try {
-      let { data } = await CompletedTemplateList();
+      let { data } = await CompletedTemplateList(id);
       console.log(data);
       if (!data?.error) {
         let values = data?.results?.templete;
@@ -135,7 +135,7 @@ const Certificate = () => {
   );
 
   const getTemplateLists = async (key) => {
-    const { data } = await CertificateList();
+    const { data } = await CertificateList(id);
     const newRows = [];
     if (!data?.error) {
       let values = data?.results?.certificateList;

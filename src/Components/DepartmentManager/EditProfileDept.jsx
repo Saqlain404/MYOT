@@ -3,13 +3,14 @@ import RightSidebar from "../RightSidebar";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
 import { useDispatch } from "react-redux";
-import { Swal } from "sweetalert2/dist/sweetalert2";
+// import { Swal } from "sweetalert2/dist/sweetalert2";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import { ProfileDeptUpdate } from "../../ApiServices/departmentHttpService/departmentHttpService";
 import { updateProfilePic, updateUserName } from "../app/slice/userSlice";
 import { Button } from "rsuite";
+import Swal from "sweetalert2";
 
 const EditProfileDept = () => {
 
@@ -22,6 +23,8 @@ const EditProfileDept = () => {
 
   const location = useLocation();
   const { state } = location;
+
+  const id = localStorage.getItem("user_id");
 
   const {
     register,
@@ -72,9 +75,9 @@ const EditProfileDept = () => {
     //   return false
     // }
     const formData = new FormData();
-    // if (data1?.name) {
-    //   formData.append("name", data1?.name);
-    // }
+    if (data1?.name) {
+      formData.append("name", data1?.name);
+    }
     // formData.append("email", data1?.email);
     // formData.append("phone_number", data1?.number);
     formData.append("profile_Pic", files?.profile_img);
@@ -84,7 +87,7 @@ const EditProfileDept = () => {
     formData.append("address", data1?.companyAddress);
     formData.append("companyName", data1?.companyName);
 
-    let { data } = await ProfileDeptUpdate();
+    let { data } = await ProfileDeptUpdate(id, formData);
     console.log(data);
     if (data && data?.error) {
       Swal.fire({
@@ -111,7 +114,7 @@ const EditProfileDept = () => {
       setFiles([]);
       dispatch(updateProfilePic(data?.results?.department?.profile_Pic));
       dispatch(updateUserName(data?.results?.department?.name));
-      navigate("/Admin/My-profile");
+      navigate("/Department/My-profile");
       // getEmployeeList();
     }
   };
