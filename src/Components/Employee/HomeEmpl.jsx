@@ -594,6 +594,7 @@ const HomeEmpl = () => {
                       className="btn mb-1 mt-2 me-2 rounded-2"
                       data-bs-dismiss="modal"
                       onClick={() => handleSubmit()}
+                      disabled={!documentInfo.templateId}
                     >
                       Request 
                     </Button>
@@ -812,12 +813,16 @@ const HomeEmpl = () => {
                         />
                       </div>
                       <div>
-                        <button
+                      <Button
+                        style={{width:"100px"}}
                           type="submit"
-                          className="comment-btn btn-primary"
+                          appearance="primary"
+                          className="comment-btn"
+                          data-bs-dismiss="modal"
+                          disabled={!comment || /^\s+$/.test(comment)}
                         >
                           Comment
-                        </button>
+                        </Button>
                       </div>
                     </div>
                   </form>
