@@ -100,7 +100,7 @@ const EmplySetting = () => {
                     <p className="td-text border-bottom me-3">
                       Business Assets 
                     </p>
-                    <p className="th-text mb-2">System Setting</p>
+                    {/* <p className="th-text mb-2">System Setting</p> */}
                   </div>
                   <div>
                     {/* <p className="settings-txt">Select Logo</p> */}

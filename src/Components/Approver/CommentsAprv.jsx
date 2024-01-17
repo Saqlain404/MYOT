@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import { selectUserData } from "../app/slice/userSlice";
 import Swal from "sweetalert2";
+import { Button } from "rsuite";
 
 const CommentsAprv = () => {
   const [commentList, setCommentList] = useState([]);
@@ -276,9 +277,9 @@ const CommentsAprv = () => {
                                 defaultValue=""
                                 onChange={(e) => setReplyMsg(e.target.value)}
                               />
-                              <button type="submit" className="reply-btn">
+                              <Button type="submit" appearance="primary" className="reply-btn" disabled={!replyMsg || /^\s+$/.test(replyMsg)}>
                                 Reply
-                              </button>
+                              </Button>
                               <button
                                 type="reset"
                                 id="reset"
@@ -322,9 +323,9 @@ const CommentsAprv = () => {
                       onChange={(e) => setComment(e.target.value)}
                       className="comment-inbox m-2 p-2"
                     ></textarea>
-                    <button type="submit" className="reply-btn">
+                    <Button type="submit" appearance="primary" disabled={!comment || /^\s+$/.test(comment)} className="reply-btn">
                       Send
-                    </button>
+                    </Button>
                   </form>
                 </div>
               </div>

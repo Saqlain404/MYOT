@@ -11,6 +11,8 @@ import {
 } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 import { useSelector } from "react-redux";
 import { selectUserData } from "../app/slice/userSlice";
+import { Button } from "rsuite";
+import Swal from "sweetalert2";
 
 const CommentsEmply = () => {
   const [commentList, setCommentList] = useState([]);
@@ -57,28 +59,53 @@ const CommentsEmply = () => {
 
   let creator_Id =
     localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
+
   const handleSubmitComment = async (e) => {
     e.preventDefault();
+    let trimmedComment = comment.trim()
     let data = await AddCommentEmply({
-      comment,
+      comment:trimmedComment,
       document_Id: id,
       creator_Id,
     });
     if (!data?.error) {
       setComment("");
       getCommentLists();
+    }else if(trimmedComment===""){
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Please enter a comment",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
     }
   };
 
   const handleReply = async (e, comment_Id) => {
     e.preventDefault();
+    const trimmedReply = replyMsg.trim()
     let replyData = await AddReplyCommentEmply({
-      text: replyMsg,
+      text: trimmedReply,
       comment_Id,
       creator_Id,
     });
-    console.log(replyData);
-    setReplyMsg("");
+    if(!replyData.error){
+      setReplyMsg("");
+      getCommentLists();
+    } else if(trimmedReply===""){
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position:"top-end",
+        title: "Please Enter Reply",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    }
     document.getElementById("reset").click();
     getCommentLists();
     toggleReply(comment_Id)
@@ -244,9 +271,10 @@ const CommentsEmply = () => {
                                 defaultValue=""
                                 onChange={(e) => setReplyMsg(e.target.value)}
                               />
-                              <button type="submit" className="reply-btn">
+                              <Button appearance="primary" disabled={!replyMsg || /^\s+$/.test(replyMsg)} type="submit"
+                               className="reply-btn btn mb-3 me-2">
                                 Reply
-                              </button>
+                              </Button>
                               <button
                                 type="reset"
                                 id="reset"
@@ -281,7 +309,7 @@ const CommentsEmply = () => {
                                 alt=""
                                 className="comment-avatar m-auto mt-2 w_20_h_20"
                               />
-                    <textarea
+                    <textarea 
                       name="comment"
                       placeholder="Add a comment…"
                       id=""
@@ -291,9 +319,9 @@ const CommentsEmply = () => {
                       onChange={(e) => setComment(e.target.value)}
                       className="comment-inbox m-2 p-2"
                     ></textarea>
-                    <button type="submit" className="reply-btn">
+                    <Button type="submit" appearance="primary" className="reply-btn btn" disabled={!comment || /^\s+$/.test(comment)}>
                       Send
-                    </button>
+                    </Button>
                   </form>
                 </div>
               </div>

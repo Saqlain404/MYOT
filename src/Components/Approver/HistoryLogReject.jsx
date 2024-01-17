@@ -11,6 +11,7 @@ import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import { Checkbox } from "antd";
 import Swal from "sweetalert2";
+import { Button } from "rsuite";
 
 const HistoryLogReject = () => {
   const [documentRequests, setDocumentRequests] = useState([]);
@@ -617,12 +618,16 @@ const HistoryLogReject = () => {
                         />
                       </div>
                       <div>
-                        <button
-                          type="submit"
-                          className="comment-btn btn-primary"
+                      <Button
+                        style={{width:"100px"}}
+                        type="submit"
+                        appearance="primary"
+                        className="comment-btn"
+                        data-bs-dismiss="modal"
+                        disabled={!comment || /^\s+$/.test(comment)}
                         >
                           Comment
-                        </button>
+                        </Button>
                       </div>
                     </div>
                   </form>

@@ -253,7 +253,7 @@ const EditProfileAprv = () => {
                         </p>
                       )}
                        <div
-                          className="eye_container pt-1"
+                          className="eye_container eye_container2 pt-1"
                           onClick={() => setPassVisible(!passVisible)}
                         >
                           {passVisible ? (
@@ -289,7 +289,7 @@ const EditProfileAprv = () => {
                         </p>
                       )}
                        <div
-                          className="eye_container pt-1"
+                          className="eye_container eye_container2 pt-1"
                           onClick={() => setCPassVisible(!cPassVisible)}
                         >
                           {cPassVisible ? (

@@ -105,7 +105,7 @@ const SettingsAprv = () => {
                     <p className="td-text border-bottom mt-2 me-3">
                       Business Assets
                     </p>
-                    <p className="th-text  ">System Setting</p>
+                    {/* <p className="th-text  ">System Setting</p> */}
                   </div>
                   <div>
                     {/* <p className="settings-txt">Select Logo</p> */}

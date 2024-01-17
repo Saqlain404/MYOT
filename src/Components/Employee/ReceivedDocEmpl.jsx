@@ -11,6 +11,7 @@ import {
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import { Checkbox } from "antd";
+import { Button } from "rsuite";
 // import "../../dist/css/style.min.css"
 
 const ReceivedDocEmpl = () => {
@@ -554,12 +555,16 @@ const ReceivedDocEmpl = () => {
                         />
                       </div>
                       <div>
-                        <button
+                      <Button
+                        style={{width:"100px"}}
                           type="submit"
-                          className="comment-btn btn-primary"
+                          appearance="primary"
+                          className="comment-btn"
+                          data-bs-dismiss="modal"
+                          disabled={!comment || /^\s+$/.test(comment)}
                         >
                           Comment
-                        </button>
+                        </Button>
                       </div>
                     </div>
                   </form>

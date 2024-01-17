@@ -349,10 +349,13 @@ const HelpSupportAprv = () => {
                                     onChange={handleInput}
                                   />
                                 </div> */}
-                                <div className="col-12 ps-3">
+                                <div className="col-12 ps-2">
+                                <p className="d-flex ms-1" id="exampleModalLabel">
+                                Title
+                              </p>
                                   <input
                                     type=""
-                                    placeholder="Request Ticket Type *"
+                                    placeholder="Title *"
                                     className="col-12 modal-input td-text  p-2"
                                     name="ticketType"
                                     value={contactData.ticketType}

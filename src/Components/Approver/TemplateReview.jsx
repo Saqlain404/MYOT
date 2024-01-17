@@ -13,6 +13,7 @@ import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import { Checkbox } from "antd";
 import Swal from "sweetalert2";
+import { Button } from "rsuite";
 
 const TemplateReview = () => {
   const [searchData, setSearchData] = useState("");
@@ -547,12 +548,16 @@ const TemplateReview = () => {
                         />
                       </div>
                       <div>
-                        <button
+                      <Button
+                        style={{width:"100px"}}
                           type="submit"
-                          className="comment-btn btn-primary"
+                          appearance="primary"
+                          className="comment-btn"
+                          data-bs-dismiss="modal"
+                          disabled={!comment || /^\s+$/.test(comment)}
                         >
                           Comment
-                        </button>
+                        </Button>
                       </div>
                     </div>
                   </form>

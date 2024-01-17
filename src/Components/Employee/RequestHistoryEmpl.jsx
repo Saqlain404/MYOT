@@ -12,6 +12,7 @@ import {
 } from "../../ApiServices/EmployeeHttpService/employeeLoginHttpService";
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
+import { Button } from "rsuite";
 
 const RequestHistoryEmpl = () => {
   const [searchData, setSearchData] = useState("");
@@ -536,12 +537,16 @@ const RequestHistoryEmpl = () => {
                         />
                       </div>
                       <div>
-                        <button
+                      <Button
+                        style={{width:"100px"}}
                           type="submit"
-                          className="comment-btn btn-primary"
+                          appearance="primary"
+                          className="comment-btn"
+                          data-bs-dismiss="modal"
+                          disabled={!comment || /^\s+$/.test(comment)}
                         >
                           Comment
-                        </button>
+                        </Button>
                       </div>
                     </div>
                   </form>
