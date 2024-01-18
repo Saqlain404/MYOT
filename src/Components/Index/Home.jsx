@@ -313,6 +313,18 @@ const Home = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (comment.trim().length <= 0) {
+      Swal.fire({
+        toast: true,
+        icon: "warning",
+        position: "top-end",
+        title: "Please enter a comment",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return false;
+    }
     let creator_Id = localStorage.getItem("myot_admin_id");
     console.log(creator_Id, comment, templete_Id);
     let { data } = await AddCommentForTask({
@@ -320,7 +332,6 @@ const Home = () => {
       templete_Id,
       creator_Id,
     });
-    console.log(data);
     if (!data?.error) {
       Swal.fire({
         toast: true,

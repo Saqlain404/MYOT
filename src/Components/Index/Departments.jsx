@@ -98,7 +98,7 @@ const Departments = () => {
                   className="w-auto cursor_pointer"
                 />
               </a>
-              <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+              <ul class="dropdown-menu border-0 shadow p-3 rounded">
                 <li onClick={() => departmentDetails(data?._id)}>
                   <a
                     class="dropdown-item"

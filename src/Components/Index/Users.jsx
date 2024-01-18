@@ -269,7 +269,12 @@ const Users = () => {
 
   const docsSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted documents:", documents);
+    let docs = [];
+
+    documents.forEach((doc) => {
+      docs.push({ documentName: doc.name, document: doc.file });
+    });
+    console.log(docs);
   };
 
   const handleDeleteUser = async (id) => {
@@ -339,7 +344,12 @@ const Users = () => {
       setLoader(false);
       return false;
     }
-    console.log(documents)
+
+    let docs = [];
+    documents.forEach((doc) => {
+      docs.push({ documentName: doc.name, document: doc.file });
+    });
+
     const formData = new FormData();
     formData.append("name", datas?.name);
     formData.append("email", datas?.email);
@@ -351,29 +361,34 @@ const Users = () => {
     formData.append("gender", datas?.gender);
     formData.append("employId", datas?.employid);
     formData.append("employRole", JSON.stringify(selectedRoles));
-    formData.append("document_Img", documents);
-    formData.append("documentName", documents);
+    formData.append("document_Img", docs);
     formData.append("profile_Pic", files?.profile_img);
 
-    let { data } = await AddEmployee(id, formData);
-    console.log(data);
-    setFiles([]);
-    if (data && !data?.error) {
-      setLoader(false);
-      Swal.fire({
-        toast: true,
-        icon: "success",
-        position: "top-end",
-        title: "New Employee Added",
-        showConfirmButton: false,
-        timerProgressBar: true,
-        timer: 3000,
-      });
-      setLoader(false);
+    try {
+      let { data } = await AddEmployee(id, formData);
+      console.log(data);
       setFiles([]);
-      setProfileImgUrl(null);
-      document.getElementById("closeFormModal").click();
-      getEmployeeList();
+      if (data && !data?.error) {
+        setLoader(false);
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "New Employee Added",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        setLoader(false);
+        setFiles([]);
+        setProfileImgUrl(null);
+        document.getElementById("closeFormModal").click();
+        getEmployeeList();
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -1009,8 +1024,12 @@ const Users = () => {
                               </div>
                             </div>
                           ))}
-                          <button onClick={addMoreDocument}>Add More</button>
-                          <button onClick={docsSubmit}>Submit</button>
+                          <button type="button" onClick={addMoreDocument}>
+                            Add More
+                          </button>
+                          <button type="button" onClick={docsSubmit}>
+                            Submit
+                          </button>
                         </div>
                       </div>
                       <div className="d-flex justify-content-end">

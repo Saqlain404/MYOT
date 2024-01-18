@@ -67,7 +67,7 @@ const DocsAccess = ({ admin_id }) => {
   }, [admin_id]);
 
   const getDocsAccessLog = async () => {
-    let id = localStorage.getItem("myot_admin_id")
+    let id = localStorage.getItem("myot_admin_id");
     let { data } = await SignatoryDocsAccessLog(id);
     const newRows = [];
     if (!data?.error) {
@@ -90,7 +90,15 @@ const DocsAccess = ({ admin_id }) => {
         );
         returnData.login = "NA" || moment(list?.createdAt).format("L");
         returnData.department = list?.manager[0]?.department[0]?.departmentName;
-        returnData.version = list?.templeteVersion[0]?.version;
+        returnData.version = (
+          <>
+            <span>
+              {list?.templeteVersion &&
+                list.templeteVersion.length > 0 &&
+                list.templeteVersion[list.templeteVersion.length - 1]?.version}
+            </span>
+          </>
+        );
         // returnData.status = (
         //   <span
         //     className={`"td-text status" ${

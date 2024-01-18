@@ -170,7 +170,7 @@ const Settings = () => {
                               />
                             </div>
                             <p className="py-3">
-                              Drag and drop logo here, or click add image
+                              Drag and drop logo here, or click select image
                             </p>
                             {files?.logo && files?.logo ? (
                               <>

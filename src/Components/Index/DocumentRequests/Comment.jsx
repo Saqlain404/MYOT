@@ -66,27 +66,21 @@ const DocComments = () => {
 
   const toggleReply = (index) => {
     setReply((prevState) => ({
-      ...prevState,
+      ...Object.fromEntries(
+        Object.entries(prevState).map(([key]) => [key, false])
+      ),
       [index]: !prevState[index],
     }));
   };
 
-  //   const handleReplyChange = (e, index) => {
-  //     const { value } = e.target;
-  //     setReplyText((prevState) => ({
-  //       ...prevState,
-  //       [index]: value,
-  //     }));
-  //   };
-
   const handleSubmit = async (e, id) => {
     e.preventDefault();
-    if (replyMsg === "") {
+    if (replyMsg.trim().length <= 0) {
       Swal.fire({
         toast: true,
-        icon: "error",
+        icon: "warning",
         position: "top-end",
-        title: "Please enter a reply",
+        title: "Please enter reply",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
@@ -116,6 +110,47 @@ const DocComments = () => {
       setReply(false);
       getCommentLists();
     }
+  };
+
+  const addComment = async (e) => {
+    e.preventDefault();
+    console.log(id);
+    if (comment.trim().length <= 0) {
+      Swal.fire({
+        toast: true,
+        icon: "warning",
+        position: "top-end",
+        title: "Please enter reply",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return false;
+    }
+    try {
+      let Lid = localStorage.getItem("myot_admin_id");
+      let formData = {
+        creator_Id: Lid,
+        document_Id: id,
+        comment,
+      };
+      console.log(formData);
+      let { data } = await DocumentComment(formData);
+      console.log(data);
+      if (!data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "New comment added",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        setComment("");
+        getCommentLists();
+      }
+    } catch (error) {}
   };
 
   return (
@@ -322,9 +357,9 @@ const DocComments = () => {
                       id=""
                       className="comment-inbox m-2 p-2"
                     ></textarea>
-                    {/* <button onClick={addComment} className="reply-btn">
+                    <button onClick={addComment} className="reply-btn">
                       Send
-                    </button> */}
+                    </button>
                   </div>
                 </div>
               </div>

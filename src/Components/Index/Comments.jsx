@@ -41,7 +41,9 @@ const Comments = () => {
 
   const toggleReply = (index) => {
     setReply((prevState) => ({
-      ...prevState,
+      ...Object.fromEntries(
+        Object.entries(prevState).map(([key]) => [key, false])
+      ),
       [index]: !prevState[index],
     }));
   };
@@ -69,10 +71,10 @@ const Comments = () => {
 
   const addComment = async (e) => {
     e.preventDefault();
-    if (comment.trim().length === 0) {
+    if (comment.trim().length <= 0) {
       Swal.fire({
         toast: true,
-        icon: "error",
+        icon: "warning",
         position: "top-end",
         title: "Please enter comment",
         showConfirmButton: false,
@@ -105,10 +107,10 @@ const Comments = () => {
 
   const handleSubmit = async (e, comment_Id) => {
     e.preventDefault();
-    if (replyMsg.length === 0) {
+    if (replyMsg.trim().length <= 0) {
       Swal.fire({
         toast: true,
-        icon: "error",
+        icon: "warning",
         position: "top-end",
         title: "Please enter reply",
         showConfirmButton: false,

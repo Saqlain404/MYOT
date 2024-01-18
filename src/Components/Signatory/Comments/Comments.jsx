@@ -36,7 +36,9 @@ const Comments = () => {
 
   const toggleReply = (index) => {
     setReply((prevState) => ({
-      ...prevState,
+      ...Object.fromEntries(
+        Object.entries(prevState).map(([key]) => [key, false])
+      ),
       [index]: !prevState[index],
     }));
   };

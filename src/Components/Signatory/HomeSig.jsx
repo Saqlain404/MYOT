@@ -117,7 +117,15 @@ const HomeSig = () => {
             <span className="ms-2 text-capitalize">{list?.manager?.name}</span>
           </>
         );
-        returnData.version = list?.templeteVersion[0]?.version;
+        returnData.version = (
+          <>
+            <span>
+              {list?.templeteVersion &&
+                list.templeteVersion.length > 0 &&
+                list.templeteVersion[list.templeteVersion.length - 1]?.version}
+            </span>
+          </>
+        );
         returnData.department =
           list?.manager?.department_Id?.departmentName || "NA";
         returnData.status = (

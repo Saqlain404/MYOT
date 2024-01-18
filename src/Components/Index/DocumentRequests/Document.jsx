@@ -325,6 +325,18 @@ const Document = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (comment.trim().length <= 0) {
+      Swal.fire({
+        toast: true,
+        icon: "warning",
+        position: "top-end",
+        title: "Please enter reply",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return false;
+    }
     try {
       let id = localStorage.getItem("myot_admin_id");
       let formData = {

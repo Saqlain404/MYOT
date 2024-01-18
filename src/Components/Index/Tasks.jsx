@@ -15,7 +15,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import { MDBDataTable } from "mdbreact";
 import Swal from "sweetalert2";
-import { Checkbox } from "rsuite";
+import { Button, Checkbox } from "rsuite";
 
 const Tasks = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -24,32 +24,26 @@ const Tasks = () => {
   const [comment, setComment] = useState("");
   const [totalCount, setTotalCount] = useState("");
   const [templete_Id, setTempleteId] = useState("");
+  const [loader, setLoader] = useState(false);
 
   const [tasks, setTasks] = useState({
     columns: [
       {
-        label: "Template Name",
+        label: "Task Name",
         field: "name",
         sort: "asc",
         width: 50,
         selected: false,
       },
       {
-        label: "Assigned To",
+        label: "Task Description",
         field: "assigned",
         sort: "asc",
         width: 50,
         selected: false,
       },
       {
-        label: "Version",
-        field: "version",
-        sort: "asc",
-        width: 100,
-        selected: false,
-      },
-      {
-        label: "Date",
+        label: "Start At",
         field: "date",
         sort: "asc",
         width: 100,
@@ -58,21 +52,6 @@ const Tasks = () => {
       {
         label: "Status",
         field: "status",
-        sort: "asc",
-        width: 100,
-        selected: false,
-      },
-      {
-        label: "Department",
-        field: "department",
-        sort: "asc",
-        width: 100,
-        searchable: true,
-        selected: false,
-      },
-      {
-        label: "Comments",
-        field: "comments",
         sort: "asc",
         width: 100,
         selected: false,
@@ -106,33 +85,12 @@ const Tasks = () => {
       values?.map((list, index) => {
         const returnData = {};
         returnData.name = list?.templeteName;
-        returnData.assigned = (
-          <>
-            <img
-              className="w_20_h_20"
-              src={list?.manager?.profile_Pic}
-              alt=""
-            />
-            <span className="ms-2 text-capitalize">{list?.manager?.name}</span>
-          </>
-        );
-        returnData.version = (
-          <>
-            {list?.templeteVersion && list?.templeteVersion?.length > 0
-              ? ` ${
-                  list?.templeteVersion[list?.templeteVersion.length - 1]
-                    ?.version
-                }`
-              : "No versions found"}
-          </>
-        );
         returnData.date = (
           <>
             <img src="/images/dashboard/CalendarBlank.png" />{" "}
             <span className="ms-2">{moment(list?.createdAt).format("L")}</span>
           </>
         );
-        returnData.department = list?.manager?.department_Id?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -150,23 +108,6 @@ const Tasks = () => {
             {list?.status}
           </span>
         );
-        returnData.comments = (
-          <>
-            <div className="text-center">
-              <a
-                onClick={() => setTempleteId(list?._id)}
-                type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-              >
-                <img
-                  src="/images/dashboard/Comment.png"
-                  className="mx-auto d-block"
-                />
-              </a>
-            </div>
-          </>
-        );
         returnData.actions = (
           <div class="text-center">
             <a
@@ -178,26 +119,6 @@ const Tasks = () => {
               <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-              {/* <li>
-                <a class="dropdown-item border-bottom" href="#">
-                  <img
-                    src="/images/users/AddressBook.svg"
-                    alt=""
-                    className="me-2"
-                  />
-                  View Users Details
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item border-bottom" href="#">
-                  <img
-                    src="/images/users/PencilLine.svg"
-                    alt=""
-                    className="me-2"
-                  />
-                  Edit User Details
-                </a>
-              </li> */}
               <li>
                 <Link
                   class="dropdown-item"
@@ -221,7 +142,7 @@ const Tasks = () => {
                   Wrap Column
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a
                   class="dropdown-item text-danger cursor_pointer"
                   onClick={() => handleDelete(list?._id)}
@@ -229,7 +150,7 @@ const Tasks = () => {
                   <img src="/images/users/Trash.svg" alt="" className="me-2" />
                   Delete Template
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         );
@@ -371,7 +292,7 @@ const Tasks = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                  <a className="nav-link fw-bold">Tasks</a>
+                    <a className="nav-link fw-bold">Tasks</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
@@ -507,7 +428,20 @@ const Tasks = () => {
             </div>
 
             <div className="position-relative">
-              <p className="table-name mb-2">Tasks</p>
+              <div className="d-flex align-items-center justify-content-between">
+                <p className="table-name mb-2">Tasks</p>
+                <p className="table-name mb-2">
+                  <Link
+                    type="button"
+                    className="text-dark"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                  >
+                    <img src="/images/dashboard/Plus-icon.png" alt="" />
+                    <span> Add Task</span>
+                  </Link>
+                </p>
+              </div>
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">
                   <div className="col-md-3 table-searchbar-imgs">
@@ -579,6 +513,110 @@ const Tasks = () => {
                 </div>
               </div>
             </div>
+
+            {/* TASK MODAL */}
+            <div
+              class="modal fade"
+              id="staticBackdrop"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                      Add Task
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <form onSubmit={handleSubmit}>
+                      <div className="row pt-3">
+                        <div className="col-12 mb-3 ">
+                          <input
+                            type="text"
+                            placeholder="Task Name *"
+                            className="col-12 modal-input td-text  p-2"
+                          />
+                        </div>
+                        <div className="col-6">
+                          <input
+                            type="datetime-local"
+                            placeholder="Select start date and time"
+                            className="col-12 modal-input td-text  p-2"
+                            min={new Date().toISOString().slice(0, 16)}
+                          />
+                        </div>
+                        <div className="col-6">
+                          <select
+                            className="col-12 modal-input td-text  p-2"
+                            name=""
+                            id=""
+                          >
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Incoming">Incoming</option>
+                            <option value="Cancel">Cancel</option>
+                          </select>
+                        </div>
+                        <div className="col-12 my-3 ">
+                          <label
+                            htmlFor=""
+                            className="mb-3 text-dark th-text fs-6"
+                          >
+                            Task Description
+                          </label>
+                          <textarea
+                            type="text"
+                            placeholder="Type task description here..."
+                            className="col-12 modal-input td-text p-2 text-area"
+                            name="description"
+                          ></textarea>
+                          {/* <input type="text" placeholder="Phone Number" className="col-6 modal-input th-text p-2"/> */}
+                        </div>
+                      </div>
+                      <div className="d-flex justify-content-end mb-3">
+                        <Button
+                          style={{ width: "150px" }}
+                          loading={loader}
+                          appearance="primary"
+                          className="btn mb-3 me-2 rounded-2"
+                          type="submit"
+                        >
+                          Add Tasks
+                        </Button>
+                        <Button
+                          style={{ width: "100px" }}
+                          type="reset"
+                          className="btn mb-3 mx-2 rounded-2 bg-light text-dark border-0"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          Cancel
+                        </Button>
+                        <button
+                          type="reset"
+                          class="d-none"
+                          data-bs-dismiss="modal"
+                          id="formReset"
+                        >
+                          reset
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* TASK MODAL END */}
 
             {/* COMMENT MODAL */}
 
