@@ -254,13 +254,13 @@ const EmplEditProfile = () => {
                         {passVisible ? (
                           <img
                             className="eye_icon"
-                            src="/images/icons/hide.png"
+                            src="/images/icons/view.png"
                             alt=""
                           />
                         ) : (
                           <img
                             className="eye_icon"
-                            src="/images/icons/view.png"
+                            src="/images/icons/hide.png"
                             alt=""
                           />
                         )}
@@ -290,13 +290,13 @@ const EmplEditProfile = () => {
                         {cPassVisible ? (
                           <img
                             className="eye_icon"
-                            src="/images/icons/hide.png"
+                            src="/images/icons/view.png"
                             alt=""
                           />
                         ) : (
                           <img
                             className="eye_icon"
-                            src="/images/icons/view.png"
+                            src="/images/icons/hide.png"
                             alt=""
                           />
                         )}
