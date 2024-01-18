@@ -312,7 +312,7 @@ const Document = () => {
           <MDBDataTable
             bordered
             displayEntries={false}
-            entries={5}
+            entries={10}
             className="text-nowrap"
             hover
             data={{ ...documents, columns: visibleColumns }}

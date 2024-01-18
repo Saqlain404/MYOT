@@ -19,6 +19,7 @@ import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import Swal from "sweetalert2";
 import { Button } from "rsuite";
+import { GetApprovedTemplates } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 
 const Template = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -225,6 +226,11 @@ const Template = () => {
     hiddenColumns: [],
     selectedColumns: [],
   });
+
+  useEffect(() => {
+    getTemplateCount();
+    getTemplateLists();
+  }, []);
 
   const getApproverList = async () => {
     try {
@@ -469,6 +475,7 @@ const Template = () => {
       document.getElementById("closeModal").click();
       document.getElementById("reset-modal").click();
       getTemplateLists();
+      // window.location.reload();
     }
   };
 
@@ -481,10 +488,7 @@ const Template = () => {
     }
   };
 
-  useEffect(() => {
-    getTemplateCount();
-    getTemplateLists();
-  }, []);
+ 
 
   return (
     <>
@@ -595,7 +599,7 @@ const Template = () => {
                 </div>
               </div>
             </div>
-
+              <div className="position-relative">
             <p className="table-name mb-2">Templates</p>
             <div className=" col-12 d-flex align-items-center table-searchbar">
               <div className="d-flex ">
@@ -653,7 +657,7 @@ const Template = () => {
                   key={listItems}
                   bordered
                   displayEntries={false}
-                  entries={5}
+                  entries={10}
                   className="text-nowrap"
                   hover
                   data={{ ...listItems, columns: visibleColumns }}
@@ -664,7 +668,7 @@ const Template = () => {
                 />
               </div>
             </div>
-
+            </div>
             <div className="footer">
               <div>© 2023 MYOT</div>
               <div className="d-flex ">
@@ -886,6 +890,7 @@ const Template = () => {
                       <Button
                         style={{ width: "100px" }}
                         type="reset"
+                        id="reset-modal"
                         className="btn mb-3 mx-2 rounded-2 bg-light text-dark border-0"
                         data-bs-dismiss="modal"
                         aria-label="Close"

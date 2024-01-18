@@ -180,7 +180,8 @@ const Certificate = () => {
               className="cursor_pointer"
               type=""
               data-bs-toggle="dropdown"
-              aria-expanded="false">
+              aria-expanded="false"
+            >
               <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
@@ -285,7 +286,6 @@ const Certificate = () => {
   };
 
   const onSubmit = async (info) => {
-
     const { data } = AssignTemplate({
       templete_Id: info?.templates,
       signatory: info?.signatory,
@@ -364,79 +364,85 @@ const Certificate = () => {
                 </div>
               </nav>
             </div>
-
-            <p className="table-name mb-2">Certificate List</p>
-            <div className=" col-12 d-flex align-items-center table-searchbar">
-              <div className="d-flex ">
-                <div
-                  className="mt-1"
-                  type="button"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal">
-                  <img
-                    src="/images/dashboard/Plus-icon.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
-                  />
-                </div>
-                <div className="col-md-3 table-searchbar-imgs">
-                  <img
-                    onClick={toggleSortOrder}
-                    src="/images/dashboard/ArrowsDownUp.png"
-                    className="p-2 table-searchbar-img border-end cursor_pointer"
-                  />
-                  <img
-                    src="/images/dashboard/DotsThreeOutlineVertical2.png"
-                    alt=""
-                    className="p-2 table-searchbar-img border-end"
-                  />
-                </div>
-
-                <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
-                  <p className="m-0 text-nowrap">
-                    {listItems?.selectedColumns &&
-                      listItems?.selectedColumns.length}
-                    <span> Selected</span>
-                  </p>
-                  {showClearButton ? (
-                    <p
-                      className="hide-selected m-0 text-nowrap cursor_pointer "
-                      onClick={showAllColumns}>
-                      Clear Selection
-                    </p>
-                  ) : (
-                    <p
-                      className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
-                      onClick={hideSelectedColumns}>
-                      Hide Selected
-                    </p>
-                  )}
-                </div>
-                <div class="search_icon">
-                  <img width={20} src={require("../../assets/logo/search.png")}></img>
+            <div className="position-relative">
+              <p className="table-name mb-2">Certificate List</p>
+              <div className=" col-12 d-flex align-items-center table-searchbar">
+                <div className="d-flex ">
+                  <div
+                    className="mt-1"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    <img
+                      src="/images/dashboard/Plus-icon.png"
+                      alt=""
+                      className="p-2 table-searchbar-img"
+                    />
                   </div>
-              </div>
-              <form className="d-flex me-2" role="search"></form>
-            </div>
+                  <div className="col-md-3 table-searchbar-imgs">
+                    <img
+                      onClick={toggleSortOrder}
+                      src="/images/dashboard/ArrowsDownUp.png"
+                      className="p-2 table-searchbar-img border-end cursor_pointer"
+                    />
+                    <img
+                      src="/images/dashboard/DotsThreeOutlineVertical2.png"
+                      alt=""
+                      className="p-2 table-searchbar-img border-end"
+                    />
+                  </div>
 
-            <div className="col-12 mdb_table mdb2 depart_table mt-3 ">
-              <div className="table-responsive">
-                <MDBDataTable
-                  key={listItems}
-                  bordered
-                  displayEntries={false}
-                  entries={5}
-                  className="text-nowrap"
-                  hover
-                  data={{ ...listItems, columns: visibleColumns }}
-                  // data={approvers}
-                  noBottomColumns
-                  paginationLabel={"«»"}
-                  sortable={false}
-                />
+                  <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
+                    <p className="m-0 text-nowrap">
+                      {listItems?.selectedColumns &&
+                        listItems?.selectedColumns.length}
+                      <span> Selected</span>
+                    </p>
+                    {showClearButton ? (
+                      <p
+                        className="hide-selected m-0 text-nowrap cursor_pointer "
+                        onClick={showAllColumns}
+                      >
+                        Clear Selection
+                      </p>
+                    ) : (
+                      <p
+                        className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
+                        onClick={hideSelectedColumns}
+                      >
+                        Hide Selected
+                      </p>
+                    )}
+                  </div>
+                  <div class="search_icon">
+                    <img
+                      width={20}
+                      src={require("../../assets/logo/search.png")}
+                    ></img>
+                  </div>
+                </div>
+                <form className="d-flex me-2" role="search"></form>
+              </div>
+
+              <div className="col-12 mdb_table mdb2 depart_table mt-3 ">
+                <div className="table-responsive">
+                  <MDBDataTable
+                    key={listItems}
+                    bordered
+                    displayEntries={false}
+                    entries={5}
+                    className="text-nowrap"
+                    hover
+                    data={{ ...listItems, columns: visibleColumns }}
+                    // data={approvers}
+                    noBottomColumns
+                    paginationLabel={"«»"}
+                    sortable={false}
+                  />
+                </div>
               </div>
             </div>
-
             <div className="footer">
               <div>© 2023 MYOT</div>
               <div className="d-flex ">
@@ -457,7 +463,8 @@ const Certificate = () => {
         id="exampleModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+        aria-hidden="true"
+      >
         <div class="modal-dialog modal-dialog-centered modal-dialog-department">
           <div class="modal-content border-0">
             <div class="d-flex modal-header border-bottom">
@@ -469,7 +476,8 @@ const Certificate = () => {
                 class="btn-close"
                 id="closeModal"
                 data-bs-dismiss="modal"
-                aria-label="Close"></button>
+                aria-label="Close"
+              ></button>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} action="">
@@ -485,14 +493,16 @@ const Certificate = () => {
                     )}
                     {...register("templates", {
                       required: "* Please select a Template",
-                    })}>
+                    })}
+                  >
                     <option className="w-100">Select Document</option>
                     {templates &&
                       templates.map((options) => (
                         <option
                           className="w-100"
                           key={options?._id}
-                          value={options?._id}>
+                          value={options?._id}
+                        >
                           {options?.templeteName}
                         </option>
                       ))}
@@ -528,14 +538,16 @@ const Certificate = () => {
                       )}
                       {...register("signatory", {
                         required: "* Please select a signatory",
-                      })}>
+                      })}
+                    >
                       <option className="w-100">Select signatory</option>
                       {signOptions &&
                         signOptions?.map((options) => (
                           <option
                             className="w-100"
                             key={options?._id}
-                            value={options?._id}>
+                            value={options?._id}
+                          >
                             {options?.name}
                           </option>
                         ))}

@@ -19,14 +19,12 @@ import { selectUserData } from "../app/slice/userSlice";
 // import "../../dist/css/style.min.css"
 
 const HomeDept = () => {
- 
-
   const [homeCount, setHomeCount] = useState();
   const userData = useSelector(selectUserData);
   const [listItems, setListItems] = useState([]);
   const [templateItems, setTemplateItems] = useState();
   const [search, setSearch] = useState("");
-  const[profileDetail,setProfileDetail] = useState(null);
+  const [profileDetail, setProfileDetail] = useState(null);
   const [showClearButton, setShowClearButton] = useState(false);
   const [comment, setComment] = useState("");
 
@@ -66,7 +64,7 @@ const HomeDept = () => {
         searchable: true,
         selected: false,
       },
-    
+
       {
         label: "Actions",
         field: "actions",
@@ -80,9 +78,6 @@ const HomeDept = () => {
     sortColumnName: "name",
     sortType: "asc",
   });
-
- 
-
 
   const getTemplateData = async () => {
     let { data } = await TemplateList(userId);
@@ -100,7 +95,9 @@ const HomeDept = () => {
               src={list?.signatory?.profile_Pic}
               alt=""
             />
-            <span className="ms-2 text-capitalize">{list?.signatory?.name}</span>
+            <span className="ms-2 text-capitalize">
+              {list?.signatory?.name}
+            </span>
           </>
         );
         returnData.version = (
@@ -113,7 +110,8 @@ const HomeDept = () => {
               : "No versions found"}
           </>
         );
-        returnData.department = list?.manager?.department_Id?.departmentName || "NA";
+        returnData.department =
+          list?.manager?.department_Id?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -193,7 +191,10 @@ const HomeDept = () => {
         );
         returnData.actions = (
           <div className="text-center">
-            <img src="/images/sidebar/ThreeDots.svg" className="w-auto mx-auto" />
+            <img
+              src="/images/sidebar/ThreeDots.svg"
+              className="w-auto mx-auto"
+            />
           </div>
         );
 
@@ -299,12 +300,12 @@ const HomeDept = () => {
 
   const getProfileDetails = async () => {
     let { data } = await ProfileDetails(userId);
+    console.log(data);
     if (!data?.error) {
       setProfileDetail(data?.results?.department);
     }
   };
-
- 
+  console.log(profileDetail);
 
   useEffect(() => {
     // getRequestsLists();
@@ -403,14 +404,14 @@ const HomeDept = () => {
                 <div className="col-md-3 ">
                   <div className="statics_box card-clr-1-3">
                     <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">
-                        My Department
-                      </h6>
+                      <h6 className="mb-0 header-card-text">My Department</h6>
                     </div>
                     <div className="d-flex  mt-4">
-                      <h3 className="card-text-count mb-0 fw-semibold fs-5">
+                      <h3 className="card-text-count mb-0 fw-semibold fs-5 text-capitalize">
                         {/* {homeCount?.totalDepartment || 0} */}
-                        {profileDetail ?( profileDetail?.department_Id?.name): " Not Available"}
+                        {profileDetail?.department_Id
+                          ? profileDetail?.department_Id?.departmentName
+                          : "Admin"}
                       </h3>
                     </div>
                   </div>
@@ -456,62 +457,64 @@ const HomeDept = () => {
               </div>
             </div>
             <div className="position-relative">
-            <p className="table-name mb-2">Templates</p>
-           
-            
-            <div className=" col-12 d-flex align-items-center table-searchbar">
-        <div className="d-flex ">
-          <div className="col-md-3 table-searchbar-imgs me-4">
-            {/* <img
+              <p className="table-name mb-2">Templates</p>
+
+              <div className=" col-12 d-flex align-items-center table-searchbar">
+                <div className="d-flex ">
+                  <div className="col-md-3 table-searchbar-imgs me-2">
+                    {/* <img
               src="/images/dashboard/Plus-icon.png"
               alt=""
               className="p-2 table-searchbar-img"
             /> */}
-            <img
-              src="/images/dashboard/ArrowsDownUp.png"
-              onClick={toggleSortOrder}
-              className="p-2 table-searchbar-img  cursor_pointer"
-            />
-            <img
+                    <img
+                      src="/images/dashboard/ArrowsDownUp.png"
+                      onClick={toggleSortOrder}
+                      className="p-2 table-searchbar-img border-end cursor_pointer"
+                    />
+                    {/* <img
                     src="/images/dashboard/DotsThreeOutlineVertical2.png"
                     alt=""
                     className="p-2 table-searchbar-img border-end "
-                  />
-          </div>
-          <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
-          <p className="m-0 text-nowrap">
+                  /> */}
+                  </div>
+                  <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
+                    <p className="m-0 text-nowrap">
                       {templates?.selectedColumns &&
                         templates?.selectedColumns.length}
                       <span> Selected</span>
                     </p>
-            {showClearButton ? (
-              <p
-                className="hide-selected ms-2 m-0 text-nowrap cursor_pointer "
-                onClick={showAllColumns}
-              >
-                Clear Selection
-              </p>
-            ) : (
-              <p
-                className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
-                onClick={hideSelectedColumns}
-              >
-                Hide Selected
-              </p>
-            )}
-          </div>
-          <div class="search_icon">
-                  <img width={20} src={require("../../assets/logo/search.png")}></img>
+                    {showClearButton ? (
+                      <p
+                        className="hide-selected ms-2 m-0 text-nowrap cursor_pointer "
+                        onClick={showAllColumns}
+                      >
+                        Clear Selection
+                      </p>
+                    ) : (
+                      <p
+                        className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
+                        onClick={hideSelectedColumns}
+                      >
+                        Hide Selected
+                      </p>
+                    )}
                   </div>
-        </div>
-        <form className="d-flex me-2" role="search"></form>
-      </div>
-            <div className="col-12 mdb_table mt-3 ">
-              <div className="table-responsive">
-              <MDBDataTable
+                  <div class="search_icon">
+                    <img
+                      width={20}
+                      src={require("../../assets/logo/search.png")}
+                    ></img>
+                  </div>
+                </div>
+                <form className="d-flex me-2" role="search"></form>
+              </div>
+              <div className="col-12 mdb_table mt-3 ">
+                <div className="table-responsive">
+                  <MDBDataTable
                     bordered
                     displayEntries={false}
-                    entries={5}
+                    entries={10}
                     className="text-nowrap"
                     hover
                     data={{ ...templates, columns: visibleColumns }}
@@ -519,12 +522,10 @@ const HomeDept = () => {
                     paginationLabel={"«»"}
                     sortable={false}
                   />
+                </div>
               </div>
             </div>
-            </div>
             <Document />
-
-          
 
             <div className="footer">
               <div>© 2023 MYOT</div>
@@ -545,7 +546,6 @@ const HomeDept = () => {
 };
 
 export default HomeDept;
-
 
 // disabled={
 //   !departmentInfo?.departmentname ||

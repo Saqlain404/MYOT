@@ -4,6 +4,7 @@ import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import { AdminProfile } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
+import profileImg from "../../assets/logo/high.png";
 import { Button } from "rsuite";
 
 const Profile = () => {
@@ -33,7 +34,9 @@ const Profile = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                  <a className="nav-link fw-bold"> My Profile / View</a>
+                    <a className="nav-link ms-2" href="app-email.html">
+                      My Profile / View
+                    </a>
                   </li>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">
@@ -89,10 +92,17 @@ const Profile = () => {
                   </Link>
                 </div>
                 <div className=" d-flex justify-content-start mb-4">
-                  <img className="w_100_h_100"
+                  {/* <img src="/images/dashboard/AvatarProfile.svg" alt="" /> */}
+                  <img
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                    }}
                     src={
                       (profileData?.profile_Pic && profileData.profile_Pic) ||
-                      "/images/icons/user.jpg"
+                      profileImg
                     }
                   />
                 </div>
@@ -104,7 +114,7 @@ const Profile = () => {
                     <div>
                       <p className="profile-info">Full Name</p>
                       <p className="profile-data text-capitalize">
-                        {profileData?.name || profileData?.companyName}
+                        {profileData?.name}
                       </p>
                     </div>
                     <div>

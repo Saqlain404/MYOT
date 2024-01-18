@@ -154,7 +154,6 @@ const RequestsDept = () => {
   const [listItems, setListItems] = useState([]);
   const [search, setSearch] = useState("");
 
-  
   // const [checkedCheckboxes, setCheckedCheckboxes] = useState({
   //   templateName: false,
   //   requesterName: false,
@@ -271,10 +270,13 @@ const RequestsDept = () => {
               src={list?.templete?.[0]?.manager?.[0]?.profile_Pic}
               alt=""
             />
-            <span className="ms-2 text-capitalize">{list?.templete?.[0]?.manager?.[0]?.name}</span>
+            <span className="ms-2 text-capitalize">
+              {list?.templete?.[0]?.manager?.[0]?.name}
+            </span>
           </>
-        );;
-        returnData.date = (list?.createdAt && moment(list?.createdAt).format("L")) || "NA";
+        );
+        returnData.date =
+          (list?.createdAt && moment(list?.createdAt).format("L")) || "NA";
         returnData.comment = (
           <>
             <div className="text-center">
@@ -528,53 +530,40 @@ const RequestsDept = () => {
                 </div>
               </nav>
             </div>
-            <p className="table-name mb-2">Document Request</p>
-            <div className=" col-12 d-flex align-items-center table-searchbar">
-              <div className="row d-flex  col ">
-                <div className="col-md-3  table-searchbar-imgs">
-                  {/* <img
-                    src="/images/dashboard/Plus-icon.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
-                  /> */}
-                  {/* <img
-                    src="/images/dashboard/FunnelSimple.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
-                  /> */}
+
+            <div className="position-relative">
+              <p className="table-name mb-2">Document Request</p>
+              <div className=" col-12 d-flex align-items-center table-searchbar">
+              <div className="d-flex ">
+                
+                <div className="col-md-3 table-searchbar-imgs">
                   <img
-                    src="/images/dashboard/ArrowsDownUp.png"
-                    alt=""
-                    className="p-2 table-searchbar-img"
                     onClick={toggleSortOrder}
-                  />
-                  <img
-                    src="/images/dashboard/DotsThreeOutlineVertical2.png"
-                    alt=""
-                    className="p-2 table-searchbar-img border-end"
+                    src="/images/dashboard/ArrowsDownUp.png"
+                    className="p-2 table-searchbar-img border-end cursor_pointer"
                   />
                 </div>
-                <div className="col-4 d-flex align-items-center justify-content-around table-searchbar-txt">
-                <p className="m-0 text-nowrap">
-                      {requests?.selectedColumns &&
-                        requests?.selectedColumns.length}
-                      <span> Selected</span>
+                <div className="d-flex ms-2 align-items-center justify-content-around table-searchbar-txt">
+                  <p className="m-0 text-nowrap">
+                    {requests?.selectedColumns &&
+                      requests?.selectedColumns.length}
+                    <span> Selected</span>
+                  </p>
+                  {showClearButton ? (
+                    <p
+                      className="hide-selected m-0 text-nowrap cursor_pointer "
+                      onClick={showAllColumns}
+                    >
+                      Clear Selection
                     </p>
-                    {showClearButton ? (
-                      <p
-                        className="hide-selected ms-2 m-0 text-nowrap cursor_pointer "
-                        onClick={showAllColumns}
-                      >
-                        Clear Selection
-                      </p>
-                    ) : (
-                      <p
-                        className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
-                        onClick={hideSelectedColumns}
-                      >
-                        Hide Selected
-                      </p>
-                    )}
+                  ) : (
+                    <p
+                      className="hide-selected m-0 ms-2 text-nowrap cursor_pointer "
+                      onClick={hideSelectedColumns}
+                    >
+                      Hide Selected
+                    </p>
+                  )}
                 </div>
                 <div class="search_icon">
                   <img width={20} src={require("../../assets/logo/search.png")}></img>
@@ -583,12 +572,12 @@ const RequestsDept = () => {
               <form className="d-flex me-2" role="search"></form>
             </div>
 
-            <div className="col-12 mdb_table mdb3 mt-3 ">
-              <div className="table-responsive">
-              <MDBDataTable
+              <div className="col-12 mdb_table mt-3 ">
+                <div className="table-responsive">
+                  <MDBDataTable
                     bordered
                     displayEntries={false}
-                    entries={5}
+                    entries={10}
                     className="text-nowrap"
                     hover
                     data={{ ...requests, columns: visibleColumns }}
@@ -597,10 +586,9 @@ const RequestsDept = () => {
                     paginationLabel={"«»"}
                     sortable={false}
                   />
+                </div>
               </div>
-              
             </div>
-
             <div className="footer">
               <div>© 2023 MYOT</div>
               <div className="d-flex ">

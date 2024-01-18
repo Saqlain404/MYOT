@@ -95,7 +95,7 @@ const SidebarDepartment = () => {
           </svg>
         </div>
         <div className="col-auto col-mg-3 min-vh-100  mb-4">
-          <p className="th-text">MAIN MENU</p>
+          {/* <p className="th-text">MAIN MENU</p> */}
           <ul className="nav nav-pills flex-column logout-margin">
             <li
               className={`"nav-item text-dark" ${
@@ -343,7 +343,7 @@ const SidebarDepartment = () => {
               </Link>
             </li> */}
 
-            <p className="th-text mt-3">OTHERS</p>
+            {/* <p className="th-text mt-3">OTHERS</p> */}
 
             <li
               className={`"nav-item text-dark" ${
