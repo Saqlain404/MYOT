@@ -484,7 +484,7 @@ const HomeAprv = () => {
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="department-name mb-0 fw-semibold fs-7">
-                        {profileDetail?.department_Id ?( profileDetail?.department_Id?.departmentName): "NA"}
+                        {profileDetail?.department_Id ?( profileDetail?.department_Id?.departmentName): "Admin"}
                       </h3>
                     </div>
                   </div>

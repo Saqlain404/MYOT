@@ -1675,9 +1675,9 @@ td {
   text-align: start;
   color: #000;
   font-family: Nunito;
-  font-size: 13px !important;
+  font-size: 15px !important;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500 !important;
   line-height: normal;
   letter-spacing: -0.05px;
   opacity: 0.9 !important;
@@ -1690,7 +1690,7 @@ td {
   font-family: Nunito;
   font-size: 13px !important;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400 !important;
   line-height: normal;
   letter-spacing: -0.06px;
 }
