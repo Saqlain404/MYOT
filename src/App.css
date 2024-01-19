@@ -1815,7 +1815,7 @@ td {
   border: 1px solid #e0e2e7;
   background: linear-gradient(0deg, #f7f7f8 0%, #f7f7f8 100%), #fff;
 
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.9) !important;
   font-family: Nunito;
   font-size: 14px;
   font-style: normal;
