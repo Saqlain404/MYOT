@@ -11,6 +11,8 @@ import { updateProfilePic, updateUserName } from "../app/slice/userSlice";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import { Button } from "rsuite";
+import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const EditProfileSig = () => {
   const [files, setFiles] = useState([]);
@@ -149,9 +151,9 @@ const EditProfileSig = () => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row rounded">
                   <div className=" d-flex justify-content-start align-items-start flex-column mb-4">
-                    <label className="cursor_pointer" htmlFor="profile_img">
+                    <label className="cursor_pointer my-3" htmlFor="profile_img">
                       Your Profile Picture
-                      <div>
+                      <div className="mt-4">
                         <img
                           src={
                             profileImgUrl
@@ -175,7 +177,16 @@ const EditProfileSig = () => {
                     </label>
                   </div>
                   <div className="row m-0 p-0">
-                    <div className="col-12">
+                    <div className="col-12 mt-4 input_icon_container">
+                      <div
+                        className={
+                          errors?.name
+                            ? "text-danger input_icons2 ms-2"
+                            : "input_icons2 ms-2"
+                        }
+                      >
+                        <FontAwesomeIcon icon={faUser} />
+                      </div>
                       <p className="text-start profile-card-title">Name</p>
                       <input
                         autoComplete="false"
@@ -192,7 +203,16 @@ const EditProfileSig = () => {
                         {...register("name")}
                       />
                     </div>
-                    <div className="col-6 mt-4 position-relative">
+                    <div className="col-6 mt-4 input_icon_container">
+                      <div
+                        className={
+                          errors?.password
+                            ? "text-danger input_icons2 ps-2"
+                            : "input_icons2 ps-2"
+                        }
+                      >
+                        <FontAwesomeIcon icon={faLock} />
+                      </div>
                       <p className="text-start profile-card-title">Password</p>
                       <input
                         autoComplete="false"
@@ -235,7 +255,17 @@ const EditProfileSig = () => {
                         </small>
                       )}
                     </div>
-                    <div className="col-6 mt-4 position-relative">
+                    {/* <div className="col-6 mt-4 position-relative"> */}
+                    <div className="col-6 mt-4 input_icon_container">
+                      <div
+                        className={
+                          errors?.cpassword
+                            ? "text-danger input_icons2 ms-2"
+                            : "input_icons2 ms-2"
+                        }
+                      >
+                        <FontAwesomeIcon icon={faLock} />
+                      </div>
                       <p className="text-start profile-card-title">
                         Confirm Password
                       </p>

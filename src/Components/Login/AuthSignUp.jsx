@@ -6,6 +6,17 @@ import { adminSignUp } from "../../ApiServices/adminHttpServices/adminLoginHttpS
 import Swal from "sweetalert2";
 import classNames from "classnames";
 import { Button, SelectPicker } from "rsuite";
+import {
+  faAddressBook,
+  faBuilding,
+  faEnvelope,
+  faIndustry,
+  faLock,
+  faMapMarker,
+  faMobile,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const AuthSignUp = () => {
   const [passVisible, setPassVisible] = useState(false);
@@ -54,7 +65,7 @@ const AuthSignUp = () => {
           timer: 3000,
         });
         setLoader(false);
-        document.getElementById("resetForm").click()
+        document.getElementById("resetForm").click();
       } else {
         setLoader(false);
       }
@@ -62,9 +73,8 @@ const AuthSignUp = () => {
         setTimeout(false);
       }, [6000]);
     } catch (error) {
-      console.log(error)
-    }
-    finally{
+      console.log(error);
+    } finally {
       setLoader(false);
     }
   };
@@ -78,7 +88,7 @@ const AuthSignUp = () => {
       <div className="container-fluid login-bg">
         <div className="row flex-nowrap">
           <div className="col-5 login-form signup-form  p-4 overflow-scroll">
-            <div className="form-login py-0 position-sticky top-0 bg-white">
+            <div style={{zIndex:'55'}} className="form-login py-0 position-sticky top-0 bg-white">
               <img src="/images/Myot-logo.png" className="logo" />
               <h2 className="mb-3 fs-7 fw-bolder myot">Myot</h2>
               <p className="login-desc pb-4">
@@ -86,7 +96,16 @@ const AuthSignUp = () => {
               </p>
             </div>
             <form className="form-login row" onSubmit={handleSubmit(onSubmit)}>
-              <div className="mb-3 col-6">
+              <div className="mb-3 col-6 px-1 input_icon_container">
+                <div
+                  className={
+                    errors?.companyName
+                      ? "text-danger input_icons"
+                      : "input_icons"
+                  }
+                >
+                  <FontAwesomeIcon icon={faBuilding} />
+                </div>
                 <label for="" className="form-label">
                   Company Name
                 </label>
@@ -107,7 +126,14 @@ const AuthSignUp = () => {
                   </small>
                 )}
               </div>
-              <div className="mb-3 col-6">
+              <div className="mb-3 col-6 px-1 input_icon_container">
+                <div
+                  className={
+                    errors?.email ? "text-danger input_icons" : "input_icons"
+                  }
+                >
+                  <FontAwesomeIcon icon={faEnvelope} />
+                </div>
                 <label for="" className="form-label">
                   Email Address
                 </label>
@@ -136,7 +162,14 @@ const AuthSignUp = () => {
                   </small>
                 )}
               </div>
-              <div className="mb-4 col-6 password_field">
+              <div className="mb-4 col-6 password_field px-1 input_icon_container">
+                <div
+                  className={
+                    errors?.password ? "text-danger input_icons" : "input_icons"
+                  }
+                >
+                  <FontAwesomeIcon icon={faLock} />
+                </div>
                 <label for="" className="form-label">
                   Password
                 </label>
@@ -183,7 +216,16 @@ const AuthSignUp = () => {
                   </small>
                 )}
               </div>
-              <div className="mb-3 col-6">
+              <div className="mb-3 col-6 px-1 input_icon_container">
+                <div
+                  className={
+                    errors?.mobileNumber
+                      ? "text-danger input_icons"
+                      : "input_icons"
+                  }
+                >
+                  <FontAwesomeIcon icon={faMobile} />
+                </div>
                 <label className="form-label" htmlFor="">
                   Mobile Number
                 </label>
@@ -220,13 +262,22 @@ const AuthSignUp = () => {
                     </p>
                   )}
               </div>
-              <div className="mb-3 col-6">
+              <div className="mb-3 col-6 px-1 input_icon_container">
+                <div
+                  className={
+                    errors?.companyType
+                      ? "text-danger input_icons"
+                      : "input_icons"
+                  }
+                >
+                  <FontAwesomeIcon icon={faIndustry} />
+                </div>
                 <label className="form-label" htmlFor="">
                   Company Type
                 </label>
                 <select
                   name="companyType"
-                  className={classNames("form-control", {
+                  className={classNames("form-control ps-5", {
                     "is-invalid": errors.companyType,
                   })}
                   {...register("companyType", { required: true })}
@@ -244,13 +295,22 @@ const AuthSignUp = () => {
                     <p className="errorText mt-1">Company type is required</p>
                   )}
               </div>
-              <div className="mb-3 col-6">
+              <div className="mb-3 col-6 px-1 input_icon_container">
+              <div
+                  className={
+                    errors?.companySize
+                      ? "text-danger input_icons"
+                      : "input_icons"
+                  }
+                >
+                  <FontAwesomeIcon icon={faUser} />
+                </div>
                 <label className="form-label" htmlFor="">
                   Member Size
                 </label>
                 <select
                   name="companySize"
-                  className={classNames("form-control", {
+                  className={classNames("form-control ps-5", {
                     "is-invalid": errors.companySize,
                   })}
                   {...register("companySize", { required: true })}
@@ -271,13 +331,22 @@ const AuthSignUp = () => {
                   )}
               </div>
 
-              <div className="mb-3 col-12">
+              <div className="mb-3 col-12 px-1 input_icon_container">
+              <div
+                  className={
+                    errors?.address
+                      ? "text-danger input_icons"
+                      : "input_icons"
+                  }
+                >
+                  <FontAwesomeIcon icon={faMapMarker} />
+                </div>
                 <label for="" className="form-label">
                   Address
                 </label>
                 <textarea
                   type="text"
-                  className={classNames("form-control text-area", {
+                  className={classNames("form-control text-area ps-5", {
                     "is-invalid": errors.address,
                   })}
                   id="address"
@@ -301,7 +370,9 @@ const AuthSignUp = () => {
                 >
                   SIGN UP
                 </Button>
-                <button id="resetForm" type="reset" className="d-none">reset</button>
+                <button id="resetForm" type="reset" className="d-none">
+                  reset
+                </button>
               </div>
 
               <label className="form-check-label text-dark text-center mt-2 remember-me mb-4">

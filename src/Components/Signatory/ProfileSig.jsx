@@ -118,7 +118,7 @@ const ProfileSig = () => {
                       <div className=" d-flex justify-content-between">
                         <p className="profile-txt m-2">Profile</p>
                         <Link
-                          to={"/Signatory/Edit-profile"}
+                          to={"/Signatory/Profile/Edit-profile"}
                           className="text-decoration-none"
                           state={profileData}
                         >

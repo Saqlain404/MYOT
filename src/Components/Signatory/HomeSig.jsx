@@ -99,11 +99,11 @@ const HomeSig = () => {
   const getTemplatesData = async () => {
     let id = localStorage.getItem("myot_admin_id");
     let { data } = await SignatoryTemplateData(id);
-    // let { data } = await SignatoryTemplateData("6564816c42ca2ce84e2ed3f2");
     const newRows = [];
     if (!data?.error) {
       let values = data?.results?.template;
       console.log(values);
+      values?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
       values?.map((list, index) => {
         const returnData = {};
         returnData.name = list?.templeteName;

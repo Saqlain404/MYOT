@@ -8,6 +8,9 @@ import { setUserData } from "../app/slice/userSlice";
 import Swal from "sweetalert2";
 import classNames from "classnames";
 import { Button, Checkbox } from "rsuite";
+import { faLock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const AuthLogin = () => {
   const [type, setType] = useState("password");
   const [password, setPassword] = useState("");
@@ -96,7 +99,14 @@ const AuthLogin = () => {
               </p>
             </div>
             <form className="form-login" onSubmit={handleSubmit(onSubmit)}>
-              <div className="mb-3">
+              <div className="input_icon_container mb-3 ">
+                <div
+                  className={
+                    errors?.email ? "text-danger input_icons" : "input_icons"
+                  }
+                >
+                  <FontAwesomeIcon icon={faEnvelope} />
+                </div>
                 <label for="" className="form-label">
                   Email Address
                 </label>
@@ -127,7 +137,14 @@ const AuthLogin = () => {
                   </small>
                 )}
               </div>
-              <div className="mb-3 position-relative">
+              <div className="input_icon_container mb-3 ">
+                <div
+                  className={
+                    errors?.password ? "text-danger input_icons" : "input_icons"
+                  }
+                >
+                  <FontAwesomeIcon icon={faLock} />
+                </div>
                 <label for="" className="form-label">
                   Password
                 </label>

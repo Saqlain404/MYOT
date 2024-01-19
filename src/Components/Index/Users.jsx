@@ -269,12 +269,15 @@ const Users = () => {
 
   const docsSubmit = (e) => {
     e.preventDefault();
-    let docs = [];
-
+    let docImg = [];
     documents.forEach((doc) => {
-      docs.push({ documentName: doc.name, document: doc.file });
+      if (doc?.file) {
+        docImg.push(doc.file);
+        docImg.push(doc.name);
+      }
     });
-    console.log(docs);
+
+    console.log(docImg)
   };
 
   const handleDeleteUser = async (id) => {
@@ -345,11 +348,6 @@ const Users = () => {
       return false;
     }
 
-    let docs = [];
-    documents.forEach((doc) => {
-      docs.push({ documentName: doc.name, document: doc.file });
-    });
-
     const formData = new FormData();
     formData.append("name", datas?.name);
     formData.append("email", datas?.email);
@@ -361,8 +359,19 @@ const Users = () => {
     formData.append("gender", datas?.gender);
     formData.append("employId", datas?.employid);
     formData.append("employRole", JSON.stringify(selectedRoles));
-    formData.append("document_Img", docs);
+    // formData.append("document_Img", docs);
     formData.append("profile_Pic", files?.profile_img);
+    formData.append("document", documents?.file);
+    formData.append("documentName", documents?.name);
+
+    let docImg = [];
+    documents.forEach((doc) => {
+      if (doc?.file) {
+        docImg.push(doc.file);
+        docImg.push(doc.name);
+      }
+    });
+    formData.append("document_Img", docImg);
 
     try {
       let { data } = await AddEmployee(id, formData);
@@ -1019,15 +1028,23 @@ const Users = () => {
                                   onChange={(e) =>
                                     handleDocumentNameChange(e, index)
                                   }
-                                  className="col-12 modal-input th-text p-2"
+                                  className="form-control col-12 modal-input td-text  p-2"
                                 />
                               </div>
                             </div>
                           ))}
-                          <button type="button" onClick={addMoreDocument}>
+                          <button
+                            type="button"
+                            className="comment-btn btn-primary"
+                            onClick={addMoreDocument}
+                          >
                             Add More
                           </button>
-                          <button type="button" onClick={docsSubmit}>
+                          <button
+                            type="button"
+                            className="comment-btn btn-primary ms-4"
+                            onClick={docsSubmit}
+                          >
                             Submit
                           </button>
                         </div>

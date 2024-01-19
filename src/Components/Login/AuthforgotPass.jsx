@@ -8,6 +8,8 @@ import {
 import OtpInput from "react-otp-input";
 import { toast } from "react-toastify";
 import { Button } from "rsuite";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const AuthforgotPass = () => {
   const [formToShow, setFormToShow] = useState("EmailForm");
@@ -114,7 +116,16 @@ const AuthforgotPass = () => {
                           </p>
                         </div>
                         <form>
-                          <div className="mb-3">
+                          <div className="mb-3 input_icon_container">
+                            <div
+                              className={
+                                !email
+                                  ? "text-danger input_icons"
+                                  : "input_icons"
+                              }
+                            >
+                              <FontAwesomeIcon icon={faEnvelope} />
+                            </div>
                             <label
                               htmlFor="exampleInputEmail1"
                               className="form-label"
@@ -178,7 +189,7 @@ const AuthforgotPass = () => {
                             type="submit"
                             disabled={otp.length !== 4}
                           >
-                             Verify OTP
+                            Verify OTP
                           </Button>
                         </form>
                         {/* <div className="form-group col-12 text-center">

@@ -4,6 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UpdateNewPassword } from "../../ApiServices/adminHttpServices/adminLoginHttpService";
 import Swal from "sweetalert2";
 import { Button } from "rsuite";
+import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const UpdatePassword = () => {
   const [password, setPassword] = useState("");
@@ -97,7 +99,16 @@ const UpdatePassword = () => {
                       </h2>
                     </div>
                     <form onSubmit={handleUpdatePass}>
-                      <div className="col-12 position-relative">
+                      <div className="col-12 input_icon_container">
+                        <div
+                          className={
+                            !validatePassword(password)
+                              ? "text-danger input_icons input_icons2"
+                              : "input_icons2"
+                          }
+                        >
+                          <FontAwesomeIcon icon={faLock} />
+                        </div>
                         <p className=" d-flex justify-content-start profile-card-title">
                           Password
                         </p>
@@ -138,7 +149,17 @@ const UpdatePassword = () => {
                           </p>
                         )}
                       </div>
-                      <div className="col-12 mt-4 position-relative">
+                      <div className="col-12 mt-4 input_icon_container">
+                        <div
+                          className={
+                            !validatePassword(password) ||
+                            password !== confirmPassword
+                              ? "text-danger input_icons input_icons2"
+                              : "input_icons2"
+                          }
+                        >
+                          <FontAwesomeIcon icon={faLock} />
+                        </div>
                         <p className=" d-flex justify-content-start profile-card-title">
                           Confirm Password
                         </p>

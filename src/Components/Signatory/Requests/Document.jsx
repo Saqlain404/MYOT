@@ -79,25 +79,26 @@ const Document = () => {
     const newRows = [];
     if (!data?.error) {
       let values = data?.results?.list;
-      // console.log(values)
+      console.log(values)
+      values?.sort((a, b) => new Date(b?.createdAt) - new Date(a?.createdAt));
       values?.map((list, index) => {
         const returnData = {};
-        returnData.name = list?.templete_Id?.templeteName;
+        returnData.name = list?.templete[0]?.templeteName;
         returnData.assigned = (
           <>
             <img
               className="w_20_h_20"
-              src={list?.templete_Id?.manager?.profile_Pic}
+              src={list?.templete[0]?.manager[0]?.profile_Pic}
               alt=""
             />
             <span className="ms-2 text-capitalize">
-              {list?.templete_Id?.manager?.name}
+              {list?.templete[0]?.manager[0]?.name}
             </span>
           </>
         );
         returnData.priority = list?.priority;
         returnData.department =
-          list?.templete_Id?.manager?.department_Id?.departmentName || "NA";
+          list?.templete[0]?.manager[0]?.department[0]?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${

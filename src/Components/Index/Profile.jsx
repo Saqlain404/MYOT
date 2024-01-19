@@ -76,7 +76,7 @@ const Profile = () => {
                 <div className=" d-flex justify-content-between">
                   <p className="profile-txt m-2">Profile</p>
                   <Link
-                    to={"/Admin/Edit-profile"}
+                    to={"/Admin/Profile/Edit-profile"}
                     state={profileData}
                     className="text-decoration-none"
                   >

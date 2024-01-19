@@ -161,6 +161,7 @@ export async function getClinicianSessionHistory(formData) {
 }
 
 // TASK API
+
 export async function GetTaskData(id) {
   try {
     const { data } = await adminHttpService.post(
@@ -174,6 +175,80 @@ export async function GetTaskData(id) {
     return { error };
   }
 }
+
+export async function GetTaskList(id) {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/task-list`
+    );
+    // console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function CreateTask(formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/create-task`,
+      formData
+    );
+    // console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function ViewTask(id) {
+  try {
+    const { data } = await adminHttpService.get(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/task-view/${id}`,
+    );
+    // console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function EditTask(id, formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/task-update/${id}`,
+      formData
+    );
+    // console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function UpdateTaskStatus(id, formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/task-update-status/${id}`,
+      formData
+    );
+    // console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 export async function GetApprovedTemplates(id) {
   try {
     const { data } = await adminHttpService.get(

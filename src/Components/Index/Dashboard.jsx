@@ -11,11 +11,13 @@ import {
   DashboardTotalDocument,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import DashboardListing from "./DashboardListing/DashboardListing";
+import DashboardTemplateGraph from "./DashboardListing/DashboardTemplateGraph";
 
 const Dashboard = () => {
   const [dataCount, setDataCount] = useState();
   const [totalDocument, setTotalDocument] = useState([]);
   const [ticketCount, setTicketCount] = useState();
+  const [dashGraphData, setDashGraphData] = useState()
 
   useEffect(() => {
     getDashboardDataCount();
@@ -26,7 +28,9 @@ const Dashboard = () => {
 
   const getDashboardGraph = async () => {
     let { data } = await AdminDashboardGraph();
-    console.log(data);
+    if (!data?.error) {
+      setDashGraphData(data?.results);
+    }
   };
 
   const getDashboardDataCount = async () => {
@@ -207,15 +211,16 @@ const Dashboard = () => {
             </div>
             <div className="col-12">
               <div className="row">
-                <div className="col-md-6 ">
+                <div className="col-md-6 bg-light rounded">
                   <div className="dashboard-card bg-light ">
-                    <div className="d-flex justify-content-around dashboard-card-text">
-                      <p>Templates </p>
-                      <p>Documents </p>
+                    <div className="d-flex dashboard-card-text">
+                      <p className="text-start">Templates </p>
+                      {/* <p>Documents </p>
                       <p>Current Week </p>
-                      <p>Previous Week</p>
+                      <p>Previous Week</p> */}
                     </div>
-                    <div className="d-flex justify-content-around">
+                    <DashboardTemplateGraph dashGraphData={dashGraphData} />
+                    {/* <div className="d-flex justify-content-around">
                       <img
                         src="/images/dashboard/circle-analytics.png"
                         alt=""
@@ -266,7 +271,7 @@ const Dashboard = () => {
                           <td>8.1%</td>
                         </tr>
                       </table>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
@@ -329,7 +334,7 @@ const Dashboard = () => {
                   </div>
                 </div> */}
 
-                <div className="col-lg-3 col-md-6 mb-md-2 ">
+                <div className="col-lg-3 col-md-6 mb-md-2 bg-light rounded">
                   <div className="dashboard-card3 bg-light table-card3 dashboard-card3-text">
                     <p className="text-card">Document Request</p>
 
@@ -345,7 +350,7 @@ const Dashboard = () => {
                                   ?.departmentName.split(" ")[0]
                               }
                             </span>
-                            <span className="fw-bold col-6">
+                            <span className="fw-bold col-6 m-0 p-0">
                               <progress
                                 className="w-100 custom-progress"
                                 id="file"

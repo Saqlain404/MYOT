@@ -119,9 +119,9 @@ const Sidebar = () => {
           {/* <p className="th-text">MAIN MENU</p> */}
           <ul className="nav nav-pills flex-column">
             <li
-              className={`"nav-item text-dark" ${
-                location.pathname === "/Admin/Home" ? "nav_active" : ""
-              } `}
+             className={` "nav-item text-dark" ${
+              location.pathname.match(/^\/Admin\/Home/) ? "nav_active" : ""
+            }`}
             >
               <Link to={"/Admin/Home"} className="text-decoration-none">
                 <a
@@ -373,10 +373,12 @@ const Sidebar = () => {
 
             <li
               className={` "nav-item text-dark" ${
-                location.pathname === "/Admin/My-profile" ? "nav_active" : ""
+                location.pathname.match(/^\/Admin\/Profile/)
+                  ? "nav_active"
+                  : ""
               }`}
             >
-              <Link to={"/Admin/My-profile"} className="text-decoration-none">
+              <Link to={"/Admin/Profile/My-profile"} className="text-decoration-none">
                 <a
                   className="nav-link text-dark fs-5 align-middle "
                   aria-current="page"

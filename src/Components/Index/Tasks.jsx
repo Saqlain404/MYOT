@@ -5,26 +5,26 @@ import Sidebar from "../Sidebar";
 import { Card } from "antd";
 import { Link } from "react-router-dom";
 import {
-  AddCommentForTask,
-  GetTaskData,
-  SearchTask,
+  CreateTask,
+  EditTask,
+  GetTaskList,
   TemplateCount,
-  TemplateDelete,
+  UpdateTaskStatus,
+  ViewTask,
 } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
-import { toast } from "react-toastify";
 import { MDBDataTable } from "mdbreact";
 import Swal from "sweetalert2";
 import { Button, Checkbox } from "rsuite";
+import { useForm } from "react-hook-form";
+import classNames from "classnames";
 
 const Tasks = () => {
   const [showClearButton, setShowClearButton] = useState(false);
-
-  const [search, setSearch] = useState("");
-  const [comment, setComment] = useState("");
   const [totalCount, setTotalCount] = useState("");
-  const [templete_Id, setTempleteId] = useState("");
   const [loader, setLoader] = useState(false);
+  const [taskEditData, setTaskEditData] = useState();
+  const [taskId, setTaskId] = useState();
 
   const [tasks, setTasks] = useState({
     columns: [
@@ -69,6 +69,18 @@ const Tasks = () => {
     selectedColumns: [],
   });
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({ mode: "onChange" });
+
+  const {
+    register: registerForm2,
+    handleSubmit: handleSubmitForm2,
+    formState: { errors: errorsForm2, isValid: isValidForm2 },
+  } = useForm({ mode: "onChange" });
+
   useEffect(() => {
     getTaskData();
     getTotalCount();
@@ -76,19 +88,26 @@ const Tasks = () => {
 
   const getTaskData = async () => {
     let id = localStorage.getItem("myot_admin_id");
-    let { data } = await GetTaskData(id);
+    let { data } = await GetTaskList(id);
 
+    console.log(data);
     const newRows = [];
     if (!data?.error) {
-      let values = data?.results?.templete;
+      let values = data?.results?.taskList;
       console.log(values);
+      values?.sort((a, b) => new moment(b.createdAt) - new moment(a.createdAt));
       values?.map((list, index) => {
         const returnData = {};
-        returnData.name = list?.templeteName;
+        returnData.name = list?.taskName;
+        returnData.assigned = list?.description;
         returnData.date = (
           <>
             <img src="/images/dashboard/CalendarBlank.png" />{" "}
-            <span className="ms-2">{moment(list?.createdAt).format("L")}</span>
+            <span className="ms-2">{moment.utc(list?.date).format("lll")}</span>
+            {/* <span className="ms-2">{moment(list?.date).utc().fromNow()}</span> */}
+            {/* <span className="ms-2">{moment.utc(list?.date).endOf('day').fromNow()}</span> */}
+            {/* <span className="ms-2">{console.log(moment(list?.date))}</span>
+            <span className="ms-2">{moment(list?.date).fromNow()}</span> */}
           </>
         );
         returnData.status = (
@@ -99,13 +118,17 @@ const Tasks = () => {
                 : list?.status === "Approved"
                 ? "text-success"
                 : list?.status === "In Progress"
-                ? "text-primary"
+                ? "text-warning"
                 : list?.status === "Rejected"
                 ? "text-danger"
                 : "text-success"
             }`}
           >
-            {list?.status}
+            {list?.status === "Rejected"
+              ? "Cancelled"
+              : list?.status === "Pending"
+              ? "Upcoming"
+              : list?.status}
           </span>
         );
         returnData.actions = (
@@ -119,27 +142,62 @@ const Tasks = () => {
               <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
-              <li>
+              <li
+                className="cursor_pointer"
+                // onClick={() => changeTaskStatus(list?._id, "Completed")}
+                onClick={() => taskView(list?._id)}
+              >
                 <Link
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop1"
                   class="dropdown-item"
-                  to={`/Admin/Tasks/Comments/${list?._id}`}
                 >
                   <img
+                    src="/images/dashboard/PencilLine.svg"
+                    alt=""
+                    className="ms-2"
+                  />
+                  Edit
+                </Link>
+              </li>
+              <li
+                className="cursor_pointer"
+                onClick={() => changeTaskStatus(list?._id, "Completed")}
+              >
+                <Link class="dropdown-item">
+                  {/* <img
                     src="/images/dashboard/Comment.png"
                     alt=""
                     className="me-2"
-                  />
-                  Comments
+                  /> */}
+                  <span className="text-success fs-10 mx-2">⬤</span>Completed
                 </Link>
               </li>
-              <li>
-                <a class="dropdown-item border-bottom" href="#">
-                  <img
+              <li
+                className="cursor_pointer"
+                onClick={() => changeTaskStatus(list?._id, "Rejected")}
+              >
+                <a class="dropdown-item">
+                  {/* <img
                     src="/images/users/TextAlignLeft.svg"
                     alt=""
                     className="me-2"
-                  />
-                  Wrap Column
+                  /> */}
+                  <span className="text-danger fs-10 mx-2">⬤</span> Cancel
+                </a>
+              </li>
+              <li
+                className="cursor_pointer"
+                onClick={() => changeTaskStatus(list?._id, "In Progress")}
+              >
+                <a class="dropdown-item">
+                  {/* <img
+                    src="/images/users/TextAlignLeft.svg"
+                    alt=""
+                    className="me-2"
+                  /> */}
+                  <span className="text-warning fs-10 mx-2">⬤</span> In Progress
                 </a>
               </li>
               {/* <li>
@@ -161,43 +219,89 @@ const Tasks = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    let creator_Id = localStorage.getItem("myot_admin_id");
-    let { data } = await AddCommentForTask({
-      comment,
-      templete_Id,
-      creator_Id,
-    });
-    console.log(data);
+  const taskView = async (id) => {
+    setTaskId(id);
+    let { data } = await ViewTask(id);
+
     if (!data?.error) {
-      Swal.fire({
-        toast: true,
-        icon: "success",
-        position: "top-end",
-        title: "New comment added",
-        showConfirmButton: false,
-        timerProgressBar: true,
-        timer: 3000,
-      });
-      document.getElementById("close").click();
-      setComment("");
+      setTaskEditData(data?.results?.task);
+      console.log(data?.results?.task);
     }
   };
 
-  const handleDelete = async (id) => {
-    let { data } = await TemplateDelete(id);
-    if (!data?.error) {
+  const changeTaskStatus = async (id, status) => {
+    try {
+      console.log(id, status);
+      let { data } = await UpdateTaskStatus(id, { status });
+      console.log(data);
+      if (!data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "Status Changed",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        getTaskData();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onSubmit = async (datas) => {
+    setLoader(true);
+    let creator_Id = localStorage.getItem("myot_admin_id");
+    console.log(datas);
+    try {
+      let { data } = await CreateTask({
+        taskName: datas?.name,
+        description: datas?.description,
+        date: datas?.time,
+        creator_Id,
+      });
+      console.log(data);
+      if (!data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "Task Added",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        document.getElementById("close").click();
+        document.getElementById("reset").click();
+        getTaskData();
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoader(false);
+    }
+  };
+  const onEdit = async (datas) => {
+    // console.log(datas);
+    let formData = {
+      taskName: datas?.name,
+      date: datas?.time,
+      description: datas?.description,
+    };
+    let { data } = await EditTask(taskId, formData);
+    if (data && !data?.error) {
       Swal.fire({
         toast: true,
         icon: "success",
         position: "top-end",
-        title: "Template deleted",
+        title: "Task Updated",
         showConfirmButton: false,
         timerProgressBar: true,
         timer: 3000,
       });
-      document.getElementById("close").click();
+      document.getElementById("closeEdit").click();
       getTaskData();
     }
   };
@@ -533,29 +637,61 @@ const Tasks = () => {
                     <button
                       type="button"
                       class="btn-close"
+                      id="close"
                       data-bs-dismiss="modal"
                       aria-label="Close"
                     ></button>
                   </div>
                   <div class="modal-body">
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                       <div className="row pt-3">
                         <div className="col-12 mb-3 ">
                           <input
                             type="text"
                             placeholder="Task Name *"
-                            className="col-12 modal-input td-text  p-2"
+                            className={classNames(
+                              "form-control col-12 modal-input td-text  p-2",
+                              {
+                                "is-invalid": errors.name,
+                              }
+                            )}
+                            {...register("name", {
+                              required: "* Name is required",
+                              pattern: {
+                                value: /^(?!\s)[^\d]*(?:\s[^\d]+)*$/,
+                                message:
+                                  "Spaces at the start & numbers are not allowed",
+                              },
+                            })}
                           />
+                          {errors.name && (
+                            <div className="invalid-feedback text-start">
+                              {errors.name.message}
+                            </div>
+                          )}
                         </div>
-                        <div className="col-6">
+                        <div className="col-12">
                           <input
                             type="datetime-local"
-                            placeholder="Select start date and time"
-                            className="col-12 modal-input td-text  p-2"
+                            name="time"
                             min={new Date().toISOString().slice(0, 16)}
+                            className={classNames(
+                              "form-control col-12 modal-input td-text  p-2",
+                              {
+                                "is-invalid": errors.time,
+                              }
+                            )}
+                            {...register("time", {
+                              required: "*Date & Time is required",
+                            })}
                           />
+                          {errors.time && (
+                            <div className="invalid-feedback text-start">
+                              {errors.time.message}
+                            </div>
+                          )}
                         </div>
-                        <div className="col-6">
+                        {/* <div className="col-6">
                           <select
                             className="col-12 modal-input td-text  p-2"
                             name=""
@@ -566,50 +702,60 @@ const Tasks = () => {
                             <option value="Incoming">Incoming</option>
                             <option value="Cancel">Cancel</option>
                           </select>
-                        </div>
-                        <div className="col-12 my-3 ">
+                        </div> */}
+                        <div className="col-12 mb-3 ">
                           <label
                             htmlFor=""
-                            className="mb-3 text-dark th-text fs-6"
+                            className="mt-3 text-dark th-text fs-6"
                           >
                             Task Description
                           </label>
-                          <textarea
+                          <input
                             type="text"
-                            placeholder="Type task description here..."
-                            className="col-12 modal-input td-text p-2 text-area"
-                            name="description"
-                          ></textarea>
-                          {/* <input type="text" placeholder="Phone Number" className="col-6 modal-input th-text p-2"/> */}
+                            placeholder="Task Description *"
+                            className={classNames(
+                              "form-control col-12 modal-input td-text  p-2",
+                              {
+                                "is-invalid": errors.description,
+                              }
+                            )}
+                            {...register("description", {
+                              required: "* Description is required",
+                              pattern: {
+                                value: /^(?!\s)[^\d]*(?:\s[^\d]+)*$/,
+                                message:
+                                  "Spaces at the start & numbers are not allowed",
+                              },
+                            })}
+                          />
+                          {errors.description && (
+                            <div className="invalid-feedback text-start">
+                              {errors.description.message}
+                            </div>
+                          )}
                         </div>
                       </div>
-                      <div className="d-flex justify-content-end mb-3">
+                      <div className="d-flex justify-content-end">
                         <Button
                           style={{ width: "150px" }}
                           loading={loader}
                           appearance="primary"
                           className="btn mb-3 me-2 rounded-2"
                           type="submit"
+                          disabled={!isValid}
                         >
                           Add Tasks
                         </Button>
                         <Button
                           style={{ width: "100px" }}
                           type="reset"
+                          id="reset"
                           className="btn mb-3 mx-2 rounded-2 bg-light text-dark border-0"
                           data-bs-dismiss="modal"
                           aria-label="Close"
                         >
                           Cancel
                         </Button>
-                        <button
-                          type="reset"
-                          class="d-none"
-                          data-bs-dismiss="modal"
-                          id="formReset"
-                        >
-                          reset
-                        </button>
                       </div>
                     </form>
                   </div>
@@ -617,89 +763,6 @@ const Tasks = () => {
               </div>
             </div>
             {/* TASK MODAL END */}
-
-            {/* COMMENT MODAL */}
-
-            <div
-              class="modal fade"
-              id="exampleModal"
-              tabindex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title th-text" id="exampleModalLabel">
-                      Add comment
-                    </h5>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                      id="close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <form className="rounded" onSubmit={handleSubmit}>
-                      <div className="mb-3 border-bottom">
-                        <label className="form-label th-text">
-                          Comment or type
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control border-0 w-100"
-                          placeholder="Type comment..."
-                          value={comment}
-                          onChange={(e) => setComment(e.target.value)}
-                        />
-                      </div>
-
-                      <div className="d-flex justify-content-between">
-                        <div>
-                          <img
-                            src="/images/tasks/assign comments.svg"
-                            alt=""
-                            className="comment-img"
-                          />
-                          <img
-                            src="/images/tasks/mention.svg"
-                            alt=""
-                            className="comment-img"
-                          />
-                          <img
-                            src="/images/tasks/task.svg"
-                            alt=""
-                            className="comment-img"
-                          />
-                          <img
-                            src="/images/tasks/emoji.svg"
-                            alt=""
-                            className="comment-img"
-                          />
-                          <img
-                            src="/images/tasks/attach_attachment.svg"
-                            alt=""
-                            className="comment-img"
-                          />
-                        </div>
-                        <div>
-                          <button
-                            type="submit"
-                            className="comment-btn btn-primary"
-                          >
-                            Comment
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* COMMENT MODAL CLOSE */}
 
             <div className="footer">
               <div>© 2023 MYOT</div>
@@ -710,6 +773,148 @@ const Tasks = () => {
               </div>
             </div>
           </div>
+
+          {/* EDIT MODAL */}
+          <div
+            class="modal fade"
+            id="staticBackdrop1"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="staticBackdropLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">
+                    Edit Task
+                  </h5>
+                  <button
+                    type="reset"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    id="closeEdit"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form onSubmit={handleSubmitForm2(onEdit)}>
+                    <div className="row pt-3">
+                      <div className="col-12 mb-3 ">
+                        <input
+                          type="text"
+                          placeholder="Task Name *"
+                          defaultValue={taskEditData?.taskName}
+                          className={classNames(
+                            "form-control col-12 modal-input td-text  p-2",
+                            {
+                              "is-invalid": errorsForm2.name,
+                            }
+                          )}
+                          {...registerForm2("name", {
+                            required: "* Name is required",
+                            pattern: {
+                              value: /^(?!\s)[^\d]*(?:\s[^\d]+)*$/,
+                              message:
+                                "Spaces at the start & numbers are not allowed",
+                            },
+                          })}
+                        />
+                        {errorsForm2.name && (
+                          <div className="invalid-feedback text-start">
+                            {errorsForm2.name.message}
+                          </div>
+                        )}
+                      </div>
+                      <div className="col-12">
+                        <input
+                          type="datetime-local"
+                          name="time"
+                          defaultValue={
+                            taskEditData?.date
+                              ? taskEditData.date.slice(0, 16)
+                              : new Date().toISOString().slice(0, 16)
+                          }
+                          min={new Date().toISOString().slice(0, 16)}
+                          className={classNames(
+                            "form-control col-12 modal-input td-text  p-2",
+                            {
+                              "is-invalid": errorsForm2.time,
+                            }
+                          )}
+                          {...registerForm2("time", {
+                            required: "*Date & Time is required",
+                          })}
+                        />
+                        {errorsForm2.time && (
+                          <div className="invalid-feedback text-start">
+                            {errorsForm2.time.message}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="col-12 mb-3 ">
+                        <label
+                          htmlFor=""
+                          className="mt-3 text-dark th-text fs-6"
+                        >
+                          Task Description
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Task Description *"
+                          defaultValue={taskEditData?.description}
+                          className={classNames(
+                            "form-control col-12 modal-input td-text  p-2",
+                            {
+                              "is-invalid": errorsForm2.description,
+                            }
+                          )}
+                          {...registerForm2("description", {
+                            required: "* Description is required",
+                            pattern: {
+                              value: /^(?!\s)[^\d]*(?:\s[^\d]+)*$/,
+                              message:
+                                "Spaces at the start & numbers are not allowed",
+                            },
+                          })}
+                        />
+                        {errorsForm2.description && (
+                          <div className="invalid-feedback text-start">
+                            {errorsForm2.description.message}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="d-flex justify-content-end">
+                      <Button
+                        style={{ width: "150px" }}
+                        loading={loader}
+                        appearance="primary"
+                        className="btn mb-3 me-2 rounded-2"
+                        type="submit"
+                        disabled={!isValidForm2}
+                      >
+                        Edit Task
+                      </Button>
+                      <Button
+                        style={{ width: "100px" }}
+                        type="reset"
+                        id="reset"
+                        className="btn mb-3 mx-2 rounded-2 bg-light text-dark border-0"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* EDIT MODAL END */}
           <div className="col">
             <RightSidebar />
           </div>

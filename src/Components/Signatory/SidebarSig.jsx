@@ -25,7 +25,7 @@ const SidebarSig = () => {
         timerProgressBar: true,
         timer: 3000,
       });
-      navigate("/Admin/Login");
+      navigate("/Login");
     }
   };
 
@@ -281,13 +281,13 @@ const SidebarSig = () => {
 
             <li
               className={`nav-item text-dark ${
-                location.pathname === "/Signatory/My-Profile"
+                location.pathname.match(/^\/Signatory\/Profile/)
                   ? "nav_active"
                   : ""
               }`}
             >
               <Link
-                to={"/Signatory/My-Profile"}
+                to={"/Signatory/Profile/My-Profile"}
                 className="text-decoration-none"
               >
                 <a

@@ -171,10 +171,10 @@ function App() {
         <Route path="Admin/Announcements" element={<Announcements />} />
         <Route path="Admin/Analytics" element={<Analytics />} />
         <Route path="Admin/Announcements" element={<Announcements />} />
-        <Route path="Admin/My-profile" element={<Profile />} />
-        <Route path="Admin/Edit-profile" element={<EditProfile />} />
+        <Route path="Admin/Profile/My-profile" element={<Profile />} />
+        <Route path="Admin/Profile/Edit-profile" element={<EditProfile />} />
         <Route path="Admin/Settings" element={<Settings />} />
-        <Route path="Admin/Tasks/Comments/:id" element={<Comments />} />
+        <Route path="Admin/Home/Comments/:id" element={<Comments />} />
         <Route path="Admin/Requests/Comments/:id" element={<DocComments />} />
         <Route path="Admin/Help" element={<Help />} />
         <Route path="Admin/Help/Help-Support" element={<HelpSupport />} />
@@ -259,12 +259,12 @@ function App() {
 
         <Route path="Signatory/Requests" element={<RequestsSig />} />
         <Route path="Signatory/Announcements" element={<AnnouncementsSig />} />
-        <Route path="Signatory/My-profile" element={<ProfileSig />} />
+        <Route path="Signatory/Profile/My-profile" element={<ProfileSig />} />
         <Route
           path="Signatory/Signature-management"
           element={<SignManagement />}
         />
-        <Route path="Signatory/Edit-profile" element={<EditProfileSig />} />
+        <Route path="Signatory/Profile/Edit-profile" element={<EditProfileSig />} />
         <Route path="Signatory/Help" element={<HelpSig />} />
         <Route path="Signatory/Help-Support" element={<HelpSupportSig />} />
         <Route path="Signatory/Contact-us" element={<ContactUsSig />} />

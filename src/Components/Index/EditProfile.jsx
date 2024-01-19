@@ -12,6 +12,8 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { updateProfilePic, updateUserName } from "../app/slice/userSlice";
 import { Button } from "rsuite";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const EditProfile = () => {
   const [files, setFiles] = useState([]);
@@ -32,7 +34,7 @@ const EditProfile = () => {
   } = useForm({
     mode: "onChange",
   });
-  
+
   const onFileSelection = (e, key) => {
     // console.log(e.target.files, key);
     setFiles({ ...files, [key]: e.target.files[0] });
@@ -179,8 +181,7 @@ const EditProfile = () => {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-12 d-flex justify-content-between mb-2">
-                    </div>
+                    <div className="col-12 d-flex justify-content-between mb-2"></div>
                     <div className="col-12 d-flex justify-content-between mb-2">
                       <div className="col-12 m-2">
                         <p className=" d-flex justify-content-start profile-card-title">
@@ -226,7 +227,16 @@ const EditProfile = () => {
                       </div> */}
                     </div>
                     <div className="col-12 d-flex justify-content-between">
-                      <div className="col-6 m-2 position-relative">
+                      <div className="col-6 m-2 input_icon_container">
+                        <div
+                          className={
+                            errors?.password
+                              ? "text-danger input_icons2"
+                              : "input_icons2"
+                          }
+                        >
+                          <FontAwesomeIcon icon={faLock} />
+                        </div>
                         <p className=" d-flex justify-content-start profile-card-title">
                           Password
                         </p>
@@ -274,7 +284,16 @@ const EditProfile = () => {
                           </small>
                         )}
                       </div>
-                      <div className="col-6 m-2 position-relative">
+                      <div className="col-6 m-2 input_icon_container">
+                        <div
+                          className={
+                            errors?.cpassword
+                              ? "text-danger input_icons2"
+                              : "input_icons2"
+                          }
+                        >
+                          <FontAwesomeIcon icon={faLock} />
+                        </div>
                         <p className=" d-flex justify-content-start profile-card-title">
                           Confirm Password
                         </p>
