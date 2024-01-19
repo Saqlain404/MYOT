@@ -133,6 +133,7 @@ import MainHome from "./Components/superAdmin/home";
 import SigDocComments from "./Components/Signatory/Comments/SigDocComments";
 import SettingsDept from "./Components/DepartmentManager/SettingsDept";
 import HelpNSupport from "./Components/superAdmin/Help/HelpNSupport";
+import DocsComments from "./Components/DepartmentManager/DocumentRequests/Comment";
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -199,6 +200,7 @@ function App() {
         <Route path="Department/Departments" element={<DepartmentsDept />} />
         <Route path="Department/Requests" element={<RequestsDept />} />
         <Route path="Department/Chat" element={<ChatboxDept />} />
+        <Route path="Department/Comments/:id" element={<DocsComments />} />
         <Route path="Department/Comments" element={<CommentsDept />} />
         <Route
           path="Department/Announcements"

@@ -6,14 +6,16 @@ import {
   RequestorList,
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
-import { RequestsList } from "../../../ApiServices/departmentHttpService/departmentHttpService";
+import { AddCommentForRequests, RequestsList } from "../../../ApiServices/departmentHttpService/departmentHttpService";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 const Document = () => {
   const [showClearButton, setShowClearButton] = useState(false);
   const [search, setSearch] = useState("");
   const [comment, setComment] = useState("");
   const [document_Id, setDocument_Id] = useState();
+  const [templete_Id, setTemplete_Id] = useState();
 
   const [documents, setDocuments] = useState({
     columns: [
@@ -91,72 +93,67 @@ const Document = () => {
           list?.templete_Id?.manager?.department_Id?.departmentName;
 
         returnData.comment = (
-          <div className="text-center">
-            <img
-              src="/images/dashboard/Comment.png"
-              className="mx-auto d-block"
-            />
-          </div>
-          // <>
-          //   <div className="text-center">
-          //     <a type="button" data-bs-toggle="dropdown" aria-expanded="false">
-
-          //     </a>
-          //     <form
-          //       className="dropdown-menu p-4 border-0 shadow p-3 mb-5 rounded"
-          //       // onSubmit={(e) => handleSubmit(e, list?._id)}
-          //     >
-          //       <div className="mb-3 border-bottom">
-          //         <label className="form-label th-text">Comment or type</label>
-
-          //         <input
-          //           type="text"
-          //           className="form-control border-0"
-          //           // value={comment}
-          //           // onChange={(e) => setComment(e.target.value)}
-          //         />
-          //       </div>
-
-          //       <div className="d-flex justify-content-between">
-          //         <div>
-          //           <img
-          //             src="/images/tasks/assign comments.svg"
-          //             alt=""
-          //             className="comment-img"
-          //           />
-          //           <img
-          //             src="/images/tasks/mention.svg"
-          //             alt=""
-          //             className="comment-img"
-          //           />
-          //           <img
-          //             src="/images/tasks/task.svg"
-          //             alt=""
-          //             className="comment-img"
-          //           />
-          //           <img
-          //             src="/images/tasks/emoji.svg"
-          //             alt=""
-          //             className="comment-img"
-          //           />
-          //           <img
-          //             src="/images/tasks/attach_attachment.svg"
-          //             alt=""
-          //             className="comment-img"
-          //           />
-          //         </div>
-          //         <div>
-          //           <button type="submit" className="comment-btn btn-primary">
-          //             Comment
-          //           </button>
-          //         </div>
-          //       </div>
-          //     </form>
-          //   </div>
-          // </>
+          <>
+            <div className="text-center">
+              <a
+                onClick={() => setTemplete_Id(list?._id)}
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal1"
+              >
+                <img
+                  src="/images/dashboard/Comment.png"
+                  className="mx-auto d-block"
+                />
+              </a>
+            </div>
+          </>
         );
         returnData.actions = (
-          <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
+          <div class="text-center">
+            <a
+              className="cursor_pointer"
+              type=""
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img src="/images/sidebar/ThreeDots.svg" className="w-auto" />
+            </a>
+            <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
+              <li>
+                <Link
+                  class="dropdown-item"
+                  to={`/Department/Comments/${list?._id}`}
+                >
+                  <img
+                    src="/images/dashboard/Comment.png"
+                    alt=""
+                    className="me-2"
+                  />
+                  Comments
+                </Link>
+              </li>
+              <li>
+                <a class="dropdown-item border-bottom" href="#">
+                  <img
+                    src="/images/users/TextAlignLeft.svg"
+                    alt=""
+                    className="me-2"
+                  />
+                  Wrap Column
+                </a>
+              </li>
+              {/* <li
+                className="cursor_pointer"
+                onClick={() => deleteTemplate(list?._id)}
+              >
+                <a class="dropdown-item text-danger">
+                  <img src="/images/users/Trash.svg" alt="" className="me-2" />
+                  Delete Template
+                </a>
+              </li> */}
+            </ul>
+          </div>
         );
 
         newRows.push(returnData);
@@ -234,33 +231,42 @@ const Document = () => {
     setShowClearButton(false);
   };
 
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      let id = localStorage.getItem("myot_admin_id");
-      let formData = {
-        creator_Id: id,
-        document_Id,
-        comment,
-      };
-      console.log(formData);
-      let { data } = await DocumentComment(formData);
-      console.log(data);
-      if (!data?.error) {
-        toast("Comment added successfully", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        document.getElementById("resetComment").click();
-        getRequestorList();
-      }
-    } catch (error) {}
+    if (comment.trim().length <= 0) {
+      Swal.fire({
+        toast: true,
+        icon: "warning",
+        position: "top-end",
+        title: "Please enter a comment",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return false;
+    }
+    let creator_Id = localStorage.getItem("myot_admin_id");
+    console.log(creator_Id, comment, templete_Id);
+    let { data } = await AddCommentForRequests({
+      comment,
+      templete_Id,
+      creator_Id,
+    });
+    if (!data?.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Comment added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      document.getElementById("closeForm").click();
+      setComment("");
+    }
   };
 
   return (
@@ -322,6 +328,87 @@ const Document = () => {
           />
         </div>
       </div>
+      {/* Comment Modal */}
+      <div
+            class="modal fade"
+            id="exampleModal1"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title th-text" id="exampleModalLabel">
+                    Add comment
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    id="closeForm"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form className="rounded" onSubmit={handleSubmit}>
+                    <div className="mb-3 border-bottom">
+                      <label className="form-label th-text">
+                        Comment or type
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control border-0 w-100"
+                        placeholder="Type comment..."
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="d-flex justify-content-between">
+                      <div>
+                        <img
+                          src="/images/tasks/assign comments.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/mention.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/task.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/emoji.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/attach_attachment.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                      </div>
+                      <div>
+                        <button
+                          type="submit"
+                          className="comment-btn btn-primary"
+                        >
+                          Comment
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Comment Modal close */}
     </div>
   );
 };
