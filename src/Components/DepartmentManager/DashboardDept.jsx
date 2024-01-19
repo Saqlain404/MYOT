@@ -3,6 +3,7 @@ import RightSidebar from "../RightSidebar";
 import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
 import { DashboardList, DepartmentDashboardCount, DocumentCount, TicketCount } from "../../ApiServices/departmentHttpService/departmentHttpService";
+import moment from "moment";
 
 const DashboardDept = () => {
   const documents = [
@@ -417,7 +418,7 @@ const DashboardDept = () => {
                         type="checkbox"
                         value=""
                       />
-                      <img src={document?.templete} alt="" className="list-profile-pic mt-1"/>
+                      <img src={document?.templete} alt="" className="list-profile-pic"/>
                       {document?.templeteName}
                     </td>
                     <td className="td-text">
@@ -426,9 +427,26 @@ const DashboardDept = () => {
                     </td>
                     <td className="td-text">
                       <img src="/images/dashboard/CalendarBlank.png" alt="" className="mb-1"/>
-                      {document?.createdAt}
+                      {(document?.createdAt && moment(document?.createdAt).format("L")) || "NA"}
+                      
                     </td>
-                    <td className="td-text">{document?.status}</td>
+                    <td className="td-text">
+                    
+          <span
+            className={`"td-text status" ${
+              document?.status === "Pending"
+                ? "text-info"
+                : document?.status === "Approved"
+                ? "text-warning"
+                : document?.status === "In Progress"
+                ? "text-primary"
+                : "text-success"
+            }`}
+          >
+            {document?.status}
+          </span>
+        
+                    </td>
                     <td className="td-text"><div class="dropdown">
   <a type="" data-bs-toggle="dropdown" aria-expanded="false" href="/">
   <img src="/images/sidebar/ThreeDots.svg" className="w-auto p-3" alt=""/>
