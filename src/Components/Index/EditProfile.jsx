@@ -156,7 +156,7 @@ const EditProfile = () => {
                     {/* <p className="profile-txt m-2">Your Profile Picture</p> */}
                     <label htmlFor="img">Your Profile Picture</label>
                   </div>
-                  <div className=" d-flex justify-content-start mb-4">
+                  <div className=" d-flex justify-content-start my-4">
                     <div className="position-relative">
                       <img
                         src={

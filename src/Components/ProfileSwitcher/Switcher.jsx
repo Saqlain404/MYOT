@@ -1,22 +1,91 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUserData } from "../app/slice/userSlice";
+import Swal from "sweetalert2";
 
 const Switcher = () => {
   const [role, setRole] = useState();
   const [allRoleOfUser, setAllRoleOfUser] = useState([]);
-
   const userData = useSelector(selectUserData);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const pathLocation = location.pathname.split("/");
     setRole(pathLocation[1]);
   }, [location]);
 
-  // console.log(userData);
+  useEffect(() => {
+    let adminRoutes = location.pathname.startsWith("/Admin");
+    let sigRoutes = location.pathname.startsWith("/Signatory");
+    let empRoutes = location.pathname.startsWith("/Employee");
+    let approverRoutes = location.pathname.startsWith("/Approver");
+    let deptRoutes = location.pathname.startsWith("/Department");
+
+    let roles = userData?.employRole;
+    if (!roles.includes("Admin") && adminRoutes) {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: "You may not have permission to access",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 7000,
+      });
+      navigate("/Login");
+    }
+    if (!roles?.includes("Signatory") && sigRoutes) {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: "You may not have permission to access",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 7000,
+      });
+      navigate("/Login");
+    }
+    if (!roles?.includes("Department Manager") && deptRoutes) {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: "You may not have permission to access",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 7000,
+      });
+      navigate("/Login");
+    }
+    if (!roles?.includes("Approver") && approverRoutes) {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: "You may not have permission to access",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 7000,
+      });
+      navigate("/Login");
+    }
+    if (!roles?.includes("Employee") && empRoutes) {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: "You may not have permission to access",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 7000,
+      });
+      navigate("/Login");
+    }
+  }, [location]);
 
   useEffect(() => {
     getUserRole();

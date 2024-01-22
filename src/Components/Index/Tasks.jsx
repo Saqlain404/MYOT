@@ -21,7 +21,6 @@ import classNames from "classnames";
 
 const Tasks = () => {
   const [showClearButton, setShowClearButton] = useState(false);
-  const [totalCount, setTotalCount] = useState("");
   const [loader, setLoader] = useState(false);
   const [taskEditData, setTaskEditData] = useState();
   const [taskId, setTaskId] = useState();
@@ -75,15 +74,14 @@ const Tasks = () => {
     formState: { errors, isValid },
   } = useForm({ mode: "onChange" });
 
-  const {
-    register: registerForm2,
-    handleSubmit: handleSubmitForm2,
-    formState: { errors: errorsForm2, isValid: isValidForm2 },
-  } = useForm({ mode: "onChange" });
+  // const {
+  //   register: registerForm2,
+  //   handleSubmit: handleSubmitForm2,
+  //   formState: { errors: errorsForm2, isValid: isValidForm2},
+  // } = useForm({ mode: "onChange" });
 
   useEffect(() => {
     getTaskData();
-    getTotalCount();
   }, []);
 
   const getTaskData = async () => {
@@ -283,14 +281,16 @@ const Tasks = () => {
       setLoader(false);
     }
   };
-  const onEdit = async (datas) => {
-    // console.log(datas);
+  const onEdit = async (e) => {
+    e.preventDefault();
+    console.log(taskEditData);
     let formData = {
-      taskName: datas?.name,
-      date: datas?.time,
-      description: datas?.description,
+      taskName: taskEditData?.taskName,
+      date: taskEditData?.date,
+      description: taskEditData?.description,
     };
     let { data } = await EditTask(taskId, formData);
+    console.log(data);
     if (data && !data?.error) {
       Swal.fire({
         toast: true,
@@ -304,15 +304,6 @@ const Tasks = () => {
       document.getElementById("closeEdit").click();
       getTaskData();
     }
-  };
-
-  const getTotalCount = async () => {
-    let id = await localStorage.getItem("myot_admin_id");
-    try {
-      let { data } = await TemplateCount(id);
-      console.log(data);
-      setTotalCount(data?.results);
-    } catch (error) {}
   };
 
   const handleCheckboxChange = (field) => {
@@ -429,106 +420,6 @@ const Tasks = () => {
                   </div>
                 </div>
               </nav>
-            </div>
-            <div className="row">
-              <div className="col-12 mb-4">
-                <div className="row statics_part">
-                  <div className="col-lg-3 col-md-6 mb-md-2">
-                    <div className="statics_box card-clr-1-3">
-                      <div className="statics_left">
-                        <h6 className="mb-0 header-card-text">
-                          Total Template Create
-                        </h6>
-                      </div>
-                      <div className="d-flex  mt-4">
-                        <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                          {totalCount?.totalTemplete || 0}
-                        </h3>
-                        {/* <span className="card-insights fw-bold m-auto">
-                          +11.01%
-                          <img
-                            src="/images/dashboard/ArrowRise.png"
-                            alt=""
-                            className="ps-1"
-                          />
-                        </span> */}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-3 col-md-6 mb-md-2">
-                    <div className="statics_box card-clr-2-4">
-                      <div className="statics_left">
-                        <h6 className="mb-0 header-card-text">
-                          Template Awaiting
-                        </h6>
-                      </div>
-                      <div className="d-flex  mt-4">
-                        <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                          {(totalCount?.totalPendingTemplete &&
-                            totalCount?.totalPendingTemplete[0]?.count) ||
-                            0}
-                        </h3>
-                        {/* <span className="card-insights fw-bold m-auto">
-                          +9.15%
-                          <img
-                            src="/images/dashboard/ArrowRise.png"
-                            alt=""
-                            className="ps-1"
-                          />
-                        </span> */}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-3 col-md-6 mb-md-2">
-                    <div className="statics_box card-clr-1-3">
-                      <div className="statics_left">
-                        <h6 className="mb-0 header-card-text">
-                          Recently Approved
-                        </h6>
-                      </div>
-                      <div className="d-flex  mt-4">
-                        <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                          {(totalCount?.totalPendingTemplete &&
-                            totalCount?.totalPendingTemplete[0]?.count) ||
-                            0}
-                        </h3>
-                        {/* <span className="card-insights fw-bold m-auto">
-                          -0.65%
-                          <img
-                            src="/images/dashboard/ArrowFall.png"
-                            alt=""
-                            className="ps-1"
-                          />
-                        </span> */}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-3 col-md-6 mb-md-2">
-                    <div className="statics_box card-clr-2-4">
-                      <div className="statics_left">
-                        <h6 className="mb-0 header-card-text">
-                          Active Signatories
-                        </h6>
-                      </div>
-                      <div className="d-flex mt-4">
-                        <h3 className="card-text-count mb-0 fw-semibold fs-7">
-                          {(totalCount?.totalPendingTemplete &&
-                            totalCount?.totalPendingTemplete[0]?.count) ||
-                            0}
-                        </h3>
-                        {/* <span className="card-insights fw-bold m-auto">
-                          -1.48%
-                          <img
-                            src="/images/dashboard/ArrowFall.png"
-                            alt=""
-                            className="ps-1"
-                          />
-                        </span> */}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <div className="position-relative">
@@ -799,59 +690,38 @@ const Tasks = () => {
                   ></button>
                 </div>
                 <div class="modal-body">
-                  <form onSubmit={handleSubmitForm2(onEdit)}>
+                  <form onSubmit={onEdit}>
                     <div className="row pt-3">
                       <div className="col-12 mb-3 ">
                         <input
                           type="text"
                           placeholder="Task Name *"
-                          defaultValue={taskEditData?.taskName}
-                          className={classNames(
-                            "form-control col-12 modal-input td-text  p-2",
-                            {
-                              "is-invalid": errorsForm2.name,
-                            }
-                          )}
-                          {...registerForm2("name", {
-                            required: "* Name is required",
-                            pattern: {
-                              value: /^(?!\s)[^\d]*(?:\s[^\d]+)*$/,
-                              message:
-                                "Spaces at the start & numbers are not allowed",
-                            },
-                          })}
+                          value={taskEditData?.taskName}
+                          onChange={(e) =>
+                            setTaskEditData({
+                              ...taskEditData,
+                              taskName: e.target.value,
+                            })
+                          }
+                          className="form-control col-12 modal-input td-text  p-2"
                         />
-                        {errorsForm2.name && (
-                          <div className="invalid-feedback text-start">
-                            {errorsForm2.name.message}
-                          </div>
-                        )}
                       </div>
                       <div className="col-12">
                         <input
                           type="datetime-local"
                           name="time"
-                          defaultValue={
-                            taskEditData?.date
-                              ? taskEditData.date.slice(0, 16)
-                              : new Date().toISOString().slice(0, 16)
-                          }
+                          value={moment
+                            .utc(`${taskEditData?.date}`)
+                            .format("YYYY-MM-DDTHH:mm:ss")}
                           min={new Date().toISOString().slice(0, 16)}
-                          className={classNames(
-                            "form-control col-12 modal-input td-text  p-2",
-                            {
-                              "is-invalid": errorsForm2.time,
-                            }
-                          )}
-                          {...registerForm2("time", {
-                            required: "*Date & Time is required",
-                          })}
+                          onChange={(e) =>
+                            setTaskEditData({
+                              ...taskEditData,
+                              date: e.target.value,
+                            })
+                          }
+                          className="form-control col-12 modal-input td-text  p-2"
                         />
-                        {errorsForm2.time && (
-                          <div className="invalid-feedback text-start">
-                            {errorsForm2.time.message}
-                          </div>
-                        )}
                       </div>
 
                       <div className="col-12 mb-3 ">
@@ -864,27 +734,15 @@ const Tasks = () => {
                         <input
                           type="text"
                           placeholder="Task Description *"
-                          defaultValue={taskEditData?.description}
-                          className={classNames(
-                            "form-control col-12 modal-input td-text  p-2",
-                            {
-                              "is-invalid": errorsForm2.description,
-                            }
-                          )}
-                          {...registerForm2("description", {
-                            required: "* Description is required",
-                            pattern: {
-                              value: /^(?!\s)[^\d]*(?:\s[^\d]+)*$/,
-                              message:
-                                "Spaces at the start & numbers are not allowed",
-                            },
-                          })}
+                          value={taskEditData?.description}
+                          onChange={(e) =>
+                            setTaskEditData({
+                              ...taskEditData,
+                              description: e.target.value,
+                            })
+                          }
+                          className="form-control col-12 modal-input td-text  p-2"
                         />
-                        {errorsForm2.description && (
-                          <div className="invalid-feedback text-start">
-                            {errorsForm2.description.message}
-                          </div>
-                        )}
                       </div>
                     </div>
                     <div className="d-flex justify-content-end">
@@ -894,7 +752,7 @@ const Tasks = () => {
                         appearance="primary"
                         className="btn mb-3 me-2 rounded-2"
                         type="submit"
-                        disabled={!isValidForm2}
+                        // disabled={!isValidForm2}
                       >
                         Edit Task
                       </Button>

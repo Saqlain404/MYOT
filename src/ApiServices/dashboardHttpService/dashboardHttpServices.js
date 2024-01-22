@@ -175,6 +175,19 @@ export async function GetTaskData(id) {
     return { error };
   }
 }
+export async function GetAllTemplateList(id) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/template-list/${id}`
+    );
+    // console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
 
 export async function GetTaskList(id) {
   try {

@@ -88,7 +88,10 @@ const AuthSignUp = () => {
       <div className="container-fluid login-bg">
         <div className="row flex-nowrap">
           <div className="col-5 login-form signup-form  p-4 overflow-scroll">
-            <div style={{zIndex:'55'}} className="form-login py-0 position-sticky top-0 bg-white">
+            <div
+              style={{ zIndex: "55" }}
+              className="form-login py-0 position-sticky top-0 bg-white"
+            >
               <img src="/images/Myot-logo.png" className="logo" />
               <h2 className="mb-3 fs-7 fw-bolder myot">Myot</h2>
               <p className="login-desc pb-4">
@@ -118,11 +121,21 @@ const AuthSignUp = () => {
                   name="companyName"
                   placeholder="Enter Your Company Name"
                   autoComplete="off"
-                  {...register("companyName", { required: true })}
+                  {...register("companyName", {
+                    required: "Company Name is required",
+                    minLength: {
+                      value: 5,
+                      message: "Company Name must be at least 5 characters",
+                    },
+                    maxLength: {
+                      value: 30,
+                      message: "Company Name cannot exceed 30 characters",
+                    },
+                  })}
                 />
                 {errors.companyName && (
                   <small className="errorText mt-1 ">
-                    Company name is required
+                    {errors.companyName?.message}
                   </small>
                 )}
               </div>
@@ -296,7 +309,7 @@ const AuthSignUp = () => {
                   )}
               </div>
               <div className="mb-3 col-6 px-1 input_icon_container">
-              <div
+                <div
                   className={
                     errors?.companySize
                       ? "text-danger input_icons"
@@ -332,11 +345,9 @@ const AuthSignUp = () => {
               </div>
 
               <div className="mb-3 col-12 px-1 input_icon_container">
-              <div
+                <div
                   className={
-                    errors?.address
-                      ? "text-danger input_icons"
-                      : "input_icons"
+                    errors?.address ? "text-danger input_icons" : "input_icons"
                   }
                 >
                   <FontAwesomeIcon icon={faMapMarker} />
