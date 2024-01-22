@@ -14,6 +14,7 @@ import {
 import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import { Checkbox } from "antd";
+import DashboardDocumentGraph from "./DashboardDocumentGraph";
 
 const EmployeeDash = () => {
   const navigate = useNavigate();
@@ -547,11 +548,12 @@ const EmployeeDash = () => {
                 <div className="col-md-6 ">
                   <div className="dashboard-card bg-light ">
                     <div className="d-flex  dashboard-card-text">
-                      <p className="fs-6 fw-normal">Documents </p>
+                      <p className="fs-6 fw-normal">Templates </p>
                       {/* <p>Current Week </p> */}
                       {/* <p>Previous Week</p> */}
                     </div>
-                    <div className="d-flex justify-content-around">
+                      <DashboardDocumentGraph docCount={docCount} />
+                    {/* <div className="d-flex justify-content-around">
                       <img
                         src="/images/dashboard/circle-analytics.png"
                         alt=""
@@ -602,7 +604,7 @@ const EmployeeDash = () => {
                           <td>{(docCount?.rejectedPresent)?.toFixed(2)}%</td>
                         </tr>
                       </table>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
