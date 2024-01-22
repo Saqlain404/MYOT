@@ -1,29 +1,183 @@
 import React from "react";
 import RightSidebar from "../RightSidebar";
-import Sidebar from "../Sidebar";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
 import { useState } from "react";
-import { CommentsList } from "../../ApiServices/departmentHttpService/departmentHttpService";
+import { AddComment, CommentDelete,  CommentLists, } from "../../ApiServices/departmentHttpService/departmentHttpService";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../app/slice/userSlice";
+import Swal from "sweetalert2";
+import {  TemplateReply } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import moment from "moment";
+import { toast } from "react-toastify";
 
 const CommentsDept = () => {
  
   const [commentList, setCommentList] = useState([]);
+  const [reply, setReply] = useState(false);
+  const [replyMsg, setReplyMsg] = useState("");
+  const [comment, setComment] = useState("");
+  const userData = useSelector(selectUserData);
 
-  const getCommentList = async () => {
-    const {data} = await CommentsList();
-    if (!data?.error) {
-      setCommentList(data?.results?.commentDetailsList);
+  const { id } = useParams();
+
+  useEffect(() => {
+    getCommentLists();
+  }, []);
+
+  const getCommentLists = async () => {
+    try {
+      let { data } = await CommentLists(id);
+      if (!data?.error) {
+        setCommentList(data?.results?.commentDetails);
+        console.log(data?.results?.commentDetails);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  console.log(commentList);
+  const toggleReply = (index) => {
+    setReply((prevState) => ({
+      ...Object.fromEntries(
+        Object.entries(prevState).map(([key]) => [key, false])
+      ),
+      [index]: !prevState[index],
+    }));
+  };
 
-  useEffect(() => {
-    getCommentList()
-  }, [])
-  
+  const handleDeleteComment = async (e, id) => {
+    e.preventDefault();
+    try {
+      let { data } = await CommentDelete(id);
+      if (data && !data.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "Comment deleted successfully",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        getCommentLists();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmit1 = async (e) => {
+    e.preventDefault();
+    if (comment.trim().length <= 0) {
+      Swal.fire({
+        toast: true,
+        icon: "warning",
+        position: "top-end",
+        title: "Please enter a comment",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return false;
+    }
+    let creator_Id = localStorage.getItem("myot_admin_id");
+    // console.log(creator_Id, comment, templete_Id);
+    let { data } = await AddComment({
+      comment,
+      templete_Id: id,
+      creator_Id,
+    });
+    if (!data?.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Comment added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      // getCommentLists();
+      setComment("");
+    }
+  };
+
+  const addComment = async (e) => {
+    e.preventDefault();
+    if (comment.trim().length <= 0) {
+      Swal.fire({
+        toast: true,
+        icon: "warning",
+        position: "top-end",
+        title: "Please enter comment",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return false;
+    }
+    let creator_Id = localStorage.getItem("myot_admin_id");
+    let { data } = await AddComment({
+      comment,
+      templete_Id: id,
+      creator_Id,
+    });
+    console.log(data);
+    if (!data?.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "New comment added",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      getCommentLists();
+      setComment("");
+    }
+  };
+
+  const handleSubmit = async (e, comment_Id) => {
+    e.preventDefault();
+    if (replyMsg.trim().length <= 0) {
+      Swal.fire({
+        toast: true,
+        icon: "warning",
+        position: "top-end",
+        title: "Please enter reply",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return false;
+    }
+    let creator_Id = localStorage.getItem("myot_admin_id");
+    let { data } = await TemplateReply({
+      text: replyMsg,
+      comment_Id,
+      creator_Id,
+    });
+    console.log(data);
+    if (data && !data?.error) {
+      toast("Reply added", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setReplyMsg("");
+      setReply(false);
+      // document.getElementById("reset").click();
+      getCommentLists();
+    }
+  };
 
   return (
     <>
@@ -37,9 +191,7 @@ const CommentsDept = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link ms-2" href="app-email.html">
-                      Templates /
-                    </a>
+                    <a className="nav-link fw-bold"> Comments</a>
                   </li>
                 </ul>
                 <div className="col-7 d-flex align-items-center  justify-content-end">
@@ -58,11 +210,11 @@ const CommentsDept = () => {
                       className="ms-4 "
                     />
                     <Link to={"/Admin/Chat"}>
-                    <img
-                      src="/images/dashboard/chat-left-dots-fill.png"
-                      alt=""
-                      className="ms-4"
-                    />
+                      <img
+                        src="/images/dashboard/chat-left-dots-fill.png"
+                        alt=""
+                        className="ms-4"
+                      />
                     </Link>
                     <img
                       src="/images/dashboard/round-notifications.png"
@@ -72,109 +224,174 @@ const CommentsDept = () => {
                   </div>
                 </div>
               </nav>
-            
             </div>
-            {commentList?.map((comments, index) => (
+
             <div className="container px-4 text-center min-vh-100 ">
-            <p className="templates-leave mt-3  d-flex ">
-                  Comments
-                </p>
-
-                  <div className="bg-white rounded p-2 mb-3">
-                <div className="d-flex  justify-content-between">
-                    <div className="d-flex justify-content-between">
-                      <img src={comments?.creator_Id?.profile_Pic} alt="" className="m-2 table-profile-pic"/>
-                      <p className="commenter-name m-auto">{comments?.creator_Id?.name}</p>
-                      <p className="comment-time m-auto">{comments?.createdAt}</p>
-                    </div>
-                    <div>
-                    <img src="/images/dashboard/reply-arrow.svg" alt="" className="m-2"/>
-                    <a href="/" className="ticket-link mt-3 me-1 text-decoration-none">Reply</a>
-                    </div>
-                   
-                  </div>
-                  <p className="comment-txt p-2 mb-0">{comments?.comment}</p>
-                  </div>
-                  
-
-                  <div className="border-start ps-4">
-                  <div className="bg-white rounded p-2 mb-3">
-                <div className="d-flex  justify-content-between">
-                    <div className="d-flex justify-content-between">
-                      <img src="/images/dashboard/Avatar.png" alt="" className="m-2"/>
-                      <p className="commenter-name m-auto">amyrobson</p>
-                      <p className="comment-time m-auto">1 month ago</p>
-                    </div>
-                    <div>
-                    <img src="/images/dashboard/reply-arrow.svg" alt="" className="m-2"/>
-                    <a href="/" className="ticket-link mt-3 me-1 text-decoration-none">Reply</a>
-                    </div>
-                   
-                  </div>
-                  <p className="comment-txt p-2 mb-0">Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You’ve nailed the design and the responsiveness at various breakpoints works really well.</p>
-                  </div>
-                  <div className="bg-white rounded p-2 mb-3">
-                <div className="d-flex  justify-content-between">
-                    <div className="d-flex justify-content-between">
-                      <img src="/images/dashboard/Avatar2.png" alt="" className="comment-avatar m-auto mt-2"/>
-                      <p className="comment-reply p-2">Impressive! Though it seems the drag feature could be improved. But overall it looks really well.</p>
-                     <button className="reply-btn">Reply</button>
-                    </div>
-                    
-                   
-                  </div>
-                  
-                  </div>
-
-                  <div className="bg-white rounded p-2 mb-3">
-                <div className="d-flex  justify-content-between">
-                    <div className="d-flex justify-content-between">
-                      <img src="/images/dashboard/Avatar.png" alt="" className="m-2"/>
-                      <div className="d-flex">
-                      <p className="commenter-name m-auto">amyrobson</p>
-                      <button className="you-btn ms-1">You</button>
+              <p className="templates-leave mt-3  d-flex ">Comments</p>
+              {commentList && commentList?.length > 0 ? (
+                commentList?.map((comments, index) => (
+                  <>
+                    <div className="bg-white rounded p-2 mb-3">
+                      <div className="d-flex  justify-content-between">
+                        <div className="d-flex justify-content-between">
+                          <img
+                            src={
+                              comments?.creator_Id?.profile_Pic
+                                ? comments?.creator_Id?.profile_Pic
+                                : "/images/dashboard/Avatar.png"
+                            }
+                            alt=""
+                            className="m-2 w_20_h_20"
+                          />
+                          <p className="commenter-name m-auto text-capitalize">
+                            {comments?.creator_Id?.name}
+                          </p>
+                          <p className="comment-time m-auto">
+                            {moment(comments?.createdAt).calendar()}
+                          </p>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-end">
+                          <div
+                            className="cursor_pointer d-flex align-items-center"
+                            onClick={() => toggleReply(index)}
+                          >
+                            {reply[index] ? (
+                              <Link className="ticket-link me-1 text-decoration-none">
+                                Cancel
+                              </Link>
+                            ) : (
+                              <>
+                                <img
+                                  src="/images/dashboard/reply-arrow.svg"
+                                  className="me-1"
+                                />
+                                <Link className="ticket-link me-1 text-decoration-none">
+                                  Reply
+                                </Link>
+                              </>
+                            )}
+                          </div>
+                          <div
+                            onClick={(e) =>
+                              handleDeleteComment(e, comments?._id)
+                            }
+                            className="ms-2"
+                          >
+                            <img
+                              src="/images/icons/delete_icon.png"
+                              className="me-1"
+                            />
+                            <Link className="ticket-link me-1 text-decoration-none text-danger">
+                              Delete
+                            </Link>
+                          </div>
+                        </div>
                       </div>
-                      <p className="comment-time m-auto">2 days ago</p>
-                    </div>
-                    <div className="d-flex">
-                      <div>
-                    <img src="/images/dashboard/Trash.svg" alt="" className="m-2"/>
-                    <a href="/" className="delete-comment-btn mt-3 me-1 text-decoration-none">Delete</a>
-                    </div>
-                    <div>
-                    <img src="/images/dashboard/PencilLine.svg" alt="" className="m-2"/>
-                    <a href="/" className="ticket-link mt-3 me-1 text-decoration-none">Edit</a>
-                    </div>
-                    </div>
-                    
-                   
-                  </div>
-                  <p className="comment-write p-2 m-2">Impressive! Though it seems the drag feature could be improved.</p>
-                  <div className="d-flex justify-content-end m-2">
-                  <button className="update-comment-btn">Update</button>
-                  </div>
-                  </div>
-                  </div>
+                      <p className="comment-txt p-2 mb-0">
+                        {comments?.[0]?.comment}
+                      </p>
 
-                  <div className="bg-white rounded p-2 mb-3">
+                      {comments?.replyText && (
+                        <div
+                          style={{ borderLeft: "2px solid #f8f9fa" }}
+                          className="text-start ms-5"
+                        >
+                          {comments?.replyText.map((reply) => (
+                            <div className="bg-white p-2 mb-3">
+                              <div className="d-flex align-items-center justify-content-between">
+                                <div>
+                                  <div className="d-flex align-items-center">
+                                    <img
+                                      className="w_20_h_20 me-1"
+                                      src={reply?.creator_Id?.profile_Pic}
+                                      alt=""
+                                    />
+                                    <p className="commenter-name my-auto text-capitalize">
+                                      {reply?.creator_Id?.name}
+                                    </p>
+                                    {/* <p className="comment-time m-auto">
+                                      {moment(reply?.createdAt).calendar()}
+                                    </p> */}
+                                  </div>
+                                  <p className="comment-txt p-2 mb-0">
+                                    {reply?.text}
+                                  </p>
+                                </div>
+                                <div></div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {reply[index] && (
+                        <div className="bg-white rounded p-2 my-3 task_reply">
+                          <form
+                            onSubmit={(e) => handleSubmit(e, comments?._id)}
+                          >
+                            <div className="d-flex justify-content-between">
+                              <img
+                                src={userData?.profile_Pic}
+                                alt=""
+                                className="comment-avatar m-auto mt-2 w_20_h_20"
+                              />
+                              <textarea
+                                type="text"
+                                className="p-2 w-100 mx-2 comment-txt"
+                                name="reply"
+                                placeholder="Reply..."
+                                defaultValue=""
+                                onChange={(e) => setReplyMsg(e.target.value)}
+                              />
+                              <button type="submit" className="reply-btn">
+                                Reply
+                              </button>
+                              <button
+                                type="reset"
+                                id="reset"
+                                className="d-none"
+                              >
+                                reset
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                ))
+              ) : (
+                <>
+                  <h3 className="bg-white rounded p-2 py-4 mb-3">
+                    No Comments Found
+                  </h3>
+                </>
+              )}
+
+              <div className="bg-white rounded p-2 mb-3">
                 <div className="d-flex  justify-content-between">
-                    <div className="d-flex justify-content-between">
-                      <img src="/images/dashboard/Avatar2.png" alt="" className="comment-avatar m-auto mt-2"/>
-                     <textarea name="comment" placeholder="Add a comment…" id="" cols="30" rows="10" className="comment-inbox m-2 p-2"></textarea>
-                     <button className="reply-btn">Send</button>
-                    </div>
-                    
-                   
+                  <div className="d-flex justify-content-between">
+                    <img
+                      src={userData?.profile_Pic}
+                      alt=""
+                      className="comment-avatar m-auto mt-2 w_50_h_50"
+                    />
+                    <textarea
+                      name="comment"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      placeholder="Add a comment…"
+                      id=""
+                      className="comment-inbox m-2 p-2"
+                    ></textarea>
+                    <button onClick={handleSubmit1} className="reply-btn">
+                      Send
+                    </button>
                   </div>
-                  
-                  </div>
-                  
+                </div>
+              </div>
+            </div>
 
-  
-</div>
-))}
-
-<div className="footer bg-white">
+            <div className="footer bg-white">
               <div>© 2023 MYOT</div>
               <div className="d-flex ">
                 <p className="ms-3">About</p>
@@ -182,7 +399,7 @@ const CommentsDept = () => {
                 <p className="ms-3">Contact Us</p>
               </div>
             </div>
-        </div>
+          </div>
         
         <div className="col">
             <RightSidebar />

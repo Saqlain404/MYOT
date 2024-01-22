@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import SidebarDepartment from "./SidebarDepartment";
 import { DashboardList, DepartmentDashboardCount, DocumentCount, TicketCount } from "../../ApiServices/departmentHttpService/departmentHttpService";
 import moment from "moment";
+import DashboardTemplateGraph from "./Dashboard/DashboardTemplateGraph";
 
 const DashboardDept = () => {
   const documents = [
@@ -79,8 +80,16 @@ const DashboardDept = () => {
   const [ticketCount, setTicketCount] = useState();
   const [search, setSearch] = useState("");
   const [listItems, setListItems] = useState();
+  const [dashGraphData, setDashGraphData] = useState()
   
   const id = localStorage.getItem("user_id");
+
+  const getDashboardGraph = async () => {
+    let { data } = await DocumentCount(id);
+    if (!data?.error) {
+      setDashGraphData(data?.results);
+    }
+  };
 
   const getDepartmentCount = async () => {
     let { data } = await DepartmentDashboardCount(id);
@@ -116,6 +125,7 @@ const DashboardDept = () => {
     getDashboardLists();
     getTicketCount();
     getDocumentCount();
+    getDashboardGraph();
   }, []);
 
   return (
@@ -230,42 +240,66 @@ const DashboardDept = () => {
             <div className="col-12">
               <div className="row">
                 <div className="col-md-6 ">
-                  <div className="dashboard-card bg-light ">
-                    <div className="d-flex justify-content-around dashboard-card-text">
-                      <p>Templates </p>
-                      <p>Documents </p>
+                <div className="dashboard-card bg-light ">
+                    <div className="d-flex dashboard-card-text">
+                      <p className="text-start">Templates </p>
+                      {/* <p>Documents </p>
                       <p>Current Week </p>
-                      <p>Previous Week</p>
+                      <p>Previous Week</p> */}
                     </div>
-                    <div className="d-flex justify-content-around">
+                    <DashboardTemplateGraph dashGraphData={dashGraphData}/>
+                    {/* <div className="d-flex justify-content-around">
                       <img
                         src="/images/dashboard/circle-analytics.png"
                         alt=""
-                        className="m-4"
+                        className="m-4 dashboard-card-img"
                       />
                       <table className="ms-2 dashboard-card-text">
                         <tr>
-                          <td style={{paddingRight: 70}} className="text-nowrap">
-                            <img src="/images/dashboard/active-dot.svg" alt="" /> Active</td>
-                          <td>{documentCount?.completePresent} %</td>
+                          <td
+                            style={{ paddingRight: 70 }}
+                            className="text-nowrap"
+                          >
+                            <img
+                              src="/images/dashboard/active-dot.svg"
+                              alt=""
+                            />{" "}
+                            Active
+                          </td>
+                          <td>38.6%</td>
                         </tr>
                         <tr>
                           <td>
-                          <img src="/images/dashboard/under-review-dot.svg" alt="" />Under Review</td>
-                          <td>{documentCount?.pendingPresent} %</td>
+                            <img
+                              src="/images/dashboard/under-review-dot.svg"
+                              alt=""
+                            />
+                            Under Review
+                          </td>
+                          <td>22.5%</td>
                         </tr>
                         <tr>
                           <td>
-                          <img src="/images/dashboard/approve-dot.svg" alt="" />Approved</td>
-                          <td>{documentCount?.approvedPresent} %</td>
+                            <img
+                              src="/images/dashboard/approve-dot.svg"
+                              alt=""
+                            />
+                            Approved
+                          </td>
+                          <td>30.8%</td>
                         </tr>
                         <tr>
                           <td>
-                          <img src="/images/dashboard/rejected-dot.svg" alt="" />Rejected</td>
-                          <td>{documentCount?.rejectedPresent} %</td>
+                            <img
+                              src="/images/dashboard/rejected-dot.svg"
+                              alt=""
+                            />
+                            Rejected
+                          </td>
+                          <td>8.1%</td>
                         </tr>
                       </table>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
