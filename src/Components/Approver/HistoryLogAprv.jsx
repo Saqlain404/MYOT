@@ -593,7 +593,7 @@ const HistoryLogAprv = () => {
                           data-bs-dismiss="modal"
                           disabled={!comment || /^\s+$/.test(comment)}
                         >
-                          Comment
+                          Comment 
                         </Button>
                       </div>
                     </div>

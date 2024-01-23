@@ -16,39 +16,52 @@ const EmplHelpSupport = () => {
   const [ticketList, setTicketList] = useState();
   const [id, setId] = useState();
   const [selectedDropdown, setSelectedDropdown] = useState("All");
+  const [requestType, setRequestType] = useState("");
+  const [message, setMessage] = useState("");
+  const [files, setFiles] = useState([]);
+  const [selectedTicketIndex, setSelectedTicketIndex] = useState(null);
 
   const ids = localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id")
 
   // Add Ticket
-  const [contactData, setContactData] = useState({
-    email: "",
-    ticketType: "",
-    ticketIssue: "",
-  });
-  const handleInput = (event) => {
-    setContactData({ ...contactData, [event.target.name]: event.target.value });
+  // const [contactData, setContactData] = useState({
+  //   email: "",
+  //   ticketType: "",
+  //   ticketIssue: "",
+  // });
+ 
+
+  const handleFileSelection = async (e, key) => {
+    setFiles({ ...files, [key]: e.target.files[0] });
+  };
+
+  const handleAttachmentClick = (index) => {
+    setSelectedTicketIndex(index);
+    console.log(ticketList);
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    const data = {
-      email: contactData.email,
-      ticketType: contactData.ticketType,
-      ticketIssue: contactData.ticketIssue,
-    };
-    const response = await CreateEmplyTicket({
-      creator_Id: localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id"),
-      email: data.email,
-      ticketType: data.ticketType,
-      ticketIssue: data.ticketIssue,
-    });
-    setContactData({
-      email: "",
-      ticketType: "",
-      ticketIssue: "",
-    });
-    AllData()
+    let id = localStorage.getItem("myot_admin_id");
+    let formData = new FormData();
+    // formData.append("email", email);
+    formData.append("ticketType", requestType);
+    formData.append("ticketIssue", message);
+    formData.append("creator_Id", id);
+    formData.append("document", files?.attachment);
+
+    const response = await CreateEmplyTicket(formData);
+    if (!response?.error) {
+      event.target.reset()
+      setRequestType("");
+      setFiles([]);
+      setMessage("");
+      // document.getElementById("resetForm").click();
+      // document.getElementById("closeTicketModal").click();
+      AllData();
+    }
   };
+
 
   const OnGoingList = async () => {
     let data = await OnGoingListEmply(ids);
@@ -279,6 +292,7 @@ const EmplHelpSupport = () => {
                             ></button>
                           </div>
 
+                         
                           <form action="" onSubmit={onSubmit}>
                             <div className="row p-3">
                               <div className="col-12 mb-3 d-flex">
@@ -293,46 +307,62 @@ const EmplHelpSupport = () => {
                                   />
                                 </div> */}
                                 <div className="col-12 ps-2">
-                                <p className="d-flex ms-1" id="exampleModalLabel">
-                                Title
-                              </p>
+                                  <p
+                                    className="d-flex ms-1"
+                                    id="exampleModalLabel"
+                                  >
+                                    Title
+                                  </p>
                                   <input
-                                    type=""
+                                    type="text"
                                     placeholder="Title *"
-                                    className="col-12 modal-input td-text  p-2"
-                                    name="ticketType"
-                                    value={contactData.ticketType}
-                                    onChange={handleInput}
+                                    className="col-12 modal-input td-text w-100 p-2"
+                                    name="request type"
+                                    value={requestType}
+                                    onChange={(e) =>
+                                      setRequestType(e.target.value)
+                                    }
                                   />
                                 </div>
                               </div>
                               <p className="d-flex ms-2" id="exampleModalLabel">
                                 Description
                               </p>
-                              <div className="col-12 mb-3 ms-2 ">
+                              <div className="col-12 mb-3">
                                 <textarea
+                                  style={{ minHeight: "100px" }}
                                   type="text"
                                   placeholder="Type ticket issue here..."
-                                  className="col-12 modal-input text-area td-text p-2"
-                                  name="ticketIssue"
-                                  value={contactData.ticketIssue}
-                                  onChange={handleInput}
+                                  className="col-12 modal-input td-text p-2"
+                                  name="message"
+                                  value={message}
+                                  onChange={(e) => setMessage(e.target.value)}
                                 ></textarea>
                               </div>
+                                <p className="d-flex ms-2 mb-1">Attachment ( if Any )</p>
+                              <div className="col-12 mb-3">
+                                <input
+                                  type="file"
+                                  className="col-12 modal-input td-text p-2"
+                                  name="attachment"
+                                  accept=".pdf, .png, .jpg, .jpeg"
+                                  defaultValue=""
+                                  onChange={(e) =>
+                                    handleFileSelection(e, "attachment")
+                                  }
+                                />
+                              </div>
                             </div>
-                            <ToastContainer />
+                            {/* <ToastContainer /> */}
                             <div className="d-flex justify-content-end mb-3">
-                            <Button
+                              <Button
                                 style={{ width: "100px" }}
                                 appearance="primary"
                                 type="submit"
                                 // class="user-modal-btn"
                                 className="btn mb-3 me-2 rounded-2"
                                 data-bs-dismiss="modal"
-                                disabled={
-                                  !contactData?.ticketIssue ||
-                                  !contactData?.ticketType
-                                }
+                                disabled={!requestType || !message}
                               >
                                 Send
                               </Button>
@@ -449,7 +479,7 @@ const EmplHelpSupport = () => {
                 <div className="col-12">
                   {ticketList?.[0] && ticketList?.[0]?.length
                     ? 
-                    ticketList?.[0]?.map((ticket) => (
+                    ticketList?.[0]?.map((ticket,index) => (
                         <div
                           className="col rounded border bg-white mb-3 p-2"
                           key={ticket._id}
@@ -509,12 +539,62 @@ const EmplHelpSupport = () => {
                                 {ticket.creator_Id.name}
                               </p>
                             </div>
-                            <a href="/" className="ticket-link mt-3 me-1">
+                            <div className="d-flex align-items-center">
+                            {ticket?.document && (
+                              <a
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop"
+                                className="ticket-link mt-3 mx-2 cursor_pointer"
+                                onClick={() => handleAttachmentClick(index)}
+                              >
+                                See Attachement
+                              </a>
+                            )}
+                            <a className="ticket-link mt-3 me-1 cursor_pointer">
                               Open Ticket
                             </a>
                           </div>
+                          </div>
                         </div>
                       )) : <p className="fs-5">Yay! no tickets</p>}
+                </div>
+                <div
+                  class="modal fade"
+                  id="staticBackdrop"
+                  data-bs-backdrop="static"
+                  data-bs-keyboard="false"
+                  tabindex="-1"
+                  aria-labelledby="staticBackdropLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <p className="fs-6">Attachment</p>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <div> 
+                          {selectedTicketIndex !== null &&
+                          ticketList[0]?.[selectedTicketIndex]?.document ? (
+                            <img
+                              src={
+                                ticketList[0]?.[selectedTicketIndex]?.document
+                              }
+                              alt="Attachment"
+                              style={{ width: "100%", objectFit: "cover" }}
+                            />
+                          ) : null}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

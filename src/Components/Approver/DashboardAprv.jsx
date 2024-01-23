@@ -15,6 +15,7 @@ import moment from "moment";
 import GradientLineChartApprv from "./GradientLineChartApprv";
 import { MDBDataTable } from "mdbreact";
 import { Checkbox } from "antd";
+import { Button } from "rsuite";
 
 const DashboardAprv = () => {
   const [searchData, setSearchData] = useState("");
@@ -22,6 +23,8 @@ const DashboardAprv = () => {
   const [countData, setCountData] = useState();
   const [updatedStatus, setUpdatedStatus] = useState();
   const [showClearButton, setShowClearButton] = useState(false);
+  const [reasons, setReason] = useState();
+  const [document_Id, setDocument_Id] = useState();
 
   const [tasks, setTasks] = useState({
     columns: [
@@ -271,7 +274,7 @@ const DashboardAprv = () => {
                     />
                     View Users Details
                   </a>
-                </Link>{" "}
+                </Link>
               </li>
               <li>
                 <Link
@@ -286,6 +289,7 @@ const DashboardAprv = () => {
                   Comments
                 </Link>
               </li>
+              {list.status !== "Approved" && (
               <li>
                 <a
                   onClick={() => approved(list?._id)}
@@ -297,12 +301,16 @@ const DashboardAprv = () => {
                     alt=""
                     className="me-2"
                   />
-                  Approved
+                  Approved 
                 </a>
-              </li>
+              </li> 
+              )}
+                {list.status !== "Rejected" && (
               <li>
                 <a
-                  onClick={() => rejected(list?._id)}
+                  onClick={() => setDocument_Id(list?._id)}
+                  data-bs-toggle="modal"
+                  data-bs-target="#commentModal"
                   class="dropdown-item text-danger"
                   href="#"
                 >
@@ -310,6 +318,7 @@ const DashboardAprv = () => {
                   Rejected
                 </a>
               </li>
+                )}
             </ul>
           </div>
         );
@@ -324,9 +333,15 @@ const DashboardAprv = () => {
     const approveData = await approvedTemplete(document_Id);
     getTaskData()
   };
-  const rejected = async (document_Id) => {
-    const rejectedData = await rejectedTemplete(document_Id);
-    getTaskData()
+  const submitReason = async (e) => {
+    e.preventDefault();
+    const rejectedData = await rejectedTemplete(document_Id, {
+      reasons,
+    });
+    if(rejectedData){
+      setReason("")
+    getTaskData();
+    }
   };
 
   const handleCheckboxChange = (field) => {
@@ -361,7 +376,6 @@ const DashboardAprv = () => {
           checked={tasks.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
           defaultChecked>
-          {" "}
           {column.label}
         </Checkbox>
       </div>
@@ -680,12 +694,85 @@ const DashboardAprv = () => {
           <div className="col">
             <RightSidebar />
           </div>
+           {/* Comment Modal */}
+           <div
+            class="modal fade"
+            id="commentModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title th-text fs-6" id="exampleModalLabel">
+                    Add Reason
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    id="closeForm"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form className="rounded" onSubmit={submitReason}>
+                    <div className="mb-3">
+                      <label className="form-label th-text"></label>
+                      <input
+                        type="text"
+                        className="form-control w-100"
+                        placeholder="Type reason..."
+                        value={reasons}
+                        onChange={(e) => setReason(e.target.value)}
+                      />
+                    </div>
 
-          <div className="middle-section">
-            <div className="body-wrapper">
-              <div className="container-fluid">
-                <div className="row d-flex flex-direction-row cards-row"></div>
-                <div className="d-flex cardss"></div>
+                    <div className="d-flex justify-content-end">
+                      {/* <div>
+                        <img
+                          src="/images/tasks/assign comments.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/mention.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/task.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/emoji.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/attach_attachment.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                      </div> */}
+                      <div>
+                        <Button
+                          style={{ width: "100px" }}
+                          type="submit"
+                          appearance="primary"
+                          color="red"
+                          // className="comment-btn"
+                          data-bs-dismiss="modal"
+                          disabled={!reasons || /^\s+$/.test(reasons)}
+                        >
+                          Reject
+                        </Button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

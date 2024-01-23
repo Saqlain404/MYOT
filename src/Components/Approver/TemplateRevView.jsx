@@ -36,7 +36,7 @@ const TemplateRevView = () => {
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
                     <a className="nav-link fw-bold ms-2">
-                      Template / Template Version 1.0 / View
+                      Template / View
                     </a>
                   </li>
                 </ul>
@@ -80,7 +80,7 @@ const TemplateRevView = () => {
       <p className="preview-cert-txt m-2">Preview</p>
       <div>
       <button className="preview-dwld-btn">Download</button>
-      <button className="preview-edit-btn ms-3">Edit</button>
+      {/* <button className="preview-edit-btn ms-3">Edit</button> */}
       </div>
     </div>
     <div className="col-12 mb-4 ">
