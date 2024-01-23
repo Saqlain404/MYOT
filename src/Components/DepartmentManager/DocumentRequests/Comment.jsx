@@ -6,7 +6,7 @@ import Sidebar from "../../Sidebar";
 import RightSidebar from "../../RightSidebar";
 import { selectUserData } from "../../app/slice/userSlice";
 import { toast } from "react-toastify";
-import { DocumentComment, DocumentCommentLists } from "../../../ApiServices/departmentHttpService/departmentHttpService";
+import { AddComment, CommentLists, } from "../../../ApiServices/departmentHttpService/departmentHttpService";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
@@ -29,7 +29,7 @@ const DocsComments = () => {
     try {
       let lid = localStorage.getItem("myot_admin_id");
       setLocalId(lid);
-      let { data } = await DocumentCommentLists(id);
+      let { data } = await CommentLists(id);
       if (!data?.error) {
         setCommentList(data?.results?.commentDetails);
         console.log(data?.results);
@@ -74,7 +74,7 @@ const DocsComments = () => {
       comment: newReply,
     };
     console.log(formData);
-    let { data } = await DocumentComment(formData);
+    let { data } = await AddComment(formData);
     console.log(data);
     if (!data?.error) {
       toast("Comment added successfully", {
@@ -116,7 +116,7 @@ const DocsComments = () => {
         comment,
       };
       console.log(formData);
-      let { data } = await DocumentComment(formData);
+      let { data } = await AddComment(formData);
       console.log(data);
       if (!data?.error) {
         Swal.fire({

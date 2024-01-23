@@ -6,7 +6,7 @@ import {
   RequestorList,
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import { toast } from "react-toastify";
-import { AddCommentForRequests, RequestsList } from "../../../ApiServices/departmentHttpService/departmentHttpService";
+import { AddComment, RequestsList } from "../../../ApiServices/departmentHttpService/departmentHttpService";
 import moment from "moment";
 import Swal from "sweetalert2";
 
@@ -249,7 +249,7 @@ const Document = () => {
     }
     let creator_Id = localStorage.getItem("myot_admin_id");
     console.log(creator_Id, comment, templete_Id);
-    let { data } = await AddCommentForRequests({
+    let { data } = await AddComment({
       comment,
       templete_Id,
       creator_Id,

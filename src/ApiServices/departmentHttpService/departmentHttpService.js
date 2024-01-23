@@ -487,7 +487,7 @@ export async function ContactUs() {
   }
 }
 
-export async function AddCommentForRequests(formData) {
+export async function AddComment(formData) {
   try {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/add-comment`,
@@ -502,9 +502,9 @@ export async function AddCommentForRequests(formData) {
   }
 }
 
-export async function DocumentCommentLists(id) {
+export async function CommentLists(id) {
   try {
-    const { data } = await adminHttpService.get(
+    const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/comment-details/${id}`
     );
 
@@ -515,13 +515,13 @@ export async function DocumentCommentLists(id) {
   }
 }
 
-export async function DocumentComment(formData) {
+
+
+export async function CommentDelete(id) {
   try {
     const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/add-comment`,
-      formData
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/delete-comment/${id}`
     );
-
     return { data };
   } catch (error) {
     if (error.response) toast.error(error.response.data.message);
