@@ -26,7 +26,7 @@ const Switcher = () => {
     let token = localStorage.getItem("token-company")
 
     let roles = userData?.employRole;
-    if (!roles.includes("Admin") && adminRoutes && !token) {
+    if (!roles?.includes("Admin") && adminRoutes && !token) {
       Swal.fire({
         toast: true,
         icon: "error",
