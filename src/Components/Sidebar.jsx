@@ -14,28 +14,11 @@ import { selectUserData } from "./app/slice/userSlice";
 const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userData = useSelector(selectUserData);
-
   const location = useLocation();
 
   useEffect(() => {
     let id = localStorage.getItem("token-company");
     if (!id) {
-      navigate("/Login");
-    }
-
-    let roles = userData?.employRole;
-
-    if (!roles?.includes("Admin")) {
-      Swal.fire({
-        toast: true,
-        icon: "error",
-        position: "top-end",
-        title: "You may not have permission to access",
-        showConfirmButton: false,
-        timerProgressBar: true,
-        timer: 7000,
-      });
       navigate("/Login");
     }
   }, []);
@@ -119,9 +102,9 @@ const Sidebar = () => {
           {/* <p className="th-text">MAIN MENU</p> */}
           <ul className="nav nav-pills flex-column">
             <li
-             className={` "nav-item text-dark" ${
-              location.pathname.match(/^\/Admin\/Home/) ? "nav_active" : ""
-            }`}
+              className={` "nav-item text-dark" ${
+                location.pathname.match(/^\/Admin\/Home/) ? "nav_active" : ""
+              }`}
             >
               <Link to={"/Admin/Home"} className="text-decoration-none">
                 <a
@@ -174,6 +157,29 @@ const Sidebar = () => {
                   />
 
                   <span className="ms-3 align-middle sidebar-btn">Tasks</span>
+                </a>
+              </Link>
+            </li>
+            <li
+              className={` "nav-item text-dark" ${
+                location.pathname.match(/^\/Admin\/Templates/)
+                  ? "nav_active"
+                  : ""
+              }`}
+            >
+              <Link to={"/Admin/Templates"} className="text-decoration-none">
+                <a
+                  className="nav-link text-dark fs-5 align-middle"
+                  aria-current="page"
+                >
+                  <img
+                    src="/images/sidebar/tasks.png"
+                    className="align-middle sidebar-icon"
+                  />
+
+                  <span className="ms-3 align-middle sidebar-btn">
+                    Templates
+                  </span>
                 </a>
               </Link>
             </li>
@@ -373,12 +379,13 @@ const Sidebar = () => {
 
             <li
               className={` "nav-item text-dark" ${
-                location.pathname.match(/^\/Admin\/Profile/)
-                  ? "nav_active"
-                  : ""
+                location.pathname.match(/^\/Admin\/Profile/) ? "nav_active" : ""
               }`}
             >
-              <Link to={"/Admin/Profile/My-profile"} className="text-decoration-none">
+              <Link
+                to={"/Admin/Profile/My-profile"}
+                className="text-decoration-none"
+              >
                 <a
                   className="nav-link text-dark fs-5 align-middle "
                   aria-current="page"

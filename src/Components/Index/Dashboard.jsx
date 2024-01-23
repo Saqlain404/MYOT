@@ -347,7 +347,7 @@ const Dashboard = () => {
                               {
                                 count?._id
                                   .flat(Infinity)[0]
-                                  ?.departmentName.split(" ")[0]
+                                  ?.departmentName.split(" ")[0] || "Admin"
                               }
                             </span>
                             <span className="fw-bold col-6 m-0 p-0">

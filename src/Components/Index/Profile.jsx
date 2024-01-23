@@ -4,7 +4,6 @@ import Sidebar from "../Sidebar";
 import { Link } from "react-router-dom";
 import { AdminProfile } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import moment from "moment";
-import profileImg from "../../assets/logo/high.png";
 import { Button } from "rsuite";
 
 const Profile = () => {
@@ -83,7 +82,7 @@ const Profile = () => {
                     <Button
                       style={{ width: "70px" }}
                       // loading={loader}
-                      appearance="primary" 
+                      appearance="primary"
                       className="btn mb-3 me-2 rounded-2"
                       type="submit"
                     >
@@ -102,7 +101,7 @@ const Profile = () => {
                     }}
                     src={
                       (profileData?.profile_Pic && profileData.profile_Pic) ||
-                      profileImg
+                      "/images/icons/user.jpg"
                     }
                   />
                 </div>
