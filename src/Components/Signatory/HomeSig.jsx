@@ -111,10 +111,10 @@ const HomeSig = () => {
           <>
             <img
               className="w_20_h_20"
-              src={list?.manager?.profile_Pic}
+              src={list?.manager[0]?.profile_Pic}
               alt=""
             />
-            <span className="ms-2 text-capitalize">{list?.manager?.name}</span>
+            <span className="ms-2 text-capitalize">{list?.manager[0]?.name}</span>
           </>
         );
         returnData.version = (
@@ -127,7 +127,7 @@ const HomeSig = () => {
           </>
         );
         returnData.department =
-          list?.manager?.department_Id?.departmentName || "NA";
+          list?.manager[0]?.department[0]?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${

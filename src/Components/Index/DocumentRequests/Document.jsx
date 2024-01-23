@@ -121,7 +121,17 @@ const Document = () => {
             </span>
           </>
         );
-        returnData.priority = list?.priority;
+        returnData.priority = (
+          <>
+            <span className="me-1">
+              {list?.priority === "Low" ? (<img src="/images/icons/low.png" alt="" />) : ("")}
+              {list?.priority === "High" ? (<img src="/images/icons/high.png" alt="" />) : ("")}
+              {list?.priority === "Normal" ? (<img src="/images/icons/normal.png" alt="" />) : ("")}
+              {list?.priority === "Urgent" ? (<img src="/images/icons/urgent.png" alt="" />) : ("")}
+            </span>
+            <span>{list?.priority}</span>
+          </>
+        );
         returnData.department =
           list?.templete[0]?.manager[0]?.department[0]?.departmentName || "NA";
         returnData.status = (
