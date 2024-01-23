@@ -23,9 +23,10 @@ const Switcher = () => {
     let empRoutes = location.pathname.startsWith("/Employee");
     let approverRoutes = location.pathname.startsWith("/Approver");
     let deptRoutes = location.pathname.startsWith("/Department");
+    let token = localStorage.getItem("token-company")
 
     let roles = userData?.employRole;
-    if (!roles.includes("Admin") && adminRoutes) {
+    if (!roles.includes("Admin") && adminRoutes && !token) {
       Swal.fire({
         toast: true,
         icon: "error",
@@ -37,7 +38,7 @@ const Switcher = () => {
       });
       navigate("/Login");
     }
-    if (!roles?.includes("Signatory") && sigRoutes) {
+    if (!roles?.includes("Signatory") && sigRoutes && !token) {
       Swal.fire({
         toast: true,
         icon: "error",
@@ -49,7 +50,7 @@ const Switcher = () => {
       });
       navigate("/Login");
     }
-    if (!roles?.includes("Department Manager") && deptRoutes) {
+    if (!roles?.includes("Department Manager") && deptRoutes && !token) {
       Swal.fire({
         toast: true,
         icon: "error",
@@ -61,7 +62,7 @@ const Switcher = () => {
       });
       navigate("/Login");
     }
-    if (!roles?.includes("Approver") && approverRoutes) {
+    if (!roles?.includes("Approver") && approverRoutes && !token) {
       Swal.fire({
         toast: true,
         icon: "error",
@@ -73,7 +74,7 @@ const Switcher = () => {
       });
       navigate("/Login");
     }
-    if (!roles?.includes("Employee") && empRoutes) {
+    if (!roles?.includes("Employee") && empRoutes && !token) {
       Swal.fire({
         toast: true,
         icon: "error",

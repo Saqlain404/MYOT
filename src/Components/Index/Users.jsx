@@ -29,6 +29,7 @@ const Users = () => {
   const [profileImgUrl, setProfileImgUrl] = useState();
   const [userId, setUserId] = useState();
   const [loader, setLoader] = useState(false);
+  const [docsName, setDocsName] = useState("");
 
   const [documents, setDocuments] = useState([{ file: null, name: "" }]);
 
@@ -269,15 +270,9 @@ const Users = () => {
 
   const docsSubmit = (e) => {
     e.preventDefault();
-    let docImg = [];
-    documents.forEach((doc) => {
-      if (doc?.file) {
-        docImg.push(doc.file);
-        docImg.push(doc.name);
-      }
-    });
+    console.log(files);
+    console.log(docsName);
 
-    console.log(docImg)
   };
 
   const handleDeleteUser = async (id) => {
@@ -361,17 +356,17 @@ const Users = () => {
     formData.append("employRole", JSON.stringify(selectedRoles));
     // formData.append("document_Img", docs);
     formData.append("profile_Pic", files?.profile_img);
-    formData.append("document", documents?.file);
-    formData.append("documentName", documents?.name);
+    formData.append("document", files?.docs);
+    formData.append("documentName", docsName);
 
-    let docImg = [];
-    documents.forEach((doc) => {
-      if (doc?.file) {
-        docImg.push(doc.file);
-        docImg.push(doc.name);
-      }
-    });
-    formData.append("document_Img", docImg);
+    // let docImg = [];
+    // documents.forEach((doc) => {
+    //   if (doc?.file) {
+    //     docImg.push(doc.file);
+    //     docImg.push(doc.name);
+    //   }
+    // });
+    // formData.append("document_Img", docImg);
 
     try {
       let { data } = await AddEmployee(id, formData);
@@ -1010,7 +1005,26 @@ const Users = () => {
                           <div className="d-flex align-items-center">
                             <p>Document Upload</p>
                           </div>
-                          {documents.map((document, index) => (
+                          <div className="row">
+                            <div className="col-6 mb-3">
+                              <input
+                                type="file"
+                                name="docs"
+                                onChange={(e) => onFileSelection(e, "docs")}
+                                className="col-12 modal-input th-text p-2"
+                              />
+                            </div>
+                            <div className="col-6">
+                              <input
+                                type="text"
+                                placeholder="Document name ex. Passport..."
+                                value={document.name}
+                                onChange={(e) => setDocsName(e.target.value)}
+                                className="form-control col-12 modal-input td-text  p-2"
+                              />
+                            </div>
+                          </div>
+                          {/* {documents.map((document, index) => (
                             <div className="row" key={index}>
                               <div className="col-6 mb-3">
                                 <input
@@ -1032,7 +1046,7 @@ const Users = () => {
                                 />
                               </div>
                             </div>
-                          ))}
+                          ))} */}
                           <button
                             type="button"
                             className="comment-btn btn-primary"
