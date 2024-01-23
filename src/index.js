@@ -7,6 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import store from "./Components/app/store";
 import 'rsuite/dist/rsuite.min.css';
+import * as serviceWorker from './serviceWorker';
 
 let persistor = persistStore(store);
 
@@ -24,3 +25,5 @@ render(
   </Suspense>,
   document.getElementById("root")
 );
+
+serviceWorker.unregister();

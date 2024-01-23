@@ -14,6 +14,7 @@ import Document from "./Requests/Document";
 import { AddCommentForTask } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import Swal from "sweetalert2";
 import { Checkbox } from "rsuite";
+import ViewTemp from "./ViewTemplate/ViewTemp";
 
 const HomeSig = () => {
   const [count, setCount] = useState();
@@ -21,6 +22,7 @@ const HomeSig = () => {
   const [showClearButton, setShowClearButton] = useState(false);
   const [templete_Id, setTemplateId] = useState("");
   const [department, setDepartment] = useState();
+  const [viewTemplateId, setViewTemplateId] = useState();
 
   const [templates, setTemplates] = useState({
     columns: [
@@ -114,7 +116,9 @@ const HomeSig = () => {
               src={list?.manager[0]?.profile_Pic}
               alt=""
             />
-            <span className="ms-2 text-capitalize">{list?.manager[0]?.name}</span>
+            <span className="ms-2 text-capitalize">
+              {list?.manager[0]?.name}
+            </span>
           </>
         );
         returnData.version = (
@@ -176,6 +180,17 @@ const HomeSig = () => {
                   Edit User Details
                 </a>
               </li> */}
+              <li
+                onClick={() => setViewTemplateId(list?._id)}
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+                type="button"
+              >
+                <Link class="dropdown-item">
+                  <img src="/images/users/AddressBook.svg" className="me-2" />
+                  View Template Details
+                </Link>
+              </li>
               <li>
                 <Link
                   class="dropdown-item"
@@ -512,6 +527,36 @@ const HomeSig = () => {
             </div>
 
             <Document />
+
+            {/* VIEW TEMP MODAL */}
+
+            <div
+              class="modal fade"
+              id="staticBackdrop"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-lg"> 
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                      Template Details
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <ViewTemp viewTemplateId={viewTemplateId} />
+                </div>
+              </div>
+            </div>
+            {/* VIEW TEMP MODAL END */}
 
             <div className="footer">
               <div>© 2023 MYOT</div>
