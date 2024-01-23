@@ -26,7 +26,17 @@ const HelpSupport = () => {
   useEffect(() => {
     getTicketList();
   }, []);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('This Month');
 
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    setIsDropdownOpen(false);
+    filterTickets(option); // Call filterTickets with the selected option
+  };
   const getTicketList = async () => {
     let emp_id = localStorage.getItem("myot_admin_id");
     setId(emp_id);
@@ -66,6 +76,47 @@ const HelpSupport = () => {
   const handleAttachmentClick = (index) => {
     setSelectedTicketIndex(index);
   };
+  const [filteredTickets, setFilteredTickets] = useState([]);
+
+  const filterTickets = (option) => {
+    const now = moment();
+    let filteredList = [];
+
+    if (ticketList) {  // Check if ticketList is defined
+      switch (option) {
+        case "This Week":
+          filteredList = ticketList.filter(
+            (ticket) =>
+              moment(ticket.createdAt).isSameOrAfter(now.clone().startOf("week")) &&
+              moment(ticket.createdAt).isSameOrBefore(now.clone().endOf("week"))
+          );
+          break;
+
+        case "This Month":
+          filteredList = ticketList.filter(
+            (ticket) =>
+              moment(ticket.createdAt).isSameOrAfter(now.clone().startOf("month")) &&
+              moment(ticket.createdAt).isSameOrBefore(now.clone().endOf("month"))
+          );
+          break;
+
+        case "This Year":
+          filteredList = ticketList.filter(
+            (ticket) =>
+              moment(ticket.createdAt).isSameOrAfter(now.clone().startOf("year")) &&
+              moment(ticket.createdAt).isSameOrBefore(now.clone().endOf("year"))
+          );
+          break;
+
+        default:
+          // No filter, display all tickets
+          filteredList = ticketList;
+          break;
+      }
+    }
+
+    setFilteredTickets(filteredList);
+  };
 
   const handleCreateRequest = async (e) => {
     e.preventDefault();
@@ -98,6 +149,10 @@ const HelpSupport = () => {
       getTicketList();
     }
   };
+  useEffect(() => {
+    filterTickets(selectedOption);
+  }, [selectedOption, ticketList]);
+
   return (
     <>
       <div className="container-fluid">
@@ -339,12 +394,22 @@ const HelpSupport = () => {
                       </div>
                     </div>
                     {/* <!-- Modal End--> */}
-                    <Link className="text-decoration-none">
-                      <button className="help-support-btn1 me-2">
-                        This Week
-                        <img src="/images/dashboard/DownArrowBtn.svg" alt="" />
-                      </button>
-                    </Link>
+                    <div className="ms-auto"> {/* Add the ms-auto class here for right alignment */}
+                      <Link className="text-decoration-none">
+                        <button className="help-support-btn1 me-2" onClick={toggleDropdown}>
+                          {selectedOption}
+                          <img src="/images/dashboard/DownArrowBtn.svg" alt="" />
+                        </button>
+                      </Link>
+                      {isDropdownOpen && (
+                        <div className="dropdown-content">
+                          <div onClick={() => handleOptionClick('This Week')}>This Week</div>
+                          <div onClick={() => handleOptionClick('This Month')}>This Month</div>
+                          <div onClick={() => handleOptionClick('This Year')}>This Year</div>
+                        </div>
+                      )}
+                    </div>
+
                     <Link
                       className="text-decoration-none"
                       data-bs-toggle="modal"
@@ -427,8 +492,8 @@ const HelpSupport = () => {
                       aria-labelledby="ex1-tab-1"
                     >
                       <div className="col-12">
-                        {ticketList && ticketList?.length > 0 ? (
-                          ticketList?.map((ticket, index) => (
+                        {filteredTickets && filteredTickets.length > 0 ? (
+                          filteredTickets.map((ticket, index) => (
                             <div className="rounded border bg-white mb-3 p-2">
                               <div>
                                 <div className="d-flex justify-content-between align-items-center">
@@ -503,7 +568,8 @@ const HelpSupport = () => {
                           ))
                         ) : (
                           <h3 className="my-5 text-black-50 th-text">
-                            Yay! No Tickets
+                            {`Yay! No Tickets ${selectedOption === 'This Week' ? 'This Week' : selectedOption}`}
+
                           </h3>
                         )}
                       </div>
@@ -515,8 +581,8 @@ const HelpSupport = () => {
                       aria-labelledby="ex1-tab-2"
                     >
                       <div className="col-12">
-                        {ticketList && ticketList?.length > 0 ? (
-                          ticketList?.map((ticket) => (
+                        {filteredTickets && filteredTickets.length > 0 ? (
+                          filteredTickets.map((ticket, index) => (
                             <div className="rounded border bg-white mb-3 p-2">
                               <div>
                                 <div className="d-flex justify-content-between align-items-center">
@@ -576,7 +642,8 @@ const HelpSupport = () => {
                           ))
                         ) : (
                           <h3 className="my-5 text-black-50 th-text">
-                            Yay! No Tickets
+                            {`Yay! No Tickets ${selectedOption === 'This Week' ? 'This Week' : selectedOption}`}
+
                           </h3>
                         )}
                       </div>
@@ -588,8 +655,8 @@ const HelpSupport = () => {
                       aria-labelledby="ex1-tab-3"
                     >
                       <div className="col-12">
-                        {ticketList && ticketList?.length > 0 ? (
-                          ticketList?.map((ticket) => (
+                        {filteredTickets && filteredTickets.length > 0 ? (
+                          filteredTickets.map((ticket, index) => (
                             <div className="rounded border bg-white mb-3 p-2">
                               <div>
                                 <div className="d-flex justify-content-between align-items-center">
@@ -649,7 +716,8 @@ const HelpSupport = () => {
                           ))
                         ) : (
                           <h3 className="my-5 text-black-50 th-text">
-                            Yay! No Tickets
+                            {`Yay! No Tickets ${selectedOption === 'This Week' ? 'This Week' : selectedOption}`}
+
                           </h3>
                         )}
                       </div>
@@ -722,7 +790,8 @@ const HelpSupport = () => {
                           ))
                         ) : (
                           <h3 className="my-5 text-black-50 th-text">
-                            Yay! No Tickets
+                            {`Yay! No Tickets ${selectedOption === 'This Week' ? 'This Week' : selectedOption}`}
+
                           </h3>
                         )}
                       </div>
@@ -751,7 +820,7 @@ const HelpSupport = () => {
                         <div class="modal-body">
                           <div>
                             {selectedTicketIndex !== null &&
-                            ticketList[selectedTicketIndex]?.document ? (
+                              ticketList[selectedTicketIndex]?.document ? (
                               <img
                                 src={ticketList[selectedTicketIndex]?.document}
                                 alt="Attachment"
