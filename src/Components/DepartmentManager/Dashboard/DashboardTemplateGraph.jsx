@@ -45,7 +45,7 @@ const DashboardTemplateGraph = ({ dashGraphData }) => {
           },
         },
       ],
-      colors: ["#dada4a", "#FF0000", "#0000FF", "#00FF00"],
+      colors: ["#000000", "#95A4FC", "#BAEDBD", "#00FF00"],
     },
   });
 
@@ -55,9 +55,12 @@ const DashboardTemplateGraph = ({ dashGraphData }) => {
       const seriesData = [];
       const categories = [];
 
+      
+      
+
       Object.keys(dashGraphData).forEach((key) => {
-        if (dashGraphData[key] && Array.isArray(dashGraphData[key])) {
-          const count = dashGraphData[key][0]?.count || 0;
+        // if (dashGraphData[key] && Array.isArray(dashGraphData[key])) {
+          const count = dashGraphData[key] || 0;
           seriesData.push(count);
           // Map key to a label
           const label =
@@ -71,7 +74,7 @@ const DashboardTemplateGraph = ({ dashGraphData }) => {
               ? "Active"
               : "Other";
           categories.push(label);
-        }
+        // }
       });
 
       setState((prevState) => ({
@@ -94,6 +97,7 @@ const DashboardTemplateGraph = ({ dashGraphData }) => {
             series={state.series}
             type="donut"
             width={320}
+            // height={300}
           />
         </div>
         <div id="html-dist"></div>

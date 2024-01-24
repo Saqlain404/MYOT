@@ -9,135 +9,245 @@ import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/dist/sweetalert2.css";
 
-import AuthLogin from "./Components/Login/AuthLogin";
-import AuthforgotPass from "./Components/Login/AuthforgotPass";
-import AuthforgotSuccess from "./Components/Login/AuthforgotSuccess";
-import Home from "./Components/Index/Home";
-import Dashboard from "./Components/Index/Dashboard";
-import Tasks from "./Components/Index/Tasks";
-import Calender from "./Components/Index/Calender";
-import Users from "./Components/Index/Users";
-import Departments from "./Components/Index/Departments";
-import Chatbox from "./Components/Index/Chatbox";
-import CalendarMonth from "./Components/Index/CalendarMonth";
-import CalenderYear from "./Components/Index/CalenderYear";
-import HomeDept from "./Components/DepartmentManager/HomeDept";
-import DashboardDept from "./Components/DepartmentManager/DashboardDept";
-import Template from "./Components/DepartmentManager/Template";
-import Certificate from "./Components/DepartmentManager/Certificate";
-import CalenderDept from "./Components/DepartmentManager/CalenderDept";
-import DepartmentsDept from "./Components/DepartmentManager/DepartmentsDept";
-import CertificateView from "./Components/DepartmentManager/CertificateView";
-import TemplateView from "./Components/DepartmentManager/TemplateView";
-import HomeAprv from "./Components/Approver/HomeAprv";
-import TemplateReview from "./Components/Approver/TemplateReview";
-import DashboardAprv from "./Components/Approver/DashboardAprv";
-import TemplateRevView from "./Components/Approver/TemplateRevView";
-import HistoryLog from "./Components/Approver/HistoryLogAprv";
-import CalenderAprv from "./Components/Approver/CalenderAprv";
-import CalendarMonthAprv from "./Components/Approver/CalendarMonthAprv";
-import CalendarYearAprv from "./Components/Approver/CalenderYearAprv";
-import HistoryLogAprv from "./Components/Approver/HistoryLogAprv";
-import HistoryLogReject from "./Components/Approver/HistoryLogReject";
-import HomeSig from "./Components/Signatory/HomeSig";
-import DashboardSig from "./Components/Signatory/DashboardSig";
-import HistoryLogSig from "./Components/Signatory/HistoryLogSig";
-import HistoryLogDoc from "./Components/Signatory/HistoryLogDoc";
-import CalenderSig from "./Components/Signatory/CalenderSig";
-import CalendarMonthSig from "./Components/Signatory/CalendarMonthSig";
-import CalendarYearSig from "./Components/Signatory/CalenderYearSig";
-import AwaitingSig from "./Components/Signatory/AwaitingSig";
-import Approver from "./Components/Index/Approver";
-import Signatories from "./Components/Index/Signatories";
-import Requests from "./Components/Index/Requests";
-import Announcements from "./Components/Index/Announcements";
-import Analytics from "./Components/Index/Analytics";
-import RequestsAprv from "./Components/Approver/RequestsAprv";
-import AnnouncementsAprv from "./Components/Approver/AnnouncementsAprv";
-import RequestsDept from "./Components/DepartmentManager/RequestsDept";
-import AnnouncementsDept from "./Components/DepartmentManager/AnnouncementsDept";
-import AnalyticsDept from "./Components/DepartmentManager/Analytics";
-import RequestsSig from "./Components/Signatory/Requests";
-import AnnouncementsSig from "./Components/Signatory/AnnouncementsSig";
-import Profile from "./Components/Index/Profile";
-import EditProfile from "./Components/Index/EditProfile";
-import EditProfileSig from "./Components/Signatory/EditProfile";
-import ProfileSig from "./Components/Signatory/ProfileSig";
-import ProfileAprv from "./Components/Approver/ProfileAprv";
-import EditProfileAprv from "./Components/Approver/EditProfileAprv";
-import ProfileDept from "./Components/DepartmentManager/ProfileDept";
-import EditProfileDept from "./Components/DepartmentManager/EditProfileDept";
-import Help from "./Components/Index/Help";
-import HelpSupport from "./Components/Index/Help&support";
-import ContactUs from "./Components/Index/ContactUs";
-import HelpSig from "./Components/Signatory/HelpSig";
-import HelpSupportSig from "./Components/Signatory/Help&supportSig";
-import ContactUsSig from "./Components/Signatory/ContactUsSig";
-import HelpAprv from "./Components/Approver/HelpAprv";
-import HelpSupportAprv from "./Components/Approver/Help&supportAprv";
-import ContactUsAprv from "./Components/Approver/ContactUsAprv";
-import HelpDept from "./Components/DepartmentManager/HelpDept";
-import HelpSupportDept from "./Components/DepartmentManager/Help&supportDept";
-import ContactUsDept from "./Components/DepartmentManager/ContactUsDept";
-import Settings from "./Components/Index/Settings";
-import Comments from "./Components/Index/Comments";
-import SignManagement from "./Components/Signatory/SignManagement";
-import SettingsAprv from "./Components/Approver/SettingsAprv";
-
-import HomeEmpl from "./Components/Employee/HomeEmpl";
-import EmployeeDash from "./Components/Employee/EmployeeDash";
-import RequestHistoryEmpl from "./Components/Employee/RequestHistoryEmpl";
-import DocHistoryEmploye from "./Components/Employee/DocHistoryEmploye";
-import DocumentEmply from "./Components/Employee/DocumentEmply";
-import ReceivedDocEmpl from "./Components/Employee/ReceivedDocEmpl";
-import CalenderEmply from "./Components/Employee/CalenderEmply";
-import ViewDocumentEmply from "./Components/Employee/ViewDocumentEmply";
-import ViewReceivedDoc from "./Components/Employee/ViewRecievedDoc";
-import EmplProfile from "./Components/Employee/ProfileEmpl";
-import EmplHelp from "./Components/Employee/Help";
-import EmplHelpSupport from "./Components/Employee/EmplHelp&Support";
-import EmplEditProfile from "./Components/Employee/EmplEditProfile";
-import ChatboxEmploy from "./Components/Employee/ChatboxEmploy";
-import ContactUsEmpl from "./Components/Employee/ContactUsEmpl";
-import EmplAuthLogin from "./Components/Login/EmplAuthLogin";
-import EmplAuthforgotPassword from "./Components/Login/EmplAuthforgotPass";
-import EmplForgotSuccess from "./Components/Login/EmplForgotSuccess";
-import ViewUser from "./Components/Index/ViewUser";
-import TemplateEdit from "./Components/DepartmentManager/TemplateEdit";
-import ChatboxSig from "./Components/Signatory/ChatboxSig";
-import ChatboxDept from "./Components/DepartmentManager/ChatboxDept";
-import ChatboxAprv from "./Components/Approver/Chatbox";
-import CalendarMonthDept from "./Components/DepartmentManager/CalendarMonthDept";
-import CalenderYearDept from "./Components/DepartmentManager/CalenderYear";
-
-import CommentsDept from "./Components/DepartmentManager/CommentsDept";
-import AuthResetPass from "./Components/Login/AuthResetPass";
-import AuthSignUp from "./Components/Login/AuthSignUp";
-
-import EmplySetting from "./Components/Employee/EmplySetting";
-import OTPauthEmply from "./Components/Login/OTPauthEmply";
-import CalendarMonthEmply from "./Components/Employee/CalendarMonthEmply";
-import CalenderYearEmply from "./Components/Employee/CalenderYearEmply";
-import DocComments from "./Components/Index/DocumentRequests/Comment";
-import CommentsEmply from "./Components/Employee/CommentsEmply";
-import SigComments from "./Components/Signatory/Comments/Comments";
-import SettingsSig from "./Components/Signatory/SettingsSig";
-import UpdatePassword from "./Components/Login/UpdatePassword";
-import UpdatePassEmply from "./Components/Login/UpdatePassEmply";
-import CommentsAprv from "./Components/Approver/CommentsAprv";
-import Login from "./Components/superAdmin/login";
-import MainForgotPass from "./Components/superAdmin/forgotPassword";
-import MainUpdatePassword from "./Components/superAdmin/updatePassword";
-import MainForgotSuccess from "./Components/superAdmin/forgotSucess";
-import MainHome from "./Components/superAdmin/home";
-import SigDocComments from "./Components/Signatory/Comments/SigDocComments";
-import SettingsDept from "./Components/DepartmentManager/SettingsDept";
-import HelpNSupport from "./Components/superAdmin/Help/HelpNSupport";
-import DocsComments from "./Components/DepartmentManager/DocumentRequests/Comment";
-import ContentManagement from "./Components/superAdmin/contentManagement";
-import EditContent from "./Components/superAdmin/editContent";
-import { Loader } from "rsuite";
-import Templates from "./Components/Index/Templates";
+const AuthforgotPass = lazy(() => import("./Components/Login/AuthforgotPass"));
+const AuthforgotSuccess = lazy(() =>
+  import("./Components/Login/AuthforgotSuccess")
+);
+const Home = lazy(() => import("./Components/Index/Home"));
+const Dashboard = lazy(() => import("./Components/Index/Dashboard"));
+const Tasks = lazy(() => import("./Components/Index/Tasks"));
+const Calender = lazy(() => import("./Components/Index/Calender"));
+const Users = lazy(() => import("./Components/Index/Users"));
+const Departments = lazy(() => import("./Components/Index/Departments"));
+const Chatbox = lazy(() => import("./Components/Index/Chatbox"));
+const CalendarMonth = lazy(() => import("./Components/Index/CalendarMonth"));
+const CalenderYear = lazy(() => import("./Components/Index/CalenderYear"));
+const HomeDept = lazy(() => import("./Components/DepartmentManager/HomeDept"));
+const DashboardDept = lazy(() =>
+  import("./Components/DepartmentManager/DashboardDept")
+);
+const Template = lazy(() => import("./Components/DepartmentManager/Template"));
+const Certificate = lazy(() =>
+  import("./Components/DepartmentManager/Certificate")
+);
+const CalenderDept = lazy(() =>
+  import("./Components/DepartmentManager/CalenderDept")
+);
+const DepartmentsDept = lazy(() =>
+  import("./Components/DepartmentManager/DepartmentsDept")
+);
+const CertificateView = lazy(() =>
+  import("./Components/DepartmentManager/CertificateView")
+);
+const TemplateView = lazy(() =>
+  import("./Components/DepartmentManager/TemplateView")
+);
+const HomeAprv = lazy(() => import("./Components/Approver/HomeAprv"));
+const TemplateReview = lazy(() =>
+  import("./Components/Approver/TemplateReview")
+);
+const DashboardAprv = lazy(() => import("./Components/Approver/DashboardAprv"));
+const TemplateRevView = lazy(() =>
+  import("./Components/Approver/TemplateRevView")
+);
+const HistoryLog = lazy(() => import("./Components/Approver/HistoryLogAprv"));
+const CalenderAprv = lazy(() => import("./Components/Approver/CalenderAprv"));
+const CalendarMonthAprv = lazy(() =>
+  import("./Components/Approver/CalendarMonthAprv")
+);
+const CalendarYearAprv = lazy(() =>
+  import("./Components/Approver/CalenderYearAprv")
+);
+const HistoryLogAprv = lazy(() =>
+  import("./Components/Approver/HistoryLogAprv")
+);
+const HistoryLogReject = lazy(() =>
+  import("./Components/Approver/HistoryLogReject")
+);
+const HomeSig = lazy(() => import("./Components/Signatory/HomeSig"));
+const DashboardSig = lazy(() => import("./Components/Signatory/DashboardSig"));
+const HistoryLogSig = lazy(() =>
+  import("./Components/Signatory/HistoryLogSig")
+);
+const HistoryLogDoc = lazy(() =>
+  import("./Components/Signatory/HistoryLogDoc")
+);
+const CalenderSig = lazy(() => import("./Components/Signatory/CalenderSig"));
+const CalendarMonthSig = lazy(() =>
+  import("./Components/Signatory/CalendarMonthSig")
+);
+const CalendarYearSig = lazy(() =>
+  import("./Components/Signatory/CalenderYearSig")
+);
+const AwaitingSig = lazy(() => import("./Components/Signatory/AwaitingSig"));
+const Approver = lazy(() => import("./Components/Index/Approver"));
+const Signatories = lazy(() => import("./Components/Index/Signatories"));
+const Requests = lazy(() => import("./Components/Index/Requests"));
+const Announcements = lazy(() => import("./Components/Index/Announcements"));
+const Analytics = lazy(() => import("./Components/Index/Analytics"));
+const RequestsAprv = lazy(() => import("./Components/Approver/RequestsAprv"));
+const AnnouncementsAprv = lazy(() =>
+  import("./Components/Approver/AnnouncementsAprv")
+);
+const RequestsDept = lazy(() =>
+  import("./Components/DepartmentManager/RequestsDept")
+);
+const AnnouncementsDept = lazy(() =>
+  import("./Components/DepartmentManager/AnnouncementsDept")
+);
+const AnalyticsDept = lazy(() =>
+  import("./Components/DepartmentManager/Analytics")
+);
+const RequestsSig = lazy(() => import("./Components/Signatory/Requests"));
+const AnnouncementsSig = lazy(() =>
+  import("./Components/Signatory/AnnouncementsSig")
+);
+const Profile = lazy(() => import("./Components/Index/Profile"));
+const EditProfile = lazy(() => import("./Components/Index/EditProfile"));
+const EditProfileSig = lazy(() => import("./Components/Signatory/EditProfile"));
+const ProfileSig = lazy(() => import("./Components/Signatory/ProfileSig"));
+const ProfileAprv = lazy(() => import("./Components/Approver/ProfileAprv"));
+const EditProfileAprv = lazy(() =>
+  import("./Components/Approver/EditProfileAprv")
+);
+const ProfileDept = lazy(() =>
+  import("./Components/DepartmentManager/ProfileDept")
+);
+const EditProfileDept = lazy(() =>
+  import("./Components/DepartmentManager/EditProfileDept")
+);
+const Help = lazy(() => import("./Components/Index/Help"));
+const HelpSupport = lazy(() => import("./Components/Index/Help&support"));
+const ContactUs = lazy(() => import("./Components/Index/ContactUs"));
+const HelpSig = lazy(() => import("./Components/Signatory/HelpSig"));
+const HelpSupportSig = lazy(() =>
+  import("./Components/Signatory/Help&supportSig")
+);
+const ContactUsSig = lazy(() => import("./Components/Signatory/ContactUsSig"));
+const HelpAprv = lazy(() => import("./Components/Approver/HelpAprv"));
+const HelpSupportAprv = lazy(() =>
+  import("./Components/Approver/Help&supportAprv")
+);
+const ContactUsAprv = lazy(() => import("./Components/Approver/ContactUsAprv"));
+const HelpDept = lazy(() => import("./Components/DepartmentManager/HelpDept"));
+const HelpSupportDept = lazy(() =>
+  import("./Components/DepartmentManager/Help&supportDept")
+);
+const ContactUsDept = lazy(() =>
+  import("./Components/DepartmentManager/ContactUsDept")
+);
+const Settings = lazy(() => import("./Components/Index/Settings"));
+const Comments = lazy(() => import("./Components/Index/Comments"));
+const SignManagement = lazy(() =>
+  import("./Components/Signatory/SignManagement")
+);
+const SettingsAprv = lazy(() => import("./Components/Approver/SettingsAprv"));
+const HomeEmpl = lazy(() => import("./Components/Employee/HomeEmpl"));
+const EmployeeDash = lazy(() => import("./Components/Employee/EmployeeDash"));
+const RequestHistoryEmpl = lazy(() =>
+  import("./Components/Employee/RequestHistoryEmpl")
+);
+const DocHistoryEmploye = lazy(() =>
+  import("./Components/Employee/DocHistoryEmploye")
+);
+const DocumentEmply = lazy(() => import("./Components/Employee/DocumentEmply"));
+const ReceivedDocEmpl = lazy(() =>
+  import("./Components/Employee/ReceivedDocEmpl")
+);
+const CalenderEmply = lazy(() => import("./Components/Employee/CalenderEmply"));
+const ViewDocumentEmply = lazy(() =>
+  import("./Components/Employee/ViewDocumentEmply")
+);
+const ViewReceivedDoc = lazy(() =>
+  import("./Components/Employee/ViewRecievedDoc")
+);
+const EmplProfile = lazy(() => import("./Components/Employee/ProfileEmpl"));
+const EmplHelp = lazy(() => import("./Components/Employee/Help"));
+const EmplHelpSupport = lazy(() =>
+  import("./Components/Employee/EmplHelp&Support")
+);
+const EmplEditProfile = lazy(() =>
+  import("./Components/Employee/EmplEditProfile")
+);
+const ChatboxEmploy = lazy(() => import("./Components/Employee/ChatboxEmploy"));
+const ContactUsEmpl = lazy(() => import("./Components/Employee/ContactUsEmpl"));
+const EmplAuthLogin = lazy(() => import("./Components/Login/EmplAuthLogin"));
+const EmplAuthforgotPassword = lazy(() =>
+  import("./Components/Login/EmplAuthforgotPass")
+);
+const EmplForgotSuccess = lazy(() =>
+  import("./Components/Login/EmplForgotSuccess")
+);
+const ViewUser = lazy(() => import("./Components/Index/ViewUser"));
+const TemplateEdit = lazy(() =>
+  import("./Components/DepartmentManager/TemplateEdit")
+);
+const ChatboxSig = lazy(() => import("./Components/Signatory/ChatboxSig"));
+const ChatboxDept = lazy(() =>
+  import("./Components/DepartmentManager/ChatboxDept")
+);
+const ChatboxAprv = lazy(() => import("./Components/Approver/Chatbox"));
+const CalendarMonthDept = lazy(() =>
+  import("./Components/DepartmentManager/CalendarMonthDept")
+);
+const CalenderYearDept = lazy(() =>
+  import("./Components/DepartmentManager/CalenderYear")
+);
+const CommentsDept = lazy(() =>
+  import("./Components/DepartmentManager/CommentsDept")
+);
+const AuthResetPass = lazy(() => import("./Components/Login/AuthResetPass"));
+const AuthSignUp = lazy(() => import("./Components/Login/AuthSignUp"));
+const EmplySetting = lazy(() => import("./Components/Employee/EmplySetting"));
+const OTPauthEmply = lazy(() => import("./Components/Login/OTPauthEmply"));
+const CalendarMonthEmply = lazy(() =>
+  import("./Components/Employee/CalendarMonthEmply")
+);
+const CalenderYearEmply = lazy(() =>
+  import("./Components/Employee/CalenderYearEmply")
+);
+const DocComments = lazy(() =>
+  import("./Components/Index/DocumentRequests/Comment")
+);
+const CommentsEmply = lazy(() => import("./Components/Employee/CommentsEmply"));
+const SigComments = lazy(() =>
+  import("./Components/Signatory/Comments/Comments")
+);
+const SettingsSig = lazy(() => import("./Components/Signatory/SettingsSig"));
+const UpdatePassword = lazy(() => import("./Components/Login/UpdatePassword"));
+const UpdatePassEmply = lazy(() =>
+  import("./Components/Login/UpdatePassEmply")
+);
+const CommentsAprv = lazy(() => import("./Components/Approver/CommentsAprv"));
+const Login = lazy(() => import("./Components/superAdmin/login"));
+const MainForgotPass = lazy(() =>
+  import("./Components/superAdmin/forgotPassword")
+);
+const MainUpdatePassword = lazy(() =>
+  import("./Components/superAdmin/updatePassword")
+);
+const MainForgotSuccess = lazy(() =>
+  import("./Components/superAdmin/forgotSucess")
+);
+const MainHome = lazy(() => import("./Components/superAdmin/home"));
+const SigDocComments = lazy(() =>
+  import("./Components/Signatory/Comments/SigDocComments")
+);
+const SettingsDept = lazy(() =>
+  import("./Components/DepartmentManager/SettingsDept")
+);
+const HelpNSupport = lazy(() =>
+  import("./Components/superAdmin/Help/HelpNSupport")
+);
+const ContentManagement = lazy(() =>
+  import("./Components/superAdmin/contentManagement")
+);
+const EditContent = lazy(() => 
+  import("./Components/superAdmin/editContent")
+);
+const Templates = lazy(() => import("./Components/Index/Templates"));
+const Loader = lazy(() => import("./Components/Loader/Loader"));
+const AuthLogin = lazy(() => import("./Components/Login/AuthLogin"));
 
 function App() {
   const token = localStorage.getItem("token-company");
@@ -542,7 +652,7 @@ function App() {
           }
         />
         <Route
-          path="Department/Comments"
+          path="Department/Home/Comments/:id"
           element={
             <Suspense fallback={<Loader />}>
               <CommentsDept />
@@ -1237,22 +1347,16 @@ function App() {
             </Suspense>
           }
         />
-
-        <Route
-          path="main/Content-management"
-          element={
-            <Suspense fallback={<Loader />}>
-              <ContentManagement />
-            </Suspense>
-          }
-        />
+        <Route path="/main/login" element={<Login />} />
+        <Route path="/main/forgot-password" element={<MainForgotPass />} />
+        <Route path="/main/update-password" element={<MainUpdatePassword />} />
+        <Route path="/main/success" element={<MainForgotSuccess />} />
+        <Route path="main/Home" element={<MainHome />} />
+        <Route path="main/Help-support" element={<HelpNSupport />} />
+        <Route path="main/Content-management" element={<ContentManagement />} />
         <Route
           path="main/Content-management/Edit-content"
-          element={
-            <Suspense fallback={<Loader />}>
-              <EditContent />
-            </Suspense>
-          }
+          element={<EditContent />}
         />
       </Routes>
     </div>
