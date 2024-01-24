@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "rsuite";
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, ContentState } from "draft-js";
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import MainSidebar from "./sidebar";
+import axios from "axios";
+
 const ContentManagement = () => {
   const [editorContent, setEditorContent] = useState(
     EditorState.createWithContent(
@@ -15,7 +17,34 @@ const ContentManagement = () => {
     )
   );
 
+  const [content, setcontent] = useState([])
+
   const [isEditing, setIsEditing] = useState(false);
+
+  const authToken = localStorage.getItem('token-main-admin');
+  const headers = {
+    'x-auth-token-admin': authToken,
+  };
+  const contentManagement = async () => {
+    try {
+      if (!authToken) {
+        console.warn('Authentication token not found');
+      }
+      const response = await axios.get(`${process.env.REACT_APP_APIENDPOINT}/api/admin/content-details/65b0a0896dcaaf68cc29b7db`, {
+        headers,
+      });
+
+      const ticketData = response.data.results.contents;
+      setcontent(ticketData)
+      console.log(ticketData)
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
+  useEffect(() => {
+    contentManagement()
+  }, [])
+
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -125,13 +154,15 @@ const ContentManagement = () => {
                         onEditorStateChange={(newEditorState) => setEditorContent(newEditorState)}
                       />
                     ) : (
-                      <p className="col-12 mb-4 help-text">
-                        {/* Render the non-editable content here */}
-                        {editorContent.getCurrentContent().getPlainText()}
-                      </p>
+                      <div >
+                       
+                        {content.map((item) => (
+                          <p className="col-12 mb-4 help-text">{item.description}</p>
+                        ))}
+                      </div>
                     )}
-                  
-                  
+
+
                     <h4 className="mb-2">TYPES OF INFORMATION WE COLLECT</h4>
                     We collect Personal Information, including Personal Health
                     Information, and we may use Personal Information to create a
