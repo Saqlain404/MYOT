@@ -14,6 +14,7 @@ import {
 } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import RightSidebar from "../../RightSidebar";
 import Sidebar from "../../Sidebar";
+import ViewTemp from "../../Signatory/ViewTemplate/ViewTemp";
 
 const TemplateList = () => {
   const [showClearButton, setShowClearButton] = useState(false);
@@ -21,7 +22,7 @@ const TemplateList = () => {
   const [comment, setComment] = useState("");
   const [totalCount, setTotalCount] = useState("");
   const [templete_Id, setTemplete_Id] = useState();
-  
+  const [viewTemplateId, setViewTemplateId] = useState();
 
   const [templates, setTemplates] = useState({
     columns: [
@@ -90,7 +91,7 @@ const TemplateList = () => {
 
   useEffect(() => {
     getAllTemplates();
-    getTotalCount()
+    getTotalCount();
   }, []);
 
   const getTotalCount = async () => {
@@ -153,7 +154,7 @@ const TemplateList = () => {
               list?.status === "Pending"
                 ? "text-info"
                 : list?.status === "Approved"
-                ? "text-success"
+                ? "text-warning"
                 : list?.status === "In Progress"
                 ? "text-primary"
                 : list?.status === "Rejected"
@@ -205,14 +206,19 @@ const TemplateList = () => {
                   Comments
                 </Link>
               </li>
-              <li>
+              <li
+                onClick={() => setViewTemplateId(list?._id)}
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+                type="button"
+              >
                 <a class="dropdown-item border-bottom" href="#">
                   <img
                     src="/images/users/TextAlignLeft.svg"
                     alt=""
                     className="me-2"
                   />
-                  Wrap Column
+                  View Template Details
                 </a>
               </li>
               <li
@@ -660,6 +666,33 @@ const TemplateList = () => {
           </div>
 
           {/* Comment Modal close */}
+
+          <div
+            class="modal fade"
+            id="staticBackdrop"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="staticBackdropLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">
+                    Template Details
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <ViewTemp viewTemplateId={viewTemplateId} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

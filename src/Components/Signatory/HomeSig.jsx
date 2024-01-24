@@ -11,9 +11,13 @@ import {
 } from "../../ApiServices/SignatoryHttpServices/signatoryHttpServices";
 import { MDBDataTable } from "mdbreact";
 import Document from "./Requests/Document";
-import { AddCommentForTask } from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import {
+  AddCommentForTask,
+  TemplateReject,
+} from "../../ApiServices/dashboardHttpService/dashboardHttpServices";
 import Swal from "sweetalert2";
-import { Checkbox } from "rsuite";
+import { Button, Checkbox } from "rsuite";
+import ViewTemp from "./ViewTemplate/ViewTemp";
 
 const HomeSig = () => {
   const [count, setCount] = useState();
@@ -21,6 +25,9 @@ const HomeSig = () => {
   const [showClearButton, setShowClearButton] = useState(false);
   const [templete_Id, setTemplateId] = useState("");
   const [department, setDepartment] = useState();
+  const [viewTemplateId, setViewTemplateId] = useState();
+  const [rejectReason, setRejectReason] = useState("");
+  const [loader, setLoader] = useState(false);
 
   const [templates, setTemplates] = useState({
     columns: [
@@ -111,10 +118,12 @@ const HomeSig = () => {
           <>
             <img
               className="w_20_h_20"
-              src={list?.manager?.profile_Pic}
+              src={list?.manager[0]?.profile_Pic}
               alt=""
             />
-            <span className="ms-2 text-capitalize">{list?.manager?.name}</span>
+            <span className="ms-2 text-capitalize">
+              {list?.manager[0]?.name}
+            </span>
           </>
         );
         returnData.version = (
@@ -127,14 +136,14 @@ const HomeSig = () => {
           </>
         );
         returnData.department =
-          list?.manager?.department_Id?.departmentName || "NA";
+          list?.manager[0]?.department[0]?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${
               list?.status === "Pending"
                 ? "text-info"
                 : list?.status === "Approved"
-                ? "text-success"
+                ? "text-warning"
                 : list?.status === "In Progress"
                 ? "text-primary"
                 : list?.status === "Rejected"
@@ -176,6 +185,28 @@ const HomeSig = () => {
                   Edit User Details
                 </a>
               </li> */}
+              <li
+                onClick={() => setViewTemplateId(list?._id)}
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+                type="button"
+              >
+                <Link class="dropdown-item">
+                  <img src="/images/users/AddressBook.svg" className="me-2" />
+                  View Template Details
+                </Link>
+              </li>
+              <li
+                onClick={() => setViewTemplateId(list?._id)}
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop2"
+              >
+                <a class="dropdown-item text-danger" href="#">
+                  <img src="/images/XCircle.svg" alt="" className="me-2" />
+                  Reject
+                </a>
+              </li>
               <li>
                 <Link
                   class="dropdown-item"
@@ -322,6 +353,40 @@ const HomeSig = () => {
   const showAllColumns = () => {
     setTemplates({ ...templates, hiddenColumns: [], selectedColumns: [] });
     setShowClearButton(false);
+  };
+
+  const handleReject = async (e) => {
+    e.preventDefault();
+    console.log(viewTemplateId, rejectReason);
+    if (rejectReason?.trim().length <= 0) {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: "Please enter a reason",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return false;
+    }
+    let { data } = await TemplateReject(viewTemplateId, {
+      reasons: rejectReason,
+    });
+    if (!data?.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Template Rejected",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      setRejectReason("");
+      getTemplatesData();
+      document.getElementById("closeReject").click();
+    }
   };
 
   return (
@@ -512,6 +577,85 @@ const HomeSig = () => {
             </div>
 
             <Document />
+
+            {/* VIEW TEMP MODAL */}
+
+            <div
+              class="modal fade"
+              id="staticBackdrop"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                      Template Details
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <ViewTemp viewTemplateId={viewTemplateId} />
+                </div>
+              </div>
+            </div>
+            {/* VIEW TEMP MODAL END */}
+
+            <div
+              class="modal fade"
+              id="staticBackdrop2"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                      Reject Template
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      id="closeReject"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <input
+                      type="text"
+                      className="td-text w-100 py-2 rounded ps-2"
+                      placeholder="Reject Reason..."
+                      value={rejectReason}
+                      onChange={(e) => setRejectReason(e.target.value)}
+                    />
+                    <div className="text-end mt-4">
+                      <Button
+                        style={{ width: "100px" }}
+                        loading={loader}
+                        color="red"
+                        appearance="primary"
+                        className={`btn mb-3 me-2 rounded-2`}
+                        type="submit"
+                        onClick={(e) => handleReject(e)}
+                      >
+                        Reject
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div className="footer">
               <div>© 2023 MYOT</div>

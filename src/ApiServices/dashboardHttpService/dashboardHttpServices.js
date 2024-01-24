@@ -221,7 +221,7 @@ export async function CreateTask(formData) {
 export async function ViewTask(id) {
   try {
     const { data } = await adminHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/company/task-view/${id}`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/task-view/${id}`
     );
     // console.log(data);
 
@@ -345,6 +345,21 @@ export async function TasksCommentList(id) {
   }
 }
 
+export async function ChangeDocsPriority(id, formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/company/change-priority/${id}`,
+      formData
+    );
+    // console.log(data);
+
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
 export async function TasksCommentDelete(id) {
   try {
     const { data } = await adminHttpService.post(
@@ -450,6 +465,31 @@ export async function ApproverList(id) {
   try {
     const { data } = await adminHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/company/approver-list/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function TemplateDetails(id) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/approver/templete-details/${id}`
+    );
+    return { data };
+  } catch (error) {
+    if (error.response) toast.error(error.response.data.message);
+    return { error };
+  }
+}
+
+export async function TemplateReject(id, formData) {
+  try {
+    const { data } = await adminHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/approver/templete-rejected/${id}`,
+      formData
     );
     return { data };
   } catch (error) {

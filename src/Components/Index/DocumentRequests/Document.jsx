@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
 import {
+  ChangeDocsPriority,
   DocumentComment,
   DocumentDelete,
   HomeRequestorList,
@@ -121,7 +122,43 @@ const Document = () => {
             </span>
           </>
         );
-        returnData.priority = list?.priority;
+        returnData.priority = (
+          <>
+            <div
+              className="me-1 cursor_pointer"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal5"
+              type="button"
+              onClick={() => {
+                setDocument_Id(list?._id);
+              }}
+            >
+              <span>
+                {list?.priority === "Low" ? (
+                  <img src="/images/icons/low.png" alt="" />
+                ) : (
+                  ""
+                )}
+                {list?.priority === "High" ? (
+                  <img src="/images/icons/high.png" alt="" />
+                ) : (
+                  ""
+                )}
+                {list?.priority === "Normal" ? (
+                  <img src="/images/icons/normal.png" alt="" />
+                ) : (
+                  ""
+                )}
+                {list?.priority === "Urgent" ? (
+                  <img src="/images/icons/urgent.png" alt="" />
+                ) : (
+                  ""
+                )}
+              </span>
+              <span className="ms-3">{list?.priority}</span>
+            </div>
+          </>
+        );
         returnData.department =
           list?.templete[0]?.manager[0]?.department[0]?.departmentName || "NA";
         returnData.status = (
@@ -250,6 +287,24 @@ const Document = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handlePriorityChange = async (e, key) => {
+    e.preventDefault();
+    let { data } = await ChangeDocsPriority(document_Id, { priority: key });
+    if (!data?.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Priority changed successfully",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      document.getElementById("resetPriority").click();
+      getRequestorList();
     }
   };
 
@@ -496,6 +551,81 @@ const Document = () => {
                   </div>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* PRIORITY MODAL */}
+      <div
+        class="modal fade"
+        id="exampleModal5"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content ">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Change Priority
+              </h5>
+              <button
+                type="reset"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                className="d-none"
+                id="resetPriority"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <ul className="list-unstyled ps-5">
+                <li
+                  className="my-4 cursor_pointer"
+                  onClick={(e) => handlePriorityChange(e, "High")}
+                >
+                  <span>
+                    <img className="me-3" src="/images/icons/high.png" alt="" />
+                    <span>High</span>
+                  </span>
+                </li>
+                <li
+                  className="my-4 cursor_pointer"
+                  onClick={(e) => handlePriorityChange(e, "Urgent")}
+                >
+                  <span>
+                    <img
+                      className="me-3"
+                      src="/images/icons/urgent.png"
+                      alt=""
+                    />
+                    <span>Urgent</span>
+                  </span>
+                </li>
+                <li
+                  className="my-4 cursor_pointer"
+                  onClick={(e) => handlePriorityChange(e, "Low")}
+                >
+                  <span>
+                    <img className="me-3" src="/images/icons/low.png" alt="" />
+                    <span>Low</span>
+                  </span>
+                </li>
+                <li
+                  className="my-4 cursor_pointer"
+                  onClick={(e) => handlePriorityChange(e, "Normal")}
+                >
+                  <span>
+                    <img
+                      className="me-3"
+                      src="/images/icons/normal.png"
+                      alt=""
+                    />
+                    <span>Normal</span>
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

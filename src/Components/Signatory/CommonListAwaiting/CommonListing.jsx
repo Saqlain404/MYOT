@@ -4,13 +4,21 @@ import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { AddCommentForTask } from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
-import { Checkbox } from "rsuite";
+import {
+  AddCommentForTask,
+  TemplateReject,
+} from "../../../ApiServices/dashboardHttpService/dashboardHttpServices";
+import { Button, Checkbox } from "rsuite";
+import ViewTemp from "../ViewTemplate/ViewTemp";
 
 const CommonListing = () => {
   const [showClearButton, setShowClearButton] = useState(false);
   const [templete_Id, setTemplateId] = useState();
   const [comment, setComment] = useState("");
+  const [viewTemplateId, setViewTemplateId] = useState();
+  const [rejectReason, setRejectReason] = useState("");
+  const [loader, setLoader] = useState(false);
+
   const [awaitListing, setAwaitListing] = useState({
     columns: [
       {
@@ -89,21 +97,16 @@ const CommonListing = () => {
           </>
         );
         returnData.date = moment(list?.createdAt).format("L");
-        returnData.department = list?.manager[0]?.department[0]?.departmentName || "NA";
+        returnData.department =
+          list?.manager[0]?.department[0]?.departmentName || "NA";
         returnData.status = (
           <span
             className={`"td-text status" ${
               list?.status === "Pending"
                 ? "text-info"
                 : list?.status === "Approved"
-                ? "text-success"
-                : list?.status === "In Progress"
-                ? "text-primary"
-                : list?.status === "Rejected"
-                ? "text-danger"
-                : list?.status === "Completed"
-                ? "text-success"
-                : "text-success"
+                ? "text-warning"
+                : "text-danger"
             }`}
           >
             {list?.status}
@@ -147,14 +150,33 @@ const CommonListing = () => {
                   Comments
                 </Link>
               </li>
+              <li
+                onClick={() => setViewTemplateId(list?._id)}
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+                type="button"
+              >
+                <Link class="dropdown-item">
+                  <img src="/images/users/AddressBook.svg" className="me-2" />
+                  View Template Details
+                </Link>
+              </li>
               <li>
-                <a class="dropdown-item border-bottom" href="#">
-                  <img
-                    src="/images/users/TextAlignLeft.svg"
-                    alt=""
-                    className="me-2"
-                  />
-                  Wrap Column
+                <Link class="dropdown-item">
+                  <img src="/images/users/PencilLine.svg" className="me-2" />
+                  Sign Template
+                </Link>
+              </li>
+
+              <li
+                onClick={() => setViewTemplateId(list?._id)}
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop2"
+              >
+                <a class="dropdown-item text-danger" href="#">
+                  <img src="/images/XCircle.svg" alt="" className="me-2" />
+                  Reject
                 </a>
               </li>
               {/* <li>
@@ -290,6 +312,39 @@ const CommonListing = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+  const handleReject = async (e) => {
+    e.preventDefault();
+    console.log(viewTemplateId, rejectReason);
+    if (rejectReason?.trim().length <= 0) {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: "Please enter a reason",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return false;
+    }
+    let { data } = await TemplateReject(viewTemplateId, {
+      reasons: rejectReason,
+    });
+    if (!data?.error) {
+      Swal.fire({
+        toast: true,
+        icon: "success",
+        position: "top-end",
+        title: "Template Rejected",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      setRejectReason("");
+      getAwaitListingData();
+      document.getElementById("closeReject").click();
     }
   };
   return (
@@ -438,6 +493,84 @@ const CommonListing = () => {
                   </div>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/*  */}
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">
+                Template Details
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <ViewTemp viewTemplateId={viewTemplateId} />
+          </div>
+        </div>
+      </div>
+
+      {/* Reject Modal */}
+      <div
+        class="modal fade"
+        id="staticBackdrop2"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">
+                Reject Template
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                id="closeReject"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <input
+                type="text"
+                className="td-text w-100 py-2 rounded ps-2"
+                placeholder="Reject Reason..."
+                value={rejectReason}
+                onChange={(e) => setRejectReason(e.target.value)}
+              />
+              <div className="text-end mt-4">
+                <Button
+                  style={{ width: "100px" }}
+                  loading={loader}
+                  color="red"
+                  appearance="primary"
+                  className={`btn mb-3 me-2 rounded-2`}
+                  type="submit"
+                  onClick={(e) => handleReject(e)}
+                >
+                  Reject
+                </Button>
+              </div>
             </div>
           </div>
         </div>

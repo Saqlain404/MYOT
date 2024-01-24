@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/dist/sweetalert2.css";
+import AuthLoader from "./Components/Loader/AuthLoader";
 
 const AuthforgotPass = lazy(() => import("./Components/Login/AuthforgotPass"));
 const AuthforgotSuccess = lazy(() =>
@@ -252,7 +253,7 @@ function App() {
         <Route
           path="*"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <AuthLogin />
             </Suspense>
           }
@@ -260,7 +261,7 @@ function App() {
         <Route
           path="Admin/Login"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <AuthLogin />
             </Suspense>
           }
@@ -268,7 +269,7 @@ function App() {
         <Route
           path="/Admin/Signup"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <AuthSignUp />
             </Suspense>
           }
@@ -276,7 +277,7 @@ function App() {
         <Route
           path="Admin/Forgot-password"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <AuthforgotPass />
             </Suspense>
           }
@@ -284,7 +285,7 @@ function App() {
         <Route
           path="Admin/Reset-password"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <AuthResetPass />
             </Suspense>
           }
@@ -292,7 +293,7 @@ function App() {
         <Route
           path="Admin/Forgot-success"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <AuthforgotSuccess />
             </Suspense>
           }
@@ -301,7 +302,7 @@ function App() {
         <Route
           path="Login"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <AuthLogin />
             </Suspense>
           }
@@ -309,7 +310,7 @@ function App() {
         <Route
           path="Forgot-password"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <AuthforgotPass />
             </Suspense>
           }
@@ -317,7 +318,7 @@ function App() {
         <Route
           path="Update-password"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <UpdatePassword />
             </Suspense>
           }
@@ -325,7 +326,7 @@ function App() {
         <Route
           path="Forgot-success"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <AuthforgotSuccess />
             </Suspense>
           }
@@ -1296,7 +1297,7 @@ function App() {
         <Route
           path="/main/login"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <Login />
             </Suspense>
           }
@@ -1304,7 +1305,7 @@ function App() {
         <Route
           path="/main/forgot-password"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <MainForgotPass />
             </Suspense>
           }
@@ -1312,7 +1313,7 @@ function App() {
         <Route
           path="/main/update-password"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <MainUpdatePassword />
             </Suspense>
           }
@@ -1320,15 +1321,15 @@ function App() {
         <Route
           path="/main/success"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <MainForgotSuccess />
             </Suspense>
           }
         />
         <Route
-          path="main/Home"
+          path="main/home"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <MainHome />
             </Suspense>
           }
@@ -1336,7 +1337,7 @@ function App() {
         <Route
           path="main/Help-support"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<AuthLoader />}>
               <HelpNSupport />
             </Suspense>
           }
