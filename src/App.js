@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/dist/sweetalert2.css";
 import AuthLoader from "./Components/Loader/AuthLoader";
+import LoaderAprv from "./Components/Loader/LoaderAprv";
+import LoaderEmply from "./Components/Loader/LoaderEmply";
 
 const AuthforgotPass = lazy(() => import("./Components/Login/AuthforgotPass"));
 const AuthforgotSuccess = lazy(() =>
@@ -722,7 +724,7 @@ function App() {
         <Route
           path="Approver/Home"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <HomeAprv />
             </Suspense>
           }
@@ -730,7 +732,7 @@ function App() {
         <Route
           path="Approver/Dashboard"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <DashboardAprv />
             </Suspense>
           }
@@ -738,7 +740,7 @@ function App() {
         <Route
           path="Approver/Template-review"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <TemplateReview />
             </Suspense>
           }
@@ -746,7 +748,7 @@ function App() {
         <Route
           path="Approver/Template-view/:id"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <TemplateRevView />
             </Suspense>
           }
@@ -754,7 +756,7 @@ function App() {
         <Route
           path="Approver/Requests"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <RequestsAprv />
             </Suspense>
           }
@@ -762,7 +764,7 @@ function App() {
         <Route
           path="Approver/Announcements"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <AnnouncementsAprv />
             </Suspense>
           }
@@ -770,7 +772,7 @@ function App() {
         <Route
           path="Approver/History-log-approved"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <HistoryLogAprv />
             </Suspense>
           }
@@ -778,7 +780,7 @@ function App() {
         <Route
           path="Approver/History-log-rejected"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <HistoryLogReject />
             </Suspense>
           }
@@ -786,7 +788,7 @@ function App() {
         <Route
           path="Approver/Calendar"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <CalenderAprv />
             </Suspense>
           }
@@ -794,7 +796,7 @@ function App() {
         <Route
           path="Approver/Calendar-month"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <CalendarMonthAprv />
             </Suspense>
           }
@@ -802,7 +804,7 @@ function App() {
         <Route
           path="Approver/Calendar-year"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <CalendarYearAprv />
             </Suspense>
           }
@@ -810,7 +812,7 @@ function App() {
         <Route
           path="Approver/My-profile"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <ProfileAprv />
             </Suspense>
           }
@@ -818,7 +820,7 @@ function App() {
         <Route
           path="Approver/Edit-profile"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <EditProfileAprv />
             </Suspense>
           }
@@ -826,7 +828,7 @@ function App() {
         <Route
           path="Approver/Help"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <HelpAprv />
             </Suspense>
           }
@@ -834,7 +836,7 @@ function App() {
         <Route
           path="Approver/Help-Support"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <HelpSupportAprv />
             </Suspense>
           }
@@ -842,7 +844,7 @@ function App() {
         <Route
           path="Approver/Contact-us"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <ContactUsAprv />
             </Suspense>
           }
@@ -850,7 +852,7 @@ function App() {
         <Route
           path="Approver/Settings"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <SettingsAprv />
             </Suspense>
           }
@@ -858,7 +860,7 @@ function App() {
         <Route
           path="Approver/Chat"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <ChatboxAprv />
             </Suspense>
           }
@@ -866,7 +868,7 @@ function App() {
         <Route
           path="Approver/Comment/:id"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderAprv />}>
               <CommentsAprv />
             </Suspense>
           }
@@ -1103,7 +1105,7 @@ function App() {
         <Route
           path="Employee/Login"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <EmplAuthLogin />
             </Suspense>
           }
@@ -1111,7 +1113,7 @@ function App() {
         <Route
           path="Employee/Forgot-Password"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <EmplAuthforgotPassword />
             </Suspense>
           }
@@ -1119,7 +1121,7 @@ function App() {
         <Route
           path="Employee/Forgot-Success"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <EmplForgotSuccess />
             </Suspense>
           }
@@ -1127,7 +1129,7 @@ function App() {
         <Route
           path="Employee/reset-update-password"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <UpdatePassEmply />
             </Suspense>
           }
@@ -1135,7 +1137,7 @@ function App() {
         <Route
           path="Employee/Home"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <HomeEmpl />
             </Suspense>
           }
@@ -1143,7 +1145,7 @@ function App() {
         <Route
           path="Employee/Dashboard"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <EmployeeDash />
             </Suspense>
           }
@@ -1151,7 +1153,7 @@ function App() {
         <Route
           path="Employee/history-log-request"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <RequestHistoryEmpl />
             </Suspense>
           }
@@ -1159,7 +1161,7 @@ function App() {
         <Route
           path="Employee/history-log-access"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <DocHistoryEmploye />
             </Suspense>
           }
@@ -1167,7 +1169,7 @@ function App() {
         <Route
           path="Employee/document"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <DocumentEmply />
             </Suspense>
           }
@@ -1175,7 +1177,7 @@ function App() {
         <Route
           path="Employee/received-doc"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <ReceivedDocEmpl />
             </Suspense>
           }
@@ -1183,7 +1185,7 @@ function App() {
         <Route
           path="Employee/Calender"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <CalenderEmply />
             </Suspense>
           }
@@ -1191,7 +1193,7 @@ function App() {
         <Route
           path="Employee/view-details/:id"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <ViewDocumentEmply />
             </Suspense>
           }
@@ -1199,7 +1201,7 @@ function App() {
         <Route
           path="Employee/received-doc/view-details"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <ViewReceivedDoc />
             </Suspense>
           }
@@ -1207,7 +1209,7 @@ function App() {
         <Route
           path="Employee/OTP-verification"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <OTPauthEmply />
             </Suspense>
           }
@@ -1215,7 +1217,7 @@ function App() {
         <Route
           path="Employee/profile"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <EmplProfile />
             </Suspense>
           }
@@ -1223,7 +1225,7 @@ function App() {
         <Route
           path="Employee/Edit-Profile"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <EmplEditProfile />
             </Suspense>
           }
@@ -1231,7 +1233,7 @@ function App() {
         <Route
           path="Employee/Help&Support"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <EmplHelpSupport />
             </Suspense>
           }
@@ -1239,7 +1241,7 @@ function App() {
         <Route
           path="Employee/Help"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <EmplHelp />
             </Suspense>
           }
@@ -1247,7 +1249,7 @@ function App() {
         <Route
           path="Employee/Chat"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <ChatboxEmploy />
             </Suspense>
           }
@@ -1255,7 +1257,7 @@ function App() {
         <Route
           path="Employee/Contact"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <ContactUsEmpl />
             </Suspense>
           }
@@ -1263,7 +1265,7 @@ function App() {
         <Route
           path="Employee/Settings"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <EmplySetting />
             </Suspense>
           }
@@ -1271,7 +1273,7 @@ function App() {
         <Route
           path="Employee/Calendar-month"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <CalendarMonthEmply />
             </Suspense>
           }
@@ -1279,7 +1281,7 @@ function App() {
         <Route
           path="Employee/Calendar-year"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <CalenderYearEmply />
             </Suspense>
           }
@@ -1287,7 +1289,7 @@ function App() {
         <Route
           path="Employee/Comment/:id"
           element={
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<LoaderEmply />}>
               <CommentsEmply />
             </Suspense>
           }

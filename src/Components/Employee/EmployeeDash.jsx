@@ -546,7 +546,7 @@ const EmployeeDash = () => {
             <div className="col-12">
               <div className="row">
                 <div className="col-md-6 ">
-                  <div className="dashboard-card bg-light ">
+                  <div className="dashboard-card bg-light"  style={{height:"100%"}}>
                     <div className="d-flex  dashboard-card-text">
                       <p className="fs-6 fw-normal">Templates </p>
                       {/* <p>Current Week </p> */}

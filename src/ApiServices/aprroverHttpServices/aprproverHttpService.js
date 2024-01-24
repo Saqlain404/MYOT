@@ -758,10 +758,11 @@ export async function approvedTemplete(documentIds) {
     return null;
   }
 }
-export async function rejectedTemplete(documentIds) {
+export async function rejectedTemplete(documentIds,formData) {
   try {
     const response = await employeeHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/approver/templete-rejected/${documentIds}`
+      `${process.env.REACT_APP_APIENDPOINT}/api/approver/templete-rejected/${documentIds}`,formData
+
     );
     if (!response.data?.error) {
       const templeteList = response?.data;
@@ -1168,10 +1169,10 @@ export async function approvedDocumentRequest(documentIds) {
   }
 }
 
-export async function rejectedDocumentRequest(documentIds) {
+export async function rejectedDocumentRequest(documentIds,formData) {
   try {
-    const response = await employeeHttpService.get(
-      `${process.env.REACT_APP_APIENDPOINT}/api/approver/rejected-document/${documentIds}`
+    const response = await employeeHttpService.post(
+      `${process.env.REACT_APP_APIENDPOINT}/api/approver/rejected-document/${documentIds}`,formData
     );
     if (!response.data?.error) {
       const templeteList = response?.data;

@@ -25,6 +25,8 @@ const RequestsAprv = () => {
   const [updatedStatus, setUpdatedStatus] = useState();
   const [comment, setComment] = useState("");
   const [templete_Id, setTemplete_Id] = useState();
+  const [reasons, setReason] = useState();
+  const [document_Id, setDocument_Id] = useState();
 
   const [tasks, setTasks] = useState({
     columns: [
@@ -243,6 +245,7 @@ const getDocTaskData = async () => {
                   Comments
                 </Link>
               </li>
+             {list?.status !== "Approved" && (
               <li>
                 <a
                   onClick={() => approveDocumentRequest(list?._id)}
@@ -254,12 +257,16 @@ const getDocTaskData = async () => {
                     alt=""
                     className="me-2"
                   />
-                  Approved
+                  Approved 
                 </a>
-              </li>
+              </li> 
+              )}
+                {list?.status !== "Rejected" && (
               <li>
                 <a
-                  onClick={() => rejectDocumentRequest(list?._id)}
+                  onClick={() => setDocument_Id(list?._id)}
+                  data-bs-toggle="modal"
+                  data-bs-target="#reasonModal"
                   class="dropdown-item text-danger"
                   href="#"
                 >
@@ -267,6 +274,7 @@ const getDocTaskData = async () => {
                   Rejected
                 </a>
               </li>
+                )}
             </ul>
           </div>
         );
@@ -411,9 +419,16 @@ const getDocTaskData = async () => {
     const approveData = await approvedDocumentRequest(document_Id);
     getDocTaskData()
   };
-  const rejectDocumentRequest = async (document_Id) => {
-    const approveData = await rejectedDocumentRequest(document_Id);
-    getDocTaskData()
+  
+  const submitReason = async (e) => {
+    e.preventDefault();
+    const rejectedData = await rejectedDocumentRequest(document_Id, {
+      reasons,
+    });
+    if(rejectedData){
+      setReason("")
+    getDocTaskData();
+    }
   };
  
   return (
@@ -639,6 +654,89 @@ const getDocTaskData = async () => {
           </div>
 
           {/* Comment Modal close */}
+
+           {/* Comment Modal */}
+           <div
+            class="modal fade"
+            id="reasonModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title th-text fs-6" id="exampleModalLabel">
+                    Add Reason
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    id="closeForm"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form className="rounded" onSubmit={submitReason}>
+                    <div className="mb-3 ">
+                      <label className="form-label th-text"></label>
+                      <input
+                        type="text"
+                        className="form-control w-100"
+                        placeholder="Type reason..."
+                        value={reasons}
+                        onChange={(e) => setReason(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="d-flex justify-content-end">
+                      {/* <div>
+                        <img
+                          src="/images/tasks/assign comments.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/mention.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/task.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/emoji.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/attach_attachment.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                      </div> */}
+                      <div>
+                        <Button
+                          style={{ width: "100px" }}
+                          type="submit"
+                          appearance="primary"
+                          color="red"
+                          // className="comment-btn"
+                          data-bs-dismiss="modal"
+                          disabled={!reasons || /^\s+$/.test(reasons)}
+                        >
+                          Reject
+                        </Button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

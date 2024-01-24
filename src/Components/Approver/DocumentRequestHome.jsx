@@ -11,11 +11,15 @@ import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import { Link } from "react-router-dom";
 import { Checkbox } from "antd";
+import { Button } from "rsuite";
 
 const DocumentRequestHome = () => {
   const [showClearButton, setShowClearButton] = useState(false);
   const [documents, setDocuments] = useState();
   const [updatedStatus, setUpdatedStatus] = useState();
+  const [reasons, setReason] = useState();
+  const [document_Id, setDocument_Id] = useState();
+
   const [tasks, setTasks] = useState({
     columns: [
       {
@@ -87,14 +91,7 @@ const DocumentRequestHome = () => {
     getDocTaskData();
   }, []);
 
-  const approved = async (document_Id) => {
-    const approveData = await approvedTemplete(document_Id);
-    setUpdatedStatus((prev) => !prev);
-  };
-  const rejected = async (document_Id) => {
-    const rejectedData = await rejectedTemplete(document_Id);
-    setUpdatedStatus((prev) => !prev);
-  };
+
 
   const getDocTaskData = async () => {
     let data = await templeteDocList(ids);
@@ -133,7 +130,7 @@ const DocumentRequestHome = () => {
           </>
         );
         returnData.department =
-          list?.templete[0]?.manager[0]?.department[0]?.departmentName || "NA";
+          list?.templete[0]?.manager[0]?.department[0]?.departmentName || "Admin";
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -177,6 +174,7 @@ const DocumentRequestHome = () => {
                   </a>
                 </Link>{" "}
               </li>
+              {list?.status !== "Approved" && (
               <li>
                 <a
                   onClick={() => approveDocumentRequest(list?._id)}
@@ -188,12 +186,16 @@ const DocumentRequestHome = () => {
                     alt=""
                     className="me-2"
                   />
-                  Approved
+                  Approved 
                 </a>
-              </li>
+              </li> 
+              )}
+                {list?.status !== "Rejected" && (
               <li>
                 <a
-                  onClick={() => rejectDocumentRequest(list?._id)}
+                  onClick={() => setDocument_Id(list?._id)}
+                  data-bs-toggle="modal"
+                  data-bs-target="#commentModal"
                   class="dropdown-item text-danger"
                   href="#"
                 >
@@ -201,6 +203,7 @@ const DocumentRequestHome = () => {
                   Rejected
                 </a>
               </li>
+                )}
             </ul>
           </div>
         );
@@ -271,7 +274,7 @@ const DocumentRequestHome = () => {
       }
       return currentSortType === "asc" ? comparison : comparison * -1;
     });
-    console.log(sortedRows);
+
     setTasks({
       ...tasks,
       rows: sortedRows,
@@ -283,9 +286,16 @@ const DocumentRequestHome = () => {
     const approveData = await approvedDocumentRequest(document_Id);
     getDocTaskData();
   };
-  const rejectDocumentRequest = async (document_Id) => {
-    const approveData = await rejectedDocumentRequest(document_Id);
+
+  const submitReason = async (e) => {
+    e.preventDefault();
+    const rejectedData = await rejectedDocumentRequest(document_Id, {
+      reasons,
+    });
+    if(rejectedData){
+      setReason("")
     getDocTaskData();
+    }
   };
 
   return (
@@ -361,6 +371,88 @@ const DocumentRequestHome = () => {
           />
         </div>
       </div>
+       {/* Comment Modal */}
+       <div
+            class="modal fade"
+            id="commentModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title th-text fs-6" id="exampleModalLabel">
+                    Add Reason
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    id="closeForm"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form className="rounded" onSubmit={submitReason}>
+                    <div className="mb-3">
+                      <label className="form-label th-text"></label>
+                      <input
+                        type="text"
+                        className="form-control w-100"
+                        placeholder="Type reason..."
+                        value={reasons}
+                        onChange={(e) => setReason(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="d-flex justify-content-end">
+                      {/* <div>
+                        <img
+                          src="/images/tasks/assign comments.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/mention.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/task.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/emoji.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/attach_attachment.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                      </div> */}
+                      <div>
+                        <Button
+                          style={{ width: "100px" }}
+                          type="submit"
+                          appearance="primary"
+                          color="red"
+                          // className="comment-btn"
+                          data-bs-dismiss="modal"
+                          disabled={!reasons || /^\s+$/.test(reasons)}
+                        >
+                          Reject
+                        </Button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
     </div>
   );
 };

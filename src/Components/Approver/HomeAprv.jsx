@@ -18,6 +18,7 @@ import moment from "moment";
 import { MDBDataTable } from "mdbreact";
 import DocumentRequestHome from "./DocumentRequestHome";
 import { Checkbox } from "antd";
+import { Button } from "rsuite";
 // import "../../dist/css/style.min.css"
 
 const HomeAprv = () => {
@@ -28,13 +29,15 @@ const HomeAprv = () => {
   const [templateNames, setTemplateNames] = useState(null);
   const [docCount, setDocCount] = useState(null);
   const [updatedStatus, setUpdatedStatus] = useState();
-  const[profileDetail,setProfileDetail] = useState(null);
+  const [profileDetail, setProfileDetail] = useState(null);
+  const [reasons, setReason] = useState();
+  const [document_Id, setDocument_Id] = useState();
 
   const [showClearButton, setShowClearButton] = useState(false);
 
-  useEffect(()=>{
-    getTaskData()
-  },[])
+  useEffect(() => {
+    getTaskData();
+  }, []);
   const [tasks, setTasks] = useState({
     columns: [
       {
@@ -73,7 +76,7 @@ const HomeAprv = () => {
         width: 100,
         selected: false,
       },
-      
+
       {
         label: "Status",
         field: "status",
@@ -81,7 +84,7 @@ const HomeAprv = () => {
         width: 100,
         selected: false,
       },
-      
+
       // {
       //   label: "Comments",
       //   field: "comments",
@@ -104,7 +107,7 @@ const HomeAprv = () => {
 
   const ids =
     localStorage.getItem("user_id") || localStorage.getItem("myot_admin_id");
-    console.log(ids)
+  console.log(ids);
 
   // const handleSearch = async () => {
   //   const result = await searchTemplete(searchData, ids);
@@ -142,6 +145,7 @@ const HomeAprv = () => {
   const getTaskData = async () => {
     console.log(ids);
     let data = await approverTempleteList(ids);
+    console.log(data);
 
     const newRows = [];
     if (!data?.error) {
@@ -177,7 +181,7 @@ const HomeAprv = () => {
             <span className="ms-2">{moment(list?.createdAt).format("L")}</span>
           </>
         );
-        returnData.department = list?.manager?.department_Id?.departmentName;
+        returnData.department = list?.manager?.department_Id?.departmentName || "Admin";
         returnData.status = (
           <span
             className={`"td-text status" ${
@@ -272,7 +276,9 @@ const HomeAprv = () => {
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
               <li>
                 <Link
-                  to={`/Approver/Template-view/${list?._id || "Template Not Found"}`}
+                  to={`/Approver/Template-view/${
+                    list?._id || "Template Not Found"
+                  }`}
                   className="text-decoration-none"
                 >
                   <a class="dropdown-item border-bottom" href="/">
@@ -283,8 +289,9 @@ const HomeAprv = () => {
                     />
                     View Template
                   </a>
-                </Link>{" "}
+                </Link>
               </li>
+              {list.status !== "Approved" && (
               <li>
                 <a
                   onClick={() => approved(list?._id)}
@@ -296,12 +303,16 @@ const HomeAprv = () => {
                     alt=""
                     className="me-2"
                   />
-                  Approved
+                  Approved 
                 </a>
-              </li>
+              </li> 
+              )}
+                {list.status !== "Rejected" && (
               <li>
                 <a
-                  onClick={() => rejected(list?._id)}
+                  onClick={() => setDocument_Id(list?._id)}
+                  data-bs-toggle="modal"
+                  data-bs-target="#reason"
                   class="dropdown-item text-danger"
                   href="#"
                 >
@@ -309,6 +320,7 @@ const HomeAprv = () => {
                   Rejected
                 </a>
               </li>
+                )}
             </ul>
           </div>
         );
@@ -350,8 +362,8 @@ const HomeAprv = () => {
         <Checkbox
           checked={tasks.selectedColumns.includes(column.field)}
           onChange={() => handleCheckboxChange(column.field)}
-          defaultChecked>
-          {" "}
+          defaultChecked
+        >
           {column.label}
         </Checkbox>
       </div>
@@ -372,21 +384,30 @@ const HomeAprv = () => {
       const documentCountResult = await homeCount();
       if (!documentCountResult?.error && documentCountResult) {
         const counted = documentCountResult;
-        console.log(counted)
+        console.log(counted);
         setDocCount(counted);
       }
     };
-    count();
+    count(); 
   }, []);
 
   const approved = async (document_Id) => {
     const approveData = await approvedTemplete(document_Id);
-    getTaskData()
+    getTaskData();
   };
-  const rejected = async (document_Id) => {
-    const rejectedData = await rejectedTemplete(document_Id);
-    getTaskData()
+  const submitReason = async (e) => {
+    e.preventDefault();
+    const rejectedData = await rejectedTemplete(document_Id, {
+      reasons,
+    });
+    if(rejectedData){
+      setReason("")
+    getTaskData();
+    }
   };
+
+
+
 
   const toggleSortOrder = () => {
     const currentSortType = tasks.sortType === "asc" ? "desc" : "asc";
@@ -407,22 +428,16 @@ const HomeAprv = () => {
     });
   };
 
- 
-
-
-
-  useEffect(()=>{
-    const details = async ()=>{
+  useEffect(() => {
+    const details = async () => {
       const detailResults = await profileDetails(ids);
       const data = detailResults?.[0]?.approver;
-      setProfileDetail(data)
-      console.log(data)
-    }
+      setProfileDetail(data);
+      console.log(data);
+    };
     details();
-  },[])
+  }, []);
   // console.log(profileDetail)
-
-
 
   return (
     <>
@@ -436,9 +451,7 @@ const HomeAprv = () => {
               <nav className="row header bg-white  ">
                 <ul className="col align-items-center mt-3">
                   <li className="nav-item dropdown-hover d-none d-lg-block">
-                    <a className="nav-link fw-bold ms-2">
-                      Home
-                    </a>
+                    <a className="nav-link fw-bold ms-2">Home</a>
                   </li>
                 </ul>
                 <div className="col d-flex align-items-center  justify-content-end">
@@ -478,13 +491,13 @@ const HomeAprv = () => {
                 <div className="col-md-3 ">
                   <div className="statics_box card-clr-2-4">
                     <div className="statics_left">
-                      <h6 className="mb-0 header-card-text">
-                        My Department
-                      </h6>
+                      <h6 className="mb-0 header-card-text">My Department</h6>
                     </div>
                     <div className="d-flex  mt-4">
                       <h3 className="department-name mb-0 fw-semibold fs-7">
-                        {profileDetail?.department_Id ?( profileDetail?.department_Id?.departmentName): "Admin"}
+                        {profileDetail?.department_Id
+                          ? profileDetail?.department_Id?.departmentName
+                          : "Admin"}
                       </h3>
                     </div>
                   </div>
@@ -531,7 +544,7 @@ const HomeAprv = () => {
                 </div>
               </div>
             </div>
-            <div className="position-relative">
+            <div className="position-relative mb-4">
               <p className="table-name mb-2">Templates</p>
               <div className=" col-12 d-flex align-items-center table-searchbar">
                 <div className="d-flex ">
@@ -548,11 +561,11 @@ const HomeAprv = () => {
                       alt=""
                       className="p-2 table-searchbar-img"
                     /> */}
-                   <img
-              src="/images/dashboard/ArrowsDownUp.png"
-              onClick={toggleSortOrder}
-              className="p-2 table-searchbar-img border-end cursor_pointer"
-            />
+                    <img
+                      src="/images/dashboard/ArrowsDownUp.png"
+                      onClick={toggleSortOrder}
+                      className="p-2 table-searchbar-img border-end cursor_pointer"
+                    />
                     {/* <img
                       src="/images/dashboard/DotsThreeOutlineVertical2.png"
                       alt=""
@@ -581,7 +594,10 @@ const HomeAprv = () => {
                     )}
                   </div>
                   <div class="search_icon">
-                  <img width={20} src={require("../../assets/logo/search.png")}></img>
+                    <img
+                      width={20}
+                      src={require("../../assets/logo/search.png")}
+                    ></img>
                   </div>
                 </div>
                 <form className="d-flex me-2" role="search"></form>
@@ -618,6 +634,88 @@ const HomeAprv = () => {
           </div>
           <div className="col">
             <RightSidebar />
+          </div>
+          {/* Comment Modal */}
+          <div
+            class="modal fade"
+            id="reason"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title th-text fs-6" id="exampleModalLabel">
+                    Add Reason
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    id="closeForm"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form className="rounded" onSubmit={submitReason}>
+                    <div className="mb-3">
+                      <label className="form-label th-text"></label>
+                      <input
+                        type="text"
+                        className="form-control w-100"
+                        placeholder="Type reason..."
+                        value={reasons}
+                        onChange={(e) => setReason(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="d-flex justify-content-end">
+                      {/* <div>
+                        <img
+                          src="/images/tasks/assign comments.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/mention.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/task.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/emoji.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                        <img
+                          src="/images/tasks/attach_attachment.svg"
+                          alt=""
+                          className="comment-img"
+                        />
+                      </div> */}
+                      <div>
+                        <Button
+                          style={{ width: "100px" }}
+                          type="submit"
+                          appearance="primary"
+                          color="red"
+                          // className="comment-btn"
+                          data-bs-dismiss="modal"
+                          disabled={!reasons || /^\s+$/.test(reasons)}
+                        >
+                          Reject
+                        </Button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
