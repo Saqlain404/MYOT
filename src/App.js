@@ -1326,7 +1326,7 @@ function App() {
           }
         />
         <Route
-          path="main/Home"
+          path="main/home"
           element={
             <Suspense fallback={<Loader />}>
               <MainHome />

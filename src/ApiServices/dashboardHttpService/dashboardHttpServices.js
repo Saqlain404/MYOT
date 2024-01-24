@@ -488,7 +488,7 @@ export async function TemplateDetails(id) {
 export async function TemplateReject(id, formData) {
   try {
     const { data } = await adminHttpService.post(
-      `${process.env.REACT_APP_APIENDPOINT}/api/approver/templete-details/${id}`,
+      `${process.env.REACT_APP_APIENDPOINT}/api/approver/templete-rejected/${id}`,
       formData
     );
     return { data };

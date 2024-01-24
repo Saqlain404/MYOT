@@ -18,7 +18,6 @@ const CommonListing = () => {
   const [viewTemplateId, setViewTemplateId] = useState();
   const [rejectReason, setRejectReason] = useState("");
   const [loader, setLoader] = useState(false);
-  const [rejectError, setRejectError] = useState(false);
 
   const [awaitListing, setAwaitListing] = useState({
     columns: [
@@ -565,9 +564,7 @@ const CommonListing = () => {
                   loading={loader}
                   color="red"
                   appearance="primary"
-                  className={`btn mb-3 me-2 rounded-2 ${
-                    rejectError ? "border-1 border-danger outline-none" : ""
-                  }`}
+                  className={`btn mb-3 me-2 rounded-2`}
                   type="submit"
                   onClick={(e) => handleReject(e)}
                 >
