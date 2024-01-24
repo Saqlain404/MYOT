@@ -8,11 +8,12 @@ import { persistStore } from "redux-persist";
 import store from "./Components/app/store";
 import 'rsuite/dist/rsuite.min.css';
 import * as serviceWorker from './serviceWorker';
+import AuthLoader from "./Components/Loader/AuthLoader";
 
 let persistor = persistStore(store);
 
 render(
-  <Suspense fallback={<h1>Loading ...</h1>}>
+  <Suspense fallback={<AuthLoader />}>
     <React.StrictMode>
       <BrowserRouter>
         <Provider store={store}>
