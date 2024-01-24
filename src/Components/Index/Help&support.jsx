@@ -22,6 +22,8 @@ const HelpSupport = () => {
   const [loader, setLoader] = useState(false);
   const [files, setFiles] = useState([]);
   const [selectedTicketIndex, setSelectedTicketIndex] = useState(null);
+  const [selectedTicket, setSelectedTicket] = useState(null);
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     getTicketList();
@@ -113,6 +115,9 @@ const HelpSupport = () => {
           filteredList = ticketList;
           break;
       }
+      filteredList = filteredList.filter((ticket) =>
+      ticket.ticketType.toLowerCase().includes(searchInput.toLowerCase())
+    );
     }
 
     setFilteredTickets(filteredList);
@@ -151,8 +156,10 @@ const HelpSupport = () => {
   };
   useEffect(() => {
     filterTickets(selectedOption);
-  }, [selectedOption, ticketList]);
-
+  }, [selectedOption, ticketList,searchInput]);
+  const handleSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
   return (
     <>
       <div className="container-fluid">
@@ -175,6 +182,8 @@ const HelpSupport = () => {
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
+                      value={searchInput}
+                      onChange={handleSearchInputChange}
                     />
                   </form>
                   <div className="">
@@ -559,7 +568,9 @@ const HelpSupport = () => {
                                       See Attachement
                                     </a>
                                   )}
-                                  <a className="ticket-link mt-3 me-1 cursor_pointer">
+                                  <a className="ticket-link mt-3 me-1 cursor_pointer" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModals"
+                                    onClick={() => setSelectedTicket(ticket)} >
                                     Open Ticket
                                   </a>
                                 </div>
@@ -572,6 +583,19 @@ const HelpSupport = () => {
 
                           </h3>
                         )}
+                      </div>
+                    </div>
+                    <div class="modal fade" id="exampleModals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ticket Issue</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <p>{selectedTicket && selectedTicket.ticketIssue}</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div
@@ -634,7 +658,9 @@ const HelpSupport = () => {
                                     {ticket?.creator_Id?.name}
                                   </p>
                                 </div>
-                                <a className="ticket-link mt-3 me-1">
+                                <a className="ticket-link mt-3 me-1" data-bs-toggle="modal"
+                                  data-bs-target="#exampleModals"
+                                  onClick={() => setSelectedTicket(ticket)}>
                                   Open Ticket
                                 </a>
                               </div>
@@ -708,7 +734,9 @@ const HelpSupport = () => {
                                     {ticket?.creator_Id?.name}
                                   </p>
                                 </div>
-                                <a className="ticket-link mt-3 me-1">
+                                <a className="ticket-link mt-3 me-1" data-bs-toggle="modal"
+                                  data-bs-target="#exampleModals"
+                                  onClick={() => setSelectedTicket(ticket)}>
                                   Open Ticket
                                 </a>
                               </div>
@@ -782,7 +810,9 @@ const HelpSupport = () => {
                                     {ticket?.creator_Id?.name}
                                   </p>
                                 </div>
-                                <a className="ticket-link mt-3 me-1">
+                                <a className="ticket-link mt-3 me-1" data-bs-toggle="modal"
+                                  data-bs-target="#exampleModals"
+                                  onClick={() => setSelectedTicket(ticket)}>
                                   Open Ticket
                                 </a>
                               </div>

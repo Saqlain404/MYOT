@@ -94,6 +94,7 @@ const EditContent = () => {
                         </Button>
                       </Link>
                     </div>
+                    
                     This privacy policy describes the treatment of information
                     provided or collected on the websites or applications where
                     this privacy policy is posted. We follow this privacy policy

@@ -1,10 +1,60 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "rsuite";
-import Sidebar from "../Sidebar";
+import { Editor } from 'react-draft-wysiwyg';
+import { EditorState, ContentState } from "draft-js";
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import MainSidebar from "./sidebar";
+import axios from "axios";
 
 const ContentManagement = () => {
+  const [editorContent, setEditorContent] = useState(
+    EditorState.createWithContent(
+      ContentState.createFromText(
+        "This privacy policy describes the treatment of information provided or collected on the websites or applications where this privacy policy is posted. We follow this privacy policy in accordance with applicable law in the places where we operate. This policy is separate from our HIPAA Notice of Privacy Practices Policy; however, this policy refers to the HIPAA Notice of Privacy Practices Policy as it relates to your health information. Privacy Practices Policy\n\n" +
+        "Please keep in mind that when you provide information to us on a third-party site or platform (for example, via credit card vendor or through a patient portal), the information you provide may be separately collected by the third-party site or platform. The information we collect is covered by this privacy policy, and the information the third-party site or platform collects is subject to the third-party site or platform's privacy practices. Privacy choices you have made on the third-party site or platform will not apply to our use of the information we have collected directly through our website. Please also keep in mind that our site or communications may contain links to other sites or applications not owned or controlled by us and we are not responsible for the privacy practices of those sites. We encourage you to be aware when you leave our sites or applications and to read the privacy policies of other sites that may collect your Personal Information."
+      )
+    )
+  );
+
+  const [content, setcontent] = useState([])
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const authToken = localStorage.getItem('token-main-admin');
+  const headers = {
+    'x-auth-token-admin': authToken,
+  };
+  const contentManagement = async () => {
+    try {
+      if (!authToken) {
+        console.warn('Authentication token not found');
+      }
+      const response = await axios.get(`${process.env.REACT_APP_APIENDPOINT}/api/admin/content-details/65b0a0896dcaaf68cc29b7db`, {
+        headers,
+      });
+
+      const ticketData = response.data.results.contents;
+      setcontent(ticketData)
+      console.log(ticketData)
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
+  useEffect(() => {
+    contentManagement()
+  }, [])
+
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = () => {
+    setIsEditing(false);
+    // Save the edited content if needed
+  };
+
   return (
     <>
       <div className="container-fluid">
@@ -78,49 +128,41 @@ const ContentManagement = () => {
                   <p className="col-12 mb-4 help-text">
                     <div className="col-12 d-flex justify-content-between mb-2">
                       <h4>Privacy Policies</h4>
-                      <Link
-                        to={"/main/Content-management/Edit-content"}
-
-                        // className="text-decoration-none"
-                      >
+                      {isEditing ? (
                         <Button
                           style={{ width: "70px" }}
-                          // loading={loader}
                           appearance="primary"
                           className="btn mb-3 me-2 rounded-2"
-                          type="submit"
+                          onClick={handleSaveClick}
+                        >
+                          Save
+                        </Button>
+                      ) : (
+                        <Button
+                          style={{ width: "70px" }}
+                          appearance="primary"
+                          className="btn mb-3 me-2 rounded-2"
+                          onClick={handleEditClick}
                         >
                           Edit
                         </Button>
-                      </Link>
+                      )}
                     </div>
-                    This privacy policy describes the treatment of information
-                    provided or collected on the websites or applications where
-                    this privacy policy is posted. We follow this privacy policy
-                    in accordance with applicable law in the places where we
-                    operate. This policy is separate from our HIPAA Notice of
-                    Privacy Practices Policy; however, this policy refers to the
-                    HIPAA Notice of Privacy Practices Policy as it relates to
-                    your health information. Privacy Practices Policy
-                    <br /> <br />
-                    Please keep in mind that when you provide information to us
-                    on a third-party site or platform (for example, via credit
-                    card vendor or through a patient portal), the information
-                    you provide may be separately collected by the third-party
-                    site or platform. The information we collect is covered by
-                    this privacy policy, and the information the third-party
-                    site or platform collects is subject to the third-party site
-                    or platform's privacy practices. Privacy choices you have
-                    made on the third-party site or platform will not apply to
-                    our use of the information we have collected directly
-                    through our website. Please also keep in mind that our site
-                    or communications may contain links to other sites or
-                    applications not owned or controlled by us and we are not
-                    responsible for the privacy practices of those sites. We
-                    encourage you to be aware when you leave our sites or
-                    applications and to read the privacy policies of other sites
-                    that may collect your Personal Information. <br />
-                    <br />
+                    {isEditing ? (
+                      <Editor
+                        editorState={editorContent}
+                        onEditorStateChange={(newEditorState) => setEditorContent(newEditorState)}
+                      />
+                    ) : (
+                      <div >
+                       
+                        {content.map((item) => (
+                          <p className="col-12 mb-4 help-text">{item.description}</p>
+                        ))}
+                      </div>
+                    )}
+
+
                     <h4 className="mb-2">TYPES OF INFORMATION WE COLLECT</h4>
                     We collect Personal Information, including Personal Health
                     Information, and we may use Personal Information to create a
@@ -261,21 +303,25 @@ const ContentManagement = () => {
                   <p className="col-12 mb-4 help-text">
                     <div className="col-12 d-flex justify-content-between mb-2">
                       <h4>Terms & Condition</h4>
-                      <Link
-                        to={"/main/Content-management/Edit-content"}
-
-                        // className="text-decoration-none"
-                      >
+                      {isEditing ? (
                         <Button
                           style={{ width: "70px" }}
-                          // loading={loader}
                           appearance="primary"
                           className="btn mb-3 me-2 rounded-2"
-                          type="submit"
+                          onClick={handleSaveClick}
+                        >
+                          Save
+                        </Button>
+                      ) : (
+                        <Button
+                          style={{ width: "70px" }}
+                          appearance="primary"
+                          className="btn mb-3 me-2 rounded-2"
+                          onClick={handleEditClick}
                         >
                           Edit
                         </Button>
-                      </Link>
+                      )}
                     </div>
                     This privacy policy describes the treatment of information
                     provided or collected on the websites or applications where
@@ -444,21 +490,25 @@ const ContentManagement = () => {
                   <p className="col-12 mb-4 help-text">
                     <div className="col-12 d-flex justify-content-between mb-2">
                       <h4>About Us</h4>
-                      <Link
-                        to={"/main/Content-management/Edit-content"}
-
-                        // className="text-decoration-none"
-                      >
+                      {isEditing ? (
                         <Button
                           style={{ width: "70px" }}
-                          // loading={loader}
                           appearance="primary"
                           className="btn mb-3 me-2 rounded-2"
-                          type="submit"
+                          onClick={handleSaveClick}
+                        >
+                          Save
+                        </Button>
+                      ) : (
+                        <Button
+                          style={{ width: "70px" }}
+                          appearance="primary"
+                          className="btn mb-3 me-2 rounded-2"
+                          onClick={handleEditClick}
                         >
                           Edit
                         </Button>
-                      </Link>
+                      )}
                     </div>
                     MYOT is a proposed SaaS solution that allows organizations
                     to create, manage, and collaborate on standardized document
