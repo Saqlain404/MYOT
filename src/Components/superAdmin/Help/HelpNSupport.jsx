@@ -10,6 +10,10 @@ const HelpNSupport = () => {
   const [selectedTicketIndex, setSelectedTicketIndex] = useState(null);
   const [newTicket, setnewTicket] = useState([])
   const [resolve, setresolve] = useState([])
+  const [searchInput, setSearchInput] = useState("");
+  const [selectedTicket, setSelectedTicket] = useState("");
+  const [selectedTickets, setSelectedTickets] = useState("");
+  
 
   const handleAttachmentClick = (index) => {
     setSelectedTicketIndex(index);
@@ -249,7 +253,9 @@ const HelpNSupport = () => {
         filteredList = resolve;
         break;
     }
-
+    filteredList = filteredList.filter((ticket) =>
+      ticket.ticketType.toLowerCase().includes(searchInput.toLowerCase())
+    );
     setFilteredResolveTickets(filteredList);
   };
 
@@ -257,6 +263,26 @@ const HelpNSupport = () => {
   const [filteredOngoingTickets, setFilteredOngoingTickets] = useState([]);
   const [filteredNewTickets, setFilteredNewTickets] = useState([]);
   const [filteredResolveTickets, setFilteredResolveTickets] = useState([]);
+  useEffect(() => {
+    // Apply search filter to the ticketList
+    const filteredTickets = ticketList.filter((ticket) =>
+      ticket.ticketType.toLowerCase().includes(searchInput.toLowerCase())
+    );
+    setFilteredTickets(filteredTickets);
+  }, [selectedOption, ticketList, searchInput]);
+  useEffect(() => {
+    const filteredOngoingTickets = ongoing.filter((ticket) =>
+      ticket.ticketType.toLowerCase().includes(searchInput.toLowerCase())
+    );
+    setFilteredOngoingTickets(filteredOngoingTickets);
+  }, [selectedOption, ongoing, searchInput]);
+
+  useEffect(() => {
+    const filteredNewTickets = newTicket.filter((ticket) =>
+      ticket.ticketType.toLowerCase().includes(searchInput.toLowerCase())
+    );
+    setFilteredNewTickets(filteredNewTickets);
+  }, [selectedOption, newTicket, searchInput]);
   useEffect(() => {
     filterOngoingTickets(selectedOption);
   }, [selectedOption, ongoing]);
@@ -268,17 +294,25 @@ const HelpNSupport = () => {
   useEffect(() => {
     filterResolveTickets(selectedOption);
   }, [selectedOption, resolve]);
-
+  useEffect(() => {
+    filterTickets(selectedOption);
+  }, [selectedOption, ticketList]);
+  useEffect(() => {
+    const filteredResolveTickets = resolve.filter((ticket) =>
+      ticket.ticketType.toLowerCase().includes(searchInput.toLowerCase())
+    );
+    setFilteredResolveTickets(filteredResolveTickets);
+  }, [selectedOption, resolve, searchInput]);
   useEffect(() => {
     SuperAdminTicketList();
     SuperAdminOngoingTicketList();
     SuperAdminNewTicketList();
     SuperAdminResolveTicketList();
   }, []);
-  useEffect(() => {
-    filterTickets(selectedOption);
-  }, [selectedOption, ticketList]);
 
+  const handleSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
   return (
     <>
       <div className="container-fluid">
@@ -301,6 +335,8 @@ const HelpNSupport = () => {
                       type="search"
                       placeholder="Search"
                       aria-label="Search"
+                      value={searchInput}
+                      onChange={handleSearchInputChange}
                     />
                   </form>
                   <div className="">
@@ -390,9 +426,9 @@ const HelpNSupport = () => {
                 {isDropdownOpen && (
                   <div className="dropdown-content z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
-                    <li className="hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white" onClick={() => handleOptionClick('This Week')}>This Week</li>
-                    <li className="hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white" onClick={() => handleOptionClick('This Month')}>This Month</li>
-                    <li className="hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white" onClick={() => handleOptionClick('This Year')}>This Year</li>
+                      <li className="hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white" onClick={() => handleOptionClick('This Week')}>This Week</li>
+                      <li className="hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white" onClick={() => handleOptionClick('This Month')}>This Month</li>
+                      <li className="hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white" onClick={() => handleOptionClick('This Year')}>This Year</li>
                     </ul>
                   </div>
                 )}
@@ -430,7 +466,7 @@ const HelpNSupport = () => {
                             </div>
                           </div>
                           <div className="text-start mt-3 ms-5">
-                            <p>{ticket?.ticketIssue}</p>
+                            <p>{ticket?.ticketType}</p>
                             {/* <p>
                                     Lorem, ipsum dolor sit amet consectetur
                                     adipisicing elit. Voluptas veritatis,
@@ -475,7 +511,7 @@ const HelpNSupport = () => {
                                 See Attachement
                               </a>
                             )}
-                            <a className="ticket-link mt-3 me-1 cursor_pointer">
+                            <a className="ticket-link mt-3 me-1 cursor_pointer" data-bs-toggle="modal" onClick={() => setSelectedTicket(ticket)} data-bs-target="#exampleModal">
                               Open Ticket
                             </a>
                           </div>
@@ -487,6 +523,34 @@ const HelpNSupport = () => {
                       {`Yay! No Tickets ${selectedOption === 'This Week' ? 'This Week' : selectedOption}`}
                     </h3>
                   )}
+                </div>
+              </div>
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Ticket Issue</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <p>{selectedTicket && selectedTicket?.ticketType}</p>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+              <div class="modal fade" id="exampleModalss" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Ticket Status</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <p>{selectedTickets && selectedTickets?.ticketType}</p>
+                    </div>
+                    
+                  </div>
                 </div>
               </div>
               <div
@@ -518,7 +582,7 @@ const HelpNSupport = () => {
                             </div>
                           </div>
                           <div className="text-start mt-3 ms-5">
-                            <p>{ticket?.ticketIssue}</p>
+                            <p>{ticket?.ticketType}</p>
                             {/* <p>
                                     Lorem, ipsum dolor sit amet consectetur
                                     adipisicing elit. Voluptas veritatis,
@@ -549,7 +613,7 @@ const HelpNSupport = () => {
                               {ticket?.creator_Id[0]?.name}
                             </p>
                           </div>
-                          <a className="ticket-link mt-3 me-1">
+                          <a className="ticket-link mt-3 me-1" data-bs-toggle="modal" onClick={() => setSelectedTicket(ticket)} data-bs-target="#exampleModal">
                             Open Ticket
                           </a>
                         </div>
@@ -591,7 +655,7 @@ const HelpNSupport = () => {
                             </div>
                           </div>
                           <div className="text-start mt-3 ms-5">
-                            <p>{ticket?.ticketIssue}</p>
+                            <p>{ticket?.ticketType}</p>
                             {/* <p>
                                     Lorem, ipsum dolor sit amet consectetur
                                     adipisicing elit. Voluptas veritatis,
@@ -622,7 +686,7 @@ const HelpNSupport = () => {
                               {ticket?.creator_Id[0]?.name}
                             </p>
                           </div>
-                          <a className="ticket-link mt-3 me-1">
+                          <a className="ticket-link mt-3 me-1" data-bs-toggle="modal" onClick={() => setSelectedTicket(ticket)} data-bs-target="#exampleModal">
                             Open Ticket
                           </a>
                         </div>
@@ -664,7 +728,7 @@ const HelpNSupport = () => {
                             </div>
                           </div>
                           <div className="text-start mt-3 ms-5">
-                            <p>{ticket?.ticketIssue}</p>
+                            <p>{ticket?.ticketType}</p>
                             {/* <p>
                                     Lorem, ipsum dolor sit amet consectetur
                                     adipisicing elit. Voluptas veritatis,
@@ -695,7 +759,7 @@ const HelpNSupport = () => {
                               {ticket?.creator_Id?.name}
                             </p>
                           </div>
-                          <a className="ticket-link mt-3 me-1">
+                          <a className="ticket-link mt-3 me-1" data-bs-toggle="modal" onClick={() => setSelectedTicket(ticket)} data-bs-target="#exampleModal">
                             Open Ticket
                           </a>
                         </div>

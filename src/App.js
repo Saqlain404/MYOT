@@ -67,6 +67,8 @@ import ProfileAprv from "./Components/Approver/ProfileAprv";
 import EditProfileAprv from "./Components/Approver/EditProfileAprv";
 import ProfileDept from "./Components/DepartmentManager/ProfileDept";
 import EditProfileDept from "./Components/DepartmentManager/EditProfileDept";
+import EditContent from "./Components/superAdmin/editContent";
+import ContentManagement from "./Components/superAdmin/contentManagement";
 import Help from "./Components/Index/Help";
 import HelpSupport from "./Components/Index/Help&support";
 import ContactUs from "./Components/Index/ContactUs";
@@ -357,6 +359,8 @@ function App() {
         <Route path="/main/login" element={<Login />} />
         <Route path="/main/forgot-password" element={<MainForgotPass />} />
         <Route path="/main/update-password" element={<MainUpdatePassword />} />
+        <Route path="main/Content-management" element={<ContentManagement />} />
+        <Route path="main/Content-management/Edit-content" element={<EditContent />} />
         <Route path="/main/success" element={<MainForgotSuccess />} />
         <Route path="main/Home" element={<MainHome />} />
         <Route path="main/Help-support" element={<HelpNSupport />} />
