@@ -1171,7 +1171,7 @@ export async function approvedDocumentRequest(documentIds) {
 
 export async function rejectedDocumentRequest(documentIds,formData) {
   try {
-    const response = await employeeHttpService.get(
+    const response = await employeeHttpService.post(
       `${process.env.REACT_APP_APIENDPOINT}/api/approver/rejected-document/${documentIds}`,formData
     );
     if (!response.data?.error) {
