@@ -13,6 +13,8 @@
     "@fullcalendar/list": "^6.1.10",
     "@fullcalendar/react": "^6.1.10",
     "@fullcalendar/timegrid": "^6.1.10",
+    "@react-pdf-viewer/core": "3.6.0",
+    "@react-pdf-viewer/default-layout": "3.6.0",
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -25,6 +27,7 @@
     "localforage": "^1.10.0",
     "mdbreact": "^5.2.0",
     "moment": "^2.29.4",
+    "pdfjs-dist": "^2.15.349",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
     "react-bootstrap": "^2.9.1",
@@ -40,10 +43,7 @@
     "rsuite": "^5.50.0",
     "style.min.css": "^0.0.6",
     "sweetalert2": "^11.0.17",
-    "web-vitals": "^2.1.4",
-    "@react-pdf-viewer/core": "3.6.0",
-    "@react-pdf-viewer/default-layout": "3.6.0",
-    "pdfjs-dist": "^2.15.349"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

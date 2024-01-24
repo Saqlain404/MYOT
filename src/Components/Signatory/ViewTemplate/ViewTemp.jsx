@@ -30,21 +30,34 @@ const ViewTemp = ({ viewTemplateId }) => {
   return (
     <div class="modal-body view_temp_modal">
       <div className="row">
-        <div className="text-end">
-          <p>
-            Status : <span className="text-warning">{tempData?.status}</span>
-          </p>
-        </div>
         <div className="col-md-4">
           <p>Template Name : {tempData?.templeteName}</p>
         </div>
-        <div className="col-md-4">
+        <div className="text-end col-8">
+          <p>
+            Status : <span className="text-warning">{tempData?.status}</span>
+          </p>
+          {tempData?.rejectedReason && (
+            <div>
+              <p className="my-4">
+                Rejected Reason :
+                <span className="text-warning">
+                  {" "}
+                  {tempData?.rejectedReason}
+                </span>
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* <div className="col-md-4">
           <p>Assigned To : {tempData?.templeteName}</p>
         </div>
         <div className="col-md-4">
           <p>Created By : {tempData?.templeteName}</p>
-        </div>
-        <div className="my-4">
+        </div> */}
+
+        <div className="my-4 position-relative">
           {pdfUrl && (
             <Worker
               workerUrl={`https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.js`}

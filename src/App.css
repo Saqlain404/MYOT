@@ -2973,6 +2973,10 @@ input[type="number"]::-webkit-outer-spin-button {
   display: none !important;
   border-right: none !important;
 }
+/* .rpv-toolbar__right > div:nth-child(4){
+  position: absolute !important;
+  top: 0;
+} */
 
 .rpv-toolbar__right > div:nth-child(1),
 .rpv-toolbar__right > div:nth-child(2),

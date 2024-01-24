@@ -7,7 +7,7 @@ import { TemplateDetails } from "../../../ApiServices/dashboardHttpService/dashb
 import { Viewer, Worker } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 
-const ViewTemp = ({ viewTemplateId }) => {
+const SignedTemp = ({ viewTemplateId }) => {
   const [tempData, setTempData] = useState();
   const [pdfUrl, setPdfUrl] = useState("");
 
@@ -51,7 +51,6 @@ const ViewTemp = ({ viewTemplateId }) => {
             >
               <div>
                 <Viewer
-                  // fileUrl={tempData?.templete[0]}
                   fileUrl={`${pdfUrl}`}
                   // fileUrl="http://ec2-51-112-25-93.me-central-1.compute.amazonaws.com:2053/17059962825372ocnt.pdf"
                   plugins={[defaultLayoutPluginInstance]}
@@ -65,4 +64,4 @@ const ViewTemp = ({ viewTemplateId }) => {
   );
 };
 
-export default ViewTemp;
+export default SignedTemp;
