@@ -135,9 +135,28 @@ const MainSidebar = () => {
               </a>
             </Link>
           </li> */}
+           <li
+            className={` "nav-item text-dark" ${
+              location.pathname.match(/^\/main\/Content-management/) ? "nav_active" : ""
+            }`}
+          >
+            <Link to={"/main/Content-management"} className="text-decoration-none">
+              <a
+                className="nav-link text-dark fs-5 align-middle "
+                aria-current="page"
+              >
+                <img
+                  src="/images/sidebar/signatories.png"
+                  className="align-middle sidebar-icon"
+                />
+
+                <span className="ms-3 align-middle sidebar-btn">Content Management</span>
+              </a>
+            </Link>
+          </li>
           <li
             className={` "nav-item text-dark" ${
-              location.pathname.match(/^\/Admin\/Help/) ? "nav_active" : ""
+              location.pathname.match(/^\/main\/Help/) ? "nav_active" : ""
             }`}
           >
             <Link to={"/main/Help-support"} className="text-decoration-none">

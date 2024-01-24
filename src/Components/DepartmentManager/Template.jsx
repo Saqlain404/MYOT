@@ -349,7 +349,8 @@ const Template = () => {
             </a>
             <ul class="dropdown-menu border-0 shadow p-3 mb-5 rounded">
               <li>
-                <Link class="dropdown-item">
+                <Link class="dropdown-item"
+                to={"/Department/Template-view"}>
                   <img
                     src="/images/users/AddressBook.svg"
                     alt=""
@@ -744,7 +745,7 @@ const Template = () => {
                     name="profile_img"
                     type="file"
                     required
-                    accept="image/*"
+                    accept="application/pdf"
                     defaultValue=""
                     onChange={(e) => onFileSelection(e, "profile_img")}
                   />

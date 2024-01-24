@@ -123,7 +123,7 @@ const Document = () => {
               <li>
                 <Link
                   class="dropdown-item"
-                  to={`/Department/Comments/${list?._id}`}
+                  to={`/Department/Home/Comments/${list?._id}`}
                 >
                   <img
                     src="/images/dashboard/Comment.png"

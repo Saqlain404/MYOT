@@ -247,7 +247,7 @@ const DashboardDept = () => {
                       <p>Current Week </p>
                       <p>Previous Week</p> */}
                     </div>
-                    <DashboardTemplateGraph dashGraphData={dashGraphData}/>
+                    <DashboardTemplateGraph dashGraphData={dashGraphData} />
                     {/* <div className="d-flex justify-content-around">
                       <img
                         src="/images/dashboard/circle-analytics.png"

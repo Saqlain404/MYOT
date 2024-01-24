@@ -242,6 +242,12 @@ const SettingsDept = lazy(() =>
 const HelpNSupport = lazy(() =>
   import("./Components/superAdmin/Help/HelpNSupport")
 );
+const ContentManagement = lazy(() =>
+  import("./Components/superAdmin/contentManagement")
+);
+const EditContent = lazy(() => 
+  import("./Components/superAdmin/editContent")
+);
 const Templates = lazy(() => import("./Components/Index/Templates"));
 const Loader = lazy(() => import("./Components/Loader/Loader"));
 const AuthLogin = lazy(() => import("./Components/Login/AuthLogin"));
@@ -649,7 +655,7 @@ function App() {
           }
         />
         <Route
-          path="Department/Comments"
+          path="Department/Home/Comments/:id"
           element={
             <Suspense fallback={<Loader />}>
               <CommentsDept />
@@ -1343,6 +1349,17 @@ function App() {
               <HelpNSupport />
             </Suspense>
           }
+        />
+        <Route path="/main/login" element={<Login />} />
+        <Route path="/main/forgot-password" element={<MainForgotPass />} />
+        <Route path="/main/update-password" element={<MainUpdatePassword />} />
+        <Route path="/main/success" element={<MainForgotSuccess />} />
+        <Route path="main/Home" element={<MainHome />} />
+        <Route path="main/Help-support" element={<HelpNSupport />} />
+        <Route path="main/Content-management" element={<ContentManagement />} />
+        <Route
+          path="main/Content-management/Edit-content"
+          element={<EditContent />}
         />
       </Routes>
     </div>
